@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.iconpln.treasury</groupId>
+        <artifactId>liquiditas</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>liquiditas-core</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ojdbc</groupId>
+            <artifactId>ojdbc</artifactId>
+            <version>14</version>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>development</id>
+            <properties>
+                <activatedProperties>development</activatedProperties>
+                <db.url>jdbc:oracle:thin:@192.168.10.24:1521:cisqa</db.url>
+                <db.username>DASHBOARD</db.username>
+                <db.password>DASHBOARD</db.password>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>testing</id>
+            <properties>
+                <activatedProperties>testing</activatedProperties>
+                <db.url>jdbc:oracle:thin:@10.14.152.4:1598:cisqa</db.url>
+                <db.username>DASHBOARD</db.username>
+                <db.password>DASHBOARD</db.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>production</id>
+            <properties>
+                <activatedProperties>production</activatedProperties>
+                <db.url>jdbc:oracle:thin:@10.14.158.192:1521:DBTRESRY</db.url>
+                <db.username>dashboard</db.username>
+                <db.password>dashboard</db.password>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>

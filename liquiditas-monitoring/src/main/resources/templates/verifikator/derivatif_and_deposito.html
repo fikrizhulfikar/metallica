@@ -1,0 +1,74 @@
+<div th:fragment="stylesheets-frontend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        th {
+            font-size: 11px;
+            vertical-align: middle
+        }
+
+        td {
+            font-size: 10px;
+        }
+
+        td, th {
+            padding: 2px !important;
+        }
+        .carousel-control{
+            width : 8% !important;
+        }
+    </style>
+</div>
+<div class="app-body col-md-12" style="margin-top: -15px;min-height: 400px" th:fragment="content" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div align="center" class="title"><h5><b>PRODUK DERIVATIF DAN DEPOSITO</b></h5></div>
+    <div class="view-table col-md-12" style="padding-left: 15px;padding-right: 15px;padding-top: 15px;">
+        <table width="100%" id="table-produk-derivatif" class="table table-bordered">
+            <thead>
+            <tr>
+                <th width="15%" style="vertical-align: middle; background-color: #67a2d8" rowspan="2">BANK</th>
+                <th style="background: #91e491" width="40%" colspan="3">DERIVATIF</th>
+                <th style="background: #f5926d" width="40%" colspan="2">DEPOSITO</th>
+            <tr>
+                <th style="background: #91e491" width="15%">FORWARD</th>
+                <th style="background: #91e491" width="15%">SWAP</th>
+                <th style="background: #91e491" width="15%">CALL SPREAD</th>
+                <th style="background: #f5926d" width="15%">USD</th>
+                <th style="background: #f5926d" width="15%">IDR</th>
+            </tr>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-12">
+        <div id="derivatif-deposito-carousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="item active" align="center">
+                    <div id="chart-hedging"></div>
+                </div>
+                <div class="item" align="center">
+                    <div id="chart-swap"></div>
+                </div>
+                <div class="item" align="center">
+                    <div id="chart-call-spread"></div>
+                </div>
+                <div class="item" align="center">
+                    <div id="chart-usd"></div>
+                </div>
+                <div class="item" align="center">
+                    <div id="chart-idr"></div>
+                </div>
+            </div>
+            <a class="left carousel-control" href="#derivatif-deposito-carousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#derivatif-deposito-carousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+</div>
+<div th:fragment="scripts-frontend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <script src="/static/js/frontend/verifikator/derivatif_and_deposito.js"></script>
+</div>

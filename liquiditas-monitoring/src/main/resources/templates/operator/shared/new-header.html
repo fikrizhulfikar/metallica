@@ -1,0 +1,58 @@
+<header th:fragment="header-param" class="app-header navbar">
+    <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button">☰</button>
+    <a class="navbar-brand" href="#"></a>
+    <ul class="nav navbar-nav d-md-down-none">
+        <li class="nav-item">
+            <a class="nav-link navbar-toggler sidebar-toggler" href="#">☰</a>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav ml-auto">
+
+        <!--TAHAP 2-->
+        <!--<li class="nav-item dropdown d-md-down-none">-->
+            <!--<a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">-->
+                <!--<i class="icon-envelope-letter"></i><span class="badge badge-pill badge-info">7</span>-->
+            <!--</a>-->
+            <!--<div class="dropdown-menu dropdown-menu-right dropdown-menu-lg show" style="width:750px !important;">-->
+                <!--<div class="dropdown-header text-center">-->
+                    <!--<strong>You have 4 messages</strong>-->
+                <!--</div>-->
+                <!--<a href="#" class="dropdown-item">-->
+                    <!--<div class="message">-->
+                        <!--<div>-->
+                            <!--<small class="text-muted">John Doe</small>-->
+                            <!--<small class="text-muted float-right mt-1">Just now</small>-->
+                        <!--</div>-->
+                        <!--<div class="text-truncate font-weight-bold">-->
+                            <!--<span class="fa fa-exclamation text-danger"></span> Important message</div>-->
+                        <!--<div class="small text-muted text-truncate">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</div>-->
+                    <!--</div>-->
+                <!--</a>-->
+            <!--</div>-->
+        <!--</li>-->
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button"
+               aria-haspopup="true" aria-expanded="false">
+                <img src="/static/new-backend/img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com"/>
+                <span class="d-md-down-none" th:text ="${#authentication.getPrincipal().getUsername()}">Me</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-header text-center">
+                    <strong>Menu</strong>
+                </div>
+                <form id="form-logout" th:action="@{/logout}" method="post">
+                </form>
+                <a class="dropdown-item" onclick="logout()" href="#"><i class="fa fa-share"></i> Logout</a>
+                <script>
+                    function logout() {
+                        document.getElementById("form-logout").submit();
+                    }
+                </script>
+            </div>
+        </li>
+        <li class="nav-item d-md-down-none">
+            <span class="nav-link navbar-toggler" href="#"><i class="fa fa-users"></i></span>
+        </li>
+    </ul>
+</header>

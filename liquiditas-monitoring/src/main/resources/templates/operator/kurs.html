@@ -1,0 +1,64 @@
+<div th:fragment="stylesheets-backend">
+    <style>
+        button{ cursor: pointer
+        }
+        .table td {
+            padding-right: 0.75rem;
+            padding-bottom: 0.25rem;
+            padding-left: 0.75rem;
+            padding-top: 0.25rem;
+        }
+        .animated{
+            margin-top: 75px;
+        }
+        .table th {
+            align: center;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Kurs</li>
+    </ol>
+
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+            <div align="center">
+                <h5><b>EXCHANGE RATES ON TRANSACTION</b></h5>
+                <h5><b>BANK INDONESIA</b></h5>
+            </div>
+            <table id="table-kurs-1" class="table table-bordered" style="margin-left: 0px;">
+                <thead>
+                <tr>
+                    <th>CURRENCIES</th>
+                    <th>VALUE</th>
+                    <th>SELL</th>
+                    <th>BUY</th>
+                    <th>MEAN</th>
+                </tr>
+                </thead>
+                <tbody style="font-size: 12px">
+                </tbody>
+            </table>
+        </div>
+        <div class="animated fadeIn">
+            <div align="center">
+                <h5><b>FOREIGN EXCHANGE REFERENCE RATE</b></h5>
+                <h5><b>JAKARTA INTERBANK SPOT DOLLAR RATE</b></h5>
+            </div>
+            <table id="table-kurs-2" class="table table-bordered" style="margin-left: 0px;" align="center">
+                <thead>
+                <tr>
+                    <th>TANGGAL</th>
+                    <th>KURS</th>
+                </tr>
+                </thead>
+                <tbody style="font-size: 12px">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/kurs.js"></script>
+</div>

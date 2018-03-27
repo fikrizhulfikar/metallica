@@ -1,0 +1,82 @@
+<div th:fragment="stylesheets-backend">
+    <style>
+        button{ cursor: pointer
+        }
+        .table td {
+            padding-right: 0.75rem;
+            padding-bottom: 0.25rem;
+            padding-left: 0.75rem;
+            padding-top: 0.25rem;
+        }
+        div.dataTables_wrapper div.dataTables_paginate {
+            float: right !important;
+            text-align: left !important;
+            padding-left: 0px;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter {
+            text-align: right !important;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Master Vendor</li>
+    </ol>
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+            <div class="list-data" style="margin-top:50px;">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="form">
+                            <div class="form-group">
+                                <label for="pIdVendor"><span style="color: red">*)</span>&nbsp;ID Vendor:</label>
+                                <input type="text" class="form-control" id="pIdVendor" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNamaVendor"><span style="color: red">*)</span>&nbsp;Nama Vendor:</label>
+                                <input type="text" class="form-control" id="pNamaVendor" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pJenis"><span style="color: red">*)</span>&nbsp;Jenis Pembayaran:</label>
+                                <select id="pJenis" class="form-control" required="required">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pFlag"><span style="color: red">*)</span>&nbsp;Status:</label>
+                                <select id="pFlag" class="form-control" required="required">
+                                    <option value="1">TAMPIL</option>
+                                    <option value="0">TIDAK TAMPIL</option>
+                                </select>
+                            </div>
+                            <div align="right">
+                                <button onclick="clearForm()" class="btn btn-warning">Clear Form</button>
+                                <button onclick="submit()" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 50px">
+                    <table id="table-main" class="table table-bordered table-striped" width="100%"
+                           style="margin-right: 0px !important;">
+                        <thead style="font-size: 12px">
+                        <tr>
+                            <th>N0.</th>
+                            <th>ID VENDOR</th>
+                            <th>NAMA VENDOR</th>
+                            <th>JENIS</th>
+                            <th>STATUS</th>
+                            <th width="100px;">AKSI</th>
+                        </tr>
+                        </thead>
+                        <tbody style="font-size: 12px">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/master/vendor.js"></script>
+</div>

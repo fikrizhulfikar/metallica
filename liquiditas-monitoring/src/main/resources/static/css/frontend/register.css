@@ -1,0 +1,11 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+
+.kop{
+    color: saddlebrown !important;
+}
+.footer{
+    background-color: saddlebrown;
+    padding: 15px;
+    color: white;
+
+}

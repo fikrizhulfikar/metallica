@@ -1,0 +1,178 @@
+<div th:fragment="stylesheets-backend">
+    <style>
+        button{ cursor: pointer
+        }
+        .table td {
+            padding-right: 0.75rem;
+            padding-bottom: 0.25rem;
+            padding-left: 0.75rem;
+            padding-top: 0.25rem;
+        }
+
+        div.dataTables_wrapper div.dataTables_paginate {
+            float: right !important;
+            text-align: left !important;
+            padding-left: 0px;
+        }
+
+        .lbl-src{
+            font-size: 12px;
+        }
+
+        .panel-custom {
+            overflow-x: hidden !important;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter {
+            text-align: right !important;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Realisasi Pembayaran</li>
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <a style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</a>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
+            </div>
+        </li>
+    </ol>
+    <div id="edit-reverse-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Realisasi Pembayaran</h5>
+                </div>
+                <!--datalist-->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="pKeterangan">Keterangan:</label>
+                        <input type="text" class="form-control" id="pKeterangan" list="data-keterangan" required="required"/>
+                        <datalist id="data-keterangan"></datalist>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" onclick="reverse()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+            <div id="filter">
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;">
+                    <div class="col-md-1" style="padding-right: 0px;"><label class="lbl-src">Tanggal Awal</label></div>
+                    <div class="col-md-3" style="padding-right: 0px;"><input type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal"/></div>
+                    <div class="col-md-1" style="padding-right: 0px;"><label class="lbl-src">Tanggal Akhir</label></div>
+                    <div class="col-md-3" style="padding-right: 0px;"><input type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/></div>
+                    <div class="col-md-1" style="padding-right: 0px;"><label class="lbl-src">Bank</label></div>
+                    <div class="col-md-3" style="padding-right: 0px;"><select name="bank" id="cmb_bank" class="form-control">
+                        <option value="">Pilih Data</option>
+                    </select></div>
+                </div>
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
+                    <div class="col-md-1" style="padding-right: 0px;"><label class="lbl-src">Currency</label></div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="bacurrecnynk" id="cmb_currecny" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;"><label class="lbl-src">Jenis Pembayaran</label></div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="jenis_pemabayaran" id="cmb_jenis_pemabayaran" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
+                    <div class="col-md-3" style="padding-right: 0px;"><button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button></div>
+                </div>
+            </div>
+            <div class="list-data" style="margin-top:25px;">
+                <div class="panel panel-default">
+                    <div class="panel-body panel-custom">
+                        <table id="table-rekapitulasi" class="table table-bordered table-striped"
+                               style="margin-left: 0px;">
+                            <thead style="font-size: 12px">
+                            <tr>
+                                <th>NO.</th>
+                                <th>JENIS PEMBAYARAN</th>
+                                <th>JATUH TEMPO</th>
+                                <th>VENDOR / PENGEMBANG / PEMASOK / LOAN</th>
+                                <th>CURRENCY</th>
+                                <th>NILAI TAGIHAN</th>
+                                <th>NAMA KONTRAK/ LOAN/ UNIT PENERIMA/ PEMBANGKIT</th>
+                                <th>BANK TUJUAN PEMBAYARAN</th>
+                                <th>BANK PEMBAYAR</th>
+                                <th>TGL TERIMA TAGIHAN</th>
+                                <th>TGL. SURAT TAGIHAN</th>
+                                <th>NO. SURAT TAGIHAN</th>
+                                <th>TGL. NOTA DINAS PEMBAYARAN</th>
+                                <th>NO. NOTA DINAS PEMBAYARAN</th>
+                                <th>TGL PEMBAYARAN</th>
+                                <th>COUNTDOWN</th>
+                                <th>STATUS</th>
+                                <th>TIPE TRANSAKSI</th>
+                                <th>STATUS TAGIHAN</th>
+                                <th>KETERANGAN</th>
+                                <th>AKSI</th>
+                            </tr>
+                            </thead>
+                            <tbody style="font-size: 12px">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-upload-file" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title_modal">UPLOAD FILE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="input_file">
+                    <div class="form-group" style="display:none">
+                        <input type="text" class="form-control" id="temp-id-valas-file" accept="application/pdf,application/zip" onchange="upload_server('1')"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">UPLOAD TANDA TERIMA INVOICE |
+                            <a href="" id="btn-download-tanda-terima-invoice">-</a></label>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">UPLOAD LEMBAR VERIFIKASI | <a
+                                href="" id="btn-download-lembar-verifikasi">-</a></label>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">UPLOAD INVOICE / TAGIHAN | <a href=""
+                                                                                                           id="btn-download-file-tagihan">-</a></label>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">UPLOAD NOTA DINAS PEMBAYARAN
+                            | <a href="" id="btn-download-nota-dinas-pembayaran">-</a></label>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="file-bukti-pelaksanaan">UPLOAD BUKTI PELAKSANAAN PEMBAYARAN | <a href="" id="btn-download-bukti-pelaksanaan">-</a></label>
+                        <input type="file" class="form-control" id="file-bukti-pelaksanaan" accept="application/pdf,application/zip" onchange="upload_server('5')"/>
+                    </div>
+                    <div class="form-group">
+                        <p>File bertipe .zip atau pdf</p>
+                        <p>Disarankan Maksimal 5mb</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Selesai</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/realisasiPembayaran.js"></script>
+</div>

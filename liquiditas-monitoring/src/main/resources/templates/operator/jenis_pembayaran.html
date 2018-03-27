@@ -1,0 +1,103 @@
+<div th:fragment="stylesheets-backend">
+    <style>
+        button{ cursor: pointer
+        }
+        .table td {
+            padding-right: 0.75rem;
+            padding-bottom: 0.25rem;
+            padding-left: 0.75rem;
+            padding-top: 0.25rem;
+        }
+        div.dataTables_wrapper div.dataTables_paginate {
+            float: right !important;
+            text-align: left !important;
+            padding-left: 0px;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter {
+            text-align: right !important;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Master Jenis Pembayaran</li>
+    </ol>
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+            <div class="list-data" style="margin-top:50px;">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="form">
+                            <div class="form-group">
+                                <label for="pIdJenisPembayaran"><span style="color: red">*)</span>&nbsp;ID Jenis
+                                    Pembayaran:</label>
+                                <input type="text" class="form-control" id="pIdJenisPembayaran" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNamaJenisPembayaran"><span style="color: red">*)</span>&nbsp;Nama Jenis
+                                    Pembayaran:</label>
+                                <input type="text" class="form-control" id="pNamaJenisPembayaran" required="required"/>
+                            </div>
+                            <div class="form-group" style="margin-top: 10px;margin-bottom: 10px">
+                                <label for="pBesar"><span style="color: red">*)</span>&nbsp;User Besar:</label>
+                                <div class="form-group" id="pBesar">
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-top: 10px;margin-bottom: 10px">
+                                <label for="pKecil"><span style="color: red">*)</span>&nbsp;User Kecil:</label>
+                                <div class="form-group" id="pKecil">
+                                </div>
+                            </div>
+                            <!--<div class="form-group" style="margin-top: 10px;margin-bottom: 10px">-->
+                                <!--<label for="pPKK"><span style="color: red">*)</span>&nbsp;User PKK:</label>-->
+                                <!--<div class="form-group" id="pPKK">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <div class="form-group" style="margin-top: 10px;margin-bottom: 10px">
+                                <label for="pDivKu"><span style="color: red">*)</span>&nbsp;User DIVKEU:</label>
+                                <div class="form-group" id="pDivKu">
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-top: 10px;margin-bottom: 10px">
+                                <label for="pKasir"><span style="color: red">*)</span>&nbsp;User Kasir:</label>
+                                <div class="form-group" id="pKasir">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="pFlag"><span style="color: red">*)</span>&nbsp;Status:</label>
+                                <select id="pFlag" class="form-control" required="required">
+                                    <option value="1">TAMPIL</option>
+                                    <option value="0">TIDAK TAMPIL</option>
+                                </select>
+                            </div>
+                            <div align="right">
+                                <button onclick="clearForm()" class="btn btn-warning">Clear Form</button>
+                                <button onclick="submit()" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 50px">
+                    <table id="table-main" class="table table-bordered table-striped" width="100%"
+                           style="margin-right: 0px !important;">
+                        <thead style="font-size: 12px">
+                        <tr>
+                            <th>N0.</th>
+                            <th>ID JENIS PEMBAYARAN</th>
+                            <th>NAMA JENIS PEMBAYARAN</th>
+                            <th>STATUS</th>
+                            <th width="100px;">AKSI</th>
+                        </tr>
+                        </thead>
+                        <tbody style="font-size: 12px">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/master/jenis_pembayaran.js"></script>
+</div>

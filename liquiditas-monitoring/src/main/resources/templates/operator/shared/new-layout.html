@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="UI - For calculte valas"/>
+    <meta name="author" content="ICON PLN"/>
+    <meta name="keyword" content="Valas Administrator"/>
+    <link rel="shortcut icon" href="/static/new-backend/img/icon.png"/>
+
+    <title>Valas Administrator</title>
+
+    <!-- Icons -->
+    <link href="/static/css/jquery-ui.css" rel="stylesheet"/>
+    <link href="/static/new-backend/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="/static/new-backend/css/simple-line-icons.css" rel="stylesheet"/>
+
+    <!-- Main styles for this application -->
+    <link href="/static/new-backend/css/style.css" rel="stylesheet"/>
+    <link href="/static/css/backend/jquery.dataTables.min.css" rel="stylesheet"/>
+    <link href="/static/css/select2.css" rel="stylesheet"/>
+    <style>
+        td.details-control {
+            background: url('/static/images/details_open.png') no-repeat center center;
+            cursor: pointer;
+        }
+
+        tr.shown td.details-control {
+            background: url('/static/images/details_close.png') no-repeat center center;
+        }
+
+        div.dataTables_wrapper div.dataTables_paginate {
+            float: left !important;
+            text-align: left !important;
+        }
+
+        .dataTables_length {
+            padding-left: -10px !important;
+        }
+
+        .panel-custom {
+            overflow-x: scroll;
+            padding: 10px 0px 10px 0px !important;
+        }
+
+        .dataTables_wrapper {
+            padding: 0px !important;
+        }
+
+        .color-active {
+            color: darkslategray;
+        }
+
+        .datatables_action {
+            text-align: right;
+        }
+
+        .datatables_action-center {
+            text-align: center;
+        }
+        .th-middle{
+            vertical-align: middle !important;
+            text-align: center !important;
+        }
+        #loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+            margin-top: 22.5%;
+        }
+
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <div th:replace="${view} :: stylesheets-backend"></div>
+
+
+
+</head>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+<div style="display: none" class="col-md-12" id="loader-div" align="center"><div id="loader"></div></div>
+<header th:replace="operator/shared/new-header :: header-param" class="app-header navbar">
+</header>
+
+<div class="app-body">
+    <div class="sidebar" th:replace="operator/shared/new-menu :: menu-param">
+    </div>
+
+    <main th:replace="${view} :: content" class="main">
+    </main>
+
+</div>
+<footer class="app-footer" style="cursor: default">
+    <a><b>L'Metallica</b></a> © 2017 Administrator.
+    <span class="float-right">Powered by <b><a>ICON </a></b>
+        </span>
+</footer>
+</body>
+<!-- Bootstrap and necessary plugins -->
+<script src="/static/new-backend/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/static/js/select2.min.js"></script>
+<script src="/static/new-backend/bower_components/tether/dist/js/tether.min.js"></script>
+<script src="/static/new-backend/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/static/js/backend/jquery.dataTables.min.js"></script>
+<script src="/static/js/backend/dataTables.bootstrap4.min.js"></script>
+<script src="/static/new-backend/bower_components/pace/pace.min.js"></script>
+<script src="/static/js/sockjs.min.js"></script>
+<script src="/static/js/stomp.min.js"></script>
+
+
+<!-- GenesisUI main scripts -->
+<script src="/static/new-backend/js/app.js"></script>
+<script src="/static/js/jquery-ui.js"></script>
+<script src="/static/js/show-dialog.js"></script>
+<script src="/static/js/maskedinput/jquery.maskmoney.js"></script>
+<script src="/static/js/maskedinput/jquery.mask.min.js"></script>
+<script src="/static/js/maskedinput/FormatMoney.js"></script>
+<script src="/static/js/pdfmake/pdfmake.min.js"></script>
+<script src="/static/js/pdfmake/vfs_fonts.js"></script>
+<script src="/static/js/backend/coreapps.js"></script>
+<script src="/static/js/accounting.min.js"></script>
+<div th:replace="${view} :: scripts-backend"></div>
+<script th:inline="javascript">
+    var roleUser = [[${#authentication.getAuthorities().toString()}]]
+    var username = [[${#authentication.getPrincipal().getUsername().toString()}]]
+    var thp1 = roleUser.replace("[", "")
+    var thp2 = thp1.replace("]", "")
+    var newRoleUser = thp2.split(", ");
+    console.log("role : ",newRoleUser)
+    console.log("username : ",username)
+
+    connect();
+
+    function connect() {
+        sockJsProtocols = ["xhr-streaming", "xhr-polling"];
+        var socket = new SockJS("http://localhost:9212/liquiditas", null, {transports: sockJsProtocols});
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function(frame) {
+            console.log('Status connected : ' + frame);
+            stompClient.subscribe('/pusher/invoice/info', function(message) {
+                showMessageOutput(message);
+            });
+        },function(msg) {
+            console.log("err msg : ",msg)
+            $("#sts-con").hide();
+            $("#sts-discon").show();
+        });
+    }
+
+    function disconnect() {
+        if(stompClient != null) {
+            stompClient.disconnect();
+            console.log("Disconnected");
+        }
+
+    }
+
+    function showMessageOutput(message) {
+        console.log(message);
+    }
+
+    //for send message to socket server
+    function sendContent() {
+        stompClient.send("/push/content", {}, "test send from client");
+    }
+</script>
+</html>

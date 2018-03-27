@@ -1,0 +1,1026 @@
+package com.iconpln.liquiditas.core.service;
+
+import com.iconpln.liquiditas.core.utils.AppUtils;
+import oracle.jdbc.OracleTypes;
+import org.apache.tomcat.jdbc.pool.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.stereotype.Repository;
+
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by israjhaliri on 8/1/17.
+ */
+@Repository
+public class ValasService {
+
+    @Autowired
+    private DataSource dataSource;
+
+    private JdbcTemplate getJdbcTemplate() {
+        return new JdbcTemplate(dataSource);
+    }
+
+    //    pembayaran
+    public Map<String, Object> insPembayaran(
+            String pIdValas, String pJenisPembayaran, String pTglJatuhTempo, String pVendor,
+            String pCurr, String pNilaiTagihan, String pBankTujuan, String pBankPembayar,
+            String pUnitPenerima, String pNoTagihan, String pTglTagihan, String pNoNotdin,
+            String pTglNotdin, String pStatusValas, String pCreateBy, String pKeterangan,
+            String pTipeTransaksi, String pTglTerimaInvoice
+    ) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("ins_rekap_data");
+        Map<String, Object> out;
+        SqlParameterSource inParent = new MapSqlParameterSource()
+                .addValue("p_id_valas", pIdValas)
+                .addValue("p_jenis_pembayaran", pJenisPembayaran)
+                .addValue("p_tgl_jatuh_tempo", pTglJatuhTempo)
+                .addValue("p_vendor", pVendor)
+                .addValue("p_curr", pCurr)
+                .addValue("p_nilai_tagihan", pNilaiTagihan)
+                .addValue("p_bank_tujuan", pBankTujuan)
+                .addValue("p_bank_pembayar", pBankPembayar)
+                .addValue("p_unit_penerima", pUnitPenerima)
+                .addValue("p_no_tagihan", pNoTagihan)
+                .addValue("p_tgl_tagihan", pTglTagihan)
+                .addValue("p_no_notdin", pNoNotdin)
+                .addValue("p_tgl_notdin", pTglNotdin)
+                .addValue("p_status_valas", pStatusValas)
+                .addValue("p_create_by", pCreateBy)
+                .addValue("p_deskripsi", pKeterangan)
+                .addValue("p_tipe_transaksi", pTipeTransaksi)
+                .addValue("p_tgl_terima_invoice", pTglTerimaInvoice)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        out = simpleJdbcCall.execute(inParent);
+        AppUtils.getLogger(this).info("data ins_rekap_data : {}", out);
+        return out;
+    }
+
+    public List<Map<String, Object>> getListPembayaran(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pPembayaran, String pUserId, String pSearch) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data rekap search info = " +
+                        "start : {}, " +
+                        "length : {}, " +
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, " +
+                        "pBank : {}, " +
+                        "pCurrency : {}, " +
+                        "pPembayaran : {}," +
+                        "pStatusValas : {}," +
+                        "pUserId : {}," +
+                        "pSearch : {},",
+
+                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, pUserId, pSearch);
+
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_rekap_pembayaran_pss");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_start", pStart);
+        params.put("p_length", pLength);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_bank", pBank);
+        params.put("p_cur", pCurrency);
+        params.put("p_pembayaran", pPembayaran);
+        params.put("p_user_id", pUserId);
+        params.put("p_search", pSearch);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_rekap_pembayaran_pss : {}", resultset);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getListRealisasi(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pPembayaran, String pUserId, String pSearch) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data rekap search info = " +
+                        "start : {}, " +
+                        "length : {}, " +
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, " +
+                        "pBank : {}, " +
+                        "pCurrency : {}, " +
+                        "pPembayaran : {}," +
+                        "pUserId : {}," +
+                        "pSearch : {},",
+
+                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, pUserId, pSearch);
+
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_realisasi_pembayaran_pss");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_start", pStart);
+        params.put("p_length", pLength);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_bank", pBank);
+        params.put("p_cur", pCurrency);
+        params.put("p_pembayaran", pPembayaran);
+        params.put("p_user_id", pUserId);
+        params.put("p_search", pSearch);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_rekap_pembayaran_pss : {}", resultset);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getAllpembayaran(String pStatusValas, String idUser, String pTglAwal, String pTglAkhir, String pBank, String pCurr, String pPembayaran) throws SQLException {
+
+        AppUtils.getLogger(this).debug("PARAM SEARCH pStatusValas : {}", pStatusValas);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pBank : {}", pBank);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pCurr : {}", pCurr);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pPembayaran : {}", pPembayaran);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_all_pembayaran_by_status");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_status_valas", pStatusValas);
+        params.put("p_userid", idUser);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_bank", pBank);
+        params.put("p_cur", pCurr);
+        params.put("p_pembayaran", pPembayaran);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_all_pembayaran_by_status : {} and userid {}", resultset, idUser);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getPembayaranbyId(String pIdValas) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_rekap_pembayaran_byid");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_id_valas", pIdValas);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_rekap_pembayaran_byid : {}", resultset);
+        return resultset;
+    }
+
+    public Map<String, Object> deletePembayaran(String pIdValas) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("del_rekap_pembayaran");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_valas", pIdValas)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data del_rekap_pembayaran : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> updReverse(String pIdValas, String pUpdateby, String pKeterangan) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("upd_reverse_pembayaran");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_valas", pIdValas)
+                .addValue("p_update_by", pUpdateby)
+                .addValue("p_deskripsi", pKeterangan)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data upd_reverse_pembayaran : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> updStatus(String pIdValas, String pStatusInvoice, String pDeskripsi, String pUpdateby) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("upd_status_pembayaran");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_valas", pIdValas)
+                .addValue("p_update_by", pUpdateby)
+                .addValue("p_status_invoice", pStatusInvoice)
+                .addValue("p_deskripsi", pDeskripsi)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data upd_status_pembayaran : {}", out);
+        return out;
+    }
+
+    //    derivatif
+    public Map<String, Object> insDeviratif(
+            String pIdProduct, String pIdDeviratif, String pTglDeal, String pBank,
+            String pTglJatuhTempo, String pTenor, String pCurr, String pNationalAmount,
+            String pDealRate, String pForwardPoint, String pKursJisdor1, String pBungaDeposito,
+            String pSumberDana, String pPeruntukanDana, String pFixingRate,
+            String pKursJisdor2, String pSwapPoint, String pStrikePrice,
+            String pStrikePrice2, String pSettlementRate, String pKeterangan,
+            String pStatusDeviratif, String pBiayaPremi, String pCreateBy
+    ) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("ins_derivatif");
+
+        AppUtils.getLogger(this).debug("pIdProduct : {} ", pIdProduct);
+        AppUtils.getLogger(this).debug("pIdDeviratif : {} ", pIdDeviratif);
+        AppUtils.getLogger(this).debug("pTglDeal : {} ", pTglDeal);
+        AppUtils.getLogger(this).debug("pBank : {} ", pBank);
+        AppUtils.getLogger(this).debug("pTglJatuhTempo : {} ", pTglJatuhTempo);
+        AppUtils.getLogger(this).debug("pTenor : {} ", pTenor);
+        AppUtils.getLogger(this).debug("pCurr : {} ", pCurr);
+        AppUtils.getLogger(this).debug("pNationalAmount : {} ", pNationalAmount);
+        AppUtils.getLogger(this).debug("pDealRate : {} ", pDealRate);
+        AppUtils.getLogger(this).debug("pForwardPoint : {} ", pForwardPoint);
+        AppUtils.getLogger(this).debug("pKursJisdor1 : {} ", pKursJisdor1);
+        AppUtils.getLogger(this).debug("pBungaDeposito : {} ", pBungaDeposito);
+        AppUtils.getLogger(this).debug("pPeruntukanDana : {} ", pPeruntukanDana);
+        AppUtils.getLogger(this).debug("pFixingRate : {} ", pFixingRate);
+        AppUtils.getLogger(this).debug("pSumberDana : {} ", pSumberDana);
+        AppUtils.getLogger(this).debug("pKursJisdor2 : {} ", pKursJisdor2);
+        AppUtils.getLogger(this).debug("pSwapPoint : {} ", pSwapPoint);
+        AppUtils.getLogger(this).debug("pStrikePrice : {} ", pStrikePrice);
+        AppUtils.getLogger(this).debug("pStrikePrice2 : {} ", pStrikePrice2);
+        AppUtils.getLogger(this).debug("pSettlementRate : {} ", pSettlementRate);
+        AppUtils.getLogger(this).debug("pKeterangan : {} ", pKeterangan);
+        AppUtils.getLogger(this).debug("pStatusDeviratif : {} ", pStatusDeviratif);
+        AppUtils.getLogger(this).debug("pBiayaPremi : {} ", pBiayaPremi);
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_product", pIdProduct)
+                .addValue("p_id_derivatif", pIdDeviratif)
+                .addValue("p_tgl_deal", pTglDeal)
+                .addValue("p_bank", pBank)
+                .addValue("p_tgl_jatuh_tempo", pTglJatuhTempo)
+                .addValue("p_tenor", pTenor)
+                .addValue("p_curr", pCurr)
+                .addValue("p_national_amount", pNationalAmount)
+                .addValue("p_deal_rate", pDealRate)
+                .addValue("p_forward_point", pForwardPoint)
+                .addValue("p_kurs_jisdor1", pKursJisdor1)
+                .addValue("p_bunga_deposito", pBungaDeposito)
+                .addValue("p_sumber_dana", pSumberDana)
+                .addValue("p_peruntukan_dana", pPeruntukanDana)
+                .addValue("p_fixing_rate", pFixingRate)
+                .addValue("p_kurs_jisdor2", pKursJisdor2)
+                .addValue("p_swap_point", pSwapPoint)
+                .addValue("p_strike_price1", pStrikePrice)
+                .addValue("p_strike_price2", pStrikePrice2)
+                .addValue("p_settlement_rate", pSettlementRate)
+                .addValue("p_keterangan", pKeterangan)
+                .addValue("p_status_derivatif", pStatusDeviratif)
+                .addValue("p_create_by", pCreateBy)
+                .addValue("p_biaya_premi", pBiayaPremi)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data ins_derivatif : {}", out);
+        return out;
+    }
+
+    public List<Map<String, Object>> getListDeviratif(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pTenor, String pStatusDerivatif, String pSearch) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data rekap search info = " +
+                        "start : {}, " +
+                        "length : {}, " +
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, " +
+                        "pBank : {}, " +
+                        "pCurrency : {}, " +
+                        "pTenor : {}," +
+                        "pStatusDerivatif : {}," +
+                        "pSearch : {},",
+
+                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pStatusDerivatif, pSearch);
+
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_derivatif_pss");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_start", pStart);
+        params.put("p_length", pLength);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_bank", pBank);
+        params.put("p_cur", pCurrency);
+        params.put("p_tenor", pTenor);
+        params.put("p_id_product", pStatusDerivatif);
+        params.put("p_search", pSearch);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_derivatif_pss : {}", resultset);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getAllDerivatif(String pIdProduct, String pTglAwal, String pTglAkhir, String pBank, String pCurr, String pTenor) throws SQLException {
+
+        AppUtils.getLogger(this).debug("PARAM SEARCH pIdProduct : {}", pIdProduct);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pBank : {}", pBank);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pCurr : {}", pCurr);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTenor : {}", pTenor);
+
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_all_derivatif_by_product");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_id_product", pIdProduct);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_bank", pBank);
+        params.put("p_cur", pCurr);
+        params.put("p_tenor", pTenor);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_all_derivatif_by_product : {}", resultset);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getDerivatifbyId(String pIdProduct, String pIdDerivatif) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_derivatif_byid");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_id_product", pIdProduct);
+        params.put("p_id_derivatif", pIdDerivatif);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_derivatif_byid : {}", resultset);
+        return resultset;
+    }
+
+    public Map<String, Object> deleteDerivatif(String pIdProduct, String pIdDerivatif) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("del_derivatif");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_product", pIdProduct)
+                .addValue("p_id_derivatif", pIdDerivatif)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data del_derivatif : {}", out);
+        return out;
+    }
+
+    //    deposito
+    public Map<String, Object> insDeposito(
+            String pIdDeposito, String pBank, String pCurr, String pNoAccount,
+            String pNominal, String pInterest, String pTglpenempatan, String pTenor,
+            String pTglJatuhTempo, String pKeterangan, String pStatusDeposito, String pCreateBy
+    ) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("ins_deposito");
+
+        AppUtils.getLogger(this).debug("pIdDeposito : {} ", pIdDeposito);
+        AppUtils.getLogger(this).debug("pBank : {} ", pBank);
+        AppUtils.getLogger(this).debug("pCurr : {} ", pCurr);
+        AppUtils.getLogger(this).debug("pNoAccount : {} ", pNoAccount);
+        AppUtils.getLogger(this).debug("pNominal : {} ", pNominal);
+        AppUtils.getLogger(this).debug("pInterest : {} ", pInterest);
+        AppUtils.getLogger(this).debug("pTglpenempatan : {} ", pTglpenempatan);
+        AppUtils.getLogger(this).debug("pTenor : {} ", pTenor);
+        AppUtils.getLogger(this).debug("pTglJatuhTempo : {} ", pTglJatuhTempo);
+        AppUtils.getLogger(this).debug("pKeterangan : {} ", pKeterangan);
+        AppUtils.getLogger(this).debug("pStatusDeposito : {} ", pStatusDeposito);
+        AppUtils.getLogger(this).debug("pCreateBy : {} ", pCreateBy);
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_deposito", pIdDeposito)
+                .addValue("p_bank", pBank)
+                .addValue("p_curr", pCurr)
+                .addValue("p_no_account", pNoAccount)
+                .addValue("p_nominal", pNominal)
+                .addValue("p_interest", pInterest)
+                .addValue("p_tgl_penempatan", pTglpenempatan)
+                .addValue("p_tenor", pTenor)
+                .addValue("p_tgl_jatuh_tempo", pTglJatuhTempo)
+                .addValue("p_keterangan", pKeterangan)
+                .addValue("p_status_deposito", pStatusDeposito)
+                .addValue("p_create_by", pCreateBy)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data ins_deposito : {}", out);
+        return out;
+    }
+
+    public List<Map<String, Object>> getListDeposito(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pTenor, String pKeterangan, String pSearch) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data rekap search info = " +
+                        "start : {}, " +
+                        "length : {}, " +
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, " +
+                        "pBank : {}, " +
+                        "pCurrency : {}, " +
+                        "pTenor : {}," +
+                        "pKeterangan : {}," +
+                        "pSearch : {},",
+
+                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pKeterangan, pSearch);
+
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_deposito_pss");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_start", pStart);
+        params.put("p_length", pLength);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_bank", pBank);
+        params.put("p_cur", pCurrency);
+        params.put("p_tenor", pTenor);
+        params.put("p_keterangan", pKeterangan);
+        params.put("p_search", pSearch);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_deposito_pss : {}", resultset);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getAllDeposito(String pTglAwal, String pTglAkhir, String pBank, String pCurr, String pTenor, String pKet) throws SQLException {
+
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pBank : {}", pBank);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pCurr : {}", pCurr);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTenor : {}", pTenor);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pKet : {}", pKet);
+
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_all_deposito");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_bank", pBank);
+        params.put("p_cur", pCurr);
+        params.put("p_tenor", pTenor);
+        params.put("p_keterangan", pKet);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_all_deposito : {}", resultset);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getDepositobyId(String pIdDeposito) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_deposito_byid");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_id_deposito", pIdDeposito);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_deposito_byid : {}", resultset);
+        return resultset;
+    }
+
+    public Map<String, Object> deleteDeposito(String pIdDeposito) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("del_deposito");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_deposito", pIdDeposito)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data del_deposito : {}", out);
+        return out;
+    }
+
+
+    //    tripartite
+    public Map<String, Object> insTripartite(
+            String pIdTripartite, String pBank, String pTglJatuhTempo, String pCurr,
+            String pVendor, String pJenisPembayaran, String pNominalSblmPajak, String pPajak,
+            String pNominalunderlying, String pNominalTanpaUnderlying, String pKursJisdor, String pSpread,
+            String pNoInvoice, String pTglInvoice, String pStatusTripartite, String pCreateby, String pTipeTransaksi,
+            String pTglTerimaInvoice, String pNoNotdin, String pTglNotdin, String pDeskripsi
+    ) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("ins_tripartite");
+
+        AppUtils.getLogger(this).debug("pIdTripartite : {} ", pIdTripartite);
+        AppUtils.getLogger(this).debug("pBank : {} ", pBank);
+        AppUtils.getLogger(this).debug("pTglJatuhTempo : {} ", pTglJatuhTempo);
+        AppUtils.getLogger(this).debug("pCurr : {} ", pCurr);
+        AppUtils.getLogger(this).debug("pVendor : {} ", pVendor);
+        AppUtils.getLogger(this).debug("pJenisPembayaran : {} ", pJenisPembayaran);
+        AppUtils.getLogger(this).debug("pNominalSblmPajak : {} ", pNominalSblmPajak);
+        AppUtils.getLogger(this).debug("pPajak : {} ", pPajak);
+        AppUtils.getLogger(this).debug("pNominalunderlying : {} ", pNominalunderlying);
+        AppUtils.getLogger(this).debug("pNominalTanpaUnderlying : {} ", pNominalTanpaUnderlying);
+        AppUtils.getLogger(this).debug("pKursJisdor : {} ", pKursJisdor);
+        AppUtils.getLogger(this).debug("pSpread : {} ", pSpread);
+        AppUtils.getLogger(this).debug("pNoInvoice : {} ", pNoInvoice);
+        AppUtils.getLogger(this).debug("pTglInvoice : {} ", pTglInvoice);
+        AppUtils.getLogger(this).debug("pStatusTripartite : {} ", pStatusTripartite);
+        AppUtils.getLogger(this).debug("pCreateby : {} ", pCreateby);
+        AppUtils.getLogger(this).debug("pTipeTransaksi : {} ", pTipeTransaksi);
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_tripartite", pIdTripartite)
+                .addValue("p_bank", pBank)
+                .addValue("p_tgl_jatuh_tempo", pTglJatuhTempo)
+                .addValue("p_curr", pCurr)
+                .addValue("p_vendor", pVendor)
+                .addValue("p_jenis_pembayaran", pJenisPembayaran)
+                .addValue("p_nominal_sblm_pajak", pNominalSblmPajak)
+                .addValue("p_pajak", pPajak)
+                .addValue("p_nominal_underlying", pNominalunderlying)
+                .addValue("p_nominal_tanpa_underlying", pNominalTanpaUnderlying)
+                .addValue("p_kurs_jisdor", pKursJisdor)
+                .addValue("p_spread", pSpread)
+                .addValue("p_no_invoice", pNoInvoice)
+                .addValue("p_tgl_invoice", pTglInvoice)
+                .addValue("p_status_tripartite", pStatusTripartite)
+                .addValue("p_create_by", pCreateby)
+                .addValue("p_tipe_transaksi", pTipeTransaksi)
+                .addValue("p_tgl_terima_invoice", pTglTerimaInvoice)
+                .addValue("p_no_notdin", pNoNotdin)
+                .addValue("p_tgl_notdin", pTglNotdin)
+                .addValue("P_deskripsi", pDeskripsi)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data ins_tripartite : {}", out);
+        return out;
+    }
+
+    public List<Map<String, Object>> getListTripartite(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pJenisPembayaran, String pStatus, String username, String pSearch) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data rekap search info = " +
+                        "start : {}, " +
+                        "length : {}, " +
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, " +
+                        "pBank : {}, " +
+                        "status : {}, " +
+                        "pJenisPembayaran : {}," +
+                        "pSearch : {},",
+
+
+                pStart, pLength, pTglAwal, pTglAkhir, pBank, pStatus, pJenisPembayaran, pSearch);
+
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_tripartite_pss");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_start", pStart);
+        params.put("p_length", pLength);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_bank", pBank);
+        params.put("p_jenis_pembayaran", pJenisPembayaran);
+        params.put("p_status", pStatus);
+        params.put("p_user_id", username);
+        params.put("p_search", pSearch);
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_tripartite_pss : {}", resultset);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getAllTripartite(String idUser, String pTglAwal, String pTglAkhir, String pBank, String pJenisPembayaran) throws SQLException {
+
+        AppUtils.getLogger(this).debug("PARAM SEARCH idUser : {}", idUser);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pBank : {}", pBank);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pJenisPembayaran : {}", pJenisPembayaran);
+
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_all_tripartite");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_userid", idUser);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_bank", pBank);
+        params.put("p_jenis_pembayaran", pJenisPembayaran);
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_all_tripartite : {} with userid {}", resultset, idUser);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getTripartitebyId(String pIdTripartite) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_tripartite_byid");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_id_tripartite", pIdTripartite);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_tripartite_byid : {}", resultset);
+        return resultset;
+    }
+
+    public Map<String, Object> deleteTripartite(String pIdTripartite) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("del_tripartite");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_tripartite", pIdTripartite)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data del_tripartite : {}", out);
+        return out;
+    }
+
+    //    kurs
+    public Map<String, Object> getAllKurs() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_list_kurs");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_kurs_harian", OracleTypes.CURSOR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data get_list_kurs : {}", out);
+        return out;
+    }
+
+    //    pembelian valas
+    public Map<String, Object> insPembelianValas(
+            String PidBeliValas, String pBankPengirim, String pbankPenerima, String pTglPosting,
+            String pCurr, String pPembelian, String pKurs,
+            String pNo, String pPay, String pDoc1, String pDoc2, String pCreateBy
+    ) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("ins_beli_valas");
+
+        AppUtils.getLogger(this).debug("PidBeliValas : {} ", PidBeliValas);
+        AppUtils.getLogger(this).debug("pBankPengirim : {} ", pBankPengirim);
+        AppUtils.getLogger(this).debug("pbankPenerima : {} ", pbankPenerima);
+        AppUtils.getLogger(this).debug("pTglPosting : {} ", pTglPosting);
+        AppUtils.getLogger(this).debug("pCurr : {} ", pCurr);
+        AppUtils.getLogger(this).debug("pPembelian : {} ", pPembelian);
+        AppUtils.getLogger(this).debug("pKurs : {} ", pKurs);
+        AppUtils.getLogger(this).debug("pNo : {} ", pNo);
+        AppUtils.getLogger(this).debug("pPay : {} ", pPay);
+        AppUtils.getLogger(this).debug("pDoc1 : {} ", pDoc1);
+        AppUtils.getLogger(this).debug("pDoc2 : {} ", pDoc2);
+        AppUtils.getLogger(this).debug("pCreateBy : {} ", pCreateBy);
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_beli_valas", PidBeliValas)
+                .addValue("p_bank_pengirim", pBankPengirim)
+                .addValue("p_bank_penerima", pbankPenerima)
+                .addValue("p_tgl_posting", pTglPosting)
+                .addValue("p_curr", pCurr)
+                .addValue("p_pembelian", pPembelian)
+                .addValue("p_kurs", pKurs)
+                .addValue("p_no", pNo)
+                .addValue("p_pay", pPay)
+                .addValue("p_doc1", pDoc1)
+                .addValue("p_doc2", pDoc2)
+                .addValue("p_create_by", pCreateBy)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data ins_beli_valas : {}", out);
+        return out;
+    }
+
+    public List<Map<String, Object>> getListPemebelianValas(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurr, String pDok1, String pDok2, String pSearch) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data get beli valas pss info = " +
+                        "start : {}, " +
+                        "length : {}, " +
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, " +
+                        "pCurr : {}," +
+                        "pBank : {}, " +
+                        "pDok1 : {}, " +
+                        "pDok2 : {}, " +
+                        "pSearch : {}, ",
+
+                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurr, pDok1, pDok2, pSearch);
+
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_beli_valas_pss");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_start", pStart);
+        params.put("p_length", pLength);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_bank", pBank);
+        params.put("p_curr", pCurr);
+        params.put("p_dok1", pDok1);
+        params.put("p_dok2", pDok2);
+        params.put("p_search", pSearch);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_beli_valas_pss : {}", resultset);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getAllPembelianValas(String pTglAwal, String pTglAkhir, String pBank, String pCurr, String pDok1, String pDok2) throws SQLException {
+
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pBank : {}", pBank);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pCurr : {}", pCurr);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pDok1 : {}", pDok1);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pDok2 : {}", pDok2);
+
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_all_beli_valas");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_bank", pBank);
+        params.put("p_curr", pCurr);
+        params.put("p_dok1", pDok1);
+        params.put("p_dok2", pDok2);
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_all_beli_valas : {}", resultset);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getPembelianValasById(String pIdBeliValas) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_beli_valas_byid");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_id_beli_valas", pIdBeliValas);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_beli_valas_byid : {}", resultset);
+        return resultset;
+    }
+
+    public Map<String, Object> deletePembelianValas(String pIdBeliValas) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("del_beli_valas");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_beli_valas", pIdBeliValas)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data del_beli_valas : {}", out);
+        return out;
+    }
+
+    //Tracking
+    public Map<String, Object> getAllTracking(String pNoTagihan) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_tracking");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("P_NO_TAGIHAN", pNoTagihan)
+                .addValue("OUT_TRACKING", OracleTypes.CURSOR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data get_tracking : {}", out);
+        return out;
+    }
+
+    //Placement
+    public Map<String, Object> getSumberPlacement() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_dashboard_idr")
+                .withFunctionName("get_sumber_placement");
+
+        Map<String, Object> out = simpleJdbcCall.execute();
+        AppUtils.getLogger(this).info("data getSumberPlacement : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> getPlacementAwal(String tglAkhir) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_dashboard_idr")
+                .withFunctionName("get_placement_awal");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tanggal_akhir", tglAkhir);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data getPlacementAwal : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> getListPlacement() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_dashboard_idr")
+                .withFunctionName("get_list_placement");
+
+        Map<String, Object> out = simpleJdbcCall.execute();
+        AppUtils.getLogger(this).info("data getListPlacement : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> getDetilSumberdana(String pJenis, String pJenisSumberDana) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_dashboard_idr")
+                .withFunctionName("get_detil_sumberdana");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_jenis", pJenis)
+                .addValue("p_jenis_sumberdana", pJenisSumberDana);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+
+        AppUtils.getLogger(this).info("data getDetilSumberdana : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> insPlacement(String pBank, String pReceipt, String pKmk, String pSubsidi) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_dashboard_idr")
+                .withFunctionName("ins_placement");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_bank", pBank)
+                .addValue("p_receipt", pReceipt)
+                .addValue("p_kmk", pKmk)
+                .addValue("p_subsidi", pSubsidi);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data insPlacement : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> insHistoryPlacementTmp(String pBankTujuan, String pJenis, String pJenisSumberDana, String pNilai, String pBankSumberDana, String pIdSession) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_dashboard_idr")
+                .withFunctionName("ins_history_placement_tmp");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_bank_tujuan", pBankTujuan)
+                .addValue("p_jenis", pJenis)
+                .addValue("p_jenis_sumberdana", pJenisSumberDana)
+                .addValue("p_bank_sumberdana", pBankSumberDana)
+                .addValue("p_nilai", pNilai)
+                .addValue("p_id_session", pIdSession);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data insHistoryPlacementTmp : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> insHistoryPlacementMain(String pJenis, String pJenisSumber, String pIdSession) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_dashboard_idr")
+                .withFunctionName("ins_history_placement_main");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_jenis", pJenis)
+                .addValue("p_jenis_sumber", pJenisSumber)
+                .addValue("p_id_session", pIdSession);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data ins_history_placement_main : {}", out);
+        return out;
+    }
+
+
+    public Map<String, Object> getListPotensi() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_dashboard_idr")
+                .withFunctionName("get_list_potensi");
+
+        Map<String, Object> out = simpleJdbcCall.execute();
+
+        AppUtils.getLogger(this).info("data getListPotensi : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> insSaldoPotensi(String pKodeBank, String pJumlah) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_dashboard_idr")
+                .withFunctionName("ins_saldo_potensi");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_kode_bank", pKodeBank)
+                .addValue("p_jumlah", pJumlah);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data insSaldoPotensi : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> uploadFileRekap(String pIdValas, String pJenisFile, BigDecimal pFileSize, String pFileName, String pUpdateBy) {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_valas")
+                .withFunctionName("upload_file_rekap");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_valas", pIdValas)
+                .addValue("p_jenis_file", pJenisFile)
+                .addValue("p_file_size", pFileSize)
+                .addValue("p_nama_file", pFileName)
+                .addValue("p_update_by", pUpdateBy);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data uploadFileRekap : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> getFilesRekap(String pIdValas) {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_valas")
+                .withFunctionName("get_list_file_rekap");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_valas", pIdValas);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data getFilesRekap : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> uploadFileTripartite(String pIdValas, String pJenisFile, BigDecimal pFileSize, String pFileName, String pUpdateBy) {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_valas")
+                .withFunctionName("upload_file_tripartite");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_tripartite", pIdValas)
+                .addValue("p_jenis_file", pJenisFile)
+                .addValue("p_file_size", pFileSize)
+                .addValue("p_nama_file", pFileName)
+                .addValue("p_update_by", pUpdateBy);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data uploadFileTripartite : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> getFilesTripartite(String pIdValas) {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_valas")
+                .withFunctionName("get_list_file_tripartite");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_tripartite", pIdValas);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data getFilesTripartite : {}", out);
+        return out;
+    }
+}
