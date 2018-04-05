@@ -26,6 +26,5 @@ upload_profile_file/
 nbproject/private/
 build/
 nbbuild/
-dist/
 nbdist/
 .nb-gradle/
