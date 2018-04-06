@@ -1023,4 +1023,19 @@ public class ValasService {
         AppUtils.getLogger(this).info("data getFilesTripartite : {}", out);
         return out;
     }
+
+    public Map<String, Object> updKetLunas(String idValas, String pKeterangan,String pUpdateBy) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_valas")
+                .withFunctionName("upd_ket_lunas");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_valas", idValas)
+                .addValue("p_keterangan", pKeterangan)
+                .addValue("p_update_by", pUpdateBy);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data updKetLunas : {}", out);
+        return out;
+    }
 }
