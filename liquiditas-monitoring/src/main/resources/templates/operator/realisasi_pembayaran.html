@@ -60,6 +60,27 @@
 
         </div>
     </div>
+    <div id="edit-ket-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Realisasi Pembayaran</h5>
+                </div>
+                <!--datalist-->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="pKeterangan">Keterangan:</label>
+                        <input type="text" class="form-control" id="pKeteranganNew" list="data-keterangan" required="required"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" onclick="editKet()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
     <div class="container-fluid" style="margin-bottom: 15px;">
         <div class="animated fadeIn">
             <div id="filter">

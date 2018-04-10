@@ -54,6 +54,38 @@ function show_modal(id) {
     $('#edit-reverse-modal').modal({backdrop: 'static', keyboard: false});
 }
 
+function  show_modal_upd_ket(id) {
+    idValas = id;
+    $('#edit-ket-modal').modal({backdrop: 'static', keyboard: false});
+}
+
+function editKet() {
+    showLoadingCss()
+    $.ajax({
+        url: baseUrl+"api_operator/pembayaran/upd_ket",
+        dataType: 'JSON',
+        type: "POST",
+        data : {
+            pIdValas : idValas,
+            pKeterangan : $("#pKeteranganNew").val(),
+        },
+        success: function (res) {
+            hideLoadingCss("")
+            if(res.return == 1){
+                alert("Sukses update keterangan");
+                idValas = "";
+                location.reload();
+            }else{
+                alert("Gagal update keterangan");
+            }
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+
+        }
+    });
+}
+
 
 function inputKeterangan() {
 
@@ -456,6 +488,12 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                 "sClass": "datatables_action",
                 "mRender": function (data, type, full) {
                     return full.COUNT_DOWN;
+                }
+            },
+            {
+                "aTargets": [ 19 ],
+                "mRender": function ( data, type, full ) {
+                     return "<a href='javascript:' onclick='show_modal_upd_ket(\"" + full.ID_VALAS + "\")'>"+full.DESKRIPSI+"<a>";
                 }
             }
         ],

@@ -77,6 +77,7 @@ function createUI(data) {
                 "<td align='right'>" + accounting.formatNumber(val.SALDO_AWAL_GBP,2,".",",") + "</td>" +
                 "<td align='right'>" + accounting.formatNumber(val.SALDO_AWAL_AUD,2,".",",") + "</td>" +
                 "<td align='right'>" + accounting.formatNumber(val.SALDO_AWAL_MYR,2,".",",") + "</td>" +
+                "<td align='right'>" + accounting.formatNumber(val.SALDO_AWAL_KRW,2,".",",") + "</td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td style='border-bottom: 1px solid transparent !important;color:#d1e1ea;'><b>" + val.TGL + "</b></td>" +
@@ -88,6 +89,7 @@ function createUI(data) {
                 "<td align='right'>" + accounting.formatNumber(val.SETTLEMENT_HEDGING_GBP,2,".",",") + "</td>" +
                 "<td align='right'>" + accounting.formatNumber(val.SETTLEMENT_HEDGING_AUD,2,".",",") + "</td>" +
                 "<td align='right'>" + accounting.formatNumber(val.SETTLEMENT_HEDGING_MYR,2,".",",") + "</td>" +
+                "<td align='right'>" + accounting.formatNumber(val.SETTLEMENT_HEDGING_KRW,2,".",",") + "</td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td align='center' style='border-bottom: 1px solid transparent !important;'><b>" + val.TGL + "</b></td>" +
@@ -99,6 +101,7 @@ function createUI(data) {
                 "<td align='right'>" + accounting.formatNumber(val.RENCANA_PEMBAYARAN_GBP,2,".",",") + "</td>" +
                 "<td align='right'>" + accounting.formatNumber(val.RENCANA_PEMBAYARAN_AUD,2,".",",") + "</td>" +
                 "<td align='right'>" + accounting.formatNumber(val.RENCANA_PEMBAYARAN_MYR,2,".",",") + "</td>" +
+                "<td align='right'>" + accounting.formatNumber(val.RENCANA_PEMBAYARAN_KRW,2,".",",") + "</td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td style='border-bottom: 1px solid transparent !important;border-top: 1px solid transparent !important;color:#d1e1ea;'><b>" + val.TGL + "</b></td>" +
@@ -110,6 +113,7 @@ function createUI(data) {
                 "<td align='right'>" + accounting.formatNumber(val.SALDO_AKHIR_GBP,2,".",",") + "</td>" +
                 "<td align='right'>" + accounting.formatNumber(val.SALDO_AKHIR_AUD,2,".",",") + "</td>" +
                 "<td align='right'>" + accounting.formatNumber(val.SALDO_AKHIR_MYR,2,".",",") + "</td>" +
+                "<td align='right'>" + accounting.formatNumber(val.SALDO_AKHIR_KRW,2,".",",") + "</td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td style='border-top: 1px solid transparent !important;color:#d1e1ea;'><b>" + val.TGL + "</b></td>" +
@@ -121,6 +125,7 @@ function createUI(data) {
                 "<td style='background: #a5bfff;' align='right'>" + val.KETERANGAN_GBP + "</td>" +
                 "<td style='background: #a5bfff;' align='right'>" + val.KETERANGAN_AUD + "</td>" +
                 "<td style='background: #a5bfff;' align='right'>" + val.KETERANGAN_MYR + "</td>" +
+                "<td style='background: #a5bfff;' align='right'>" + val.KETERANGAN_KRW + "</td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td colspan='10' style='background: #dce0dc;height: 5px;'></td>" +

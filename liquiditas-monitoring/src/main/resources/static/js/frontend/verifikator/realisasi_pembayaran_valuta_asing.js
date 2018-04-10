@@ -38,6 +38,12 @@ function initDataTable(pYear) {
                         "<td align='right'>" + accounting.formatNumber(val.USD, 2, ".", ",") + "</td>" +
                         "<td align='right'>" + accounting.formatNumber(val.JPY, 2, ".", ",") + "</td>" +
                         "<td align='right'>" + accounting.formatNumber(val.EUR, 2, ".", ",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.IDR, 2, ".", ",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.GBP, 2, ".", ",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.AUD, 2, ".", ",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.MYR, 2, ".", ",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.KRW, 2, ".", ",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.EQ_IDR, 2, ".", ",") + "</td>" +
                         "</tr>";
                     $('#table-pembayaran-harian tbody').append(html);
                 });
@@ -47,6 +53,12 @@ function initDataTable(pYear) {
                     "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_USD, 2, ".", ",") + "</td>" +
                     "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_JPY, 2, ".", ",") + "</td>" +
                     "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_EUR, 2, ".", ",") + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_IDR, 2, ".", ",") + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_GBP, 2, ".", ",") + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_AUD, 2, ".", ",") + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_MYR, 2, ".", ",") + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_KRW, 2, ".", ",") + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_EQ_IDR, 2, ".", ",") + "</td>" +
                     "</tr>";
 
                 var total2 = "<tr style='background-color:#67a2d8; color: white'>" +
@@ -56,7 +68,7 @@ function initDataTable(pYear) {
                     "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].EQ_IDR_EUR, 2, ".", ",") + "</td>" +
                     "</tr>";
                 $('#table-pembayaran-harian tbody').append(total1);
-                $('#table-pembayaran-harian tbody').append(total2);
+                // $('#table-pembayaran-harian tbody').append(total2);
 
                 $("#date-harian").html(res.return[0].TITLE);
             }
@@ -70,6 +82,12 @@ function initDataTable(pYear) {
                         "<td align='right'>" + accounting.formatNumber(val.USD, 2, ".", ",") + "</td>" +
                         "<td align='right'>" + accounting.formatNumber(val.JPY, 2, ".", ",") + "</td>" +
                         "<td align='right'>" + accounting.formatNumber(val.EUR, 2, ".", ",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.IDR, 2, ".", ",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.GBP, 2, ".", ",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.AUD, 2, ".", ",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.MYR, 2, ".", ",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.KRW, 2, ".", ",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.EQ_IDR, 2, ".", ",") + "</td>" +
                         "</tr>";
                     $('#table-pembayaran-rekap tbody').append(html);
                 });
@@ -79,6 +97,12 @@ function initDataTable(pYear) {
                     "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL2[0].TOTAL_USD, 2, ".", ",") + "</td>" +
                     "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL2[0].TOTAL_JPY, 2, ".", ",") + "</td>" +
                     "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL2[0].TOTAL_EUR, 2, ".", ",") + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL2[0].TOTAL_IDR, 2, ".", ",") + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL2[0].TOTAL_GBP, 2, ".", ",") + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL2[0].TOTAL_AUD, 2, ".", ",") + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL2[0].TOTAL_MYR, 2, ".", ",") + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL2[0].TOTAL_KRW, 2, ".", ",") + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL2[0].TOTAL_EQ_IDR, 2, ".", ",") + "</td>" +
                     "</tr>";
 
                 var total2 = "<tr style='background-color:#67a2d8; color: white'>" +
@@ -88,7 +112,7 @@ function initDataTable(pYear) {
                     "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL2[0].EQ_IDR_EUR, 2, ".", ",") + "</td>" +
                     "</tr>";
                 $('#table-pembayaran-rekap tbody').append(total1);
-                $('#table-pembayaran-rekap tbody').append(total2);
+                // $('#table-pembayaran-rekap tbody').append(total2);
 
 
                 $("#date-rekap").html(res.OUT_TABLE2[0].TITLE);

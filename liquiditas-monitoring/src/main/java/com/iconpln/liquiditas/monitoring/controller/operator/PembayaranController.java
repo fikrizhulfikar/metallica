@@ -79,8 +79,10 @@ public class PembayaranController {
         final Thread outThread = new Thread() {
             @Override
             public void run() {
-                    notificationService.broadcastStatus("gggggggggggggggg");
-            };
+                notificationService.broadcastStatus("gggggggggggggggg");
+            }
+
+            ;
         };
         outThread.start();
 
@@ -231,6 +233,20 @@ public class PembayaranController {
         AppUtils.getLogger(this).debug("idValas : {} ", pIdValas);
         try {
             return valasService.updStatus(pIdValas, pStatusInvoice, pDeskripsi, WebUtils.getUsernameLogin());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/upd_ket", method = RequestMethod.POST)
+    public Map<String, Object> updStatus(
+            @RequestParam(value = "pIdValas", defaultValue = "") String pIdValas,
+            @RequestParam(value = "pKeterangan", defaultValue = "") String pKeterangan
+            ) {
+        AppUtils.getLogger(this).debug("idValas : {} ", pIdValas);
+        try {
+            return valasService.updKetLunas(pIdValas, pKeterangan, WebUtils.getUsernameLogin());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
