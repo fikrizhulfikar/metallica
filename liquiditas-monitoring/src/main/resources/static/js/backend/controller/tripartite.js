@@ -92,7 +92,7 @@ function openFormNew() {
 function delete_data(id) {
     var stateCrf = confirm("Anda Yakin Akan Menghapus Data Ini ?");
     if (stateCrf == true) {
-        showLoadingCss()
+        showLoadingCss();
         $.ajax({
             url: baseUrl + "api_operator/tripartite/delete_data",
             dataType: 'JSON',
@@ -101,7 +101,7 @@ function delete_data(id) {
                 pIdTripartite: id
             },
             success: function (res) {
-                hideLoadingCss("")
+                hideLoadingCss("");
                 console.log("delete log : ", res)
                 if (res.return == 1) {
                     alert(res.OUT_MSG);
@@ -118,9 +118,10 @@ function delete_data(id) {
     }
 }
 
-function edit_data(id) {
+
+function duplicate_data(id) {
+   console.log("duplicate data tripartite");
     showLoadingCss();
-    // console.log(id);
     $.ajax({
         url: baseUrl + "api_operator/tripartite/edit_data",
         dataType: 'JSON',
@@ -129,8 +130,56 @@ function edit_data(id) {
             pIdTripartite: id
         },
         success: function (res) {
-            hideLoadingCss("")
-            idTripartite = id
+            hideLoadingCss("");
+            console.log("data duplicate :", res);
+
+            $("#pTglJatuhTempo").val(res[0].TGL_JATUH_TEMPO);
+            $("#pTglJatuhTempoH2").val(res[0].H2_JATUH_TEMPO);
+            $("#pNominalSebelumPajak").val(res[0].NOMINAL_SBLM_PAJAK);
+            $("#pPajak").val(res[0].PAJAK);
+            $("#pNominalDenganUnderlying").val(res[0].NOMINAL_UNDERLYING);
+            $("#pNominalTanpaUnderlying").val(res[0].NOMINAL_TANPA_UNDERLYING);
+            $("#pSpread").val(res[0].SPREAD);
+            $("#pNoInvoice").val(res[0].NO_INVOICE);
+            $("#pTglInvoice").val(res[0].TGL_TERIMA_INVOICE);
+            $("#pKursJisdor").val(res[0].KURS_JISDOR);
+            $("#pTglTerimaInvoice").val(res[0].TGL_INVOICE);
+            $("#pNoNotdin").val(res[0].NO_NOTDIN);
+            $("#pNoNotaDinas").val(res[0].TGL_NOTDIN);
+            $("#pDeskripsi").val(res[0].DESKRIPSI);
+
+            tempVendor = res[0].ID_VENDOR;
+
+            setSelectJenisPembayaran("pJenisPemabayaran", "TRIPARTITE", res[0].ID_JENIS_PEMBAYARAN);
+            setSelectBank("pBankCounterparty", "", "PEMBAYAR", res[0].ID_BANK_CONTERPARTY, "TRIPARTITE");
+            setSelectCurr("pCurrecny", "", res[0].CURRENCY, "TRIPARTITE");
+            $("#pTipeTransaksi").val(res[0].TIPE_TRANSAKSI);
+
+            setTimeout(function () {
+                $("#pVendor").select2({
+                    width: "100%"
+                });
+                $('#edit-tripartite-modal').modal({backdrop: 'static', keyboard: false});
+            }, timeSowFormEdit);
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
+function edit_data(id) {
+    showLoadingCss();
+    $.ajax({
+        url: baseUrl + "api_operator/tripartite/edit_data",
+        dataType: 'JSON',
+        type: "GET",
+        data: {
+            pIdTripartite: id
+        },
+        success: function (res) {
+            hideLoadingCss("");
+            idTripartite = id;
             console.log("data edit_data :", res);
 
             $("#pTglJatuhTempo").val(res[0].TGL_JATUH_TEMPO);
@@ -143,15 +192,14 @@ function edit_data(id) {
             $("#pNoInvoice").val(res[0].NO_INVOICE);
             $("#pTglInvoice").val(res[0].TGL_TERIMA_INVOICE);
             $("#pKursJisdor").val(res[0].KURS_JISDOR);
-            $("#pTglTerimaInvoice").val(res[0].TGL_INVOICE)
-            $("#pNoNotdin").val(res[0].NO_NOTDIN)
-            $("#pNoNotaDinas").val(res[0].TGL_NOTDIN)
-            $("#pDeskripsi").val(res[0].DESKRIPSI)
+            $("#pTglTerimaInvoice").val(res[0].TGL_INVOICE);
+            $("#pNoNotdin").val(res[0].NO_NOTDIN);
+            $("#pNoNotaDinas").val(res[0].TGL_NOTDIN);
+            $("#pDeskripsi").val(res[0].DESKRIPSI);
 
-            //areasini
             tempVendor = res[0].ID_VENDOR;
 
-            setSelectJenisPembayaran("pJenisPemabayaran", "TRIPARTITE", res[0].ID_JENIS_PEMBAYARAN)
+            setSelectJenisPembayaran("pJenisPemabayaran", "TRIPARTITE", res[0].ID_JENIS_PEMBAYARAN);
             setSelectBank("pBankCounterparty", "", "PEMBAYAR", res[0].ID_BANK_CONTERPARTY, "TRIPARTITE");
             setSelectCurr("pCurrecny", "", res[0].CURRENCY, "TRIPARTITE");
             $("#pTipeTransaksi").val(res[0].TIPE_TRANSAKSI);
@@ -312,10 +360,10 @@ function search(state) {
     if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
         alert("Mohon Lengkapi Tgl Akhir");
     } else {
-        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_jenis_pemabayaran").val())
+        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_jenis_pemabayaran").val());
         getAllData()
-        srcTglAwal = $("#tanggal_awal").val()
-        srcTglAkhir = $("#tanggal_akhir").val()
+        srcTglAwal = $("#tanggal_awal").val();
+        srcTglAkhir = $("#tanggal_akhir").val();
     }
 }
 
@@ -820,10 +868,11 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
                             if (full.STATUS_TRACKING == "INPUT DATA") {
                                 ret_value =
                                     '<div class="btn-group">' +
+                                    '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>' +
                                     '<button style="width: 15px !important;" class="btn-update-status btn-sm btn-warning" title="Update Status" onclick="show_modal(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-arrows-alt"></i></button>' +
                                     '<button style="width: 15px !important;" class="btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
-                                                                    '<button style="width: 15px !important;" class="btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-remove"></i></button>' +
-                                                                    '<button style="width: 15px !important;;" width="100px;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-remove"></i></button>' +
+                                    '<button style="width: 15px !important;;" width="100px;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
                                     '</div>'
                             } else {
                                 ret_value =
@@ -837,6 +886,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
                     }else{
                         ret_value =
                             '<div class="btn-group">' +
+                            '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>' +
                             '<button style="width: 15px !important;" class="btn-update-status btn-sm btn-warning" title="Update Status" onclick="show_modal(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-arrows-alt"></i></button>' +
                             '<button style="width: 15px !important;" class="btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
                             '<button style="width: 15px !important;" class="btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-remove"></i></button>' +

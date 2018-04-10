@@ -110,7 +110,6 @@ public class PembayaranController {
             e.printStackTrace();
         }
 
-
         Map mapData = new HashMap();
         mapData.put("draw", draw);
         mapData.put("data", list);
@@ -305,6 +304,7 @@ public class PembayaranController {
                 paramDetail.put("ID_VENDOR", data.get("ID_VENDOR"));
                 paramDetail.put("CURRENCY", data.get("CURRENCY"));
                 paramDetail.put("TOTAL_TAGIHAN", data.get("TOTAL_TAGIHAN"));
+                paramDetail.put("EQ_RUPIAH", data.get("EQ_RUPIAH"));
                 paramDetail.put("ID_UNIT", data.get("ID_UNIT"));
                 paramDetail.put("KODE_BANK_TUJUAN", data.get("KODE_BANK_TUJUAN"));
                 paramDetail.put("KODE_BANK_PEMBAYAR", data.get("KODE_BANK_PEMBAYAR"));

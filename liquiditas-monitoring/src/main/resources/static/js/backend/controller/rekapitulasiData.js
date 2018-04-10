@@ -65,6 +65,65 @@ function selectStatus(value) {
     }
 }
 
+function duplicate_data(id) {
+    showLoadingCss()
+    $.ajax({
+        url: baseUrl + "api_operator/pembayaran/edit_data",
+        dataType: 'JSON',
+        type: "GET",
+        data: {
+            pIdValas: id,
+        },
+        success: function (res) {
+            hideLoadingCss("")
+            console.log("data duplicate :", res);
+
+            $("#pTglJatuhTempo").val("");
+            $("#pNilaiTagihan").val("");
+            $("#pNoTagihan").val("");
+            $("#pTglTagihan").val("");
+            $("#pNoNotaDinas").val("");
+            $("#pTglNotaDinas").val("");
+            $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
+            $('#pTglTagihan').datepicker({dateFormat: 'dd/mm/yy'});
+            $('#pTglNotaDinas').datepicker({dateFormat: 'dd/mm/yy'});
+
+            tempVendor = res[0].ID_VENDOR;
+            tempUnit = res[0].ID_UNIT;
+
+            setSelectJenisPembayaran("pJenisPemabayaran", "", res[0].ID_JENIS_PEMBAYARAN);
+            setSelectCurr("pCurrecny", "", res[0].CURRENCY, "REKAP");
+            setSelectBank2("pBankTujuan", "", "TUJUAN", res[0].KODE_BANK_TUJUAN, "REKAP");
+            setSelectBank("pBankPembayar", "", "PEMBAYAR", res[0].KODE_BANK_PEMBAYAR, "REKAP");
+
+            $("#pTglJatuhTempo").val(res[0].TGL_JATUH_TEMPO);
+            $("#pNilaiTagihan").val(res[0].TOTAL_TAGIHAN);
+            $("#pNoTagihan").val(res[0].NO_TAGIHAN);
+            $("#pTglTagihan").val(res[0].TGL_TAGIHAN);
+            $("#pNoNotaDinas").val(res[0].NO_NOTDIN);
+            $("#pTglNotaDinas").val(res[0].TGL_NOTDIN);
+            $("#pKeterangan").val(res[0].DESKRIPSI);
+            $("#pStatus").val(res[0].STATUS_VALAS);
+            $("#pTipeTransaksi").val(res[0].TIPE_TRANSAKSI);
+            $("#pTglTerimaInvoice").val(res[0].TGL_TERIMA_INVOICE);
+
+            setTimeout(function () {
+                $("#pVendor").select2({
+                    width: "100%"
+                });
+                $("#pUnitPenerima").select2({
+                    width: "100%"
+                });
+                $('#edit-rekap-modal').modal({backdrop: 'static', keyboard: false});
+            }, timeSowFormEdit);
+            hideLoadingCss()
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
 function openFormNew() {
 
     idValas = "";
@@ -669,16 +728,17 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                             if (full.STATUS_TRACKING == "INPUT DATA") {
                                 ret_value =
                                     '<div class="btn-group">' +
+                                    '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>' +
                                     '<button style="width: 15px !important;" class="btn-update-status btn-sm btn-warning" title="Update Status" onclick="show_modal(\'' + full.ID_VALAS + '\')"><i class="fa fa-arrows-alt"></i></button>' +
-                                    '<button style="width: 15px !important;;" width="100px;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
-                                    '<button style="width: 15px !important;;" width="100px;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
-                                    '<button style="width: 15px !important;;" width="100px;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
                                     '</div>'
                             } else {
                                 ret_value =
                                     '<div class="btn-group">' +
-                                    '<button style="width: 15px !important;;" width="100px;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
-                                    '<button style="width: 15px !important;;" width="100px;" class="btn-update-data btn-ms btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
                                     '</div>'
                             }
                        }
@@ -686,10 +746,11 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                     else{
                         ret_value =
                             '<div class="btn-group">' +
+                            '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>' +
                             '<button style="width: 15px !important;" class="btn-update-status btn-sm btn-warning" title="Update Status" onclick="show_modal(\'' + full.ID_VALAS + '\')"><i class="fa fa-arrows-alt"></i></button>' +
-                            '<button style="width: 15px !important;;" width="100px;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
-                            '<button style="width: 15px !important;;" width="100px;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
-                            '<button style="width: 15px !important;;" width="100px;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
+                            '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
+                            '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
+                            '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
                             '</div>'
                     }
 

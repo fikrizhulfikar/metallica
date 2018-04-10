@@ -2,10 +2,7 @@ package com.iconpln.liquiditas.monitoring.controller.operator;
 
 import com.iconpln.liquiditas.core.service.ValasService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -22,12 +19,26 @@ public class TrackingController {
 
 
     @RequestMapping(value = "/get_data", method = RequestMethod.GET)
+    @ResponseBody
     public Map getData(
-            @RequestParam(value = "pNoTagihan", defaultValue = "") String pNoTagihan
+            @RequestParam(value = "pSearch", defaultValue = "") String pSearch
     ) {
         try {
-            return valasService.getAllTracking(pNoTagihan);
+            return valasService.getAllTracking(pSearch);
         } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_detail_tracking", method = RequestMethod.GET)
+    @ResponseBody
+    public Map getDetailTracking(
+            @RequestParam(value = "pIdValas", defaultValue = "") String pIdValas
+    ) {
+        try {
+            return valasService.getDetailTracking(pIdValas);
+        }catch (Exception e){
             e.printStackTrace();
             return null;
         }

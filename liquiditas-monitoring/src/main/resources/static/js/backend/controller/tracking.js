@@ -8,11 +8,76 @@ function addZero(i) {
     return i;
 }
 
+$('#table-tracking').on('click', '#btnDetail', function () {
+    detailTracking($(this).attr('id_valas'));
+});
+
+function detailTracking(id) {
+    $.ajax({
+        url: baseUrl + "api_operator/tracking/get_detail_tracking",
+        dataType: 'JSON',
+        async: false,
+        type: "GET",
+        global: false,
+        data: {
+            pIdValas: id
+        },
+        success: function (res) {
+            $("#table-tracking_ket tbody").empty();
+            hideLoadingCss("")
+            $.each(res.return, function (key, val) {
+                var today = new Date(val.TGL);
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1;
+
+                var h = addZero(today.getHours());
+                var m = addZero(today.getMinutes());
+                var s = addZero(today.getSeconds());
+                x = h + ":" + m + ":" + s;
+
+                var yyyy = today.getFullYear();
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+                var today = dd + '/' + mm + '/' + yyyy;
+
+                if (key == 0) {
+                    var newHtml = "<tr>" +
+                        "<td>" + today + "</td>" +
+                        "<td>" + val.NAMA + "</td>" +
+                        "<td>" + val.OLEH + "</td>" +
+                        "</tr>";
+                }
+                else {
+                    var newHtml = "<tr>" +
+                        "<td>" + today + " " + x + "</td>" +
+                        "<td>" + val.NAMA + "</td>" +
+                        "<td>" + val.OLEH + "</td>" +
+                        "</tr>";
+                }
+                $("#table-tracking_ket tbody").append(newHtml);
+                $("#all_table").show();
+            });
+            console.log("ini detail", res);
+        },
+        error: function (e, xhr) {
+            console.log(e)
+            hideLoadingCss("Gagal Melakukan Proses, Harap Hubungi Administrator")
+        }
+
+    });
+
+    $('#detail-tracking-modal').modal({backdrop: 'static', keyboard: false});
+}
+
 function processTracking() {
 
-    var  no_tagihan=  $("#search-no-tagihan").val().toString();
+    var search = $("#search-no-tagihan").val().toString();
 
-    if (no_tagihan == "") {
+    if (search == "") {
         alert("Masukkan No Tagihan");
 
     } else {
@@ -22,61 +87,11 @@ function processTracking() {
             global: false,
             dataType: 'JSON',
             url: baseUrl + "api_operator/tracking/get_data",
-            data: {pNoTagihan: no_tagihan},
-
+            data: {
+                pSearch: search
+            },
             success: function (res) {
-                $("#table-tracking_ket tbody").empty();
-                hideLoadingCss("")
-                 console.log(res);
-
-                if (res.OUT_TRACKING.length > 0) {
-                    $.each(res.OUT_TRACKING, function (key, val) {
-                        var today = new Date(val.TGL);
-                        var dd = today.getDate();
-                        var mm = today.getMonth()+1;
-
-                            var h = addZero(today.getHours());
-                            var m = addZero(today.getMinutes());
-                            var s = addZero(today.getSeconds());
-                            x = h + ":" + m + ":" + s;
-
-                        var yyyy = today.getFullYear();
-                        if(dd<10){
-                            dd='0'+dd;
-                        }
-                        if(mm<10){
-                            mm='0'+mm;
-                        }
-                        var today = dd+'/'+mm+'/'+yyyy;
-
-                        if(key == 0){
-                            var newHtml = "<tr>" +
-                            "<td>" + today + "</td>" +
-                            "<td>" + val.NAMA + "</td>" +
-                            "<td>" + val.OLEH + "</td>" +
-                            "</tr>";
-                        }
-                        else{
-                            var newHtml = "<tr>" +
-                            "<td>" + today + " " + x + "</td>" +
-                            "<td>" + val.NAMA + "</td>" +
-                            "<td>" + val.OLEH + "</td>" +
-                            "</tr>";
-                        }
-                        $("#table-tracking_ket tbody").append(newHtml);
-                        $("#all_table").show();
-                    });
-
-                } else {
-
-                    $("#all_table").hide();
-                    alert("No Tagihan Tidak Ditemukan");
-                    /*  var newHtml = "<tr>" +
-                          "<td colspan='2' align='center' > No Data </td>" +
-                          "</tr>";
-                      $("#table-tracking_ket tbody").append(newHtml);*/
-                }
-
+                console.log("ini tracking", res);
                 $("#table-tracking tbody").empty();
                 $.each(res.return, function (key, val) {
                     var newHtml = "<tr>" +
@@ -87,7 +102,8 @@ function processTracking() {
                         "<td>" + val.CURRENCY + "</td>" +
                         "<td>" + accounting.formatNumber(val.TOTAL_TAGIHAN, 2, ".", ",") + "</td>" +
                         "<td>" + val.UNIT + "</td>" +
-                        "</tr>";
+                        "<td align='center'><button class='btn-xs btn-primary' id='btnDetail' style='cursor: pointer; width: 80px; margin: 6px 0 8px 0' title='Detail' id_valas='" + val.ID_VALAS + "'><i class=\"fa fa-search\"></i></button></td>"
+                    "</tr>";
                     $("#table-tracking tbody").append(newHtml);
                     $("#all_table").show();
                 });
@@ -98,10 +114,3 @@ function processTracking() {
         });
     }
 }
-
-/* function hanyaAngka(evt) {
-     var charCode = (evt.which) ? evt.which : event.keyCode
-     if (charCode > 31 && (charCode < 48 || charCode > 57))
-         return false;
-     return true;
- }*/

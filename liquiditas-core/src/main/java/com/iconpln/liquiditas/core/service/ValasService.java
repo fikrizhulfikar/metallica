@@ -827,18 +827,30 @@ public class ValasService {
     }
 
     //Tracking
-    public Map<String, Object> getAllTracking(String pNoTagihan) throws SQLException {
+    public Map<String, Object> getAllTracking(String pSearch) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_VALAS")
-                .withFunctionName("get_tracking");
+                .withFunctionName("get_tracking_level1");
 
         SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("P_NO_TAGIHAN", pNoTagihan)
-                .addValue("OUT_TRACKING", OracleTypes.CURSOR);
+                .addValue("p_search", pSearch);
         Map<String, Object> out = simpleJdbcCall.execute(in);
-        AppUtils.getLogger(this).info("data get_tracking : {}", out);
+        AppUtils.getLogger(this).info("data get_tracking_level1 : {}", out);
         return out;
+    }
+
+    public Map<String, Object> getDetailTracking(String pIdValas) throws SQLException {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_tracking_level2");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_valas", pIdValas);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data get_tracking_level2 : {}", out);
+        return out;
+
     }
 
     //Placement

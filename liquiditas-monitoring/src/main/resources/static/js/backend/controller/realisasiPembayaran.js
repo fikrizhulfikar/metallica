@@ -7,38 +7,38 @@
 var table_rekapitulasi;
 var idValas = "";
 var allData;
-var tempTableSearch= "";
+var tempTableSearch = "";
 
 var srcTglAwal = null;
 var srcTglAkhir = null;
 $(document).ready(function () {
     getAllData();
-    $('#tanggal_awal').datepicker({ dateFormat: 'dd/mm/yy'});
+    $('#tanggal_awal').datepicker({dateFormat: 'dd/mm/yy'});
     $('#tanggal_akhir').attr("disabled", "disabled");
-    $('#pTglJatuhTempo').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
-    setSelectBank("cmb_bank","FILTER","","","REKAP");
-    setSelectCurr("cmb_currecny","FILTER","","REKAP");
-    setSelectJenisPembayaran("cmb_jenis_pemabayaran","FILTER","");
+    $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
+    setSelectBank("cmb_bank", "FILTER", "", "", "REKAP");
+    setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+    setSelectJenisPembayaran("cmb_jenis_pemabayaran", "FILTER", "");
     search("load");
     inputKeterangan();
 });
 
-$("#tanggal_awal").change(function() {
+$("#tanggal_awal").change(function () {
     var tglAwalData = $('#tanggal_awal').val();
-    if(tglAwalData == ""){
+    if (tglAwalData == "") {
         // alert("Tanggal awal belum di tentukan");
         $('#tanggal_akhir').val("");
         $('#tanggal_akhir').attr("disabled", "disabled");
-    }else{
+    } else {
         $('#tanggal_akhir').val("");
-        $('#tanggal_akhir').datepicker( "destroy" );
+        $('#tanggal_akhir').datepicker("destroy");
         $('#tanggal_akhir').attr("disabled", false);
-        $('#tanggal_akhir').datepicker({ dateFormat: 'dd/mm/yy' ,minDate:  tglAwalData});
+        $('#tanggal_akhir').datepicker({dateFormat: 'dd/mm/yy', minDate: tglAwalData});
     }
 });
 
 function search(state) {
-    if ($("#tanggal_akhir").val() == "" && state != "load"  && $("#tanggal_awal").val() != "") {
+    if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
         alert("Mohon Lengkapi Tgl Akhir");
     } else {
         initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val(), $("#cmb_jenis_pemabayaran").val())
@@ -48,7 +48,7 @@ function search(state) {
     }
 }
 
-function  show_modal(id) {
+function show_modal(id) {
     idValas = id;
     $('#pTglJatuhTempo').val("");
     $('#edit-reverse-modal').modal({backdrop: 'static', keyboard: false});
@@ -58,7 +58,7 @@ function  show_modal(id) {
 function inputKeterangan() {
 
     var ket = localStorage.getItem("real_ktr");
-    if ( ket === null) {
+    if (ket === null) {
         return null
     }
     else {
@@ -81,7 +81,7 @@ function reverse() {
     var all_ket = [];
     var ket_lama = localStorage.getItem("real_ktr");
 
-    if (ket_lama == null ){
+    if (ket_lama == null) {
         localStorage.removeItem("real_ktr");
         localStorage.removeItem("ktr");
         localStorage.setItem("ktr", ket);
@@ -94,33 +94,33 @@ function reverse() {
 
         var status = true;
         var list_keterangan_lama = ket_lama.split(",");
-        for (var i = 0; i < list_keterangan_lama.length; i++){
+        for (var i = 0; i < list_keterangan_lama.length; i++) {
             if (ket === list_keterangan_lama[i]) {
                 status = false
             }
         }
-        if(status == true){
+        if (status == true) {
             list_keterangan_lama.push(ket);
         }
         localStorage.setItem("real_ktr", list_keterangan_lama);
     }
     showLoadingCss()
     $.ajax({
-        url: baseUrl+"api_operator/pembayaran/upd_reverse",
+        url: baseUrl + "api_operator/pembayaran/upd_reverse",
         dataType: 'JSON',
         type: "POST",
-        data : {
-            pIdValas : idValas,
-            pKeterangan : $("#pKeterangan").val(),
+        data: {
+            pIdValas: idValas,
+            pKeterangan: $("#pKeterangan").val(),
         },
         success: function (res) {
             hideLoadingCss("")
-            console.log("data upd_reverse :",res);
-            if(res.return == 1){
+            console.log("data upd_reverse :", res);
+            if (res.return == 1) {
                 alert(res.OUT_MSG);
                 idValas = "";
                 location.reload();
-            }else{
+            } else {
                 alert(res.OUT_MSG);
             }
         },
@@ -145,7 +145,7 @@ function getAllData() {
             pPembayaran: $("#cmb_jenis_pemabayaran").val()
         },
         success: function (res) {
-            console.log("al data  : "+res);
+            console.log("al data  : " + res);
             allData = res;
         },
         error: function () {
@@ -156,14 +156,14 @@ function getAllData() {
 
 function exportXls() {
     var tglAwal = "null";
-    if(srcTglAwal != ""){
+    if (srcTglAwal != "") {
         tglAwal = srcTglAwal
     }
     var tglAkhir = "null";
-    if(srcTglAkhir != ""){
+    if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/pembayaran/xls/1/"+tglAwal.replace(/\//g,"-")+"/"+tglAkhir.replace(/\//g,"-")+"/"+$("#cmb_bank").val()+"/"+$("#cmb_currecny").val()+"/"+$("#cmb_jenis_pemabayaran").val());
+    window.open(baseUrl + "api_operator/pembayaran/xls/1/" + tglAwal.replace(/\//g, "-") + "/" + tglAkhir.replace(/\//g, "-") + "/" + $("#cmb_bank").val() + "/" + $("#cmb_currecny").val() + "/" + $("#cmb_jenis_pemabayaran").val());
 }
 
 function generatePDF() {
@@ -196,6 +196,11 @@ function generatePDF() {
     });
     column.push({
         text: "NILAI TAGIHAN",
+        style: "tableHeader",
+        alignment: "center"
+    });
+    column.push({
+        text: "NOMINAL EQ IDR",
         style: "tableHeader",
         alignment: "center"
     });
@@ -250,10 +255,10 @@ function generatePDF() {
         alignment: "center"
     });
     column.push({
-            text: "STATUS",
-            style: "tableHeader",
-            alignment: "center"
-        });
+        text: "STATUS",
+        style: "tableHeader",
+        alignment: "center"
+    });
     column.push({
         text: "TIPE TRANSAKSI",
         style: "tableHeader",
@@ -266,14 +271,15 @@ function generatePDF() {
     });
 
     var externalDataRetrievedFromServer = []
-    $.each(allData, function( index, v ) {
+    $.each(allData, function (index, v) {
         var helloooow = {
             NO: v.ROW_NUMBER,
             JENIS_PEMBAYARAN: v.ID_JENIS_PEMBAYARAN,
             JATUH_TEMPO: v.TGL_JATUH_TEMPO,
             VENDOR: v.ID_VENDOR,
             CURRENCY: v.CURRENCY,
-            NILAI_TAGIHAN: accounting.formatNumber(v.TOTAL_TAGIHAN,2,".",","),
+            NILAI_TAGIHAN: accounting.formatNumber(v.TOTAL_TAGIHAN, 2, ".", ","),
+            NOMINAL_EQ_IDR: accounting.formatNumber(v.EQ_RUPIAH, 2, ".", ","),
             NAMA_KONTRAK: v.ID_UNIT,
             BANK_TUJUAN_PEMBAYARAN: v.KODE_BANK_TUJUAN,
             BANK_PEMBAYAR: v.KODE_BANK_PEMBAYAR,
@@ -291,15 +297,12 @@ function generatePDF() {
         externalDataRetrievedFromServer.push(helloooow)
     });
 
-
-
-
     function buildTableBody(data, columns) {
         var body = [];
 
         body.push(columns);
 
-        data.forEach(function(row) {
+        data.forEach(function (row) {
             var dataRow = [];
             console.log(row);
             dataRow.push(row["NO"]);
@@ -307,7 +310,8 @@ function generatePDF() {
             dataRow.push(row["JATUH_TEMPO"]);
             dataRow.push(row["VENDOR"]);
             dataRow.push(row["CURRENCY"]);
-            dataRow.push({text:row["NILAI_TAGIHAN"],alignment: "right"});
+            dataRow.push({text: row["NILAI_TAGIHAN"], alignment: "right"});
+            dataRow.push({text: row["NOMINAL_EQ_IDR"], alignment: "right"});
             dataRow.push(row["NAMA_KONTRAK"]);
             dataRow.push(row["BANK_TUJUAN_PEMBAYARAN"]);
             dataRow.push(row["BANK_PEMBAYAR"]);
@@ -317,7 +321,7 @@ function generatePDF() {
             dataRow.push(row["TGL_NOTA_DINAS"]);
             dataRow.push(row["NO_NOTA_DINAS"]);
             dataRow.push(row["TGL_LUNAS"]);
-            dataRow.push({text:row["COUNT_DOWN"],alignment: "right"});
+            dataRow.push({text: row["COUNT_DOWN"], alignment: "right"});
             dataRow.push(row["STATUS"]);
             dataRow.push(row["TIPE_TRANSAKSI"]);
             dataRow.push(row["STATUS_TRACKING"]);
@@ -341,12 +345,12 @@ function generatePDF() {
 
     var docDefinition = {
         pageOrientation: "landscape",
-        content: [ {
+        content: [{
             text: "REALISASI PEMBAYARAN",
             style: "header",
             alignment: "center"
         }, {
-            text: "Tanggal Cetak : "+getDataNow(),
+            text: "Tanggal Cetak : " + getDataNow(),
             style: "subheader"
         },
             table(externalDataRetrievedFromServer, column)
@@ -378,90 +382,97 @@ function generatePDF() {
     pdfMake.createPdf(docDefinition).open();
 }
 
-function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pPembayaran){
+function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
     showLoadingCss()
     $('#table-rekapitulasi tbody').empty();
     $('#table-rekapitulasi').dataTable().fnDestroy();
-    table_rekapitulasi = $('#table-rekapitulasi').DataTable( {
+    table_rekapitulasi = $('#table-rekapitulasi').DataTable({
         // "sDom": '<"H"ilr><"clear">t<"F"p>',
         "serverSide": true,
         "searching": true,
         "oSearch": {"sSearch": tempTableSearch},
-        "scrollY":        "300px",
-        "scrollX":        true,
+        "scrollY": "300px",
+        "scrollX": true,
         "scrollCollapse": true,
         "aoColumnDefs": [
-            { width: 20, targets: 0 },
-            { width: 140, targets: 1 },
-            { width: 105, targets: 2 },
-            { width: 200, targets: 3 },
-            { width: 80, targets: 4 },
-            { width: 100, targets: 5 },
-            { width: 300, targets: 6 },
-            { width: 170, targets: 7 },
-            { width: 100, targets: 8 },
-            { width: 90, targets: 9 },
-            { width: 110, targets: 10 },
-            { width: 130, targets: 11 },
-            { width: 120, targets: 12 },
-            { width: 75, targets: 13 },
-            { width: 75, targets: 14 },
-            { width: 75, targets: 15 },
-            { width: 100, targets: 16 },
-            { width: 135, targets: 17 },
-            { width: 120, targets: 18 },
-            { width: 300, targets: 19 },
-            {className: "datatables_action", "targets": [11,15]},
+            {width: 20, targets: 0},
+            {width: 140, targets: 1},
+            {width: 105, targets: 2},
+            {width: 200, targets: 3},
+            {width: 80, targets: 4},
+            {width: 100, targets: 5},
+            {width: 120, targets: 6},
+            {width: 300, targets: 7},
+            {width: 170, targets: 8},
+            {width: 100, targets: 9},
+            {width: 90, targets: 10},
+            {width: 110, targets: 11},
+            {width: 130, targets: 12},
+            {width: 120, targets: 13},
+            {width: 75, targets: 14},
+            {width: 75, targets: 15},
+            {width: 75, targets: 16},
+            {width: 100, targets: 17},
+            {width: 135, targets: 18},
+            {width: 120, targets: 19},
+            {width: 300, targets: 20},
+            {className: "datatables_action", "targets": [12, 16, 6]},
             {
                 "bSortable": false,
-                "aTargets": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+                "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
             },
             {
-                "aTargets": [ 20],
-                "mRender": function ( data, type, full ) {
+                "aTargets": [21],
+                "mRender": function (data, type, full) {
 
-                   if(newRoleUser[0] == "ROLE_MS_LIKUIDITAS"|| newRoleUser[0] == "ROLE_DM_LIKUIDITAS" || newRoleUser[0] == "ROLE_MS_PEMBELANJAAN"|| newRoleUser[0] == "ROLE_MS_KEUKON"|| newRoleUser[0] == "ROLE_DM_KEUKON_SLPMN" || newRoleUser[0] == "ROLE_DM_KEUKON_APLN"|| newRoleUser[0] == "ROLE_MS_KEUKON"){
-                       return '<div class="btn-group">' +
-                               '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-info" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                               '</div>';
-                   }else{
+                    if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS" || newRoleUser[0] == "ROLE_MS_PEMBELANJAAN" || newRoleUser[0] == "ROLE_MS_KEUKON" || newRoleUser[0] == "ROLE_DM_KEUKON_SLPMN" || newRoleUser[0] == "ROLE_DM_KEUKON_APLN" || newRoleUser[0] == "ROLE_MS_KEUKON") {
+                        return '<div class="btn-group">' +
+                            '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-info" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
+                            '</div>';
+                    } else {
                         return '<div class="btn-group">' +
                             '<button style="width: 15px !important;" class="btn-update-status btn-sm btn-success" title="Edit" onclick="show_modal(\'' + full.ID_VALAS + '\')"><i class="fa fa-arrow-left"></i></button>' +
                             '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-info" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
                             '</div>';
-                   }
+                    }
                 }
-
             },
             {
                 "aTargets": [5],
                 "sClass": "datatables_action",
-                "mRender": function ( data, type, full ) {
-                     return accounting.formatNumber(full.TOTAL_TAGIHAN,2,".",",")
+                "mRender": function (data, type, full) {
+                    return accounting.formatNumber(full.TOTAL_TAGIHAN, 2, ".", ",")
                 }
             },
             {
-                "aTargets": [ 13 ],
+                "aTargets": [6],
                 "sClass": "datatables_action",
-                "mRender": function ( data, type, full ) {
-                     return full.COUNT_DOWN;
+                "mRender": function (data, type, full) {
+                    return accounting.formatNumber(full.EQ_RUPIAH, 2, ".", ",")
+                }
+            },
+            {
+                "aTargets": [14],
+                "sClass": "datatables_action",
+                "mRender": function (data, type, full) {
+                    return full.COUNT_DOWN;
                 }
             }
         ],
         "ajax": {
-            "url": baseUrl+"api_operator/pembayaran/get_data_realisasi",
+            "url": baseUrl + "api_operator/pembayaran/get_data_realisasi",
             "type": "GET",
-            "dataType" : "json",
+            "dataType": "json",
             "data": {
-                pTglAwal : pTglAwal,
-                pTglAkhir : pTglAkhir,
-                pBank : pBank,
-                pCurrency : pCurrency,
-                pPembayaran : pPembayaran,
+                pTglAwal: pTglAwal,
+                pTglAkhir: pTglAkhir,
+                pBank: pBank,
+                pCurrency: pCurrency,
+                pPembayaran: pPembayaran,
             },
-            "dataSrc" : function(res){
+            "dataSrc": function (res) {
                 hideLoadingCss("")
-                console.log("get log : ",res);
+                console.log("get log : ", res);
                 return res.data;
             }
         },
@@ -472,6 +483,7 @@ function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pPembayaran){
             {"data": "ID_VENDOR", "defaultContent": ""},
             {"data": "CURRENCY", "defaultContent": ""},
             {"data": "TOTAL_TAGIHAN", "defaultContent": ""},
+            {"data": "EQ_RUPIAH", "defaultContent": ""},
             {"data": "ID_UNIT", "defaultContent": ""},
             {"data": "KODE_BANK_TUJUAN", "defaultContent": ""},
             {"data": "KODE_BANK_PEMBAYAR", "defaultContent": ""},
@@ -487,19 +499,19 @@ function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pPembayaran){
             {"data": "STATUS_TRACKING", "defaultContent": ""},
             {"data": "DESKRIPSI", "defaultContent": ""}
         ],
-        "drawCallback": function( settings ) {
+        "drawCallback": function (settings) {
             $('th').removeClass('sorting_asc');
             $('th').removeClass('datatables_action');
             $('th').addClass('th-middle');
-            console.log("length : ",newRoleUser.length);
-            console.log("length : ",newRoleUser[0]);
+            console.log("length : ", newRoleUser.length);
+            console.log("length : ", newRoleUser[0]);
             $(".btn-update-status").hide();
-            if(newRoleUser.length > 0){
-                for(var i= 0; i < newRoleUser.length; i++){
+            if (newRoleUser.length > 0) {
+                for (var i = 0; i < newRoleUser.length; i++) {
                     if (newRoleUser[i] == "ROLE_KASIR" || newRoleUser[i] == "ROLE_KASIR_IDR" || newRoleUser[i] == "ROLE_KASIR_INVESTASI" || newRoleUser[i] == "ROLE_ADMIN") {
                         $(".btn-update-status").show();
                     }
-                    else{
+                    else {
                         $("#file-bukti-pelaksanaan").hide();
                     }
                 }
@@ -507,7 +519,7 @@ function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pPembayaran){
         }
     });
 
-    table_rekapitulasi.on('search.dt', function() {
+    table_rekapitulasi.on('search.dt', function () {
         var value = $('.dataTables_filter input').val();
         console.log(value); // <-- the value
         tempTableSearch = value;
@@ -516,7 +528,7 @@ function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pPembayaran){
 }
 
 
-function upload_file(pIdValas){
+function upload_file(pIdValas) {
     $("#modal-upload-file").modal("show");
     $("#temp-id-valas-file").val(pIdValas);
 
@@ -533,55 +545,55 @@ function getFilesRekap(pIdValas) {
         },
 
         success: function (data) {
-            console.log("get files rekap  : ",data);
+            console.log("get files rekap  : ", data);
 
             $.each(data.data_pembayaran.return, function (index, val) {
 
-                if(val.JENIS_FILE == 1){
-                    if(val.NAMA_FILE != "" || val.NAMA_FILE != null){
-                        var html  = '<a target="_blank" href="/filePath/'+ val.NAMA_FILE +'" id="btn-download-tanda-terima-invoice"><i class="fa fa-download"> '+val.NAMA_FILE+' </i></a>';
+                if (val.JENIS_FILE == 1) {
+                    if (val.NAMA_FILE != "" || val.NAMA_FILE != null) {
+                        var html = '<a target="_blank" href="/filePath/' + val.NAMA_FILE + '" id="btn-download-tanda-terima-invoice"><i class="fa fa-download"> ' + val.NAMA_FILE + ' </i></a>';
                         $("#btn-download-tanda-terima-invoice").replaceWith(html);
-                    }else{
-                        var html  = '<a id="btn-download-tanda-terima-invoice">-</a>';
+                    } else {
+                        var html = '<a id="btn-download-tanda-terima-invoice">-</a>';
                         $("#btn-download-tanda-terima-invoice").replaceWith(html);
                     }
                 }
 
-                if(val.JENIS_FILE == 2){
-                    if(val.NAMA_FILE != "" || val.NAMA_FILE != null){
-                        var html  = '<a target="_blank" href="/filePath/'+ val.NAMA_FILE +'" id="btn-download-lembar-verifikasi"><i class="fa fa-download"> '+val.NAMA_FILE+' </i></a>';
+                if (val.JENIS_FILE == 2) {
+                    if (val.NAMA_FILE != "" || val.NAMA_FILE != null) {
+                        var html = '<a target="_blank" href="/filePath/' + val.NAMA_FILE + '" id="btn-download-lembar-verifikasi"><i class="fa fa-download"> ' + val.NAMA_FILE + ' </i></a>';
                         $("#btn-download-lembar-verifikasi").replaceWith(html);
-                    }else{
-                        var html  = '<a id="btn-download-lembar-verifikasi">-</a>';
+                    } else {
+                        var html = '<a id="btn-download-lembar-verifikasi">-</a>';
                         $("#btn-download-lembar-verifikasi").replaceWith(html);
                     }
                 }
 
-                if(val.JENIS_FILE == 3){
-                    if(val.NAMA_FILE != "" || val.NAMA_FILE != null){
-                        var html  = '<a target="_blank" href="/filePath/'+ val.NAMA_FILE +'" id="btn-download-file-tagihan"><i class="fa fa-download"> '+val.NAMA_FILE+' </i></a>';
+                if (val.JENIS_FILE == 3) {
+                    if (val.NAMA_FILE != "" || val.NAMA_FILE != null) {
+                        var html = '<a target="_blank" href="/filePath/' + val.NAMA_FILE + '" id="btn-download-file-tagihan"><i class="fa fa-download"> ' + val.NAMA_FILE + ' </i></a>';
                         $("#btn-download-file-tagihan").replaceWith(html);
-                    }else{
-                        var html  = '<a id="btn-download-file-tagihan">-</a>';
+                    } else {
+                        var html = '<a id="btn-download-file-tagihan">-</a>';
                         $("#btn-download-file-tagihan").replaceWith(html);
                     }
                 }
 
-                if(val.JENIS_FILE == 4){
-                    if(val.NAMA_FILE != "" || val.NAMA_FILE != null){
-                        var html  = '<a target="_blank" href="/filePath/'+ val.NAMA_FILE +'" id="btn-download-nota-dinas-pembayaran"><i class="fa fa-download"> '+val.NAMA_FILE+' </i></a>';
+                if (val.JENIS_FILE == 4) {
+                    if (val.NAMA_FILE != "" || val.NAMA_FILE != null) {
+                        var html = '<a target="_blank" href="/filePath/' + val.NAMA_FILE + '" id="btn-download-nota-dinas-pembayaran"><i class="fa fa-download"> ' + val.NAMA_FILE + ' </i></a>';
                         $("#btn-download-nota-dinas-pembayaran").replaceWith(html);
-                    }else{
-                        var html  = '<a id="btn-download-nota-dinas-pembayaran">-</a>';
+                    } else {
+                        var html = '<a id="btn-download-nota-dinas-pembayaran">-</a>';
                         $("#btn-download-nota-dinas-pembayaran").replaceWith(html);
                     }
                 }
-                if(val.JENIS_FILE == 5){
-                    if(val.NAMA_FILE != "" || val.NAMA_FILE != null){
-                        var html  = '<a target="_blank" href="/filePath/'+ val.NAMA_FILE +'" id="btn-download-bukti-pelaksanaan"><i class="fa fa-download"> '+val.NAMA_FILE+' </i></a>';
+                if (val.JENIS_FILE == 5) {
+                    if (val.NAMA_FILE != "" || val.NAMA_FILE != null) {
+                        var html = '<a target="_blank" href="/filePath/' + val.NAMA_FILE + '" id="btn-download-bukti-pelaksanaan"><i class="fa fa-download"> ' + val.NAMA_FILE + ' </i></a>';
                         $("#btn-download-bukti-pelaksanaan").replaceWith(html);
-                    }else{
-                        var html  = '<a id="btn-download-bukti-pelaksanaan">-</a>';
+                    } else {
+                        var html = '<a id="btn-download-bukti-pelaksanaan">-</a>';
                         $("#btn-download-bukti-pelaksanaan").replaceWith(html);
                     }
                 }
@@ -618,11 +630,11 @@ function upload_server(jenisFile) {
         contentType: false,
         processData: false,
         success: function (data) {
-            console.log("response upload file : ",data);
-            if(data.return == 1){
+            console.log("response upload file : ", data);
+            if (data.return == 1) {
                 alert("Sukses upload file");
                 getFilesRekap($("#temp-id-valas-file").val());
-            }else{
+            } else {
                 alert("Gagal upload file");
             }
             hideLoadingCss();
@@ -632,10 +644,10 @@ function upload_server(jenisFile) {
 
         },
         error: function () {
-          hideLoadingCss("Gagal upload file");
-          setTimeout(function () {
-              $('#modal-upload-file').modal({backdrop: 'static', keyboard: false});
-          }, 2000);
+            hideLoadingCss("Gagal upload file");
+            setTimeout(function () {
+                $('#modal-upload-file').modal({backdrop: 'static', keyboard: false});
+            }, 2000);
         }
     });
 }
