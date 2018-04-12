@@ -101,6 +101,7 @@ public class ValasService {
         params.put("p_search", pSearch);
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
 
+
         AppUtils.getLogger(this).info("data get_rekap_pembayaran_pss : {}", resultset);
         return resultset;
     }
