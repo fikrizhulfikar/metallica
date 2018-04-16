@@ -1,0 +1,35 @@
+<div th:fragment="stylesheets-backend">
+    <style>
+
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Potensi Pendapatan</li>
+    </ol>
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+            <div class="list-data" style="margin-top:50px;">
+                <div style="margin-top: 50px">
+                    <table id="table-main" class="table table-bordered table-striped" width="100%"
+                           style="margin-right: 0px !important;">
+                        <thead style="font-size: 12px;">
+                        <tr>
+                            <th style="text-align: center">NAMA BANK</th>
+                            <th style='display:none;'>KODE BANK</th>
+                            <th style="text-align: center">SALDO AWAL</th>
+                            <th style="text-align: center">SET SALDO</th>
+                            <th style="text-align: center">AKSI</th>
+                        </tr>
+                        </thead>
+                        <tbody style="font-size: 12px">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/potensiPendapatan.js"></script>
+</div>

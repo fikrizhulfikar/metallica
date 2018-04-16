@@ -73,8 +73,17 @@ public class PageOperatorController {
         return "operator/placement";
     }
 
-    @RequestMapping("/potensi")
-    public String potensi() {
-        return "operator/potensi";
+    @RequestMapping("/potensi_pendapatan")
+    public String potensi_pendapatan() {
+        return "operator/potensi_pendapatan";
+    }
+    @RequestMapping("/penarikan_kmk")
+    public String penarikan_kmk() {
+        return "operator/penarikan_kmk";
+    }
+
+    @RequestMapping("/penerimaan_subsidi")
+    public String penerimaan_subsidi() {
+        return "operator/penerimaan_subsidi";
     }
 }

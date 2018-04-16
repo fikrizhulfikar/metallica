@@ -7,12 +7,12 @@
                         <span th:text="${menu.text}"></span>
                     </a>
                     <a th:if="${menu.id == 'mnuPotensi'}" class="nav-link nav-dropdown-toggle" href="#">
-                        <i th:class="${menu.icon_style}"></i> <span th:text="${menu.text}"></span>
+                        <i th:class="${menu.icon_style}"></i><span th:text="${menu.text}"></span>
                     </a>
                     <ul th:if="${menu.id == 'mnuPotensi'}" class="nav-dropdown-items">
                         <li th:each="potensi : ${session.potensi}" class="nav-item">
                             <a class="nav-link" style="font-size: 13px;" th:href="@{${potensi.form_id}}">
-                                <i th:class="${potensi.icon_style}"></i>
+                                <i></i>
                                 <span style="margin-left:15px;" th:text="${potensi.text}"></span>
                             </a>
                         </li>
