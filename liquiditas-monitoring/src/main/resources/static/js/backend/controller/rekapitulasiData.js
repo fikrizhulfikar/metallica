@@ -9,7 +9,7 @@ var idValas = "";
 var allData;
 var tempVendor = "";
 var tempUnit = "";
-var tempTableSearch= "";
+var tempTableSearch = "";
 
 var srcTglAwal = null;
 var srcTglAkhir = null;
@@ -18,7 +18,7 @@ $(document).ready(function () {
     $('#tanggal_awal').datepicker({dateFormat: 'dd/mm/yy'});
     $('#tanggal_akhir').attr("disabled", "disabled");
     $('#pVendor').select2({
-      width: '100%'
+        width: '100%'
     });
     $('#pJenisPemabayaran').select2({
         width: '100%'
@@ -49,8 +49,8 @@ $("#tanggal_awal").change(function () {
 });
 
 function selectJenisPembayaran(value) {
-    $("#pUnitPenerima").select2("val","");
-    $("#pVendor").select2("val","");
+    $("#pUnitPenerima").select2("val", "");
+    $("#pVendor").select2("val", "");
     setSelectVendor("pVendor", value, tempVendor);
     setSelectUnit("pUnitPenerima", value, tempUnit);
 }
@@ -139,10 +139,10 @@ function openFormNew() {
     $("#pCurrecny").val("");
     $("#pBankPembayar").val("");
     $("#pTipeTransaksi").val("");
-    $("#pBankTujuan").select2("val","");
-    $("#pJenisPemabayaran").select2("val","");
-    $("#pUnitPenerima").select2("val","");
-    $("#pVendor").select2("val","");
+    $("#pBankTujuan").select2("val", "");
+    $("#pJenisPemabayaran").select2("val", "");
+    $("#pUnitPenerima").select2("val", "");
+    $("#pVendor").select2("val", "");
 
     $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
     $('#pTglTagihan').datepicker({dateFormat: 'dd/mm/yy'});
@@ -186,7 +186,7 @@ function delete_data(id) {
 
 function siap() {
     var a = localStorage.getItem("real_no_tagihan_RD");
-    if ( a === null) {
+    if (a === null) {
         return null;
     } else {
         var c = a.split(",");
@@ -210,7 +210,7 @@ function siap() {
 function inputKeterangan() {
 
     var ket = localStorage.getItem("real_ket");
-    if ( ket === null) {
+    if (ket === null) {
         return null
     }
     else {
@@ -250,7 +250,7 @@ function ins_data() {
         all_val.push(no_ta);
         var c = old_data.split(",");
         for (var i = 0; i < c.length; i++) {
-            if (no_ta !== c[i]){
+            if (no_ta !== c[i]) {
                 localStorage.setItem("real_no_tagihan_RD", all_val);
             }
         }
@@ -260,7 +260,7 @@ function ins_data() {
     var all_ket = [];
     var ket_lama = localStorage.getItem("real_ket");
 
-    if (ket_lama == null ){
+    if (ket_lama == null) {
         localStorage.removeItem("real_ket");
         localStorage.removeItem("KET");
         localStorage.setItem("KET", ket);
@@ -273,12 +273,12 @@ function ins_data() {
 
         var status = true;
         var list_keterangan_lama = ket_lama.split(",");
-        for (var i = 0; i < list_keterangan_lama.length; i++){
+        for (var i = 0; i < list_keterangan_lama.length; i++) {
             if (ket === list_keterangan_lama[i]) {
                 status = false
             }
         }
-        if(status == true){
+        if (status == true) {
             list_keterangan_lama.push(ket);
         }
         localStorage.setItem("real_ket", list_keterangan_lama);
@@ -670,7 +670,7 @@ function generatePDF() {
     pdfMake.createPdf(docDefinition).open();
 }
 
-function  show_modal(id) {
+function show_modal(id) {
     idValas = id;
     $('#edit-reverse-modal').modal({backdrop: 'static', keyboard: false});
 }
@@ -720,11 +720,11 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
 
                     var ret_value;
 
-                    if (newRoleUser[0] != "ROLE_KASIR_IDR" && newRoleUser[0] != "ROLE_KASIR" && newRoleUser[0] != "ROLE_ADMIN") {
+                    if (newRoleUser[0] != "ROLE_KASIR_IDR" && newRoleUser[0] != "ROLE_KASIR" && newRoleUser[0] != "ROLE_ADMIN" && newRoleUser[0] != "ROLE_KASIR_INVESTASI") {
 
-                       if(newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS" || newRoleUser[0] == "ROLE_MS_PEMBELANJAAN" || newRoleUser[0] == "ROLE_MS_KEUKON"){
-                           return "-"
-                       }else{
+                        if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS" || newRoleUser[0] == "ROLE_MS_PEMBELANJAAN" || newRoleUser[0] == "ROLE_MS_KEUKON") {
+                            return "-"
+                        } else {
                             if (full.STATUS_TRACKING == "INPUT DATA") {
                                 ret_value =
                                     '<div class="btn-group">' +
@@ -741,9 +741,9 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                                     '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
                                     '</div>'
                             }
-                       }
+                        }
                     }
-                    else{
+                    else {
                         ret_value =
                             '<div class="btn-group">' +
                             '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>' +
@@ -821,7 +821,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
             $("#option-siap").hide();
             if (newRoleUser.length > 0) {
                 for (var i = 0; i < newRoleUser.length; i++) {
-                    if (newRoleUser[i] == "ROLE_KASIR_IDR" || newRoleUser[i] == "ROLE_KASIR") {
+                    if (newRoleUser[i] == "ROLE_KASIR_IDR" || newRoleUser[i] == "ROLE_KASIR" || newRoleUser[i] == "ROLE_KASIR_INVESTASI") {
                         $(".btn-update-status").show();
                         $("#option-lunas").show();
                         $("#option-input").show();
@@ -845,17 +845,16 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
         }
     });
 
-    table_rekapitulasi.on('search.dt', function() {
+    table_rekapitulasi.on('search.dt', function () {
         var value = $('.dataTables_filter input').val();
         console.log(value); // <-- the value
         tempTableSearch = value;
     });
 }
 
-function upload_file(pIdValas){
-    $("#modal-upload-file").modal("show");
+function upload_file(pIdValas) {
     $("#temp-id-valas-file").val(pIdValas);
-
+    $("#modal-upload-file").modal("show");
     getFilesRekap(pIdValas);
 }
 
@@ -867,49 +866,66 @@ function getFilesRekap(pIdValas) {
         data: {
             pIdValas: pIdValas
         },
-
         success: function (data) {
-            console.log("get files rekap  : ",data);
+            console.log(data);
+            var html1 = '<a id="btn-download-tanda-terima-invoice">-</a>';
+            var html2 = '<a id="btn-download-lembar-verifikasi">-</a>';
+            var html3 = '<a id="btn-download-file-tagihan">-</a>';
+            var html4 = '<a id="btn-download-nota-dinas-pembayaran">-</a>';
 
+            $("#btn-download-tanda-terima-invoice").replaceWith(html1);
+            $("#btn-download-lembar-verifikasi").replaceWith(html2);
+            $("#btn-download-file-tagihan").replaceWith(html3);
+            $("#btn-download-nota-dinas-pembayaran").replaceWith(html4);
             $.each(data.data_pembayaran.return, function (index, val) {
-                if(val.JENIS_FILE == 1){
-                    if(val.NAMA_FILE != "" || val.NAMA_FILE != null){
-                        var html  = '<a target="_blank" href="/filePath/'+ val.NAMA_FILE +'" id="btn-download-tanda-terima-invoice"><i class="fa fa-download"> '+val.NAMA_FILE+' </i></a>';
-                        $("#btn-download-tanda-terima-invoice").replaceWith(html);
-                    }else{
-                        var html  = '<a id="btn-download-tanda-terima-invoice">-</a>';
-                        $("#btn-download-tanda-terima-invoice").replaceWith(html);
+                console.log(val.JENIS_FILE)
+                if (val.JENIS_FILE !== null || val.JENIS_FILE !== "") {
+                    if (val.JENIS_FILE === '1') {
+                        if (val.NAMA_FILE !== "" || val.NAMA_FILE != null) {
+                            var html = '<a target="_blank" href="/filePath/' + val.NAMA_FILE + '" id="btn-download-tanda-terima-invoice"><i class="fa fa-download"> ' + val.NAMA_FILE + ' </i></a>';
+                            $("#btn-download-tanda-terima-invoice").replaceWith(html);
+                        } else {
+                            var html = '<a id="btn-download-tanda-terima-invoice">-</a>';
+                            $("#btn-download-tanda-terima-invoice").replaceWith(html);
+                        }
                     }
-                }
+                    else if (val.JENIS_FILE === '2') {
+                        if (val.NAMA_FILE !== "" || val.NAMA_FILE != null) {
+                            var html = '<a target="_blank" href="/filePath/' + val.NAMA_FILE + '" id="btn-download-lembar-verifikasi"><i class="fa fa-download"> ' + val.NAMA_FILE + ' </i></a>';
+                            $("#btn-download-lembar-verifikasi").replaceWith(html);
+                        } else {
+                            var html = '<a id="btn-download-lembar-verifikasi">-</a>';
+                            $("#btn-download-lembar-verifikasi").replaceWith(html);
+                        }
+                    }
+                    else if (val.JENIS_FILE === '3') {
+                        if (val.NAMA_FILE !== "" || val.NAMA_FILE != null) {
+                            var html = '<a target="_blank" href="/filePath/' + val.NAMA_FILE + '" id="btn-download-file-tagihan"><i class="fa fa-download"> ' + val.NAMA_FILE + ' </i></a>';
+                            $("#btn-download-file-tagihan").replaceWith(html);
+                        } else {
+                            var html = '<a id="btn-download-file-tagihan">-</a>';
+                            $("#btn-download-file-tagihan").replaceWith(html);
+                        }
+                    }
+                    else if (val.JENIS_FILE === '4') {
+                        if (val.NAMA_FILE !== "" || val.NAMA_FILE != null) {
+                            var html = '<a target="_blank" href="/filePath/' + val.NAMA_FILE + '" id="btn-download-nota-dinas-pembayaran"><i class="fa fa-download"> ' + val.NAMA_FILE + ' </i></a>';
+                            $("#btn-download-nota-dinas-pembayaran").replaceWith(html);
+                        } else {
+                            var html = '<a id="btn-download-nota-dinas-pembayaran">-</a>';
+                            $("#btn-download-nota-dinas-pembayaran").replaceWith(html);
+                        }
+                    }
+                } else {
+                    var html1 = '<a id="btn-download-tanda-terima-invoice">-</a>';
+                    var html2 = '<a id="btn-download-lembar-verifikasi">-</a>';
+                    var html3 = '<a id="btn-download-file-tagihan">-</a>';
+                    var html4 = '<a id="btn-download-nota-dinas-pembayaran">-</a>';
 
-                if(val.JENIS_FILE == 2){
-                    if(val.NAMA_FILE != "" || val.NAMA_FILE != null){
-                        var html  = '<a target="_blank" href="/filePath/'+ val.NAMA_FILE +'" id="btn-download-lembar-verifikasi"><i class="fa fa-download"> '+val.NAMA_FILE+' </i></a>';
-                        $("#btn-download-lembar-verifikasi").replaceWith(html);
-                    }else{
-                        var html  = '<a id="btn-download-lembar-verifikasi">-</a>';
-                        $("#btn-download-lembar-verifikasi").replaceWith(html);
-                    }
-                }
-
-                if(val.JENIS_FILE == 3){
-                    if(val.NAMA_FILE != "" || val.NAMA_FILE != null){
-                        var html  = '<a target="_blank" href="/filePath/'+ val.NAMA_FILE +'" id="btn-download-file-tagihan"><i class="fa fa-download"> '+val.NAMA_FILE+' </i></a>';
-                        $("#btn-download-file-tagihan").replaceWith(html);
-                    }else{
-                        var html  = '<a id="btn-download-file-tagihan">-</a>';
-                        $("#btn-download-file-tagihan").replaceWith(html);
-                    }
-                }
-
-                if(val.JENIS_FILE == 4){
-                    if(val.NAMA_FILE != "" || val.NAMA_FILE != null){
-                        var html  = '<a target="_blank" href="/filePath/'+ val.NAMA_FILE +'" id="btn-download-nota-dinas-pembayaran"><i class="fa fa-download"> '+val.NAMA_FILE+' </i></a>';
-                        $("#btn-download-nota-dinas-pembayaran").replaceWith(html);
-                    }else{
-                        var html  = '<a target="_blank" id="btn-download-nota-dinas-pembayaran">-</a>';
-                        $("#btn-download-nota-dinas-pembayaran").replaceWith(html);
-                    }
+                    $("#btn-download-tanda-terima-invoice").replaceWith(html1);
+                    $("#btn-download-lembar-verifikasi").replaceWith(html2);
+                    $("#btn-download-file-tagihan").replaceWith(html3);
+                    $("#btn-download-nota-dinas-pembayaran").replaceWith(html4);
                 }
             });
         },
@@ -926,15 +942,15 @@ function upload_server(jenisFile) {
     var formData = new FormData(form);
     var jenisFile;
 
-    if (jenisFile=="1"){
+    if (jenisFile == "1") {
         formData.append('file', $('input[type=file]#file-tanda-terima-invoice')[0].files[0]);
         fileSize = $('input[type=file]#file-tanda-terima-invoice')[0].files[0].size / 1000;
         $("#file-tanda-terima-invoice").val('');
-    } else if (jenisFile=="2"){
+    } else if (jenisFile == "2") {
         formData.append('file', $('input[type=file]#file-lembar-verifikasi')[0].files[0]);
         fileSize = $('input[type=file]#file-lembar-verifikasi')[0].files[0].size / 1000;
         $("#file-lembar-verifikasi").val('');
-    } else if (jenisFile=="3"){
+    } else if (jenisFile == "3") {
         formData.append('file', $('input[type=file]#file-tagihan')[0].files[0]);
         fileSize = $('input[type=file]#file-tagihan')[0].files[0].size / 1000;
         $("#file-tagihan").val('');
@@ -958,11 +974,11 @@ function upload_server(jenisFile) {
         contentType: false,
         processData: false,
         success: function (data) {
-            console.log("response upload file : ",data);
-            if(data.return == 1){
+            console.log("response upload file : ", data);
+            if (data.return == 1) {
                 alert("Sukses upload file");
                 getFilesRekap($("#temp-id-valas-file").val());
-            }else{
+            } else {
                 alert("Gagal upload file");
             }
             hideLoadingCss();
@@ -971,10 +987,10 @@ function upload_server(jenisFile) {
             }, 2000);
         },
         error: function () {
-          hideLoadingCss("Gagal upload file");
-          setTimeout(function () {
-              $('#modal-upload-file').modal({backdrop: 'static', keyboard: false});
-          }, 2000);
+            hideLoadingCss("Gagal upload file");
+            setTimeout(function () {
+                $('#modal-upload-file').modal({backdrop: 'static', keyboard: false});
+            }, 2000);
         }
     });
 }

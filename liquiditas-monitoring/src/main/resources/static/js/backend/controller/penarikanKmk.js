@@ -10,7 +10,7 @@ function getAllData() {
         dataType: 'JSON',
         type: "GET",
         data: {
-          pJenis: ""
+          pJenis: "KMK"
         },
         success: function (res) {
             hideLoadingCss("")

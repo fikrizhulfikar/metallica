@@ -6,7 +6,7 @@ var idTripartite;
 var allData;
 var table_trepartite;
 var tempVendor;
-var tempTableSearch= "";
+var tempTableSearch = "";
 
 var srcTglAwal = null;
 var srcTglAkhir = null;
@@ -54,7 +54,7 @@ $("#tanggal_awal").change(function () {
 });
 
 function selectJenisPembayaran(value) {
-    $("#pVendor").select2("val","");
+    $("#pVendor").select2("val", "");
     setSelectVendor("pVendor", value, tempVendor);
 }
 
@@ -120,7 +120,7 @@ function delete_data(id) {
 
 
 function duplicate_data(id) {
-   console.log("duplicate data tripartite");
+    console.log("duplicate data tripartite");
     showLoadingCss();
     $.ajax({
         url: baseUrl + "api_operator/tripartite/edit_data",
@@ -220,7 +220,7 @@ function edit_data(id) {
 function siap() {
 
     var old_data = localStorage.getItem("real_no_invoice");
-    if ( old_data === null) {
+    if (old_data === null) {
         return null;
     } else {
         var a = localStorage.getItem("real_no_invoice");
@@ -243,7 +243,7 @@ function siap() {
 function inputKeterangan() {
 
     var ket = localStorage.getItem("real_keterangan");
-    if ( ket === null) {
+    if (ket === null) {
         return null
     }
     else {
@@ -278,7 +278,7 @@ function ins_data() {
         all_val.push(no_invoice);
         var c = old_data.split(",");
         for (var i = 0; i < c.length; i++) {
-            if (no_invoice !== c[i]){
+            if (no_invoice !== c[i]) {
                 localStorage.setItem("real_no_invoice", all_val);
             }
         }
@@ -288,7 +288,7 @@ function ins_data() {
     var all_ket = [];
     var ket_lama = localStorage.getItem("real_keterangan");
 
-    if (ket_lama == null ){
+    if (ket_lama == null) {
         localStorage.removeItem("real_keterangan");
         localStorage.removeItem("keterangan");
         localStorage.setItem("keterangan", ket);
@@ -301,17 +301,17 @@ function ins_data() {
 
         var status = true;
         var list_keterangan_lama = ket_lama.split(",");
-        for (var i = 0; i < list_keterangan_lama.length; i++){
+        for (var i = 0; i < list_keterangan_lama.length; i++) {
             if (ket === list_keterangan_lama[i]) {
                 status = false
             }
         }
-        if(status == true){
+        if (status == true) {
             list_keterangan_lama.push(ket);
         }
         localStorage.setItem("real_keterangan", list_keterangan_lama);
     }
-    
+
     showLoadingCss()
     $.ajax({
         url: baseUrl + "api_operator/tripartite/ins_data",
@@ -348,7 +348,7 @@ function ins_data() {
             } else {
                 alert(res.OUT_MSG);
             }
-            $("#pVendor").select2("val","");
+            $("#pVendor").select2("val", "");
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
@@ -582,7 +582,7 @@ function generatePDF() {
             dataRow.push({text: row["NOMINAL_SEBELUM_PAJAK"], alignment: "right"});
             dataRow.push({text: row["PAJAK"], alignment: "right"});
             dataRow.push({text: row["NOMINAL_SETELAH_PAJAK"], alignment: "right"});
-            dataRow.push({text: row["NOMINAL_DENGAN_UNDERLYING"],alignment: "right"});
+            dataRow.push({text: row["NOMINAL_DENGAN_UNDERLYING"], alignment: "right"});
             dataRow.push({text: row["NOMINAL_TANPA_UNDERLYING"], alignment: "right"});
             dataRow.push({text: row["KURS_JISDOR"], alignment: "right"});
             dataRow.push({text: row["SPREAD"], alignment: "right"});
@@ -667,33 +667,33 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
         "scrollX": true,
         "scrollCollapse": true,
         "aoColumnDefs": [
-            { width: 100, targets: 1 },
-            { width: 100, targets: 2 },
-            { width: 100, targets: 3 },
-            { width: 100, targets: 4 },
-            { width: 100, targets: 5 },
-            { width: 100, targets: 6 },
-            { width: 150, targets: 7 },
-            { width: 100, targets: 8 },
-            { width: 150, targets: 9 },
-            { width: 150, targets: 10 },
-            { width: 150, targets: 11 },
-            { width: 100, targets: 12 },
-            { width: 100, targets: 13 },
-            { width: 100, targets: 14 },
-            { width: 150, targets: 15 },
-            { width: 150, targets: 16 },
-            { width: 100, targets: 17 },
-            { width: 100, targets: 18 },
-            { width: 150, targets: 19 },
-            { width: 150, targets: 20 },
-            { width: 100, targets: 21 },
-            { width: 100, targets: 22 },
-            { width: 100, targets: 23 },
-            { width: 100, targets: 24 },
-            { width: 300, targets: 25 },
-            { width: 75, targets: 26 },
-           {className: "datatables_action", "targets": [7, 8, 9, 10, 11, 12, 13, 14, 15, 18, 20, 22]},
+            {width: 100, targets: 1},
+            {width: 100, targets: 2},
+            {width: 100, targets: 3},
+            {width: 100, targets: 4},
+            {width: 100, targets: 5},
+            {width: 100, targets: 6},
+            {width: 150, targets: 7},
+            {width: 100, targets: 8},
+            {width: 150, targets: 9},
+            {width: 150, targets: 10},
+            {width: 150, targets: 11},
+            {width: 100, targets: 12},
+            {width: 100, targets: 13},
+            {width: 100, targets: 14},
+            {width: 150, targets: 15},
+            {width: 150, targets: 16},
+            {width: 100, targets: 17},
+            {width: 100, targets: 18},
+            {width: 150, targets: 19},
+            {width: 150, targets: 20},
+            {width: 100, targets: 21},
+            {width: 100, targets: 22},
+            {width: 100, targets: 23},
+            {width: 100, targets: 24},
+            {width: 300, targets: 25},
+            {width: 75, targets: 26},
+            {className: "datatables_action", "targets": [7, 8, 9, 10, 11, 12, 13, 14, 15, 18, 20, 22]},
             {
                 "bSortable": false,
                 "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 17, 19, 20, 21, 22, 23, 24, 25, 26]
@@ -704,167 +704,167 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
                     return full.ROW_NUMBER;
                 }
 
-            },{
+            }, {
                 "aTargets": [1],
                 "mRender": function (data, type, full) {
                     return full.JENIS_PEMBAYARAN;
                 }
 
-            },{
+            }, {
                 "aTargets": [2],
                 "mRender": function (data, type, full) {
                     return full.TGL_JATUH_TEMPO;
                 }
 
-            },{
+            }, {
                 "aTargets": [3],
                 "mRender": function (data, type, full) {
                     return full.H2_JATUH_TEMPO;
                 }
 
-            },{
+            }, {
                 "aTargets": [4],
                 "mRender": function (data, type, full) {
                     return full.VENDOR;
                 }
 
-            },{
+            }, {
                 "aTargets": [5],
                 "mRender": function (data, type, full) {
                     return full.BANK_CONTERPARTY;
                 }
 
-            },{
+            }, {
                 "aTargets": [6],
                 "mRender": function (data, type, full) {
                     return full.CURRENCY;
                 }
 
-            },{
+            }, {
                 "aTargets": [7],
                 "mRender": function (data, type, full) {
                     return accounting.formatNumber(full.NOMINAL_SBLM_PAJAK, 2, ".", ",")
                 }
 
-            },{
+            }, {
                 "aTargets": [8],
                 "mRender": function (data, type, full) {
                     return full.PAJAK + " %";
                 }
 
-            },{
+            }, {
                 "aTargets": [9],
                 "mRender": function (data, type, full) {
                     return accounting.formatNumber(full.NOMINAL_STLH_PAJAK, 2, ".", ",")
                 }
 
-            },{
+            }, {
                 "aTargets": [10],
                 "mRender": function (data, type, full) {
                     return accounting.formatNumber(full.NOMINAL_UNDERLYING, 2, ".", ",")
                 }
 
-            },{
+            }, {
                 "aTargets": [11],
                 "mRender": function (data, type, full) {
                     return accounting.formatNumber(full.NOMINAL_TANPA_UNDERLYING, 2, ".", ",")
                 }
 
-            },{
+            }, {
                 "aTargets": [12],
                 "mRender": function (data, type, full) {
                     return accounting.formatNumber(full.KURS_JISDOR, 2, ".", ",")
                 }
 
-            },{
+            }, {
                 "aTargets": [13],
                 "mRender": function (data, type, full) {
                     return accounting.formatNumber(full.SPREAD, 2, ".", ",")
                 }
 
-            },{
+            }, {
                 "aTargets": [14],
                 "mRender": function (data, type, full) {
                     return accounting.formatNumber(full.KURS_TRANSAKSI, 2, ".", ",")
                 }
 
-            },{
+            }, {
                 "aTargets": [15],
                 "mRender": function (data, type, full) {
                     return accounting.formatNumber(full.NOMINAL_PEMBAYARAN_IDR, 2, ".", ",");
                 }
 
-            },{
+            }, {
                 "aTargets": [16],
                 "mRender": function (data, type, full) {
                     return full.TGL_INVOICE;
                 }
 
-            },{
+            }, {
                 "aTargets": [17],
                 "mRender": function (data, type, full) {
                     return full.TGL_TERIMA_INVOICE;
                 }
 
-            },{
+            }, {
                 "aTargets": [18],
                 "mRender": function (data, type, full) {
                     return full.NO_INVOICE;
                 }
 
-            },{
+            }, {
                 "aTargets": [19],
                 "mRender": function (data, type, full) {
                     return full.TGL_NOTDIN;
                 }
 
-            },{
+            }, {
                 "aTargets": [20],
                 "mRender": function (data, type, full) {
                     return full.NO_NOTDIN;
                 }
 
-            },{
+            }, {
                 "aTargets": [21],
                 "mRender": function (data, type, full) {
                     return full.TGL_LUNAS;
                 }
 
-            },{
+            }, {
                 "aTargets": [22],
                 "mRender": function (data, type, full) {
                     return full.COUNT_DOWN;
                 }
 
-            },{
+            }, {
                 "aTargets": [23],
                 "mRender": function (data, type, full) {
                     return full.TIPE_TRANSAKSI;
                 }
 
-            },{
+            }, {
                 "aTargets": [24],
                 "mRender": function (data, type, full) {
                     return full.STATUS_TRACKING;
                 }
 
-            },{
+            }, {
                 "aTargets": [25],
                 "mRender": function (data, type, full) {
                     return full.DESKRIPSI;
                 }
 
-            },{
+            }, {
                 "aTargets": [26],
                 "mRender": function (data, type, full) {
 
                     var ret_value;
 
-                    if (newRoleUser[0] != "ROLE_KASIR_IDR" && newRoleUser[0] != "ROLE_KASIR" && newRoleUser[0] != "ROLE_ADMIN") {
+                    if (newRoleUser[0] != "ROLE_KASIR_IDR" && newRoleUser[0] != "ROLE_KASIR" && newRoleUser[0] != "ROLE_ADMIN" && newRoleUser[0] != "ROLE_KASIR_INVESTASI") {
 
-                        if(newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_MS_PEMBELANJAAN"|| newRoleUser[0] == "ROLE_MS_KEUKON" || newRoleUser[0] == "ROLE_MS_KEUKON"){
-                           return "-"
-                        }else{
+                        if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_MS_PEMBELANJAAN" || newRoleUser[0] == "ROLE_MS_KEUKON" || newRoleUser[0] == "ROLE_MS_KEUKON") {
+                            return "-"
+                        } else {
                             if (full.STATUS_TRACKING == "INPUT DATA") {
                                 ret_value =
                                     '<div class="btn-group">' +
@@ -877,18 +877,17 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
                             } else {
                                 ret_value =
                                     '<div class="btn-group">' +
-    //                                '<button style="width: 15px !important;" class="btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
                                     '<button style="width: 15px !important;" class="btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-remove"></i></button>' +
                                     '<button style="width: 15px !important;;" width="100px;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
                                     '</div>'
                             }
                         }
-                    }else{
+                    } else {
                         ret_value =
                             '<div class="btn-group">' +
+
                             '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>' +
                             '<button style="width: 15px !important;" class="btn-update-status btn-sm btn-warning" title="Update Status" onclick="show_modal(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-arrows-alt"></i></button>' +
-                            '<button style="width: 15px !important;" class="btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
                             '<button style="width: 15px !important;" class="btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-remove"></i></button>' +
                             '<button style="width: 15px !important;;" width="100px;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
                             '</div>'
@@ -921,12 +920,14 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
             $('th').removeClass('datatables_action');
             $('th').addClass('th-middle');
 
+
             $("#option-lunas").hide();
             $("#option-input").hide();
             $("#option-siap").hide();
             if (newRoleUser.length > 0) {
                 for (var i = 0; i < newRoleUser.length; i++) {
-                    if (newRoleUser[i] == "ROLE_KASIR" || newRoleUser[i] == "ROLE_KASIR_IDR") {
+                    if (newRoleUser[i] == "ROLE_KASIR" || newRoleUser[i] == "ROLE_KASIR_IDR" || newRoleUser[i] == "ROLE_KASIR_INVESTASI") {
+                        $(".btn-update-status").show();
                         $("#option-lunas").show();
                         $("#option-input").show();
                     } else if (newRoleUser[i] == "ROLE_ADMIN") {
@@ -935,13 +936,14 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
                         $("#option-input").show();
                     } else {
                         $("#option-siap").show();
+
                     }
                 }
             }
         }
     });
 
-    table_trepartite.on('search.dt', function() {
+    table_trepartite.on('search.dt', function () {
         var value = $('.dataTables_filter input').val();
         console.log(value); // <-- the value
         tempTableSearch = value;
@@ -949,11 +951,12 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
 
 }
 
-function upload_file(pIdValas){
+function upload_file(pIdValas) {
     $("#modal-upload-file").modal("show");
     $("#temp-id-valas-file").val(pIdValas);
-
     getFiles(pIdValas);
+    console.log("this id > ", pIdValas);
+
 }
 
 function getFiles(pIdValas) {
@@ -964,47 +967,67 @@ function getFiles(pIdValas) {
         data: {
             pIdValas: pIdValas
         },
-
         success: function (data) {
-            console.log("get files tripartite  : ",data);
+            console.log("get files tripartite  : ", data);
+            var html = '<a id="btn-download-bukti-pelaksanaan">-</a>';
+            var html1 = '<a id="btn-download-tanda-terima-invoice">-</a>';
+            var html2 = '<a id="btn-download-lembar-verifikasi">-</a>';
+            var html3 = '<a id="btn-download-file-tagihan">-</a>';
+            var html4 = '<a id="btn-download-nota-dinas-pembayaran">-</a>';
 
+            $("#btn-download-bukti-pelaksanaan").replaceWith(html);
+            $("#btn-download-tanda-terima-invoice").replaceWith(html1);
+            $("#btn-download-lembar-verifikasi").replaceWith(html2);
+            $("#btn-download-file-tagihan").replaceWith(html3);
+            $("#btn-download-nota-dinas-pembayaran").replaceWith(html4);
+            $("#btn-download-nota-dinas-pembayaran").empty();
             $.each(data.data_pembayaran.return, function (index, val) {
-                if(val.JENIS_FILE == 1){
-                    if(val.NAMA_FILE != "" || val.NAMA_FILE != null){
-                        var html  = '<a target="_blank" href="/filePath/'+ val.NAMA_FILE +'" id="btn-download-tanda-terima-invoice"><i class="fa fa-download"> '+val.NAMA_FILE+' </i></a>';
+                if (val.JENIS_FILE == null || val.JENIS_FILE == "") {
+                    var html1 = '<a id="btn-download-tanda-terima-invoice">-</a>';
+                    var html2 = '<a id="btn-download-lembar-verifikasi">-</a>';
+                    var html3 = '<a id="btn-download-file-tagihan">-</a>';
+                    var html4 = '<a id="btn-download-nota-dinas-pembayaran">-</a>';
+                    $("#btn-download-tanda-terima-invoice").replaceWith(html1);
+                    $("#btn-download-lembar-verifikasi").replaceWith(html2);
+                    $("#btn-download-file-tagihan").replaceWith(html3);
+                    $("#btn-download-nota-dinas-pembayaran").replaceWith(html4);
+                }
+                if (val.JENIS_FILE == 1) {
+                    if (val.NAMA_FILE != "" || val.NAMA_FILE != null) {
+                        var html = '<a target="_blank" href="/filePath/' + val.NAMA_FILE + '" id="btn-download-tanda-terima-invoice"><i class="fa fa-download"> ' + val.NAMA_FILE + ' </i></a>';
                         $("#btn-download-tanda-terima-invoice").replaceWith(html);
-                    }else{
-                        var html  = '<a id="btn-download-tanda-terima-invoice">-</a>';
+                    } else {
+                        var html = '<a id="btn-download-tanda-terima-invoice">-</a>';
                         $("#btn-download-tanda-terima-invoice").replaceWith(html);
                     }
                 }
 
-                if(val.JENIS_FILE == 2){
-                    if(val.NAMA_FILE != "" || val.NAMA_FILE != null){
-                        var html  = '<a target="_blank" href="/filePath/'+ val.NAMA_FILE +'" id="btn-download-lembar-verifikasi"><i class="fa fa-download"> '+val.NAMA_FILE+' </i></a>';
+                if (val.JENIS_FILE == 2) {
+                    if (val.NAMA_FILE != "" || val.NAMA_FILE != null) {
+                        var html = '<a target="_blank" href="/filePath/' + val.NAMA_FILE + '" id="btn-download-lembar-verifikasi"><i class="fa fa-download"> ' + val.NAMA_FILE + ' </i></a>';
                         $("#btn-download-lembar-verifikasi").replaceWith(html);
-                    }else{
-                        var html  = '<a id="btn-download-lembar-verifikasi">-</a>';
+                    } else {
+                        var html = '<a id="btn-download-lembar-verifikasi">-</a>';
                         $("#btn-download-lembar-verifikasi").replaceWith(html);
                     }
                 }
 
-                if(val.JENIS_FILE == 3){
-                    if(val.NAMA_FILE != "" || val.NAMA_FILE != null){
-                        var html  = '<a target="_blank" href="/filePath/'+ val.NAMA_FILE +'" id="btn-download-file-tagihan"><i class="fa fa-download"> '+val.NAMA_FILE+' </i></a>';
+                if (val.JENIS_FILE == 3) {
+                    if (val.NAMA_FILE != "" || val.NAMA_FILE != null) {
+                        var html = '<a target="_blank" href="/filePath/' + val.NAMA_FILE + '" id="btn-download-file-tagihan"><i class="fa fa-download"> ' + val.NAMA_FILE + ' </i></a>';
                         $("#btn-download-file-tagihan").replaceWith(html);
-                    }else{
-                        var html  = '<a id="btn-download-file-tagihan">-</a>';
+                    } else {
+                        var html = '<a id="btn-download-file-tagihan">-</a>';
                         $("#btn-download-file-tagihan").replaceWith(html);
                     }
                 }
 
-                if(val.JENIS_FILE == 4){
-                    if(val.NAMA_FILE != "" || val.NAMA_FILE != null){
-                        var html  = '<a target="_blank" href="/filePath/'+ val.NAMA_FILE +'" id="btn-download-nota-dinas-pembayaran"><i class="fa fa-download"> '+val.NAMA_FILE+' </i></a>';
+                if (val.JENIS_FILE == 4) {
+                    if (val.NAMA_FILE != "" || val.NAMA_FILE != null) {
+                        var html = '<a target="_blank" href="/filePath/' + val.NAMA_FILE + '" id="btn-download-nota-dinas-pembayaran"><i class="fa fa-download"> ' + val.NAMA_FILE + ' </i></a>';
                         $("#btn-download-nota-dinas-pembayaran").replaceWith(html);
-                    }else{
-                        var html  = '<a id="btn-download-nota-dinas-pembayaran">-</a>';
+                    } else {
+                        var html = '<a id="btn-download-nota-dinas-pembayaran">-</a>';
                         $("#btn-download-nota-dinas-pembayaran").replaceWith(html);
                     }
                 }
@@ -1023,15 +1046,15 @@ function upload_server(jenisFile) {
     var formData = new FormData(form);
     var jenisFile;
 
-    if (jenisFile=="1"){
+    if (jenisFile == "1") {
         formData.append('file', $('input[type=file]#file-tanda-terima-invoice')[0].files[0]);
         fileSize = $('input[type=file]#file-tanda-terima-invoice')[0].files[0].size / 1000;
         $("#file-tanda-terima-invoice").val('');
-    } else if (jenisFile=="2"){
+    } else if (jenisFile == "2") {
         formData.append('file', $('input[type=file]#file-lembar-verifikasi')[0].files[0]);
         fileSize = $('input[type=file]#file-lembar-verifikasi')[0].files[0].size / 1000;
         $("#file-lembar-verifikasi").val('');
-    } else if (jenisFile=="3"){
+    } else if (jenisFile == "3") {
         formData.append('file', $('input[type=file]#file-tagihan')[0].files[0]);
         fileSize = $('input[type=file]#file-tagihan')[0].files[0].size / 1000;
         $("#file-tagihan").val('');
@@ -1055,28 +1078,28 @@ function upload_server(jenisFile) {
         contentType: false,
         processData: false,
         success: function (data) {
-            console.log("response upload file : ",data);
-            if(data.return == 1){
+            console.log("response upload file : ", data);
+            if (data.return == 1) {
                 alert("Sukses upload file");
                 getFiles($("#temp-id-valas-file").val());
-            }else{
+            } else {
                 alert("Gagal upload file");
             }
             hideLoadingCss();
             setTimeout(function () {
-                  $('#modal-upload-file').modal({backdrop: 'static', keyboard: false});
-              }, 2000);
+                $('#modal-upload-file').modal({backdrop: 'static', keyboard: false});
+            }, 2000);
         },
         error: function () {
-          hideLoadingCss("Gagal upload file");
-          setTimeout(function () {
+            hideLoadingCss("Gagal upload file");
+            setTimeout(function () {
                 $('#modal-upload-file').modal({backdrop: 'static', keyboard: false});
             }, 2000);
         }
     });
 }
 
-function  show_modal(id) {
+function show_modal(id) {
     idTripartite = id;
     $('#edit-reverse-modal').modal({backdrop: 'static', keyboard: false});
 }
