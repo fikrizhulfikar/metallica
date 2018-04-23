@@ -14,4 +14,7 @@ running the project = java -jar <yours project name>.jar
 
 DEPLOY PROD
 
-ssh root@10.14.158.191
+login by terminal using "ssh root@10.14.158.191"
+the password "icon*123#"
+
+then looking for the folder valas
