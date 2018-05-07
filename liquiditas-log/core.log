@@ -1,0 +1,9 @@
+2018-04-06 13:39:47,267 INFO  c.i.liquiditas.core.ApplicationCore - Starting ApplicationCore on Indorental-1-PC with PID 7340 (E:\data\liquiditas\liquiditas-core\target\classes started by Indorental-1 in E:\data\liquiditas) 
+2018-04-06 13:39:47,268 INFO  c.i.liquiditas.core.ApplicationCore - The following profiles are active: development 
+2018-04-06 13:39:48,706 INFO  c.i.liquiditas.core.ApplicationCore - Started ApplicationCore in 1.803 seconds (JVM running for 2.766) 
+2018-04-06 13:40:08,678 INFO  c.i.liquiditas.core.ApplicationCore - Starting ApplicationCore on Indorental-1-PC with PID 7864 (E:\data\liquiditas\liquiditas-core\target\classes started by Indorental-1 in E:\data\liquiditas) 
+2018-04-06 13:40:08,679 INFO  c.i.liquiditas.core.ApplicationCore - The following profiles are active: development 
+2018-04-06 13:40:09,910 INFO  c.i.liquiditas.core.ApplicationCore - Started ApplicationCore in 1.495 seconds (JVM running for 2.713) 
+2018-04-06 13:41:36,603 INFO  c.i.liquiditas.core.ApplicationCore - Starting ApplicationCore on Indorental-1-PC with PID 8296 (E:\data\liquiditas\liquiditas-core\target\classes started by Indorental-1 in E:\data\liquiditas) 
+2018-04-06 13:41:36,603 INFO  c.i.liquiditas.core.ApplicationCore - The following profiles are active: development 
+2018-04-06 13:41:37,837 INFO  c.i.liquiditas.core.ApplicationCore - Started ApplicationCore in 1.504 seconds (JVM running for 2.845) 

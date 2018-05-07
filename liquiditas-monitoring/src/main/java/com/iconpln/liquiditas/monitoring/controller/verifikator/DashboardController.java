@@ -108,11 +108,14 @@ public class DashboardController {
     @RequestMapping(value = "/get_rencana_bayar_equivalen_rupiah", method = RequestMethod.GET)
     public Map getRencanaBayarEquivalenRupiah(@RequestParam(value = "pTgl_akhir", defaultValue = "") String tanggalAkhir) {
         try {
+            Map map = dashboardService.getRencanaBayarEquivalenRupiah(tanggalAkhir);
+            System.out.println("map" +map.toString());
             return dashboardService.getRencanaBayarEquivalenRupiah(tanggalAkhir);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+
 
     }
 

@@ -243,6 +243,7 @@ public class DashboardService {
                 .addValue("p_tanggal_akhir", tanggalAkhir);
         Map<String, Object> out = simpleJdbcCall.execute(in);
         AppUtils.getLogger(this).info("data getRencanaBayarEquivalenRupiah : {}", tanggalAkhir, out);
+        System.out.println("tanggalAkhir "+tanggalAkhir);
         return out;
     }
 
