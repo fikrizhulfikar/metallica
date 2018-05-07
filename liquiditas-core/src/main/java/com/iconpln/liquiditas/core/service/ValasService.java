@@ -101,6 +101,7 @@ public class ValasService {
         params.put("p_search", pSearch);
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
 
+
         AppUtils.getLogger(this).info("data get_rekap_pembayaran_pss : {}", resultset);
         return resultset;
     }
@@ -953,7 +954,7 @@ public class ValasService {
         return out;
     }
 
-
+    //PotensiPendapatan
     public Map<String, Object> getListPotensi() throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -979,6 +980,38 @@ public class ValasService {
         AppUtils.getLogger(this).info("data insSaldoPotensi : {}", out);
         return out;
     }
+
+    //Penarikan Kmk dan Penerimaan subsidi
+    public Map<String, Object> getListKmkSubsidi(String pJenis) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_dashboard_idr")
+                .withFunctionName("get_list_kmk_subsidi");
+
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_jenis", pJenis);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+
+        AppUtils.getLogger(this).info("data getListKmkSubsidi : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> insSaldoKmkSubsidi(String pKodeBank, String pJumlah, String pJenis) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_dashboard_idr")
+                .withFunctionName("ins_saldo_kmk_subsidi ");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_kode_bank", pKodeBank)
+                .addValue("p_jumlah", pJumlah)
+                .addValue("p_jenis", pJenis);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data insSaldoKmkSubsidi : {}", out);
+        return out;
+    }
+
 
     public Map<String, Object> uploadFileRekap(String pIdValas, String pJenisFile, BigDecimal pFileSize, String pFileName, String pUpdateBy) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())

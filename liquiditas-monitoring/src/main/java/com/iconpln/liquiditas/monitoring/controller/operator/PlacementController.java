@@ -41,6 +41,7 @@ public class PlacementController {
         }
     }
 
+    //potensi pendapatan
     @RequestMapping(value = "/get_potensi", method = RequestMethod.GET)
     public Map getListPotensi() {
         try {
@@ -50,6 +51,73 @@ public class PlacementController {
             return null;
         }
     }
+
+    @RequestMapping(value = "/ins_saldo_potensi", method = RequestMethod.POST)
+    public Map insSaldoPotensi(
+            @RequestParam(value = "pKodeBank", defaultValue = "") String pKodeBank,
+            @RequestParam(value = "pJumlah", defaultValue = "") String pJumlah
+    ) {
+        try {
+            return valasService.insSaldoPotensi(pKodeBank, pJumlah);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //penarikan kmk
+    @RequestMapping(value = "/get_penarikan_kmk", method = RequestMethod.GET)
+    public Map getListPenarikanKmk(
+            @RequestParam(value = "pJenis", defaultValue = "") String pJenis
+    ) {
+        try {
+            return valasService.getListKmkSubsidi(pJenis);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/ins_saldo_penarikan_kmk", method = RequestMethod.POST)
+    public Map insSaldoPenarikanKmk(
+            @RequestParam(value = "pJenis", defaultValue = "") String pJenis,
+            @RequestParam(value = "pKodeBank", defaultValue = "") String pKodeBank,
+            @RequestParam(value = "pJumlah", defaultValue = "") String pJumlah
+    ) {
+        try {
+            return valasService.insSaldoKmkSubsidi(pJenis,pKodeBank, pJumlah);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    //penerimaan subsidi
+    @RequestMapping(value = "/get_penerimaan_subsidi", method = RequestMethod.GET)
+    public Map getListPenerimaanSubsidi(
+            @RequestParam(value = "pJenis", defaultValue = "") String pJenis
+    ) {
+        try {
+            return valasService.getListKmkSubsidi(pJenis);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/ins_saldo_penerimaan_subsidi", method = RequestMethod.POST)
+    public Map insSaldoPenerimaanSubsidi(
+            @RequestParam(value = "pJenis", defaultValue = "") String pJenis,
+            @RequestParam(value = "pKodeBank", defaultValue = "") String pKodeBank,
+            @RequestParam(value = "pJumlah", defaultValue = "") String pJumlah
+    ) {
+        try {
+            return valasService.insSaldoKmkSubsidi(pJenis,pKodeBank, pJumlah);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     @RequestMapping(value = "/get_sumber_placement", method = RequestMethod.GET)
     public Map getSumberPlacement() {
@@ -93,19 +161,6 @@ public class PlacementController {
     ) {
         try {
             return valasService.insPlacement(pBank, pReceipt, pKmk, pSubsidi);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @RequestMapping(value = "/ins_saldo_potensi", method = RequestMethod.POST)
-    public Map insSaldoPotensi(
-            @RequestParam(value = "pKodeBank", defaultValue = "") String pKodeBank,
-            @RequestParam(value = "pJumlah", defaultValue = "") String pJumlah
-    ) {
-        try {
-            return valasService.insSaldoPotensi(pKodeBank, pJumlah);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

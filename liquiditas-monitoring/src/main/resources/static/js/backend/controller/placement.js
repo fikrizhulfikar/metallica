@@ -205,6 +205,51 @@ function getPlacementAwal() {
                     }
                     valas.push(temp)
                 }
+
+                if (value.JENIS == "imprest" && value.NAMA_BANK == "MANDIRI") {
+                    temp = {
+                        saldo_awal: {
+                            mandiri: value.SALDO_AWAL,
+                            tangal: value.TANGGAL
+                        },
+                        saldo_akhir: {
+                            mandiri: value.SALDO_AKHIR,
+                            tangal: value.TANGGAL
+                        }
+                    }
+                    imprest.push(temp)
+                }
+
+                if (value.JENIS == "investasi" && value.NAMA_BANK == "MANDIRI") {
+                    temp = {
+                        saldo_awal: {
+                            mandiri: value.SALDO_AWAL,
+                            tangal: value.TANGGAL
+                        },
+                        saldo_akhir: {
+                            mandiri: value.SALDO_AKHIR,
+                            tangal: value.TANGGAL
+                        }
+                    }
+                    investasi.push(temp)
+                }
+
+                if (value.JENIS == "operasi" && value.NAMA_BANK == "MANDIRI") {
+                    temp = {
+                        saldo_awal: {
+                            mandiri: value.SALDO_AWAL,
+                            tangal: value.TANGGAL
+                        },
+                        saldo_akhir: {
+                            mandiri: value.SALDO_AKHIR,
+                            tangal: value.TANGGAL
+                        }
+                    }
+                    operasi.push(temp)
+                }
+            });
+
+            $.each(res.return, function (index, value) {
                 if (value.JENIS == "valas" && value.NAMA_BANK == "BNI") {
                     for (var i = 0; i < valas.length; i++) {
                         valas[i].saldo_awal.bni = value.SALDO_AWAL;
@@ -225,20 +270,6 @@ function getPlacementAwal() {
                         valas[i].saldo_akhir.bukopin = value.SALDO_AKHIR;
                     }
                 }
-
-                if (value.JENIS == "imprest" && value.NAMA_BANK == "MANDIRI") {
-                    temp = {
-                        saldo_awal: {
-                            mandiri: value.SALDO_AWAL,
-                            tangal: value.TANGGAL
-                        },
-                        saldo_akhir: {
-                            mandiri: value.SALDO_AKHIR,
-                            tangal: value.TANGGAL
-                        }
-                    }
-                    imprest.push(temp)
-                }
                 if (value.JENIS == "imprest" && value.NAMA_BANK == "BNI") {
                     for (var i = 0; i < imprest.length; i++) {
                         imprest[i].saldo_awal.bni = value.SALDO_AWAL;
@@ -258,19 +289,7 @@ function getPlacementAwal() {
                     }
                 }
 
-                if (value.JENIS == "investasi" && value.NAMA_BANK == "MANDIRI") {
-                    temp = {
-                        saldo_awal: {
-                            mandiri: value.SALDO_AWAL,
-                            tangal: value.TANGGAL
-                        },
-                        saldo_akhir: {
-                            mandiri: value.SALDO_AKHIR,
-                            tangal: value.TANGGAL
-                        }
-                    }
-                    investasi.push(temp)
-                }
+
                 if (value.JENIS == "investasi" && value.NAMA_BANK == "BNI") {
                     for (var i = 0; i < investasi.length; i++) {
                         investasi[i].saldo_awal.bni = value.SALDO_AWAL;
@@ -290,19 +309,7 @@ function getPlacementAwal() {
                     }
                 }
 
-                if (value.JENIS == "operasi" && value.NAMA_BANK == "MANDIRI") {
-                    temp = {
-                        saldo_awal: {
-                            mandiri: value.SALDO_AWAL,
-                            tangal: value.TANGGAL
-                        },
-                        saldo_akhir: {
-                            mandiri: value.SALDO_AKHIR,
-                            tangal: value.TANGGAL
-                        }
-                    }
-                    operasi.push(temp)
-                }
+
                 if (value.JENIS == "operasi" && value.NAMA_BANK == "BNI") {
                     for (var i = 0; i < operasi.length; i++) {
                         operasi[i].saldo_awal.bni = value.SALDO_AWAL;
@@ -355,7 +362,7 @@ function getPlacementAwal() {
                 }
             });
 
-            // console.log("valas : ", valas);
+            console.log("valas : ", valas);
             // console.log("imprest : ", imprest);
             // console.log("investasi : ", investasi);
             // console.log("operasi : ", operasi);

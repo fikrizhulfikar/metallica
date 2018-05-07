@@ -54,7 +54,7 @@ function show_modal(id) {
     $('#edit-reverse-modal').modal({backdrop: 'static', keyboard: false});
 }
 
-function  show_modal_upd_ket(id) {
+function show_modal_upd_ket(id) {
     idValas = id;
     $('#edit-ket-modal').modal({backdrop: 'static', keyboard: false});
 }
@@ -62,20 +62,20 @@ function  show_modal_upd_ket(id) {
 function editKet() {
     showLoadingCss()
     $.ajax({
-        url: baseUrl+"api_operator/pembayaran/upd_ket",
+        url: baseUrl + "api_operator/pembayaran/upd_ket",
         dataType: 'JSON',
         type: "POST",
-        data : {
-            pIdValas : idValas,
-            pKeterangan : $("#pKeteranganNew").val(),
+        data: {
+            pIdValas: idValas,
+            pKeterangan: $("#pKeteranganNew").val(),
         },
         success: function (res) {
             hideLoadingCss("")
-            if(res.return == 1){
+            if (res.return == 1) {
                 alert("Sukses update keterangan");
                 idValas = "";
                 location.reload();
-            }else{
+            } else {
                 alert("Gagal update keterangan");
             }
         },
@@ -491,9 +491,9 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                 }
             },
             {
-                "aTargets": [ 19 ],
-                "mRender": function ( data, type, full ) {
-                     return "<a href='javascript:' onclick='show_modal_upd_ket(\"" + full.ID_VALAS + "\")'>"+full.DESKRIPSI+"<a>";
+                "aTargets": [20],
+                "mRender": function (data, type, full) {
+                    return "<a href='javascript:' onclick='show_modal_upd_ket(\"" + full.ID_VALAS + "\")'>" + full.DESKRIPSI + "<a>";
                 }
             }
         ],
@@ -584,9 +584,30 @@ function getFilesRekap(pIdValas) {
 
         success: function (data) {
             console.log("get files rekap  : ", data);
+            var html = '<a id="btn-download-bukti-pelaksanaan">-</a>';
+            var html1 = '<a id="btn-download-tanda-terima-invoice">-</a>';
+            var html2 = '<a id="btn-download-lembar-verifikasi">-</a>';
+            var html3 = '<a id="btn-download-file-tagihan">-</a>';
+            var html4 = '<a id="btn-download-nota-dinas-pembayaran">-</a>';
 
+            $("#btn-download-bukti-pelaksanaan").replaceWith(html);
+            $("#btn-download-tanda-terima-invoice").replaceWith(html1);
+            $("#btn-download-lembar-verifikasi").replaceWith(html2);
+            $("#btn-download-file-tagihan").replaceWith(html3);
+            $("#btn-download-nota-dinas-pembayaran").replaceWith(html4);
             $.each(data.data_pembayaran.return, function (index, val) {
-
+                if (val.JENIS_FILE == null || val.JENIS_FILE == "") {
+                    var html = '<a id="btn-download-bukti-pelaksanaan">-</a>';
+                    var html1 = '<a id="btn-download-tanda-terima-invoice">-</a>';
+                    var html2 = '<a id="btn-download-lembar-verifikasi">-</a>';
+                    var html3 = '<a id="btn-download-file-tagihan">-</a>';
+                    var html4 = '<a id="btn-download-nota-dinas-pembayaran">-</a>';
+                    $("#btn-download-bukti-pelaksanaan").replaceWith(html);
+                    $("#btn-download-tanda-terima-invoice").replaceWith(html1);
+                    $("#btn-download-lembar-verifikasi").replaceWith(html2);
+                    $("#btn-download-file-tagihan").replaceWith(html3);
+                    $("#btn-download-nota-dinas-pembayaran").replaceWith(html4);
+                }
                 if (val.JENIS_FILE == 1) {
                     if (val.NAMA_FILE != "" || val.NAMA_FILE != null) {
                         var html = '<a target="_blank" href="/filePath/' + val.NAMA_FILE + '" id="btn-download-tanda-terima-invoice"><i class="fa fa-download"> ' + val.NAMA_FILE + ' </i></a>';
@@ -626,6 +647,7 @@ function getFilesRekap(pIdValas) {
                         $("#btn-download-nota-dinas-pembayaran").replaceWith(html);
                     }
                 }
+
                 if (val.JENIS_FILE == 5) {
                     if (val.NAMA_FILE != "" || val.NAMA_FILE != null) {
                         var html = '<a target="_blank" href="/filePath/' + val.NAMA_FILE + '" id="btn-download-bukti-pelaksanaan"><i class="fa fa-download"> ' + val.NAMA_FILE + ' </i></a>';

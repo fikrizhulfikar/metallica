@@ -50,6 +50,7 @@ public class RestFilter implements Filter {
             List<Map<String, Object>> menus = userService.loadMenu(currentPrincipalName);
             List<Map<String, Object>> menuDerivatif = new ArrayList<>();
             List<Map<String, Object>> menuMaster = new ArrayList<>();
+            List<Map<String, Object>> menuPotensi = new ArrayList<>();
 
             if (menus == null) {
                 httpResponse.sendRedirect("/");
@@ -64,11 +65,15 @@ public class RestFilter implements Filter {
                         if(menus.get(i).get("root_id").equals("mnuTransaksiMaster") || menus.get(i).get("id").equals("mnuTransaksiMaster")){
                             menuMaster.add(menus.get(i));
                         }
+                        if(menus.get(i).get("root_id").equals("mnuPotensi")){
+                            menuPotensi.add(menus.get(i));
+                        }
                     }
                 }
                 session.setAttribute("menus", menus);
                 session.setAttribute("derivatif", menuDerivatif);
                 session.setAttribute("master", menuMaster);
+                session.setAttribute("potensi", menuPotensi);
 
                 System.out.println("SERVLET SESSION MENU : " + session.getAttribute("menus"));
 
