@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "fir-lmetalica",
+  "private_key_id": "31f45a15f19cf739296dbf093139b44c03672876",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDXllDZjFcYurOs\nqjP4ocWGDuyMhh/swz1/j0P/6s2wjwX2doL8nM47LeUNaMfvsKuD6k+gOL/rGDk8\nDYgZeSuElW0NMh2CwpdsWj6ZYVPhvRjpeZDSMviLHipt8t7N08/uJVtn3VyKWUJ5\nyLXvmjWM6oN0nnmnTZqKCR6HwriiSPGbmZk/bCoOoezsM8Uqn0IJ17m58hPmdM8L\nvlmvBNTBMIhe2WCoOiLgaGT2R+q2BK2r8uKRwyad1CnI4t4CXXtL2ASMXpSFlg8N\nr4sqGLh8VPMVHKKKD086R9ZD5RJkQ4u9Ey9oFjHK3lLwIymRSrXy8Uf6TMy3rNKM\nniqua0sPAgMBAAECggEADUNyNfAsa5kQ9M6D5AgP3u+MHhkiXa6lWfO2e0g232Xt\nN/ySkngTOBDaxrhrlJOJ+dOwkmrrY8tZuhgbB3Ys9zs6OlWa+zB9oGzs7QLP5lN7\n9OFFx6jbIbP5aEpI6uDdKgmiVgGIb/qN3HA8wUD7im/jJomZcnGT0Go/NpsEQPee\n5RiH7asZHthgi9/fxDzCUlpYTNvtGWFBMvs3i9tRH+dcJ8RD8wuAU/3MeBmEyGnC\n34AT7iwrlUKIPkikjAjoikmIR8K0hAv+WWaVAx/kUIC7gwaHWUaRMPqoab1k0NIP\nOvhkPjHYAp0fGItaoCqRnSuhBE57GO1LEDy9E40qAQKBgQD+zqsqTh0JEuN+EFPe\nxx7GyE7lS52dqbAGo1xWaSfo8rtQn6ET2xi9hrXQPnyHM3+t5fXgHnO6SpRMXmp3\nrY5bn04i9pNq/e5lwgMAPc6ARyFywltqDX5U1T501cmagmwiEO155udjSo2qzvj7\nMF3t3q7g150ROXxYbwtJYWg33QKBgQDYmKZ+zY+2s4WVMS5mIKzDcHnuYuMRVD0A\nAwXqcV0c3zBjfCVFOd0eRX/CDseF7UdUhMj7c03Jsdhnhde2ScvJHzNedJaSwILw\nEHC0+S9VpKBz5OkyZ12FFxP1d+W3/t2BOeK2GjF11lakuOHaWHfX13toJ8w29YeW\nt323obH12wKBgQDHMYcrlk8qhcKkDV2TfbQ4j+Tlabx4wWujdNe9kY0qlX8Low7I\nN/JaT1IYzpCJHSBGMMyK/SNZUe4m2XR/xITSaXIq8PoDnSleEVJJQQgKzhB+5yOR\nf6Tv6phdu7dT+3tPEk6jinf+7gxbqFuJ+qCjUP8DNGtMSNVFSOHY5rYTXQKBgQCP\n6fWOgVUBBw02EQSMVR+ViDFsBIZtKDSTwm521LYSjfVf1MgK1CSojXMS5LELupnP\nfZ7w/C7uWd25A0RN2YCu9K00EHFPttwJWFMa3Aroc8cs2idcFzQbTzcyvWSEObLB\nv010w7ijXDQbpMBkTK3sWz+i9/aHeeKKcQb2MVjGSwKBgQDIoH9kthdwqMeedG4u\n7nUTzP8LowQbELOE+rtC3WTbIKe6cepZ7Tyltd08FUh8tH/pwFAXZivkJYxasQE7\nS+gBgg3DR3xle6e/+nqdN7VGDvp+MmVFzl67pMsxF5zY0uMh/8AHGB3v7WarhiOD\nuaskhZ6bkEbPF3v8ZJHvLUUXBg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-ltuay@fir-lmetalica.iam.gserviceaccount.com",
+  "client_id": "112349521341599111989",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ltuay%40fir-lmetalica.iam.gserviceaccount.com"
+}
