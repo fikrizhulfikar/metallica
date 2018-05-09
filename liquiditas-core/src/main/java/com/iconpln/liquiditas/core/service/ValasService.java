@@ -99,8 +99,8 @@ public class ValasService {
         params.put("p_pembayaran", pPembayaran);
         params.put("p_user_id", pUserId);
         params.put("p_search", pSearch);
-        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
 
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
 
         AppUtils.getLogger(this).info("data get_rekap_pembayaran_pss : {}", resultset);
         return resultset;
@@ -154,6 +154,8 @@ public class ValasService {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_VALAS")
                 .withFunctionName("get_all_pembayaran_by_status");
+
+
 
         Map<String, Object> params = new HashMap<>();
         params.put("p_status_valas", pStatusValas);

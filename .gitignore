@@ -1,5 +1,7 @@
 liquiditas-core/target/
 Liquiditas-monitoring/target/
+Liquiditas-monitoring/liquiditas-log/*
+Liquiditas-log/*
 Liquiditas-scheduler/target/
 logs/
 upload_content_file/

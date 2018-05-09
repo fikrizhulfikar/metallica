@@ -79,4 +79,14 @@ public class ValasTests {
 			e.printStackTrace();
 		}
 	}
+
+	@Test
+	public void getListPembayaran() {
+		try {
+			valasService.getListPembayaran(1, 2, "20180101", "20180501", "BNI", "IDR", "ALL", "", "");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

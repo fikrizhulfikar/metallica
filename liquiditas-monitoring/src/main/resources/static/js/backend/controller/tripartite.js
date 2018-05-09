@@ -860,37 +860,83 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
 
                     var ret_value;
 
-                    if (newRoleUser[0] != "ROLE_KASIR_IDR" && newRoleUser[0] != "ROLE_KASIR" && newRoleUser[0] != "ROLE_ADMIN" && newRoleUser[0] != "ROLE_KASIR_INVESTASI") {
-
-                        if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_MS_PEMBELANJAAN" || newRoleUser[0] == "ROLE_MS_KEUKON" || newRoleUser[0] == "ROLE_MS_KEUKON") {
-                            return "-"
-                        } else {
-                            if (full.STATUS_TRACKING == "INPUT DATA") {
-                                ret_value =
-                                    '<div class="btn-group">' +
-                                    '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-update-status btn-sm btn-warning" title="Update Status" onclick="show_modal(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-arrows-alt"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-remove"></i></button>' +
-                                    '<button style="width: 15px !important;;" width="100px;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
-                                    '</div>'
-                            } else {
-                                ret_value =
-                                    '<div class="btn-group">' +
-                                    '<button style="width: 15px !important;" class="btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-remove"></i></button>' +
-                                    '<button style="width: 15px !important;;" width="100px;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
-                                    '</div>'
-                            }
-                        }
+                    if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
+                        return "-"
                     } else {
-                        ret_value =
-                            '<div class="btn-group">' +
+                        if (full.STATUS_TRACKING == "INPUT DATA") {
 
-                            '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>' +
-                            '<button style="width: 15px !important;" class="btn-update-status btn-sm btn-warning" title="Update Status" onclick="show_modal(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-arrows-alt"></i></button>' +
-                            '<button style="width: 15px !important;" class="btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-remove"></i></button>' +
-                            '<button style="width: 15px !important;;" width="100px;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
-                            '</div>'
+                            ret_value =
+                                '<div class="btn-group">' +
+                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified User" onclick="upd_status_tracking(\'' +full.ID_TRIPARTITE+'\',\'' +2+ '\')"><i class="fa fa-arrows-alt"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-close"></i></button>' +
+                                '</div>'
+                        }
+                        else if (full.STATUS_TRACKING == "VERIFIED BY USER") {
+
+                            ret_value =
+                                '<div class="btn-group">' +
+                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DM" onclick="upd_status_tracking(\'' +full.ID_TRIPARTITE+'\',\'' +3+ '\')"><i class="fa fa-arrows-alt"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-close"></i></button>' +
+                                '</div>'
+                        }
+                        else if (full.STATUS_TRACKING == "VERIFIED BY DM" && full.UPDATE_BY == "dmkeukonap"){
+
+                            ret_value =
+                                '<div class="btn-group">' +
+                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MS Keukon" onclick="upd_status_tracking(\'' +full.ID_TRIPARTITE+'\',\'' +8+ '\')"><i class="fa fa-arrows-alt"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-close"></i></button>' +
+                                '</div>'
+                        }
+                        else if (full.UPDATE_BY !== "dmkeukonap" && full.STATUS_TRACKING == "VERIFIED BY DM" || full.STATUS_TRACKING == "VERIFIED BY MS KEUKON"){
+
+                            ret_value =
+                                '<div class="btn-group">' +
+                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DM Pembelanjaan" onclick="upd_status_tracking(\'' +full.ID_TRIPARTITE+'\',\'' +4+ '\')"><i class="fa fa-arrows-alt"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-close"></i></button>' +
+                                '</div>'
+                        }
+                        else if (full.STATUS_TRACKING == "VERIFIED BY DM PEMBELANJAAN"){
+
+                            ret_value =
+                                '<div class="btn-group">' +
+                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Approve MS" onclick="upd_status_tracking(\'' +full.ID_TRIPARTITE+'\',\'' +5+ '\')"><i class="fa fa-arrows-alt"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-close"></i></button>' +
+                                '</div>'
+                        }
+                        else if (full.STATUS_TRACKING == "APPROVE BY MS"){
+
+                            ret_value =
+                                '<div class="btn-group">' +
+                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Lunas" onclick="upd_status_tracking(\'' +full.ID_TRIPARTITE+'\',\'' +7+ '\')"><i class="fa fa-arrows-alt"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-close"></i></button>' +
+                                '</div>'
+                        }
+
+                        else {
+                            ret_value =
+                                '<div class="btn-group">' +
+                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-close"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
+                                '</div>'
+                        }
                     }
 
                     return ret_value;
@@ -957,6 +1003,33 @@ function upload_file(pIdValas) {
     getFiles(pIdValas);
     console.log("this id > ", pIdValas);
 
+}
+function upd_status_tracking(idTripartite , pStatusinvoice){
+    showLoadingCss();
+    console.log("idvalas :",idTripartite);
+    console.log("satusinvoice :",pStatusinvoice);
+    $.ajax({
+        url: baseUrl + "api_operator/pembayaran/upd_status",
+        dataType: 'JSON',
+        type: "POST",
+        data: {
+            pIdValas: idTripartite,
+            pStatusInvoice: pStatusinvoice,
+        },
+        success: function (res) {
+            hideLoadingCss("")
+            console.log("data upd_status :", res);
+            if (res.return == 1) {
+                alert(res.OUT_MSG);
+                location.reload();
+            } else {
+                alert(res.OUT_MSG);
+            }
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
 }
 
 function getFiles(pIdValas) {
