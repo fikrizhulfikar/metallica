@@ -1,6 +1,9 @@
 package com.iconpln.liquiditas.core.service;
 
 import com.iconpln.liquiditas.core.utils.AppUtils;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import oracle.jdbc.OracleTypes;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -1001,7 +1004,7 @@ public class ValasService {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("pkg_dashboard_idr")
-                .withFunctionName("ins_saldo_penarikan_kmk ");
+                .withFunctionName("ins_saldo_penarikan_kmk");
 
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_kode_bank", pKodeBank, Types.VARCHAR)
