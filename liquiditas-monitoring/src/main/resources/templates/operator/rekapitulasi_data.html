@@ -33,6 +33,7 @@
         <li class="breadcrumb-item active" style="cursor: default">Rekapitulasi Data</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls(1)"><i class="icon-plus"></i>&nbsp;Input Xls</button>
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
                 <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS','ROLE_DM_LIKUIDITAS','ROLE_MS_PEMBELANJAAN','ROLE_MS_KEUKON','ROLE_KASIR_IDR','ROLE_KASIR')">
@@ -311,6 +312,36 @@
                     <div class="form-group">
                         <p>File bertipe .zip atau pdf</p>
                         <p>Disarankan Maksimal 5mb</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Selesai</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-upload-xls" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title_modal_upload_xls">UPLOAD FILE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="input_file_xls">
+                    <div class="form-group" style="display:none">
+                        <input type="text" class="form-control" id="temp-xls"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="file-tanda-terima-invoice">UPLOAD FILE XLS |
+                            <a th:href="@{/api_operator/pembayaran/download_template}" id="btn-download-template-data-pembayaran">
+                                Download Template
+                            </a></label>
+                        <input type="file" class="form-control" id="file-xls"
+                               accept="application/vnd.ms-excel" onchange="upload_server_xls('1')"/>
+
                     </div>
                 </div>
                 <div class="modal-footer">

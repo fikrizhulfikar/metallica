@@ -1073,3 +1073,74 @@ function upload_server(jenisFile) {
         }
     });
 }
+
+function upload_xls(pIdValas){
+    $("#modal-upload-xls").modal("show");
+    $("#temp-xls").val(pIdValas);
+
+    //getFilesRekap(pIdValas);
+}
+
+function upload_server_xls(jenisFile) {
+    $("#modal-upload-xls").modal("hide");
+    //showLoadingCss();
+    var form = $('form')[0];
+    var formData = new FormData(form);
+
+    formData.append('file', $('input[type=file]#file-xls')[0].files[0]);
+    fileSize = $('input[type=file]#file-xls')[0].files[0].size / 1000;
+    $("#file-xls").val('');
+
+
+    formData.append('pIdValas', $("#temp-xls").val());
+    formData.append('pJenisFile', jenisFile);
+    formData.append('pFileSize', fileSize);
+    console.log(formData);
+    $.ajax({
+        crossOrigin: true,
+        type: "POST",
+        url: baseUrl + "api_operator/pembayaran/upload_xls",
+        data: formData,
+        enctype: 'multipart/form-data',
+        cache: false,
+//        for jquery 1.6
+        contentType: false,
+        processData: false,
+        /*success: function (data) {
+            console.log("response upload file : ",data);
+            if(data.return == 1){
+                alert("Sukses upload file");
+                getFilesRekap($("#temp-xls").val());
+            }else{
+                alert("Gagal upload file");
+            }
+            hideLoadingCss();
+            setTimeout(function () {
+                $('#modal-upload-xls').modal({backdrop: 'static', keyboard: false});
+            }, 2000);
+        },
+        error: function () {
+            hideLoadingCss("Gagal upload file");
+            setTimeout(function () {
+                $('#modal-upload-xls').modal({backdrop: 'static', keyboard: false});
+            }, 2000);
+        }*/
+        success: function (res) {
+
+            hideLoadingCss("")
+            console.log("ins log : ", res);
+            if (res.return == 1) {
+                alert("sukses");
+//                location.reload();
+                search("load");
+                $('#modal-upload-xls').modal('hide');
+            } else {
+                // alert(res.OUT_MSG);
+                alert("gagal");
+            }
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
+        }
+    });
+}

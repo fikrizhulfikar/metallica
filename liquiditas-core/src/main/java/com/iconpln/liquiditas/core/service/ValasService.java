@@ -1,10 +1,8 @@
 package com.iconpln.liquiditas.core.service;
 
 import com.iconpln.liquiditas.core.utils.AppUtils;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import oracle.jdbc.OracleTypes;
+import org.apache.poi.hssf.usermodel.*;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,14 +10,19 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
-
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Table;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeParseException;
+import java.util.*;
 
 /**
  * Created by israjhaliri on 8/1/17.
@@ -1083,6 +1086,97 @@ public class ValasService {
                 .addValue("p_update_by", pUpdateBy);
         Map<String, Object> out = simpleJdbcCall.execute(in);
         AppUtils.getLogger(this).info("data updKetLunas : {}", out);
+        return out;
+    }
+
+
+    public Map<String, Object> uploadXls(InputStream path, String user) throws ParseException, SQLException{
+        Map<String, Object> out = null;
+        HSSFWorkbook workbook = null;
+        Iterator<Row> rowIterator = null;
+        HSSFRow row = null;
+        HSSFCell cell = null;
+        Map<String, Object> param = new HashMap<>();
+        List<Map<String,Object>> failedList =  new ArrayList<>();
+        try {
+            workbook = new HSSFWorkbook(path);
+            HSSFSheet sheet = workbook.getSheetAt(0);
+
+            rowIterator = sheet.iterator();
+            Row row1 = sheet.getRow(1);
+            List<String> list = new ArrayList<>();
+            int i =0;
+
+            while (rowIterator.hasNext()) {
+                row = (HSSFRow) rowIterator.next();
+                AppUtils.getLogger(this).info("rownumber : {}", row.getRowNum());
+                Row rrow = sheet.getRow(row.getRowNum());
+                for (int cellNum = 0; cellNum < rrow.getLastCellNum(); cellNum++){
+
+                    if(rrow.getCell(cellNum) == null){
+                        list.add("-");
+                    }
+                    else if(rrow.getCell(cellNum).getCellType() == Cell.CELL_TYPE_NUMERIC){
+                        if(HSSFDateUtil.isCellDateFormatted(rrow.getCell(cellNum))){
+                            DateFormat format = new SimpleDateFormat("dd-MMMM-yyyy", Locale.ENGLISH);
+                            AppUtils.getLogger(this).info("datatanggal {}: {}", rrow.getCell(cellNum).toString());
+                            list.add(new SimpleDateFormat("dd/MM/yyyy").format(format.parse(rrow.getCell(cellNum).toString())));
+                        }
+                        else {
+                            list.add(rrow.getCell(cellNum).toString());
+                            AppUtils.getLogger(this).info("datanumeric {}: {}", rrow.getCell(cellNum).toString(), row.getCell(cellNum).getCellType());
+
+                        }
+                    }
+                    else{
+                        /*if(rrow.getCell(cellNum).toString().equals("OPERASI")){
+                            rrow.getCell(cellNum).setCellValue("1");
+                        }*/
+                        list.add(rrow.getCell(cellNum).toString());
+                        AppUtils.getLogger(this).info("datastring {}: {}", rrow.getCell(cellNum).toString(), row.getCell(cellNum).getCellType());
+                    }
+                }
+                AppUtils.getLogger(this).debug("isi row : {}", list.toString());
+                if (!list.get(0).equals("Tipe Transaksi") && !list.get(0).isEmpty()){
+                    SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                            .withCatalogName("PKG_VALAS")
+                            .withFunctionName("ins_rekap_xls");
+
+                    SqlParameterSource inParent = new MapSqlParameterSource()
+                            .addValue("p_id_valas", "")
+                            .addValue("p_jenis_pembayaran", list.get(1))
+                            .addValue("p_tgl_jatuh_tempo", list.get(2))
+                            .addValue("p_vendor", list.get(3))
+                            .addValue("p_curr", list.get(4))
+                            .addValue("p_nilai_tagihan", list.get(5))
+                            .addValue("p_bank_tujuan", list.get(6))
+                            .addValue("p_bank_pembayar", list.get(7))
+                            .addValue("p_unit_penerima", list.get(8))
+                            .addValue("p_no_tagihan", list.get(10))
+                            .addValue("p_tgl_tagihan", "15/05/2018 ")
+                            .addValue("p_no_notdin", list.get(11))
+                            .addValue("p_tgl_notdin", "15/05/2018 ")
+                            .addValue("p_status_valas", list.get(13))
+                            .addValue("p_create_by", user)
+                            .addValue("p_deskripsi", list.get(14))
+                            .addValue("p_tipe_transaksi", list.get(0))
+                            .addValue("p_tgl_terima_invoice", list.get(9))
+                            .addValue("out_msg", OracleTypes.VARCHAR);
+                    AppUtils.getLogger(this).info("data p_tgl_jatuh_tempo : {}", inParent.getValue("p_tgl_jatuh_tempo"));
+                    AppUtils.getLogger(this).info("data p_tipe_transaksi : {}", inParent.getValue("p_tipe_transaksi"));
+                    out = simpleJdbcCall.execute(inParent);
+                    AppUtils.getLogger(this).info("data ins_rekap_data : {}", out);
+
+                }
+
+                list.clear();
+
+
+            }
+
+        } catch (IOException | NullPointerException e) {
+            e.printStackTrace();
+        }
         return out;
     }
 }

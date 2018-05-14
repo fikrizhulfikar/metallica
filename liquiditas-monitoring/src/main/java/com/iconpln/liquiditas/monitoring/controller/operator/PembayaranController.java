@@ -16,8 +16,11 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.*;
 
 /**
@@ -382,5 +385,48 @@ public class PembayaranController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @RequestMapping(value = "/upload_xls", method = RequestMethod.POST)
+    public Map<String, Object> uploadFileXls(
+            @RequestParam(value = "file") MultipartFile file,
+            @RequestParam(value = "pIdValas", defaultValue = "") String pIdValas,
+            @RequestParam(value = "pJenisFile", defaultValue = "") String pJenisFile,
+            @RequestParam(value = "pFileSize", defaultValue = "") String pFileSize,
+            HttpServletResponse response
+    ) throws IOException, ParseException, SQLException {
+        InputStream inputStream = file.getInputStream();
+        /*Map<String, Object> listFailed = Map<String, Object>*/
+        return valasService.uploadXls(inputStream, WebUtils.getUsernameLogin());
+
+//        return generateReport(response,listFailed,"result");
+//        return listFailed;
+    }
+
+    @RequestMapping(value = "/download_template", method = RequestMethod.GET)
+    public String export(HttpServletResponse response) {
+        return generateReport(response,null,"template");
+    }
+    public String generateReport(HttpServletResponse response, List<Map<String, Object>> listFailed, String type) {
+        try {
+            AppUtils.getLogger(this).debug("Masuknih : {}");
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            Map value = new HashMap();
+            String resource;
+            System.out.println("resources : "+type);
+                response.setHeader("Content-Disposition", "attachment; filename=\"template-rekapitulasi.xls\"");
+                resource = "classpath:/templates/report/template-rekapitulasi.xls";
+
+            System.out.println("resources : "+ resource);
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource(resource).getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, value);
+            workbook.write(os);
+            os.flush();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }
