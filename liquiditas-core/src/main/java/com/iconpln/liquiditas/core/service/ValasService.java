@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -984,33 +985,29 @@ public class ValasService {
     }
 
     //Penarikan Kmk dan Penerimaan subsidi
-    public Map<String, Object> getListKmkSubsidi(String pJenis) throws SQLException {
+    public Map<String, Object> getListKmk() throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("pkg_dashboard_idr")
-                .withFunctionName("get_list_kmk_subsidi");
+                .withFunctionName("get_list_penarikan_kmk");
 
+        Map<String, Object> out = simpleJdbcCall.execute();
 
-        SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("p_jenis", pJenis);
-        Map<String, Object> out = simpleJdbcCall.execute(in);
-
-        AppUtils.getLogger(this).info("data getListKmkSubsidi : {}", out);
+        AppUtils.getLogger(this).info("data getListKmk : {}", out);
         return out;
     }
 
-    public Map<String, Object> insSaldoKmkSubsidi(String pKodeBank, String pJumlah, String pJenis) throws SQLException {
+    public Map<String, Object> insSaldoKmk(String pKodeBank, String pJumlah) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("pkg_dashboard_idr")
-                .withFunctionName("ins_saldo_kmk_subsidi ");
+                .withFunctionName("ins_saldo_penarikan_kmk ");
 
         SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("p_kode_bank", pKodeBank)
-                .addValue("p_jumlah", pJumlah)
-                .addValue("p_jenis", pJenis);
+                .addValue("p_kode_bank", pKodeBank, Types.VARCHAR)
+                .addValue("p_jumlah", pJumlah, Types.VARCHAR);
         Map<String, Object> out = simpleJdbcCall.execute(in);
-        AppUtils.getLogger(this).info("data insSaldoKmkSubsidi : {}", out);
+        AppUtils.getLogger(this).info("data insSaldoKmk : {}", out);
         return out;
     }
 

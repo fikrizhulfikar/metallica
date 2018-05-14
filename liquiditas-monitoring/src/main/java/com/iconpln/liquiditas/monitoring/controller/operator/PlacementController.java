@@ -66,12 +66,10 @@ public class PlacementController {
     }
 
     //penarikan kmk
-    @RequestMapping(value = "/get_penarikan_kmk", method = RequestMethod.GET)
-    public Map getListPenarikanKmk(
-            @RequestParam(value = "pJenis", defaultValue = "") String pJenis
-    ) {
+    @RequestMapping(value = "/get_list_penarikan_kmk", method = RequestMethod.GET)
+    public Map getListPenarikanKmk() {
         try {
-            return valasService.getListKmkSubsidi(pJenis);
+            return valasService.getListKmk();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -80,19 +78,18 @@ public class PlacementController {
 
     @RequestMapping(value = "/ins_saldo_penarikan_kmk", method = RequestMethod.POST)
     public Map insSaldoPenarikanKmk(
-            @RequestParam(value = "pJenis", defaultValue = "") String pJenis,
             @RequestParam(value = "pKodeBank", defaultValue = "") String pKodeBank,
             @RequestParam(value = "pJumlah", defaultValue = "") String pJumlah
     ) {
         try {
-            return valasService.insSaldoKmkSubsidi(pJenis,pKodeBank, pJumlah);
+            return valasService.insSaldoKmk(pKodeBank, pJumlah);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
     //penerimaan subsidi
-    @RequestMapping(value = "/get_penerimaan_subsidi", method = RequestMethod.GET)
+   /* @RequestMapping(value = "/get_penerimaan_subsidi", method = RequestMethod.GET)
     public Map getListPenerimaanSubsidi(
             @RequestParam(value = "pJenis", defaultValue = "") String pJenis
     ) {
@@ -102,16 +99,15 @@ public class PlacementController {
             e.printStackTrace();
             return null;
         }
-    }
+    }*/
 
     @RequestMapping(value = "/ins_saldo_penerimaan_subsidi", method = RequestMethod.POST)
     public Map insSaldoPenerimaanSubsidi(
-            @RequestParam(value = "pJenis", defaultValue = "") String pJenis,
             @RequestParam(value = "pKodeBank", defaultValue = "") String pKodeBank,
             @RequestParam(value = "pJumlah", defaultValue = "") String pJumlah
     ) {
         try {
-            return valasService.insSaldoKmkSubsidi(pJenis,pKodeBank, pJumlah);
+            return valasService.insSaldoKmk(pKodeBank, pJumlah);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

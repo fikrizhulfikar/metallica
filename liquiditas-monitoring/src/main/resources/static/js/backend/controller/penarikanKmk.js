@@ -6,12 +6,9 @@ $(document).ready(function () {
 function getAllData() {
     showLoadingCss()
     $.ajax({
-        url: baseUrl + "/api_operator/placement/get_penarikan_kmk",
+        url: baseUrl + "/api_operator/placement/get_list_penarikan_kmk",
         dataType: 'JSON',
         type: "GET",
-        data: {
-          pJenis: "KMK"
-        },
         success: function (res) {
             hideLoadingCss("")
             console.log("list penarikan kmk : ",res);
@@ -62,12 +59,11 @@ $('table').on('click', '.btn', function()
         dataType: 'JSON',
         type: "POST",
         data : {
-            pJenis: "",
             pKodeBank: row.find('.kdbank_potensi').html(),
             pJumlah: row.find('input').val(),
         },
         success: function (res) {
-            console.log("res ins potensi : ",res);
+            console.log("res ins kmk : ",res);
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
                 location.reload();
