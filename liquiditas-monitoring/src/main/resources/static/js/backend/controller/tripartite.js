@@ -660,6 +660,10 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
     $('#table-trepartite').dataTable().fnDestroy();
     table_trepartite = $('#table-trepartite').DataTable({
         // "sDom": '<"H"ilr><"clear">t<"F"p>',
+        /*"dom": "<'row'<'small-12 columns'l><'toolbar'><'small-6 columns'f>r>"+
+        "t"+
+        "<'row'<'small-6 columns'i><'small-6 columns'p>>",*/
+        // "dom" : "<'row'   fl<'toolbar'>>",
         "serverSide": true,
         "searching": true,
         "oSearch": {"sSearch": tempTableSearch},
@@ -693,10 +697,11 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
             {width: 100, targets: 24},
             {width: 300, targets: 25},
             {width: 75, targets: 26},
+            {width: 12, targets: 27},
             {className: "datatables_action", "targets": [7, 8, 9, 10, 11, 12, 13, 14, 15, 18, 20, 22]},
             {
                 "bSortable": false,
-                "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 17, 19, 20, 21, 22, 23, 24, 25, 26]
+                "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27]
             },
             {
                 "aTargets": [0],
@@ -943,6 +948,20 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
 
                 }
 
+            },
+            {
+                "aTargets": [27],
+                "mRender": function (data, type, full) {
+
+                   var ret_value =
+                        '<div class="input-group">' +
+                        '<input type="checkbox" value="">'+
+                        '</div>';
+
+                    return ret_value;
+
+                }
+
             }
         ],
         "ajax": {
@@ -988,7 +1007,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
             }
         }
     });
-
+     // $("div.toolbar").html('<b>Custom tool bar! Text/images etc.</b>');
     table_trepartite.on('search.dt', function () {
         var value = $('.dataTables_filter input').val();
         console.log(value); // <-- the value

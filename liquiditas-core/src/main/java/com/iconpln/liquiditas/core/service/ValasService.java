@@ -1133,7 +1133,8 @@ public class ValasService {
                         if(HSSFDateUtil.isCellDateFormatted(rrow.getCell(cellNum))){
                             DateFormat format = new SimpleDateFormat("dd-MMMM-yyyy", Locale.ENGLISH);
                             AppUtils.getLogger(this).info("datatanggal {}: {}", rrow.getCell(cellNum).toString());
-                            list.add(new SimpleDateFormat("dd/MM/yyyy").format(format.parse(rrow.getCell(cellNum).toString())));
+
+                            list.add(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(format.parse(rrow.getCell(cellNum).toString())));
                         }
                         else {
                             list.add(rrow.getCell(cellNum).toString());
@@ -1160,7 +1161,7 @@ public class ValasService {
                             .addValue("p_nomor", x)
                             .addValue("p_id_upload", idUpload)
                             .addValue("p_jenis_pembayaran", list.get(1))
-                            .addValue("p_tgl_jatuh_tempo", list.get(2))
+                            .addValue("p_tgl_jatuh_tempo", list.get(2) + " 00:00")
                             .addValue("p_vendor", list.get(3))
                             .addValue("p_curr", list.get(4))
                             .addValue("p_nilai_tagihan", list.get(5))
@@ -1168,14 +1169,14 @@ public class ValasService {
                             .addValue("p_bank_pembayar", list.get(7))
                             .addValue("p_unit_penerima", list.get(8))
                             .addValue("p_no_tagihan", list.get(10))
-                            .addValue("p_tgl_tagihan", "15/05/2018 ")
+                            .addValue("p_tgl_tagihan", "15/05/2018 00:00")
                             .addValue("p_no_notdin", list.get(11))
-                            .addValue("p_tgl_notdin", "15/05/2018 ")
+                            .addValue("p_tgl_notdin", "15/05/2018 00:00")
                             .addValue("p_status_valas", list.get(13))
                             .addValue("p_create_by", user)
                             .addValue("p_deskripsi", list.get(14))
                             .addValue("p_tipe_transaksi", list.get(0))
-                            .addValue("p_tgl_terima_invoice", list.get(9))
+                            .addValue("p_tgl_terima_invoice", list.get(9) + " 00:00")
                             .addValue("out_msg", OracleTypes.VARCHAR);
                     AppUtils.getLogger(this).info("data p_tgl_jatuh_tempo : {}", inParent.getValue("p_tgl_jatuh_tempo"));
                     AppUtils.getLogger(this).info("data p_tipe_transaksi : {}", inParent.getValue("p_tipe_transaksi"));
@@ -1193,7 +1194,7 @@ public class ValasService {
                     .addValue("p_id_upload", idUpload);
             out = simpleJdbcCall.execute(inParent);
 
-            AppUtils.getLogger(this).info("data ins_rekap_data_xls : {}", out);
+            AppUtils.getLogger(this).info("data ins tempttorekap : {}", out);
         } catch (IOException | NullPointerException e) {
             e.printStackTrace();
         }

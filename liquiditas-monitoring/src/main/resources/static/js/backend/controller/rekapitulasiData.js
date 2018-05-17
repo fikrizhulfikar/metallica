@@ -1129,7 +1129,7 @@ function upload_server_xls(jenisFile) {
 
             hideLoadingCss("")
             console.log("ins log : ", res);
-            if (res.return == 1) {
+            if (res.V_RETURN == 0) {
                 alert("sukses");
 //                location.reload();
                 search("load");

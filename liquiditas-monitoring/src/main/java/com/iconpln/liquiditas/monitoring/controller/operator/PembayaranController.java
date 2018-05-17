@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -415,7 +416,98 @@ public class PembayaranController {
             return null;
         }
     }
+    /*@RequestMapping(value = "/xls_idr", method = RequestMethod.GET)
+    public String exportIdr(HttpServletResponse response,
+                            @RequestParam(value = "pTglTerpusat", defaultValue = "") String pTglTerpusat,
+                            @RequestParam(value = "pTglImport", defaultValue = "") String pTglImport,
+                            @RequestParam(value = "pTglRupiah", defaultValue = "") String pTglRupiah)
+    {
+        try {
 
+            String title = "LAPORAN DASHBOARD IDR";
+            String namaFile = "dashboard_idr.xls";
+
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
+
+            List<Map<String, Object>> listDataSaldoIdrImprest = (List<Map<String, Object>>) dashboardService.getSaldoIdrImprest().get("return");
+            List<Map<String, Object>> listTotalSaldoIdrImprest = (List<Map<String, Object>>) dashboardService.getSaldoIdrImprest().get("OUT_TOTAL");
+
+            List<Map<String, Object>> listRealisasiPlacement = (List<Map<String, Object>>) dashboardService.getRealisasiPlacement().get("return");
+            List<Map<String, Object>> listDataBankRealisasiPlacement = (List<Map<String, Object>>) dashboardService.getRealisasiPlacement().get("OUT_PIE_IMPREST");
+
+            List<Map<String, Object>> listDataSaldoIdrSubsidiKmk = (List<Map<String, Object>>) dashboardService.getSaldoIdrSubsidiKmk().get("return");
+            List<Map<String, Object>> listTotalSaldoIdrSubsidiKmk = (List<Map<String, Object>>) dashboardService.getSaldoIdrSubsidiKmk().get("OUT_TOTAL");
+
+            List<Map<String, Object>> listDataSaldoIdrReceipt = (List<Map<String, Object>>) dashboardService.getSaldoIdrReceipt().get("return");
+            List<Map<String, Object>> listTotalSaldoIdrReceipt = (List<Map<String, Object>>) dashboardService.getSaldoIdrReceipt().get("OUT_TOTAL");
+
+            List<Map<String, Object>> listBayarImprestOperasiTerpusat = (List<Map<String, Object>>) dashboardService.getRencanaBayarImprestOperasiTerpusat(pTglTerpusat).get("return");
+
+            List<Map<String, Object>> listBayarImprestImport = (List<Map<String, Object>>) dashboardService.getRencanaBayarImprestDanImport(pTglImport).get("return");
+
+            List<Map<String, Object>> listBayarEquivalenRupiah = (List<Map<String, Object>>) dashboardService.getRencanaBayarEquivalenRupiah(pTglRupiah).get("return");
+
+            List<Map<String, Object>> listJenisPembayaran = (List<Map<String, Object>>) dashboardService.getRekapJenisPembayaran().get("return");
+            List<Map<String, Object>> listTotalJenisPembayaran = (List<Map<String, Object>>) dashboardService.getRekapJenisPembayaran().get("OUT_TOTAL");
+
+            AppUtils.getLogger(this).info("LIST DATA DETAIL IMPRST : {}", listDataSaldoIdrImprest.toString());
+            AppUtils.getLogger(this).info("LIST DATA TOTAL IMPRST : {}", listTotalSaldoIdrImprest.toString());
+            AppUtils.getLogger(this).info("LIST DATA REALISASI PLACEMENT : {}", listRealisasiPlacement.toString());
+            //AppUtils.getLogger(this).info("LIST DATA BANK PLACEMENT : {}", listDataBankRealisasiPlacement.toString());
+            AppUtils.getLogger(this).info("LIST DATA DETAIL PINBUK, KMK, SUBSIDI : {}", listDataSaldoIdrSubsidiKmk.toString());
+            AppUtils.getLogger(this).info("LIST DATA TOTAL PINBUK, KMK, SUBSIDI : {}", listTotalSaldoIdrSubsidiKmk.toString());
+            AppUtils.getLogger(this).info("LIST DATA DETAIL RECEIPT : {}", listDataSaldoIdrReceipt.toString());
+            AppUtils.getLogger(this).info("LIST DATA TOTAL RECEIPT : {}", listTotalSaldoIdrReceipt.toString());
+
+            //AppUtils.getLogger(this).info("LIST DATA DETAIL BAYAR OPERASI DAN INVESTASI TERPUSAT : {}", listBayarImprestOperasiTerpusat.toString());
+            AppUtils.getLogger(this).info("LIST DATA DETAIL BAYAR IMPREST DAN IMPORT : {}", listBayarImprestImport.toString());
+            AppUtils.getLogger(this).info("LIST DATA DETAIL BAYAR EQUIVALEN RUPIAH : {}", listBayarEquivalenRupiah.toString());
+
+            AppUtils.getLogger(this).info("LIST DATA JENIS PEMBAYARAN : {}", listJenisPembayaran.toString());
+            AppUtils.getLogger(this).info("LIST TOTAL JENIS PEMBAYARAN: {}", listTotalJenisPembayaran.toString());
+
+            Map param = new HashMap();
+            Date myDate = new Date();
+            param.put("TGL_CETAK", new SimpleDateFormat("dd-MM-yyyy").format(myDate));
+            param.put("TITLE", title);
+            param.put("DETAIL_IMPRST", listDataSaldoIdrImprest);
+            param.put("TOTAL_IMPRST", listTotalSaldoIdrImprest);
+            param.put("DETAIL_PINBUK_KMK_SUBSIDI", listDataSaldoIdrSubsidiKmk);
+            param.put("TOTAL_PINBUK_KMK_SUBSIDI", listTotalSaldoIdrSubsidiKmk);
+
+            param.put("DETAIL_RECEIPT", listDataSaldoIdrReceipt);
+            param.put("TOTAL_RECEIPT", listTotalSaldoIdrReceipt);
+            //param.put("DETAIL_REALISASI_PLACEMENT", listDataRealisasiPlacement);
+            param.put("DETAIL_BANK_REALISASI_PLACEMENT", listDataBankRealisasiPlacement);
+            param.put("DETAIL_REALISASI_PLACEMENT", listRealisasiPlacement);
+            param.put("DETAIL_BAYAR_TERPUSAT", listBayarImprestOperasiTerpusat);
+            param.put("DETAIL_BAYAR_IMPREST_IMPORT", listBayarImprestImport);
+            param.put("DETAIL_BAYAR_EQUIVALEN_RUPIAH", listBayarEquivalenRupiah);
+
+            param.put("DATE1", AppUtils.getDateByPlus(0));
+            param.put("DATE2", AppUtils.getDateByPlus(1));
+            param.put("DATE3", AppUtils.getDateByPlus(2));
+            param.put("DATE4", AppUtils.getDateByPlus(3));
+            param.put("DATE5", AppUtils.getDateByPlus(4));
+            param.put("DATE6", AppUtils.getDateByPlus(5));
+            param.put("DATE7", AppUtils.getDateByPlus(6));
+            param.put("DETAIL_JENIS_PEMBAYARAN", listJenisPembayaran);
+            param.put("TOTAL_JENIS_PEMBAYARAN", listTotalJenisPembayaran);
+
+
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/dashboard_idr.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }*/
     @RequestMapping(value = "/download_template", method = RequestMethod.GET)
     public String export(HttpServletResponse response) {
         return generateReport(response,null,"template");
