@@ -1089,6 +1089,17 @@ public class ValasService {
         return out;
     }
 
+    public String getIdUpload (){
+        AppUtils.getLogger(this).info("siapsiap");
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_valas")
+                .withFunctionName("generate_id_upload");
+
+        Map<String, Object> out = simpleJdbcCall.execute();
+        AppUtils.getLogger(this).info("data getIdUpload : {}", out.get("return"));
+        String idUpload = out.get("return").toString();
+        return idUpload;
+    }
 
     public Map<String, Object> uploadXls(InputStream path, String user) throws ParseException, SQLException{
         Map<String, Object> out = null;
@@ -1097,6 +1108,8 @@ public class ValasService {
         HSSFRow row = null;
         HSSFCell cell = null;
         Map<String, Object> param = new HashMap<>();
+        String idUpload = getIdUpload();
+        int i = 0;
         List<Map<String,Object>> failedList =  new ArrayList<>();
         try {
             workbook = new HSSFWorkbook(path);
@@ -1105,7 +1118,7 @@ public class ValasService {
             rowIterator = sheet.iterator();
             Row row1 = sheet.getRow(1);
             List<String> list = new ArrayList<>();
-            int i =0;
+            int x =0;
 
             while (rowIterator.hasNext()) {
                 row = (HSSFRow) rowIterator.next();
@@ -1138,12 +1151,14 @@ public class ValasService {
                 }
                 AppUtils.getLogger(this).debug("isi row : {}", list.toString());
                 if (!list.get(0).equals("Tipe Transaksi") && !list.get(0).isEmpty()){
+                    x++;
                     SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                            .withCatalogName("PKG_VALAS")
-                            .withFunctionName("ins_rekap_xls");
-
+                            .withCatalogName("pkg_valas")
+                            .withFunctionName("ins_rekap_temp");
+//                            .withFunctionName("ins_rekap_data");
                     SqlParameterSource inParent = new MapSqlParameterSource()
-                            .addValue("p_id_valas", "")
+                            .addValue("p_nomor", x)
+                            .addValue("p_id_upload", idUpload)
                             .addValue("p_jenis_pembayaran", list.get(1))
                             .addValue("p_tgl_jatuh_tempo", list.get(2))
                             .addValue("p_vendor", list.get(3))
@@ -1165,15 +1180,20 @@ public class ValasService {
                     AppUtils.getLogger(this).info("data p_tgl_jatuh_tempo : {}", inParent.getValue("p_tgl_jatuh_tempo"));
                     AppUtils.getLogger(this).info("data p_tipe_transaksi : {}", inParent.getValue("p_tipe_transaksi"));
                     out = simpleJdbcCall.execute(inParent);
-                    AppUtils.getLogger(this).info("data ins_rekap_data : {}", out);
+                    AppUtils.getLogger(this).info("data totemp : {}", out);
 
                 }
-
                 list.clear();
-
-
             }
 
+           SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                    .withCatalogName("pkg_valas")
+                    .withFunctionName("return_cursor");
+            SqlParameterSource inParent = new MapSqlParameterSource()
+                    .addValue("p_id_upload", idUpload);
+            out = simpleJdbcCall.execute(inParent);
+
+            AppUtils.getLogger(this).info("data ins_rekap_data_xls : {}", out);
         } catch (IOException | NullPointerException e) {
             e.printStackTrace();
         }

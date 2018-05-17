@@ -403,6 +403,19 @@ public class PembayaranController {
 //        return listFailed;
     }
 
+    @RequestMapping(value = "/get_id_upload", method = RequestMethod.GET)
+    public Map getIdUpload() {
+        Map data = new HashMap();
+        try {
+            data.put("path", WebUtils.getFilePath());
+            data.put("data_pembayaran", valasService.getIdUpload());
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @RequestMapping(value = "/download_template", method = RequestMethod.GET)
     public String export(HttpServletResponse response) {
         return generateReport(response,null,"template");
