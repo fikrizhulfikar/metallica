@@ -700,7 +700,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
             {width: 12, targets: 27},
             {className: "datatables_action", "targets": [7, 8, 9, 10, 11, 12, 13, 14, 15, 18, 20, 22]},
             {
-                "bSortable": false,
+                "bSortable": true,
                 "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27]
             },
             {
@@ -981,7 +981,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
             }
         },
         "drawCallback": function (settings) {
-            $('th').removeClass('sorting_asc');
+            // $('th').removeClass('sorting_asc');
             $('th').removeClass('datatables_action');
             $('th').addClass('th-middle');
 

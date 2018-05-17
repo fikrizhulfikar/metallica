@@ -75,7 +75,7 @@ public class ValasService {
         return out;
     }
 
-    public List<Map<String, Object>> getListPembayaran(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pPembayaran, String pUserId, String pSearch) throws SQLException {
+    public List<Map<String, Object>> getListPembayaran(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pPembayaran, String pUserId, String sortBy, String sortDir, String pSearch) throws SQLException {
 
         AppUtils.getLogger(this).debug("data rekap search info = " +
                         "start : {}, " +
@@ -87,25 +87,30 @@ public class ValasService {
                         "pPembayaran : {}," +
                         "pStatusValas : {}," +
                         "pUserId : {}," +
+                        "pSortBy : {}," +
+                        "pSortDir : {}," +
                         "pSearch : {},",
 
-                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, pUserId, pSearch);
+                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, pUserId, sortBy, sortDir, pSearch);
 
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_VALAS")
-                .withFunctionName("get_rekap_pembayaran_pss");
+                .withCatalogName("PKG_TEST_VALAS")
+                .withFunctionName("get_rekap_pembayaran_pss3");
 
-        Map<String, Object> params = new HashMap<>();
-        params.put("p_start", pStart);
-        params.put("p_length", pLength);
-        params.put("p_tgl_awal", pTglAwal);
-        params.put("p_tgl_akhir", pTglAkhir);
-        params.put("p_bank", pBank);
-        params.put("p_cur", pCurrency);
-        params.put("p_pembayaran", pPembayaran);
-        params.put("p_user_id", pUserId);
-        params.put("p_search", pSearch);
+
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_start", pStart, Types.INTEGER)
+                .addValue("p_length", pLength, Types.INTEGER)
+                .addValue("p_tgl_awal", pTglAwal, Types.VARCHAR)
+                .addValue("p_tgl_akhir", pTglAkhir, Types.VARCHAR)
+                .addValue("p_bank", pBank, Types.VARCHAR)
+                .addValue("p_cur", pCurrency, Types.VARCHAR)
+                .addValue("p_pembayaran", pPembayaran, Types.VARCHAR)
+                .addValue("p_user_id", pUserId, Types.VARCHAR)
+                .addValue("p_sort_by", sortBy, Types.VARCHAR)
+                .addValue("p_sort_dir", sortDir, Types.VARCHAR)
+                .addValue("p_search", pSearch, Types.VARCHAR);
 
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
 
@@ -596,7 +601,7 @@ public class ValasService {
         return out;
     }
 
-    public List<Map<String, Object>> getListTripartite(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pJenisPembayaran, String pStatus, String username, String pSearch) throws SQLException {
+    public List<Map<String, Object>> getListTripartite(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pJenisPembayaran, String pStatus, String username, String sortBy, String sortDir, String pSearch) throws SQLException {
 
         AppUtils.getLogger(this).debug("data rekap search info = " +
                         "start : {}, " +
@@ -606,15 +611,17 @@ public class ValasService {
                         "pBank : {}, " +
                         "status : {}, " +
                         "pJenisPembayaran : {}," +
+                        "pSortBy : {}," +
+                        "pSortDir : {}," +
                         "pSearch : {},",
 
 
-                pStart, pLength, pTglAwal, pTglAkhir, pBank, pStatus, pJenisPembayaran, pSearch);
+                pStart, pLength, pTglAwal, pTglAkhir, pBank, pStatus, pJenisPembayaran, sortBy, sortDir, pSearch);
 
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_VALAS")
-                .withFunctionName("get_tripartite_pss");
+                .withCatalogName("PKG_TEST_VALAS")
+                .withFunctionName("get_tripartite_pss3");
 
         Map<String, Object> params = new HashMap<>();
         params.put("p_start", pStart);
@@ -625,6 +632,8 @@ public class ValasService {
         params.put("p_jenis_pembayaran", pJenisPembayaran);
         params.put("p_status", pStatus);
         params.put("p_user_id", username);
+        params.put("p_sort_by", sortBy);
+        params.put("p_sort_dir", sortDir);
         params.put("p_search", pSearch);
 
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
