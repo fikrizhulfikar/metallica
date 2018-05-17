@@ -81,8 +81,10 @@ function processTracking() {
         alert("Masukkan No Tagihan");
 
     } else {
+        showLoadingCss();
+        console.log("showLoading");
         $.ajax({
-            async: false,
+            async: true,
             type: "GET",
             global: false,
             dataType: 'JSON',
@@ -107,6 +109,7 @@ function processTracking() {
                     $("#table-tracking tbody").append(newHtml);
                     $("#all_table").show();
                 });
+                hideLoadingCss();
             },
             error: function () {
                 hideLoadingCss("Gagal Melakukan Proses, Harap Hubungi Administrator")
