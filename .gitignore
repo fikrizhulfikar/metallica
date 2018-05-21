@@ -30,3 +30,4 @@ build/
 nbbuild/
 nbdist/
 .nb-gradle/
+/liquiditas-monitoring/liquiditas-log/monitoring.log
