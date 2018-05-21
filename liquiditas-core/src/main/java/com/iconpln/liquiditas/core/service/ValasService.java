@@ -1191,7 +1191,8 @@ public class ValasService {
                     .withCatalogName("pkg_valas")
                     .withFunctionName("return_cursor");
             SqlParameterSource inParent = new MapSqlParameterSource()
-                    .addValue("p_id_upload", idUpload);
+                    .addValue("p_id_upload", idUpload)
+                    .addValue("p_jenis_laporan", 1);
             out = simpleJdbcCall.execute(inParent);
 
             AppUtils.getLogger(this).info("data ins tempttorekap : {}", out);
@@ -1199,5 +1200,16 @@ public class ValasService {
             e.printStackTrace();
         }
         return out;
+    }
+    public Map<String, Object> getErrorData(String idUpload) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_valas")
+                .withFunctionName("return_cursor");
+        SqlParameterSource inParent = new MapSqlParameterSource()
+                .addValue("p_id_upload", idUpload)
+                .addValue("p_jenis_laporan", 1);
+//        out = simpleJdbcCall.execute(inParent);
+        return simpleJdbcCall.execute(inParent);
     }
 }

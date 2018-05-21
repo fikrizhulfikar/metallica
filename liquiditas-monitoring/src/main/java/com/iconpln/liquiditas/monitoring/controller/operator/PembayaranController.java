@@ -508,20 +508,38 @@ public class PembayaranController {
             return null;
         }
     }*/
-    @RequestMapping(value = "/download_template", method = RequestMethod.GET)
-    public String export(HttpServletResponse response) {
-        return generateReport(response,null,"template");
+    @RequestMapping(value = "/download_template/{jenis}/{idUpload}", method = RequestMethod.GET)
+    public String export(HttpServletResponse response,
+                         @PathVariable String idUpload,
+                         @PathVariable String jenis) throws SQLException {
+        AppUtils.getLogger(this).info("DOWNLOAD {} ID UPLOAD : {}", jenis, idUpload);
+        if(idUpload == "0"){
+
+            return generateReport(response,null,jenis);
+        }
+        else {
+            return generateReport(response,valasService.getErrorData(idUpload),jenis);
+        }
     }
-    public String generateReport(HttpServletResponse response, List<Map<String, Object>> listFailed, String type) {
+    public String generateReport(HttpServletResponse response, Map<String, Object> errorData, String type) {
         try {
-            AppUtils.getLogger(this).debug("Masuknih : {}");
+            AppUtils.getLogger(this).debug("Masuknih : {}", errorData);
             ServletOutputStream os = response.getOutputStream();
             response.setContentType("application/vnd.ms-excel");
             Map value = new HashMap();
+            value.put("listFailed", errorData.get("return"));
+            System.out.println("value : "+value);
             String resource;
             System.out.println("resources : "+type);
-                response.setHeader("Content-Disposition", "attachment; filename=\"template-rekapitulasi.xls\"");
-                resource = "classpath:/templates/report/template-rekapitulasi.xls";
+            if(type.contains("template")){
+                response.setHeader("Content-Disposition", "attachment; filename=\""+type+".xls\"");
+                resource = "classpath:/templates/report/"+type+".xls";
+            }
+            else {
+                response.setHeader("Content-Disposition", "attachment; filename=\"data_"+type+"_error.xls\"");
+                resource = "classpath:/templates/report/"+type+".xls";
+            }
+
 
             System.out.println("resources : "+ resource);
             XLSTransformer transformer = new XLSTransformer();

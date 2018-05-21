@@ -441,7 +441,7 @@ function getAllData() {
         },
         success: function (res) {
             allData = res;
-//            console.log(allData)
+         console.log("alldata",allData)
         },
         error: function (res) {
             console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
@@ -1083,7 +1083,7 @@ function upload_xls(pIdValas){
 
 function upload_server_xls(jenisFile) {
     $("#modal-upload-xls").modal("hide");
-    //showLoadingCss();
+    showLoadingCss();
     var form = $('form')[0];
     var formData = new FormData(form);
 
@@ -1106,37 +1106,16 @@ function upload_server_xls(jenisFile) {
 //        for jquery 1.6
         contentType: false,
         processData: false,
-        /*success: function (data) {
-            console.log("response upload file : ",data);
-            if(data.return == 1){
-                alert("Sukses upload file");
-                getFilesRekap($("#temp-xls").val());
-            }else{
-                alert("Gagal upload file");
-            }
-            hideLoadingCss();
-            setTimeout(function () {
-                $('#modal-upload-xls').modal({backdrop: 'static', keyboard: false});
-            }, 2000);
-        },
-        error: function () {
-            hideLoadingCss("Gagal upload file");
-            setTimeout(function () {
-                $('#modal-upload-xls').modal({backdrop: 'static', keyboard: false});
-            }, 2000);
-        }*/
         success: function (res) {
-
-            hideLoadingCss("")
-            console.log("ins log : ", res);
-            if (res.V_RETURN == 0) {
+            hideLoadingCss("");
+            if (res == 0) {
                 alert("sukses");
 //                location.reload();
                 search("load");
-                $('#modal-upload-xls').modal('hide');
             } else {
-                // alert(res.OUT_MSG);
-                alert("gagal");
+                var obj = res.return[0];
+                alert("Terdapat kesalahan pada data. Download excel?");
+                window.location = "../api_operator/pembayaran/download_template/rekapitulasi/"+obj["ID_UPLOAD"];
             }
         },
         error: function () {
