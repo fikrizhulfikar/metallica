@@ -441,7 +441,7 @@ function getAllData() {
         },
         success: function (res) {
             allData = res;
-         console.log("alldata",allData)
+//            console.log(allData)
         },
         error: function (res) {
             console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)

@@ -1,8 +1,16 @@
 package com.iconpln.liquiditas.monitoring;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.iconpln.liquiditas.core.service.ValasService;
+import com.iconpln.liquiditas.monitoring.service.FirebaseNotificationService;
+import com.iconpln.liquiditas.monitoring.service.FirebaseNotificationService.FirebaseNotification;
 import com.iconpln.liquiditas.monitoring.service.NotificationService;
 import com.iconpln.liquiditas.monitoring.utils.MailUtils;
+import java.util.function.BiConsumer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -82,11 +90,35 @@ public class ValasTests {
 
 	@Test
 	public void getListPembayaran() {
+//		try {
 		try {
-			valasService.getListPembayaran(1, 2, "20180101", "20180501", "BNI", "IDR", "ALL", "", "");
+			valasService.getListPembayaran(1, 10, "01/01/2018", "01/05/2019"
+					, "ALL", "ALL", "ALL"
+					, "admin", "JENIS_PEMBAYARAN", "DESC"
+					, "").forEach(stringObjectMap -> {
+						stringObjectMap.forEach(new BiConsumer<String, Object>() {
+							@Override
+							public void accept(String s, Object o) {
+								System.out.println("Key: " + s);
+								System.out.println("Val: " + o);
+							}
+						});
+			});
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+	}
+
+	@Autowired
+	private DatabaseReference databaseReference;
+
+	@Autowired
+	private FirebaseNotificationService service;
+	@Test
+	public void test() {
 	}
 
 }

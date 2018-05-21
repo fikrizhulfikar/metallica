@@ -41,6 +41,7 @@ function setSelectBank(idHtml, jenis, jenisBank, idForSelected, form) {
         url: baseUrl + "api_master/bank/get_data_bank",
         dataType: 'JSON',
         type: "GET",
+        sync: true,
         data: {
             pJenis: jenis,
             pJenisBank: jenisBank,
@@ -93,7 +94,7 @@ function setSelectCurr(idHtml, jenis, idForSelected, form) {
         url: baseUrl + "api_master/curr/get_data_curr",
         dataType: 'JSON',
         type: "GET",
-        async: false,
+        sync: true,
         data: {
             pJenis: jenis,
             pForm: form
@@ -206,7 +207,7 @@ function setSelectJenisPembayaran(idHtml, jenis, idForSelected) {
         url: baseUrl + "api_master/jenis_pembayaran/get_data_list_pembayaran",
         dataType: 'JSON',
         type: "GET",
-        async :false,
+        sync :true,
         data: {
             pJenis: jenis
         },

@@ -57,11 +57,13 @@ public class PembayaranController {
             @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
             @RequestParam(value = "pPembayaran", defaultValue = "ALL") String pPembayaran,
             @RequestParam(value = "search[value]", defaultValue = "") String pSearch
-            ) {
+    ) {
 
+        String sortBy = parseColumn(sortIndex);
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
         List<Map<String, Object>> list = new ArrayList<>();
         try {
-            list = valasService.getListPembayaran(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, WebUtils.getUsernameLogin(), pSearch);
+            list = valasService.getListPembayaran(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, WebUtils.getUsernameLogin(), sortBy, sortDir, pSearch);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -552,4 +554,50 @@ public class PembayaranController {
         }
         return null;
     }
+
+    private String parseColumn(int index) {
+        switch (index) {
+            case 1:
+                return "JENIS_PEMBAYARAN";
+            case 2:
+                return "JATUH_TEMPO";
+            case 3:
+                return "VENDOR";
+            case 4:
+                return "CURRENCY";
+            case 5:
+                return "TAGIHAN";
+            case 6:
+                return "UNIT";
+            case 7:
+                return "BANK_TUJUAN";
+            case 8:
+                return "BANK_PEMBAYAR";
+            case 9:
+                return "TGL_TAGIHAN";
+            case 10:
+                return "NO_TAGIHAN";
+            case 11:
+                return "TLG_NOTDIN";
+            case 12:
+                return "NO_NOTDIN";
+            case 13:
+                return "TGL_LUNAS";
+            case 14:
+                return "COUNT_DOWN";
+            case 15:
+                return "TLG_NOTDIN";
+            case 16:
+                return "STATUS_VALAS";
+            case 17:
+                return "TIPE_TRANSAKSI";
+            case 18:
+                return "STATUS_TRACKING";
+            case 19:
+                return "DESKRIPSI";
+            default:
+                return "JENIS_PEMBAYARAN";
+        }
+    }
+
 }

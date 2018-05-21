@@ -85,9 +85,10 @@ public class TripartiteController {
             @RequestParam(value = "search[value]", defaultValue = "") String pSearch
     ) {
 
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
         List<Map<String, Object>> list = new ArrayList<>();
         try {
-            list = valasService.getListTripartite(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pJenisPembayaran, pStatus,WebUtils.getUsernameLogin(), pSearch);
+            list = valasService.getListTripartite(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pJenisPembayaran, pStatus,WebUtils.getUsernameLogin(), parseColumn(sortIndex), sortDir, pSearch);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -266,4 +267,58 @@ public class TripartiteController {
             return null;
         }
     }
+
+    public String parseColumn(int index) {
+        switch (index) {
+            case 1:
+                return "JENIS_PEMBAYARAN";
+            case 2:
+                return "JATUH_TEMPO";
+            case 3:
+                return "H_MIN2_JATUH_TEMPO";
+            case 4:
+                return "VENDOR";
+            case 5:
+                return "BANK_COUNTERPARTY";
+            case 6:
+                return "CURRENCY";
+            case 7:
+                return "NOMINAL_SEBELUM_PAJAK";
+            case 8:
+                return "NOMINAL_SETELAH_PAJAK";
+            case 9:
+                return "NOMINAL_DENGAN_UNDERLYING";
+            case 10:
+                return "NOMINAL_TANPA_UNDERLYING";
+            case 11:
+                return "KURS_JISDOR";
+            case 12:
+                return "SPREAD";
+            case 13:
+                return "KURS_TRANSAKSI";
+            case 14:
+                return "NOMINAL_PEMBAYARAN_IDR";
+            case 15:
+                return "TGL_TERIMA_TAGIHAN";
+            case 16:
+                return "TGL_TAGIHAN";
+            case 17:
+                return "NO_TAGIHAN";
+            case 18:
+                return "TGL_NOTDIN";
+            case 19:
+                return "TGL_PEMBAYARAN";
+            case 20:
+                return "COUNTDOWN";
+            case 21:
+                return "TIPE_TRANSAKSI";
+            case 22:
+                return "STATUS_TAGIHAN";
+            case 23:
+                return "KETERANGAN";
+            default:
+                return "JENIS_PEMBAYARAN";
+        }
+    }
+
 }

@@ -16,9 +16,5 @@ public class FirebaseNotificationServiceTest {
     @Autowired
     private FirebaseNotificationService firebaseNotificationService;
 
-    @Test
-    public void test() {
-        firebaseNotificationService.send();
-    }
 
 }
