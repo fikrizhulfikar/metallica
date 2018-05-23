@@ -244,6 +244,157 @@ public class ValasService {
         return out;
     }
 
+    public String getIdUpload (){
+        AppUtils.getLogger(this).info("siapsiap");
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_valas")
+                .withFunctionName("generate_id_upload");
+
+        Map<String, Object> out = simpleJdbcCall.execute();
+        AppUtils.getLogger(this).info("data getIdUpload : {}", out.get("return"));
+        String idUpload = out.get("return").toString();
+        return idUpload;
+    }
+
+    public Map<String, Object> uploadXls(InputStream path, String user, String jenisFile) throws ParseException, SQLException{
+        Map<String, Object> out = null;
+        HSSFWorkbook workbook = null;
+        Iterator<Row> rowIterator = null;
+        HSSFRow row = null;
+        HSSFCell cell = null;
+        Map<String, Object> param = new HashMap<>();
+        String idUpload = getIdUpload();
+        int i = 0;
+        List<Map<String,Object>> failedList =  new ArrayList<>();
+        try {
+
+            workbook = new HSSFWorkbook(path);
+            HSSFSheet sheet = workbook.getSheetAt(0);
+            AppUtils.getLogger(this).info("pathurl : {}", path);
+            rowIterator = sheet.iterator();
+            Row row1 = sheet.getRow(1);
+            List<String> list = new ArrayList<>();
+            int x =0;
+
+            while (rowIterator.hasNext()) {
+                row = (HSSFRow) rowIterator.next();
+                Row rrow = sheet.getRow(row.getRowNum());
+                for (int cellNum = 0; cellNum < rrow.getLastCellNum(); cellNum++){
+
+                    if(rrow.getCell(cellNum) == null){
+                        list.add("-");
+                    }
+                    else if(rrow.getCell(cellNum).getCellType() == Cell.CELL_TYPE_NUMERIC){
+                        if(HSSFDateUtil.isCellDateFormatted(rrow.getCell(cellNum))){
+                            DateFormat format = new SimpleDateFormat("dd-MMMM-yyyy", Locale.ENGLISH);
+                            AppUtils.getLogger(this).info("datatanggal {}: {}", rrow.getCell(cellNum).toString());
+
+                            list.add(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(format.parse(rrow.getCell(cellNum).toString())));
+                        }
+                        else {
+                            list.add(rrow.getCell(cellNum).toString());
+                            AppUtils.getLogger(this).info("datanumeric {}: {}", rrow.getCell(cellNum).toString(), row.getCell(cellNum).getCellType());
+                        }
+                    }
+                    else{
+                        list.add(rrow.getCell(cellNum).toString());
+                        AppUtils.getLogger(this).info("datastring {}: {}", rrow.getCell(cellNum).toString(), row.getCell(cellNum).getCellType());
+                    }
+                }
+
+                if (!list.get(0).toLowerCase().equals("tipe transaksi") && !list.get(0).isEmpty()){
+                    x++;
+                    SqlParameterSource inParent;
+                    SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate()).withCatalogName("pkg_valas");
+                    if(jenisFile.equals("1")){
+                        simpleJdbcCall.withFunctionName("ins_rekap_temp");
+                        AppUtils.getLogger(this).debug("jenisFile : {}",jenisFile+"insrekap" );
+                         inParent = new MapSqlParameterSource()
+                                .addValue("p_nomor", x)
+                                .addValue("p_id_upload", idUpload)
+                                .addValue("p_jenis_pembayaran", list.get(1))
+                                .addValue("p_tgl_jatuh_tempo", list.get(2) + " 00:00")
+                                .addValue("p_vendor", list.get(3))
+                                .addValue("p_curr", list.get(4))
+                                .addValue("p_nilai_tagihan", list.get(5))
+                                .addValue("p_bank_tujuan", list.get(6))
+                                .addValue("p_bank_pembayar", list.get(7))
+                                .addValue("p_unit_penerima", list.get(8))
+                                .addValue("p_no_tagihan", list.get(10))
+                                .addValue("p_tgl_tagihan", "15/05/2018 00:00")
+                                .addValue("p_no_notdin", list.get(11))
+                                .addValue("p_tgl_notdin", "15/05/2018 00:00")
+                                .addValue("p_status_valas", list.get(13))
+                                .addValue("p_create_by", user)
+                                .addValue("p_deskripsi", list.get(14))
+                                .addValue("p_tipe_transaksi", list.get(0))
+                                .addValue("p_tgl_terima_invoice", list.get(9) + " 00:00")
+                                .addValue("out_msg", OracleTypes.VARCHAR);
+                    }else{
+                        simpleJdbcCall.withFunctionName("ins_tripartite_to_temp");
+                        inParent = new MapSqlParameterSource()
+                                .addValue("p_nomor", x)
+                                .addValue("p_id_upload", idUpload)
+                                .addValue("p_bank", list.get(5))
+                                .addValue("p_tgl_jatuh_tempo", list.get(2))
+                                .addValue("p_curr", list.get(6))
+                                .addValue("p_vendor", list.get(4))
+                                .addValue("p_jenis_pembayaran", list.get(1))
+                                .addValue("p_nominal_sblm_pajak", list.get(7))
+                                .addValue("p_pajak", list.get(8))
+                                .addValue("p_nominal_underlying", list.get(9))
+                                .addValue("p_nominal_tanpa_underlying", list.get(10))
+                                .addValue("p_kurs_jisdor", list.get(11))
+                                .addValue("p_spread", list.get(12))
+                                .addValue("p_no_invoice", list.get(15))
+                                .addValue("p_tgl_invoice", list.get(14))
+                                .addValue("p_no_notdin", list.get(16))
+                                .addValue("p_tgl_notdin", list.get(17))
+                                .addValue("p_status_tripartite", list.get(17))
+//                                .addValue("p_status_tripartite", user)
+                                .addValue("p_create_by", user)
+                                .addValue("p_deskripsi", list.get(18))
+                                .addValue("p_tipe_transaksi", list.get(0))
+                                .addValue("p_tgl_terima_invoice", list.get(13))
+                                .addValue("out_msg", OracleTypes.VARCHAR);
+                        AppUtils.getLogger(this).debug("jenisFile {} : {}", jenisFile, "tripartit" );
+                    }
+
+                    AppUtils.getLogger(this).info("data p_tgl_terima_invoice : {}", inParent.getValue("p_tgl_jatuh_tempo"));
+                    AppUtils.getLogger(this).info("data p_tipe_transaksi : {}", inParent.getValue("p_tipe_transaksi"));
+                    out = simpleJdbcCall.execute(inParent);
+                    AppUtils.getLogger(this).info("datatotemp : {}", out);
+
+                }
+                list.clear();
+            }
+
+            SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                    .withCatalogName("pkg_valas")
+                    .withFunctionName("return_cursor");
+            SqlParameterSource inParent = new MapSqlParameterSource()
+                    .addValue("p_id_upload", idUpload)
+                    .addValue("p_jenis_laporan", jenisFile);
+            out = simpleJdbcCall.execute(inParent);
+
+            AppUtils.getLogger(this).info("data ins tempttorekap : {}", out);
+        } catch (IOException | NullPointerException e) {
+            e.printStackTrace();
+        }
+        return out;
+    }
+    public Map<String, Object> getErrorData(String idUpload, String idJenis) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_valas")
+                .withFunctionName("return_cursor");
+        SqlParameterSource inParent = new MapSqlParameterSource()
+                .addValue("p_id_upload", idUpload)
+                .addValue("p_jenis_laporan", idJenis);
+//        out = simpleJdbcCall.execute(inParent);
+        return simpleJdbcCall.execute(inParent);
+    }
+
     //    derivatif
     public Map<String, Object> insDeviratif(
             String pIdProduct, String pIdDeviratif, String pTglDeal, String pBank,
@@ -1098,127 +1249,4 @@ public class ValasService {
         return out;
     }
 
-    public String getIdUpload (){
-        AppUtils.getLogger(this).info("siapsiap");
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("pkg_valas")
-                .withFunctionName("generate_id_upload");
-
-        Map<String, Object> out = simpleJdbcCall.execute();
-        AppUtils.getLogger(this).info("data getIdUpload : {}", out.get("return"));
-        String idUpload = out.get("return").toString();
-        return idUpload;
-    }
-
-    public Map<String, Object> uploadXls(InputStream path, String user) throws ParseException, SQLException{
-        Map<String, Object> out = null;
-        HSSFWorkbook workbook = null;
-        Iterator<Row> rowIterator = null;
-        HSSFRow row = null;
-        HSSFCell cell = null;
-        Map<String, Object> param = new HashMap<>();
-        String idUpload = getIdUpload();
-        int i = 0;
-        List<Map<String,Object>> failedList =  new ArrayList<>();
-        try {
-            workbook = new HSSFWorkbook(path);
-            HSSFSheet sheet = workbook.getSheetAt(0);
-
-            rowIterator = sheet.iterator();
-            Row row1 = sheet.getRow(1);
-            List<String> list = new ArrayList<>();
-            int x =0;
-
-            while (rowIterator.hasNext()) {
-                row = (HSSFRow) rowIterator.next();
-                AppUtils.getLogger(this).info("rownumber : {}", row.getRowNum());
-                Row rrow = sheet.getRow(row.getRowNum());
-                for (int cellNum = 0; cellNum < rrow.getLastCellNum(); cellNum++){
-
-                    if(rrow.getCell(cellNum) == null){
-                        list.add("-");
-                    }
-                    else if(rrow.getCell(cellNum).getCellType() == Cell.CELL_TYPE_NUMERIC){
-                        if(HSSFDateUtil.isCellDateFormatted(rrow.getCell(cellNum))){
-                            DateFormat format = new SimpleDateFormat("dd-MMMM-yyyy", Locale.ENGLISH);
-                            AppUtils.getLogger(this).info("datatanggal {}: {}", rrow.getCell(cellNum).toString());
-
-                            list.add(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(format.parse(rrow.getCell(cellNum).toString())));
-                        }
-                        else {
-                            list.add(rrow.getCell(cellNum).toString());
-                            AppUtils.getLogger(this).info("datanumeric {}: {}", rrow.getCell(cellNum).toString(), row.getCell(cellNum).getCellType());
-
-                        }
-                    }
-                    else{
-                        /*if(rrow.getCell(cellNum).toString().equals("OPERASI")){
-                            rrow.getCell(cellNum).setCellValue("1");
-                        }*/
-                        list.add(rrow.getCell(cellNum).toString());
-                        AppUtils.getLogger(this).info("datastring {}: {}", rrow.getCell(cellNum).toString(), row.getCell(cellNum).getCellType());
-                    }
-                }
-                AppUtils.getLogger(this).debug("isi row : {}", list.toString());
-                if (!list.get(0).equals("Tipe Transaksi") && !list.get(0).isEmpty()){
-                    x++;
-                    SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                            .withCatalogName("pkg_valas")
-                            .withFunctionName("ins_rekap_temp");
-//                            .withFunctionName("ins_rekap_data");
-                    SqlParameterSource inParent = new MapSqlParameterSource()
-                            .addValue("p_nomor", x)
-                            .addValue("p_id_upload", idUpload)
-                            .addValue("p_jenis_pembayaran", list.get(1))
-                            .addValue("p_tgl_jatuh_tempo", list.get(2) + " 00:00")
-                            .addValue("p_vendor", list.get(3))
-                            .addValue("p_curr", list.get(4))
-                            .addValue("p_nilai_tagihan", list.get(5))
-                            .addValue("p_bank_tujuan", list.get(6))
-                            .addValue("p_bank_pembayar", list.get(7))
-                            .addValue("p_unit_penerima", list.get(8))
-                            .addValue("p_no_tagihan", list.get(10))
-                            .addValue("p_tgl_tagihan", "15/05/2018 00:00")
-                            .addValue("p_no_notdin", list.get(11))
-                            .addValue("p_tgl_notdin", "15/05/2018 00:00")
-                            .addValue("p_status_valas", list.get(13))
-                            .addValue("p_create_by", user)
-                            .addValue("p_deskripsi", list.get(14))
-                            .addValue("p_tipe_transaksi", list.get(0))
-                            .addValue("p_tgl_terima_invoice", list.get(9) + " 00:00")
-                            .addValue("out_msg", OracleTypes.VARCHAR);
-                    AppUtils.getLogger(this).info("data p_tgl_jatuh_tempo : {}", inParent.getValue("p_tgl_jatuh_tempo"));
-                    AppUtils.getLogger(this).info("data p_tipe_transaksi : {}", inParent.getValue("p_tipe_transaksi"));
-                    out = simpleJdbcCall.execute(inParent);
-                    AppUtils.getLogger(this).info("data totemp : {}", out);
-
-                }
-                list.clear();
-            }
-
-           SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                    .withCatalogName("pkg_valas")
-                    .withFunctionName("return_cursor");
-            SqlParameterSource inParent = new MapSqlParameterSource()
-                    .addValue("p_id_upload", idUpload)
-                    .addValue("p_jenis_laporan", 1);
-            out = simpleJdbcCall.execute(inParent);
-
-            AppUtils.getLogger(this).info("data ins tempttorekap : {}", out);
-        } catch (IOException | NullPointerException e) {
-            e.printStackTrace();
-        }
-        return out;
-    }
-    public Map<String, Object> getErrorData(String idUpload) throws SQLException {
-
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("pkg_valas")
-                .withFunctionName("return_cursor");
-        SqlParameterSource inParent = new MapSqlParameterSource()
-                .addValue("p_id_upload", idUpload)
-                .addValue("p_jenis_laporan", 1);
-//        out = simpleJdbcCall.execute(inParent);
-        return simpleJdbcCall.execute(inParent);
-    }
 }

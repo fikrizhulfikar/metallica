@@ -1115,7 +1115,7 @@ function upload_server_xls(jenisFile) {
             } else {
                 var obj = res.return[0];
                 alert("Terdapat kesalahan pada data. Download excel?");
-                window.location = "../api_operator/pembayaran/download_template/rekapitulasi/"+obj["ID_UPLOAD"];
+                window.location = "../api_operator/pembayaran/download/rekapitulasi/1/"+obj["ID_UPLOAD"];
             }
         },
         error: function () {
