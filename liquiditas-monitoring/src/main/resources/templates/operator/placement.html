@@ -42,21 +42,23 @@
                         <table width="100%" id="table-set-dana" class="table table-bordered"
                                style="margin-bottom: 0px !important;">
                             <thead>
-                                <tr>
-                                    <th width="10%;">BANK</th>
-                                    <th width="20%;">Outstanding Sumber Dana</th>
-                                    <th width="10%;">MANDIRI</th>
-                                    <th width="10%;">BRI</th>
-                                    <th width="10%;">BNI</th>
-                                    <th width="10%;">BUKOPIN</th>
-                                </tr>
+                            <tr>
+                                <th width="10%;">BANK</th>
+                                <th width="20%;">Outstanding Sumber Dana</th>
+                                <th width="10%;">MANDIRI</th>
+                                <th width="10%;">BRI</th>
+                                <th width="10%;">BNI</th>
+                                <th width="10%;">BUKOPIN</th>
+                            </tr>
                             </thead>
                             <tbody>
                             </tbody>
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <button sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_SETTLEMENT','ROLE_MS_LIKUIDITAS','ROLE_DM_SETTLEMENT','ROLE_DM_INSTANSI_VERTIKAL','ROLE_DM_RECEIPT','ROLE_DM_TERPUSAT','ROLE_MS_PENDAPATAN')" type="button" class="btn btn-info" onclick="recordSetDana()">Save</button>
+                        <button sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_SETTLEMENT','ROLE_MS_LIKUIDITAS','ROLE_DM_SETTLEMENT','ROLE_DM_INSTANSI_VERTIKAL','ROLE_DM_RECEIPT','ROLE_DM_TERPUSAT','ROLE_MS_PENDAPATAN')"
+                                type="button" class="btn btn-info" onclick="recordSetDana()">Save
+                        </button>
                     </div>
                 </div>
             </div>
@@ -97,7 +99,10 @@
                             <th style="background: #B8CCE4; vertical-align: middle !important;" rowspan="2" colspan="2">
                                 KETERANGAN
                             </th>
-                            <th style="background: #00B0F0; vertical-align: middle !important;" colspan="6">IMPREST VALAS <button style="float: right;" onclick="exportXls(5)"><i class="icon-docs"></i>&nbsp;Xls</button>
+                            <th style="background: #00B0F0; vertical-align: middle !important;" colspan="6">IMPREST
+                                VALAS
+                                <button style="float: right;" onclick="exportXls(5)"><i class="icon-docs"></i>&nbsp;Xls
+                                </button>
                             </th>
                         <tr>
                             <th style="background: #00B0F0" width="19%;">MANDIRI</th>
@@ -182,7 +187,9 @@
                             <th style="background: #B8CCE4; vertical-align: middle !important;" rowspan="2" colspan="2">
                                 KETERANGAN
                             </th>
-                            <th style="background: #00B0F0" colspan="6">IMPREST <button style="float: right;" onclick="exportXls(3)"><i class="icon-docs"></i>&nbsp;Xls</button>
+                            <th style="background: #00B0F0" colspan="6">IMPREST
+                                <button style="float: right;" onclick="exportXls(3)"><i class="icon-docs"></i>&nbsp;Xls
+                                </button>
                             </th>
                         <tr>
                             <th style="background: #00B0F0" width="19%;">MANDIRI</th>
@@ -267,7 +274,9 @@
                             <th style="background: #B8CCE4; vertical-align: middle !important;" rowspan="2" colspan="2">
                                 KETERANGAN
                             </th>
-                            <th style="background: #00B0F0" colspan="6">IMPREST INVESTASI TERPUSAT <button style="float: right;" onclick="exportXls(2)"><i class="icon-docs"></i>&nbsp;Xls</button>
+                            <th style="background: #00B0F0" colspan="6">IMPREST INVESTASI TERPUSAT
+                                <button style="float: right;" onclick="exportXls(2)"><i class="icon-docs"></i>&nbsp;Xls
+                                </button>
                             </th>
                         <tr>
                             <th style="background: #00B0F0" width="19%;">MANDIRI</th>
@@ -352,7 +361,9 @@
                             <th style="background: #B8CCE4; vertical-align: middle !important;" rowspan="2" colspan="2">
                                 KETERANGAN
                             </th>
-                            <th style="background: #00B0F0" colspan="6">IMPREST OPERASI TERPUSAT <button style="float: right;" onclick="exportXls(1)"><i class="icon-docs"></i>&nbsp;Xls</button>
+                            <th style="background: #00B0F0" colspan="6">IMPREST OPERASI TERPUSAT
+                                <button style="float: right;" onclick="exportXls(1)"><i class="icon-docs"></i>&nbsp;Xls
+                                </button>
                             </th>
                         <tr>
                             <th style="background: #00B0F0" width="19%;">MANDIRI</th>
@@ -437,7 +448,9 @@
                             <th style="background: #B8CCE4; vertical-align: middle !important;" rowspan="2" colspan="2">
                                 KETERANGAN
                             </th>
-                            <th style="background: #00B0F0" colspan="6">IMPOR <button style="float: right;" onclick="exportXls(4)"><i class="icon-docs"></i>&nbsp;Xls</button>
+                            <th style="background: #00B0F0" colspan="6">IMPOR
+                                <button style="float: right;" onclick="exportXls(4)"><i class="icon-docs"></i>&nbsp;Xls
+                                </button>
                             </th>
                         <tr>
                             <th style="background: #00B0F0" width="19%;">MANDIRI</th>
