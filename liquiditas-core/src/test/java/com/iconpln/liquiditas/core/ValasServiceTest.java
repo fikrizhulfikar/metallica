@@ -29,4 +29,9 @@ public class ValasServiceTest {
         }
     }
 
+    @Test
+    public void test() {
+
+    }
+
 }

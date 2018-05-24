@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.SQLException;
@@ -117,8 +118,15 @@ public class ValasTests {
 
 	@Autowired
 	private FirebaseNotificationService service;
+
 	@Test
 	public void test() {
+		try {
+			mailUtils.sendEmail("ardikars@gmail.com", "Ini test 1", "Test");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

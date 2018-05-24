@@ -11,6 +11,7 @@ public class User {
     private String username;
     private String password;
     private Set<Role> roles;
+    private Set<String> topics;
 
     public Long getId() {
         return id;
@@ -42,6 +43,14 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Set<String> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(Set<String> topics) {
+        this.topics = topics;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
+import com.iconpln.liquiditas.monitoring.service.FirebaseNotificationService;
 import com.iconpln.liquiditas.monitoring.service.NotificationService;
 import com.iconpln.liquiditas.monitoring.utils.MailUtils;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
@@ -39,6 +40,9 @@ public class PembayaranController {
 
     @Autowired
     MailUtils mailUtils;
+
+    @Autowired
+    private FirebaseNotificationService firebaseNotificationService;
 
     @Autowired
     private ResourceLoader resourceLoader;
@@ -221,7 +225,15 @@ public class PembayaranController {
         AppUtils.getLogger(this).debug("pTipeTransaksi : {} ", pTipeTransaksi);
         AppUtils.getLogger(this).debug("pTglTerimaInvoice : {} ", pTglTerimaInvoice);
         try {
-//            mailUtils.sendEmail("diaz.setiawan@iconpln.co.id","Hello your connected to liquiditas apps","Liquiditas Test No reply");
+            if (pIdValas != null && !pIdValas.equals("")) {
+                String jenisPembayaranSebelum = valasService.getIdPembayaranByIdValas(pIdValas);
+                if (jenisPembayaranSebelum != null) {
+                    firebaseNotificationService.sendEdit("Pembayaran", pIdValas, jenisPembayaranSebelum);
+                    mailUtils.sendEdit("diaz.setiawan@iconpln.co.id","Pembayaran", pJenisPembayaran, pIdValas);
+                }
+            }
+            firebaseNotificationService.send("Pembayaran", pJenisPembayaran);
+            mailUtils.send("diaz.setiawan@iconpln.co.id","Pembayaran", pJenisPembayaran);
             return valasService.insPembayaran(pIdValas, pJenisPembayaran, pTglJatuhTempo, pVendor, pCurr, pNilaiTagihan, pBankTujuan, pBankPembayar, pUnitPenerima, pNoTagihan, pTglTagihan, pNoNotdin, pTglNotdin, pStatusValas, WebUtils.getUsernameLogin(), pKeterangan, pTipeTransaksi, pTglTerimaInvoice);
         } catch (Exception e) {
             e.printStackTrace();

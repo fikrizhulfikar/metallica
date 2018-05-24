@@ -45,7 +45,8 @@ public class UserDetailsConfig implements UserDetailsService{
                 grantedAuthorities.add(new SimpleGrantedAuthority(roles.getRole()));
             }
 
-            return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
+            UserDetailWrapper userDetailWrapper = new UserDetailWrapper(user.getUsername(), user.getPassword(), grantedAuthorities, user.getTopics());
+            return userDetailWrapper;
         }
     }
 }

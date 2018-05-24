@@ -1283,4 +1283,17 @@ public class ValasService {
         return out;
     }
 
+    public String getIdPembayaranByIdValas(String idValas) {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_valas")
+                .withFunctionName("get_id_pembayaran_by_id_valas");
+        SqlParameterSource inParent = new MapSqlParameterSource()
+                .addValue("p_id_valas", idValas);
+        try {
+            return simpleJdbcCall.executeFunction(String.class, idValas);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }

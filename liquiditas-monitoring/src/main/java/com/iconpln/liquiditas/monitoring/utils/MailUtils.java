@@ -27,6 +27,24 @@ public class MailUtils {
         javaMailSender.send(message);
     }
 
+    public void send(String to, String subject, String jenisPembayaran) throws Exception {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setTo(to);
+        helper.setText("User \"" + WebUtils.getUsernameLogin() + "\" menambahkan data dengan jenis pembayaran " + jenisPembayaran + ".");
+        helper.setSubject(subject);
+        javaMailSender.send(message);
+    }
+
+    public void sendEdit(String to, String subject, String jenisPembayaran, String id) throws Exception {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setTo(to);
+        helper.setText("User \"" + WebUtils.getUsernameLogin() + "\" mengubah data dengan jenis pembayaran " + jenisPembayaran + " dan id " + id + ".");
+        helper.setSubject(subject);
+        javaMailSender.send(message);
+    }
+
     public void sendEmailWithAttachment(String to, String body, String subject) throws Exception {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);

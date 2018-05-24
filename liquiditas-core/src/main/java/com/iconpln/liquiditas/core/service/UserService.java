@@ -32,11 +32,12 @@ public class UserService {
         try{
             SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                     .withCatalogName("PKG_SECMAN")
-                    .withFunctionName("get_login");
+                    .withFunctionName("get_login_new");
 
             SqlParameterSource in = new MapSqlParameterSource()
                     .addValue("p_user_id", username)
-                    .addValue("out_role", OracleTypes.VARCHAR);
+                    .addValue("out_role", OracleTypes.VARCHAR)
+                    .addValue("out_topics", OracleTypes.VARCHAR);
             Map<String, Object> out = simpleJdbcCall.execute(in);
             AppUtils.getLogger(this).info("data get_login : {}", out);
 
@@ -57,6 +58,15 @@ public class UserService {
             user.setUsername(users.get("USERNAME").toString());
             user.setPassword(users.get("PASSWORD").toString());
             user.setRoles(roleSet);
+
+            List<Map<String, Object>> topicList = (List<Map<String,Object>>) out.get("OUT_TOPICS");
+            Set<String> topics = new HashSet<>();
+
+            for (Map<String, Object> topic : topicList) {
+                topics.add(topic.get("id_sumber").toString());
+            }
+
+            user.setTopics(topics);
 
             AppUtils.getLogger(this).info("data user credential : {}", user.toString());
             return user;
