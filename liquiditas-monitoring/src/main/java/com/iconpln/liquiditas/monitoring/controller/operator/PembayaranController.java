@@ -393,14 +393,11 @@ public class PembayaranController {
     @RequestMapping(value = "/upload_xls", method = RequestMethod.POST)
     public Map<String, Object> uploadFileXls(
             @RequestParam(value = "file") MultipartFile file,
-            @RequestParam(value = "pIdValas", defaultValue = "") String pIdValas,
-            @RequestParam(value = "pJenisFile", defaultValue = "") String pJenisFile,
-            @RequestParam(value = "pFileSize", defaultValue = "") String pFileSize,
             HttpServletResponse response
     ) throws IOException, ParseException, SQLException {
         InputStream inputStream = file.getInputStream();
         /*Map<String, Object> listFailed = Map<String, Object>*/
-        return valasService.uploadXls(inputStream, WebUtils.getUsernameLogin(), pJenisFile);
+        return valasService.uploadXls(inputStream, WebUtils.getUsernameLogin(), "1", "");
 
 //        return generateReport(response,listFailed,"result");
 //        return listFailed;
@@ -419,23 +416,21 @@ public class PembayaranController {
         }
     }
 
-    @RequestMapping(value = "/download/{jenis}/{idJenis}/{idUpload}", method = RequestMethod.GET)
+    @RequestMapping(value = "/download/{idUpload}", method = RequestMethod.GET)
     public String export(HttpServletResponse response,
-                         @PathVariable String idUpload,
-                         @PathVariable String jenis, //template atau download
-                         @PathVariable String idJenis) throws SQLException {
-        AppUtils.getLogger(this).info("DOWNLOAD {} ID UPLOAD : {}", "download" + jenis, idUpload);
+                         @PathVariable String idUpload) throws SQLException {
+        AppUtils.getLogger(this).info("DOWNLOAD {} ID UPLOAD : {}", "download", idUpload);
 
-            return generateReport(response,valasService.getErrorData(idUpload, idJenis), "download", jenis);
+            return generateReport(response,valasService.getErrorData(idUpload, "1"), "download");
     }
 
-    @RequestMapping(value = "/template/{jenis}", method = RequestMethod.GET)
-    public String downloadTemplate(HttpServletResponse response,
-                         @PathVariable String jenis) throws SQLException {
-            return generateReport(response,null, "template", jenis);
+    @RequestMapping(value = "/template", method = RequestMethod.GET)
+    public String downloadTemplate(HttpServletResponse response) throws SQLException {
+            return generateReport(response,null, "template");
 
     }
-    public String generateReport(HttpServletResponse response, Map<String, Object> errorData, String tipe, String jenis) {
+
+    public String generateReport(HttpServletResponse response, Map<String, Object> errorData, String tipe) {
         try {
             AppUtils.getLogger(this).debug("Masuknih : {}", errorData);
 
@@ -445,15 +440,13 @@ public class PembayaranController {
 
             System.out.println("value : "+value);
             String resource;
-            System.out.println("resources : "+jenis);
-
-            response.setHeader("Content-Disposition", "attachment; filename=\""+tipe+"_"+jenis+".xls\"");
-            resource = "classpath:/templates/report/"+tipe+"_"+jenis+".xls";
+            response.setHeader("Content-Disposition", "attachment; filename=\""+tipe+"_rekapitulasi.xls\"");
+            resource = "classpath:/templates/report/"+tipe+"_rekapitulasi.xls";
             if(tipe.equals("download")){
                 value.put("listFailed", errorData.get("return"));
             }
 
-            System.out.println("resources : "+ resource);
+            System.out.println("listFailed : "+ value);
             XLSTransformer transformer = new XLSTransformer();
             InputStream streamTemplate = resourceLoader.getResource(resource).getInputStream();
             Workbook workbook = transformer.transformXLS(streamTemplate, value);

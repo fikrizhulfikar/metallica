@@ -1225,9 +1225,6 @@ function update_status() {
 
 function upload_xls(pIdValas){
     $("#modal-upload-xls").modal("show");
-    $("#temp-xls").val(pIdValas);
-
-    //getFilesRekap(pIdValas);
 }
 
 function upload_server_xls(jenisFile) {
@@ -1240,15 +1237,11 @@ function upload_server_xls(jenisFile) {
     fileSize = $('input[type=file]#file-xls')[0].files[0].size / 1000;
     $("#file-xls").val('');
 
-
-    formData.append('pIdValas', $("#temp-xls").val());
-    formData.append('pJenisFile', jenisFile);
-    formData.append('pFileSize', fileSize);
     console.log(formData);
     $.ajax({
         crossOrigin: true,
         type: "POST",
-        url: baseUrl + "api_operator/pembayaran/upload_xls",
+        url: baseUrl + "api_operator/tripartite/upload_xls",
         data: formData,
         enctype: 'multipart/form-data',
         cache: false,
@@ -1265,7 +1258,7 @@ function upload_server_xls(jenisFile) {
             } else {
                 var obj = res.return[0];
                 alert("Terdapat kesalahan pada data. Download excel?");
-                window.location = "../api_operator/pembayaran/download/tripartite/2/"+obj["ID_UPLOAD"];
+                window.location = "../api_operator/tripartite/download/"+obj["ID_UPLOAD"];
             }
         },
         error: function () {

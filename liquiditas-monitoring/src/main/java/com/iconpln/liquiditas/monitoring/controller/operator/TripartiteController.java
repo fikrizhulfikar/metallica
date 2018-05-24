@@ -14,8 +14,11 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -266,6 +269,77 @@ public class TripartiteController {
             e.printStackTrace();
             return null;
         }
+    }
+
+
+    @RequestMapping(value = "/get_id_upload", method = RequestMethod.GET)
+    public Map getIdUpload() {
+        Map data = new HashMap();
+        try {
+            data.put("path", WebUtils.getFilePath());
+            data.put("data_pembayaran", valasService.getIdUpload());
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/upload_xls", method = RequestMethod.POST)
+    public Map<String, Object> uploadFileXls(
+            @RequestParam(value = "file") MultipartFile file,
+            HttpServletResponse response
+    ) throws IOException, ParseException, SQLException {
+        InputStream inputStream = file.getInputStream();
+        /*Map<String, Object> listFailed = Map<String, Object>*/
+        return valasService.uploadXls(inputStream, WebUtils.getUsernameLogin(), "2", "");
+
+//        return generateReport(response,listFailed,"result");
+//        return listFailed;
+    }
+
+    @RequestMapping(value = "/download/{idUpload}", method = RequestMethod.GET)
+    public String export(HttpServletResponse response,
+                         @PathVariable String idUpload) throws SQLException {
+        AppUtils.getLogger(this).info("DOWNLOAD {} ID UPLOAD : {}", "download tripartite", idUpload);
+
+        return generateReport(response,valasService.getErrorData(idUpload, "2"), "download");
+    }
+
+    @RequestMapping(value = "/template", method = RequestMethod.GET)
+    public String downloadTemplate(HttpServletResponse response) throws SQLException {
+        return generateReport(response,null, "template");
+
+    }
+
+    public String generateReport(HttpServletResponse response, Map<String, Object> errorData, String tipe) {
+        try {
+            AppUtils.getLogger(this).debug("Masuknih : {}", errorData);
+
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            Map value = new HashMap();
+
+            System.out.println("value : "+value);
+            String resource;
+            System.out.println("resources : tripartite");
+
+            response.setHeader("Content-Disposition", "attachment; filename=\""+tipe+"_tripartite.xls\"");
+            resource = "classpath:/templates/report/"+tipe+"_tripartite.xls";
+            if(tipe.equals("download")){
+                value.put("listFailed", errorData.get("return"));
+            }
+
+            System.out.println("resources : "+ resource);
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource(resource).getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, value);
+            workbook.write(os);
+            os.flush();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public String parseColumn(int index) {

@@ -1074,14 +1074,12 @@ function upload_server(jenisFile) {
     });
 }
 
-function upload_xls(pIdValas){
+function upload_xls(){
     $("#modal-upload-xls").modal("show");
-    $("#temp-xls").val(pIdValas);
-
     //getFilesRekap(pIdValas);
 }
 
-function upload_server_xls(jenisFile) {
+function upload_server_xls() {
     $("#modal-upload-xls").modal("hide");
     showLoadingCss();
     var form = $('form')[0];
@@ -1091,10 +1089,6 @@ function upload_server_xls(jenisFile) {
     fileSize = $('input[type=file]#file-xls')[0].files[0].size / 1000;
     $("#file-xls").val('');
 
-
-    formData.append('pIdValas', $("#temp-xls").val());
-    formData.append('pJenisFile', jenisFile);
-    formData.append('pFileSize', fileSize);
     console.log(formData);
     $.ajax({
         crossOrigin: true,
@@ -1108,14 +1102,15 @@ function upload_server_xls(jenisFile) {
         processData: false,
         success: function (res) {
             hideLoadingCss("");
-            if (res == 0) {
+            console.log("res", res)
+            if (res.V_RETURN == 0) {
                 alert("sukses");
 //                location.reload();
                 search("load");
             } else {
                 var obj = res.return[0];
                 alert("Terdapat kesalahan pada data. Download excel?");
-                window.location = "../api_operator/pembayaran/download/rekapitulasi/1/"+obj["ID_UPLOAD"];
+                window.location = "../api_operator/pembayaran/download/"+obj["ID_UPLOAD"];
             }
         },
         error: function () {

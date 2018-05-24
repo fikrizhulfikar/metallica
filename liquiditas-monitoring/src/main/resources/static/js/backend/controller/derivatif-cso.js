@@ -482,6 +482,54 @@ function generatePDF() {
     pdfMake.createPdf(docDefinition).open();
 }
 
+function upload_xls(pIdDerivatif){
+    $("#modal-upload-xls").modal("show");
+
+    //getFilesRekap(pIdValas);
+}
+
+function upload_server_xls() {
+    $("#modal-upload-xls").modal("hide");
+    showLoadingCss();
+    var form = $('form')[0];
+    var formData = new FormData(form);
+
+    formData.append('file', $('input[type=file]#file-xls')[0].files[0]);
+    fileSize = $('input[type=file]#file-xls')[0].files[0].size / 1000;
+    $("#file-xls").val('');
+
+
+    formData.append('pIdDerivatif', $("#temp-xls").val());
+    console.log(formData);
+    $.ajax({
+        crossOrigin: true,
+        type: "POST",
+        url: baseUrl + "api_operator/derivatif/upload_xls",
+        data: formData,
+        enctype: 'multipart/form-data',
+        cache: false,
+//        for jquery 1.6
+        contentType: false,
+        processData: false,
+        success: function (res) {
+            hideLoadingCss("");
+            console.log("res",res);
+            if (res.V_RETURN == 0) {
+                alert("sukses");
+//                location.reload();
+                search("load");
+            } else {
+                var obj = res.return[0];
+                alert("Terdapat kesalahan pada data. Download excel?");
+                window.location = "../api_operator/tripartite/download/"+obj["ID_UPLOAD"];
+            }
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
+        }
+    });
+}
+
 function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor) {
     showLoadingCss();
     $('#table-derivatif-cso tbody').empty();

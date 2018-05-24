@@ -256,7 +256,7 @@ public class ValasService {
         return idUpload;
     }
 
-    public Map<String, Object> uploadXls(InputStream path, String user, String jenisFile) throws ParseException, SQLException{
+    public Map<String, Object> uploadXls(InputStream path, String user, String jenisFile, String idDerivatif) throws ParseException, SQLException{
         Map<String, Object> out = null;
         HSSFWorkbook workbook = null;
         Iterator<Row> rowIterator = null;
@@ -270,7 +270,6 @@ public class ValasService {
 
             workbook = new HSSFWorkbook(path);
             HSSFSheet sheet = workbook.getSheetAt(0);
-            AppUtils.getLogger(this).info("pathurl : {}", path);
             rowIterator = sheet.iterator();
             Row row1 = sheet.getRow(1);
             List<String> list = new ArrayList<>();
@@ -301,9 +300,9 @@ public class ValasService {
                         AppUtils.getLogger(this).info("datastring {}: {}", rrow.getCell(cellNum).toString(), row.getCell(cellNum).getCellType());
                     }
                 }
-
-                if (!list.get(0).toLowerCase().equals("tipe transaksi") && !list.get(0).isEmpty()){
-                    x++;
+                AppUtils.getLogger(this).debug("nilaiX : {}", x);
+                if (x > 0 /*||
+                        !list.get(0).toLowerCase().equals("tanggal deal") && !list.get(0).isEmpty()*/){
                     SqlParameterSource inParent;
                     SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate()).withCatalogName("pkg_valas");
                     if(jenisFile.equals("1")){
@@ -330,12 +329,14 @@ public class ValasService {
                                 .addValue("p_tipe_transaksi", list.get(0))
                                 .addValue("p_tgl_terima_invoice", list.get(9) + " 00:00")
                                 .addValue("out_msg", OracleTypes.VARCHAR);
-                    }else{
+                    }else if(jenisFile.equals("2")){
+                        AppUtils.getLogger(this).debug("jenisFile {} : {}{}", jenisFile, "tripartit", list );
                         simpleJdbcCall.withFunctionName("ins_tripartite_to_temp");
                         inParent = new MapSqlParameterSource()
                                 .addValue("p_nomor", x)
                                 .addValue("p_id_upload", idUpload)
                                 .addValue("p_bank", list.get(5))
+                                .addValue("p_jatuh_tempo", list.get(2))
                                 .addValue("p_tgl_jatuh_tempo", list.get(2))
                                 .addValue("p_curr", list.get(6))
                                 .addValue("p_vendor", list.get(4))
@@ -357,16 +358,49 @@ public class ValasService {
                                 .addValue("p_tipe_transaksi", list.get(0))
                                 .addValue("p_tgl_terima_invoice", list.get(13))
                                 .addValue("out_msg", OracleTypes.VARCHAR);
-                        AppUtils.getLogger(this).debug("jenisFile {} : {}", jenisFile, "tripartit" );
+                    }else if(jenisFile.equals("3")){
+                        AppUtils.getLogger(this).debug("jenisFile {} : {}{}", jenisFile, "derifativ"+idDerivatif, list );
+                        simpleJdbcCall.withFunctionName("ins_derivatif_to_temp");
+                        inParent = new MapSqlParameterSource()
+                                .addValue("p_nomor", x)
+                                .addValue("p_id_upload", idUpload)
+                                .addValue("p_id_product", idDerivatif)
+                                .addValue("p_bank", list.get(1))
+                                .addValue("p_tgl_deal", list.get(0))
+                                .addValue("p_tgl_jatuh_tempo", list.get(2))
+                                .addValue("p_curr", list.get(4))
+                                .addValue("p_tenor", list.get(3))
+                                .addValue("p_national_amount", list.get(5))
+                                .addValue("p_tipe_transaksi", "")
+                                .addValue("p_deal_rate", list.get(6))
+                                .addValue("p_forward_point", list.get(7))
+                                .addValue("p_kurs_jisdor1", list.get(8))
+                                .addValue("p_bunga_deposito", list.get(9))
+                                .addValue("p_sumber_dana", list.get(11))
+                                .addValue("p_peruntukan_dana", list.get(10))
+                                .addValue("p_fixing_rate", "")
+                                .addValue("p_swap_point", "")
+                                .addValue("p_strike_price1", "")
+                                .addValue("p_strike_price2", "")
+                                .addValue("p_settlement_rate","")
+                                .addValue("p_status_derivatif", list.get(12))
+//                                .addValue("p_status_tripartite", user)
+                                .addValue("p_create_by", user)
+                                .addValue("p_keterangan", "")
+                                .addValue("p_biaya_premi", "")
+                                .addValue("out_msg", OracleTypes.VARCHAR);
+                    }else {
+                        inParent = null;
                     }
-
-                    AppUtils.getLogger(this).info("data p_tgl_terima_invoice : {}", inParent.getValue("p_tgl_jatuh_tempo"));
+                    AppUtils.getLogger(this).info("data p_id_upload : {}", inParent.getValue("p_id_upload"));
+                    AppUtils.getLogger(this).info("data p_bank : {}", inParent.getValue("p_bank"));
                     AppUtils.getLogger(this).info("data p_tipe_transaksi : {}", inParent.getValue("p_tipe_transaksi"));
                     out = simpleJdbcCall.execute(inParent);
                     AppUtils.getLogger(this).info("datatotemp : {}", out);
 
                 }
                 list.clear();
+                x++;
             }
 
             SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -377,7 +411,7 @@ public class ValasService {
                     .addValue("p_jenis_laporan", jenisFile);
             out = simpleJdbcCall.execute(inParent);
 
-            AppUtils.getLogger(this).info("data ins tempttorekap : {}", out);
+            AppUtils.getLogger(this).info("data ins tempttorekap id {}: {}", idUpload, out);
         } catch (IOException | NullPointerException e) {
             e.printStackTrace();
         }
