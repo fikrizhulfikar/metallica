@@ -6,13 +6,16 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriTemplateHandler;
@@ -33,10 +36,9 @@ public class FcmConfig {
     @PostConstruct
     @Bean("googleCredentials")
     public GoogleCredentials googleCredentials() throws IOException {
-        BufferedInputStream fileInputStream = (BufferedInputStream) (FcmConfig.class
-                .getClassLoader().getResourceAsStream(accoutService));
-
-        GoogleCredentials googleCredentials = GoogleCredentials.fromStream(fileInputStream);
+        ApplicationContext context = new ClassPathXmlApplicationContext();
+        Resource resource = context.getResource(accoutService);
+        GoogleCredentials googleCredentials = GoogleCredentials.fromStream(resource.getInputStream());
         GoogleCredentials scoped = googleCredentials.createScoped(
                 Arrays.asList(
                         "https://www.googleapis.com/auth/firebase.database",
