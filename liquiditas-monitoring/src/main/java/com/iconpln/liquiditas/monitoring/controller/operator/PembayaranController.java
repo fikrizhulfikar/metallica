@@ -1,29 +1,31 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
-import com.iconpln.liquiditas.monitoring.service.FirebaseNotificationService;
-import com.iconpln.liquiditas.monitoring.service.NotificationService;
-import com.iconpln.liquiditas.monitoring.utils.MailUtils;
-import com.iconpln.liquiditas.monitoring.utils.WebUtils;
 import com.iconpln.liquiditas.core.service.ValasService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
-import net.sf.jxls.transformer.XLSTransformer;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.iconpln.liquiditas.monitoring.utils.WebUtils;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.jxls.transformer.XLSTransformer;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created by israj on 10/4/2016.
@@ -34,15 +36,6 @@ public class PembayaranController {
 
     @Autowired
     ValasService valasService;
-
-    @Autowired
-    NotificationService notificationService;
-
-    @Autowired
-    MailUtils mailUtils;
-
-    @Autowired
-    private FirebaseNotificationService firebaseNotificationService;
 
     @Autowired
     private ResourceLoader resourceLoader;
@@ -85,17 +78,6 @@ public class PembayaranController {
             mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
             mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
         }
-
-        final Thread outThread = new Thread() {
-            @Override
-            public void run() {
-                notificationService.broadcastStatus("gggggggggggggggg");
-            }
-
-            ;
-        };
-        outThread.start();
-
         return mapData;
     }
 
@@ -225,15 +207,15 @@ public class PembayaranController {
         AppUtils.getLogger(this).debug("pTipeTransaksi : {} ", pTipeTransaksi);
         AppUtils.getLogger(this).debug("pTglTerimaInvoice : {} ", pTglTerimaInvoice);
         try {
-            if (pIdValas != null && !pIdValas.equals("")) {
-                String jenisPembayaranSebelum = valasService.getIdPembayaranByIdValas(pIdValas);
-                if (jenisPembayaranSebelum != null) {
-                    firebaseNotificationService.sendEdit("Pembayaran", pIdValas, jenisPembayaranSebelum);
-                    mailUtils.sendEdit("diaz.setiawan@iconpln.co.id","Pembayaran", pJenisPembayaran, pIdValas);
-                }
-            }
-            firebaseNotificationService.send("Pembayaran", pJenisPembayaran);
-            mailUtils.send("diaz.setiawan@iconpln.co.id","Pembayaran", pJenisPembayaran);
+//            if (pIdValas != null && !pIdValas.equals("")) {
+//                String jenisPembayaranSebelum = valasService.getIdPembayaranByIdValas(pIdValas);
+//                if (jenisPembayaranSebelum != null) {
+//                    firebaseNotificationService.sendEdit("Pembayaran", pIdValas, jenisPembayaranSebelum);
+//                    mailUtils.sendEdit("diaz.setiawan@iconpln.co.id","Pembayaran", pJenisPembayaran, pIdValas);
+//                }
+//            }
+//            firebaseNotificationService.send("Pembayaran", pJenisPembayaran);
+//            mailUtils.send("diaz.setiawan@iconpln.co.id","Pembayaran", pJenisPembayaran);
             return valasService.insPembayaran(pIdValas, pJenisPembayaran, pTglJatuhTempo, pVendor, pCurr, pNilaiTagihan, pBankTujuan, pBankPembayar, pUnitPenerima, pNoTagihan, pTglTagihan, pNoNotdin, pTglNotdin, pStatusValas, WebUtils.getUsernameLogin(), pKeterangan, pTipeTransaksi, pTglTerimaInvoice);
         } catch (Exception e) {
             e.printStackTrace();

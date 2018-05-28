@@ -1,15 +1,11 @@
 package com.iconpln.liquiditas.monitoring;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 import com.iconpln.liquiditas.core.service.ValasService;
-import com.iconpln.liquiditas.monitoring.service.FirebaseNotificationService;
-import com.iconpln.liquiditas.monitoring.service.FirebaseNotificationService.FirebaseNotification;
-import com.iconpln.liquiditas.monitoring.service.NotificationService;
-import com.iconpln.liquiditas.monitoring.utils.MailUtils;
+import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 import java.util.function.BiConsumer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,26 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ValasTests {
 
-	@Autowired
-	private MailUtils mailUtils;
-
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-	@Autowired
-	NotificationService notificationService;
 
 	@Autowired
 	private ValasService valasService;
@@ -81,15 +64,6 @@ public class ValasTests {
 	}
 
 	@Test
-	public void mail()  {
-		try{
-			mailUtils.sendEmail("israj.alwan@iconpln.co.id","Hello your connected to liquiditas apps","Liquiditas Test No reply");
-		}catch (Exception e){
-			e.printStackTrace();
-		}
-	}
-
-	@Test
 	public void getListPembayaran() {
 //		try {
 		try {
@@ -111,22 +85,6 @@ public class ValasTests {
 //		} catch (SQLException e) {
 //			e.printStackTrace();
 //		}
-	}
-
-	@Autowired
-	private DatabaseReference databaseReference;
-
-	@Autowired
-	private FirebaseNotificationService service;
-
-	@Test
-	public void test() {
-		try {
-			mailUtils.sendEmail("ardikars@gmail.com", "Ini test 1", "Test");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 	}
 
 }

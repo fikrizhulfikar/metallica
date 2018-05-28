@@ -72,4 +72,15 @@ public class NotificationController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PostMapping(
+            value = "/subscribe",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<String> subscribe(Map<String, Object> parameters) {
+        String token = (String) parameters.get("token");
+        List<String> topics = (List<String>) parameters.get("topics");
+        return new ResponseEntity<>(notificationService.subscribe(token, topics), HttpStatus.OK);
+    }
+
 }

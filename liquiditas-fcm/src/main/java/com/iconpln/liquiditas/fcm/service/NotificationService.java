@@ -8,6 +8,7 @@ import com.google.firebase.messaging.WebpushConfig;
 import com.google.firebase.messaging.WebpushNotification;
 import com.iconpln.liquiditas.fcm.model.FirebaseNotification;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -74,6 +75,29 @@ public class NotificationService {
                 .setTopic(topic)
                 .build();
         firebaseMessaging.sendAsync(message);
+    }
+
+    /**
+     * Subscribe to topics
+     * @param clientToken client token.
+     * @param topics list of topic.
+     * @return returns number of successfully subcribed token.
+     */
+    public String subscribe(String clientToken, List<String> topics) {
+        AtomicInteger count = new AtomicInteger();
+        topics.stream().forEach(topic -> {
+            TopicManagementResponse response = null;
+            try {
+                response = FirebaseMessaging.getInstance()
+                        .subscribeToTopicAsync(Collections.singletonList(clientToken), topic).get();
+            } catch (InterruptedException e) {
+                count.set(-1);
+            } catch (ExecutionException e) {
+                count.set(-1);
+            }
+            count.set(response.getSuccessCount());
+        });
+        return count.get() + " tokens were subscribed successfully: " + topics.toString();
     }
 
 }
