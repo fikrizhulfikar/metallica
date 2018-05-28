@@ -1,6 +1,7 @@
 package com.iconpln.liquiditas.fcm.controller;
 
 import com.iconpln.liquiditas.fcm.model.FirebaseNotification;
+import com.iconpln.liquiditas.fcm.model.Subscriber;
 import com.iconpln.liquiditas.fcm.service.DatabaseService;
 import com.iconpln.liquiditas.fcm.service.NotificationService;
 import com.iconpln.liquiditas.fcm.service.TokenService;
@@ -77,10 +78,8 @@ public class NotificationController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<String> subscribe(Map<String, Object> parameters) {
-        String token = (String) parameters.get("token");
-        List<String> topics = (List<String>) parameters.get("topics");
-        return new ResponseEntity<>(notificationService.subscribe(token, topics), HttpStatus.OK);
+    public ResponseEntity<String> subscribe(@RequestBody Subscriber subscriber) {
+        return new ResponseEntity<>(notificationService.subscribe(subscriber.getToken(), subscriber.getTopics()), HttpStatus.OK);
     }
 
 }
