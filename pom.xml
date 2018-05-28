@@ -26,6 +26,7 @@
     <module>liquiditas-core</module>
     <module>liquiditas-scheduler</module>
     <module>liquiditas-monitoring</module>
+    <module>liquiditas-fcm</module>
   </modules>
 
   <dependencies>
