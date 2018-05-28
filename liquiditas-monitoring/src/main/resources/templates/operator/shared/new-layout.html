@@ -425,19 +425,6 @@
     }
 
     function subscribeTokenToTopic(token) {
-        // fetch('https://iid.googleapis.com/iid/v1/' + token + '/rel/topics/' + topic, {
-        //     method: 'POST',
-        //     headers: new Headers({
-        //         'Authorization': 'key=AAAALF27ZkE:APA91bHjVOJR1mt-QSvz4s6o2CkL3PDQaBDAQgDUSmaWqOzX2IbuvJmXqZot7Iu8Pq2C7BpvYXvmgTaYEaGwtjp_mx_Y3qb-Ib9rHveFVz6XU8-9HNq-DothNIT1XbJ70w0URedUFIaA'
-        //     })
-        // }).then(function (response) {
-        //     console.log(response);
-        //
-        //     console.log('Subscribed to "' + topic + '"');
-        // }).catch(function (error) {
-        //     console.error(error);
-        // });
-
         $.ajax({
             type: "POST",
             beforeSend: function(request) {

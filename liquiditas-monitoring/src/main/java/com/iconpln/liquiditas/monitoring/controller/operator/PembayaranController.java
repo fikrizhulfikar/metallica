@@ -2,6 +2,7 @@ package com.iconpln.liquiditas.monitoring.controller.operator;
 
 import com.iconpln.liquiditas.core.service.ValasService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
+import com.iconpln.liquiditas.monitoring.service.NotificationService;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +38,9 @@ public class PembayaranController {
 
     @Autowired
     ValasService valasService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     @Autowired
     private ResourceLoader resourceLoader;
@@ -207,15 +212,30 @@ public class PembayaranController {
         AppUtils.getLogger(this).debug("pTipeTransaksi : {} ", pTipeTransaksi);
         AppUtils.getLogger(this).debug("pTglTerimaInvoice : {} ", pTglTerimaInvoice);
         try {
-//            if (pIdValas != null && !pIdValas.equals("")) {
-//                String jenisPembayaranSebelum = valasService.getIdPembayaranByIdValas(pIdValas);
-//                if (jenisPembayaranSebelum != null) {
-//                    firebaseNotificationService.sendEdit("Pembayaran", pIdValas, jenisPembayaranSebelum);
-//                    mailUtils.sendEdit("diaz.setiawan@iconpln.co.id","Pembayaran", pJenisPembayaran, pIdValas);
-//                }
-//            }
-//            firebaseNotificationService.send("Pembayaran", pJenisPembayaran);
-//            mailUtils.send("diaz.setiawan@iconpln.co.id","Pembayaran", pJenisPembayaran);
+            if (pIdValas != null && !pIdValas.equals("")) {
+                String jenisPembayaranSebelum = valasService.getIdPembayaranByIdValas(pIdValas);
+                if (jenisPembayaranSebelum != null) {
+                    notificationService.sendNotification(
+                            "Pembayaran",
+                            "User " + WebUtils.getUsernameLogin() + " melakukan perubahan data pada id valas " + pIdValas + ".",
+                            "",
+                            false,
+                            WebUtils.getUsernameLogin(),
+                            pJenisPembayaran,
+                            new Date()
+                    );
+                }
+            } else {
+                notificationService.sendNotification(
+                        "Pembayaran",
+                        "User " + WebUtils.getUsernameLogin() + " melakukan penambahan data.",
+                        "",
+                        false,
+                        WebUtils.getUsernameLogin(),
+                        pJenisPembayaran,
+                        new Date()
+                );
+            }
             return valasService.insPembayaran(pIdValas, pJenisPembayaran, pTglJatuhTempo, pVendor, pCurr, pNilaiTagihan, pBankTujuan, pBankPembayar, pUnitPenerima, pNoTagihan, pTglTagihan, pNoNotdin, pTglNotdin, pStatusValas, WebUtils.getUsernameLogin(), pKeterangan, pTipeTransaksi, pTglTerimaInvoice);
         } catch (Exception e) {
             e.printStackTrace();

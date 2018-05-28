@@ -1,5 +1,6 @@
 package com.iconpln.liquiditas.monitoring.service;
 
+import com.iconpln.liquiditas.monitoring.utils.SessionHandler;
 import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.util.Date;
@@ -22,10 +23,14 @@ public class NotificationService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public ResponseEntity<String> subscribe(String jwtToken, String clientToken, Set<String> topics) {
+    @Autowired
+    private SessionHandler sessionHandler;
+
+    public ResponseEntity<String> subscribe(String clientToken, Set<String> topics) {
         Map<String, Object> map = new HashMap<>();
         map.put("token", clientToken);
         map.put("topics", topics);
+        String jwtToken = sessionHandler.getTokenFromSession();
         HttpEntity httpEntity = new HttpEntity(map, createHeaders(MediaType.APPLICATION_JSON, jwtToken));
         ResponseEntity<String> responseEntity = restTemplate.exchange("/api/fcm/notification/subscribe",
                 HttpMethod.POST,
@@ -34,7 +39,7 @@ public class NotificationService {
         return responseEntity;
     }
 
-    public void sendNotification(String title, String body, String icon, boolean isSeen, String createBy, String topic, Date date, String token) throws URISyntaxException {
+    public void sendNotification(String title, String body, String icon, boolean isSeen, String createBy, String topic, Date date) throws URISyntaxException {
         FirebaseNotification firebaseNotification = new FirebaseNotification();
         firebaseNotification.setTitle(title);
         firebaseNotification.setBody(body);
@@ -43,11 +48,13 @@ public class NotificationService {
         firebaseNotification.setCreateBy(createBy);
         firebaseNotification.setTopic(topic);
         firebaseNotification.setDate(date.getTime());
+        String token = sessionHandler.getTokenFromSession();
         HttpEntity httpEntity = new HttpEntity(firebaseNotification, createHeaders(MediaType.APPLICATION_JSON, token));
         restTemplate.exchange( "/api/fcm/notification/notify", HttpMethod.POST, httpEntity, Void.class);
     }
 
-    public ResponseEntity<Map<String, FirebaseNotification>> getNotification(Set<String> topics, String token) {
+    public ResponseEntity<Map<String, FirebaseNotification>> getNotification(Set<String> topics) {
+        String token = sessionHandler.getTokenFromSession();
         HttpEntity httpEntity = new HttpEntity(createHeaders(MediaType.APPLICATION_FORM_URLENCODED, token));
         String query = String.join(",", topics);
         return restTemplate.exchange("/api/fcm/notification/get_notification?topics="+query,
