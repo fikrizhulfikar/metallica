@@ -499,7 +499,7 @@ function upload_server_xls() {
     $("#file-xls").val('');
 
 
-    formData.append('pIdDerivatif', $("#temp-xls").val());
+    formData.append('pIdDerivatif', "3");
     console.log(formData);
     $.ajax({
         crossOrigin: true,
@@ -521,7 +521,8 @@ function upload_server_xls() {
             } else {
                 var obj = res.return[0];
                 alert("Terdapat kesalahan pada data. Download excel?");
-                window.location = "../api_operator/tripartite/download/"+obj["ID_UPLOAD"];
+                window.location = "../api_operator/derivatif/download/3/"+obj["ID_UPLOAD"];
+                search("load");
             }
         },
         error: function () {

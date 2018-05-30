@@ -243,7 +243,7 @@ public class DepositoController {
     ) throws IOException, ParseException, SQLException {
         InputStream inputStream = file.getInputStream();
         /*Map<String, Object> listFailed = Map<String, Object>*/
-        return valasService.uploadXls(inputStream, WebUtils.getUsernameLogin(), "6", "");
+        return valasService.uploadXls(inputStream, WebUtils.getUsernameLogin(), "4", "");
 
 //        return generateReport(response,listFailed,"result");
 //        return listFailed;
@@ -254,7 +254,7 @@ public class DepositoController {
                          @PathVariable String idUpload) throws SQLException {
         AppUtils.getLogger(this).info("DOWNLOAD {} ID UPLOAD : {}", "download deposito", idUpload);
 
-        return generateReport(response,valasService.getErrorData(idUpload, "6"), "download");
+        return generateReport(response,valasService.getErrorData(idUpload, "4"), "download");
     }
 
     @RequestMapping(value = "/template", method = RequestMethod.GET)

@@ -520,7 +520,8 @@ function upload_server_xls() {
             } else {
                 var obj = res.return[0];
                 alert("Terdapat kesalahan pada data. Download excel?");
-                window.location = "../api_operator/tripartite/download/"+obj["ID_UPLOAD"];
+                window.location = "../api_operator/derivatif/download/2/"+obj["ID_UPLOAD"];
+                search("load");
             }
         },
         error: function () {

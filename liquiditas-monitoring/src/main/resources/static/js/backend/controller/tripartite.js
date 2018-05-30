@@ -1259,6 +1259,7 @@ function upload_server_xls(jenisFile) {
                 var obj = res.return[0];
                 alert("Terdapat kesalahan pada data. Download excel?");
                 window.location = "../api_operator/tripartite/download/"+obj["ID_UPLOAD"];
+                search("load");
             }
         },
         error: function () {

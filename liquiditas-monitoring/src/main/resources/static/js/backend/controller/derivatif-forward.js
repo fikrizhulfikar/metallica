@@ -672,7 +672,7 @@ function upload_server_xls() {
     formData.append('file', $('input[type=file]#file-xls')[0].files[0]);
     fileSize = $('input[type=file]#file-xls')[0].files[0].size / 1000;
     $("#file-xls").val('');
-
+    console.log("idderivatif", $("#temp-xls").val());
 
     formData.append('pIdDerivatif', $("#temp-xls").val());
     console.log(formData);
@@ -696,7 +696,8 @@ function upload_server_xls() {
             } else {
                 var obj = res.return[0];
                 alert("Terdapat kesalahan pada data. Download excel?");
-                window.location = "../api_operator/tripartite/download/"+obj["ID_UPLOAD"];
+                window.location = "../api_operator/derivatif/download/1/"+obj["ID_UPLOAD"];
+                search("load");
             }
         },
         error: function () {

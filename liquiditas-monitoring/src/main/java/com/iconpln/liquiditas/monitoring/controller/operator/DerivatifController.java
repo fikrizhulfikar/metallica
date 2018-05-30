@@ -333,14 +333,13 @@ public class DerivatifController {
     @RequestMapping(value = "/upload_xls", method = RequestMethod.POST)
     public Map<String, Object> uploadFileXls(
             @RequestParam(value = "file") MultipartFile file,
-            @RequestParam(value = "pIdValas", defaultValue = "") String pIdDerivatif,
-            @RequestParam(value = "pJenisFile", defaultValue = "") String pJenisFile,
-            @RequestParam(value = "pFileSize", defaultValue = "") String pFileSize,
+            @RequestParam(value = "pIdDerivatif", defaultValue = "") String pIdDerivatif,
             HttpServletResponse response
     ) throws IOException, ParseException, SQLException {
         InputStream inputStream = file.getInputStream();
         /*Map<String, Object> listFailed = Map<String, Object>*/
-        return valasService.uploadXls(inputStream, WebUtils.getUsernameLogin(), pJenisFile, pIdDerivatif);
+        AppUtils.getLogger(this).info("pIdDerivatif: {}", pIdDerivatif);
+        return valasService.uploadXls(inputStream, WebUtils.getUsernameLogin(), "3", pIdDerivatif);
 
 //        return generateReport(response,listFailed,"result");
 //        return listFailed;
@@ -350,18 +349,19 @@ public class DerivatifController {
     public String export(HttpServletResponse response,
                          @PathVariable String idUpload,
                          @PathVariable String idDerivatif) throws SQLException {
-        AppUtils.getLogger(this).info("DOWNLOAD {} ID UPLOAD : {}", "download tripartite", idUpload);
+        AppUtils.getLogger(this).info("DOWNLOAD {} ID UPLOAD : {}", "download "+idDerivatif, idUpload);
 
-        return generateReport(response,valasService.getErrorData(idUpload, "3"), "download");
+        return generateReport(response,valasService.getErrorData(idUpload, "3"), "download", idDerivatif);
     }
 
-    @RequestMapping(value = "/template", method = RequestMethod.GET)
-    public String downloadTemplate(HttpServletResponse response) throws SQLException {
-        return generateReport(response,null, "template");
+    @RequestMapping(value = "/template/{idDerivatif}", method = RequestMethod.GET)
+    public String downloadTemplate(HttpServletResponse response,
+                         @PathVariable String idDerivatif) throws SQLException {
+        return generateReport(response,null, "template", idDerivatif);
 
     }
 
-    public String generateReport(HttpServletResponse response, Map<String, Object> errorData, String tipe) {
+    public String generateReport(HttpServletResponse response, Map<String, Object> errorData, String tipe, String idDerivatif) {
         try {
             AppUtils.getLogger(this).debug("Masuknih : {}", errorData);
 
@@ -372,9 +372,17 @@ public class DerivatifController {
             System.out.println("value : "+value);
             String resource;
             System.out.println("resources : tripartite");
+            if(idDerivatif.equals("1")){
+                response.setHeader("Content-Disposition", "attachment; filename=\""+tipe+"_derivatif_forward.xls\"");
+                resource = "classpath:/templates/report/"+tipe+"_derivatif_forward.xls";
+            }else if(idDerivatif.equals("2")){
+                response.setHeader("Content-Disposition", "attachment; filename=\""+tipe+"_derivatif_swap.xls\"");
+                resource = "classpath:/templates/report/"+tipe+"_derivatif_swap.xls";
+            }else {
+                response.setHeader("Content-Disposition", "attachment; filename=\""+tipe+"_derivatif_cso.xls\"");
+                resource = "classpath:/templates/report/"+tipe+"_derivatif_cso.xls";
+            }
 
-            response.setHeader("Content-Disposition", "attachment; filename=\""+tipe+"_derivatif.xls\"");
-            resource = "classpath:/templates/report/"+tipe+"_tripartite.xls";
             if(tipe.equals("download")){
                 value.put("listFailed", errorData.get("return"));
             }

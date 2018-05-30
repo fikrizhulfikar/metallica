@@ -249,6 +249,7 @@ function upload_server_xls() {
                 var obj = res.return[0];
                 alert("Terdapat kesalahan pada data. Download excel?");
                 window.location = "../api_operator/deposito/download/"+obj["ID_UPLOAD"];
+                search("load");
             }
         },
         error: function () {
