@@ -504,6 +504,7 @@ public class ValasService {
         }
         return out;
     }
+
     public Map<String, Object> getErrorData(String idUpload, String idJenis) throws SQLException {
         Map<String, Object> out = null;
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())

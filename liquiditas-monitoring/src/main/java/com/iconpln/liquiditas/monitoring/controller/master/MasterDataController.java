@@ -5,16 +5,22 @@ import com.iconpln.liquiditas.core.domain.BankDetail;
 import com.iconpln.liquiditas.core.service.MasterService;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
 import com.iconpln.liquiditas.core.utils.AppUtils;
+import net.sf.jxls.transformer.XLSTransformer;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +35,9 @@ public class MasterDataController {
 
     @Autowired
     MasterService masterService;
+
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -893,4 +902,106 @@ public class MasterDataController {
             return null;
         }
     }
+
+
+    @RequestMapping(value = "/get_id_upload", method = RequestMethod.GET)
+    public Map getIdUpload() {
+        Map data = new HashMap();
+        try {
+            data.put("path", WebUtils.getFilePath());
+            data.put("data_pembayaran", masterService.getIdUpload());
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/upload_xls", method = RequestMethod.POST)
+    public Map<String, Object> uploadFileXls(
+            @RequestParam(value = "file") MultipartFile file,
+            @RequestParam(value = "pIdJenisFile", defaultValue = "") String pIdJenisFile,
+            HttpServletResponse response
+    ) throws IOException, ParseException, SQLException {
+        InputStream inputStream = file.getInputStream();
+        /*Map<String, Object> listFailed = Map<String, Object>*/
+        AppUtils.getLogger(this).info("pIdJenisFile: {}", pIdJenisFile);
+        return masterService.uploadXls(inputStream, WebUtils.getUsernameLogin(), pIdJenisFile);
+
+//        return generateReport(response,listFailed,"result");
+//        return listFailed;
+    }
+
+    @RequestMapping(value = "/download/{idJenisFile}/{idUpload}", method = RequestMethod.GET)
+    public String export(HttpServletResponse response,
+                         @PathVariable String idUpload,
+                         @PathVariable String idJenisFile) throws SQLException {
+        AppUtils.getLogger(this).info("DOWNLOAD {} ID UPLOAD : {}", "download "+idJenisFile, idUpload);
+
+        return generateReport(response,masterService.getErrorData(idUpload, idJenisFile), "download", idJenisFile);
+    }
+
+    @RequestMapping(value = "/template/{idJenisFile}", method = RequestMethod.GET)
+    public String downloadTemplate(HttpServletResponse response,
+                                   @PathVariable String idJenisFile) throws SQLException {
+        return generateReport(response,null, "template", idJenisFile);
+
+    }
+
+    public String generateReport(HttpServletResponse response, Map<String, Object> errorData, String tipe, String idJenisFile) {
+        try {
+            AppUtils.getLogger(this).debug("Masuknih : {}", errorData);
+
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            Map value = new HashMap();
+
+            System.out.println("value : "+value);
+            String resource;
+            System.out.println("resources : tripartite");
+            if(idJenisFile.equals("1")){
+                response.setHeader("Content-Disposition", "attachment; filename=\""+tipe+"_currency.xls\"");
+                resource = "classpath:/templates/input/"+tipe+"_currency.xls";
+            }else if(idJenisFile.equals("2")){
+                response.setHeader("Content-Disposition", "attachment; filename=\""+tipe+"_bank.xls\"");
+                resource = "classpath:/templates/input/"+tipe+"_bank.xls";
+            }else if(idJenisFile.equals("3")){
+                response.setHeader("Content-Disposition", "attachment; filename=\""+tipe+"_vendor.xls\"");
+                resource = "classpath:/templates/input/"+tipe+"_vendor.xls";
+            }else if(idJenisFile.equals("4")){
+                response.setHeader("Content-Disposition", "attachment; filename=\""+tipe+"_unit.xls\"");
+                resource = "classpath:/templates/input/"+tipe+"_unit.xls";
+            }else if(idJenisFile.equals("5")){
+                response.setHeader("Content-Disposition", "attachment; filename=\""+tipe+"_tenor.xls\"");
+                resource = "classpath:/templates/input/"+tipe+"_tenor.xls";
+            }else if(idJenisFile.equals("6")){
+                response.setHeader("Content-Disposition", "attachment; filename=\""+tipe+"_sumber_dana.xls\"");
+                resource = "classpath:/templates/input/"+tipe+"_sumber_dana.xls";
+            }else if(idJenisFile.equals("7")){
+                response.setHeader("Content-Disposition", "attachment; filename=\""+tipe+"_keterangan.xls\"");
+                resource = "classpath:/templates/input/"+tipe+"_keterangan.xls";
+            }else if(idJenisFile.equals("8")){
+                response.setHeader("Content-Disposition", "attachment; filename=\""+tipe+"_jenis_pembayaran.xls\"");
+                resource = "classpath:/templates/input/"+tipe+"_jenis_pembayaran.xls";
+            }else {
+                response.setHeader("Content-Disposition", "attachment; filename=\""+tipe+"_user.xls\"");
+                resource = "classpath:/templates/input/"+tipe+"_user.xls";
+            }
+
+            if(tipe.equals("download")){
+                value.put("listFailed", errorData.get("return"));
+            }
+
+//            System.out.println("resources : "+ resource);
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource(resource).getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, value);
+            workbook.write(os);
+            os.flush();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

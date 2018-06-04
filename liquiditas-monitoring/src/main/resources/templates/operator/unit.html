@@ -22,6 +22,11 @@
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
         <li class="breadcrumb-item active" style="cursor: default">Master Unit</li>
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
+            </div>
+        </li>
     </ol>
     <div class="container-fluid" style="margin-bottom: 15px;">
         <div class="animated fadeIn">
@@ -72,6 +77,36 @@
                         <tbody style="font-size: 12px">
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-upload-xls" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title_modal_upload_xls">UPLOAD FILE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="input_file_xls">
+                    <div class="form-group" style="display:none">
+                        <input type="text" class="form-control" id="temp-xls"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">UPLOAD FILE XLS |
+                            <a th:href="@{/api_master/template/4}" id="btn-download-template-data-unit">
+                                Download Template
+                            </a></label>
+                        <input type="file" class="form-control" id="file-xls"
+                               accept="application/vnd.ms-excel"/>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal" onclick="upload_server_xls()">Selesai</button>
                 </div>
             </div>
         </div>

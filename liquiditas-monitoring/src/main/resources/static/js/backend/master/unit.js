@@ -37,7 +37,6 @@ function submit() {
     });
 }
 
-
 function clearForm() {
     isUpdate = "0"
     $("#pIdUnit").val("");
@@ -45,7 +44,6 @@ function clearForm() {
     $("#pIdUnit").prop('disabled', false);
     $('#pJenis').prop('disabled', false);
 }
-
 
 function getbyId(id,jenis) {
     showLoadingCss()
@@ -70,6 +68,47 @@ function getbyId(id,jenis) {
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
+function upload_xls(){
+    $("#modal-upload-xls").modal("show");
+}
+
+function upload_server_xls() {
+    $("#modal-upload-xls").modal("hide");
+    showLoadingCss();
+    var form = $('form')[0];
+    var formData = new FormData(form);
+    formData.append('file', $('input[type=file]#file-xls')[0].files[0]);
+    formData.append('pIdJenisFile', "4");
+    console.log(formData);
+    $.ajax({
+        crossOrigin: true,
+        type: "POST",
+        url: baseUrl + "api_master/upload_xls",
+        data: formData,
+        enctype: 'multipart/form-data',
+        cache: false,
+//        for jquery 1.6
+        contentType: false,
+        processData: false,
+        success: function (res) {
+            hideLoadingCss("");
+            console.log("res",res);
+            if (res.V_RETURN == 0) {
+                alert("sukses");
+            } else {
+                var obj = res.return[0];
+                alert("Terdapat kesalahan pada data. Download excel?");
+                window.location = "../api_master/download/4/"+obj["ID_UPLOAD"];
+            }
+            setSelectJenisPembayaran("pJenis", "", "");
+            initDataTable();
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
         }
     });
 }
