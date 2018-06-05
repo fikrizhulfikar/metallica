@@ -95,8 +95,8 @@ public class ValasService {
 
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_TEST_VALAS")
-                .withFunctionName("get_rekap_pembayaran_pss3");
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_rekap_pembayaran_pss");
 
 
         SqlParameterSource params = new MapSqlParameterSource()
