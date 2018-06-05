@@ -1,128 +1,100 @@
-2018-06-05 06:57:10,172 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
-2018-06-05 07:03:35,165 DEBUG c.i.l.m.config.SecurityConfig$1 - User 'ipp678' not found 
-2018-06-05 07:04:09,898 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180604-000000003  
-2018-06-05 07:04:18,594 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180604-000000004  
-2018-06-05 07:04:28,732 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180604-000000004  
-2018-06-05 07:04:53,519 DEBUG c.i.l.m.c.o.PembayaranController - idValas :   
-2018-06-05 07:04:53,519 DEBUG c.i.l.m.c.o.PembayaranController - pJenisPembayaran : P00001  
-2018-06-05 07:04:53,519 DEBUG c.i.l.m.c.o.PembayaranController - pTglJatuhTempo : 05/06/2018  
-2018-06-05 07:04:53,519 DEBUG c.i.l.m.c.o.PembayaranController - pCurr : IDR  
-2018-06-05 07:04:53,519 DEBUG c.i.l.m.c.o.PembayaranController - pVendor : V00003  
-2018-06-05 07:04:53,519 DEBUG c.i.l.m.c.o.PembayaranController - pNilaiTagihan : 4000  
-2018-06-05 07:04:53,519 DEBUG c.i.l.m.c.o.PembayaranController - pBankTujuan : B00004  
-2018-06-05 07:04:53,519 DEBUG c.i.l.m.c.o.PembayaranController - pBankPembayar : B00058  
-2018-06-05 07:04:53,519 DEBUG c.i.l.m.c.o.PembayaranController - pUnitPenerima : A00005  
-2018-06-05 07:04:53,519 DEBUG c.i.l.m.c.o.PembayaranController - pNoTagihan :   
-2018-06-05 07:04:53,519 DEBUG c.i.l.m.c.o.PembayaranController - pTglTagihan :   
-2018-06-05 07:04:53,519 DEBUG c.i.l.m.c.o.PembayaranController - pNoNotdin :   
-2018-06-05 07:04:53,520 DEBUG c.i.l.m.c.o.PembayaranController - pTglNotdin :   
-2018-06-05 07:04:53,520 DEBUG c.i.l.m.c.o.PembayaranController - pNoTagihan :   
-2018-06-05 07:04:53,520 DEBUG c.i.l.m.c.o.PembayaranController - pStatusValas :   
-2018-06-05 07:04:53,520 DEBUG c.i.l.m.c.o.PembayaranController - pKeterangan :   
-2018-06-05 07:04:53,520 DEBUG c.i.l.m.c.o.PembayaranController - pTipeTransaksi : 1  
-2018-06-05 07:04:53,520 DEBUG c.i.l.m.c.o.PembayaranController - pTglTerimaInvoice : 05/06/2018  
-2018-06-05 07:04:58,632 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180605-000000001  
-2018-06-05 07:05:04,765 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180605-000000001  
-2018-06-05 07:07:00,913 DEBUG c.i.l.m.c.o.PembayaranController - idValas :   
-2018-06-05 07:07:00,914 DEBUG c.i.l.m.c.o.PembayaranController - pJenisPembayaran : P00001  
-2018-06-05 07:07:00,914 DEBUG c.i.l.m.c.o.PembayaranController - pTglJatuhTempo : 06/06/2018  
-2018-06-05 07:07:00,914 DEBUG c.i.l.m.c.o.PembayaranController - pCurr : IDR  
-2018-06-05 07:07:00,914 DEBUG c.i.l.m.c.o.PembayaranController - pVendor : V00003  
-2018-06-05 07:07:00,914 DEBUG c.i.l.m.c.o.PembayaranController - pNilaiTagihan : 45  
-2018-06-05 07:07:00,914 DEBUG c.i.l.m.c.o.PembayaranController - pBankTujuan : B00003  
-2018-06-05 07:07:00,922 DEBUG c.i.l.m.c.o.PembayaranController - pBankPembayar : B00058  
-2018-06-05 07:07:00,922 DEBUG c.i.l.m.c.o.PembayaranController - pUnitPenerima : A00005  
-2018-06-05 07:07:00,922 DEBUG c.i.l.m.c.o.PembayaranController - pNoTagihan :   
-2018-06-05 07:07:00,922 DEBUG c.i.l.m.c.o.PembayaranController - pTglTagihan :   
-2018-06-05 07:07:00,923 DEBUG c.i.l.m.c.o.PembayaranController - pNoNotdin :   
-2018-06-05 07:07:00,923 DEBUG c.i.l.m.c.o.PembayaranController - pTglNotdin :   
-2018-06-05 07:07:00,923 DEBUG c.i.l.m.c.o.PembayaranController - pNoTagihan :   
-2018-06-05 07:07:00,923 DEBUG c.i.l.m.c.o.PembayaranController - pStatusValas :   
-2018-06-05 07:07:00,923 DEBUG c.i.l.m.c.o.PembayaranController - pKeterangan :   
-2018-06-05 07:07:00,923 DEBUG c.i.l.m.c.o.PembayaranController - pTipeTransaksi : 1  
-2018-06-05 07:07:00,923 DEBUG c.i.l.m.c.o.PembayaranController - pTglTerimaInvoice : 04/06/2018  
-2018-06-05 07:07:05,861 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180605-000000002  
-2018-06-05 07:07:28,774 DEBUG c.i.l.m.c.o.PembayaranController - idValas :   
-2018-06-05 07:07:28,774 DEBUG c.i.l.m.c.o.PembayaranController - pJenisPembayaran : P00001  
-2018-06-05 07:07:28,774 DEBUG c.i.l.m.c.o.PembayaranController - pTglJatuhTempo : 05/06/2018  
-2018-06-05 07:07:28,774 DEBUG c.i.l.m.c.o.PembayaranController - pCurr : IDR  
-2018-06-05 07:07:28,774 DEBUG c.i.l.m.c.o.PembayaranController - pVendor : V00003  
-2018-06-05 07:07:28,774 DEBUG c.i.l.m.c.o.PembayaranController - pNilaiTagihan : 5000  
-2018-06-05 07:07:28,774 DEBUG c.i.l.m.c.o.PembayaranController - pBankTujuan : B00002  
-2018-06-05 07:07:28,774 DEBUG c.i.l.m.c.o.PembayaranController - pBankPembayar : B00057  
-2018-06-05 07:07:28,774 DEBUG c.i.l.m.c.o.PembayaranController - pUnitPenerima : A00005  
-2018-06-05 07:07:28,775 DEBUG c.i.l.m.c.o.PembayaranController - pNoTagihan :   
-2018-06-05 07:07:28,775 DEBUG c.i.l.m.c.o.PembayaranController - pTglTagihan :   
-2018-06-05 07:07:28,775 DEBUG c.i.l.m.c.o.PembayaranController - pNoNotdin :   
-2018-06-05 07:07:28,775 DEBUG c.i.l.m.c.o.PembayaranController - pTglNotdin :   
-2018-06-05 07:07:28,775 DEBUG c.i.l.m.c.o.PembayaranController - pNoTagihan :   
-2018-06-05 07:07:28,775 DEBUG c.i.l.m.c.o.PembayaranController - pStatusValas :   
-2018-06-05 07:07:28,775 DEBUG c.i.l.m.c.o.PembayaranController - pKeterangan :   
-2018-06-05 07:07:28,775 DEBUG c.i.l.m.c.o.PembayaranController - pTipeTransaksi : 1  
-2018-06-05 07:07:28,775 DEBUG c.i.l.m.c.o.PembayaranController - pTglTerimaInvoice : 05/06/2018  
-2018-06-05 07:07:33,818 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180605-000000003  
-2018-06-05 07:07:39,115 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180605-000000003  
-2018-06-05 07:07:45,157 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180605-000000002  
-2018-06-05 07:10:13,371 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180528-000000219  
-2018-06-05 07:10:22,892 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180528-000000219  
-2018-06-05 07:19:31,717 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
-2018-06-05 07:20:27,020 DEBUG c.i.l.m.c.o.PembayaranController - idValas :   
-2018-06-05 07:20:27,020 DEBUG c.i.l.m.c.o.PembayaranController - pJenisPembayaran : P00044  
-2018-06-05 07:20:27,020 DEBUG c.i.l.m.c.o.PembayaranController - pTglJatuhTempo : 06/06/2018  
-2018-06-05 07:20:27,020 DEBUG c.i.l.m.c.o.PembayaranController - pCurr : IDR  
-2018-06-05 07:20:27,020 DEBUG c.i.l.m.c.o.PembayaranController - pVendor : V01179  
-2018-06-05 07:20:27,020 DEBUG c.i.l.m.c.o.PembayaranController - pNilaiTagihan : 500  
-2018-06-05 07:20:27,020 DEBUG c.i.l.m.c.o.PembayaranController - pBankTujuan : B00004  
-2018-06-05 07:20:27,020 DEBUG c.i.l.m.c.o.PembayaranController - pBankPembayar : B00058  
-2018-06-05 07:20:27,020 DEBUG c.i.l.m.c.o.PembayaranController - pUnitPenerima : A00384  
-2018-06-05 07:20:27,020 DEBUG c.i.l.m.c.o.PembayaranController - pNoTagihan :   
-2018-06-05 07:20:27,020 DEBUG c.i.l.m.c.o.PembayaranController - pTglTagihan :   
-2018-06-05 07:20:27,020 DEBUG c.i.l.m.c.o.PembayaranController - pNoNotdin :   
-2018-06-05 07:20:27,020 DEBUG c.i.l.m.c.o.PembayaranController - pTglNotdin :   
-2018-06-05 07:20:27,020 DEBUG c.i.l.m.c.o.PembayaranController - pNoTagihan :   
-2018-06-05 07:20:27,020 DEBUG c.i.l.m.c.o.PembayaranController - pStatusValas :   
-2018-06-05 07:20:27,020 DEBUG c.i.l.m.c.o.PembayaranController - pKeterangan :   
-2018-06-05 07:20:27,020 DEBUG c.i.l.m.c.o.PembayaranController - pTipeTransaksi : 1  
-2018-06-05 07:20:27,020 DEBUG c.i.l.m.c.o.PembayaranController - pTglTerimaInvoice : 05/06/2018  
-2018-06-05 07:20:31,738 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180605-000000004  
-2018-06-05 07:22:56,924 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
-2018-06-05 07:25:56,695 DEBUG c.i.l.m.c.o.PembayaranController - idValas :   
-2018-06-05 07:25:56,695 DEBUG c.i.l.m.c.o.PembayaranController - pJenisPembayaran : P00013  
-2018-06-05 07:25:56,695 DEBUG c.i.l.m.c.o.PembayaranController - pTglJatuhTempo : 05/06/2018  
-2018-06-05 07:25:56,695 DEBUG c.i.l.m.c.o.PembayaranController - pCurr : IDR  
-2018-06-05 07:25:56,695 DEBUG c.i.l.m.c.o.PembayaranController - pVendor : V00127  
-2018-06-05 07:25:56,695 DEBUG c.i.l.m.c.o.PembayaranController - pNilaiTagihan : 500  
-2018-06-05 07:25:56,696 DEBUG c.i.l.m.c.o.PembayaranController - pBankTujuan : B00002  
-2018-06-05 07:25:56,696 DEBUG c.i.l.m.c.o.PembayaranController - pBankPembayar : B00058  
-2018-06-05 07:25:56,696 DEBUG c.i.l.m.c.o.PembayaranController - pUnitPenerima : A00057  
-2018-06-05 07:25:56,696 DEBUG c.i.l.m.c.o.PembayaranController - pNoTagihan :   
-2018-06-05 07:25:56,696 DEBUG c.i.l.m.c.o.PembayaranController - pTglTagihan :   
-2018-06-05 07:25:56,696 DEBUG c.i.l.m.c.o.PembayaranController - pNoNotdin :   
-2018-06-05 07:25:56,696 DEBUG c.i.l.m.c.o.PembayaranController - pTglNotdin :   
-2018-06-05 07:25:56,696 DEBUG c.i.l.m.c.o.PembayaranController - pNoTagihan :   
-2018-06-05 07:25:56,696 DEBUG c.i.l.m.c.o.PembayaranController - pStatusValas :   
-2018-06-05 07:25:56,696 DEBUG c.i.l.m.c.o.PembayaranController - pKeterangan :   
-2018-06-05 07:25:56,696 DEBUG c.i.l.m.c.o.PembayaranController - pTipeTransaksi : 1  
-2018-06-05 07:25:56,696 DEBUG c.i.l.m.c.o.PembayaranController - pTglTerimaInvoice : 05/06/2018  
-2018-06-05 07:26:31,125 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
-2018-06-05 07:29:58,191 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
-2018-06-05 07:30:33,708 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180605-000000005  
-2018-06-05 07:31:37,516 DEBUG c.i.l.m.c.o.PembayaranController - idValas :   
-2018-06-05 07:31:37,516 DEBUG c.i.l.m.c.o.PembayaranController - pJenisPembayaran : P00001  
-2018-06-05 07:31:37,516 DEBUG c.i.l.m.c.o.PembayaranController - pTglJatuhTempo : 05/06/2018  
-2018-06-05 07:31:37,516 DEBUG c.i.l.m.c.o.PembayaranController - pCurr : IDR  
-2018-06-05 07:31:37,516 DEBUG c.i.l.m.c.o.PembayaranController - pVendor : V00003  
-2018-06-05 07:31:37,516 DEBUG c.i.l.m.c.o.PembayaranController - pNilaiTagihan : 5400  
-2018-06-05 07:31:37,516 DEBUG c.i.l.m.c.o.PembayaranController - pBankTujuan : B00003  
-2018-06-05 07:31:37,516 DEBUG c.i.l.m.c.o.PembayaranController - pBankPembayar : B00058  
-2018-06-05 07:31:37,516 DEBUG c.i.l.m.c.o.PembayaranController - pUnitPenerima : A00006  
-2018-06-05 07:31:37,516 DEBUG c.i.l.m.c.o.PembayaranController - pNoTagihan :   
-2018-06-05 07:31:37,516 DEBUG c.i.l.m.c.o.PembayaranController - pTglTagihan :   
-2018-06-05 07:31:37,517 DEBUG c.i.l.m.c.o.PembayaranController - pNoNotdin :   
-2018-06-05 07:31:37,517 DEBUG c.i.l.m.c.o.PembayaranController - pTglNotdin :   
-2018-06-05 07:31:37,517 DEBUG c.i.l.m.c.o.PembayaranController - pNoTagihan :   
-2018-06-05 07:31:37,517 DEBUG c.i.l.m.c.o.PembayaranController - pStatusValas :   
-2018-06-05 07:31:37,517 DEBUG c.i.l.m.c.o.PembayaranController - pKeterangan :   
-2018-06-05 07:31:37,517 DEBUG c.i.l.m.c.o.PembayaranController - pTipeTransaksi : 1  
-2018-06-05 07:31:37,517 DEBUG c.i.l.m.c.o.PembayaranController - pTglTerimaInvoice : 04/06/2018  
-2018-06-05 07:31:42,758 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180605-000000006  
+2018-06-04 08:28:07,747 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
+2018-06-04 09:07:40,274 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
+2018-06-04 09:40:17,267 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=440, NOMOR=1, ID_SUMBER_DANA=SD9999, NAMA_SUMBER_DANA=TEST UPLOAD XLS, FLAG_TAMPIL=TAMPIL, STATUS_UPLOAD=-1, CREATE_BY=admin, CREATE_DATE=04-JUN-18, OUT_MSG=null}], V_RETURN=1} 
+2018-06-04 09:43:09,262 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
+2018-06-04 10:27:17,624 DEBUG c.i.l.m.c.o.PembayaranController - idValas :   
+2018-06-04 10:27:17,624 DEBUG c.i.l.m.c.o.PembayaranController - pJenisPembayaran : P00001  
+2018-06-04 10:27:17,624 DEBUG c.i.l.m.c.o.PembayaranController - pTglJatuhTempo : 04/06/2018  
+2018-06-04 10:27:17,624 DEBUG c.i.l.m.c.o.PembayaranController - pCurr : USD  
+2018-06-04 10:27:17,624 DEBUG c.i.l.m.c.o.PembayaranController - pVendor : V00003  
+2018-06-04 10:27:17,624 DEBUG c.i.l.m.c.o.PembayaranController - pNilaiTagihan : 90  
+2018-06-04 10:27:17,624 DEBUG c.i.l.m.c.o.PembayaranController - pBankTujuan : B00002  
+2018-06-04 10:27:17,624 DEBUG c.i.l.m.c.o.PembayaranController - pBankPembayar : B00059  
+2018-06-04 10:27:17,624 DEBUG c.i.l.m.c.o.PembayaranController - pUnitPenerima : A00004  
+2018-06-04 10:27:17,624 DEBUG c.i.l.m.c.o.PembayaranController - pNoTagihan :   
+2018-06-04 10:27:17,624 DEBUG c.i.l.m.c.o.PembayaranController - pTglTagihan :   
+2018-06-04 10:27:17,624 DEBUG c.i.l.m.c.o.PembayaranController - pNoNotdin :   
+2018-06-04 10:27:17,624 DEBUG c.i.l.m.c.o.PembayaranController - pTglNotdin :   
+2018-06-04 10:27:17,624 DEBUG c.i.l.m.c.o.PembayaranController - pNoTagihan :   
+2018-06-04 10:27:17,624 DEBUG c.i.l.m.c.o.PembayaranController - pStatusValas :   
+2018-06-04 10:27:17,624 DEBUG c.i.l.m.c.o.PembayaranController - pKeterangan :   
+2018-06-04 10:27:17,625 DEBUG c.i.l.m.c.o.PembayaranController - pTipeTransaksi : 1  
+2018-06-04 10:27:17,625 DEBUG c.i.l.m.c.o.PembayaranController - pTglTerimaInvoice : 04/06/2018  
+2018-06-04 10:27:36,693 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180604-000000002  
+2018-06-04 10:33:12,977 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
+2018-06-04 10:36:28,208 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : null 
+2018-06-04 10:41:20,281 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : null 
+2018-06-04 10:41:31,579 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : null 
+2018-06-04 11:02:55,592 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=445, NOMOR=1, ID_SUMBER_DANA=SD9999ssss, NAMA_SUMBER_DANA=TEST UPLOAD XLS, FLAG_TAMPIL=asdads, STATUS_UPLOAD=-1, CREATE_BY=admin, CREATE_DATE=04-JUN-18, OUT_MSG=null}], V_RETURN=1} 
+2018-06-04 11:08:21,151 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
+2018-06-04 11:12:58,416 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=446, NOMOR=1, ID_SUMBER_DANA=SD9999ssss, NAMA_SUMBER_DANA=TEST UPLOAD XLS, FLAG_TAMPIL=asdads, STATUS_UPLOAD=-1, CREATE_BY=admin, CREATE_DATE=04-JUN-18, OUT_MSG=null}], V_RETURN=1} 
+2018-06-04 11:22:14,770 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=451, NOMOR=1, CURRENCY=PESO, STATUS_UPLOAD=-1, STATUS=tampils, OUT_MSG=DATA SUDAH ADA}], V_RETURN=1} 
+2018-06-04 11:27:08,518 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=452, NOMOR=1, CURRENCY=PESO, STATUS_UPLOAD=-1, STATUS=tampils, OUT_MSG=DATA SUDAH ADA}], V_RETURN=1} 
+2018-06-04 13:13:40,515 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
+2018-06-04 13:20:12,188 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
+2018-06-04 13:33:54,681 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=462, NOMOR=1, CURRENCY=PESO, STATUS_UPLOAD=-1, STATUS=tampils, OUT_MSG=DATA SUDAH ADA}], V_RETURN=1} 
+2018-06-04 13:41:15,514 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=463, NOMOR=1, ID_JENIS_PEMBAYARAN=P99999, NAMA_PEMBAYARAN=TEST UPLOAD XLS, CREATE_DATE=04-JUN-18, CREATE_BY=admin, STATUS_UPLOAD=0, ID_GROUP=SUPER ADMIN, OUT_MSG=null, FLAG_TAMPIL=TAMPIL}], V_RETURN=1} 
+2018-06-04 13:57:24,929 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=464, NOMOR=1, ID_JENIS_PEMBAYARAN=P99999, NAMA_PEMBAYARAN=TEST UPLOAD XLS, CREATE_DATE=04-JUN-18, CREATE_BY=admin, STATUS_UPLOAD=0, ID_GROUP=SUPER ADMIN, OUT_MSG=null, FLAG_TAMPIL=TAMPIL}], V_RETURN=1} 
+2018-06-04 13:58:15,189 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=465, NOMOR=1, ID_JENIS_PEMBAYARAN=P99999, NAMA_PEMBAYARAN=TEST UPLOAD XLS, CREATE_DATE=04-JUN-18, CREATE_BY=admin, STATUS_UPLOAD=0, ID_GROUP=SUPER ADMIN, OUT_MSG=null, FLAG_TAMPIL=TAMPIL}], V_RETURN=1} 
+2018-06-04 13:58:41,713 DEBUG c.i.l.m.c.o.DerivatifController - Masuknih : {return=[], V_RETURN=0} 
+2018-06-04 14:01:39,948 DEBUG c.i.l.m.c.o.DerivatifController - Masuknih : {return=[], V_RETURN=0} 
+2018-06-04 14:04:10,171 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=468, NOMOR=1, ID_UNIT=A99999, NAMA_UNIT=TES UPLOAD XLS, JENIS_PEMBAYARAN=ASURANSI, FLAG_TAMPIL=TAMPIL, STATUS_UPLOAD=-1, CREATE_BY=admin, CREATE_DATE=04-JUN-18, OUT_MSG=null}], V_RETURN=1} 
+2018-06-04 14:06:25,395 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=469, NOMOR=1, ID_TENOR=T999, NAMA_TENOR=99 BULAN, FLAG_TAMPIL=TAMPIL, STATUS_UPLOAD=-1, CREATE_BY=admin, CREATE_DATE=04-JUN-18, OUT_MSG=null}], V_RETURN=1} 
+2018-06-04 14:08:50,912 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=470, NOMOR=1, ID_TENOR=T999, NAMA_TENOR=99 BULAN, FLAG_TAMPIL=TAMPIL, STATUS_UPLOAD=-1, CREATE_BY=admin, CREATE_DATE=04-JUN-18, OUT_MSG=null}], V_RETURN=1} 
+2018-06-04 14:09:22,275 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=471, NOMOR=1, ID_SUMBER_DANA=SD9999ssss, NAMA_SUMBER_DANA=TEST UPLOAD XLS, FLAG_TAMPIL=asdads, STATUS_UPLOAD=-1, CREATE_BY=admin, CREATE_DATE=04-JUN-18, OUT_MSG=null}], V_RETURN=1} 
+2018-06-04 14:17:15,583 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=472, NOMOR=1, ID_KETERANGAN=KT999, NAMA_KETERANGAN=TEST UPLOAD XLS, JENIS=CALL SPREAD OPTION, FLAG_TAMPIL=TAMPIL, STATUS_UPLOAD=-1, CREATE_BY=admin, CREATE_DATE=04-JUN-18, OUT_MSG=null}, {ID_UPLOAD=472, NOMOR=2, ID_KETERANGAN=KT1000, NAMA_KETERANGAN=TEST, JENIS=DEPOSITO, FLAG_TAMPIL=TAMPIL, STATUS_UPLOAD=-1, CREATE_BY=admin, CREATE_DATE=04-JUN-18, OUT_MSG=null}], V_RETURN=2} 
+2018-06-04 14:18:18,120 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=473, NOMOR=1, ID_KETERANGAN=KT999, NAMA_KETERANGAN=TEST UPLOAD XLS, JENIS=CALL SPREAD OPTION, FLAG_TAMPIL=TAMPIL, STATUS_UPLOAD=-1, CREATE_BY=admin, CREATE_DATE=04-JUN-18, OUT_MSG=null}, {ID_UPLOAD=473, NOMOR=2, ID_KETERANGAN=KT1000, NAMA_KETERANGAN=TEST, JENIS=DEPOSITO, FLAG_TAMPIL=TAMPIL, STATUS_UPLOAD=-1, CREATE_BY=admin, CREATE_DATE=04-JUN-18, OUT_MSG=null}], V_RETURN=2} 
+2018-06-04 14:32:20,824 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[], V_RETURN=0} 
+2018-06-04 14:37:34,052 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[], V_RETURN=0} 
+2018-06-04 14:43:11,440 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=481, NOMOR=1, USERNAME=TESXLS, USER_PASSWORD=1.2345678E7, USER_ROLE=DIVKEUAS, FLAG_TAMPIL=AKTIF, STATUS_UPLOAD=0, CREATE_BY=admin, CREATE_DATE=04-JUN-18, OUT_MSG=null}], V_RETURN=1} 
+2018-06-04 14:44:27,974 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=482, NOMOR=1, USERNAME=TESXLS, USER_PASSWORD=1.2345678E7, USER_ROLE=DIVKEUAS, FLAG_TAMPIL=AKTIF, STATUS_UPLOAD=0, CREATE_BY=admin, CREATE_DATE=04-JUN-18, OUT_MSG=null}], V_RETURN=1} 
+2018-06-04 14:45:41,942 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
+2018-06-04 14:46:24,703 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=483, NOMOR=1, USERNAME=TESXLS, USER_PASSWORD=1.2345678E7, USER_ROLE=DIVKEUAS, FLAG_TAMPIL=AKTIF, STATUS_UPLOAD=0, CREATE_BY=admin, CREATE_DATE=04-JUN-18, OUT_MSG=null}], V_RETURN=1} 
+2018-06-04 14:48:24,732 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=484, NOMOR=1, USERNAME=TESXLS, USER_PASSWORD=1.2345678E7, USER_ROLE=DIVKEUAS, FLAG_TAMPIL=AKTIF, STATUS_UPLOAD=0, CREATE_BY=admin, CREATE_DATE=04-JUN-18, OUT_MSG=null}], V_RETURN=1} 
+2018-06-04 14:50:19,238 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=485, NOMOR=1, USERNAME=TESXLS, USER_PASSWORD=1.2345678E7, USER_ROLE=DIVKEUAS, FLAG_TAMPIL=AKTIF, STATUS_UPLOAD=0, CREATE_BY=admin, CREATE_DATE=04-JUN-18, OUT_MSG=null}], V_RETURN=1} 
+2018-06-04 14:54:38,514 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
+2018-06-04 14:55:44,615 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=486, NOMOR=1, USERNAME=TESXLS, USER_PASSWORD=1.2345678E7, USER_ROLE=DIVKEUAS, FLAG_TAMPIL=AKTIF, STATUS_UPLOAD=0, CREATE_BY=admin, CREATE_DATE=04-JUN-18, OUT_MSG=null}], V_RETURN=1} 
+2018-06-04 14:57:31,321 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
+2018-06-04 15:00:05,142 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=487, NOMOR=1, USERNAME=TESXLS, USER_PASSWORD=1.2345678E7, USER_ROLE=DIVKEUAS, FLAG_TAMPIL=AKTIF, STATUS_UPLOAD=0, CREATE_BY=admin, CREATE_DATE=04-JUN-18, OUT_MSG=null}], V_RETURN=1} 
+2018-06-04 15:00:53,963 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
+2018-06-04 15:04:28,797 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=488, NOMOR=1, USERNAME=TESXLS, USER_PASSWORD=12345678, USER_ROLE=DIVKEUAS, FLAG_TAMPIL=AKTIF, STATUS_UPLOAD=0, CREATE_BY=admin, CREATE_DATE=04-JUN-18, OUT_MSG=null}], V_RETURN=1} 
+2018-06-04 15:11:50,027 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
+2018-06-04 15:13:36,863 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180604-000000001  
+2018-06-04 15:13:47,628 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180604-000000002  
+2018-06-04 15:14:14,639 DEBUG c.i.l.m.c.o.PembayaranController - idValas :   
+2018-06-04 15:14:14,639 DEBUG c.i.l.m.c.o.PembayaranController - pJenisPembayaran : P00001  
+2018-06-04 15:14:14,639 DEBUG c.i.l.m.c.o.PembayaranController - pTglJatuhTempo : 06/06/2018  
+2018-06-04 15:14:14,639 DEBUG c.i.l.m.c.o.PembayaranController - pCurr : KRW  
+2018-06-04 15:14:14,639 DEBUG c.i.l.m.c.o.PembayaranController - pVendor : null  
+2018-06-04 15:14:14,639 DEBUG c.i.l.m.c.o.PembayaranController - pNilaiTagihan : 1  
+2018-06-04 15:14:14,639 DEBUG c.i.l.m.c.o.PembayaranController - pBankTujuan : B00003  
+2018-06-04 15:14:14,639 DEBUG c.i.l.m.c.o.PembayaranController - pBankPembayar : B00058  
+2018-06-04 15:14:14,639 DEBUG c.i.l.m.c.o.PembayaranController - pUnitPenerima : A00003  
+2018-06-04 15:14:14,639 DEBUG c.i.l.m.c.o.PembayaranController - pNoTagihan :   
+2018-06-04 15:14:14,639 DEBUG c.i.l.m.c.o.PembayaranController - pTglTagihan :   
+2018-06-04 15:14:14,639 DEBUG c.i.l.m.c.o.PembayaranController - pNoNotdin :   
+2018-06-04 15:14:14,639 DEBUG c.i.l.m.c.o.PembayaranController - pTglNotdin :   
+2018-06-04 15:14:14,639 DEBUG c.i.l.m.c.o.PembayaranController - pNoTagihan :   
+2018-06-04 15:14:14,639 DEBUG c.i.l.m.c.o.PembayaranController - pStatusValas :   
+2018-06-04 15:14:14,639 DEBUG c.i.l.m.c.o.PembayaranController - pKeterangan :   
+2018-06-04 15:14:14,639 DEBUG c.i.l.m.c.o.PembayaranController - pTipeTransaksi : 1  
+2018-06-04 15:14:14,639 DEBUG c.i.l.m.c.o.PembayaranController - pTglTerimaInvoice : 04/06/2018  
+2018-06-04 15:14:37,450 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180604-000000003  
+2018-06-04 15:25:22,441 DEBUG c.i.l.m.c.o.PembayaranController - idValas :   
+2018-06-04 15:25:22,442 DEBUG c.i.l.m.c.o.PembayaranController - pJenisPembayaran : P00001  
+2018-06-04 15:25:22,442 DEBUG c.i.l.m.c.o.PembayaranController - pTglJatuhTempo :   
+2018-06-04 15:25:22,442 DEBUG c.i.l.m.c.o.PembayaranController - pCurr : IDR  
+2018-06-04 15:25:22,442 DEBUG c.i.l.m.c.o.PembayaranController - pVendor : V00004  
+2018-06-04 15:25:22,442 DEBUG c.i.l.m.c.o.PembayaranController - pNilaiTagihan : 1  
+2018-06-04 15:25:22,442 DEBUG c.i.l.m.c.o.PembayaranController - pBankTujuan : B00004  
+2018-06-04 15:25:22,442 DEBUG c.i.l.m.c.o.PembayaranController - pBankPembayar : B00059  
+2018-06-04 15:25:22,442 DEBUG c.i.l.m.c.o.PembayaranController - pUnitPenerima : A00004  
+2018-06-04 15:25:22,442 DEBUG c.i.l.m.c.o.PembayaranController - pNoTagihan :   
+2018-06-04 15:25:22,442 DEBUG c.i.l.m.c.o.PembayaranController - pTglTagihan :   
+2018-06-04 15:25:22,442 DEBUG c.i.l.m.c.o.PembayaranController - pNoNotdin :   
+2018-06-04 15:25:22,442 DEBUG c.i.l.m.c.o.PembayaranController - pTglNotdin :   
+2018-06-04 15:25:22,442 DEBUG c.i.l.m.c.o.PembayaranController - pNoTagihan :   
+2018-06-04 15:25:22,442 DEBUG c.i.l.m.c.o.PembayaranController - pStatusValas :   
+2018-06-04 15:25:22,442 DEBUG c.i.l.m.c.o.PembayaranController - pKeterangan :   
+2018-06-04 15:25:22,442 DEBUG c.i.l.m.c.o.PembayaranController - pTipeTransaksi : 1  
+2018-06-04 15:25:22,442 DEBUG c.i.l.m.c.o.PembayaranController - pTglTerimaInvoice : 04/06/2018  
