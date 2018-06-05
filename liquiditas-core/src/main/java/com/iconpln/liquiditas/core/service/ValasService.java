@@ -93,11 +93,9 @@ public class ValasService {
 
                 pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, pUserId, sortBy, sortDir, pSearch);
 
-
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_VALAS")
                 .withFunctionName("get_rekap_pembayaran_pss");
-
 
         SqlParameterSource params = new MapSqlParameterSource()
                 .addValue("p_start", pStart, Types.INTEGER)
