@@ -658,7 +658,7 @@ public class MasterService {
         return resultset;
     }
 
-    public Map<String,Object> insUser(String pUsername,String pPassword,String pIdGroup,String pFlag) throws SQLException {
+    public Map<String,Object> insUser(String pUsername,String pPassword, String pEmail, String pIdGroup,String pFlag) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_MASTER")
@@ -667,6 +667,7 @@ public class MasterService {
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_username", pUsername)
                 .addValue("p_password", pPassword)
+                .addValue("p_email", pEmail)
                 .addValue("p_id_group", pIdGroup)
                 .addValue("p_flag_tampil", pFlag)
                 .addValue("out_message", OracleTypes.VARCHAR);
@@ -973,8 +974,9 @@ public class MasterService {
                                 .addValue("p_id_upload", idUpload)
                                 .addValue("p_usname", list.get(0))
                                 .addValue("p_password", list.get(1))
-                                .addValue("p_role", list.get(2))
-                                .addValue("p_flag_tampil", list.get(3))
+                                .addValue("p_email", list.get(2))
+                                .addValue("p_role", list.get(3))
+                                .addValue("p_flag_tampil", list.get(4))
                                 .addValue("p_create_by", user)
                                 .addValue("out_message", OracleTypes.VARCHAR);
                     }

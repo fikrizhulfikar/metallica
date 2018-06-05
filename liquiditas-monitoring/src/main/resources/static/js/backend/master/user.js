@@ -27,6 +27,7 @@ function getbyId(id) {
             console.log("get by id : ", res);
             $("#pUsername").val(res[0].USERNAME);
             $("#pUsername").prop('disabled', true);
+            $("#pEmail").val(res[0].EMAIL);
             // $("#pPassword").val(res[0].PASSWORD);
             $("#pIdGroup").val(res[0].ID_GROUP);
             $("#pFlag").val(res[0].ENABLED);
@@ -46,6 +47,7 @@ function submit() {
         data: {
             pUsername: $("#pUsername").val(),
             pPassword: $("#pPassword").val(),
+            pEmail: $("#pEmail").val(),
             pIdGroup: $("#pIdGroup").val(),
             pFlag: $("#pFlag").val()
         },
@@ -119,11 +121,11 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pketeranga
         "aoColumnDefs": [
             {
                 "bSortable": false,
-                "aTargets": [0, 1, 2]
+                "aTargets": [0, 1, 2, 3]
             }
             ,
             {
-                "aTargets": [4],
+                "aTargets": [5],
                 "sClass": "datatables_action-center",
                 "mRender": function (data, type, full) {
 
@@ -135,7 +137,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pketeranga
 
             },
             {
-                "aTargets": 3,
+                "aTargets": 4,
                 "mRender": function (data, type, full) {
                     if (full.ENABLED == 1) {
                         return "AKTIF"
@@ -160,6 +162,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pketeranga
         "columns": [
             {"data": "ROW_NUMBER", "defaultContent": ""},
             {"data": "USERNAME", "defaultContent": ""},
+            {"data": "EMAIL", "defaultContent": ""},
             {"data": "ID_GROUP", "defaultContent": ""},
             {"data": "ENABLED", "defaultContent": ""}
         ],

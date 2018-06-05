@@ -773,12 +773,13 @@ public class MasterDataController {
     public Map<String,Object> inUser(
             @RequestParam(value = "pUsername", defaultValue = "") String pUsername,
             @RequestParam(value = "pPassword", defaultValue = "") String pPassword,
+            @RequestParam(value = "pEmail", defaultValue = "") String pEmail,
             @RequestParam(value = "pIdGroup", defaultValue = "") String pIdGroup,
             @RequestParam(value = "pFlag", defaultValue = "") String pFlag
     ) {
 
         try{
-            return masterService.insUser(pUsername,passwordEncoder.encode(pPassword),pIdGroup,pFlag);
+            return masterService.insUser(pUsername,passwordEncoder.encode(pPassword), pEmail,pIdGroup,pFlag);
         }catch (Exception e){
             AppUtils.getLogger(this).debug(e.getMessage());
             return null;
