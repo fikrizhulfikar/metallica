@@ -37,6 +37,7 @@ $(document).ready(function () {
     setSelectJenisPembayaran("cmb_jenis_pemabayaran", "FILTER", "");
     search("load");
     inputKeterangan();
+
 });
 
 $("#tanggal_awal").change(function () {
@@ -948,18 +949,12 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
 
                 }
 
-            },
-            {
+            },{
                 "aTargets": [27],
                 "mRender": function (data, type, full) {
-
                    var ret_value =
-                        '<div class="input-group">' +
-                        '<input type="checkbox" value="">'+
-                        '</div>';
-
+                        '<input class="cb" type="checkbox" value="'+full.ID_TRIPARTITE+'" id="cbcheckbox">';
                     return ret_value;
-
                 }
 
             }
@@ -1014,8 +1009,50 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
         tempTableSearch = value;
     });
 
-}
+    $('.dataTables_filter').each(function () {
+        $(this).append('<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="multiUpdate()">Verified</button>');
+    });
+    /*$("#table-trepartite").on('change',"input[type='checkbox']",function(e){
+        //your code
+        // var isChecked = $(this).attr("checked");
+        // console.log(isChecked);
+        if($(this).is(':checked')){
+            console.log("bbppppp");
+            $('#btn-verified').hide();
+        }
+        console.log($(this));
+        alert("boo,");
+    });*/
 
+}
+function multiUpdate() {
+    var id= $("#table-trepartite input[type=checkbox]:checked").map(function() {
+        return $(this).attr("value");
+    }).get();
+    console.log("id",id.toString());
+    $.ajax({
+        url: baseUrl + "api_operator/pembayaran/multi_upd_status",
+        dataType: 'JSON',
+        type: "POST",
+        data: {
+            pIdsValas: id.toString(),
+            pStatusInvoice: 2,
+        },
+        success: function (res) {
+            hideLoadingCss("")
+            console.log("data upd_status :", res);
+            if (res.return == 1) {
+                alert(res.OUT_MSG);
+                location.reload();
+            } else {
+                alert(res.OUT_MSG);
+            }
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
 function upload_file(pIdValas) {
     $("#modal-upload-file").modal("show");
     $("#temp-id-valas-file").val(pIdValas);

@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -259,6 +260,29 @@ public class PembayaranController {
         }
     }
 
+    @RequestMapping(value = "/multi_upd_status", method = RequestMethod.POST)
+    public Map<String, Object> multiUpdStatus(
+            @RequestParam(value = "pIdsValas", defaultValue = "") String pIdsValas,
+            @RequestParam(value = "pStatusInvoice", defaultValue = "") String pStatusInvoice,
+            @RequestParam(value = "pDeskripsi", defaultValue = "") String pDeskripsi
+    ) {
+        Map<String, Object> out = null;
+        String[] idList = pIdsValas.split(",");
+        for(String item : idList){
+            AppUtils.getLogger(this).debug("idValas : {} ", item);
+            try {
+                out = valasService.updStatus(item, pStatusInvoice, pDeskripsi, WebUtils.getUsernameLogin());
+                AppUtils.getLogger(this).debug("update {} : {} ", item, out);
+            } catch (Exception e) {
+                e.printStackTrace();
+                out = null;
+            }
+        }
+
+        AppUtils.getLogger(this).debug("statusInvoice : {} ", pStatusInvoice);
+        return out;
+
+    }
     @RequestMapping(value = "/upd_ket", method = RequestMethod.POST)
     public Map<String, Object> updStatus(
             @RequestParam(value = "pIdValas", defaultValue = "") String pIdValas,
