@@ -1,5 +1,6 @@
 package com.iconpln.liquiditas.fcm.config.security;
 
+import com.iconpln.liquiditas.fcm.common.util.Logging;
 import com.iconpln.liquiditas.fcm.config.security.model.User;
 import com.iconpln.liquiditas.fcm.config.security.service.AuthenticationService;
 import java.util.Optional;
@@ -25,7 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration("webAuthenticationProvider")
 public class WebAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
-    private final Logger logger = LoggerFactory.getLogger(WebAuthenticationProvider.class);
+    private final Logger logger = Logging.getInstance().getLogger(this);
 
     @Autowired
     @Qualifier("authenticationService")
@@ -60,6 +61,7 @@ public class WebAuthenticationProvider extends AbstractUserDetailsAuthentication
         try {
             loadedUser = service.findByUsername(s);
         } catch (UsernameNotFoundException var6) {
+            logger.info("Username not found: " + s);
             throw var6;
         } catch (Exception var7) {
             throw new InternalAuthenticationServiceException(var7.getMessage(), var7);

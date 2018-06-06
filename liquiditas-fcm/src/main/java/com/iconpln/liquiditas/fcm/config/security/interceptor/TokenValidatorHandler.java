@@ -2,6 +2,7 @@ package com.iconpln.liquiditas.fcm.config.security.interceptor;
 
 import com.iconpln.liquiditas.fcm.common.ConstantKeys;
 import com.iconpln.liquiditas.fcm.common.ConstantMessages;
+import com.iconpln.liquiditas.fcm.common.util.Logging;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,8 @@ import org.springframework.util.StringUtils;
  */
 @Component
 public class TokenValidatorHandler extends UsernamePasswordAuthenticationFilter {
+
+    private final Logger logger = Logging.getInstance().getLogger(this);
 
     @Value("${token.header}")
     private String tokenHeader;
@@ -80,15 +84,17 @@ public class TokenValidatorHandler extends UsernamePasswordAuthenticationFilter 
                         PrintWriter out = httpResponse.getWriter();
                         out.write(ConstantMessages.EXPIRED_TOKEN);
                         out.close();
+                        logger.info("Expired token: " + token);
                     }
                 } else {
                     httpResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
                     PrintWriter out = httpResponse.getWriter();
                     out.write(ConstantMessages.INVALID_ISSUER);
                     out.close();
+                    logger.info("Invalid issuer: " + issuer + " is not valid for (" + ((HttpServletRequest) req).getRequestURI() + ").");
                 }
             } catch (Exception e) {
-                logger.error(e.getMessage());
+                logger.error("Error: " + e.getMessage());
             }
         }
         chain.doFilter(req, res);

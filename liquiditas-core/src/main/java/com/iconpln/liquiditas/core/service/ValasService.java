@@ -1,5 +1,6 @@
 package com.iconpln.liquiditas.core.service;
 
+import com.iconpln.liquiditas.core.domain.RekapPembayaran;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import oracle.jdbc.OracleTypes;
 import org.apache.poi.hssf.usermodel.*;
@@ -1383,6 +1384,61 @@ public class ValasService {
             return simpleJdbcCall.executeFunction(String.class, idValas);
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    /**
+     * Untuk kirim email ke user yang sudah jatuh tempo pembayaran (h-1 & h-0).
+     * @return returns emails.
+     */
+    public List<Map<String, Object>> getEmailJatuhTempo() {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_test_valas")
+                .withFunctionName("get_emails");
+        try {
+            List<Map<String, Object>> out = simpleJdbcCall.executeFunction(ArrayList.class);
+            return out;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
+    public List<RekapPembayaran> getRekapPembayaranByEmail(String email) {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_test_valas")
+                .withFunctionName("get_rekap_pembayaran_by_email");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_email", email);
+        try {
+            List<Map<String, Object>> out = simpleJdbcCall.executeFunction(ArrayList.class, in);
+            List<RekapPembayaran> rekapPembayarans = new ArrayList<>();
+            out.stream().forEach(data -> {
+                RekapPembayaran rekapPembayaran = new RekapPembayaran();
+
+                rekapPembayaran.setIdVendor(data.get("ID_VENDOR").toString());
+                rekapPembayaran.setIdJenisPembayaran(data.get("ID_JENIS_PEMBAYARAN").toString());
+                rekapPembayaran.setIdUnit(data.get("ID_UNIT").toString());
+                rekapPembayaran.setCurrency(data.get("CURRENCY").toString());
+                rekapPembayaran.setTotalTagihan(new BigDecimal(data.get("TOTAL_TAGIHAN").toString()));
+                rekapPembayaran.setTglJatuhTempo(data.get("TGL_JATUH_TEMPO").toString());
+                rekapPembayaran.setKodeBankTujuan(data.get("KODE_BANK_TUJUAN").toString());
+                rekapPembayaran.setKodeBankPembayar(data.get("KODE_BANK_PEMBAYAR").toString());
+                rekapPembayaran.setNoTagihan(data.get("NO_TAGIHAN").toString());
+                rekapPembayaran.setTglTagihan(data.get("TGL_TAGIHAN").toString());
+                rekapPembayaran.setNoNotDin(data.get("NO_NOTDIN").toString());
+                rekapPembayaran.setTglNotDin(data.get("TGL_NOTDIN").toString());
+                rekapPembayaran.setStatusValas(data.get("STATUS_VALAS").toString());
+                rekapPembayaran.setCountdown(data.get("COUNT_DOWN").toString());
+                rekapPembayaran.setDeskripsi(data.get("DESKRIPSI").toString());
+                rekapPembayaran.setTipeTransaksi(data.get("TIPE_TRANSAKSI").toString());
+                rekapPembayaran.setTglTerimaInvoice(data.get("TGL_TERIMA_INVOICE").toString());
+                rekapPembayaran.setTglLunas(data.get("TGL_LUNAS").toString());
+                rekapPembayaran.setStatusTracking(data.get("STATUS_TRACKING").toString());
+                rekapPembayarans.add(rekapPembayaran);
+            });
+            return rekapPembayarans;
+        } catch (Exception e) {
+            return new ArrayList<>();
         }
     }
 
