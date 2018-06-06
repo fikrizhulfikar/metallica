@@ -1456,4 +1456,23 @@ public class ValasService {
         }
     }
 
+    public List<Map<String, Object>> getDerivatifCcsPss(int pStart, int pLength, String pTglAwal, String pTglAkhir, String pBank, String pTenor, String pIdProduct, String pSearch) throws SQLException {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_derivatif_ccs_pss");
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_start", pStart);
+        params.put("p_length", pLength);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_bank", pBank);
+        params.put("p_tenor", pTenor);
+        params.put("p_id_product", pIdProduct);
+        params.put("p_search", pSearch);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_derivatif_ccs_pss : {}", resultset);
+        return resultset;
+    }
+
 }

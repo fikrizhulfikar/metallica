@@ -361,6 +361,28 @@ public class DerivatifController {
 
     }
 
+    @RequestMapping(value = "/get_derivatif_ccs_pss", method = RequestMethod.GET)
+    public List getDerivatifCcsPss(
+            @RequestParam(value = "pStart", defaultValue = "1") int pStart,
+            @RequestParam(value = "pLength", defaultValue = "10") int pLength,
+            @RequestParam(value = "pIdProduct", defaultValue = "") String pIdProduct,
+            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pTenor", defaultValue = "ALL") String pTenor,
+            @RequestParam(value = "pSearch", defaultValue = "ALL") String pSearch
+            ) {
+        AppUtils.getLogger(this).info("pIdProduct : {}",pIdProduct);
+        try {
+            return valasService.getDerivatifCcsPss(pStart, pLength,
+                    pTglAwal, pTglAkhir, pBank, pTenor, pIdProduct, pSearch);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
     public String generateReport(HttpServletResponse response, Map<String, Object> errorData, String tipe, String idDerivatif) {
         try {
             AppUtils.getLogger(this).debug("Masuknih : {}", errorData);
