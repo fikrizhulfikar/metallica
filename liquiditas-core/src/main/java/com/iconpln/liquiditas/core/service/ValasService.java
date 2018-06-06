@@ -1387,6 +1387,20 @@ public class ValasService {
         }
     }
 
+    public Map<String, Object> deletePlacement() {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withProcedureName("del_placement");
+        try {
+            Map<String, Object> response = simpleJdbcCall.execute();
+            response.put("message", "Data berhasil di-reset.");
+            return response;
+        } catch (Exception e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Data gagal di-reset.");
+            return response;
+        }
+    }
+
     /**
      * Untuk kirim email ke user yang sudah jatuh tempo pembayaran (h-1 & h-0).
      * @return returns emails.
