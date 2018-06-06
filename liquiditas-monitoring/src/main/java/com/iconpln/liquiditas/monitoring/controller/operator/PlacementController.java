@@ -396,4 +396,9 @@ public class PlacementController {
             return "Gagal Export Data :" + e.getMessage();
         }
     }
+
+    @PostMapping(value = "/delete_placement")
+    public Map<String, Object> deletePlacement() {
+        return valasService.deletePlacement();
+    }
 }
