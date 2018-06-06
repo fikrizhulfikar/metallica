@@ -1,7 +1,12 @@
 package com.iconpln.liquiditas.core;
 
+import com.iconpln.liquiditas.core.domain.RekapPembayaran;
 import com.iconpln.liquiditas.core.service.ValasService;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,17 +26,9 @@ public class ValasServiceTest {
     private JdbcTemplate jdbcTemplate;
 
     @Test
-    public void addKmk() throws SQLException {
-        try {
-            service.insSaldoKmk("B00058", "1");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
     public void test() {
-
+        List<RekapPembayaran> rekapPembayarans =  service.getRekapPembayaranByEmail("elvankun@gmail.com");
+        rekapPembayarans.stream().forEach(System.out::println);
     }
 
 }
