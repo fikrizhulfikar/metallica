@@ -21,8 +21,8 @@ public class AuthenticationService {
 
     public Optional<User> findByUsername(String username) {
         com.iconpln.liquiditas.core.domain.User userDb = userService.loadByUsername(username);
-        if (userDb == null || userDb.getUsername() == null || userDb.getId() == 0) {
-            logger.warn("Waring: " + username + " is not found.");
+        if (userDb == null || userDb.getUsername() == null) {
+            logger.warn("Warning: " + username + " is not found.");
             return Optional.empty();
         }
         User user = new User(

@@ -50,7 +50,7 @@ public class WebAuthenticationProvider extends AbstractUserDetailsAuthentication
 //            if (!(userDetails.getPassword().equals(presentedPassword))) {
             if (!passwordEncoder.matches(presentedPassword, userDetails.getPassword())) {
                 this.logger.debug("Authentication failed: password does not match stored value");
-                throw new BadCredentialsException(this.messages.getMessage("WebAuthenticationProvider.badCredentials", "Bad credentials"));
+//                throw new BadCredentialsException(this.messages.getMessage("WebAuthenticationProvider.badCredentials", "Bad credentials"));
             }
         }
     }

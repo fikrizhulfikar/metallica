@@ -1475,4 +1475,52 @@ public class ValasService {
         return resultset;
     }
 
+    public Map<String, Object> insDerivatifCcs(
+            String pIdCcs,
+            String pStartDate,
+            String pEndDate,
+            String pPayDate,
+            String pNotionalUsd,
+            String pLibor,
+            String pReceiveUsd,
+            String pResetDate,
+            String pDiscountUsd,
+            String pReceiveIdr,
+            String pDiscountIdr,
+            String pSukuBungaIdr,
+            String pPrincipal,
+            String pCreateBy,
+            String pBank,
+            String pJatuhTempo,
+            String pTenor
+    ) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("ins_derivatif_ccs");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_ccs", pIdCcs)
+                .addValue("p_start_date", pStartDate)
+                .addValue("p_end_date", pEndDate)
+                .addValue("p_pay_date", pPayDate)
+                .addValue("p_notional_usd", pNotionalUsd)
+                .addValue("p_libor", pLibor)
+                .addValue("p_receive_usd", pReceiveUsd)
+                .addValue("p_reset_date", pResetDate)
+                .addValue("p_discount_usd", pDiscountUsd)
+                .addValue("p_receive_idr", pReceiveIdr)
+                .addValue("p_discount_idr", pDiscountIdr)
+                .addValue("p_suku_bunga_idr", pSukuBungaIdr)
+                .addValue("p_principal", pPrincipal)
+                .addValue("p_create_by", pCreateBy)
+                .addValue("p_bank", pBank)
+                .addValue("p_tenor", pTenor)
+                .addValue("out_msg", OracleTypes.INTEGER);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data ins_tripartite : {}", out);
+        return out;
+    }
+
 }
