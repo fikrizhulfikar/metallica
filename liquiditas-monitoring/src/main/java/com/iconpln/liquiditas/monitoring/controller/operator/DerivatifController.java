@@ -365,22 +365,68 @@ public class DerivatifController {
     public List getDerivatifCcsPss(
             @RequestParam(value = "pStart", defaultValue = "1") int pStart,
             @RequestParam(value = "pLength", defaultValue = "10") int pLength,
-            @RequestParam(value = "pIdProduct", defaultValue = "") String pIdProduct,
             @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
             @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
             @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
             @RequestParam(value = "pTenor", defaultValue = "ALL") String pTenor,
             @RequestParam(value = "pSearch", defaultValue = "ALL") String pSearch
             ) {
-        AppUtils.getLogger(this).info("pIdProduct : {}",pIdProduct);
+        AppUtils.getLogger(this).info("get_derivatif_ccs_pss");
         try {
             return valasService.getDerivatifCcsPss(pStart, pLength,
-                    pTglAwal, pTglAkhir, pBank, pTenor, pIdProduct, pSearch);
+                    pTglAwal, pTglAkhir, pBank, pTenor, pSearch);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
 
+    }
+
+    @RequestMapping(value = "/ins_derivatif_ccs", method = RequestMethod.POST)
+    public Map<String, Object> insDerivatifCcs(
+            String pIdCcs,
+            String pStartDate,
+            String pEndDate,
+            String pPayDate,
+            String pNotionalUsd,
+            String pLibor,
+            String pReceiveUsd,
+            String pResetDate,
+            String pDiscountUsd,
+            String pReceiveIdr,
+            String pDiscountIdr,
+            String pSukuBungaIdr,
+            String pPrincipal,
+            String pCreateBy,
+            String pBank,
+            String pJatuhTempo,
+            String pTenor
+    ) {
+        AppUtils.getLogger(this).info("ins derivative ccs.");
+        try {
+            return valasService.insDerivatifCcs(
+                    pIdCcs,
+                    pStartDate,
+                    pEndDate,
+                    pPayDate,
+                    pNotionalUsd,
+                    pLibor,
+                    pReceiveUsd,
+                    pResetDate,
+                    pDiscountUsd,
+                    pReceiveIdr,
+                    pDiscountIdr,
+                    pSukuBungaIdr,
+                    pPrincipal,
+                    pCreateBy,
+                    pBank,
+                    pJatuhTempo,
+                    pTenor
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String generateReport(HttpServletResponse response, Map<String, Object> errorData, String tipe, String idDerivatif) {

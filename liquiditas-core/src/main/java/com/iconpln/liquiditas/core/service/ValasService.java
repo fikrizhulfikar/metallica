@@ -1456,7 +1456,7 @@ public class ValasService {
         }
     }
 
-    public List<Map<String, Object>> getDerivatifCcsPss(int pStart, int pLength, String pTglAwal, String pTglAkhir, String pBank, String pTenor, String pIdProduct, String pSearch) throws SQLException {
+    public List<Map<String, Object>> getDerivatifCcsPss(int pStart, int pLength, String pTglAwal, String pTglAkhir, String pBank, String pTenor, String pSearch) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_VALAS")
                 .withFunctionName("get_derivatif_ccs_pss");
@@ -1467,7 +1467,6 @@ public class ValasService {
         params.put("p_tgl_akhir", pTglAkhir);
         params.put("p_bank", pBank);
         params.put("p_tenor", pTenor);
-        params.put("p_id_product", pIdProduct);
         params.put("p_search", pSearch);
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
 
@@ -1515,6 +1514,7 @@ public class ValasService {
                 .addValue("p_principal", pPrincipal)
                 .addValue("p_create_by", pCreateBy)
                 .addValue("p_bank", pBank)
+                .addValue("p_jatuh_tempo", pJatuhTempo)
                 .addValue("p_tenor", pTenor)
                 .addValue("out_msg", OracleTypes.INTEGER);
 
