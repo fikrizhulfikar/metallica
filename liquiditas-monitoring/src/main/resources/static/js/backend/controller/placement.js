@@ -831,3 +831,22 @@ function exportXls(idJenis) {
     }
 
 }
+
+function deletePlacement() {
+    showLoadingCss();
+    $.ajax({
+        url: baseUrl + "api_operator/placement/delete_placement",
+        type: "POST",
+        data: {
+
+        },
+        success: function (res) {
+            console.log("ins history placement MAIN: ",res);
+            hideLoadingCss(res.message);
+            location.reload();
+        },
+        error: function () {
+            hideLoadingCss("Gagal reset data.");
+        }
+    });
+}

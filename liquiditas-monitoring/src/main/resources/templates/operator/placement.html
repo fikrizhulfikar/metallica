@@ -22,7 +22,11 @@
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
         <li class="breadcrumb-item active">Placement</li>
+
         <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <button class="btn btn-secondary" onclick="deletePlacement()"><i class="icon-docs"></i>&nbsp;Reset Data</button>
+            </div>
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <button class="btn btn-secondary" onclick="exportXls(0)"><i class="icon-docs"></i>&nbsp;Xls</button>
             </div>

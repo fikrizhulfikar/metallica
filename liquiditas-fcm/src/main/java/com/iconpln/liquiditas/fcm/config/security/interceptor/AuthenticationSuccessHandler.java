@@ -2,6 +2,7 @@ package com.iconpln.liquiditas.fcm.config.security.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iconpln.liquiditas.fcm.common.ConstantKeys;
+import com.iconpln.liquiditas.fcm.common.util.Logging;
 import com.iconpln.liquiditas.fcm.config.security.model.Token;
 import com.iconpln.liquiditas.fcm.config.security.model.User;
 import io.jsonwebtoken.Jwts;
@@ -13,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.http.HttpStatus;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -24,6 +26,8 @@ import org.springframework.stereotype.Component;
  */
 @Component("authenticationSucessHandler")
 public class AuthenticationSuccessHandler implements org.springframework.security.web.authentication.AuthenticationSuccessHandler {
+
+    private final Logger logger = Logging.getInstance().getLogger(this);
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -59,6 +63,7 @@ public class AuthenticationSuccessHandler implements org.springframework.securit
         PrintWriter out = httpServletResponse.getWriter();
         objectMapper.writeValue(out, token);
         out.close();
+        logger.info("Authentication success: " + authentication.getPrincipal() + " logged in successfully with issuer " + issuer + ".");
     }
 
 }

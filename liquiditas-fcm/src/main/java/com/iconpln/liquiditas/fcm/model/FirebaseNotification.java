@@ -2,12 +2,14 @@ package com.iconpln.liquiditas.fcm.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author Langkuy <contact@ardikars.com>
  */
 public class FirebaseNotification implements Serializable {
 
+    private String id;
     private String title;
     private String body;
     private String icon;
@@ -21,12 +23,21 @@ public class FirebaseNotification implements Serializable {
     }
 
     public FirebaseNotification(String title, String body, String icon, Boolean isSeen, String createBy) {
+        this.id = UUID.randomUUID().toString();
         this.title = title;
         this.body = body;
         this.icon = icon;
         this.isSeen = isSeen;
         this.createBy = createBy;
         this.date = new Date().getTime();
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getTitle() {

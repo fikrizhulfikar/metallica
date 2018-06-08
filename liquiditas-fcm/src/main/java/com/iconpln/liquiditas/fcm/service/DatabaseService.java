@@ -7,6 +7,7 @@ import com.iconpln.liquiditas.fcm.model.FirebaseNotification;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.UUID;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,9 @@ public class DatabaseService {
         Preconditions.checkArgument(notification != null, "Notification must be not null.");
         Preconditions.checkArgument(topic != null, "Topic must be not null.");
         String key = databaseReference.push().getKey();
+        if (notification.getId() == null || notification.getId().isEmpty()) {
+            notification.setId(UUID.randomUUID().toString());
+        }
         Map<String, Object> map = new HashMap<>();
         notification.setTopic(topic);
         map.put(key, notification);
@@ -69,11 +73,22 @@ public class DatabaseService {
                     jsonObject.getBoolean("isSeen"),
                     jsonObject.getString("createBy")
             );
+            notification.setId(jsonObject.getString("id"));
             notification.setTopic(jsonObject.getString("topic"));
             notification.setDate(jsonObject.getLong("date"));
             map.put(key, notification);
         }
         return map;
+    }
+
+    public FirebaseNotification read(String key, FirebaseNotification notification, String topic) {
+        Map<String, Object> map = new HashMap<>();
+        notification.setTopic(topic);
+        notification.setIsSeen(true);
+        map.put(key, notification);
+        databaseReference.orderByChild("id").equalTo(key)
+                .getRef().updateChildrenAsync(map);
+        return notification;
     }
 
 }
