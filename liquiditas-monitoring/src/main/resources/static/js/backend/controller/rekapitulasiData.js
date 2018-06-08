@@ -850,38 +850,45 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
 
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY USER") {
-                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"3" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+
                                 if(newRoleUser[0] == "ROLE_DM_ENERGI" || newRoleUser[0] == "ROLE_DM_KEUKON_APLN" || newRoleUser[0] == "ROLE_DM_PENGUSAHAAN" || newRoleUser[0] == "ROLE_ADMIN"){
-
-
+                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"3" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                }else {
+                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
                                 }
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY DM" && full.UPDATE_BY == "dmkeukonap" || full.UPDATE_BY == "dmkeukonslap" ){
-                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"8" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
-                                if(newRoleUser[0] == "ROLE_MS_KEUKON" || newRoleUser[0] == "ROLE_ADMIN"){
 
+                                if(newRoleUser[0] == "ROLE_MS_KEUKON" || newRoleUser[0] == "ROLE_ADMIN"){
+                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"8" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                }else {
+                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
                                 }
                             }
                             else if (full.UPDATE_BY == "dmkeukonslap" && full.STATUS_TRACKING == "VERIFIED BY DM"
                                 || full.UPDATE_BY !== "dmkeukonap" && full.STATUS_TRACKING == "VERIFIED BY DM"
                                 || full.STATUS_TRACKING == "VERIFIED BY MS KEUKON"){
-
-                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"4" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
                                 if(newRoleUser[0] == "ROLE_DM_PEMBELANJAAN"|| newRoleUser[0] == "ROLE_ADMIN"){
+                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"4" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                }else {
+                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
                                 }
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY DM PEMBELANJAAN"){
-                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"5" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+
                                 if(newRoleUser[0] == "ROLE_MS_PEMBELANJAAN" || newRoleUser[0] == "ROLE_ADMIN"){
-
+                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"5" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                }else {
+                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
                                 }
-
                             }
                             else if (full.STATUS_TRACKING == "APPROVE BY MS"){
                                 var role = newRoleUser[0];
-                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"7" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
-                                if(role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN"){
 
+                                if(role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN"){
+                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"7" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                }else {
+                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
                                 }
                             }
                             else {

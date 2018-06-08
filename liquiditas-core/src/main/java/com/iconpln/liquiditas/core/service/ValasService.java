@@ -317,7 +317,7 @@ public class ValasService {
                                 .addValue("p_nomor", x)
                                 .addValue("p_id_upload", idUpload)
                                 .addValue("p_jenis_pembayaran", list.get(1))
-                                .addValue("p_tgl_jatuh_tempo", list.get(2) + " 00:00")
+                                .addValue("p_tgl_jatuh_tempo", list.get(2))
                                 .addValue("p_vendor", list.get(3))
                                 .addValue("p_curr", list.get(4))
                                 .addValue("p_nilai_tagihan", list.get(5))
@@ -332,7 +332,7 @@ public class ValasService {
                                 .addValue("p_create_by", user)
                                 .addValue("p_deskripsi", list.get(14))
                                 .addValue("p_tipe_transaksi", list.get(0))
-                                .addValue("p_tgl_terima_invoice", list.get(9) + " 00:00")
+                                .addValue("p_tgl_terima_invoice", list.get(9))
                                 .addValue("out_msg", OracleTypes.VARCHAR);
                     }else if(jenisFile.equals("2")){
                         AppUtils.getLogger(this).debug("jenisFile {} : {}{}", jenisFile, "tripartit", list );

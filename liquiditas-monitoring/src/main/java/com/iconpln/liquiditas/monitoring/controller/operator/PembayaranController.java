@@ -279,18 +279,24 @@ public class PembayaranController {
                 String key = (String)keys.next();
                 String value = json.getString(key);
                 AppUtils.getLogger(this).debug("  {}: {} ", key, value);
-                try {
-                    out = valasService.updStatus(value, key, pDeskripsi, WebUtils.getUsernameLogin());
-                    AppUtils.getLogger(this).debug("update {} : {} ", value, key);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    out = null;
-                    break;
+                if(!key.equals("x")){
+                    try {
+                        out = valasService.updStatus(value, key, pDeskripsi, WebUtils.getUsernameLogin());
+                        AppUtils.getLogger(this).debug("update {} : {} ", value, key);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        out = null;
+                        break;
+                    }
+                }
+                else {
+                    out.put("OUT_MSG", "DATA BERHASIL DIUBAH");
+                    out.put("return", "1");
                 }
             }
         }
 
-        AppUtils.getLogger(this).debug("statusInvoice : {} ", pStatusInvoice);
+        AppUtils.getLogger(this).debug("statusInvoice : {} ", out);
         return out;
 
     }
