@@ -119,7 +119,6 @@ function delete_data(id) {
     }
 }
 
-
 function duplicate_data(id) {
     console.log("duplicate data tripartite");
     showLoadingCss();
@@ -400,7 +399,6 @@ function exportXls() {
     }
     window.open(baseUrl + "api_operator/tripartite/xls/" + tglAwal.replace(/\//g, "-") + "/" + tglAkhir.replace(/\//g, "-") + "/" + $("#cmb_bank").val() + "/" + $("#cmb_jenis_pemabayaran").val());
 }
-
 
 function generatePDF() {
     console.log("all data  : " + allData);
@@ -1025,7 +1023,8 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
     });*/
 
 }
-function multiUpdate() {
+
+function multiUpdate(statusInvoice) {
     var id= $("#table-trepartite input[type=checkbox]:checked").map(function() {
         return $(this).attr("value");
     }).get();
@@ -1036,7 +1035,7 @@ function multiUpdate() {
         type: "POST",
         data: {
             pIdsValas: id.toString(),
-            pStatusInvoice: 2,
+            pStatusInvoice: statusInvoice,
         },
         success: function (res) {
             hideLoadingCss("")
@@ -1053,6 +1052,7 @@ function multiUpdate() {
         }
     });
 }
+
 function upload_file(pIdValas) {
     $("#modal-upload-file").modal("show");
     $("#temp-id-valas-file").val(pIdValas);
@@ -1060,6 +1060,7 @@ function upload_file(pIdValas) {
     console.log("this id > ", pIdValas);
 
 }
+
 function upd_status_tracking(idTripartite , pStatusinvoice){
     showLoadingCss();
     console.log("idvalas :",idTripartite);

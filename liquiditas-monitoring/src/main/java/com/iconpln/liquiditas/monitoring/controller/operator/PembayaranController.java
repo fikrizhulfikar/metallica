@@ -1,5 +1,7 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.iconpln.liquiditas.core.service.ValasService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.monitoring.service.NotificationService;
@@ -11,16 +13,13 @@ import java.math.BigDecimal;
 import java.sql.Array;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jxls.transformer.XLSTransformer;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -263,19 +262,31 @@ public class PembayaranController {
     @RequestMapping(value = "/multi_upd_status", method = RequestMethod.POST)
     public Map<String, Object> multiUpdStatus(
             @RequestParam(value = "pIdsValas", defaultValue = "") String pIdsValas,
+            @RequestParam(value = "pData", defaultValue = "") String pData,
             @RequestParam(value = "pStatusInvoice", defaultValue = "") String pStatusInvoice,
             @RequestParam(value = "pDeskripsi", defaultValue = "") String pDeskripsi
     ) {
         Map<String, Object> out = null;
-        String[] idList = pIdsValas.split(",");
-        for(String item : idList){
-            AppUtils.getLogger(this).debug("idValas : {} ", item);
-            try {
-                out = valasService.updStatus(item, pStatusInvoice, pDeskripsi, WebUtils.getUsernameLogin());
-                AppUtils.getLogger(this).debug("update {} : {} ", item, out);
-            } catch (Exception e) {
-                e.printStackTrace();
-                out = null;
+        String noBracket = pData.replaceAll("\\[", "").replaceAll("\\]","");
+        AppUtils.getLogger(this).debug("JSONValas : {} ", pData.replaceAll("\\[", "").replaceAll("\\]",""));
+        String[] listData = noBracket.split(",");
+        JSONObject json;
+        for(String item : listData){
+            json = new JSONObject(item);
+            AppUtils.getLogger(this).debug("jsonobject : {} ", json);
+            Iterator<?> keys = json.keys();
+            while( keys.hasNext() ){
+                String key = (String)keys.next();
+                String value = json.getString(key);
+                AppUtils.getLogger(this).debug("  {}: {} ", key, value);
+                try {
+                    out = valasService.updStatus(value, key, pDeskripsi, WebUtils.getUsernameLogin());
+                    AppUtils.getLogger(this).debug("update {} : {} ", value, key);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    out = null;
+                    break;
+                }
             }
         }
 
@@ -283,6 +294,39 @@ public class PembayaranController {
         return out;
 
     }
+
+    @RequestMapping(value = "/multi_del_data", method = RequestMethod.POST)
+    public Map<String, Object> multiDelData(
+            @RequestParam(value = "pData", defaultValue = "") String pData
+    ) {
+        Map<String, Object> out = null;
+        String noBracket = pData.replaceAll("\\[", "").replaceAll("\\]", "");
+        AppUtils.getLogger(this).debug("JSONValas : {} ", pData.replaceAll("\\[", "").replaceAll("\\]", ""));
+        String[] listData = noBracket.split(",");
+        JSONObject json;
+        for (String item : listData) {
+            json = new JSONObject(item);
+            AppUtils.getLogger(this).debug("jsonobject : {} ", json);
+            Iterator<?> keys = json.keys();
+            while (keys.hasNext()) {
+                String key = (String) keys.next();
+                String value = json.getString(key);
+                AppUtils.getLogger(this).debug("  {}: {} ", key, value);
+                try {
+                    out = valasService.deletePembayaran(value);
+                    AppUtils.getLogger(this).debug("update {} : {} ", value, key);
+                    AppUtils.getLogger(this).debug("idValas deleted : {} ", value);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    out = null;
+                    break;
+                }
+            }
+
+        }
+        return out;
+    }
+
     @RequestMapping(value = "/upd_ket", method = RequestMethod.POST)
     public Map<String, Object> updStatus(
             @RequestParam(value = "pIdValas", defaultValue = "") String pIdValas,

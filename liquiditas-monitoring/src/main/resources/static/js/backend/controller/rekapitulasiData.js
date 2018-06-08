@@ -37,6 +37,7 @@ $(document).ready(function () {
     inputKeterangan();
 });
 
+
 $("#tanggal_awal").change(function () {
     var tglAwalData = $('#tanggal_awal').val();
     if (tglAwalData == "") {
@@ -708,6 +709,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                 {width: 90, targets: 17},
                 {width: 90, targets: 18},
                 {width: 300, targets: 19},
+                {width: 12, targets: 21},
                 {className: "datatables_action", "targets": [5, 13, 11, 15]},
                 {"width": "20%", "targets": 0},
                 {
@@ -739,7 +741,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                                     ret_value =
                                         '<div class="btn-group">' +
                                         '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
-                                        if(newRoleUser[0] == "ROLE_DM_ENERGI" || newRoleUser[0] == "ROLE_DM_KEUKON_APLN" || newRoleUser[0] == "ROLE_DM_PENGUSAHAAN"){
+                                        if(newRoleUser[0] == "ROLE_DM_ENERGI" || newRoleUser[0] == "ROLE_DM_KEUKON_APLN" || newRoleUser[0] == "ROLE_DM_PENGUSAHAAN" || newRoleUser[0] == "ROLE_ADMIN"){
                                             ret_value = ret_value +'<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DM" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +3+ '\')"><i class="fa fa-arrows-alt"></i></button>';
                                         }
                                         ret_value = ret_value +
@@ -752,7 +754,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                                     ret_value =
                                         '<div class="btn-group">' +
                                         '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
-                                    if(newRoleUser[0] == "ROLE_MS_KEUKON"){
+                                    if(newRoleUser[0] == "ROLE_MS_KEUKON" || newRoleUser[0] == "ROLE_ADMIN"){
                                         ret_value = ret_value +
                                             '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MS Keukon" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +8+ '\')"><i class="fa fa-arrows-alt"></i></button>';
                                     }
@@ -767,7 +769,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                                     ret_value =
                                         '<div class="btn-group">' +
                                         '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
-                                    if(newRoleUser[0] == "ROLE_DM_PEMBELANJAAN"){
+                                    if(newRoleUser[0] == "ROLE_DM_PEMBELANJAAN" || newRoleUser[0] == "ROLE_ADMIN"){
                                         ret_value = ret_value +
                                             '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DM Pembelanjaan" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +4+ '\')"><i class="fa fa-arrows-alt"></i></button>';
                                     }
@@ -782,7 +784,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                                     ret_value =
                                         '<div class="btn-group">' +
                                         '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
-                                    if(newRoleUser[0] == "ROLE_MS_PEMBELANJAAN"){
+                                    if(newRoleUser[0] == "ROLE_MS_PEMBELANJAAN" || newRoleUser[0] == "ROLE_ADMIN"){
                                         ret_value = ret_value +
                                             '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Approve MS" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +5+ '\')"><i class="fa fa-arrows-alt"></i></button>';
                                     }
@@ -798,7 +800,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                                         '<div class="btn-group">' +
                                         '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
                                         var role = newRoleUser[0];
-                                        if(role.includes("KASIR")){
+                                        if(role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN"){
                                             ret_value = ret_value +
                                                 '<button style="width: 15px !important;" id="option-lunas" class="btn-lunas btn-sm btn-warning" title="Lunas" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +7+ '\')"><i class="fa fa-arrows-alt"></i></button>';
                                         }
@@ -832,6 +834,62 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                         function (data, type, full) {
                             return accounting.formatNumber(full.TOTAL_TAGIHAN, 2, ".", ",")
                         }
+
+                },
+                {
+                    "aTargets": [21],
+                    "mRender": function (data, type, full) {
+                        var ret_value =
+                            '';
+
+                        if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
+                            return ""
+                        } else {
+                            if (full.STATUS_TRACKING == "INPUT DATA") {
+                                ret_value ='<input class="cb" type="checkbox" data-value=\'{"2" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+
+                            }
+                            else if (full.STATUS_TRACKING == "VERIFIED BY USER") {
+                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"3" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                if(newRoleUser[0] == "ROLE_DM_ENERGI" || newRoleUser[0] == "ROLE_DM_KEUKON_APLN" || newRoleUser[0] == "ROLE_DM_PENGUSAHAAN" || newRoleUser[0] == "ROLE_ADMIN"){
+
+
+                                }
+                            }
+                            else if (full.STATUS_TRACKING == "VERIFIED BY DM" && full.UPDATE_BY == "dmkeukonap" || full.UPDATE_BY == "dmkeukonslap" ){
+                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"8" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                if(newRoleUser[0] == "ROLE_MS_KEUKON" || newRoleUser[0] == "ROLE_ADMIN"){
+
+                                }
+                            }
+                            else if (full.UPDATE_BY == "dmkeukonslap" && full.STATUS_TRACKING == "VERIFIED BY DM"
+                                || full.UPDATE_BY !== "dmkeukonap" && full.STATUS_TRACKING == "VERIFIED BY DM"
+                                || full.STATUS_TRACKING == "VERIFIED BY MS KEUKON"){
+
+                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"4" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                if(newRoleUser[0] == "ROLE_DM_PEMBELANJAAN"|| newRoleUser[0] == "ROLE_ADMIN"){
+                                }
+                            }
+                            else if (full.STATUS_TRACKING == "VERIFIED BY DM PEMBELANJAAN"){
+                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"5" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                if(newRoleUser[0] == "ROLE_MS_PEMBELANJAAN" || newRoleUser[0] == "ROLE_ADMIN"){
+
+                                }
+
+                            }
+                            else if (full.STATUS_TRACKING == "APPROVE BY MS"){
+                                var role = newRoleUser[0];
+                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"7" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                if(role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN"){
+
+                                }
+                            }
+                            else {
+                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"0" : "'+full.ID_VALAS+'"}\' id="cbcheckbox" enabled="false">';
+                            }
+                        }
+                        return ret_value;
+                    }
 
                 }
             ],
@@ -933,9 +991,22 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
 
     table_rekapitulasi.on('search.dt', function () {
         var value = $('.dataTables_filter input').val();
-        console.log(value); // <-- the value
         tempTableSearch = value;
     });
+
+    $('.dataTables_filter').each(function () {
+        $(this).append('<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="multiUpdate()"><i class="fa fa-arrows-alt"></i></button>' +
+            '<button class="btn btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="multiDelete()"><i class="fa fa-close"></i></button>');
+    });
+
+  /*  $("#table-rekapitulasi").on('change',"input[type='checkbox']",function(e){
+        if($(this).is(':checked')){
+            $('#btn-verified').show();
+        }
+        else{
+            $('#btn-verified').hide();
+        }
+    });*/
 }
 
 function upload_file(pIdValas) {
@@ -956,6 +1027,70 @@ function upd_status_tracking(idValas , pStatusinvoice){
         data: {
             pIdValas: idValas,
             pStatusInvoice:pStatusinvoice,
+        },
+        success: function (res) {
+            hideLoadingCss("")
+            console.log("data upd_status :", res);
+            if (res.return == 1) {
+                alert(res.OUT_MSG);
+                location.reload();
+            } else {
+                alert(res.OUT_MSG);
+            }
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
+function multiUpdate() {
+    var id= $("#table-rekapitulasi input[type=checkbox]:checked").map(function() {
+        return $(this).data("value");
+    }).get();
+    var obj = new Object();
+    obj = id;
+    console.log("obj", obj);
+    console.log("id",id.toString());
+    $.ajax({
+        url: baseUrl + "api_operator/pembayaran/multi_upd_status",
+        dataType: 'JSON',
+        type: "POST",
+        data: {
+            pData: JSON.stringify(obj),
+            // pStatusInvoice: statusInvoice,
+        },
+        success: function (res) {
+            hideLoadingCss("")
+            console.log("data upd_status :", res);
+            if (res.return == 1) {
+                alert(res.OUT_MSG);
+                location.reload();
+            } else {
+                alert(res.OUT_MSG);
+            }
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
+function multiDelete() {
+    var id= $("#table-rekapitulasi input[type=checkbox]:checked").map(function() {
+        return $(this).data("value");
+    }).get();
+    var obj = new Object();
+    obj = id;
+    console.log("obj", obj);
+    console.log("id",id.toString());
+    $.ajax({
+        url: baseUrl + "api_operator/pembayaran/multi_del_data",
+        dataType: 'JSON',
+        type: "POST",
+        data: {
+            pData: JSON.stringify(obj),
+            // pStatusInvoice: statusInvoice,
         },
         success: function (res) {
             hideLoadingCss("")
