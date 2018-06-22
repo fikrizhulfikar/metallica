@@ -531,7 +531,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor) {
     showLoadingCss();
     $('#table-derivatif-ccs tbody').empty();
     $('#table-derivatif-ccs').dataTable().fnDestroy();
-    table_derivatif_cso = $('#table-derivatif-ccs').DataTable({
+    table_derivatif_ccs = $('#table-derivatif-ccs').DataTable({
         // "sDom": '<"H"ilr><"clear">t<"F"p>',
         "serverSide": true,
         "searching": true,
@@ -556,11 +556,11 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor) {
             {className: "datatables_action", "targets": [7, 8, 9, 10, 11, 12, 13, 14]},
             {
                 "bSortable": false,
-                "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+                "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,21]
             }
             ,
             {
-                "aTargets": [19],
+                "aTargets": [21],
                 "mRender": function (data, type, full) {
                     if(newRoleUser[0] == "ROLE_MS_LIKUIDITAS"){
                         return "-"
@@ -574,83 +574,83 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor) {
                     }
                 }
 
-            },
-            {
-                "aTargets": [7],
-                "mRender": function (data, type, full) {
-
-                    return accounting.formatNumber(full.NATIONAL_AMOUNT,2,".",",")
-
-                }
-
-            },
-            {
-                "aTargets": [8],
-                "sClass": "datatables_action",
-                "mRender": function (data, type, full) {
-
-                    return accounting.formatNumber(full.STRIKE_PRICE1,2,".",",")
-
-                }
-
-            },
-            {
-                "aTargets": [9],
-                "mRender": function (data, type, full) {
-
-                    return accounting.formatNumber(full.STRIKE_PRICE2,2,".",",")
-
-                }
-
-            },
-            {
-                "aTargets": [10],
-                "mRender": function (data, type, full) {
-
-                    return accounting.formatNumber(full.SETTLEMENT_RATE,2,".",",")
-
-                }
-
-            },
-            {
-                "aTargets": [11],
-                "mRender": function (data, type, full) {
-
-                    return accounting.formatNumber(full.BIAYA_PREMI,2,".",",")
-
-                }
-
-            },
-            {
-                "aTargets": [12],
-                "mRender": function (data, type, full) {
-
-                    return accounting.formatNumber(full.BUNGA_DEPOSITE_HEDGING,2,".",",")
-
-                }
-
-            },
-            {
-                "aTargets": [13],
-                "mRender": function (data, type, full) {
-
-                    return accounting.formatNumber(full.NET_BIAYA_PREMI,2,".",",")
-
-                }
-
-            },
-            {
-                "aTargets": [14],
-                "mRender": function (data, type, full) {
-
-                    return accounting.formatNumber(full.NET_BUY_NATIONAL_AMOUNT,2,".",",")
-
-                }
-
             }
+            // {
+            //     "aTargets": [7],
+            //     "mRender": function (data, type, full) {
+            //
+            //         return accounting.formatNumber(full.NATIONAL_AMOUNT,2,".",",")
+            //
+            //     }
+            //
+            // },
+            // {
+            //     "aTargets": [8],
+            //     "sClass": "datatables_action",
+            //     "mRender": function (data, type, full) {
+            //
+            //         return accounting.formatNumber(full.STRIKE_PRICE1,2,".",",")
+            //
+            //     }
+            //
+            // },
+            // {
+            //     "aTargets": [9],
+            //     "mRender": function (data, type, full) {
+            //
+            //         return accounting.formatNumber(full.STRIKE_PRICE2,2,".",",")
+            //
+            //     }
+            //
+            // },
+            // {
+            //     "aTargets": [10],
+            //     "mRender": function (data, type, full) {
+            //
+            //         return accounting.formatNumber(full.SETTLEMENT_RATE,2,".",",")
+            //
+            //     }
+            //
+            // },
+            // {
+            //     "aTargets": [11],
+            //     "mRender": function (data, type, full) {
+            //
+            //         return accounting.formatNumber(full.BIAYA_PREMI,2,".",",")
+            //
+            //     }
+            //
+            // },
+            // {
+            //     "aTargets": [12],
+            //     "mRender": function (data, type, full) {
+            //
+            //         return accounting.formatNumber(full.BUNGA_DEPOSITE_HEDGING,2,".",",")
+            //
+            //     }
+            //
+            // },
+            // {
+            //     "aTargets": [13],
+            //     "mRender": function (data, type, full) {
+            //
+            //         return accounting.formatNumber(full.NET_BIAYA_PREMI,2,".",",")
+            //
+            //     }
+            //
+            // },
+            // {
+            //     "aTargets": [14],
+            //     "mRender": function (data, type, full) {
+            //
+            //         return accounting.formatNumber(full.NET_BUY_NATIONAL_AMOUNT,2,".",",")
+            //
+            //     }
+            //
+            // }
         ],
         "ajax": {
-            "url": baseUrl + "api_operator/derivatif/get_data",
+            "url": baseUrl + "api_operator/derivatif/get_derivatif_ccs_pss",
             "type": "GET",
             "dataType": "json",
             "data": {
@@ -669,25 +669,26 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor) {
         },
         "columns": [
             {"data": "ROW_NUMBER", "defaultContent": ""},
-            {"data": "BANK_CONTERPARTY", "defaultContent": ""},
-            {"data": "CURRENCY", "defaultContent": ""},
-            {"data": "TGL_DEAL", "defaultContent": ""},
-            {"data": "JAM_DEAL", "defaultContent": ""},
-            {"data": "TGL_JATUH_TEMPO", "defaultContent": ""},
-            {"data": "TENOR", "defaultContent": ""},
-            {"data": "NATIONAL_AMOUNT", "defaultContent": ""},
-            {"data": "STRIKE_PRICE1", "defaultContent": ""},
-            {"data": "STRIKE_PRICE2", "defaultContent": ""},
-            {"data": "SETTLEMENT_RATE", "defaultContent": ""},
-            {"data": "BIAYA_PREMI", "defaultContent": ""},
-            {"data": "BUNGA_DEPOSITE_HEDGING", "defaultContent": ""},
-            {"data": "NET_BIAYA_PREMI", "defaultContent": ""},
-            {"data": "NET_BUY_NATIONAL_AMOUNT", "defaultContent": ""},
-            {"data": "SUMBER_DANA", "defaultContent": ""},
-            {"data": "PERUNTUKAN_DANA", "defaultContent": ""},
-            {"data": "KETERANGAN", "defaultContent": ""},
-            {"data": "STATUS_DERIVATIF", "defaultContent": ""}
-
+            {"data": "START_DATE", "defaultContent": ""},
+            {"data": "END_DATE", "defaultContent": ""},
+            {"data": "PAY_DATE", "defaultContent": ""},
+            {"data": "JUMLAH_HARI", "defaultContent": ""},
+            {"data": "NOTIONAL_USD", "defaultContent": ""},
+            {"data": "LIBOR", "defaultContent": ""},
+            {"data": "SUKU_BUNGA_USD", "defaultContent": ""},
+            {"data": "SUKU_BUNGA_USD", "defaultContent": ""},
+            {"data": "RECEIVE_PRINCIPAL", "defaultContent": ""},
+            {"data": "RECEIVE_COUPON", "defaultContent": ""},
+            {"data": "TOTAL_PENERIMAAN", "defaultContent": ""},
+            {"data": "RESET_DATE", "defaultContent": ""},
+            {"data": "DISCOUNT_FACTOR_USD", "defaultContent": ""},
+            {"data": "PV_USD", "defaultContent": ""},
+            {"data": "NOTIONAL_IDR", "defaultContent": ""},
+            {"data": "PAY_PRINCIPAL", "defaultContent": ""},
+            {"data": "PAY_COUPON", "defaultContent": ""},
+            {"data": "TOTAL_PENERIMAAN", "defaultContent": ""},
+            {"data": "DISCOUNT_FACTOR_IDR", "defaultContent": ""},
+            {"data": "PV_IDR", "defaultContent": ""}
         ],
         "drawCallback": function (settings) {
             $('th').removeClass('sorting_asc');
@@ -696,7 +697,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor) {
         }
     });
 
-    table_derivatif_cso.on('search.dt', function() {
+    table_derivatif_ccs.on('search.dt', function() {
         var value = $('.dataTables_filter input').val();
         console.log(value); // <-- the value
         tempTableSearch = value;

@@ -363,6 +363,7 @@ public class DerivatifController {
 
     @RequestMapping(value = "/get_derivatif_ccs_pss", method = RequestMethod.GET)
     public Map getDerivatifCcsPss(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
             @RequestParam(value = "pStart", defaultValue = "1") int pStart,
             @RequestParam(value = "pLength", defaultValue = "10") int pLength,
             @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
@@ -372,15 +373,26 @@ public class DerivatifController {
             @RequestParam(value = "pSearch", defaultValue = "ALL") String pSearch
             ) {
         AppUtils.getLogger(this).info("get_derivatif_ccs_pss");
+        Map<String, Object> mapData = new HashMap<>();
         try {
-            Map<String, Object> map = new HashMap<>();
-            map.put("data", valasService.getDerivatifCcsPss(pStart, pLength,
-                    pTglAwal, pTglAkhir, pBank, pTenor, pSearch));
-            return map;
+            List<Map<String, Object>> list = valasService.getDerivatifCcsPss(pStart, pLength,
+                    pTglAwal, pTglAkhir, pBank, pTenor, pSearch);
+            mapData.put("draw", draw);
+            mapData.put("data", list);
+            AppUtils.getLogger(this).info("size data : {}",list.size());
+            if(list.size() < 1 || list.isEmpty()){
+                mapData.put("recordsTotal", 0);
+                mapData.put("recordsFiltered", 0);
+            }else
+            {
+                mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+                mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            }
+            return mapData;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+        return mapData;
 
     }
 
