@@ -17,4 +17,6 @@ DEPLOY PROD
 login by terminal using "ssh root@10.14.158.191"
 the password "icon*123#"
 
+java -Dserver.port=.... -jar <namejar>.jar
+
 then looking for the folder valas

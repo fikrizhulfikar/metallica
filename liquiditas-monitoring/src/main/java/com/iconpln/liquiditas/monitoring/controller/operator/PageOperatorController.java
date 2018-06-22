@@ -43,6 +43,11 @@ public class PageOperatorController {
         return "operator/derivatif_cso";
     }
 
+    @RequestMapping("/derivatif_ccs")
+    public String deviratifCss() {
+        return "operator/derivatif_ccs";
+    }
+
     @RequestMapping("/deposito")
     public String deposito() {
         return "operator/deposito";

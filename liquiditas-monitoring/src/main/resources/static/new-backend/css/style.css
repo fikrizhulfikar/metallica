@@ -2147,7 +2147,8 @@ tbody.collapse.show {
 
 .dropup,
 .dropdown {
-  position: relative; }
+  position: relative;
+}
 
 .dropdown-toggle::after {
   display: inline-block;
@@ -2158,7 +2159,8 @@ tbody.collapse.show {
   content: "";
   border-top: 0.3em solid;
   border-right: 0.3em solid transparent;
-  border-left: 0.3em solid transparent; }
+  border-left: 0.3em solid transparent;
+}
 
 .dropdown-toggle:empty::after {
   margin-left: 0; }
@@ -2215,7 +2217,11 @@ tbody.collapse.show {
     background-color: transparent; }
 
 .show > .dropdown-menu {
-  display: block; }
+  display: block;
+  position: absolute;
+  overflow: auto;
+  max-height: 500px;
+}
 
 .show > a {
   outline: 0; }

@@ -425,6 +425,36 @@ public class ValasService {
                                     .addValue("p_keterangan", "")
                                     .addValue("p_biaya_premi", "")
                                     .addValue("out_msg", OracleTypes.VARCHAR);
+                        }else if(idDerivatif.equals("3")){
+                            AppUtils.getLogger(this).debug("jenisFile {} : {}{}", jenisFile, "derifativccs"+idDerivatif, list );
+                            simpleJdbcCall.withFunctionName("ins_derivatif_to_temp");
+                            inParent = new MapSqlParameterSource()
+                                    .addValue("p_nomor", x)
+                                    .addValue("p_id_upload", idUpload)
+                                    .addValue("p_id_product", idDerivatif)
+                                    .addValue("p_bank", list.get(0))
+                                    .addValue("p_tgl_deal", list.get(1))
+                                    .addValue("p_tgl_jatuh_tempo", list.get(2))
+                                    .addValue("p_curr", list.get(4))
+                                    .addValue("p_tenor", list.get(3))
+                                    .addValue("p_national_amount", list.get(5))
+                                    .addValue("p_fixing_rate", list.get(6))
+                                    .addValue("p_swap_point", list.get(7))
+                                    .addValue("p_bunga_deposito", list.get(8))
+                                    .addValue("p_sumber_dana", list.get(9))
+                                    .addValue("p_peruntukan_dana", list.get(10))
+                                    .addValue("p_status_derivatif", list.get(11))
+                                    .addValue("p_deal_rate", "")
+                                    .addValue("p_forward_point", "")
+                                    .addValue("p_kurs_jisdor1", "")
+                                    .addValue("p_strike_price1", "")
+                                    .addValue("p_strike_price2", "")
+                                    .addValue("p_settlement_rate","")
+//                                .addValue("p_status_tripartite", user)
+                                    .addValue("p_create_by", user)
+                                    .addValue("p_keterangan", "")
+                                    .addValue("p_biaya_premi", "")
+                                    .addValue("out_msg", OracleTypes.VARCHAR);
                         } else{
                             AppUtils.getLogger(this).debug("jenisFile {} : {}{}", jenisFile, "derifativcso"+idDerivatif, list );
                             AppUtils.getLogger(this).debug("idproduct: {}", idDerivatif );
@@ -518,6 +548,76 @@ public class ValasService {
         AppUtils.getLogger(this).info("errorData {}: {}", idUpload, out);
         return out;
     }
+
+    //derivatifccs
+//    public Map<String, Object> insDeviratifCcs(
+//            String pIdCcs, String pStartDate, String pEndDate, String pPayDate,
+//            String pNationalUsd, String pLibor, String pReceiveUsd, String pResetDate,
+//            String pDiscountUsd, String pReceiveIdr, String pDiscountIdr ,String pSukuBungaIdr,
+//            String pPrincipal, String pCreateBy, String pBank, String pJatuhTempo, String pTenor
+//    ) throws SQLException {
+//
+//        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+//                .withCatalogName("PKG_VALAS")
+//                .withFunctionName("ins_derivatif");
+//
+//        AppUtils.getLogger(this).debug("pIdProduct : {} ", pIdProduct);
+//        AppUtils.getLogger(this).debug("pIdDeviratif : {} ", pIdDeviratif);
+//        AppUtils.getLogger(this).debug("pTglDeal : {} ", pTglDeal);
+//        AppUtils.getLogger(this).debug("pBank : {} ", pBank);
+//        AppUtils.getLogger(this).debug("pTglJatuhTempo : {} ", pTglJatuhTempo);
+//        AppUtils.getLogger(this).debug("pTenor : {} ", pTenor);
+//        AppUtils.getLogger(this).debug("pCurr : {} ", pCurr);
+//        AppUtils.getLogger(this).debug("pNationalAmount : {} ", pNationalAmount);
+//        AppUtils.getLogger(this).debug("pDealRate : {} ", pDealRate);
+//        AppUtils.getLogger(this).debug("pForwardPoint : {} ", pForwardPoint);
+//        AppUtils.getLogger(this).debug("pKursJisdor1 : {} ", pKursJisdor1);
+//        AppUtils.getLogger(this).debug("pBungaDeposito : {} ", pBungaDeposito);
+//        AppUtils.getLogger(this).debug("pPeruntukanDana : {} ", pPeruntukanDana);
+//        AppUtils.getLogger(this).debug("pFixingRate : {} ", pFixingRate);
+//        AppUtils.getLogger(this).debug("pSumberDana : {} ", pSumberDana);
+//        AppUtils.getLogger(this).debug("pKursJisdor2 : {} ", pKursJisdor2);
+//        AppUtils.getLogger(this).debug("pSwapPoint : {} ", pSwapPoint);
+//        AppUtils.getLogger(this).debug("pStrikePrice : {} ", pStrikePrice);
+//        AppUtils.getLogger(this).debug("pStrikePrice2 : {} ", pStrikePrice2);
+//        AppUtils.getLogger(this).debug("pSettlementRate : {} ", pSettlementRate);
+//        AppUtils.getLogger(this).debug("pKeterangan : {} ", pKeterangan);
+//        AppUtils.getLogger(this).debug("pStatusDeviratif : {} ", pStatusDeviratif);
+//        AppUtils.getLogger(this).debug("pBiayaPremi : {} ", pBiayaPremi);
+//
+//        SqlParameterSource in = new MapSqlParameterSource()
+//                .addValue("p_id_product", pIdProduct)
+//                .addValue("p_id_derivatif", pIdDeviratif)
+//                .addValue("p_tgl_deal", pTglDeal)
+//                .addValue("p_bank", pBank)
+//                .addValue("p_tgl_jatuh_tempo", pTglJatuhTempo)
+//                .addValue("p_tenor", pTenor)
+//                .addValue("p_curr", pCurr)
+//                .addValue("p_national_amount", pNationalAmount)
+//                .addValue("p_deal_rate", pDealRate)
+//                .addValue("p_forward_point", pForwardPoint)
+//                .addValue("p_kurs_jisdor1", pKursJisdor1)
+//                .addValue("p_bunga_deposito", pBungaDeposito)
+//                .addValue("p_sumber_dana", pSumberDana)
+//                .addValue("p_peruntukan_dana", pPeruntukanDana)
+//                .addValue("p_fixing_rate", pFixingRate)
+//                .addValue("p_kurs_jisdor2", pKursJisdor2)
+//                .addValue("p_swap_point", pSwapPoint)
+//                .addValue("p_strike_price1", pStrikePrice)
+//                .addValue("p_strike_price2", pStrikePrice2)
+//                .addValue("p_settlement_rate", pSettlementRate)
+//                .addValue("p_keterangan", pKeterangan)
+//                .addValue("p_status_derivatif", pStatusDeviratif)
+//                .addValue("p_create_by", pCreateBy)
+//                .addValue("p_biaya_premi", pBiayaPremi)
+//                .addValue("out_msg", OracleTypes.VARCHAR);
+//        Map<String, Object> out = simpleJdbcCall.execute(in);
+//        AppUtils.getLogger(this).info("data ins_derivatif : {}", out);
+//        return out;
+//    }
+
+
+
 
     //    derivatif
     public Map<String, Object> insDeviratif(

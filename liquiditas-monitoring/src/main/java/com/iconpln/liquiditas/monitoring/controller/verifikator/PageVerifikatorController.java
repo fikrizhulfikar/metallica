@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * Created by israj on 10/4/2016.
  * modified by fputra on 28/08/2017
+ * modified by elvan on 04/06/2018
  */
 @Controller
 public class PageVerifikatorController {
@@ -84,4 +85,10 @@ public class PageVerifikatorController {
     public String jenis_pembayaran(){
         return "verifikatoridr/jenis_pembayaran";
     }
+
+    @RequestMapping("/page_idrverifikator/idr_real_pembayaran")
+    public String realisasiPembayaranValutaAsingIdr(){
+        return "verifikator/realisasi_pembayaran_valuta_asing";
+    }
+
 }

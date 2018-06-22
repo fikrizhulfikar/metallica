@@ -137,6 +137,7 @@ public class DashboardService {
                 .addValue("out_pie_usd", OracleTypes.CURSOR)
                 .addValue("out_pie_eur", OracleTypes.CURSOR)
                 .addValue("out_pie_jpy", OracleTypes.CURSOR)
+                .addValue("out_pie_myr", OracleTypes.CURSOR)
                 .addValue("out_pie_globalbond", OracleTypes.CURSOR);
         Map<String, Object> out = simpleJdbcCall.execute(in);
         AppUtils.getLogger(this).info("data get_layer1 : {}", out);

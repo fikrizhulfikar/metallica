@@ -23,6 +23,7 @@ function initDataTableImprstValas() {
                     "<td align='right'>" + accounting.formatNumber(val.NILAI_USD,2,".",",") + "</td>" +
                     "<td align='right'>" + accounting.formatNumber(val.NILAI_EUR,2,".",",") + "</td>" +
                     "<td align='right'>" + accounting.formatNumber(val.NILAI_JPY,2,".",",") + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(val.NILAI_MYR,2,".",",") + "</td>" +
                     "<td align='right'>" + accounting.formatNumber(val.NILAI_USD_GLOBAL,2,".",",") + "</td>" +
                     "</tr>";
                 $('#table-imprst-valas tbody').append(html);
@@ -33,6 +34,7 @@ function initDataTableImprstValas() {
                 "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_USD,2,".",",") + "</td>" +
                 "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_EUR,2,".",",") + "</td>" +
                 "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_JPY,2,".",",") + "</td>" +
+                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_MYR,2,".",",") + "</td>" +
                 "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_GLOBAL,2,".",",") + "</td>" +
                 "</tr>";
 
@@ -41,6 +43,7 @@ function initDataTableImprstValas() {
                 "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].EQ_IDR_USD,2,".",",") + "</td>" +
                 "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].EQ_IDR_EUR,2,".",",") + "</td>" +
                 "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].EQ_IDR_JPY,2,".",",") + "</td>" +
+                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].EQ_IDR_MYR,2,".",",") + "</td>" +
                 "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].EQ_IDR_GLOBAL,2,".",",") + "</td>" +
                 "</tr>";
             $('#table-imprst-valas tbody').append(total1);
@@ -74,6 +77,15 @@ function initDataTableImprstValas() {
                 dataPieJPY.push(dataPieTemp)
             });
 
+            // var dataPieJPY = [];
+            // $.each(res.OUT_PIE_JPY, function (index, value) {
+            //     var dataPieTemp = {
+            //         label: value.ID_BANK,
+            //         value: value.NILAI == 0 ? null : value.NILAI
+            //     };
+            //     dataPieJPY.push(dataPieTemp)
+            // });
+
             var dataPieGlobalUSD = [];
             $.each(res.OUT_PIE_GLOBALBOND, function (index, value) {
                 var dataPieTemp = {
@@ -83,9 +95,12 @@ function initDataTableImprstValas() {
                 dataPieGlobalUSD.push(dataPieTemp)
             });
 
+            console.log("");
+
             creteChartUSDImprstValas(dataPieUSD);
             creteChartEURImprstValas(dataPieEUR);
             creteChartJPYImprstValas(dataPieJPY);
+            // creteChartJPYImprstValas(dataPieJPY);
             creteChartUSDGlobalBond(dataPieGlobalUSD);
             hideLoadingCss()
         },
@@ -187,6 +202,35 @@ function creteChartJPYImprstValas(data) {
         fusioncharts.render();
     });
 }
+
+// function creteChartMYRImprstValas(data) {
+//     console.log(data);
+//     FusionCharts.ready(function () {
+//         var fusioncharts = new FusionCharts({
+//                 type: 'pie2d',
+//                 renderAt: 'chart-JPY-imprst-valas',
+//                 width: '635',
+//                 height: '450',
+//                 dataFormat: 'json',
+//                 dataSource: {
+//                     "chart": {
+//                         "caption": "JPY IMPREST",
+//                         "numbersuffix": " %",
+//                         "exportEnabled": "1",
+//                         "bgColor": "#77D5D4",
+//                         "showLabels": "0",
+//                         "isSmartLineSlanted": "0",
+//                         "showBorder": "0",
+//                         "showLegend": "1",
+//                         "baseFontSize": "12"
+//                     },
+//                     "data": data
+//                 }
+//             }
+//         );
+//         fusioncharts.render();
+//     });
+// }
 
 function creteChartUSDGlobalBond(data) {
     console.log(data);

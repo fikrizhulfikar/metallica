@@ -1,0 +1,237 @@
+<div th:fragment="stylesheets-backend">
+    <style>
+        button{ cursor: pointer
+        }
+        .table td {
+            padding-right: 0.75rem;
+            padding-bottom: 0.25rem;
+            padding-left: 0.75rem;
+            padding-top: 0.25rem;
+        }
+        div.dataTables_wrapper div.dataTables_paginate {
+            float: right !important;
+            text-align: left !important;
+            padding-left: 0px;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter {
+            text-align: right !important;
+        }
+        .lbl-src{
+            font-size: 12px;
+        }
+        .panel-custom {
+            overflow-x: hidden !important;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Call Spread Option</li>
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls(3)"><i class="icon-plus"></i>&nbsp;Input Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS')"><i class="icon-pencil"></i> &nbsp;New Data</button>
+            </div>
+        </li>
+    </ol>
+    <div id="edit-derivatif-ccs" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Derivatif CCS</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pBankCounterParty"><span style="color: red">*)</span>&nbsp;Bank Counterparty:</label>
+                                <select id="pBankCounterParty" class="form-control">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pStartDate"><span style="color: red">*)</span>&nbsp;Start Date:</label>
+                                <input type="text" class="form-control" id="pStartDate"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pEndDate"><span style="color: red">*)</span>&nbsp;End Date:</label>
+                                <input type="text" class="form-control" id="pEndDate"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTenor"><span style="color: red">*)</span>&nbsp;Tenor:</label>
+                                <select id="pTenor" class="form-control">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNationalUsd"><span style="color: red">*)</span>&nbsp;National USD:</label>
+                                <input type="text" class="form-control" id="pNationalUsd"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pLibor"><span style="color: red">*)</span>&nbsp;Libor:</label>
+                                <input type="number" class="form-control" id="pLibor"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pReceiveUsd"><span style="color: red">*)</span>&nbsp;Receive USD:</label>
+                                <input type="number" class="form-control" id="pReceiveUsd"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDiscountUsd"><span style="color: red">*)</span>&nbsp;Discount USD:</label>
+                                <input type="number" class="form-control" id="pDiscountUsd"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pResetData"><span style="color: red">*)</span>&nbsp;Reset Date:</label>
+                                <input type="text" class="form-control" id="pResetData"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPayUsd"><span style="color: red">*)</span>&nbsp;Pay USD:</label>
+                                <input type="text" class="form-control" id="pPayUsd"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pJatuhTempo">Jatuh Tempo:</label>
+                                <input type="number" class="form-control" id="pJatuhTempo"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPrincipal">Principal:</label>
+                                <input type="number" class="form-control" id="pPrincipal"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCreateBy">Created By:</label>
+                                <input type="number" class="form-control" id="pCreateBy"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pReceiveIdr">Receive IDR:</label>
+                                <input type="number" class="form-control" id="pReceiveIdr"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDiscountIdr"><span style="color: red">*)</span>&nbsp;Discount IDR:</label>
+                                <input type="number" class="form-control" id="pDiscountIdr"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pSukuBungaIdr"><span style="color: red">*)</span>&nbsp;Suku Bunga IDR:</label>
+                                <input type="number" class="form-control" id="pSukuBungaIdr"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label>
+                                <br/>
+                                <label>Gunakan titik (.) untuk koma (,)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="ins_data()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+            <div id="filter">
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;">
+                    <div class="col-md-1" style="padding-right: 0px;"><label class="lbl-src">Tanggal Awal</label></div>
+                    <div class="col-md-3" style="padding-right: 0px;"><input type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal"/></div>
+                    <div class="col-md-1" style="padding-right: 0px;"><label class="lbl-src">Tanggal Akhir</label></div>
+                    <div class="col-md-3" style="padding-right: 0px;"><input type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/></div>
+                    <div class="col-md-1" style="padding-right: 0px;"><label class="lbl-src">Bank Counterparty</label></div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="bank" id="cmb_bank" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
+                    <div class="col-md-1" style="padding-right: 0px;"><label class="lbl-src">Currency </label></div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="bacurrecnynk" id="cmb_currecny" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;"><label for="cmb_tenor">Tenor</label></div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select id="cmb_tenor" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
+                    <div class="col-md-3" style="padding-right: 0px;"><button onclick="search()" class="btn btn-primary" style="width: 100%; border-radius: 3px">Search</button></div>
+                </div>
+            </div>
+            <div class="list-data" style="margin-top:50px;">
+                <div class="panel panel-default">
+                    <div class="panel-body panel-custom">
+                        <table id="table-derivatif-ccs" class="table table-bordered table-striped" style="margin-left: 0px;">
+                            <thead style="font-size: 12px">
+                            <tr>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Pay Date</th>
+                                <th>Jumlah Hari</th>
+                                <th>National (USD)</th>
+                                <th>Libor 6M</th>
+                                <th>Suku Bunga USD (Libor 6M+2%)</th>
+                                <th>Suku Bunga USD (Libor 6M+2%)</th>
+                                <th>PLN Receive Principal (USD)</th>
+                                <th>PLN Receive Coupon (USD)</th>
+                                <th>Total Penerimaan PLN (USD)</th>
+                                <th>Reset Date</th>
+                                <th>Discount Factor</th>
+                                <th>PV (USD)</th>
+                                <th>National (IDR)</th>
+                                <th>PLN Pay Principal (IDR)</th>
+                                <th>PLN Pay Coupon (IDR)</th>
+                                <th>Total Penerimaan PLN (IDR)</th>
+                                <th>Discount Factor</th>
+                                <th>PV (IDR)</th>
+                            </tr>
+                            </thead>
+                            <tbody style="font-size: 12px">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-upload-xls" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title_modal_upload_xls">UPLOAD FILE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="input_file_xls">
+                    <div class="form-group" style="display:none">
+                        <input type="text" class="form-control" id="temp-xls"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">UPLOAD FILE XLS |
+                            <a th:href="@{/api_operator/derivatif/template}" id="btn-download-template-data-derivatif">
+                                Download Template
+                            </a></label>
+                        <input type="file" class="form-control" id="file-xls"
+                               accept="application/vnd.ms-excel"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal" onclick="upload_server_xls()">Selesai</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/derivatif-ccs.js"></script>
+</div>
