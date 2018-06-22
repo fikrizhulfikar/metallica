@@ -27,8 +27,44 @@ public class ValasServiceTest {
 
     @Test
     public void test() {
-        List<RekapPembayaran> rekapPembayarans =  service.getRekapPembayaranByEmail("elvankun@gmail.com");
-        rekapPembayarans.stream().forEach(System.out::println);
+        try {
+            List<Map<String, Object>> res = service.getDerivatifCcsPss(
+                    1,
+                    10,
+                    "01/01/2017",
+                    "01/01/2019",
+                    "B00058",
+                    "T001",
+                    ""
+
+            );
+             res.stream().forEach(System.out::println);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+//        try {
+//            service.insDerivatifCcs(
+//                    "",
+//                    "01/01/2017",
+//                    "01/01/2019",
+//                    "01/01/2018",
+//                    "432498",
+//                    "0985347",
+//                    "43580923",
+//                    "01/05/2018",
+//                    "34534",
+//                    "653453",
+//                    "23432",
+//                    "53453",
+//                    "3654",
+//                    "admin",
+//                    "B00058",
+//                    "01/03/2018",
+//                    "T001"
+//            );
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
     }
 
 }

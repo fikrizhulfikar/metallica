@@ -63,6 +63,15 @@ public class NotificationService {
                 new ParameterizedTypeReference<Map<String, FirebaseNotification>>() {});
     }
 
+    public ResponseEntity<String> readNotification(String key) {
+        String token = sessionHandler.getTokenFromSession();
+        HttpEntity httpEntity = new HttpEntity(createHeaders(MediaType.APPLICATION_FORM_URLENCODED, token));
+        return restTemplate.exchange("/api/fcm/notification/read/"+key,
+                HttpMethod.POST,
+                httpEntity,
+                new ParameterizedTypeReference<String>() {});
+    }
+
     private HttpHeaders createHeaders(MediaType mediaType, String token){
         HttpHeaders headers = new HttpHeaders() {{
             set( "Authorization", token );
@@ -80,6 +89,7 @@ public class NotificationService {
         private String createBy;
         private String topic;
         private Long date;
+        private String key;
 
         public FirebaseNotification() {
             this.date = new Date().getTime();
@@ -148,6 +158,14 @@ public class NotificationService {
 
         public void setDate(Long date) {
             this.date = date;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+        public String getKey() {
+            return key;
         }
 
         @Override

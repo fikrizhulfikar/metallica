@@ -8,10 +8,12 @@ import com.iconpln.liquiditas.monitoring.utils.SessionHandler;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,15 +30,21 @@ public class NotificationController {
 
     @PostMapping(value = "/subscribe")
     public ResponseEntity<String> subscribe(@RequestParam("token") String token, Authentication authentication) {
-        String jwtToken = sessionHandler.getTokenFromSession();
         return notificationService.subscribe(token, getTopicsFromSession(authentication));
     }
 
     @GetMapping("/get")
     public ResponseEntity<Map<String, FirebaseNotification>> get(Authentication authentication) {
         Set<String> topics = getTopicsFromSession(authentication);
-        String token = sessionHandler.getTokenFromSession();
         return notificationService.getNotification(topics);
+    }
+
+    @PostMapping(value = "/read/{key}",
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public ResponseEntity<String> read(@PathVariable("key") String key) {
+        return notificationService.readNotification(key);
     }
 
     private UserDetailWrapper getUserFromSession(Authentication authentication) {

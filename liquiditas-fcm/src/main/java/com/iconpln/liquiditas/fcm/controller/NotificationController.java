@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,6 +81,17 @@ public class NotificationController {
     )
     public ResponseEntity<String> subscribe(@RequestBody Subscriber subscriber) {
         return new ResponseEntity<>(notificationService.subscribe(subscriber.getToken(), subscriber.getTopics()), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/read/{key}",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public ResponseEntity<Map<String, Object>> read(@PathVariable("key") String key) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("key", key);
+        map.put("status", databaseService.read(key));
+        return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
     }
 
 }

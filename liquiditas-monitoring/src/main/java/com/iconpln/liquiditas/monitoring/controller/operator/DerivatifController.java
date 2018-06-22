@@ -362,7 +362,7 @@ public class DerivatifController {
     }
 
     @RequestMapping(value = "/get_derivatif_ccs_pss", method = RequestMethod.GET)
-    public List getDerivatifCcsPss(
+    public Map getDerivatifCcsPss(
             @RequestParam(value = "pStart", defaultValue = "1") int pStart,
             @RequestParam(value = "pLength", defaultValue = "10") int pLength,
             @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
@@ -373,8 +373,10 @@ public class DerivatifController {
             ) {
         AppUtils.getLogger(this).info("get_derivatif_ccs_pss");
         try {
-            return valasService.getDerivatifCcsPss(pStart, pLength,
-                    pTglAwal, pTglAkhir, pBank, pTenor, pSearch);
+            Map<String, Object> map = new HashMap<>();
+            map.put("data", valasService.getDerivatifCcsPss(pStart, pLength,
+                    pTglAwal, pTglAkhir, pBank, pTenor, pSearch));
+            return map;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

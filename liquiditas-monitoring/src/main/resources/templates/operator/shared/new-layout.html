@@ -158,6 +158,7 @@
     $.ajax({
         type: "GET",
         url: baseUrl + "notification/get",
+        async: true,
         success: function(obj) {
             var prop;
             var count = 0;
@@ -169,6 +170,7 @@
                 '</div>\n';
             $("#notification_li").append(drop_down);
             for(prop in obj) {
+                console.log(obj[prop]);
                 if(!obj.hasOwnProperty(prop)) continue;
                 var added =
                     '<a href="#" class="dropdown-item">\n' +
@@ -458,6 +460,18 @@
 
     resetUI();
     requestPermission();
+
+    function readNotification(key) {
+        $.ajax({
+            type: "POST",
+            url: baseUrl + "notification/read/" + key,
+            async: true,
+            contentType: 'application/x-www-form-urlencoded',
+            success: function(obj) {
+
+            }
+        });
+    }
 
 </script>
 </html>
