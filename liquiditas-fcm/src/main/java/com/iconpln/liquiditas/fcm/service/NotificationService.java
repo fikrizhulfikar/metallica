@@ -62,17 +62,16 @@ public class NotificationService {
     /**
      * Send message to topic.
      * @param notification message.
-     * @param topic topic.
      */
-    public void sendMessageToTopic(FirebaseNotification notification, String topic) {
+    public void sendMessageToTopic(FirebaseNotification notification) {
         Preconditions.checkArgument(notification != null, "Notification must be not null.");
-        Preconditions.checkArgument(topic != null, "Topic must be not null.");
+        Preconditions.checkArgument(notification.getTopic() != null, "Topic must be not null.");
         WebpushConfig webpushConfig = WebpushConfig.builder()
                 .setNotification(new WebpushNotification(notification.getTitle(), notification.getBody(), notification.getIcon()))
                 .build();
         Message message = Message.builder()
                 .setWebpushConfig(webpushConfig)
-                .setTopic(topic)
+                .setTopic(notification.getTopic())
                 .build();
         firebaseMessaging.sendAsync(message);
     }

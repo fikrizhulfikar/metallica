@@ -34,16 +34,22 @@ public class DatabaseService {
     /**
      * Save notification to firebase realtime database.
      * @param notification notification.
-     * @param topic topic.
      */
-    public void saveNotificationByTopic(FirebaseNotification notification, String topic) {
+    public void saveNotificationByTopic(FirebaseNotification notification) {
         Preconditions.checkArgument(notification != null, "Notification must be not null.");
-        Preconditions.checkArgument(topic != null, "Topic must be not null.");
+        Preconditions.checkArgument(notification.getTopic() != null, "Topic must be not null.");
         String key = databaseReference.push().getKey();
-        notification.setIsSeen(false);
+        notification = FirebaseNotification.builder()
+                .key(key)
+                .title(notification.getTitle())
+                .topic(notification.getTopic())
+                .createBy(notification.getCreateBy())
+                .date(System.currentTimeMillis())
+                .isSeen(false)
+                .icon(notification.getIcon())
+                .body(notification.getBody())
+                .build();
         Map<String, Object> map = new HashMap<>();
-        notification.setTopic(topic);
-        notification.setKey(key);
         map.put(key, notification);
         databaseReference.updateChildrenAsync(map);
     }
@@ -64,26 +70,22 @@ public class DatabaseService {
         while (keys.hasNext()) {
             String key = keys.next();
             JSONObject jsonObject = object.getJSONObject(key);
-            FirebaseNotification notification = new FirebaseNotification(
-                    jsonObject.getString("title"),
-                    jsonObject.getString("body"),
-                    jsonObject.getString("icon"),
-                    jsonObject.getBoolean("isSeen"),
-                    jsonObject.getString("createBy")
-            );
-            notification.setKey(key);
-            notification.setTopic(jsonObject.getString("topic"));
-            notification.setDate(jsonObject.getLong("date"));
+            FirebaseNotification notification = FirebaseNotification.builder()
+                    .title(jsonObject.getString("title"))
+                    .body(jsonObject.getString("body"))
+                    .icon(jsonObject.getString("icon"))
+                    .isSeen(jsonObject.getBoolean("isSeen"))
+                    .createBy(jsonObject.getString("createBy"))
+                    .topic(jsonObject.getString("topic"))
+                    .date(jsonObject.getLong("date"))
+                    .key(key)
+                    .build();
             map.put(key, notification);
         }
         return map;
     }
 
     public String read(String key) {
-//        Map<String, Object> map = new HashMap<>();
-//        notification.setTopic(topic);
-//        notification.setIsSeen(true);
-//        map.put(key, notification);
         databaseReference.child(key).child("isSeen").setValueAsync(true);
         return "OK!";
     }

@@ -46,8 +46,8 @@ public class NotificationController {
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<Void> notify(@RequestBody FirebaseNotification notification) {
-        notificationService.sendMessageToTopic(notification, notification.getTopic());
-        databaseService.saveNotificationByTopic(notification, notification.getTopic());
+        notificationService.sendMessageToTopic(notification);
+        databaseService.saveNotificationByTopic(notification);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

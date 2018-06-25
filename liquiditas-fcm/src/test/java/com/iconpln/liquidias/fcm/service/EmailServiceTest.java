@@ -51,27 +51,28 @@ public class EmailServiceTest {
 
     @Test
     public void raad() {
-        FirebaseNotification notification = new FirebaseNotification();
-        notification.setBody("UPDATE NYA");
-        notification.setDate(new Date().getTime());
-        notification.setTopic("P00044");
-        notification.setCreateBy("admin");
-        notification.setIcon("ICON.ico");
-        notification.setTitle("UPDATE TITLE");
+//        FirebaseNotification notification = new FirebaseNotification();
+//        notification.setBody("UPDATE NYA");
+//        notification.setDate(new Date().getTime());
+//        notification.setTopic("P00044");
+//        notification.setCreateBy("admin");
+//        notification.setIcon("ICON.ico");
+//        notification.setTitle("UPDATE TITLE");
 //        databaseService.saveNotificationByTopic(notification, "P00044");
     }
 
     @Test
     public void ins() {
-        FirebaseNotification notification = new FirebaseNotification();
-        notification.setBody("INS NYA");
-        notification.setDate(new Date().getTime());
-        notification.setTopic("P00044");
-        notification.setCreateBy("admin");
-        notification.setIcon("ICON.ico");
-        notification.setTitle("INS TITLE");
-//        databaseService.saveNotificationByTopic(notification, "P00044");
-            databaseService.saveNotificationByTopic(notification, "P00045");
+//        FirebaseNotification notification = new FirebaseNotification();
+//        notification.setBody("INS NYA");
+//        notification.setDate(new Date().getTime());
+//        notification.setTopic("P00044");
+//        notification.setCreateBy("admin");
+//        notification.setIcon("ICON.ico");
+//        notification.setTitle("INS TITLE");
+////        databaseService.saveNotificationByTopic(notification, "P00044");
+//            databaseService.saveNotificationByTopic(notification, "P00045");
+
     }
 
 }
