@@ -177,7 +177,7 @@
                     '  <div class="message">\n' +
                     '    <div>\n' +
                     '      <small class="text-muted" id="notification_title">'+obj[prop].title+'</small>\n' +
-                    '      <small class="text-muted float-right mt-1" id="notification_date">'+"now"+'</small>\n' +
+                    '      <small class="text-muted float-right mt-1" id="notification_date">'+new Date(obj[prop].date)+'</small>\n' +
                     '    </div>\n' +
                     '    <div class="small text-muted text-truncate" id="notification_body">'+obj[prop].body+'</div>\n' +
                     '  </div>\n' +
@@ -471,6 +471,28 @@
 
             }
         });
+    }
+
+    function formatDate(longDate) {
+        var monthNames = [
+            "Januari", "Februari", "Maret",
+            "April", "Mei", "Juni", "Juli",
+            "Agustus", "September", "Oktober",
+            "November", "Desember"
+        ];
+
+        var date = new Date(longDate);
+        var now = new Date();
+
+        if ((data.getDate() - 1) === now) {
+            
+        }
+
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+
+        return day + ' ' + monthNames[monthIndex] + ' ' + year;
     }
 
 </script>

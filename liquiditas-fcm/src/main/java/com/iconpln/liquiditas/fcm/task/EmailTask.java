@@ -21,7 +21,7 @@ public class EmailTask {
     @Autowired
     private ValasService valasService;
 
-    @Scheduled(cron = "0 0 7 * * *")
+    @Scheduled(cron = "0 0 12 * * ?")
     public void send() {
         List<Map<String, Object>> mapList = valasService.getEmailJatuhTempo();
         List<String> emails = mapList.stream()
