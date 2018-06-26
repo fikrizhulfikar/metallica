@@ -21,13 +21,14 @@ public class EmailTask {
     @Autowired
     private ValasService valasService;
 
-    @Scheduled(cron = "0 0 12 * * ?")
+    @Scheduled(cron = "0 0 7 * * ?")
     public void send() {
         List<Map<String, Object>> mapList = valasService.getEmailJatuhTempo();
         List<String> emails = mapList.stream()
+                .filter(stringObjectMap -> stringObjectMap.get("email") != null)
                 .map(stringObjectMap -> stringObjectMap.get("email").toString())
                 .collect(Collectors.toList());
-        emails.stream().forEach(email -> {
+            emails.stream().forEach(email -> {
             List<RekapPembayaran> rekapPembayarans = valasService.getRekapPembayaranByEmail(email);
             emailService.sendEmailWithAttachment(email, "Jatuh Tempo:", "Rekap Pembayaran", "REKAP_PEMBAYARAN.xls", rekapPembayarans);
         });
