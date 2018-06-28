@@ -214,10 +214,16 @@ public class PembayaranController {
         try {
             if (pIdValas != null && !pIdValas.equals("")) {
                 String jenisPembayaranSebelum = valasService.getIdPembayaranByIdValas(pIdValas);
+
+                Map<String, Object> outSebelum = valasService.getNotificatonDetail(pJenisPembayaran, pVendor);
+                Map<String, Object> outSesudah = valasService.getNotificatonDetail(pJenisPembayaran, pVendor);
+
                 if (jenisPembayaranSebelum != null) {
                     notificationService.sendNotification(
                             "Pembayaran",
-                            "User " + WebUtils.getUsernameLogin() + " melakukan perubahan data pada id valas " + pIdValas + ".",
+                            "" + WebUtils.getUsernameLogin() + " telah melakukan Perubahan/Update Data pada aplikasi."
+                                    + " " + outSebelum.getOrDefault("OUT_NAMA_JENIS_PEMBAYARAN", "") + "-" + outSebelum.getOrDefault("OUT_NAMA_VENDOR", "") + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + "."
+                                    + " Perubahan: " + outSesudah.getOrDefault("OUT_NAMA_JENIS_PEMBAYARAN", "") + "-" + outSesudah.getOrDefault("OUT_NAMA_VENDOR", "") + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + ".",
                             "",
                             false,
                             WebUtils.getUsernameLogin(),
@@ -226,9 +232,13 @@ public class PembayaranController {
                     );
                 }
             } else {
+                Map<String, Object> out = valasService.getNotificatonDetail(pJenisPembayaran, pVendor);
+                Object namaJenisPembayaran = out.getOrDefault("OUT_NAMA_JENIS_PEMBAYARAN", "");
+                Object namaVendor = out.getOrDefault("OUT_NAMA_VENDOR", "");
                 notificationService.sendNotification(
                         "Pembayaran",
-                        "User " + WebUtils.getUsernameLogin() + " melakukan penambahan data.",
+                        "" + WebUtils.getUsernameLogin() + " telah melakukan Input Data pada aplikasi. "
+                                + namaJenisPembayaran + "-" + namaVendor + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + ".",
                         "",
                         false,
                         WebUtils.getUsernameLogin(),

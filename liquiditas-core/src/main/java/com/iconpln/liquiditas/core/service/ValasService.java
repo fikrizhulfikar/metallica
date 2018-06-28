@@ -1623,4 +1623,20 @@ public class ValasService {
         return out;
     }
 
+    public Map<String, Object> getNotificatonDetail(String pIdJenisPembayaran, String pIdVendor) {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_TEST_VALAS")
+                .withProcedureName("getNotificationDetail");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_jenis_pembayaran", pIdJenisPembayaran)
+                .addValue("p_id_vendor", pIdVendor)
+                .addValue("out_nama_jenis_pembayaran", OracleTypes.VARCHAR)
+                .addValue("out_nama_vendor", OracleTypes.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("getNotificationDetail : {}", out);
+        return out;
+    }
+
 }
