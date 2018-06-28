@@ -95,9 +95,9 @@ public class EmailService {
         HSSFSheet sheetFoto = workbook.createSheet("JATUH TEMPO");
         List<List<Object>> dataJatuhTempo = new ArrayList<>();
         dataJatuhTempo.add(Arrays.asList(
-                "ID_VENDOR",
-                "ID_JENIS_PEMBAYARAN",
-                "ID_UNIT",
+                "VENDOR",
+                "JENIS_PEMBAYARAN",
+                "UNIT",
                 "CURRENCY",
                 "TOTAL_TAGIHAN",
                 "TGL_JATUH_TEMPO",
