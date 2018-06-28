@@ -11,6 +11,7 @@ $.ajax({
             '   <strong id="notification_count_title"></strong>\n' +
             '  </div>\n' +
             '</ul>\n';
+        var count = 0;
         $("#notification_li").append(drop_down);
         for(prop in obj) {
             if(!obj.hasOwnProperty(prop)) continue;
@@ -19,6 +20,7 @@ $.ajax({
                 backgroundColor = '<li id="'+obj[prop].key+'" style="background-color: white">\n';
             } else {
                 backgroundColor = '<li id="'+obj[prop].key+'" style="background-color: #f7f8f9" onclick="readNotification(\''+obj[prop].key+'\')">\n'
+                count++;
             }
             var added =
                 backgroundColor +
@@ -34,7 +36,6 @@ $.ajax({
                 '</li>\n';
             $("#notification_div").append(added);
         }
-        var count = $("#notification_div li").length;
         $("#notification_count").html(count);
         $("#notification_count_title").html('You have ' + count + ' unread message.');
     }
@@ -170,7 +171,8 @@ messaging.onMessage(function (payload) {
         '  </div>\n' +
         '</a>\n';
 
-    var newItem = document.createElement('li id="'+obj[prop].key+'" style="background-color: #f7f8f9" onclick="readNotification(\''+obj[prop].key+'\')"');
+    var newItem = document.createElement('li');
+    newItem.style.cssText = 'background-color:#f7f8f9';
     var divNode = document.createElement("div");
     divNode.innerHTML = added;
     newItem.appendChild(divNode);
