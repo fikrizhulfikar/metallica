@@ -22,6 +22,7 @@ function initDataTable() {
                 noDataView();
             } else {
                 $('#table-main-rencana tbody').empty();
+                $('#table-main-realisasi tbody').empty();
                 $.each(res.return, function (key, val) {
                     var jatuh_tempo = new Date(res.tglcetak);
                     var jatuh_tempo_date = jatuh_tempo.getDate()  + "/" + (jatuh_tempo.getMonth()+1) + "/" + jatuh_tempo.getFullYear();
