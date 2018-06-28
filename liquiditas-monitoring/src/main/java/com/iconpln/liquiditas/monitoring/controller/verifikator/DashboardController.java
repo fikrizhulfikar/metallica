@@ -454,4 +454,16 @@ public class DashboardController {
         }
 
     }
+
+    @RequestMapping(value = "/idr_rencana_vs_realisasi", method = RequestMethod.GET)
+    public Map getRencanaVsRealisasiIdr() {
+        try {
+            return dashboardService.getRencanaVsRealisasiIdr();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
 }

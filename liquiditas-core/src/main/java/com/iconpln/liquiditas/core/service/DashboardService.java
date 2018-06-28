@@ -1,6 +1,7 @@
 package com.iconpln.liquiditas.core.service;
 
 import com.iconpln.liquiditas.core.utils.AppUtils;
+import java.util.Date;
 import oracle.jdbc.OracleTypes;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -287,6 +288,19 @@ public class DashboardService {
                 .addValue("out_total", OracleTypes.CURSOR);
         Map<String, Object> out = simpleJdbcCall.execute(in);
         AppUtils.getLogger(this).info("data getRekapJenisPembayaran : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> getRencanaVsRealisasiIdr() {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_dashboard_idr")
+                .withFunctionName("get_rencana_vs_realisasi");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_data", OracleTypes.CURSOR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        out.put("tglcetak", new Date());
+        AppUtils.getLogger(this).info("data getRencanaVsRealisasi : {}", out);
         return out;
     }
 }

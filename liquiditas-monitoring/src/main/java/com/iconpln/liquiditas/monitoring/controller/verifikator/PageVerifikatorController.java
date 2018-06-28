@@ -91,4 +91,9 @@ public class PageVerifikatorController {
         return "verifikator/realisasi_pembayaran_valuta_asing";
     }
 
+    @RequestMapping("/page_idrverifikator/idr_rencana_vs_realisasi")
+    public String rencanaVsRealisasiIdr(){
+        return "verifikatoridr/rencana_vs_realisasi";
+    }
+
 }
