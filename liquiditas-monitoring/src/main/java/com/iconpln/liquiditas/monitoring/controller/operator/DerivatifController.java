@@ -76,46 +76,35 @@ public class DerivatifController {
         }
     }
 
+    // Derivatif CCS
+    ////////////////
+    ////////////////
     @RequestMapping(value = "/ins_derivatif_ccs", method = RequestMethod.POST)
     public Map<String, Object> insDerivatifCcs(
-            String pIdCcs,
-            String pStartDate,
-            String pEndDate,
-            String pPayDate,
-            String pNotionalUsd,
-            String pLibor,
-            String pReceiveUsd,
-            String pResetDate,
-            String pDiscountUsd,
-            String pReceiveIdr,
-            String pDiscountIdr,
-            String pSukuBungaIdr,
-            String pPrincipal,
-            String pCreateBy,
-            String pBank,
-            String pJatuhTempo,
-            String pTenor
+            @RequestParam(value = "pIdCcs", defaultValue = "") String pIdCcs,
+            @RequestParam(value = "pStartDate", defaultValue = "") String pStartDate,
+            @RequestParam(value = "pEndDate", defaultValue = "") String pEndDate,
+            @RequestParam(value = "pPayDate", defaultValue = "") String pPayDate,
+            @RequestParam(value = "pNotionalUsd", defaultValue = "") String pNotionalUsd,
+            @RequestParam(value = "pLibor", defaultValue = "") String pLibor,
+            @RequestParam(value = "pReceiveUsd", defaultValue = "") String pReceiveUsd,
+            @RequestParam(value = "pResetDate", defaultValue = "") String pResetDate,
+            @RequestParam(value = "pDiscountUsd", defaultValue = "") String pDiscountUsd,
+            @RequestParam(value = "pReceiveIdr", defaultValue = "") String pReceiveIdr,
+            @RequestParam(value = "pDiscountIdr", defaultValue = "") String pDiscountIdr,
+            @RequestParam(value = "pSukuBungaIdr", defaultValue = "") String pSukuBungaIdr,
+            @RequestParam(value = "pPrincipal", defaultValue = "") String pPrincipal,
+            @RequestParam(value = "pCreateBy", defaultValue = "") String pCreateBy,
+            @RequestParam(value = "pBank", defaultValue = "") String pBank,
+            @RequestParam(value = "pJatuhTempo", defaultValue = "") String pJatuhTempo,
+            @RequestParam(value = "pTenor", defaultValue = "") String pTenor
     ) {
         AppUtils.getLogger(this).info("ins derivative ccs.");
         try {
             return valasService.insDerivatifCcs(
-                    pIdCcs,
-                    pStartDate,
-                    pEndDate,
-                    pPayDate,
-                    pNotionalUsd,
-                    pLibor,
-                    pReceiveUsd,
-                    pResetDate,
-                    pDiscountUsd,
-                    pReceiveIdr,
-                    pDiscountIdr,
-                    pSukuBungaIdr,
-                    pPrincipal,
-                    pCreateBy,
-                    pBank,
-                    pJatuhTempo,
-                    pTenor
+                    pIdCcs,pStartDate,pEndDate,pPayDate,pNotionalUsd,pLibor,pReceiveUsd,
+                    pResetDate, pDiscountUsd,pReceiveIdr,pDiscountIdr,
+                    pSukuBungaIdr,pPrincipal, pCreateBy,pBank, pJatuhTempo, pTenor
             );
         } catch (Exception e) {
             e.printStackTrace();
@@ -148,7 +137,6 @@ public class DerivatifController {
             e.printStackTrace();
         }
 
-
         Map mapData = new HashMap();
         mapData.put("draw", draw);
         mapData.put("data",list);
@@ -165,6 +153,10 @@ public class DerivatifController {
         return mapData;
     }
 
+
+    // Derivatif CCS
+    ////////////////
+    ////////////////
     @RequestMapping(value = "/get_derivatif_ccs_pss", method = RequestMethod.GET)
     public Map getDerivatifCcsPss(
             @RequestParam(value = "draw", defaultValue = "0") int draw,
@@ -174,7 +166,7 @@ public class DerivatifController {
             @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
             @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
             @RequestParam(value = "pTenor", defaultValue = "ALL") String pTenor,
-            @RequestParam(value = "pSearch", defaultValue = "ALL") String pSearch
+            @RequestParam(value = "pSearch", defaultValue = "") String pSearch
     ) {
         AppUtils.getLogger(this).info("get_derivatif_ccs_pss");
         Map<String, Object> mapData = new HashMap<>();
@@ -235,6 +227,20 @@ public class DerivatifController {
         }
     }
 
+    @RequestMapping(value = "/delete_data_ccs", method = RequestMethod.POST)
+    public Map<String, Object> deleteDataCcs(
+            @RequestParam(value = "pIdCcs", defaultValue = "") String pIdCcs
+    ) {
+
+        AppUtils.getLogger(this).debug("pIdCCS : {} ",pIdCcs);
+        try {
+            return valasService.deleteDerivatifCcs(pIdCcs);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @RequestMapping(value = "/edit_data", method = RequestMethod.GET)
     public List getRekapDataById(
             @RequestParam(value = "pIdProduct", defaultValue = "") String pIdProduct,
@@ -244,6 +250,19 @@ public class DerivatifController {
         AppUtils.getLogger(this).info("pId edit data: {}",pIdDerivatif);
         try {
             return valasService.getDerivatifbyId(pIdProduct,pIdDerivatif);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    @RequestMapping(value = "/edit_data_ccs", method = RequestMethod.GET)
+    public List getDerivatifCcsbyId(
+            @RequestParam(value = "pIdCcs", defaultValue = "") String pIdCcs) {
+        AppUtils.getLogger(this).info("pId edit data: {}",pIdCcs);
+        try {
+            return valasService.getDerivatifCcsbyId(pIdCcs);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

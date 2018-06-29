@@ -752,6 +752,35 @@ public class ValasService {
         return resultset;
     }
 
+        public Map<String, Object> deleteDerivatifCcs(String pIdCcs) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("del_derivatif_ccs");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("P_ID_CCS", pIdCcs)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data del_derivatif_ccs : {}", out);
+        return out;
+    }
+
+
+    public List<Map<String, Object>> getDerivatifCcsbyId(String pIdCcs) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_derivatif_ccs_byid");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_id_ccs", pIdCcs);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_derivatif_ccs_byid : {}", resultset);
+        return resultset;
+    }
+
     public List<Map<String, Object>> getDerivatifbyId(String pIdProduct, String pIdDerivatif) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())

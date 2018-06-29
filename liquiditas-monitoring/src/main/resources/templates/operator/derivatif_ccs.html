@@ -54,6 +54,16 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <label for="pTenor"><span style="color: red">*)</span>&nbsp;Tenor:</label>
+                                <select id="pTenor" class="form-control">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pJatuhTempo">Jatuh Tempo:</label>
+                                <input type="text" class="form-control" id="pJatuhTempo"/>
+                            </div>
+                            <div class="form-group">
                                 <label for="pStartDate"><span style="color: red">*)</span>&nbsp;Start Date:</label>
                                 <input type="text" class="form-control" id="pStartDate"/>
                             </div>
@@ -62,60 +72,42 @@
                                 <input type="text" class="form-control" id="pEndDate"/>
                             </div>
                             <div class="form-group">
-                                <label for="pTenor"><span style="color: red">*)</span>&nbsp;Tenor:</label>
-                                <select id="pTenor" class="form-control">
-                                    <option value="">Pilih Data</option>
-                                </select>
+                                <label for="pPayDate"><span style="color: red">*)</span>&nbsp;Pay Date:</label>
+                                <input type="text" class="form-control" id="pPayDate"/>
                             </div>
                             <div class="form-group">
                                 <label for="pNationalUsd"><span style="color: red">*)</span>&nbsp;National USD:</label>
                                 <input type="text" class="form-control" id="pNationalUsd"/>
                             </div>
-                            <div class="form-group">
-                                <label for="pLibor"><span style="color: red">*)</span>&nbsp;Libor:</label>
-                                <input type="number" class="form-control" id="pLibor"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pReceiveUsd"><span style="color: red">*)</span>&nbsp;Receive USD:</label>
-                                <input type="number" class="form-control" id="pReceiveUsd"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pDiscountUsd"><span style="color: red">*)</span>&nbsp;Discount USD:</label>
-                                <input type="number" class="form-control" id="pDiscountUsd"/>
-                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="pResetData"><span style="color: red">*)</span>&nbsp;Reset Date:</label>
-                                <input type="text" class="form-control" id="pResetData"/>
+                                <label for="pLibor"><span style="color: red">*)</span>&nbsp;Libor:</label>
+                                <input type="text" class="form-control" id="pLibor"/>
                             </div>
                             <div class="form-group">
-                                <label for="pPayUsd"><span style="color: red">*)</span>&nbsp;Pay USD:</label>
-                                <input type="text" class="form-control" id="pPayUsd"/>
+                                <label for="pPlnReceivePrincipalUsd"><span style="color: red">*)</span>&nbsp;PLN Receive Principal (USD):</label>
+                                <input type="text" class="form-control" id="pPlnReceivePrincipalUsd"/>
                             </div>
                             <div class="form-group">
-                                <label for="pJatuhTempo">Jatuh Tempo:</label>
-                                <input type="number" class="form-control" id="pJatuhTempo"/>
+                                <label for="pResetDate"><span style="color: red">*)</span>&nbsp;Reset Date:</label>
+                                <input type="text" class="form-control" id="pResetDate"/>
                             </div>
                             <div class="form-group">
-                                <label for="pPrincipal">Principal:</label>
-                                <input type="number" class="form-control" id="pPrincipal"/>
+                                <label for="pDiscountFactorUsd">Discount Factor USD:</label>
+                                <input type="text" class="form-control" id="pDiscountFactorUsd"/>
                             </div>
                             <div class="form-group">
-                                <label for="pCreateBy">Created By:</label>
-                                <input type="number" class="form-control" id="pCreateBy"/>
+                                <label for="pSukuBungaIdr">Suku Bunga IDR:</label>
+                                <input type="text" class="form-control" id="pSukuBungaIdr"/>
                             </div>
                             <div class="form-group">
-                                <label for="pReceiveIdr">Receive IDR:</label>
-                                <input type="number" class="form-control" id="pReceiveIdr"/>
+                                <label for="pPlnPayPrincipal"><span style="color: red">*)</span>&nbsp;PLN Pay Principal (IDR):</label>
+                                <input type="text" class="form-control" id="pPlnPayPrincipal"/>
                             </div>
                             <div class="form-group">
-                                <label for="pDiscountIdr"><span style="color: red">*)</span>&nbsp;Discount IDR:</label>
-                                <input type="number" class="form-control" id="pDiscountIdr"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pSukuBungaIdr"><span style="color: red">*)</span>&nbsp;Suku Bunga IDR:</label>
-                                <input type="number" class="form-control" id="pSukuBungaIdr"/>
+                                <label for="pDiscountFactorIdr">Discount Factor IDR:</label>
+                                <input type="text" class="form-control" id="pDiscountFactorIdr"/>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -150,12 +142,6 @@
                 </div>
 
                 <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
-                    <div class="col-md-1" style="padding-right: 0px;"><label class="lbl-src">Currency </label></div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="bacurrecnynk" id="cmb_currecny" class="form-control">
-                            <option value="">Pilih Data</option>
-                        </select>
-                    </div>
                     <div class="col-md-1" style="padding-right: 0px;"><label for="cmb_tenor">Tenor</label></div>
                     <div class="col-md-3" style="padding-right: 0px;">
                         <select id="cmb_tenor" class="form-control">
@@ -172,28 +158,32 @@
                         <table id="table-derivatif-ccs" class="table table-bordered table-striped" style="margin-left: 0px;">
                             <thead style="font-size: 12px">
                             <tr>
-                                <th>No.</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Pay Date</th>
-                                <th>Jumlah Hari</th>
-                                <th>National (USD)</th>
-                                <th>Libor 6M</th>
-                                <th>Suku Bunga USD (Libor 6M+2%)</th>
-                                <th>Suku Bunga USD (Libor 6M+2%)</th>
-                                <th>PLN Receive Principal (USD)</th>
-                                <th>PLN Receive Coupon (USD)</th>
-                                <th>Total Penerimaan PLN (USD)</th>
-                                <th>Reset Date</th>
-                                <th>Discount Factor</th>
+                                <th>NO.</th>
+                                <th>BANK COUNTERPARTY</th>
+                                <th>TENOR</th>
+                                <th>JATUH TEMPO</th>
+                                <th>START DATE</th>
+                                <th>END DATE</th>
+                                <th>PAY DATE</th>
+                                <th>JUMLAH HARI</th>
+                                <th>NATIONAL (USD)</th>
+                                <th>LIBOR 6M</th>
+                                <th>SUKU BUNGA USD (LIBOR 6M+2%)</th>
+                                <th>SUKU BUNGA USD (LIBOR 6M+2%)</th>
+                                <th>PLN RECEIVE PRINCIPAL (USD)</th>
+                                <th>PLN RECEIVE COUPON (USD)</th>
+                                <th>TOTAL PENERIMAAN PLN (USD)</th>
+                                <th>RESET DATE</th>
+                                <th>DISCOUNT FACTOR</th>
                                 <th>PV (USD)</th>
-                                <th>National (IDR)</th>
-                                <th>PLN Pay Principal (IDR)</th>
-                                <th>PLN Pay Coupon (IDR)</th>
-                                <th>Total Penerimaan PLN (IDR)</th>
-                                <th>Discount Factor</th>
+                                <th>NATIONAL (IDR)</th>
+                                <th>SUKU BUNGA IDR (LIBOR 6M+2%)</th>
+                                <th>PLN PAY PRINCIPAL (IDR)</th>
+                                <th>PLN PAY COUPON (IDR)</th>
+                                <th>TOTAL PEMBAYARAN PLN (IDR)</th>
+                                <th>DISCOUNT FACTOR</th>
                                 <th>PV (IDR)</th>
-                                <th>Aksi</th>
+                                <th>AKSI</th>
                             </tr>
                             </thead>
                             <tbody style="font-size: 12px">
@@ -223,7 +213,7 @@
                             <a th:href="@{/api_operator/derivatif/template}" id="btn-download-template-data-derivatif">
                                 Download Template
                             </a></label>
-                        <input type="file" class="form-control" id="file-xls"
+                        <input type="file" clxass="form-control" id="file-xls"
                                accept="application/vnd.ms-excel"/>
                     </div>
                 </div>
