@@ -8,6 +8,7 @@ import com.iconpln.liquiditas.fcm.Application;
 import com.iconpln.liquiditas.fcm.model.FirebaseNotification;
 import com.iconpln.liquiditas.fcm.service.DatabaseService;
 import com.iconpln.liquiditas.fcm.service.EmailService;
+import com.iconpln.liquiditas.fcm.task.EmailTask;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -36,17 +37,12 @@ public class EmailServiceTest {
     @Autowired
     private DatabaseService databaseService;
 
+    @Autowired
+    private EmailTask emailTask;
+
     @Test
     public void test() throws IOException {
-        List<Map<String, Object>> mapList = valasService.getEmailJatuhTempo();
-        List<String> emails = mapList.stream()
-                .filter(stringObjectMap -> stringObjectMap.get("email") != null)
-                .map(stringObjectMap -> stringObjectMap.get("email").toString())
-                .collect(Collectors.toList());
-        emails.stream().forEach(email -> {
-            List<RekapPembayaran> rekapPembayarans = valasService.getRekapPembayaranByEmail(email);
-            emailService.sendEmailWithAttachment(email, "Jetuh Tempo:", "Rekap Pembayaran", "REKAP_PEMBAYARAN.xls", rekapPembayarans);
-        });
+        emailTask.send();
     }
 
     @Test

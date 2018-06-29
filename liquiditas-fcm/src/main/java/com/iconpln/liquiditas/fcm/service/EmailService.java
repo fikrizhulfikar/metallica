@@ -23,6 +23,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.InputStreamSource;
@@ -35,7 +37,11 @@ import org.springframework.stereotype.Service;
  * @author Langkuy <contact@ardikars.com>
  */
 @Service("emailService")
+@PropertySource("classpath:application.properties")
 public class EmailService {
+
+    @Value("${mail.sender}")
+    private String from;
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -44,6 +50,7 @@ public class EmailService {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         try {
+            helper.setFrom(from);
             helper.setTo(to);
             helper.setText(body);
             helper.setSubject(subject);
@@ -62,9 +69,10 @@ public class EmailService {
             e.printStackTrace();
         }
         try {
+            helper.setFrom(from);
             helper.setTo(to);
-            helper.setText(body);
             helper.setSubject(subject);
+            helper.setText(body, true);
 
             //create temporary bayte array output stream
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
