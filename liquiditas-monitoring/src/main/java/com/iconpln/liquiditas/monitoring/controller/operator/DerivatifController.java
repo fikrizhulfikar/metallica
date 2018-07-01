@@ -133,7 +133,7 @@ public class DerivatifController {
 
         List<Map<String, Object>> list = new ArrayList<>();
         try {
-            String sortBy = parseColumn(sortIndex);
+            String sortBy = parseColumn2(sortIndex);
             list = valasService.getListDeviratif(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pStatusDerivatif, sortBy, sortDir, pSearch);
         } catch (Exception e) {
             e.printStackTrace();
@@ -651,6 +651,73 @@ public class DerivatifController {
                 return "DISCOUNT_FACTOR_IDR";
             case 24:
                 return "PV_IDR";
+            default:
+                return "BANK_CONTERPARTY";
+        }
+    }
+
+    public String parseColumn2(int index) {
+        switch (index) {
+            case 1:
+                return "BANK_CONTERPARTY";
+            case 2:
+                return "CURRENCY";
+            case 3:
+                return "TANGGAL_DEAL";
+            case 4:
+                return "JAM";
+            case 5:
+                return "TGL_JATUH_TEMPO";
+            case 6:
+                return "TENOR";
+            case 7:
+                return "NOTIONAL_AMOUNT_USD";
+            case 8:
+                return "DEAL_RATE";
+            case 9:
+                return "FORWARD_POINT";
+            case 10:
+                return "FORWARD_RATE";
+            case 11:
+                return "KURS_JISDOR";
+            case 12:
+                return "PENDAPATAN";
+            case 13:
+                return "BIAYA_HEDGING";
+            case 14:
+                return "BUNGA_DEPOSITO";
+            case 15:
+                return "NET_BIAYA_HEDGING";
+            case 16:
+                return "NET_BUY_NOTIONAL_AMOUNT";
+            case 17:
+                return "SUMBER_DANA";
+            case 18:
+                return "PERUNTUKAN_DANA";
+            case 19:
+                return "LEG1_FIXING_RATE";
+            case 20:
+                return "LEG1_NOTIONAL_AMOUNT";
+            case 21:
+                return "LEG2_SWAP_POINT";
+            case 22:
+                return "BIAYA_SWAP";
+            case 23:
+                return "NET_BIAYA_SWAP";
+            case 24:
+                return "STRIKE_PRICE1";
+            case 25:
+                return "STRIKE_PRICE2";
+            case 26:
+                return "SETTLEMENT_RATE";
+            case 27:
+                return "BIAYA_PREMI";
+            case 28:
+                return "NET_BIAYA_PREMI";
+            case 29:
+                return "KETERANGAN";
+            case 40:
+                return "STATUS";
             default:
                 return "BANK_CONTERPARTY";
         }
