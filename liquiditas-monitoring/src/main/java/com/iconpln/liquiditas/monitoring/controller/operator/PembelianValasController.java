@@ -75,7 +75,8 @@ public class PembelianValasController {
 
         List<Map<String, Object>> list = new ArrayList<>();
         try {
-            list = valasService.getListPemebelianValas(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pDok1, pDok2, pSearch);
+            String sortBy = parseColumn(sortIndex);
+            list = valasService.getListPemebelianValas(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pDok1, pDok2, sortBy, sortDir, pSearch);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -222,4 +223,38 @@ public class PembelianValasController {
             return "Gagal Export Data :" + e.getMessage();
         }
     }
+
+    public String parseColumn(int index) {
+        switch (index) {
+            case 1:
+                return "POSTING_DATE";
+            case 2:
+                return "NAMA_BANK_PENGIRIM";
+            case 3:
+                return "KODE_BANK_PENGIRIM";
+            case 4:
+                return "NAMA_BANK_PENERIMA";
+            case 5:
+                return "KODE_BANK_PENERIMA";
+            case 6:
+                return "PEMBELIAN";
+            case 7:
+                return "CURRENCY";
+            case 8:
+                return "KURS";
+            case 9:
+                return "KONVERSI_IDR";
+            case 10:
+                return "NO_SETTLEMENT";
+            case 11:
+                return "PAY_REG";
+            case 12:
+                return "DOKUMEN1";
+            case 13:
+                return "DOKUMEN2";
+            default:
+                return "POSTING_DATE";
+        }
+    }
+
 }

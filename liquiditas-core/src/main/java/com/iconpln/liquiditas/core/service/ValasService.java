@@ -1104,7 +1104,7 @@ public class ValasService {
         return out;
     }
 
-    public List<Map<String, Object>> getListPemebelianValas(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurr, String pDok1, String pDok2, String pSearch) throws SQLException {
+    public List<Map<String, Object>> getListPemebelianValas(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurr, String pDok1, String pDok2, String sortBy, String sortDir, String pSearch) throws SQLException {
 
         AppUtils.getLogger(this).debug("data get beli valas pss info = " +
                         "start : {}, " +
@@ -1133,6 +1133,8 @@ public class ValasService {
         params.put("p_curr", pCurr);
         params.put("p_dok1", pDok1);
         params.put("p_dok2", pDok2);
+        params.put("p_sort_by", sortBy);
+        params.put("p_sort_dir", sortDir.toUpperCase());
         params.put("p_search", pSearch);
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
 
