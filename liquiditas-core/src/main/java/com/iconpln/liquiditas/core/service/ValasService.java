@@ -1024,8 +1024,8 @@ public class ValasService {
 
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_TEST_VALAS")
-                .withFunctionName("get_tripartite_pss3");
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_tripartite_pss");
 
         Map<String, Object> params = new HashMap<>();
         params.put("p_start", pStart);
