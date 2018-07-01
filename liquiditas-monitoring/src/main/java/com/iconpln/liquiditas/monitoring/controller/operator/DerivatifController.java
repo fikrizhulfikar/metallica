@@ -133,7 +133,8 @@ public class DerivatifController {
 
         List<Map<String, Object>> list = new ArrayList<>();
         try {
-            list = valasService.getListDeviratif(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pStatusDerivatif, pSearch);
+            String sortBy = parseColumn(sortIndex);
+            list = valasService.getListDeviratif(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pStatusDerivatif, sortBy, sortDir, pSearch);
         } catch (Exception e) {
             e.printStackTrace();
         }

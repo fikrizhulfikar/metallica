@@ -618,7 +618,7 @@ public class ValasService {
         return out;
     }
 
-    public List<Map<String, Object>> getListDeviratif(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pTenor, String pStatusDerivatif, String pSearch) throws SQLException {
+    public List<Map<String, Object>> getListDeviratif(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pTenor, String pStatusDerivatif, String pSortBy, String pSortDir, String pSearch) throws SQLException {
 
         AppUtils.getLogger(this).debug("data rekap search info = " +
                         "start : {}, " +
@@ -647,6 +647,8 @@ public class ValasService {
         params.put("p_cur", pCurrency);
         params.put("p_tenor", pTenor);
         params.put("p_id_product", pStatusDerivatif);
+        params.put("p_sort_by", pSortBy);
+        params.put("p_sort_dir", pSortDir.toUpperCase());
         params.put("p_search", pSearch);
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
 
