@@ -30,7 +30,8 @@ import java.util.Map;
 @RequestMapping("/api_operator/derivatif")
 public class DerivatifController {
 
-    @Autowired ValasService valasService;
+    @Autowired
+    ValasService valasService;
 
     @Autowired
     private ResourceLoader resourceLoader;
@@ -62,14 +63,14 @@ public class DerivatifController {
             @RequestParam(value = "pBiayaPremi", defaultValue = "") String pBiayaPremi,
             @RequestParam(value = "pForwardRate", defaultValue = "") String pForwardRate
     ) {
-        AppUtils.getLogger(this).info("pprutntukan dana : {}",pPeruntukanDana);
+        AppUtils.getLogger(this).info("pprutntukan dana : {}", pPeruntukanDana);
         try {
-            return valasService.insDeviratif(pIdProduct,pIdDeviratif,pTglDeal,pBank,pTglJatuhTempo,
-                    pTenor,pCurr,pNationalAmount,pDealRate,
-                    pForwardPoint,pKursJisdor1,pBungaDeposito,
-                    pSumberDana,pPeruntukanDana,pFixingRate,pKursJisdor2,
-                    pSwapPoint,pStrikePrice,pStrikePrice2,pSettlementRate,
-                    pKeterangan,pStatusDeviratif,pBiayaPremi, WebUtils.getUsernameLogin());
+            return valasService.insDeviratif(pIdProduct, pIdDeviratif, pTglDeal, pBank, pTglJatuhTempo,
+                    pTenor, pCurr, pNationalAmount, pDealRate,
+                    pForwardPoint, pKursJisdor1, pBungaDeposito,
+                    pSumberDana, pPeruntukanDana, pFixingRate, pKursJisdor2,
+                    pSwapPoint, pStrikePrice, pStrikePrice2, pSettlementRate,
+                    pKeterangan, pStatusDeviratif, pBiayaPremi, WebUtils.getUsernameLogin());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -102,9 +103,9 @@ public class DerivatifController {
         AppUtils.getLogger(this).info("ins derivative ccs.");
         try {
             return valasService.insDerivatifCcs(
-                    pIdCcs,pStartDate,pEndDate,pPayDate,pNotionalUsd,pLibor,pReceiveUsd,
-                    pResetDate, pDiscountUsd,pReceiveIdr,pDiscountIdr,
-                    pSukuBungaIdr,pPrincipal, pCreateBy,pBank, pJatuhTempo, pTenor
+                    pIdCcs, pStartDate, pEndDate, pPayDate, pNotionalUsd, pLibor, pReceiveUsd,
+                    pResetDate, pDiscountUsd, pReceiveIdr, pDiscountIdr,
+                    pSukuBungaIdr, pPrincipal, pCreateBy, pBank, pJatuhTempo, pTenor
             );
         } catch (Exception e) {
             e.printStackTrace();
@@ -132,20 +133,19 @@ public class DerivatifController {
 
         List<Map<String, Object>> list = new ArrayList<>();
         try {
-            list = valasService.getListDeviratif(((start / length) + 1), length,pTglAwal,pTglAkhir,pBank,pCurrency,pTenor,pStatusDerivatif,pSearch);
+            list = valasService.getListDeviratif(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pStatusDerivatif, pSearch);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         Map mapData = new HashMap();
         mapData.put("draw", draw);
-        mapData.put("data",list);
-        AppUtils.getLogger(this).info("size data : {}",list.size());
-        if(list.size() < 1 || list.isEmpty()){
+        mapData.put("data", list);
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        if (list.size() < 1 || list.isEmpty()) {
             mapData.put("recordsTotal", 0);
             mapData.put("recordsFiltered", 0);
-        }else
-        {
+        } else {
             mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
             mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
         }
@@ -160,36 +160,63 @@ public class DerivatifController {
     @RequestMapping(value = "/get_derivatif_ccs_pss", method = RequestMethod.GET)
     public Map getDerivatifCcsPss(
             @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "1") int pStart,
+            @RequestParam(value = "length", defaultValue = "10") int pLength,
+            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pTenor", defaultValue = "ALL") String pTenor,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "ASC") String sortDir,
+            @RequestParam(value = "search[value]", defaultValue = "") String pSearch
+    ) {
+        String pSortBy = parseColumn(sortIndex);
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = valasService.getDerivatifCcsPss(((pStart / pLength) + 1), pLength, pTglAwal, pTglAkhir, pBank, pTenor, pSortBy, sortDir, pSearch);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Map mapData = new HashMap();
+        mapData.put("draw", draw);
+        mapData.put("data", list);
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        if (list.size() < 1 || list.isEmpty()) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
+
+        return mapData;
+
+    }
+
+    @RequestMapping(value = "/get_all_derivatif_ccs", method = RequestMethod.GET)
+    public List<Map<String, Object>> getAllDerivatifCcs(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
             @RequestParam(value = "pStart", defaultValue = "1") int pStart,
             @RequestParam(value = "pLength", defaultValue = "10") int pLength,
             @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
             @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
             @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
             @RequestParam(value = "pTenor", defaultValue = "ALL") String pTenor,
-            @RequestParam(value = "pSearch", defaultValue = "") String pSearch
+            @RequestParam(value = "pSearch", defaultValue = "") String pSearch,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "ASC") String sortDir
     ) {
         AppUtils.getLogger(this).info("get_derivatif_ccs_pss");
-        Map<String, Object> mapData = new HashMap<>();
         try {
-            List<Map<String, Object>> list = valasService.getDerivatifCcsPss(pStart, pLength,
-                    pTglAwal, pTglAkhir, pBank, pTenor, pSearch);
-            mapData.put("draw", draw);
-            mapData.put("data", list);
-            AppUtils.getLogger(this).info("size data : {}",list.size());
-            if(list.size() < 1 || list.isEmpty()){
-                mapData.put("recordsTotal", 0);
-                mapData.put("recordsFiltered", 0);
-            }else
-            {
-                mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
-                mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
-            }
-            return mapData;
+            String pSortBy = parseColumn(sortIndex);
+            return valasService.getDerivatifCcsPss(pStart, pLength,
+                    pTglAwal, pTglAkhir, pBank, pTenor, pSortBy, sortDir, pSearch);
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        return mapData;
-
     }
 
     @RequestMapping(value = "/get_all_derivatif", method = RequestMethod.GET)
@@ -201,14 +228,13 @@ public class DerivatifController {
             @RequestParam(value = "pCurr", defaultValue = "ALL") String pCurr,
             @RequestParam(value = "pTenor", defaultValue = "ALL") String pTenor
     ) {
-        AppUtils.getLogger(this).info("pIdProduct : {}",pIdProduct);
+        AppUtils.getLogger(this).info("pIdProduct : {}", pIdProduct);
         try {
-            return valasService.getAllDerivatif(pIdProduct,pTglAwal,pTglAkhir,pBank,pCurr,pTenor);
+            return valasService.getAllDerivatif(pIdProduct, pTglAwal, pTglAkhir, pBank, pCurr, pTenor);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-
     }
 
     @RequestMapping(value = "/delete_data", method = RequestMethod.POST)
@@ -217,10 +243,10 @@ public class DerivatifController {
             @RequestParam(value = "pIdDerivatif", defaultValue = "") String pIdDerivatif
     ) {
 
-        AppUtils.getLogger(this).debug("pIdProduct : {} ",pIdProduct);
-        AppUtils.getLogger(this).debug("pIdDerivatif : {} ",pIdDerivatif);
+        AppUtils.getLogger(this).debug("pIdProduct : {} ", pIdProduct);
+        AppUtils.getLogger(this).debug("pIdDerivatif : {} ", pIdDerivatif);
         try {
-            return valasService.deleteDerivatif(pIdProduct,pIdDerivatif);
+            return valasService.deleteDerivatif(pIdProduct, pIdDerivatif);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -232,7 +258,7 @@ public class DerivatifController {
             @RequestParam(value = "pIdCcs", defaultValue = "") String pIdCcs
     ) {
 
-        AppUtils.getLogger(this).debug("pIdCCS : {} ",pIdCcs);
+        AppUtils.getLogger(this).debug("pIdCCS : {} ", pIdCcs);
         try {
             return valasService.deleteDerivatifCcs(pIdCcs);
         } catch (Exception e) {
@@ -246,10 +272,10 @@ public class DerivatifController {
             @RequestParam(value = "pIdProduct", defaultValue = "") String pIdProduct,
             @RequestParam(value = "pIdDerivatif", defaultValue = "") String pIdDerivatif
     ) {
-        AppUtils.getLogger(this).info("pId edit data: {}",pIdProduct);
-        AppUtils.getLogger(this).info("pId edit data: {}",pIdDerivatif);
+        AppUtils.getLogger(this).info("pId edit data: {}", pIdProduct);
+        AppUtils.getLogger(this).info("pId edit data: {}", pIdDerivatif);
         try {
-            return valasService.getDerivatifbyId(pIdProduct,pIdDerivatif);
+            return valasService.getDerivatifbyId(pIdProduct, pIdDerivatif);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -260,7 +286,7 @@ public class DerivatifController {
     @RequestMapping(value = "/edit_data_ccs", method = RequestMethod.GET)
     public List getDerivatifCcsbyId(
             @RequestParam(value = "pIdCcs", defaultValue = "") String pIdCcs) {
-        AppUtils.getLogger(this).info("pId edit data: {}",pIdCcs);
+        AppUtils.getLogger(this).info("pId edit data: {}", pIdCcs);
         try {
             return valasService.getDerivatifCcsbyId(pIdCcs);
         } catch (Exception e) {
@@ -270,6 +296,83 @@ public class DerivatifController {
 
     }
 
+    @RequestMapping(value = "/xls-ccs/{pTglAwal}/{pTglAkhir}/{pBank}/{pTenor}", method = RequestMethod.GET)
+    public String exportCcs(
+            @PathVariable String pTglAwal,
+            @PathVariable String pTglAkhir,
+            @PathVariable String pBank,
+            @PathVariable String pTenor,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        try {
+
+            String title = "DERIVATIF CCS";
+            String namaFile = "derivatif-ccs.xls";
+
+            String tglAwal = "";
+            String tglAkhir = "";
+
+            if(!pTglAwal.equals("null")){
+                tglAwal = pTglAwal;
+            }
+            if(!pTglAkhir.equals("null")){
+                tglAkhir = pTglAkhir;
+            }
+
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
+
+            List<Map<String, Object>> listData = valasService.getAllDerivatifCcs(tglAwal,tglAkhir,pBank,pTenor);
+            AppUtils.getLogger(this).info("data report : {}", listData.toString());
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+
+            param.put("TITLE", title);
+            for (Map data : listData) {
+                Map paramDetail = new HashMap();
+
+                paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
+                paramDetail.put("BANK_CONTERPARTY", data.get("BANK_CONTERPARTY"));
+                paramDetail.put("TENOR", data.get("TENOR"));
+                paramDetail.put("JATUH_TEMPO", data.get("JATUH_TEMPO"));
+                paramDetail.put("START_DATE", data.get("START_DATE"));
+                paramDetail.put("END_DATE", data.get("END_DATE"));
+                paramDetail.put("PAY_DATE", data.get("PAY_DATE"));
+                paramDetail.put("JUMLAH_HARI", data.get("JUMLAH_HARI"));
+                paramDetail.put("NOTIONAL_USD", data.get("NOTIONAL_USD"));
+                paramDetail.put("LIBOR", data.get("LIBOR"));
+                paramDetail.put("SUKU_BUNGA_USD", data.get("SUKU_BUNGA_USD"));
+                paramDetail.put("SUKU_BUNGA_USD", data.get("SUKU_BUNGA_USD"));
+                paramDetail.put("RECEIVE_PRINCIPAL", data.get("RECEIVE_PRINCIPAL"));
+                paramDetail.put("RECEIVE_COUPON", data.get("RECEIVE_COUPON"));
+                paramDetail.put("TOTAL_PENERIMAAN", data.get("TOTAL_PENERIMAAN"));
+                paramDetail.put("RESET_DATE", data.get("RESET_DATE"));
+                paramDetail.put("DISCOUNT_FACTOR_USD", data.get("DISCOUNT_FACTOR_USD"));
+                paramDetail.put("PV_USD", data.get("PV_USD"));
+                paramDetail.put("NOTIONAL_IDR", data.get("NOTIONAL_IDR"));
+                paramDetail.put("SUKU_BUNGA_IDR", data.get("SUKU_BUNGA_IDR"));
+                paramDetail.put("PAY_PRINCIPAL", data.get("PAY_PRINCIPAL"));
+                paramDetail.put("PAY_COUPON", data.get("PAY_COUPON"));
+                paramDetail.put("TOTAL_PEMBAYARAN", data.get("TOTAL_PEMBAYARAN"));
+                paramDetail.put("DISCOUNT_FACTOR_IDR", data.get("DISCOUNT_FACTOR_IDR"));
+                paramDetail.put("PV_IDR", data.get("PV_IDR"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/derivatif-ccs.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Gagal Export Data :" + e.getMessage();
+        }
+    }
 
     @RequestMapping(value = "/xls/{pStatusValas}/{pTglAwal}/{pTglAkhir}/{pBank}/{pCurr}/{pTenor}", method = RequestMethod.GET)
     public String export(@PathVariable Integer pStatusValas,
@@ -285,29 +388,29 @@ public class DerivatifController {
             String tglAwal = "";
             String tglAkhir = "";
 
-            if(!pTglAwal.equals("null")){
+            if (!pTglAwal.equals("null")) {
                 tglAwal = pTglAwal;
             }
-            if(!pTglAkhir.equals("null")){
+            if (!pTglAkhir.equals("null")) {
                 tglAkhir = pTglAkhir;
             }
 
-            List<Map<String,Object>> listData =  valasService.getAllDerivatif(pStatusValas.toString(),tglAwal,tglAkhir,pBank,pCurr,pTenor);
+            List<Map<String, Object>> listData = valasService.getAllDerivatif(pStatusValas.toString(), tglAwal, tglAkhir, pBank, pCurr, pTenor);
 
-            AppUtils.getLogger(this).debug("data rekap : {}, report : {}",pStatusValas,listData.toString());
+            AppUtils.getLogger(this).debug("data rekap : {}, report : {}", pStatusValas, listData.toString());
             Map param = new HashMap();
-            List<Map<String,Object>> listDetail = new ArrayList<>();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
 
             String title;
             String namaFile;
             String tempalte;
-            if(pStatusValas.equals(1) || pStatusValas == 1){
+            if (pStatusValas.equals(1) || pStatusValas == 1) {
                 title = "DERIVATIF FORWARD";
                 namaFile = "derivatif_forward.xls";
                 tempalte = "derivatif-forward.xls";
 
-                for (Map data : listData){
-                    Map paramDetail  =  new HashMap();
+                for (Map data : listData) {
+                    Map paramDetail = new HashMap();
                     paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
                     paramDetail.put("BANK_CONTERPARTY", data.get("BANK_CONTERPARTY"));
                     paramDetail.put("CURRENCY", data.get("CURRENCY"));
@@ -330,15 +433,14 @@ public class DerivatifController {
                     paramDetail.put("STATUS_DERIVATIF", data.get("STATUS_DERIVATIF"));
                     listDetail.add(paramDetail);
                 }
-                param.put("DETAILS",listDetail);
-            }
-            else if(pStatusValas.equals(2) || pStatusValas == 2){
+                param.put("DETAILS", listDetail);
+            } else if (pStatusValas.equals(2) || pStatusValas == 2) {
                 title = "DERIVATIF SWAP";
                 namaFile = "derivatif_swap.xls";
                 tempalte = "derivatif-swap.xls";
 
-                for (Map data : listData){
-                    Map paramDetail  =  new HashMap();
+                for (Map data : listData) {
+                    Map paramDetail = new HashMap();
                     paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
                     paramDetail.put("BANK_CONTERPARTY", data.get("BANK_CONTERPARTY"));
                     paramDetail.put("CURRENCY", data.get("CURRENCY"));
@@ -364,16 +466,15 @@ public class DerivatifController {
                     paramDetail.put("STATUS_DERIVATIF", data.get("STATUS_DERIVATIF"));
                     listDetail.add(paramDetail);
                 }
-                param.put("DETAILS",listDetail);
+                param.put("DETAILS", listDetail);
 
-            }else
-            {
+            } else {
                 title = "DERIVATIF CALL SPREAD OPTION";
                 namaFile = "derivatif_cso.xls";
                 tempalte = "derivatif-cso.xls";
 
-                for (Map data : listData){
-                    Map paramDetail  =  new HashMap();
+                for (Map data : listData) {
+                    Map paramDetail = new HashMap();
                     paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
                     paramDetail.put("BANK_CONTERPARTY", data.get("BANK_CONTERPARTY"));
                     paramDetail.put("CURRENCY", data.get("CURRENCY"));
@@ -395,28 +496,27 @@ public class DerivatifController {
                     paramDetail.put("STATUS_DERIVATIF", data.get("STATUS_DERIVATIF"));
                     listDetail.add(paramDetail);
                 }
-                param.put("DETAILS",listDetail);
+                param.put("DETAILS", listDetail);
             }
-            param.put("TITLE",title);
+            param.put("TITLE", title);
 
-            AppUtils.getLogger(this).info("data report : {}",param.toString());
+            AppUtils.getLogger(this).info("data report : {}", param.toString());
 
             ServletOutputStream os = response.getOutputStream();
             response.setContentType("application/vnd.ms-excel");
-            response.setHeader("Content-Disposition", "attachment; filename=\""+namaFile+"\"");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
 
             XLSTransformer transformer = new XLSTransformer();
-            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/"+tempalte+"").getInputStream();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/" + tempalte + "").getInputStream();
             Workbook workbook = transformer.transformXLS(streamTemplate, param);
             workbook.write(os);
             os.flush();
             return null;
-        }  catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            return "Gagal Export Data :"+e.getMessage();
+            return "Gagal Export Data :" + e.getMessage();
         }
     }
-
 
     @RequestMapping(value = "/get_id_upload", method = RequestMethod.GET)
     public Map getIdUpload() {
@@ -450,15 +550,15 @@ public class DerivatifController {
     public String export(HttpServletResponse response,
                          @PathVariable String idUpload,
                          @PathVariable String idDerivatif) throws SQLException {
-        AppUtils.getLogger(this).info("DOWNLOAD {} ID UPLOAD : {}", "download "+idDerivatif, idUpload);
+        AppUtils.getLogger(this).info("DOWNLOAD {} ID UPLOAD : {}", "download " + idDerivatif, idUpload);
 
-        return generateReport(response,valasService.getErrorData(idUpload, "3"), "download", idDerivatif);
+        return generateReport(response, valasService.getErrorData(idUpload, "3"), "download", idDerivatif);
     }
 
     @RequestMapping(value = "/template/{idDerivatif}", method = RequestMethod.GET)
     public String downloadTemplate(HttpServletResponse response,
-                         @PathVariable String idDerivatif) throws SQLException {
-        return generateReport(response,null, "template", idDerivatif);
+                                   @PathVariable String idDerivatif) throws SQLException {
+        return generateReport(response, null, "template", idDerivatif);
 
     }
 
@@ -470,33 +570,89 @@ public class DerivatifController {
             response.setContentType("application/vnd.ms-excel");
             Map value = new HashMap();
 
-            System.out.println("value : "+value);
+            System.out.println("value : " + value);
             String resource;
             System.out.println("resources : tripartite");
-            if(idDerivatif.equals("1")){
-                response.setHeader("Content-Disposition", "attachment; filename=\""+tipe+"_derivatif_forward.xls\"");
-                resource = "classpath:/templates/report/"+tipe+"_derivatif_forward.xls";
-            }else if(idDerivatif.equals("2")){
-                response.setHeader("Content-Disposition", "attachment; filename=\""+tipe+"_derivatif_swap.xls\"");
-                resource = "classpath:/templates/report/"+tipe+"_derivatif_swap.xls";
-            }else {
-                response.setHeader("Content-Disposition", "attachment; filename=\""+tipe+"_derivatif_cso.xls\"");
-                resource = "classpath:/templates/report/"+tipe+"_derivatif_cso.xls";
+            if (idDerivatif.equals("1")) {
+                response.setHeader("Content-Disposition", "attachment; filename=\"" + tipe + "_derivatif_forward.xls\"");
+                resource = "classpath:/templates/report/" + tipe + "_derivatif_forward.xls";
+            } else if (idDerivatif.equals("2")) {
+                response.setHeader("Content-Disposition", "attachment; filename=\"" + tipe + "_derivatif_swap.xls\"");
+                resource = "classpath:/templates/report/" + tipe + "_derivatif_swap.xls";
+            } else {
+                response.setHeader("Content-Disposition", "attachment; filename=\"" + tipe + "_derivatif_cso.xls\"");
+                resource = "classpath:/templates/report/" + tipe + "_derivatif_cso.xls";
             }
 
-            if(tipe.equals("download")){
+            if (tipe.equals("download")) {
                 value.put("listFailed", errorData.get("return"));
             }
 
-            System.out.println("resources : "+ resource);
+            System.out.println("resources : " + resource);
             XLSTransformer transformer = new XLSTransformer();
             InputStream streamTemplate = resourceLoader.getResource(resource).getInputStream();
             Workbook workbook = transformer.transformXLS(streamTemplate, value);
             workbook.write(os);
             os.flush();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
+    public String parseColumn(int index) {
+        switch (index) {
+            case 1:
+                return "BANK_CONTERPARTY";
+            case 2:
+                return "TENOR";
+            case 3:
+                return "JATUH_TEMPO";
+            case 4:
+                return "START_DATE";
+            case 5:
+                return "END_DATE";
+            case 6:
+                return "PAY_DATE";
+            case 7:
+                return "JUMLAH_HARI";
+            case 8:
+                return "NOTIONAL_USD";
+            case 9:
+                return "LIBOR";
+            case 10:
+                return "SUKU_BUNGA_USD";
+            case 11:
+                return "SUKU_BUNGA_USD";
+            case 12:
+                return "RECEIVE_PRINCIPAL";
+            case 13:
+                return "RECEIVE_COUPON";
+            case 14:
+                return "TOTAL_PENERIMAAN";
+            case 15:
+                return "RESET_DATE";
+            case 16:
+                return "DISCOUNT_FACTOR_USD";
+            case 17:
+                return "PV_USD";
+            case 18:
+                return "NOTIONAL_IDR";
+            case 19:
+                return "SUKU_BUNGA_IDR";
+            case 20:
+                return "PAY_PRINCIPAL";
+            case 21:
+                return "PAY_COUPON";
+            case 22:
+                return "TOTAL_PEMBAYARAN";
+            case 23:
+                return "DISCOUNT_FACTOR_IDR";
+            case 24:
+                return "PV_IDR";
+            default:
+                return "BANK_CONTERPARTY";
+        }
+    }
+
 }
