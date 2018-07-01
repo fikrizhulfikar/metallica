@@ -104,7 +104,8 @@ public class PembayaranController {
 
         List<Map<String, Object>> list = new ArrayList<>();
         try {
-            list = valasService.getListRealisasi(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, WebUtils.getUsernameLogin(), pSearch);
+            String sortBy = parseColumn(sortIndex);
+            list = valasService.getListRealisasi(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, WebUtils.getUsernameLogin(), sortBy, sortDir, pSearch);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -587,14 +588,12 @@ public class PembayaranController {
             case 14:
                 return "COUNT_DOWN";
             case 15:
-                return "TLG_NOTDIN";
-            case 16:
                 return "STATUS_VALAS";
-            case 17:
+            case 16:
                 return "TIPE_TRANSAKSI";
-            case 18:
+            case 17:
                 return "STATUS_TRACKING";
-            case 19:
+            case 18:
                 return "DESKRIPSI";
             default:
                 return "JENIS_PEMBAYARAN";

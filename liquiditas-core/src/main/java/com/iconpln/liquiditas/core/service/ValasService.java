@@ -118,7 +118,7 @@ public class ValasService {
         return resultset;
     }
 
-    public List<Map<String, Object>> getListRealisasi(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pPembayaran, String pUserId, String pSearch) throws SQLException {
+    public List<Map<String, Object>> getListRealisasi(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pPembayaran, String pUserId, String sortBy, String sortDir, String pSearch) throws SQLException {
 
         AppUtils.getLogger(this).debug("data rekap search info = " +
                         "start : {}, " +
@@ -147,6 +147,8 @@ public class ValasService {
         params.put("p_cur", pCurrency);
         params.put("p_pembayaran", pPembayaran);
         params.put("p_user_id", pUserId);
+        params.put("p_sort_by", sortBy);
+        params.put("p_sort_dir", sortDir.toUpperCase());
         params.put("p_search", pSearch);
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
 
