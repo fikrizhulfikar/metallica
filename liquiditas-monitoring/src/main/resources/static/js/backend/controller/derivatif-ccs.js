@@ -202,7 +202,7 @@ function search(state) {
 
 function getAllData() {
     $.ajax({
-        url: baseUrl + "api_operator/derivatif/get_derivatif_ccs_pss",
+        url: baseUrl + "api_operator/derivatif/get_all_derivatif_ccs",
         dataType: 'JSON',
         type: "GET",
         data: {
@@ -212,8 +212,8 @@ function getAllData() {
             pTenor : $("#cmb_tenor").val()
         },
         success: function (res) {
-            console.log("res get_derivatif_ccs_pss ",res);
             allData = res;
+            console.log("res get_all_derivatif_ccs ",allData);
         },
         error: function () {
             console.log("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -223,18 +223,18 @@ function getAllData() {
 
 function exportXls() {
     var tglAwal = "null";
-    if(srcTglAwal != ""){
+    if (srcTglAwal != "") {
         tglAwal = srcTglAwal
     }
     var tglAkhir = "null";
-    if(srcTglAkhir != ""){
+    if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/derivatif/xls/4/"+tglAwal.replace(/\//g,"-")+"/"+tglAkhir.replace(/\//g,"-")+"/"+$("#cmb_bank").val()+"/"+$("#cmb_currecny").val()+"/"+$("#cmb_tenor").val());
+    window.open(baseUrl + "api_operator/derivatif/xls-ccs/" + tglAwal.replace(/\//g, "-") + "/" + tglAkhir.replace(/\//g, "-") + "/" + $("#cmb_bank").val() + "/" +$("#cmb_tenor").val());
 }
 
 function generatePDF() {
-    console.log("all data  : "+allData);
+    console.log("all data for pdf  : ",allData);
     var column = [];
     column.push({
         text: "NO.",
@@ -356,46 +356,20 @@ function generatePDF() {
         alignment: "center"
     });
 
-
     var externalDataRetrievedFromServer = []
+
     $.each(allData, function( index, v ) {
+        console.log("v",v);
         var helloooow = {
-
-            // {"data": "ROW_NUMBER", "defaultContent": ""},
-            // {"data": "BANK_CONTERPARTY", "defaultContent": ""},
-            // {"data": "TENOR", "defaultContent": ""},
-            // {"data": "JATUH_TEMPO", "defaultContent": ""},
-            // {"data": "START_DATE", "defaultContent": ""},
-            // {"data": "END_DATE", "defaultContent": ""},
-            // {"data": "PAY_DATE", "defaultContent": ""},
-            // {"data": "JUMLAH_HARI", "defaultContent": ""},
-            // {"data": "NOTIONAL_USD", "defaultContent": ""},
-            // {"data": "LIBOR", "defaultContent": ""},
-            // {"data": "SUKU_BUNGA_USD", "defaultContent": ""},
-            // {"data": "SUKU_BUNGA_USD", "defaultContent": ""},
-            // {"data": "RECEIVE_PRINCIPAL", "defaultContent": ""},
-            // {"data": "RECEIVE_COUPON", "defaultContent": ""},
-            // {"data": "TOTAL_PENERIMAAN", "defaultContent": ""},
-            // {"data": "RESET_DATE", "defaultContent": ""},
-            // {"data": "DISCOUNT_FACTOR_USD", "defaultContent": ""},
-            // {"data": "PV_USD", "defaultContent": ""},
-            // {"data": "NOTIONAL_IDR", "defaultContent": ""},
-            // {"data": "SUKU_BUNGA_IDR", "defaultContent": ""},
-            // {"data": "PAY_PRINCIPAL", "defaultContent": ""},
-            // {"data": "PAY_COUPON", "defaultContent": ""},
-            // {"data": "TOTAL_PEMBAYARAN", "defaultContent": ""},
-            // {"data": "DISCOUNT_FACTOR_IDR", "defaultContent": ""},
-            // {"data": "PV_IDR", "defaultContent": ""}
-
             NO : v.ROW_NUMBER,
-            BANK_COUNTERPARTY: v.BANK_CONTERPARTY ,
+            BANK_COUNTERPARTY: v.BANK_CONTERPARTY,
             TENOR: v.TENOR,
             JATUH_TEMPO: v.JATUH_TEMPO ,
             START_DATE: v.START_DATE ,
             END_DATE: v.END_DATE ,
             PAY_DATE: v.PAY_DATE ,
             JUMLAH_HARI: v.JUMLAH_HARI ,
-            NATIONAL_USD: v.NATIONAL_USD ,
+            NATIONAL_USD: v.NOTIONAL_USD ,
             LIBOR_6M: v.LIBOR,
             SUKU_BUNGA_USD_LIBOR_6M2: v.SUKU_BUNGA_USD  ,
             SUKU_BUNGA_USD_LIBOR_6M2: v.SUKU_BUNGA_USD  ,
@@ -405,7 +379,7 @@ function generatePDF() {
             RESET_DATE: v.RESET_DATE ,
             DISCOUNT_FACTOR_USD: v.DISCOUNT_FACTOR_USD ,
             PV_USD : v.PV_USD ,
-            NATIONAL_IDR: v.NATIONAL_IDR ,
+            NATIONAL_IDR: v.NOTIONAL_IDR ,
             SUKU_BUNGA_IDR_LIBOR6M: v.SUKU_BUNGA_IDR ,
             PLN_PAY_PRINCIPAL_IDR : v.PAY_PRINCIPAL ,
             PLN_PAY_COUPON_IDR: v.PAY_COUPON ,
@@ -413,21 +387,22 @@ function generatePDF() {
             DISCOUNT_FACTOR_IDR: v.DISCOUNT_FACTOR_IDR ,
             PV_IDR : v.PV_IDR ,
 
-            // NOTIONAL_AMOUNT: accounting.formatNumber(v.NATIONAL_AMOUNT,2,".",","),
-            // LEG_1_FIXING_RATE: accounting.formatNumber(v.FIXING_RATE,2,".",","),
-            // LEG_1_NATIONAL_AMOUNT: accounting.formatNumber(v.NATIONAL_AMOUNT1,2,".",","),
-            // LEG_2_SWAP_POINT: accounting.formatNumber(v.SWAP_POINT,2,".",","),
-            // LEG_2_SWAP_RATE: accounting.formatNumber(v.SWAP_RATE,2,".",","),
-            // LEG_2_NATIONAL_AMOUNT: accounting.formatNumber(v.NATIONAL_AMOUNT2,2,".",","),
-            // BIAYA_SWAP: accounting.formatNumber(v.BIAYA_SWAP,2,".",","),
-            // BUNGA_DEPOSITO_UNTUK_HEDGING: accounting.formatNumber(v.BUNGA_DEPOSITE_HEDGING,2,".",","),
-            // NET_BIAYA_SWAP: accounting.formatNumber(v.NET_BIAYA_SWAP,2,".",","),
-            // SUMBER: v.SUMBER_DANA,
-            // PERUNTUKAN_DANA: v.PERUNTUKAN_DANA,
-            // STATUS: v.STATUS_DERIVATIF
+    //         // NOTIONAL_AMOUNT: accounting.formatNumber(v.NATIONAL_AMOUNT,2,".",","),
+    //         // LEG_1_FIXING_RATE: accounting.formatNumber(v.FIXING_RATE,2,".",","),
+    //         // LEG_1_NATIONAL_AMOUNT: accounting.formatNumber(v.NATIONAL_AMOUNT1,2,".",","),
+    //         // LEG_2_SWAP_POINT: accounting.formatNumber(v.SWAP_POINT,2,".",","),
+    //         // LEG_2_SWAP_RATE: accounting.formatNumber(v.SWAP_RATE,2,".",","),
+    //         // LEG_2_NATIONAL_AMOUNT: accounting.formatNumber(v.NATIONAL_AMOUNT2,2,".",","),
+    //         // BIAYA_SWAP: accounting.formatNumber(v.BIAYA_SWAP,2,".",","),
+    //         // BUNGA_DEPOSITO_UNTUK_HEDGING: accounting.formatNumber(v.BUNGA_DEPOSITE_HEDGING,2,".",","),
+    //         // NET_BIAYA_SWAP: accounting.formatNumber(v.NET_BIAYA_SWAP,2,".",","),
+    //         // SUMBER: v.SUMBER_DANA,
+    //         // PERUNTUKAN_DANA: v.PERUNTUKAN_DANA,
+    //         // STATUS: v.STATUS_DERIVATIF
         }
         externalDataRetrievedFromServer.push(helloooow)
     });
+    console.log("hasil push hellow",externalDataRetrievedFromServer)
 
     function buildTableBody(data, columns) {
         var body = [];
@@ -462,19 +437,19 @@ function generatePDF() {
             dataRow.push(row["TOTAL_PEMBAYARAN_PLN_IDR"]);
             dataRow.push(row["DISCOUNT_FACTOR_IDR"]);
             dataRow.push(row["PV_IDR"]);
-            // dataRow.push(row["TENOR"]);
-            // dataRow.push({text:row["NOTIONAL_AMOUNT"],alignment: "right"});
-            // dataRow.push({text:row["LEG_1_FIXING_RATE"],alignment: "right"});
-            // dataRow.push({text:row["LEG_1_NATIONAL_AMOUNT"],alignment: "right"});
-            // dataRow.push({text:row["LEG_2_SWAP_POINT"],alignment: "right"});
-            // dataRow.push({text:row["LEG_2_SWAP_RATE"],alignment: "right"});
-            // dataRow.push({text:row["LEG_2_NATIONAL_AMOUNT"],alignment: "right"});
-            // dataRow.push({text:row["BIAYA_SWAP"],alignment: "right"});
-            // dataRow.push({text:row["BUNGA_DEPOSITO_UNTUK_HEDGING"],alignment: "right"});
-            // dataRow.push({text:row["NET_BIAYA_SWAP"],alignment: "right"});
-            // dataRow.push(row["SUMBER"]);
-            // dataRow.push(row["PERUNTUKAN_DANA"]);
-            // dataRow.push(row["STATUS"]);
+    //         // dataRow.push(row["TENOR"]);
+    //         // dataRow.push({text:row["NOTIONAL_AMOUNT"],alignment: "right"});
+    //         // dataRow.push({text:row["LEG_1_FIXING_RATE"],alignment: "right"});
+    //         // dataRow.push({text:row["LEG_1_NATIONAL_AMOUNT"],alignment: "right"});
+    //         // dataRow.push({text:row["LEG_2_SWAP_POINT"],alignment: "right"});
+    //         // dataRow.push({text:row["LEG_2_SWAP_RATE"],alignment: "right"});
+    //         // dataRow.push({text:row["LEG_2_NATIONAL_AMOUNT"],alignment: "right"});
+    //         // dataRow.push({text:row["BIAYA_SWAP"],alignment: "right"});
+    //         // dataRow.push({text:row["BUNGA_DEPOSITO_UNTUK_HEDGING"],alignment: "right"});
+    //         // dataRow.push({text:row["NET_BIAYA_SWAP"],alignment: "right"});
+    //         // dataRow.push(row["SUMBER"]);
+    //         // dataRow.push(row["PERUNTUKAN_DANA"]);
+    //         // dataRow.push(row["STATUS"]);
             body.push(dataRow);
         });
 
@@ -553,7 +528,7 @@ function upload_server_xls() {
     $.ajax({
         crossOrigin: true,
         type: "POST",
-        url: baseUrl + "api_operator/derivatif/upload_xls",
+        url: baseUrl + "api_operator/derivatif/upload_xls_ccs",
         data: formData,
         enctype: 'multipart/form-data',
         cache: false,
@@ -570,7 +545,8 @@ function upload_server_xls() {
             } else {
                 var obj = res.return[0];
                 alert("Terdapat kesalahan pada data. Download excel?");
-                window.location = "../api_operator/tripartite/download/"+obj["ID_UPLOAD"];
+                window.location = "../api_operator/derivatif/download/"+obj["ID_UPLOAD"];
+                search("load");
             }
         },
         error: function () {
@@ -711,9 +687,10 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pTenor) {
             // }
         ],
         "ajax": {
+
             "url": baseUrl + "api_operator/derivatif/get_derivatif_ccs_pss",
             "type": "GET",
-            "dataType": "json",
+            "dataType": "JSON",
             "data": {
                 pTglAwal: pTglAwal,
                 pTglAkhir: pTglAkhir,
@@ -722,7 +699,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pTenor) {
             },
             "dataSrc": function (res) {
                 hideLoadingCss("")
-                console.log("get log : ", res);
+                console.log("get log dataSrc : ", res);
                 return res.data;
             }
         },
@@ -765,5 +742,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pTenor) {
         console.log("VALUE SEARCH" ,value); // <-- the value
         tempTableSearch = value;
     });
+    console.log("tblDCcs", table_derivatif_ccs)
 
 }
