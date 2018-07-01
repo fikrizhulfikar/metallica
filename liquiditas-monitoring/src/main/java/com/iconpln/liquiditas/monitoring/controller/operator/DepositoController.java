@@ -80,7 +80,8 @@ public class DepositoController {
 
         List<Map<String, Object>> list = new ArrayList<>();
         try {
-            list = valasService.getListDeposito(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pKeterangan, pSearch);
+            String sortBy = parseColumn(sortIndex);
+            list = valasService.getListDeposito(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pKeterangan, sortBy, sortDir, pSearch);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -292,4 +293,40 @@ public class DepositoController {
         }
         return null;
     }
+
+    public String parseColumn(int index) {
+        switch (index) {
+            case 1:
+                return "BANK_CONTERPARTY";
+            case 2:
+                return "CURRENCY";
+            case 3:
+                return "NO_ACCOUNT_BILYET";
+            case 4:
+                return "NOMINAL";
+            case 5:
+                return "INTEREST";
+            case 6:
+                return "TGL_PENEMPATAN";
+            case 7:
+                return "TGL_JATUH_TEMPO";
+            case 8:
+                return "TENOR";
+            case 9:
+                return "JUMLAH_HARI";
+            case 10:
+                return "BUNGA";
+            case 11:
+                return "POKOK_BUNGA";
+            case 12:
+                return "COUNTDOWN";
+            case 13:
+                return "KETERANGAN";
+            case 14:
+                return "STATUS";
+            default:
+                return "BANK_CONTERPARTY";
+        }
+    }
+
 }
