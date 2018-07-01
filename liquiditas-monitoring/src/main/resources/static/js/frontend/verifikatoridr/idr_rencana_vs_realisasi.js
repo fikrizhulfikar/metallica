@@ -18,11 +18,11 @@ function initDataTable() {
             var d = new Date(res.tglcetak);
             var datestring = d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear();
             $("#tglcetak").html(datestring);
+            $('#table-main-rencana tbody').empty();
+            $('#table-main-realisasi tbody').empty();
             if (res.return.length <= 0) {
                 noDataView();
             } else {
-                $('#table-main-rencana tbody').empty();
-                $('#table-main-realisasi tbody').empty();
                 $.each(res.return, function (key, val) {
                     var jatuh_tempo = new Date(res.tglcetak);
                     var jatuh_tempo_date = jatuh_tempo.getDate()  + "/" + (jatuh_tempo.getMonth()+1) + "/" + jatuh_tempo.getFullYear();
@@ -65,15 +65,15 @@ function initDataTable() {
 
 function noDataView() {
     hideLoadingCss("");
-    $('#table-main tbody').empty();
+    $('#table-main-realisasi tbody').empty();
     var html = "<tr>" +
         "<td colspan='8' align='center'> No Data </td>" +
         "</tr>";
-    $('#table-main  tbody').append(html);
+    $('#table-main-realisasi  tbody').append(html);
 
-    $('#table-saldo-akhir tbody').empty();
+    $('#table-main-rencana tbody').empty();
     var html = "<tr>" +
         "<td colspan='8' align='center'> No Data </td>" +
         "</tr>";
-    $('#table-saldo-akhir tbody').append(html);
+    $('#table-main-rencana tbody').append(html);
 }

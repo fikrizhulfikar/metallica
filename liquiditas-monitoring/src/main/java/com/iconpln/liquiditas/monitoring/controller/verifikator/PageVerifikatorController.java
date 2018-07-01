@@ -96,4 +96,9 @@ public class PageVerifikatorController {
         return "verifikatoridr/rencana_vs_realisasi";
     }
 
+    @RequestMapping("/page_idrverifikator/cash_flow")
+    public String cashFlow(){
+        return "verifikatoridr/cash_flow";
+    }
+
 }

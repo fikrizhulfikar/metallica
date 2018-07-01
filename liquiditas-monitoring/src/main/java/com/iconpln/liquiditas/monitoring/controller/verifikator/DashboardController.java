@@ -1,11 +1,16 @@
 package com.iconpln.liquiditas.monitoring.controller.verifikator;
 
+import com.iconpln.liquiditas.core.domain.CashFlow;
 import com.iconpln.liquiditas.core.service.DashboardService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
+import javax.print.attribute.standard.Media;
 import net.sf.jxls.transformer.XLSTransformer;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,7 +45,6 @@ public class DashboardController {
         }
 
     }
-
 
     @RequestMapping(value = "/get_idr_imprest", method = RequestMethod.GET)
     public Map getIdrImprst() {
@@ -464,6 +468,29 @@ public class DashboardController {
             return null;
         }
 
+    }
+
+    @RequestMapping(value = "/idr_cash_flow", method = RequestMethod.GET)
+    public Map getCashFlowIdr() {
+        try {
+            return dashboardService.getCashFlow();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @PostMapping(value = "/ins_cash_flow_idr", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Map insCashFlowIdr(@RequestBody List<CashFlow> cashFlows) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            cashFlows.stream().forEach(cashFlow -> dashboardService.insCashFlow(cashFlow));
+            map.put("result", "Data berhasil disimpan.");
+        } catch (Exception e) {
+            map.put("result", "Data gagal disimpan.");
+            e.printStackTrace();
+        }
+        return map;
     }
 
 }

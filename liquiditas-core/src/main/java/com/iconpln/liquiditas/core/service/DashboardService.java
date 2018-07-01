@@ -1,5 +1,6 @@
 package com.iconpln.liquiditas.core.service;
 
+import com.iconpln.liquiditas.core.domain.CashFlow;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import java.util.Date;
 import oracle.jdbc.OracleTypes;
@@ -303,4 +304,28 @@ public class DashboardService {
         AppUtils.getLogger(this).info("data getRencanaVsRealisasi : {}", out);
         return out;
     }
+
+    public Map<String, Object> getCashFlow() {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("package_cashflow")
+                .withFunctionName("get_rekap_cashflow");
+        Map<String, Object> out = simpleJdbcCall.execute();
+        out.put("tglcetak", new Date());
+        AppUtils.getLogger(this).info("data cashFlow : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> insCashFlow(CashFlow cashFlow) {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("package_cashflow")
+                .withProcedureName("ins_cashflow");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("in_nourut", cashFlow.getNoUrut(), OracleTypes.INTEGER)
+                .addValue("in_tanggal", cashFlow.getTanggal(), OracleTypes.VARCHAR)
+                .addValue("in_nilai", cashFlow.getNilai(), OracleTypes.NUMBER);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data insCashFlow : {}", out);
+        return out;
+    }
+
 }
