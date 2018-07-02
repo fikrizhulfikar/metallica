@@ -261,12 +261,11 @@ public class PembayaranController {
 
     @RequestMapping(value = "/multi_upd_status", method = RequestMethod.POST)
     public Map<String, Object> multiUpdStatus(
-            @RequestParam(value = "pIdsValas", defaultValue = "") String pIdsValas,
             @RequestParam(value = "pData", defaultValue = "") String pData,
-            @RequestParam(value = "pStatusInvoice", defaultValue = "") String pStatusInvoice,
             @RequestParam(value = "pDeskripsi", defaultValue = "") String pDeskripsi
     ) {
         Map<String, Object> out = null;
+        AppUtils.getLogger(this).debug("pdata : {} ", pData);
         String noBracket = pData.replaceAll("\\[", "").replaceAll("\\]","");
         AppUtils.getLogger(this).debug("JSONValas : {} ", pData.replaceAll("\\[", "").replaceAll("\\]",""));
         String[] listData = noBracket.split(",");
@@ -328,7 +327,6 @@ public class PembayaranController {
                     break;
                 }
             }
-
         }
         return out;
     }
