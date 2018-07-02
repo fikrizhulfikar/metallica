@@ -63,7 +63,7 @@ public class DatabaseService {
     public Map<String, FirebaseNotification> findNotificationByTopic(String topic, String token) {
         Preconditions.checkArgument(topic != null, "Topic must be not null.");
         Preconditions.checkArgument(token != null, "Token must be not null.");
-        String response = restTemplate.getForObject("/lmetalica/notifications.json?orderBy=\"topic\"&equalTo=\""+topic+"\"&access_token=" + token, String.class);
+        String response = restTemplate.getForObject(databaseReference.getPath() + ".json?orderBy=\"topic\"&equalTo=\""+topic+"\"&access_token=" + token, String.class);
         JSONObject object = new JSONObject(response);
         Iterator<String> keys = object.keys();
         Map<String, FirebaseNotification> map = new HashMap<>();

@@ -33,6 +33,9 @@ public class FcmConfig {
     @Value("${fcm.database.url}")
     private String databaseUrl;
 
+    @Value("${fcm.database.reference}")
+    private String datebaseReference;
+
     @PostConstruct
     @Bean("googleCredentials")
     public GoogleCredentials googleCredentials() throws IOException {
@@ -56,7 +59,7 @@ public class FcmConfig {
     @Bean("notificationReference")
     public DatabaseReference notificationReference() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = database.getReference("/lmetalica/notifications");
+        DatabaseReference databaseReference = database.getReference(datebaseReference);
         return databaseReference;
     }
 
