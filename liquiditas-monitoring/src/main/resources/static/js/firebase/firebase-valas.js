@@ -54,7 +54,6 @@ var config = {
 firebase.initializeApp(config);
 
 const messaging = firebase.messaging();
-messaging.usePublicVapidKey('BCoh3NsznMYaC61OFdHRAaWwf0I6VJ0KEcqUzDTmkqthIRaQ294gKDNlZfAzV6rqplycVa6cR-V99yqJMr7E41w');
 
 const tokenDivId = 'token_div';
 const permissionDivId = 'permission_div';
