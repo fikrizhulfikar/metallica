@@ -523,12 +523,12 @@ function upload_server_xls() {
     $("#file-xls").val('');
 
 
-    formData.append('pIdDerivatif', $("#temp-xls").val());
+    formData.append('pIdDerivatif', "5");
     console.log(formData);
     $.ajax({
         crossOrigin: true,
         type: "POST",
-        url: baseUrl + "api_operator/derivatif/upload_xls_ccs",
+        url: baseUrl + "api_operator/derivatif/upload_xls",
         data: formData,
         enctype: 'multipart/form-data',
         cache: false,
@@ -537,7 +537,6 @@ function upload_server_xls() {
         processData: false,
         success: function (res) {
             hideLoadingCss("");
-            console.log("res",res);
             if (res.V_RETURN == 0) {
                 alert("sukses");
 //                location.reload();
@@ -545,7 +544,7 @@ function upload_server_xls() {
             } else {
                 var obj = res.return[0];
                 alert("Terdapat kesalahan pada data. Download excel?");
-                window.location = "../api_operator/derivatif/download/"+obj["ID_UPLOAD"];
+                window.location = "../api_operator/derivatif/download/5/"+obj["ID_UPLOAD"];
                 search("load");
             }
         },

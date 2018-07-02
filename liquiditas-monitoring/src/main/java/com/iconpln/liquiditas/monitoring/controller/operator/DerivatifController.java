@@ -552,8 +552,14 @@ public class DerivatifController {
                          @PathVariable String idUpload,
                          @PathVariable String idDerivatif) throws SQLException {
         AppUtils.getLogger(this).info("DOWNLOAD {} ID UPLOAD : {}", "download " + idDerivatif, idUpload);
+        if(idDerivatif.equals("5")){
+            return generateReport(response, valasService.getErrorData(idUpload, "5"), "download", idDerivatif);
+        }
+        else {
+            return generateReport(response, valasService.getErrorData(idUpload, "3"), "download", idDerivatif);
+        }
 
-        return generateReport(response, valasService.getErrorData(idUpload, "3"), "download", idDerivatif);
+
     }
 
     @RequestMapping(value = "/template/{idDerivatif}", method = RequestMethod.GET)
@@ -580,6 +586,9 @@ public class DerivatifController {
             } else if (idDerivatif.equals("2")) {
                 response.setHeader("Content-Disposition", "attachment; filename=\"" + tipe + "_derivatif_swap.xls\"");
                 resource = "classpath:/templates/report/" + tipe + "_derivatif_swap.xls";
+            }else if (idDerivatif.equals("5")) {
+                response.setHeader("Content-Disposition", "attachment; filename=\"" + tipe + "_derivatif_ccs.xls\"");
+                resource = "classpath:/templates/report/" + tipe + "_derivatif_ccs.xls";
             } else {
                 response.setHeader("Content-Disposition", "attachment; filename=\"" + tipe + "_derivatif_cso.xls\"");
                 resource = "classpath:/templates/report/" + tipe + "_derivatif_cso.xls";
