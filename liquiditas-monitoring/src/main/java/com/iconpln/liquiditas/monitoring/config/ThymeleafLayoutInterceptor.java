@@ -30,20 +30,16 @@ public class ThymeleafLayoutInterceptor extends HandlerInterceptorAdapter {
 
         if (request.getRequestURI().startsWith("/page_operator")){
             modelAndView.setViewName(DEFAULT_LAYOUT_OPERATOR);
-        }
-        else if (request.getRequestURI().startsWith("/page_master")){
+        } else if (request.getRequestURI().startsWith("/page_master")){
             modelAndView.setViewName(DEFAULT_LAYOUT_OPERATOR);
-        }
-        else if (request.getRequestURI().startsWith("/page_verifikator")){
-            System.out.println("asu asu asu asu cok  ");
+        } else if (request.getRequestURI().startsWith("/page_verifikator")){
             modelAndView.setViewName(DEFAULT_LAYOUT_VERIFIKATOR);
-        }
-        else if (request.getRequestURI().startsWith("/page_idrverifikator")){
-            System.out.println("asu asu asu cok");
+        } else if (request.getRequestURI().startsWith("/page_idrverifikator")){
             modelAndView.setViewName(DEFAULT_LAYOUT_VERIFIKATOR_IDR);
+        } else if (request.getRequestURI().startsWith("/login")){}
+        else{
+
         }
-        else if (request.getRequestURI().startsWith("/login")){}
-        else{}
         modelAndView.addObject(DEFAULT_VIEW_ATTRIBUTE_NAME, originalViewName);
     }
 }
