@@ -672,7 +672,6 @@ function upload_server_xls() {
     formData.append('file', $('input[type=file]#file-xls')[0].files[0]);
     fileSize = $('input[type=file]#file-xls')[0].files[0].size / 1000;
     $("#file-xls").val('');
-    console.log("idderivatif", $("#temp-xls").val());
 
     formData.append('pIdDerivatif', $("#temp-xls").val());
     console.log(formData);

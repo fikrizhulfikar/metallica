@@ -950,11 +950,107 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
             },{
                 "aTargets": [27],
                 "mRender": function (data, type, full) {
-                   var ret_value =
-                        '<input class="cb" type="checkbox" value="'+full.ID_TRIPARTITE+'" id="cbcheckbox">';
+                    var ret_value;
+                    console.log(newRoleUser[0], "user");
+                    console.log("full", full);
+                    if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
+                        return "-"
+                    } else {
+                        if (full.STATUS_TRACKING == "INPUT DATA") {
+
+                            ret_value =
+                                '<div class="btn-group">' +
+                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified User" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +2+ '\')"><i class="fa fa-arrows-alt"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                '</div>'
+                        }
+                        else if (full.STATUS_TRACKING == "VERIFIED BY USER") {
+
+                            ret_value =
+                                '<div class="btn-group">' +
+                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
+                            if(newRoleUser[0] == "ROLE_DM_ENERGI" || newRoleUser[0] == "ROLE_DM_KEUKON_APLN" || newRoleUser[0] == "ROLE_DM_PENGUSAHAAN" || newRoleUser[0] == "ROLE_ADMIN"){
+                                ret_value = ret_value +'<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DM" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +3+ '\')"><i class="fa fa-arrows-alt"></i></button>';
+                            }
+                            ret_value = ret_value +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                '</div>'
+                        }
+                        else if (full.STATUS_TRACKING == "VERIFIED BY DM" && full.UPDATE_BY == "dmkeukonap" || full.UPDATE_BY == "dmkeukonslap"){
+                            ret_value =
+                                '<div class="btn-group">' +
+                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
+                            if(newRoleUser[0] == "ROLE_MS_KEUKON" || newRoleUser[0] == "ROLE_ADMIN"){
+                                ret_value = ret_value +
+                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MS Keukon" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +8+ '\')"><i class="fa fa-arrows-alt"></i></button>';
+                            }
+                            ret_value = ret_value +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                '</div>'
+                        }
+                        else if (full.UPDATE_BY == "dmkeukonslap" && full.STATUS_TRACKING == "VERIFIED BY DM" || full.UPDATE_BY !== "dmkeukonap" && full.STATUS_TRACKING == "VERIFIED BY DM" || full.STATUS_TRACKING == "VERIFIED BY MS KEUKON"){
+
+                            ret_value =
+                                '<div class="btn-group">' +
+                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
+                            if(newRoleUser[0] == "ROLE_DM_PEMBELANJAAN" || newRoleUser[0] == "ROLE_ADMIN"){
+                                ret_value = ret_value +
+                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DM Pembelanjaan" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +4+ '\')"><i class="fa fa-arrows-alt"></i></button>';
+                            }
+                            ret_value = ret_value +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                '</div>'
+                        }
+                        else if (full.STATUS_TRACKING == "VERIFIED BY DM PEMBELANJAAN"){
+
+                            ret_value =
+                                '<div class="btn-group">' +
+                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
+                            if(newRoleUser[0] == "ROLE_MS_PEMBELANJAAN" || newRoleUser[0] == "ROLE_ADMIN"){
+                                ret_value = ret_value +
+                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Approve MS" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +5+ '\')"><i class="fa fa-arrows-alt"></i></button>';
+                            }
+                            ret_value = ret_value +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                '</div>'
+                        }
+                        else if (full.STATUS_TRACKING == "APPROVE BY MS"){
+
+                            ret_value =
+                                '<div class="btn-group">' +
+                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
+                            var role = newRoleUser[0];
+                            if(role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN"){
+                                ret_value = ret_value +
+                                    '<button style="width: 15px !important;" id="option-lunas" class="btn-lunas btn-sm btn-warning" title="Lunas" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +7+ '\')"><i class="fa fa-arrows-alt"></i></button>';
+                            }
+                            ret_value = ret_value +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                '</div>'
+                        }
+                        else {
+                            ret_value =
+                                '<div class="btn-group">' +
+                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
+                                '</div>'
+                        }
+                    }
                     return ret_value;
                 }
-
             }
         ],
         "ajax": {
@@ -994,7 +1090,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
                         $("#option-input").show();
                     } else {
                         $("#option-siap").show();
-
                     }
                 }
             }
@@ -1008,7 +1103,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
     });
 
     $('.dataTables_filter').each(function () {
-        $(this).append('<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="multiUpdate()">Verified</button>');
+        $(this).append('<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_data()">Verified</button><button class="btn btn-verified btn-danger btn-sm" id="btn-hapus" style="margin-left: 10px" type="button" onclick="delete_datas()">Hapus</button>');
     });
     /*$("#table-trepartite").on('change',"input[type='checkbox']",function(e){
         //your code
@@ -1024,7 +1119,39 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
 
 }
 
-function multiUpdate(statusInvoice) {
+function update_data() {
+    var id= $("#table-trepartite input[type=checkbox]:checked").map(function() {
+        return $(this).data("value");
+    }).get();
+    var obj = new Object();
+    obj = id;
+    console.log("obj", obj);
+    console.log("id",id.toString());
+    $.ajax({
+        url: baseUrl + "api_operator/pembayaran/multi_upd_status",
+        dataType: 'JSON',
+        type: "POST",
+        data: {
+            pData: JSON.stringify(obj),
+            // pStatusInvoice: statusInvoice,
+        },
+        success: function (res) {
+            hideLoadingCss("")
+            console.log("data upd_status :", res);
+            if (res.return == 1) {
+                alert(res.OUT_MSG);
+                location.reload();
+            } else {
+                alert(res.OUT_MSG);
+            }
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
+function delete_datas() {
     var id= $("#table-trepartite input[type=checkbox]:checked").map(function() {
         return $(this).attr("value");
     }).get();
@@ -1034,8 +1161,7 @@ function multiUpdate(statusInvoice) {
         dataType: 'JSON',
         type: "POST",
         data: {
-            pIdsValas: id.toString(),
-            pStatusInvoice: statusInvoice,
+            pData: id.toString()
         },
         success: function (res) {
             hideLoadingCss("")

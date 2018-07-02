@@ -816,10 +816,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                                         '</div>'
                                 }
                             }
-
-
-
-
                         return ret_value;
                     }
 
@@ -1000,7 +996,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
     });
 
     $('.dataTables_filter').each(function () {
-        $(this).append('<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="multiUpdate()"><i class="fa fa-arrows-alt"></i></button>' +
+        $(this).append('<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_data()"><i class="fa fa-arrows-alt"></i></button>' +
             '<button class="btn btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="multiDelete()"><i class="fa fa-close"></i></button>');
     });
 
@@ -1049,7 +1045,7 @@ function upd_status_tracking(idValas , pStatusinvoice){
     });
 }
 
-function multiUpdate() {
+function update_data() {
     var id= $("#table-rekapitulasi input[type=checkbox]:checked").map(function() {
         return $(this).data("value");
     }).get();
