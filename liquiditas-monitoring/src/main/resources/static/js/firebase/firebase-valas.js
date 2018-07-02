@@ -43,17 +43,18 @@ $.ajax({
 
 // Initialize Firebase
 var config = {
-    apiKey: "AIzaSyA9kqEMrDaFznAi-tWRxaxZHXZwOkd6HjY",
-    authDomain: "fir-lmetalica.firebaseapp.com",
-    databaseURL: "https://fir-lmetalica.firebaseio.com",
-    projectId: "fir-lmetalica",
-    storageBucket: "",
-    messagingSenderId: "190551123521"
+    apiKey: "AIzaSyC38znzKlQ8Jj0KH74cGnv16dF8l6LHBgs",
+    authDomain: "lmetallica-99c6c.firebaseapp.com",
+    databaseURL: "https://lmetallica-99c6c.firebaseio.com",
+    projectId: "lmetallica-99c6c",
+    storageBucket: "lmetallica-99c6c.appspot.com",
+    messagingSenderId: "483040143609"
 };
 
 firebase.initializeApp(config);
 
 const messaging = firebase.messaging();
+messaging.usePublicVapidKey('BCoh3NsznMYaC61OFdHRAaWwf0I6VJ0KEcqUzDTmkqthIRaQ294gKDNlZfAzV6rqplycVa6cR-V99yqJMr7E41w');
 
 const tokenDivId = 'token_div';
 const permissionDivId = 'permission_div';
