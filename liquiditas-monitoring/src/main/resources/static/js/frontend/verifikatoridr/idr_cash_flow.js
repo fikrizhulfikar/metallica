@@ -2,9 +2,6 @@
  * Created by israjhaliri on 1/22/18.
  */
 
-var norut9, norut10, norut11, norut12, norut13, norut15, norut16, norut17 ;
-
-
 $(document).ready(function () {
     initDataTable();
     setInterval(function () {
@@ -42,35 +39,35 @@ function initDataTable() {
                         no = "";
                     }
                     var canEdit = isCanEdit(val.NOURUT);
+                    var warnaBgTable = val.WARNA;
                     var html = "";
-
                     if (canEdit == -1) {
                         html = '<tr>' +
-                            '<td style="color: black" align="center">' + no + '</td>' +
-                            '<td style="color: black">'+'<a>&nbsp;</a>'+ val.KETERANGAN + '</td>' +
-                            '<td></td>' +
-                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL1, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL2, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL3, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL4, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL5, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL6, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL7, 2, ".", ",") + '</td>' +
-                            '<td style="background-color:#67a2d8;color: white" align="right">' + accounting.formatNumber(val.TOTAL, 2, ".", ",") + '</td>'
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="center">' + no + '</td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'">'+ spasi(val.SPASI)+ val.KETERANGAN + '</td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right"></td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL1, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL2, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL3, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL4, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL5, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL6, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL7, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TOTAL, 2, ".", ",") + '</td>'
                             '</tr>';
                     } else {
                         html = '<tr id="'+val.NOURUT+'">' +
-                            '<td style="color: black" align="center">' + no + '</td>' +
-                            '<td style="color: black">' + val.KETERANGAN + '</td>' +
-                            '<td style="text-align:center"><img src="/static/images/add.svg" height="12.5" width="12.5" onclick="showModal(\''+val.NOURUT+'\')"/></td>' +
-                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL1, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL2, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL3, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL4, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL5, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL6, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL7, 2, ".", ",") + '</td>' +
-                            '<td style="background-color:#67a2d8;color: white" align="right">' + accounting.formatNumber(val.TOTAL, 2, ".", ",") + '</td>'
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="center">' + no + '</td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'">' + spasi(val.SPASI)+ val.KETERANGAN + '</td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="center"><img src="/static/images/add.svg" height="12.5" width="12.5" onclick="showModal(\''+val.NOURUT+'\')"/></td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL1, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL2, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL3, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL4, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL5, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL6, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL7, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TOTAL, 2, ".", ",") + '</td>'
                             '</tr>';
                     }
                     $('#table-main tbody').append(html);
@@ -149,6 +146,19 @@ function dateToString(d) {
     return d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear();
 }
 
+function spasi(sp) {
+    if (sp === 4 || sp === "4"){
+      return '<a>&nbsp;&nbsp;&nbsp;&nbsp;</a>'
+    }if (sp === 8 || sp === "8"){
+      return '<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>'
+    }if (sp === 12 || sp === "12"){
+      return '<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>'
+    }if (sp === 16 || sp === "16"){
+      return '<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>'
+    }
+}
+
+
 function simpan() {
     var no_urut = Number.parseInt($("#modal-no-urut").val());
     var lbl_tgl1 = $("#id-modal-tgl1").html();
@@ -211,7 +221,6 @@ function simpan() {
         data: JSON.stringify(json),
         success: function (d) {
             location.reload();
-
         },
         error: function (e) {
             alert(e);
