@@ -1382,6 +1382,31 @@ public class ValasService {
         return out;
     }
 
+    public Map<String, Object> getListSubsidi() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_dashboard_idr")
+                .withFunctionName("get_list_subsidi");
+
+        Map<String, Object> out = simpleJdbcCall.execute();
+
+        AppUtils.getLogger(this).info("data getListSubsidi : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> insSaldoPenerimaanSubsidi(String pKodeBank, String pJumlah) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_dashboard_idr")
+                .withFunctionName("ins_saldo_subsidi");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_kode_bank", pKodeBank, Types.VARCHAR)
+                .addValue("p_jumlah", pJumlah, Types.VARCHAR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data insSaldoSubsidi : {}", out);
+        return out;
+    }
 
     public Map<String, Object> uploadFileRekap(String pIdValas, String pJenisFile, BigDecimal pFileSize, String pFileName, String pUpdateBy) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())

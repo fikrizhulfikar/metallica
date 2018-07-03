@@ -89,25 +89,25 @@ public class PlacementController {
         }
     }
     //penerimaan subsidi
-   /* @RequestMapping(value = "/get_penerimaan_subsidi", method = RequestMethod.GET)
+    @RequestMapping(value = "/get_penerimaan_subsidi", method = RequestMethod.GET)
     public Map getListPenerimaanSubsidi(
             @RequestParam(value = "pJenis", defaultValue = "") String pJenis
     ) {
         try {
-            return valasService.getListKmkSubsidi(pJenis);
+            return valasService.getListSubsidi();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-    }*/
+    }
 
     @RequestMapping(value = "/ins_saldo_penerimaan_subsidi", method = RequestMethod.POST)
-    public Map insSaldoPenerimaanSubsidi(
+    public Map insSaldoSubsidi(
             @RequestParam(value = "pKodeBank", defaultValue = "") String pKodeBank,
             @RequestParam(value = "pJumlah", defaultValue = "") String pJumlah
     ) {
         try {
-            return valasService.insSaldoKmk(pKodeBank, pJumlah);
+            return valasService.insSaldoPenerimaanSubsidi(pKodeBank, pJumlah);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
