@@ -842,156 +842,161 @@ public class MasterService {
             Row row1 = sheet.getRow(1);
             List<String> list = new ArrayList<>();
             int x =0;
+            System.out.println("ROWNYA: "+ sheet.getPhysicalNumberOfRows());
             while (rowIterator.hasNext()) {
+
                 row = (HSSFRow) rowIterator.next();
                 Row rrow = sheet.getRow(row.getRowNum());
                 int totalCell = sheet.getRow(0).getLastCellNum();
-                AppUtils.getLogger(this).info("totalCell: {}", totalCell);
-                for (int cellNum = 0; cellNum < totalCell; cellNum++){
+                if(!isRowEmpty(rrow, totalCell)){
+                    for (int cellNum = 0; cellNum < totalCell; cellNum++){
+//                    AppUtils.getLogger(this).info("ISICELL: {}", rrow.getCell(cellNum).getCellType());
+//                    AppUtils.getLogger(this).info("LENGTH: {}", rrow.getCell(cellNum).toString().length());
 
-                    if(rrow.getCell(cellNum) == null){
-                        list.add("-");
-                    }
-                    else if(rrow.getCell(cellNum).getCellType() == Cell.CELL_TYPE_NUMERIC){
-                        if(HSSFDateUtil.isCellDateFormatted(rrow.getCell(cellNum))){
-                            DateFormat format = new SimpleDateFormat("dd-MMMM-yyyy", Locale.ENGLISH);
-                            AppUtils.getLogger(this).info("datatanggal {}: {}", rrow.getCell(cellNum).toString());
-                            list.add(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(format.parse(rrow.getCell(cellNum).toString())));
-
+                        if(rrow.getCell(cellNum) == null){
+                            list.add("-");
                         }
-                        else {
-                            if(jenisFile.equals("9")){
-                                rrow.getCell(cellNum).setCellType(Cell.CELL_TYPE_STRING);
+                        else if(rrow.getCell(cellNum).getCellType() == Cell.CELL_TYPE_NUMERIC){
+                            if(HSSFDateUtil.isCellDateFormatted(rrow.getCell(cellNum))){
+                                DateFormat format = new SimpleDateFormat("dd-MMMM-yyyy", Locale.ENGLISH);
+                                AppUtils.getLogger(this).info("datatanggal {}: {}", rrow.getCell(cellNum).toString());
+                                list.add(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(format.parse(rrow.getCell(cellNum).toString())));
+
                             }
+                            else {
+                                if(jenisFile.equals("9")){
+                                    rrow.getCell(cellNum).setCellType(Cell.CELL_TYPE_STRING);
+                                }
+                                list.add(rrow.getCell(cellNum).toString());
+                                AppUtils.getLogger(this).info("datanumeric {}: {}", rrow.getCell(cellNum).toString(), row.getCell(cellNum).getCellType());
+                            }
+                        }
+                        else{
                             list.add(rrow.getCell(cellNum).toString());
-                            AppUtils.getLogger(this).info("datanumeric {}: {}", rrow.getCell(cellNum).toString(), row.getCell(cellNum).getCellType());
+                            AppUtils.getLogger(this).info("datastring {}: {}", rrow.getCell(cellNum).toString(), row.getCell(cellNum).getCellType());
                         }
                     }
-                    else{
-                        list.add(rrow.getCell(cellNum).toString());
-                        AppUtils.getLogger(this).info("datastring {}: {}", rrow.getCell(cellNum).toString(), row.getCell(cellNum).getCellType());
-                    }
-                }
-                AppUtils.getLogger(this).debug("nilaiX : {}", x);
-                if (x > 0 /*||
+                    AppUtils.getLogger(this).debug("nilaiX : {} isilist {}", x, list.toString());
+                    if (x > 0 /*||
                         !list.get(0).toLowerCase().equals("tanggal deal") && !list.get(0).isEmpty()*/){
-                    SqlParameterSource inParent;
-                    SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate()).withCatalogName("pkg_master");
-                    if(jenisFile.equals("1")){
-                        simpleJdbcCall.withFunctionName("ins_curr_to_temp");
-                        AppUtils.getLogger(this).debug("jenisFile : {}",jenisFile+" ins currency" );
-                        inParent = new MapSqlParameterSource()
-                                .addValue("p_nomor", x)
-                                .addValue("p_id_upload", idUpload)
-                                .addValue("p_currency", list.get(0))
-                                .addValue("p_flag_tampil", list.get(1))
-                                .addValue("out_message", OracleTypes.VARCHAR);
-                    }else if(jenisFile.equals("2")){
-                        simpleJdbcCall.withFunctionName("ins_bank_to_temp");
-                        AppUtils.getLogger(this).debug("jenisFile : {}",jenisFile+" ins bank" );
-                        inParent = new MapSqlParameterSource()
-                                .addValue("p_nomor", x)
-                                .addValue("p_id_upload", idUpload)
-                                .addValue("p_kode_bank", list.get(0))
-                                .addValue("p_nama_bank", list.get(1))
-                                .addValue("p_jenis", list.get(2))
-                                .addValue("p_flag_tampil", list.get(3))
-                                .addValue("out_message", OracleTypes.VARCHAR);
-                    }else if(jenisFile.equals("3")){
-                        simpleJdbcCall.withFunctionName("ins_vendor_to_temp");
-                        AppUtils.getLogger(this).debug("jenisFile : {}",jenisFile+" ins vendor" );
-                        inParent = new MapSqlParameterSource()
-                                .addValue("p_nomor", x)
-                                .addValue("p_id_upload", idUpload)
-                                .addValue("p_id_vendor", list.get(0))
-                                .addValue("p_nama_vendor", list.get(1))
-                                .addValue("p_jenis_pembayaran", list.get(2))
-                                .addValue("p_flag_tampil", list.get(3))
-                                .addValue("out_message", OracleTypes.VARCHAR);
-                    }else if(jenisFile.equals("4")){
-                        simpleJdbcCall.withFunctionName("ins_unit_to_temp");
-                        AppUtils.getLogger(this).debug("jenisFile : {}",jenisFile+" ins unit" );
-                        inParent = new MapSqlParameterSource()
-                                .addValue("p_nomor", x)
-                                .addValue("p_id_upload", idUpload)
-                                .addValue("p_id_unit", list.get(0))
-                                .addValue("p_nama_unit", list.get(1))
-                                .addValue("p_jenis_pembayaran", list.get(2))
-                                .addValue("p_flag_tampil", list.get(3))
-                                .addValue("p_create_by", user)
-                                .addValue("out_message", OracleTypes.VARCHAR);
-                    }else if(jenisFile.equals("5")){
-                        simpleJdbcCall.withFunctionName("ins_tenor_to_temp");
-                        AppUtils.getLogger(this).debug("jenisFile : {}",jenisFile+" ins tenor" );
-                        inParent = new MapSqlParameterSource()
-                                .addValue("p_nomor", x)
-                                .addValue("p_id_upload", idUpload)
-                                .addValue("p_id_tenor", list.get(0))
-                                .addValue("p_nama_tenor", list.get(1))
-                                .addValue("p_flag_tampil", list.get(2))
-                                .addValue("p_create_by", user)
-                                .addValue("out_message", OracleTypes.VARCHAR);
-                    }else if(jenisFile.equals("6")){
-                        simpleJdbcCall.withFunctionName("ins_sumber_to_temp");
-                        AppUtils.getLogger(this).debug("jenisFile : {}",jenisFile+" ins sumber" );
-                        inParent = new MapSqlParameterSource()
-                                .addValue("p_nomor", x)
-                                .addValue("p_id_upload", idUpload)
-                                .addValue("p_id_sumber", list.get(0))
-                                .addValue("p_nama_sumber", list.get(1))
-                                .addValue("p_flag_tampil", list.get(2))
-                                .addValue("p_create_by", user)
-                                .addValue("out_message", OracleTypes.VARCHAR);
-                    }else if(jenisFile.equals("7")){
-                        simpleJdbcCall.withFunctionName("ins_keterangan_to_temp");
-                        AppUtils.getLogger(this).debug("jenisFile : {}",jenisFile+" ins keterangan" );
-                        inParent = new MapSqlParameterSource()
-                                .addValue("p_nomor", x)
-                                .addValue("p_id_upload", idUpload)
-                                .addValue("p_id_keterangan", list.get(0))
-                                .addValue("p_nama_keterangan", list.get(1))
-                                .addValue("p_jenis", list.get(2))
-                                .addValue("p_flag_tampil", list.get(3))
-                                .addValue("p_create_by", user)
-                                .addValue("out_message", OracleTypes.VARCHAR);
-                    }else if(jenisFile.equals("8")){
-                        simpleJdbcCall.withFunctionName("ins_jenis_to_temp");
-                        AppUtils.getLogger(this).debug("jenisFile : {}",jenisFile+" ins jenis" );
-                        inParent = new MapSqlParameterSource()
-                                .addValue("p_nomor", x)
-                                .addValue("p_id_upload", idUpload)
-                                .addValue("p_id_jenis", list.get(0))
-                                .addValue("p_nama_pembayaran", list.get(1))
-                                .addValue("p_grup_user", list.get(2))
-                                .addValue("p_flag_tampil", list.get(3))
-                                .addValue("p_create_by", user)
-                                .addValue("out_message", OracleTypes.VARCHAR);
-                    }else if(jenisFile.equals("9")){
-                        simpleJdbcCall.withFunctionName("ins_user_to_temp");
-                        AppUtils.getLogger(this).debug("jenisFile : {}",jenisFile+" ins user password" + list.get(1));
-                        inParent = new MapSqlParameterSource()
-                                .addValue("p_nomor", x)
-                                .addValue("p_id_upload", idUpload)
-                                .addValue("p_usname", list.get(0))
-                                .addValue("p_password", list.get(1))
-                                .addValue("p_email", list.get(2))
-                                .addValue("p_role", list.get(3))
-                                .addValue("p_flag_tampil", list.get(4))
-                                .addValue("p_create_by", user)
-                                .addValue("out_message", OracleTypes.VARCHAR);
-                    }
-                    else{
-                        inParent = null;
-                    }
-                    AppUtils.getLogger(this).info("data p_id_upload : {}", inParent.getValue("p_id_upload"));
+                        SqlParameterSource inParent;
+                        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate()).withCatalogName("pkg_master");
+                        if(jenisFile.equals("1")){
+                            simpleJdbcCall.withFunctionName("ins_curr_to_temp");
+                            AppUtils.getLogger(this).debug("jenisFile : {}",jenisFile+" ins currency" );
+                            inParent = new MapSqlParameterSource()
+                                    .addValue("p_nomor", x)
+                                    .addValue("p_id_upload", idUpload)
+                                    .addValue("p_currency", list.get(0))
+                                    .addValue("p_flag_tampil", list.get(1))
+                                    .addValue("out_message", OracleTypes.VARCHAR);
+                        }else if(jenisFile.equals("2")){
+                            simpleJdbcCall.withFunctionName("ins_bank_to_temp");
+                            AppUtils.getLogger(this).debug("jenisFile : {}",jenisFile+" ins bank" );
+                            inParent = new MapSqlParameterSource()
+                                    .addValue("p_nomor", x)
+                                    .addValue("p_id_upload", idUpload)
+                                    .addValue("p_kode_bank", list.get(0))
+                                    .addValue("p_nama_bank", list.get(1))
+                                    .addValue("p_jenis", list.get(2))
+                                    .addValue("p_flag_tampil", list.get(3))
+                                    .addValue("out_message", OracleTypes.VARCHAR);
+                        }else if(jenisFile.equals("3")){
+                            simpleJdbcCall.withFunctionName("ins_vendor_to_temp");
+                            AppUtils.getLogger(this).debug("jenisFile : {}",jenisFile+" ins vendor" );
+                            inParent = new MapSqlParameterSource()
+                                    .addValue("p_nomor", x)
+                                    .addValue("p_id_upload", idUpload)
+                                    .addValue("p_id_vendor", list.get(0))
+                                    .addValue("p_nama_vendor", list.get(1))
+                                    .addValue("p_jenis_pembayaran", list.get(2))
+                                    .addValue("p_flag_tampil", list.get(3))
+                                    .addValue("out_message", OracleTypes.VARCHAR);
+                        }else if(jenisFile.equals("4")){
+                            simpleJdbcCall.withFunctionName("ins_unit_to_temp");
+                            AppUtils.getLogger(this).debug("jenisFile : {}",jenisFile+" ins unit" );
+                            inParent = new MapSqlParameterSource()
+                                    .addValue("p_nomor", x)
+                                    .addValue("p_id_upload", idUpload)
+                                    .addValue("p_id_unit", list.get(0))
+                                    .addValue("p_nama_unit", list.get(1))
+                                    .addValue("p_jenis_pembayaran", list.get(2))
+                                    .addValue("p_flag_tampil", list.get(3))
+                                    .addValue("p_create_by", user)
+                                    .addValue("out_message", OracleTypes.VARCHAR);
+                        }else if(jenisFile.equals("5")){
+                            simpleJdbcCall.withFunctionName("ins_tenor_to_temp");
+                            AppUtils.getLogger(this).debug("jenisFile : {}",jenisFile+" ins tenor" );
+                            inParent = new MapSqlParameterSource()
+                                    .addValue("p_nomor", x)
+                                    .addValue("p_id_upload", idUpload)
+                                    .addValue("p_id_tenor", list.get(0))
+                                    .addValue("p_nama_tenor", list.get(1))
+                                    .addValue("p_flag_tampil", list.get(2))
+                                    .addValue("p_create_by", user)
+                                    .addValue("out_message", OracleTypes.VARCHAR);
+                        }else if(jenisFile.equals("6")){
+                            simpleJdbcCall.withFunctionName("ins_sumber_to_temp");
+                            AppUtils.getLogger(this).debug("jenisFile : {}",jenisFile+" ins sumber" );
+                            inParent = new MapSqlParameterSource()
+                                    .addValue("p_nomor", x)
+                                    .addValue("p_id_upload", idUpload)
+                                    .addValue("p_id_sumber", list.get(0))
+                                    .addValue("p_nama_sumber", list.get(1))
+                                    .addValue("p_flag_tampil", list.get(2))
+                                    .addValue("p_create_by", user)
+                                    .addValue("out_message", OracleTypes.VARCHAR);
+                        }else if(jenisFile.equals("7")){
+                            simpleJdbcCall.withFunctionName("ins_keterangan_to_temp");
+                            AppUtils.getLogger(this).debug("jenisFile : {}",jenisFile+" ins keterangan" );
+                            inParent = new MapSqlParameterSource()
+                                    .addValue("p_nomor", x)
+                                    .addValue("p_id_upload", idUpload)
+                                    .addValue("p_id_keterangan", list.get(0))
+                                    .addValue("p_nama_keterangan", list.get(1))
+                                    .addValue("p_jenis", list.get(2))
+                                    .addValue("p_flag_tampil", list.get(3))
+                                    .addValue("p_create_by", user)
+                                    .addValue("out_message", OracleTypes.VARCHAR);
+                        }else if(jenisFile.equals("8")){
+                            simpleJdbcCall.withFunctionName("ins_jenis_to_temp");
+                            AppUtils.getLogger(this).debug("jenisFile : {}",jenisFile+" ins jenis" );
+                            inParent = new MapSqlParameterSource()
+                                    .addValue("p_nomor", x)
+                                    .addValue("p_id_upload", idUpload)
+                                    .addValue("p_id_jenis", list.get(0))
+                                    .addValue("p_nama_pembayaran", list.get(1))
+                                    .addValue("p_grup_user", list.get(2))
+                                    .addValue("p_flag_tampil", list.get(3))
+                                    .addValue("p_create_by", user)
+                                    .addValue("out_message", OracleTypes.VARCHAR);
+                        }else if(jenisFile.equals("9")){
+                            simpleJdbcCall.withFunctionName("ins_user_to_temp");
+                            AppUtils.getLogger(this).debug("jenisFile : {}",jenisFile+" ins user password" + list.get(1));
+                            inParent = new MapSqlParameterSource()
+                                    .addValue("p_nomor", x)
+                                    .addValue("p_id_upload", idUpload)
+                                    .addValue("p_usname", list.get(0))
+                                    .addValue("p_password", list.get(1))
+                                    .addValue("p_email", list.get(2))
+                                    .addValue("p_role", list.get(3))
+                                    .addValue("p_flag_tampil", list.get(4))
+                                    .addValue("p_create_by", user)
+                                    .addValue("out_message", OracleTypes.VARCHAR);
+                        }
+                        else{
+                            inParent = null;
+                        }
+                        AppUtils.getLogger(this).info("data p_id_upload : {}", inParent.getValue("p_id_upload"));
 //                    AppUtils.getLogger(this).info("data p_bank : {}", inParent.getValue("p_bank"));
 //                    AppUtils.getLogger(this).info("data p_tipe_transaksi : {}", inParent.getValue("p_tipe_transaksi"));
-                    out = simpleJdbcCall.execute(inParent);
-                    AppUtils.getLogger(this).info("datatotemp : {}", out);
+                        out = simpleJdbcCall.execute(inParent);
+                        AppUtils.getLogger(this).info("datatotemp : {}", out);
 
+                    }
+                    list.clear();
+                    x++;
                 }
-                list.clear();
-                x++;
             }
 
             SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -1022,5 +1027,14 @@ public class MasterService {
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("errorData {}: {}", idUpload, out);
         return out;
+    }
+
+    public boolean isRowEmpty(Row row, int rowSize){
+        for(int x = 0; x < rowSize; x++){
+            if(row.getCell(x) != null){
+                return false;
+            }
+        }
+        return true;
     }
 }
