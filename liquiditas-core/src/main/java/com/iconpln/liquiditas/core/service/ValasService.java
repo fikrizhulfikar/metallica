@@ -279,239 +279,240 @@ public class ValasService {
                 row = (HSSFRow) rowIterator.next();
                 Row rrow = sheet.getRow(row.getRowNum());
                 int totalCell = sheet.getRow(0).getLastCellNum();
-                AppUtils.getLogger(this).info("totalCell: {}", totalCell);
-                for (int cellNum = 0; cellNum < totalCell; cellNum++) {
+                if(!isRowEmpty(rrow, totalCell)){
+                    for (int cellNum = 0; cellNum < totalCell; cellNum++) {
 
-                    if (rrow.getCell(cellNum) == null) {
-                        list.add("-");
-                    } else if (rrow.getCell(cellNum).getCellType() == Cell.CELL_TYPE_NUMERIC) {
-                        if (HSSFDateUtil.isCellDateFormatted(rrow.getCell(cellNum))) {
-                            DateFormat format = new SimpleDateFormat("dd-MMMM-yyyy", Locale.ENGLISH);
-                            AppUtils.getLogger(this).info("datatanggal {}: {}", rrow.getCell(cellNum).toString());
-                            if (jenisFile.equals("4")) {
-                                list.add(new SimpleDateFormat("dd/MM/yyyy").format(format.parse(rrow.getCell(cellNum).toString())));
+                        if (rrow.getCell(cellNum) == null) {
+                            list.add("-");
+                        } else if (rrow.getCell(cellNum).getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                            if (HSSFDateUtil.isCellDateFormatted(rrow.getCell(cellNum))) {
+                                DateFormat format = new SimpleDateFormat("dd-MMMM-yyyy", Locale.ENGLISH);
+                                AppUtils.getLogger(this).info("datatanggal {}: {}", rrow.getCell(cellNum).toString());
+                                if (jenisFile.equals("4")) {
+                                    list.add(new SimpleDateFormat("dd/MM/yyyy").format(format.parse(rrow.getCell(cellNum).toString())));
+                                } else {
+                                    list.add(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(format.parse(rrow.getCell(cellNum).toString())));
+                                }
+
                             } else {
-                                list.add(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(format.parse(rrow.getCell(cellNum).toString())));
+                                list.add(rrow.getCell(cellNum).toString());
+                                AppUtils.getLogger(this).info("datanumeric {}: {}", rrow.getCell(cellNum).toString(), row.getCell(cellNum).getCellType());
                             }
-
                         } else {
                             list.add(rrow.getCell(cellNum).toString());
-                            AppUtils.getLogger(this).info("datanumeric {}: {}", rrow.getCell(cellNum).toString(), row.getCell(cellNum).getCellType());
+                            AppUtils.getLogger(this).info("datastring {}: {}", rrow.getCell(cellNum).toString(), row.getCell(cellNum).getCellType());
                         }
-                    } else {
-                        list.add(rrow.getCell(cellNum).toString());
-                        AppUtils.getLogger(this).info("datastring {}: {}", rrow.getCell(cellNum).toString(), row.getCell(cellNum).getCellType());
                     }
-                }
-                AppUtils.getLogger(this).debug("idproduct{}", idDerivatif);
-                AppUtils.getLogger(this).debug("nilaiX : {}", x);
-                if (x > 0 /*||
+                    AppUtils.getLogger(this).debug("idproduct{}", idDerivatif);
+                    AppUtils.getLogger(this).debug("nilaiX : {}", x);
+                    if (x > 0 /*||
                         !list.get(0).toLowerCase().equals("tanggal deal") && !list.get(0).isEmpty()*/) {
-                    SqlParameterSource inParent;
-                    SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate()).withCatalogName("pkg_valas");
-                    if (jenisFile.equals("1")) {
-                        simpleJdbcCall.withFunctionName("ins_rekap_temp");
-                        AppUtils.getLogger(this).debug("jenisFile : {}", jenisFile + "insrekap");
-                        inParent = new MapSqlParameterSource()
-                                .addValue("p_nomor", x)
-                                .addValue("p_id_upload", idUpload)
-                                .addValue("p_jenis_pembayaran", list.get(1))
-                                .addValue("p_tgl_jatuh_tempo", list.get(2))
-                                .addValue("p_vendor", list.get(3))
-                                .addValue("p_curr", list.get(4))
-                                .addValue("p_nilai_tagihan", list.get(5))
-                                .addValue("p_bank_tujuan", list.get(6))
-                                .addValue("p_bank_pembayar", list.get(7))
-                                .addValue("p_unit_penerima", list.get(8))
-                                .addValue("p_no_tagihan", list.get(10))
-                                .addValue("p_tgl_tagihan", "")
-                                .addValue("p_no_notdin", list.get(11))
-                                .addValue("p_tgl_notdin", "")
-                                .addValue("p_status_valas", list.get(13))
-                                .addValue("p_create_by", user)
-                                .addValue("p_deskripsi", list.get(14))
-                                .addValue("p_tipe_transaksi", list.get(0))
-                                .addValue("p_tgl_terima_invoice", list.get(9))
-                                .addValue("out_msg", OracleTypes.VARCHAR);
-                    } else if (jenisFile.equals("2")) {
-                        AppUtils.getLogger(this).debug("jenisFile {} : {}{}", jenisFile, "tripartit", list);
-                        simpleJdbcCall.withFunctionName("ins_tripartite_to_temp");
-                        inParent = new MapSqlParameterSource()
-                                .addValue("p_nomor", x)
-                                .addValue("p_id_upload", idUpload)
-                                .addValue("p_bank", list.get(5))
-                                .addValue("p_jatuh_tempo", list.get(2))
-                                .addValue("p_tgl_jatuh_tempo", list.get(2))
-                                .addValue("p_curr", list.get(6))
-                                .addValue("p_vendor", list.get(4))
-                                .addValue("p_jenis_pembayaran", list.get(1))
-                                .addValue("p_nominal_sblm_pajak", list.get(7))
-                                .addValue("p_pajak", list.get(8))
-                                .addValue("p_nominal_underlying", list.get(9))
-                                .addValue("p_nominal_tanpa_underlying", list.get(10))
-                                .addValue("p_kurs_jisdor", list.get(11))
-                                .addValue("p_spread", list.get(12))
-                                .addValue("p_no_invoice", list.get(15))
-                                .addValue("p_tgl_invoice", list.get(14))
-                                .addValue("p_no_notdin", list.get(16))
-                                .addValue("p_tgl_notdin", list.get(17))
-                                .addValue("p_status_tripartite", list.get(17))
-//                                .addValue("p_status_tripartite", user)
-                                .addValue("p_create_by", user)
-                                .addValue("p_deskripsi", list.get(18))
-                                .addValue("p_tipe_transaksi", list.get(0))
-                                .addValue("p_tgl_terima_invoice", list.get(13))
-                                .addValue("out_msg", OracleTypes.VARCHAR);
-                    } else if (jenisFile.equals("3")) {
-                        if (idDerivatif.equals("1")) {
-                            AppUtils.getLogger(this).debug("jenisFile {} : {}{}", jenisFile, "derifativ" + idDerivatif, list);
-                            AppUtils.getLogger(this).debug("idproduct", idDerivatif);
-                            simpleJdbcCall.withFunctionName("ins_derivatif_to_temp");
+                        SqlParameterSource inParent;
+                        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate()).withCatalogName("pkg_valas");
+                        if (jenisFile.equals("1")) {
+                            simpleJdbcCall.withFunctionName("ins_rekap_temp");
+                            AppUtils.getLogger(this).debug("jenisFile : {}", jenisFile + "insrekap");
                             inParent = new MapSqlParameterSource()
                                     .addValue("p_nomor", x)
                                     .addValue("p_id_upload", idUpload)
-                                    .addValue("p_id_product", idDerivatif)
-                                    .addValue("p_bank", list.get(1))
-                                    .addValue("p_tgl_deal", list.get(0))
+                                    .addValue("p_jenis_pembayaran", list.get(1))
                                     .addValue("p_tgl_jatuh_tempo", list.get(2))
+                                    .addValue("p_vendor", list.get(3))
                                     .addValue("p_curr", list.get(4))
-                                    .addValue("p_tenor", list.get(3))
-                                    .addValue("p_national_amount", list.get(5))
-                                    .addValue("p_deal_rate", list.get(6))
-                                    .addValue("p_forward_point", list.get(7))
-                                    .addValue("p_kurs_jisdor1", list.get(8))
-                                    .addValue("p_bunga_deposito", list.get(9))
-                                    .addValue("p_sumber_dana", list.get(11))
-                                    .addValue("p_peruntukan_dana", list.get(10))
-                                    .addValue("p_fixing_rate", "")
-                                    .addValue("p_swap_point", "")
-                                    .addValue("p_strike_price1", list.get(9))
-                                    .addValue("p_strike_price2", "")
-                                    .addValue("p_settlement_rate", "")
-                                    .addValue("p_status_derivatif", list.get(12))
-//                                .addValue("p_status_tripartite", user)
+                                    .addValue("p_nilai_tagihan", list.get(5))
+                                    .addValue("p_bank_tujuan", list.get(6))
+                                    .addValue("p_bank_pembayar", list.get(7))
+                                    .addValue("p_unit_penerima", list.get(8))
+                                    .addValue("p_no_tagihan", list.get(10))
+                                    .addValue("p_tgl_tagihan", "")
+                                    .addValue("p_no_notdin", list.get(11))
+                                    .addValue("p_tgl_notdin", "")
+                                    .addValue("p_status_valas", list.get(13))
                                     .addValue("p_create_by", user)
-                                    .addValue("p_keterangan", "")
-                                    .addValue("p_biaya_premi", "")
+                                    .addValue("p_deskripsi", list.get(14))
+                                    .addValue("p_tipe_transaksi", list.get(0))
+                                    .addValue("p_tgl_terima_invoice", list.get(9))
                                     .addValue("out_msg", OracleTypes.VARCHAR);
-                        } else if (idDerivatif.equals("2")) {
-                            AppUtils.getLogger(this).debug("jenisFile {} : {}{}", jenisFile, "derifativswap" + idDerivatif, list);
-                            simpleJdbcCall.withFunctionName("ins_derivatif_to_temp");
+                        } else if (jenisFile.equals("2")) {
+                            AppUtils.getLogger(this).debug("jenisFile {} : {}{}", jenisFile, "tripartit", list);
+                            simpleJdbcCall.withFunctionName("ins_tripartite_to_temp");
                             inParent = new MapSqlParameterSource()
                                     .addValue("p_nomor", x)
                                     .addValue("p_id_upload", idUpload)
-                                    .addValue("p_id_product", idDerivatif)
-                                    .addValue("p_bank", list.get(0))
-                                    .addValue("p_tgl_deal", list.get(1))
-                                    .addValue("p_tgl_jatuh_tempo", list.get(2))
-                                    .addValue("p_curr", list.get(4))
-                                    .addValue("p_tenor", list.get(3))
-                                    .addValue("p_national_amount", list.get(5))
-                                    .addValue("p_fixing_rate", list.get(6))
-                                    .addValue("p_swap_point", list.get(7))
-                                    .addValue("p_bunga_deposito", list.get(8))
-                                    .addValue("p_sumber_dana", list.get(9))
-                                    .addValue("p_peruntukan_dana", list.get(10))
-                                    .addValue("p_status_derivatif", list.get(11))
-                                    .addValue("p_deal_rate", "")
-                                    .addValue("p_forward_point", "")
-                                    .addValue("p_kurs_jisdor1", "")
-                                    .addValue("p_strike_price1", "")
-                                    .addValue("p_strike_price2", "")
-                                    .addValue("p_settlement_rate", "")
-//                                .addValue("p_status_tripartite", user)
-                                    .addValue("p_create_by", user)
-                                    .addValue("p_keterangan", "")
-                                    .addValue("p_biaya_premi", "")
-                                    .addValue("out_msg", OracleTypes.VARCHAR);
-                        } else if (idDerivatif.equals("5")) {
-                            AppUtils.getLogger(this).debug("jenisFile {} : {}{}", jenisFile, "derifativccs" + idDerivatif, list);
-                            jenisFile = idDerivatif;
-                            simpleJdbcCall.withFunctionName("ins_derivatif_ccs_to_temp");
-                            inParent = new MapSqlParameterSource()
-                                    .addValue("p_nomor", x)
-                                    .addValue("p_id_upload", idUpload)
-                                    .addValue("p_id_product", idDerivatif)
-                                    .addValue("p_bank", list.get(0))
-                                    .addValue("p_tenor", list.get(1))
+                                    .addValue("p_bank", list.get(5))
                                     .addValue("p_jatuh_tempo", list.get(2))
-                                    .addValue("p_start_date", list.get(3))
-                                    .addValue("p_end_date", list.get(4))
-                                    .addValue("p_pay_date", list.get(5))
-                                    .addValue("p_notional_usd", list.get(6))
-                                    .addValue("p_libor", list.get(7))
-                                    .addValue("p_receive_usd", list.get(8))
-                                    .addValue("p_reset_date", list.get(9))
-                                    .addValue("p_discount_usd", list.get(10))
-                                    .addValue("p_suku_bunga_idr", list.get(11))
-                                    .addValue("p_principal", list.get(12))
-                                    .addValue("p_discount_idr", list.get(13))
-                                    .addValue("p_create_date", "")
+                                    .addValue("p_tgl_jatuh_tempo", list.get(2))
+                                    .addValue("p_curr", list.get(6))
+                                    .addValue("p_vendor", list.get(4))
+                                    .addValue("p_jenis_pembayaran", list.get(1))
+                                    .addValue("p_nominal_sblm_pajak", list.get(7))
+                                    .addValue("p_pajak", list.get(8))
+                                    .addValue("p_nominal_underlying", list.get(9))
+                                    .addValue("p_nominal_tanpa_underlying", list.get(10))
+                                    .addValue("p_kurs_jisdor", list.get(11))
+                                    .addValue("p_spread", list.get(12))
+                                    .addValue("p_no_invoice", list.get(15))
+                                    .addValue("p_tgl_invoice", list.get(14))
+                                    .addValue("p_no_notdin", list.get(16))
+                                    .addValue("p_tgl_notdin", list.get(17))
+                                    .addValue("p_status_tripartite", list.get(17))
 //                                .addValue("p_status_tripartite", user)
                                     .addValue("p_create_by", user)
+                                    .addValue("p_deskripsi", list.get(18))
+                                    .addValue("p_tipe_transaksi", list.get(0))
+                                    .addValue("p_tgl_terima_invoice", list.get(13))
                                     .addValue("out_msg", OracleTypes.VARCHAR);
+                        } else if (jenisFile.equals("3")) {
+                            if (idDerivatif.equals("1")) {
+                                AppUtils.getLogger(this).debug("jenisFile {} : {}{}", jenisFile, "derifativ" + idDerivatif, list);
+                                AppUtils.getLogger(this).debug("idproduct", idDerivatif);
+                                simpleJdbcCall.withFunctionName("ins_derivatif_to_temp");
+                                inParent = new MapSqlParameterSource()
+                                        .addValue("p_nomor", x)
+                                        .addValue("p_id_upload", idUpload)
+                                        .addValue("p_id_product", idDerivatif)
+                                        .addValue("p_bank", list.get(1))
+                                        .addValue("p_tgl_deal", list.get(0))
+                                        .addValue("p_tgl_jatuh_tempo", list.get(2))
+                                        .addValue("p_curr", list.get(4))
+                                        .addValue("p_tenor", list.get(3))
+                                        .addValue("p_national_amount", list.get(5))
+                                        .addValue("p_deal_rate", list.get(6))
+                                        .addValue("p_forward_point", list.get(7))
+                                        .addValue("p_kurs_jisdor1", list.get(8))
+                                        .addValue("p_bunga_deposito", list.get(9))
+                                        .addValue("p_sumber_dana", list.get(11))
+                                        .addValue("p_peruntukan_dana", list.get(10))
+                                        .addValue("p_fixing_rate", "")
+                                        .addValue("p_swap_point", "")
+                                        .addValue("p_strike_price1", list.get(9))
+                                        .addValue("p_strike_price2", "")
+                                        .addValue("p_settlement_rate", "")
+                                        .addValue("p_status_derivatif", list.get(12))
+//                                .addValue("p_status_tripartite", user)
+                                        .addValue("p_create_by", user)
+                                        .addValue("p_keterangan", "")
+                                        .addValue("p_biaya_premi", "")
+                                        .addValue("out_msg", OracleTypes.VARCHAR);
+                            } else if (idDerivatif.equals("2")) {
+                                AppUtils.getLogger(this).debug("jenisFile {} : {}{}", jenisFile, "derifativswap" + idDerivatif, list);
+                                simpleJdbcCall.withFunctionName("ins_derivatif_to_temp");
+                                inParent = new MapSqlParameterSource()
+                                        .addValue("p_nomor", x)
+                                        .addValue("p_id_upload", idUpload)
+                                        .addValue("p_id_product", idDerivatif)
+                                        .addValue("p_bank", list.get(0))
+                                        .addValue("p_tgl_deal", list.get(1))
+                                        .addValue("p_tgl_jatuh_tempo", list.get(2))
+                                        .addValue("p_curr", list.get(4))
+                                        .addValue("p_tenor", list.get(3))
+                                        .addValue("p_national_amount", list.get(5))
+                                        .addValue("p_fixing_rate", list.get(6))
+                                        .addValue("p_swap_point", list.get(7))
+                                        .addValue("p_bunga_deposito", list.get(8))
+                                        .addValue("p_sumber_dana", list.get(9))
+                                        .addValue("p_peruntukan_dana", list.get(10))
+                                        .addValue("p_status_derivatif", list.get(11))
+                                        .addValue("p_deal_rate", "")
+                                        .addValue("p_forward_point", "")
+                                        .addValue("p_kurs_jisdor1", "")
+                                        .addValue("p_strike_price1", "")
+                                        .addValue("p_strike_price2", "")
+                                        .addValue("p_settlement_rate", "")
+//                                .addValue("p_status_tripartite", user)
+                                        .addValue("p_create_by", user)
+                                        .addValue("p_keterangan", "")
+                                        .addValue("p_biaya_premi", "")
+                                        .addValue("out_msg", OracleTypes.VARCHAR);
+                            } else if (idDerivatif.equals("5")) {
+                                AppUtils.getLogger(this).debug("jenisFile {} : {}{}", jenisFile, "derifativccs" + idDerivatif, list);
+                                jenisFile = idDerivatif;
+                                simpleJdbcCall.withFunctionName("ins_derivatif_ccs_to_temp");
+                                inParent = new MapSqlParameterSource()
+                                        .addValue("p_nomor", x)
+                                        .addValue("p_id_upload", idUpload)
+                                        .addValue("p_id_product", idDerivatif)
+                                        .addValue("p_bank", list.get(0))
+                                        .addValue("p_tenor", list.get(1))
+                                        .addValue("p_jatuh_tempo", list.get(2))
+                                        .addValue("p_start_date", list.get(3))
+                                        .addValue("p_end_date", list.get(4))
+                                        .addValue("p_pay_date", list.get(5))
+                                        .addValue("p_notional_usd", list.get(6))
+                                        .addValue("p_libor", list.get(7))
+                                        .addValue("p_receive_usd", list.get(8))
+                                        .addValue("p_reset_date", list.get(9))
+                                        .addValue("p_discount_usd", list.get(10))
+                                        .addValue("p_suku_bunga_idr", list.get(11))
+                                        .addValue("p_principal", list.get(12))
+                                        .addValue("p_discount_idr", list.get(13))
+                                        .addValue("p_create_date", "")
+//                                .addValue("p_status_tripartite", user)
+                                        .addValue("p_create_by", user)
+                                        .addValue("out_msg", OracleTypes.VARCHAR);
+                            } else {
+                                AppUtils.getLogger(this).debug("jenisFile {} : {}{}", jenisFile, "derifativcso" + idDerivatif, list);
+                                AppUtils.getLogger(this).debug("idproduct: {}", idDerivatif);
+                                simpleJdbcCall.withFunctionName("ins_derivatif_to_temp");
+                                inParent = new MapSqlParameterSource()
+                                        .addValue("p_nomor", x)
+                                        .addValue("p_id_upload", idUpload)
+                                        .addValue("p_id_product", idDerivatif)
+                                        .addValue("p_bank", list.get(0))
+                                        .addValue("p_tgl_deal", list.get(1))
+                                        .addValue("p_tgl_jatuh_tempo", list.get(2))
+                                        .addValue("p_curr", list.get(4))
+                                        .addValue("p_tenor", list.get(3))
+                                        .addValue("p_national_amount", list.get(5))
+                                        .addValue("p_strike_price1", list.get(6))
+                                        .addValue("p_strike_price2", list.get(7))
+                                        .addValue("p_settlement_rate", list.get(8))
+                                        .addValue("p_biaya_premi", list.get(9))
+                                        .addValue("p_bunga_deposito", list.get(10))
+                                        .addValue("p_sumber_dana", list.get(11))
+                                        .addValue("p_peruntukan_dana", list.get(12))
+                                        .addValue("p_keterangan", list.get(13))
+                                        .addValue("p_status_derivatif", list.get(14))
+                                        .addValue("p_deal_rate", "")
+                                        .addValue("p_forward_point", "")
+                                        .addValue("p_kurs_jisdor1", "")
+                                        .addValue("p_fixing_rate", "")
+                                        .addValue("p_swap_point", "")
+//                                .addValue("p_status_tripartite", user)
+                                        .addValue("p_create_by", user)
+                                        .addValue("out_msg", OracleTypes.VARCHAR);
+                            }
                         } else {
-                            AppUtils.getLogger(this).debug("jenisFile {} : {}{}", jenisFile, "derifativcso" + idDerivatif, list);
-                            AppUtils.getLogger(this).debug("idproduct: {}", idDerivatif);
-                            simpleJdbcCall.withFunctionName("ins_derivatif_to_temp");
+                            AppUtils.getLogger(this).debug("jenisFile {} : {}{}", jenisFile, "deposito" + idDerivatif, list);
+                            simpleJdbcCall.withFunctionName("ins_deposito_to_temp");
                             inParent = new MapSqlParameterSource()
                                     .addValue("p_nomor", x)
                                     .addValue("p_id_upload", idUpload)
-                                    .addValue("p_id_product", idDerivatif)
                                     .addValue("p_bank", list.get(0))
-                                    .addValue("p_tgl_deal", list.get(1))
-                                    .addValue("p_tgl_jatuh_tempo", list.get(2))
-                                    .addValue("p_curr", list.get(4))
-                                    .addValue("p_tenor", list.get(3))
-                                    .addValue("p_national_amount", list.get(5))
-                                    .addValue("p_strike_price1", list.get(6))
-                                    .addValue("p_strike_price2", list.get(7))
-                                    .addValue("p_settlement_rate", list.get(8))
-                                    .addValue("p_biaya_premi", list.get(9))
-                                    .addValue("p_bunga_deposito", list.get(10))
-                                    .addValue("p_sumber_dana", list.get(11))
-                                    .addValue("p_peruntukan_dana", list.get(12))
-                                    .addValue("p_keterangan", list.get(13))
-                                    .addValue("p_status_derivatif", list.get(14))
-                                    .addValue("p_deal_rate", "")
-                                    .addValue("p_forward_point", "")
-                                    .addValue("p_kurs_jisdor1", "")
-                                    .addValue("p_fixing_rate", "")
-                                    .addValue("p_swap_point", "")
-//                                .addValue("p_status_tripartite", user)
+                                    .addValue("p_curr", list.get(1))
+                                    .addValue("p_no_account", list.get(2))
+                                    .addValue("p_nominal", list.get(3))
+                                    .addValue("p_interest", list.get(4))
+                                    .addValue("p_tgl_penempatan", list.get(5))
+                                    .addValue("p_jatuh_tempo", list.get(6))
+                                    .addValue("p_tenor", list.get(7))
+                                    .addValue("p_keterangan", list.get(8))
+                                    .addValue("p_status_deposito", list.get(9))
                                     .addValue("p_create_by", user)
                                     .addValue("out_msg", OracleTypes.VARCHAR);
+                            AppUtils.getLogger(this).debug("kolom p_tgl_penempatan: {}", list.get(5));
+                            AppUtils.getLogger(this).debug("kolom p_jatuh_tempo: {}", inParent.getValue("p_jatuh_tempo"));
                         }
-                    } else {
-                        AppUtils.getLogger(this).debug("jenisFile {} : {}{}", jenisFile, "deposito" + idDerivatif, list);
-                        simpleJdbcCall.withFunctionName("ins_deposito_to_temp");
-                        inParent = new MapSqlParameterSource()
-                                .addValue("p_nomor", x)
-                                .addValue("p_id_upload", idUpload)
-                                .addValue("p_bank", list.get(0))
-                                .addValue("p_curr", list.get(1))
-                                .addValue("p_no_account", list.get(2))
-                                .addValue("p_nominal", list.get(3))
-                                .addValue("p_interest", list.get(4))
-                                .addValue("p_tgl_penempatan", list.get(5))
-                                .addValue("p_jatuh_tempo", list.get(6))
-                                .addValue("p_tenor", list.get(7))
-                                .addValue("p_keterangan", list.get(8))
-                                .addValue("p_status_deposito", list.get(9))
-                                .addValue("p_create_by", user)
-                                .addValue("out_msg", OracleTypes.VARCHAR);
-                        AppUtils.getLogger(this).debug("kolom p_tgl_penempatan: {}", list.get(5));
-                        AppUtils.getLogger(this).debug("kolom p_jatuh_tempo: {}", inParent.getValue("p_jatuh_tempo"));
-                    }
-                    AppUtils.getLogger(this).info("data p_id_upload : {}", inParent.getValue("p_id_upload"));
+                        AppUtils.getLogger(this).info("data p_id_upload : {}", inParent.getValue("p_id_upload"));
 //                    AppUtils.getLogger(this).info("data p_bank : {}", inParent.getValue("p_bank"));
 //                    AppUtils.getLogger(this).info("data p_tipe_transaksi : {}", inParent.getValue("p_tipe_transaksi"));
-                    out = simpleJdbcCall.execute(inParent);
-                    AppUtils.getLogger(this).info("datatotemp : {}", out);
+                        out = simpleJdbcCall.execute(inParent);
+                        AppUtils.getLogger(this).info("datatotemp : {}", out);
 
+                    }
+                    list.clear();
+                    x++;
                 }
-                list.clear();
-                x++;
             }
 
             SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -1622,4 +1623,12 @@ public class ValasService {
         return out;
     }
 
+    public boolean isRowEmpty(Row row, int rowSize){
+        for(int x = 0; x < rowSize; x++){
+            if(row.getCell(x) != null){
+                return false;
+            }
+        }
+        return true;
+    }
 }
