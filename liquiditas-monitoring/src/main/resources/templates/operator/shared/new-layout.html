@@ -201,7 +201,8 @@
         var list = document.getElementById("notification_div");
         list.insertBefore(newItem, list.childNodes[2]);
 
-        var count = $("#notification_div li").length;
+        var count = Integer.parseInt($("#notification_count").html());
+        count+=1;
         $("#notification_count").html(count);
         $("#notification_count_title").html('You have ' + count + ' unread message.');
         $.toast({
@@ -214,9 +215,9 @@
     }
 
     //for send message to socket server
-    function sendContent() {
-        stompClient.send("/push/content", {}, "test send from client");
-    }
+    // function sendContent() {
+    //     stompClient.send("/push/content", {}, "test send from client");
+    // }
 
 
     function getNotifications() {
@@ -270,7 +271,13 @@
             async: true,
             contentType: 'application/x-www-form-urlencoded',
             success: function(obj) {
+                console.log("Read: " + obj);
                 $('#'+key+'').css("background-color", "white");
+                var count = parseInt($("#notification_count").html());
+                count -= 1;
+                $("#notification_count").html(count);
+                $("#notification_count_title").html('You have ' + count + ' unread message.');
+                $('#'+key+'').prop('onclick',null).off('click');
             }
         });
     }
