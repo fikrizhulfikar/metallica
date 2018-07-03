@@ -25,7 +25,7 @@ function getAllData() {
 
                     newHtml ="<tr>"+
                         "<th>"+val.BANK+"</td>"+
-                        "<td style='display:none;' class='kdbank_potensi'>"+val.KODE_BANK+"</td>"+
+                        "<td style='display:none;' class='kdbank_subsidi'>"+val.KODE_BANK+"</td>"+
                         "<td class='kdbank_potensi'>"+val.JUMLAH+"</td>"+
                         "<td align='center'><input width='100%' class='form-control' type='number' value='0'></td>" +
                         "<td align='center'>-</td>" +
@@ -33,7 +33,7 @@ function getAllData() {
                 }else{
                     newHtml ="<tr>"+
                     "<th>"+val.BANK+"</td>"+
-                    "<td style='display:none;' class='kdbank_potensi'>"+val.KODE_BANK+"</td>"+
+                    "<td style='display:none;' class='kdbank_subsidi'>"+val.KODE_BANK+"</td>"+
                     "<td class='kdbank_potensi'>"+val.JUMLAH+"</td>"+
                     "<td align='center'><input width='100%' class='form-control' type='number' value='0'></td>" +
                     "<td align='center'><button class='btn btn-primary' style='cursor: pointer'>Save</button></td>" +
@@ -55,7 +55,7 @@ $('table').on('click', '.btn', function()
     var row = $(this).closest('tr'),
         cells = row.find('td'),
         btnCell = $(this).parent();
-    console.log(row.find('.kdbank_potensi').html());
+    console.log(row.find('.kdbank_subsidi').html());
     console.log(row.find('input').val());
 
     $.ajax({
@@ -64,7 +64,7 @@ $('table').on('click', '.btn', function()
         type: "POST",
         data : {
             pJenis:"",
-            pKodeBank: row.find('.kdbank_penerimaan_subsidi').html(),
+            pKodeBank: row.find('.kdbank_subsidi').html(),
             pJumlah: row.find('input').val(),
         },
         success: function (res) {
