@@ -49,7 +49,7 @@ function initDataTable() {
                             '<td align=\"right\">' + val.OTHER + '</td>' +
                             '</tr>';
                     }
-                    if (val.JENIS_PEMBAYARAN != 'total' || val.STATUS == 'total bro') {
+                    if ((val.STATUS_VALAS != 'RENCANA' && val.STATUS_VALAS != 'REALISASI') || val.STATUS == 'total bro') {
                         $('#table-main-rencana tbody').append(html);
                     }
                     if (val.STATUS_VALAS == 'RENCANA') {
