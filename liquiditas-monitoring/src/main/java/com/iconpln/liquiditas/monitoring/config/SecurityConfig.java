@@ -83,22 +83,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             "AbstractUserDetailsAuthenticationProvider.badCredentials",
                             "Bad credentials"));
                 }
-                HttpHeaders headers = new HttpHeaders();
-                headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-                MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
-                map.add("username", authentication.getName());
-                map.add("password", presentedPassword);
-                HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
-
-                ResponseEntity<HashMap<String, Object>> responseEntity = restTemplate.exchange(
-                        "/auth",
-                        HttpMethod.POST,
-                        request,
-                        new ParameterizedTypeReference<HashMap<String, Object>>() {}
-                );
-                if (responseEntity.getStatusCode() == HttpStatus.OK) {
-                    sessionHandler.setUserToSession(responseEntity.getBody().get("key").toString());
-                }
             }
         };
         authenticationProvider.setUserDetailsService(userDetailsService);
