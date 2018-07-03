@@ -19,6 +19,7 @@ function initDataTable() {
             var datestring = d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear();
             $("#tglcetak").html(datestring);
             $('#table-main-rencana tbody').empty();
+            $('#table-rencana tbody').empty();
             $('#table-main-realisasi tbody').empty();
             if (res.return.length <= 0) {
                 noDataView();
@@ -48,9 +49,13 @@ function initDataTable() {
                             '<td align=\"right\">' + val.OTHER + '</td>' +
                             '</tr>';
                     }
-                    if (val.STATUS_VALAS == 'RENCANA') {
+                    if (val.JENIS_PEMBAYARAN != 'total' || val.STATUS == 'total bro') {
                         $('#table-main-rencana tbody').append(html);
-                    } else {
+                    }
+                    if (val.STATUS_VALAS == 'RENCANA') {
+                        $('#table-rencana tbody').append(html);
+                    }
+                    if (val.STATUS_VALAS == 'REALISASI') {
                         $('#table-main-realisasi tbody').append(html);
                     }
                 });

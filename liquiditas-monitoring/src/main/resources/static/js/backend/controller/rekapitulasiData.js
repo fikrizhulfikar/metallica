@@ -720,8 +720,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                     "aTargets": [20],
                     "mRender": function (data, type, full) {
                         var ret_value;
-                            console.log(newRoleUser[0], "user");
-                            console.log("full", full);
                             if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
                                 return "-"
                             } else {
