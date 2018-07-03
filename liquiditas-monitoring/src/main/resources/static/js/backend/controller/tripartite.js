@@ -872,7 +872,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
                             ret_value =
                                 '<div class="btn-group">' +
                                 '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified User" onclick="upd_status_tracking(\'' +full.ID_TRIPARTITE+'\',\'' +2+ '\')"><i class="fa fa-arrows-alt"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified User" onclick="upd_status_tracking(\'' + full.ID_TRIPARTITE + '\',\'' + 2 + '\')"><i class="fa fa-arrows-alt"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-close"></i></button>' +
@@ -882,52 +882,73 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
 
                             ret_value =
                                 '<div class="btn-group">' +
-                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DM" onclick="upd_status_tracking(\'' +full.ID_TRIPARTITE+'\',\'' +3+ '\')"><i class="fa fa-arrows-alt"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>';
+                            if (newRoleUser[0] == "ROLE_DM_ENERGI" || newRoleUser[0] == "ROLE_DM_KEUKON_APLN" || newRoleUser[0] == "ROLE_DM_PENGUSAHAAN" || newRoleUser[0] == "ROLE_ADMIN") {
+                                ret_value = ret_value + '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DM" onclick="upd_status_tracking(\'' + full.ID_TRIPARTITE + '\',\'' + 3 + '\')"><i class="fa fa-arrows-alt"></i></button>';
+                            }
+                            ret_value = ret_value +
                                 '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-close"></i></button>' +
                                 '</div>'
                         }
-                        else if (full.STATUS_TRACKING == "VERIFIED BY DM" && full.UPDATE_BY == "dmkeukonap"){
+                        else if (full.STATUS_TRACKING == "VERIFIED BY DM" && full.UPDATE_BY == "dmkeukonap") {
 
                             ret_value =
                                 '<div class="btn-group">' +
-                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MS Keukon" onclick="upd_status_tracking(\'' +full.ID_TRIPARTITE+'\',\'' +8+ '\')"><i class="fa fa-arrows-alt"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>';
+                                if (newRoleUser[0] == "ROLE_MS_KEUKON" || newRoleUser[0] == "ROLE_ADMIN") {
+                                    ret_value = ret_value +
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MS Keukon" onclick="upd_status_tracking(\'' + full.ID_VALAS + '\',\'' + 8 + '\')"><i class="fa fa-arrows-alt"></i></button>';
+                                }
+                            ret_value = ret_value +
                                 '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-close"></i></button>' +
                                 '</div>'
                         }
-                        else if (full.UPDATE_BY !== "dmkeukonap" && full.STATUS_TRACKING == "VERIFIED BY DM" || full.STATUS_TRACKING == "VERIFIED BY MS KEUKON"){
+                        else if (full.UPDATE_BY !== "dmkeukonap" && full.STATUS_TRACKING == "VERIFIED BY DM" || full.STATUS_TRACKING == "VERIFIED BY MS KEUKON") {
 
                             ret_value =
                                 '<div class="btn-group">' +
-                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DM Pembelanjaan" onclick="upd_status_tracking(\'' +full.ID_TRIPARTITE+'\',\'' +4+ '\')"><i class="fa fa-arrows-alt"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>';
+
+                            if(newRoleUser[0] == "ROLE_DM_PEMBELANJAAN" || newRoleUser[0] == "ROLE_ADMIN"){
+                                ret_value = ret_value +
+                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DM Pembelanjaan" onclick="upd_status_tracking(\'' + full.ID_TRIPARTITE + '\',\'' + 4 + '\')"><i class="fa fa-arrows-alt"></i></button>';
+                            }
+                            ret_value = ret_value +
                                 '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-close"></i></button>' +
                                 '</div>'
                         }
-                        else if (full.STATUS_TRACKING == "VERIFIED BY DM PEMBELANJAAN"){
+                        else if (full.STATUS_TRACKING == "VERIFIED BY DM PEMBELANJAAN") {
 
                             ret_value =
                                 '<div class="btn-group">' +
-                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Approve MS" onclick="upd_status_tracking(\'' +full.ID_TRIPARTITE+'\',\'' +5+ '\')"><i class="fa fa-arrows-alt"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>';
+                            if(newRoleUser[0] == "ROLE_MS_PEMBELANJAAN" || newRoleUser[0] == "ROLE_ADMIN"){
+                                ret_value = ret_value +
+                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Approve MS" onclick="upd_status_tracking(\'' + full.ID_TRIPARTITE + '\',\'' + 5 + '\')"><i class="fa fa-arrows-alt"></i></button>';
+                            }
+                                ret_value = ret_value +
                                 '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-close"></i></button>' +
                                 '</div>'
                         }
-                        else if (full.STATUS_TRACKING == "APPROVE BY MS"){
+                        else if (full.STATUS_TRACKING == "APPROVE BY MS") {
 
                             ret_value =
                                 '<div class="btn-group">' +
-                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Lunas" onclick="upd_status_tracking(\'' +full.ID_TRIPARTITE+'\',\'' +7+ '\')"><i class="fa fa-arrows-alt"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>';
+                            if(newRoleUser[0] == "ROLE_ADMIN" || role.includes("KADIV")){
+                                ret_value = ret_value +
+                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Lunas" onclick="upd_status_tracking(\'' + full.ID_TRIPARTITE + '\',\'' + 7 + '\')"><i class="fa fa-arrows-alt"></i></button>';
+                            }
+                                ret_value = ret_value+
+
                                 '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-close"></i></button>' +
@@ -947,110 +968,68 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
 
                 }
 
-            },{
+            }, {
                 "aTargets": [27],
                 "mRender": function (data, type, full) {
-                    var ret_value;
-                    console.log(newRoleUser[0], "user");
-                    console.log("full", full);
+                    var ret_value =
+                        '';
+
                     if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
-                        return "-"
+                        return ""
                     } else {
                         if (full.STATUS_TRACKING == "INPUT DATA") {
+                            ret_value = '<input class="cb" type="checkbox" data-value=\'{"2" : "' + full.ID_TRIPARTITE + '"}\' id="cbcheckbox">';
 
-                            ret_value =
-                                '<div class="btn-group">' +
-                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified User" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +2+ '\')"><i class="fa fa-arrows-alt"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
-                                '</div>'
                         }
                         else if (full.STATUS_TRACKING == "VERIFIED BY USER") {
 
-                            ret_value =
-                                '<div class="btn-group">' +
-                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
-                            if(newRoleUser[0] == "ROLE_DM_ENERGI" || newRoleUser[0] == "ROLE_DM_KEUKON_APLN" || newRoleUser[0] == "ROLE_DM_PENGUSAHAAN" || newRoleUser[0] == "ROLE_ADMIN"){
-                                ret_value = ret_value +'<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DM" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +3+ '\')"><i class="fa fa-arrows-alt"></i></button>';
+                            if (newRoleUser[0] == "ROLE_DM_ENERGI" || newRoleUser[0] == "ROLE_DM_KEUKON_APLN" || newRoleUser[0] == "ROLE_DM_PENGUSAHAAN" || newRoleUser[0] == "ROLE_ADMIN") {
+                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"3" : "' + full.ID_TRIPARTITE + '"}\' id="cbcheckbox">';
+                            } else {
+                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "' + full.ID_TRIPARTITE + '"}\' id="cbcheckbox">';
                             }
-                            ret_value = ret_value +
-                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
-                                '</div>'
                         }
-                        else if (full.STATUS_TRACKING == "VERIFIED BY DM" && full.UPDATE_BY == "dmkeukonap" || full.UPDATE_BY == "dmkeukonslap"){
-                            ret_value =
-                                '<div class="btn-group">' +
-                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
-                            if(newRoleUser[0] == "ROLE_MS_KEUKON" || newRoleUser[0] == "ROLE_ADMIN"){
-                                ret_value = ret_value +
-                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MS Keukon" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +8+ '\')"><i class="fa fa-arrows-alt"></i></button>';
-                            }
-                            ret_value = ret_value +
-                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
-                                '</div>'
-                        }
-                        else if (full.UPDATE_BY == "dmkeukonslap" && full.STATUS_TRACKING == "VERIFIED BY DM" || full.UPDATE_BY !== "dmkeukonap" && full.STATUS_TRACKING == "VERIFIED BY DM" || full.STATUS_TRACKING == "VERIFIED BY MS KEUKON"){
+                        else if (full.STATUS_TRACKING == "VERIFIED BY DM" && full.UPDATE_BY == "dmkeukonap" || full.UPDATE_BY == "dmkeukonslap") {
 
-                            ret_value =
-                                '<div class="btn-group">' +
-                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
-                            if(newRoleUser[0] == "ROLE_DM_PEMBELANJAAN" || newRoleUser[0] == "ROLE_ADMIN"){
-                                ret_value = ret_value +
-                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DM Pembelanjaan" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +4+ '\')"><i class="fa fa-arrows-alt"></i></button>';
+                            if (newRoleUser[0] == "ROLE_MS_KEUKON" || newRoleUser[0] == "ROLE_ADMIN") {
+                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"8" : "' + full.ID_TRIPARTITE + '"}\' id="cbcheckbox">';
+                            } else {
+                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "' + full.ID_TRIPARTITE + '"}\' id="cbcheckbox">';
                             }
-                            ret_value = ret_value +
-                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
-                                '</div>'
                         }
-                        else if (full.STATUS_TRACKING == "VERIFIED BY DM PEMBELANJAAN"){
-
-                            ret_value =
-                                '<div class="btn-group">' +
-                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
-                            if(newRoleUser[0] == "ROLE_MS_PEMBELANJAAN" || newRoleUser[0] == "ROLE_ADMIN"){
-                                ret_value = ret_value +
-                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Approve MS" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +5+ '\')"><i class="fa fa-arrows-alt"></i></button>';
+                        else if (full.UPDATE_BY == "dmkeukonslap" && full.STATUS_TRACKING == "VERIFIED BY DM"
+                            || full.UPDATE_BY !== "dmkeukonap" && full.STATUS_TRACKING == "VERIFIED BY DM"
+                            || full.STATUS_TRACKING == "VERIFIED BY MS KEUKON") {
+                            if (newRoleUser[0] == "ROLE_DM_PEMBELANJAAN" || newRoleUser[0] == "ROLE_ADMIN") {
+                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"4" : "' + full.ID_TRIPARTITE + '"}\' id="cbcheckbox">';
+                            } else {
+                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "' + full.ID_TRIPARTITE + '"}\' id="cbcheckbox">';
                             }
-                            ret_value = ret_value +
-                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
-                                '</div>'
                         }
-                        else if (full.STATUS_TRACKING == "APPROVE BY MS"){
+                        else if (full.STATUS_TRACKING == "VERIFIED BY DM PEMBELANJAAN") {
 
-                            ret_value =
-                                '<div class="btn-group">' +
-                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
+                            if (newRoleUser[0] == "ROLE_MS_PEMBELANJAAN" || newRoleUser[0] == "ROLE_ADMIN") {
+                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"5" : "' + full.ID_TRIPARTITE + '"}\' id="cbcheckbox">';
+                            } else {
+                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "' + full.ID_TRIPARTITE + '"}\' id="cbcheckbox">';
+                            }
+                        }
+                        else if (full.STATUS_TRACKING == "APPROVE BY KADIV") {
                             var role = newRoleUser[0];
-                            if(role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN"){
-                                ret_value = ret_value +
-                                    '<button style="width: 15px !important;" id="option-lunas" class="btn-lunas btn-sm btn-warning" title="Lunas" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +7+ '\')"><i class="fa fa-arrows-alt"></i></button>';
+
+                            if (role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN") {
+                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"7" : "' + full.ID_TRIPARTITE + '"}\' id="cbcheckbox">';
+                            } else {
+                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "' + full.ID_TRIPARTITE + '"}\' id="cbcheckbox">';
                             }
-                            ret_value = ret_value +
-                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
-                                '</div>'
                         }
                         else {
-                            ret_value =
-                                '<div class="btn-group">' +
-                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                '</div>'
+                            ret_value = '<input class="cb" type="checkbox" data-value=\'{"0" : "' + full.ID_TRIPARTITE + '"}\' id="cbcheckbox" enabled="false">';
                         }
                     }
                     return ret_value;
                 }
+
             }
         ],
         "ajax": {
@@ -1074,7 +1053,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
             $('th').removeClass('datatables_action');
             $('th').addClass('th-middle');
 
-
             $("#option-lunas").hide();
             $("#option-input").hide();
             $("#option-siap").hide();
@@ -1095,7 +1073,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
             }
         }
     });
-     // $("div.toolbar").html('<b>Custom tool bar! Text/images etc.</b>');
+    // $("div.toolbar").html('<b>Custom tool bar! Text/images etc.</b>');
     table_trepartite.on('search.dt', function () {
         var value = $('.dataTables_filter input').val();
         console.log(value); // <-- the value
@@ -1103,7 +1081,8 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
     });
 
     $('.dataTables_filter').each(function () {
-        $(this).append('<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_data()">Verified</button><button class="btn btn-verified btn-danger btn-sm" id="btn-hapus" style="margin-left: 10px" type="button" onclick="delete_datas()">Hapus</button>');
+        $(this).append('<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
+            '<button class="btn btn-verified btn-danger btn-sm" id="btn-hapus" style="margin-left: 10px" type="button" onclick="delete_datas()"><i class="fa fa-close"></i></button>');
     });
     /*$("#table-trepartite").on('change',"input[type='checkbox']",function(e){
         //your code
@@ -1119,14 +1098,14 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
 
 }
 
-function update_data() {
-    var id= $("#table-trepartite input[type=checkbox]:checked").map(function() {
+function update_datas() {
+    var id = $("#table-trepartite input[type=checkbox]:checked").map(function () {
         return $(this).data("value");
     }).get();
     var obj = new Object();
     obj = id;
     console.log("obj", obj);
-    console.log("id",id.toString());
+    console.log("id", id.toString());
     $.ajax({
         url: baseUrl + "api_operator/pembayaran/multi_upd_status",
         dataType: 'JSON',
@@ -1152,16 +1131,18 @@ function update_data() {
 }
 
 function delete_datas() {
-    var id= $("#table-trepartite input[type=checkbox]:checked").map(function() {
-        return $(this).attr("value");
+    var id = $("#table-trepartite input[type=checkbox]:checked").map(function () {
+        return $(this).data("value");
     }).get();
-    console.log("id",id.toString());
+    var obj = new Object();
+    obj = id;
+    console.log("id", id.toString());
     $.ajax({
-        url: baseUrl + "api_operator/pembayaran/multi_upd_status",
+        url: baseUrl + "api_operator/pembayaran/multi_del_data",
         dataType: 'JSON',
         type: "POST",
         data: {
-            pData: id.toString()
+            pData: JSON.stringify(obj),
         },
         success: function (res) {
             hideLoadingCss("")
@@ -1187,10 +1168,10 @@ function upload_file(pIdValas) {
 
 }
 
-function upd_status_tracking(idTripartite , pStatusinvoice){
+function upd_status_tracking(idTripartite, pStatusinvoice) {
     showLoadingCss();
-    console.log("idvalas :",idTripartite);
-    console.log("satusinvoice :",pStatusinvoice);
+    console.log("idvalas :", idTripartite);
+    console.log("satusinvoice :", pStatusinvoice);
     $.ajax({
         url: baseUrl + "api_operator/pembayaran/upd_status",
         dataType: 'JSON',
@@ -1387,7 +1368,7 @@ function update_status() {
     });
 }
 
-function upload_xls(pIdValas){
+function upload_xls(pIdValas) {
     $("#modal-upload-xls").modal("show");
 }
 
@@ -1414,7 +1395,7 @@ function upload_server_xls(jenisFile) {
         processData: false,
         success: function (res) {
             hideLoadingCss("");
-            console.log("res",res);
+            console.log("res", res);
             if (res.V_RETURN == 0) {
                 alert("sukses");
 //                location.reload();
@@ -1422,7 +1403,7 @@ function upload_server_xls(jenisFile) {
             } else {
                 var obj = res.return[0];
                 alert("Terdapat kesalahan pada data. Download excel?");
-                window.location = "../api_operator/tripartite/download/"+obj["ID_UPLOAD"];
+                window.location = "../api_operator/tripartite/download/" + obj["ID_UPLOAD"];
                 search("load");
             }
         },

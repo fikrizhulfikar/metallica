@@ -329,9 +329,13 @@ public class PembayaranController {
                 String value = json.getString(key);
                 AppUtils.getLogger(this).debug("  {}: {} ", key, value);
                 try {
-                    out = valasService.deletePembayaran(value);
-                    AppUtils.getLogger(this).debug("update {} : {} ", value, key);
-                    AppUtils.getLogger(this).debug("idValas deleted : {} ", value);
+                    if(value.contains("TRIPARTITE")){
+                        out = valasService.deleteTripartite(value);
+                    }
+                    else {
+                        out = valasService.deletePembayaran(value);
+                    }
+                    AppUtils.getLogger(this).debug("id deleted : {} ", value);
                 } catch (Exception e) {
                     e.printStackTrace();
                     out = null;

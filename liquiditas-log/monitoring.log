@@ -42,3 +42,105 @@
 2018-07-03 10:53:27,285 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
 2018-07-03 10:54:24,947 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=569, NOMOR=1, ID_KETERANGAN=KT666, NAMA_KETERANGAN=TEST UPLOAD XLS, JENIS=CALL SPREAD OPTION, FLAG_TAMPIL=TAMPIL, STATUS_UPLOAD=-1, CREATE_BY=admin, CREATE_DATE=03-JUL-18, OUT_MSG=null}], V_RETURN=1} 
 2018-07-03 10:54:45,332 DEBUG c.i.l.m.c.m.MasterDataController - Masuknih : {return=[{ID_UPLOAD=570, NOMOR=1, ID_KETERANGAN=KT666, NAMA_KETERANGAN=TEST UPLOAD XLS, JENIS=CALL SPREAD OPTION, FLAG_TAMPIL=TAMPIL, STATUS_UPLOAD=-1, CREATE_BY=admin, CREATE_DATE=03-JUL-18, OUT_MSG=null}], V_RETURN=1} 
+2018-07-03 10:57:00,799 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
+2018-07-03 10:57:40,444 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180608-000000027  
+2018-07-03 10:59:06,952 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180608-000000026  
+2018-07-03 11:08:39,413 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180702-000000008  
+2018-07-03 11:09:29,263 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180702-000000008  
+2018-07-03 11:10:08,545 DEBUG c.i.l.m.config.SecurityConfig$1 - User 'kasirvalas' not found 
+2018-07-03 11:10:32,373 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180702-000000008  
+2018-07-03 11:12:59,607 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180702-000000008  
+2018-07-03 11:16:39,591 DEBUG c.i.l.m.c.o.PembayaranController - idValas : REKAP/20180702-000000008  
+2018-07-03 11:28:37,387 DEBUG c.i.l.m.c.o.PembayaranController - pdata : [{"7":"REKAP/20180628-000000011"}]  
+2018-07-03 11:28:37,387 DEBUG c.i.l.m.c.o.PembayaranController - JSONValas : {"7":"REKAP/20180628-000000011"}  
+2018-07-03 11:28:37,397 DEBUG c.i.l.m.c.o.PembayaranController - jsonobject : {"7":"REKAP/20180628-000000011"}  
+2018-07-03 11:28:37,400 DEBUG c.i.l.m.c.o.PembayaranController -   7: REKAP/20180628-000000011  
+2018-07-03 11:28:37,437 DEBUG c.i.l.m.c.o.PembayaranController - update REKAP/20180628-000000011 : 7  
+2018-07-03 11:28:37,438 DEBUG c.i.l.m.c.o.PembayaranController - statusInvoice : {OUT_MSG=DATA BERHASIL DIUBAH, return=1}  
+2018-07-03 13:13:58,695 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
+2018-07-03 13:20:18,080 DEBUG c.i.l.m.c.o.PembayaranController - pdata : [{"2":"undefined"}]  
+2018-07-03 13:20:18,081 DEBUG c.i.l.m.c.o.PembayaranController - JSONValas : {"2":"undefined"}  
+2018-07-03 13:20:18,085 DEBUG c.i.l.m.c.o.PembayaranController - jsonobject : {"2":"undefined"}  
+2018-07-03 13:20:18,085 DEBUG c.i.l.m.c.o.PembayaranController -   2: undefined  
+2018-07-03 13:20:18,144 DEBUG c.i.l.m.c.o.PembayaranController - update undefined : 2  
+2018-07-03 13:20:18,145 DEBUG c.i.l.m.c.o.PembayaranController - statusInvoice : {OUT_MSG=DATA TIDAK DITEMUKAN, return=0}  
+2018-07-03 13:21:29,120 DEBUG c.i.l.m.c.o.PembayaranController - pdata : [{"2":"undefined"}]  
+2018-07-03 13:21:29,120 DEBUG c.i.l.m.c.o.PembayaranController - JSONValas : {"2":"undefined"}  
+2018-07-03 13:21:29,120 DEBUG c.i.l.m.c.o.PembayaranController - jsonobject : {"2":"undefined"}  
+2018-07-03 13:21:29,120 DEBUG c.i.l.m.c.o.PembayaranController -   2: undefined  
+2018-07-03 13:21:29,150 DEBUG c.i.l.m.c.o.PembayaranController - update undefined : 2  
+2018-07-03 13:21:29,150 DEBUG c.i.l.m.c.o.PembayaranController - statusInvoice : {OUT_MSG=DATA TIDAK DITEMUKAN, return=0}  
+2018-07-03 13:22:13,873 DEBUG c.i.l.m.c.o.PembayaranController - pdata : [{"3":"REKAP/20180628-000000009"}]  
+2018-07-03 13:22:13,873 DEBUG c.i.l.m.c.o.PembayaranController - JSONValas : {"3":"REKAP/20180628-000000009"}  
+2018-07-03 13:22:13,873 DEBUG c.i.l.m.c.o.PembayaranController - jsonobject : {"3":"REKAP/20180628-000000009"}  
+2018-07-03 13:22:13,873 DEBUG c.i.l.m.c.o.PembayaranController -   3: REKAP/20180628-000000009  
+2018-07-03 13:22:13,920 DEBUG c.i.l.m.c.o.PembayaranController - update REKAP/20180628-000000009 : 3  
+2018-07-03 13:22:13,920 DEBUG c.i.l.m.c.o.PembayaranController - statusInvoice : {OUT_MSG=DATA BERHASIL DIUBAH, return=1}  
+2018-07-03 13:26:18,503 DEBUG c.i.l.m.c.o.PembayaranController - pdata : [{"2":"undefined"}]  
+2018-07-03 13:26:18,503 DEBUG c.i.l.m.c.o.PembayaranController - JSONValas : {"2":"undefined"}  
+2018-07-03 13:26:18,503 DEBUG c.i.l.m.c.o.PembayaranController - jsonobject : {"2":"undefined"}  
+2018-07-03 13:26:18,503 DEBUG c.i.l.m.c.o.PembayaranController -   2: undefined  
+2018-07-03 13:26:18,554 DEBUG c.i.l.m.c.o.PembayaranController - update undefined : 2  
+2018-07-03 13:26:18,554 DEBUG c.i.l.m.c.o.PembayaranController - statusInvoice : {OUT_MSG=DATA TIDAK DITEMUKAN, return=0}  
+2018-07-03 13:29:29,238 DEBUG c.i.l.m.c.o.PembayaranController - pdata : [{"2":"TRIPARTITE/20180626-000000001"}]  
+2018-07-03 13:29:29,238 DEBUG c.i.l.m.c.o.PembayaranController - JSONValas : {"2":"TRIPARTITE/20180626-000000001"}  
+2018-07-03 13:29:29,239 DEBUG c.i.l.m.c.o.PembayaranController - jsonobject : {"2":"TRIPARTITE/20180626-000000001"}  
+2018-07-03 13:29:29,239 DEBUG c.i.l.m.c.o.PembayaranController -   2: TRIPARTITE/20180626-000000001  
+2018-07-03 13:29:29,337 DEBUG c.i.l.m.c.o.PembayaranController - update TRIPARTITE/20180626-000000001 : 2  
+2018-07-03 13:29:29,337 DEBUG c.i.l.m.c.o.PembayaranController - statusInvoice : {OUT_MSG=DATA BERHASIL DIUBAH, return=1}  
+2018-07-03 13:29:50,424 DEBUG c.i.l.m.c.o.PembayaranController - pdata : [{"3":"TRIPARTITE/20180626-000000001"},{"2":"TRIPARTITE/20180626-000000002"}]  
+2018-07-03 13:29:50,424 DEBUG c.i.l.m.c.o.PembayaranController - JSONValas : {"3":"TRIPARTITE/20180626-000000001"},{"2":"TRIPARTITE/20180626-000000002"}  
+2018-07-03 13:29:50,424 DEBUG c.i.l.m.c.o.PembayaranController - jsonobject : {"3":"TRIPARTITE/20180626-000000001"}  
+2018-07-03 13:29:50,424 DEBUG c.i.l.m.c.o.PembayaranController -   3: TRIPARTITE/20180626-000000001  
+2018-07-03 13:29:50,475 DEBUG c.i.l.m.c.o.PembayaranController - update TRIPARTITE/20180626-000000001 : 3  
+2018-07-03 13:29:50,475 DEBUG c.i.l.m.c.o.PembayaranController - jsonobject : {"2":"TRIPARTITE/20180626-000000002"}  
+2018-07-03 13:29:50,475 DEBUG c.i.l.m.c.o.PembayaranController -   2: TRIPARTITE/20180626-000000002  
+2018-07-03 13:29:50,514 DEBUG c.i.l.m.c.o.PembayaranController - update TRIPARTITE/20180626-000000002 : 2  
+2018-07-03 13:29:50,514 DEBUG c.i.l.m.c.o.PembayaranController - statusInvoice : {OUT_MSG=DATA BERHASIL DIUBAH, return=1}  
+2018-07-03 13:30:07,841 DEBUG c.i.l.m.c.o.PembayaranController - pdata : [{"3":"TRIPARTITE/20180626-000000002"}]  
+2018-07-03 13:30:07,841 DEBUG c.i.l.m.c.o.PembayaranController - JSONValas : {"3":"TRIPARTITE/20180626-000000002"}  
+2018-07-03 13:30:07,841 DEBUG c.i.l.m.c.o.PembayaranController - jsonobject : {"3":"TRIPARTITE/20180626-000000002"}  
+2018-07-03 13:30:07,841 DEBUG c.i.l.m.c.o.PembayaranController -   3: TRIPARTITE/20180626-000000002  
+2018-07-03 13:30:07,878 DEBUG c.i.l.m.c.o.PembayaranController - update TRIPARTITE/20180626-000000002 : 3  
+2018-07-03 13:30:07,878 DEBUG c.i.l.m.c.o.PembayaranController - statusInvoice : {OUT_MSG=DATA BERHASIL DIUBAH, return=1}  
+2018-07-03 13:31:10,051 DEBUG c.i.l.m.c.o.PembayaranController - pdata : [{"4":"TRIPARTITE/20180626-000000001"},{"4":"TRIPARTITE/20180626-000000002"}]  
+2018-07-03 13:31:10,052 DEBUG c.i.l.m.c.o.PembayaranController - JSONValas : {"4":"TRIPARTITE/20180626-000000001"},{"4":"TRIPARTITE/20180626-000000002"}  
+2018-07-03 13:31:10,052 DEBUG c.i.l.m.c.o.PembayaranController - jsonobject : {"4":"TRIPARTITE/20180626-000000001"}  
+2018-07-03 13:31:10,052 DEBUG c.i.l.m.c.o.PembayaranController -   4: TRIPARTITE/20180626-000000001  
+2018-07-03 13:31:10,091 DEBUG c.i.l.m.c.o.PembayaranController - update TRIPARTITE/20180626-000000001 : 4  
+2018-07-03 13:31:10,091 DEBUG c.i.l.m.c.o.PembayaranController - jsonobject : {"4":"TRIPARTITE/20180626-000000002"}  
+2018-07-03 13:31:10,092 DEBUG c.i.l.m.c.o.PembayaranController -   4: TRIPARTITE/20180626-000000002  
+2018-07-03 13:31:10,125 DEBUG c.i.l.m.c.o.PembayaranController - update TRIPARTITE/20180626-000000002 : 4  
+2018-07-03 13:31:10,125 DEBUG c.i.l.m.c.o.PembayaranController - statusInvoice : {OUT_MSG=DATA BERHASIL DIUBAH, return=1}  
+2018-07-03 13:31:46,986 DEBUG c.i.l.m.c.o.PembayaranController - pdata : [{"5":"TRIPARTITE/20180626-000000002"}]  
+2018-07-03 13:31:46,987 DEBUG c.i.l.m.c.o.PembayaranController - JSONValas : {"5":"TRIPARTITE/20180626-000000002"}  
+2018-07-03 13:31:46,987 DEBUG c.i.l.m.c.o.PembayaranController - jsonobject : {"5":"TRIPARTITE/20180626-000000002"}  
+2018-07-03 13:31:46,987 DEBUG c.i.l.m.c.o.PembayaranController -   5: TRIPARTITE/20180626-000000002  
+2018-07-03 13:31:47,058 DEBUG c.i.l.m.c.o.PembayaranController - update TRIPARTITE/20180626-000000002 : 5  
+2018-07-03 13:31:47,058 DEBUG c.i.l.m.c.o.PembayaranController - statusInvoice : {OUT_MSG=DATA BERHASIL DIUBAH, return=1}  
+2018-07-03 13:46:14,497 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
+2018-07-03 13:50:41,364 DEBUG c.i.l.m.c.o.PembayaranController - pdata : [{"5":"TRIPARTITE/20180626-000000001"},{"0":"TRIPARTITE/20180626-000000002"}]  
+2018-07-03 13:50:41,364 DEBUG c.i.l.m.c.o.PembayaranController - JSONValas : {"5":"TRIPARTITE/20180626-000000001"},{"0":"TRIPARTITE/20180626-000000002"}  
+2018-07-03 13:50:41,369 DEBUG c.i.l.m.c.o.PembayaranController - jsonobject : {"5":"TRIPARTITE/20180626-000000001"}  
+2018-07-03 13:50:41,374 DEBUG c.i.l.m.c.o.PembayaranController -   5: TRIPARTITE/20180626-000000001  
+2018-07-03 13:50:41,423 DEBUG c.i.l.m.c.o.PembayaranController - update TRIPARTITE/20180626-000000001 : 5  
+2018-07-03 13:50:41,423 DEBUG c.i.l.m.c.o.PembayaranController - jsonobject : {"0":"TRIPARTITE/20180626-000000002"}  
+2018-07-03 13:50:41,423 DEBUG c.i.l.m.c.o.PembayaranController -   0: TRIPARTITE/20180626-000000002  
+2018-07-03 13:50:41,461 DEBUG c.i.l.m.c.o.PembayaranController - update TRIPARTITE/20180626-000000002 : 0  
+2018-07-03 13:50:41,462 DEBUG c.i.l.m.c.o.PembayaranController - statusInvoice : {OUT_MSG=DATA BERHASIL DIUBAH, return=1}  
+2018-07-03 13:50:58,434 DEBUG c.i.l.m.c.o.PembayaranController - pdata :   
+2018-07-03 13:50:58,435 DEBUG c.i.l.m.c.o.PembayaranController - JSONValas :   
+2018-07-03 13:53:29,617 DEBUG c.i.l.m.c.o.PembayaranController - JSONValas :   
+2018-07-03 13:54:58,156 DEBUG c.i.l.m.c.o.PembayaranController - JSONValas :   
+2018-07-03 13:55:31,002 DEBUG c.i.l.m.c.o.PembayaranController - JSONValas :   
+2018-07-03 13:56:22,947 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
+2018-07-03 13:57:08,607 DEBUG c.i.l.m.c.o.PembayaranController - JSONValas : {"0":"TRIPARTITE/20180626-000000001"}  
+2018-07-03 13:57:08,614 DEBUG c.i.l.m.c.o.PembayaranController - jsonobject : {"0":"TRIPARTITE/20180626-000000001"}  
+2018-07-03 13:57:08,617 DEBUG c.i.l.m.c.o.PembayaranController -   0: TRIPARTITE/20180626-000000001  
+2018-07-03 13:57:08,670 DEBUG c.i.l.m.c.o.PembayaranController - update TRIPARTITE/20180626-000000001 : 0  
+2018-07-03 13:57:08,670 DEBUG c.i.l.m.c.o.PembayaranController - idValas deleted : TRIPARTITE/20180626-000000001  
+2018-07-03 13:59:51,833 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
+2018-07-03 14:01:38,054 DEBUG c.i.l.m.c.o.PembayaranController - JSONValas : {"0":"TRIPARTITE/20180626-000000001"}  
+2018-07-03 14:01:38,067 DEBUG c.i.l.m.c.o.PembayaranController - jsonobject : {"0":"TRIPARTITE/20180626-000000001"}  
+2018-07-03 14:01:38,069 DEBUG c.i.l.m.c.o.PembayaranController -   0: TRIPARTITE/20180626-000000001  
+2018-07-03 14:01:38,133 DEBUG c.i.l.m.c.o.PembayaranController - id deleted : TRIPARTITE/20180626-000000001  

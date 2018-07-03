@@ -740,7 +740,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                                         '<div class="btn-group">' +
                                         '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
                                         if(newRoleUser[0] == "ROLE_DM_ENERGI" || newRoleUser[0] == "ROLE_DM_KEUKON_APLN" || newRoleUser[0] == "ROLE_DM_PENGUSAHAAN" || newRoleUser[0] == "ROLE_ADMIN"){
-                                            ret_value = ret_value +'<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DM" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +3+ '\')"><i class="fa fa-arrows-alt"></i></button>';
+                                                ret_value = ret_value +'<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DM" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +3+ '\')"><i class="fa fa-arrows-alt"></i></button>';
                                         }
                                         ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
@@ -1010,7 +1010,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
     });
 
     $('.dataTables_filter').each(function () {
-        $(this).append('<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_data()"><i class="fa fa-arrows-alt"></i></button>' +
+        $(this).append('<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
             '<button class="btn btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="multiDelete()"><i class="fa fa-close"></i></button>');
     });
 
@@ -1059,7 +1059,7 @@ function upd_status_tracking(idValas , pStatusinvoice){
     });
 }
 
-function update_data() {
+function update_datas() {
     var id= $("#table-rekapitulasi input[type=checkbox]:checked").map(function() {
         return $(this).data("value");
     }).get();
