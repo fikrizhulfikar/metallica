@@ -201,7 +201,7 @@
         var list = document.getElementById("notification_div");
         list.insertBefore(newItem, list.childNodes[2]);
 
-        var count = Integer.parseInt($("#notification_count").html());
+        var count = parseInt($("#notification_count").html());
         count+=1;
         $("#notification_count").html(count);
         $("#notification_count_title").html('You have ' + count + ' unread message.');
