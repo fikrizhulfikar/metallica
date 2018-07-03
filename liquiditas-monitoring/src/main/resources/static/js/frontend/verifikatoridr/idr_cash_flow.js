@@ -147,7 +147,9 @@ function dateToString(d) {
 }
 
 function spasi(sp) {
-    if (sp === 4 || sp === "4"){
+    if (sp === 0 || sp === "0"){
+      return '<a>&nbsp;</a>'
+    }if (sp === 4 || sp === "4"){
       return '<a>&nbsp;&nbsp;&nbsp;&nbsp;</a>'
     }if (sp === 8 || sp === "8"){
       return '<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>'
