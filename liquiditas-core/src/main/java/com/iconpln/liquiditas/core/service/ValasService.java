@@ -280,6 +280,7 @@ public class ValasService {
                 Row rrow = sheet.getRow(row.getRowNum());
                 int totalCell = sheet.getRow(0).getLastCellNum();
                 if(!isRowEmpty(rrow, totalCell)){
+                    System.out.println("ISROWEMPTY"+ isRowEmpty(rrow, totalCell));
                     for (int cellNum = 0; cellNum < totalCell; cellNum++) {
 
                         if (rrow.getCell(cellNum) == null) {
@@ -303,7 +304,6 @@ public class ValasService {
                             AppUtils.getLogger(this).info("datastring {}: {}", rrow.getCell(cellNum).toString(), row.getCell(cellNum).getCellType());
                         }
                     }
-                    AppUtils.getLogger(this).debug("idproduct{}", idDerivatif);
                     AppUtils.getLogger(this).debug("nilaiX : {}", x);
                     if (x > 0 /*||
                         !list.get(0).toLowerCase().equals("tanggal deal") && !list.get(0).isEmpty()*/) {
@@ -1649,8 +1649,10 @@ public class ValasService {
     }
 
     public boolean isRowEmpty(Row row, int rowSize){
+        System.out.println("ROWSIZE ; "+rowSize);
         for(int x = 0; x < rowSize; x++){
-            if(row.getCell(x) != null){
+            System.out.println("ISI ROW : "+ row.getCell(x));
+            if(row.getCell(x) != null && row.getCell(x).toString().length() > 0){
                 return false;
             }
         }
