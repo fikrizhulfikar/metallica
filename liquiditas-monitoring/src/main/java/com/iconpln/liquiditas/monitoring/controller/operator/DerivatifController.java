@@ -345,7 +345,6 @@ public class DerivatifController {
                 paramDetail.put("NOTIONAL_USD", data.get("NOTIONAL_USD"));
                 paramDetail.put("LIBOR", data.get("LIBOR"));
                 paramDetail.put("SUKU_BUNGA_USD", data.get("SUKU_BUNGA_USD"));
-                paramDetail.put("SUKU_BUNGA_USD", data.get("SUKU_BUNGA_USD"));
                 paramDetail.put("RECEIVE_PRINCIPAL", data.get("RECEIVE_PRINCIPAL"));
                 paramDetail.put("RECEIVE_COUPON", data.get("RECEIVE_COUPON"));
                 paramDetail.put("TOTAL_PENERIMAAN", data.get("TOTAL_PENERIMAAN"));

@@ -292,11 +292,6 @@ function generatePDF() {
         alignment: "center"
     });
     column.push({
-        text: "SUKU BUNGA USD (LIBOR 6M+2%)(%)",
-        style: "tableHeader",
-        alignment: "center"
-    });
-    column.push({
         text: "PLN RECEIVE PRINCIPAL (USD)",
         style: "tableHeader",
         alignment: "center"
@@ -372,7 +367,6 @@ function generatePDF() {
             NATIONAL_USD: v.NOTIONAL_USD ,
             LIBOR_6M: v.LIBOR,
             SUKU_BUNGA_USD_LIBOR_6M2: v.SUKU_BUNGA_USD  ,
-            SUKU_BUNGA_USD_LIBOR_6M2: v.SUKU_BUNGA_USD  ,
             PLN_RECEIVE_PRINCIPAL_USD: v.RECEIVE_PRINCIPAL ,
             PLN_RECEIVE_COUPON_USD: v.RECEIVE_COUPON ,
             TOTAL_PENERIMAAN_PLN_USD: v.TOTAL_PENERIMAAN,
@@ -422,7 +416,6 @@ function generatePDF() {
             dataRow.push(row["JUMLAH_HARI"]);
             dataRow.push(row["NATIONAL_USD"]);
             dataRow.push(row["LIBOR_6M"]);
-            dataRow.push(row["SUKU_BUNGA_USD_LIBOR_6M2"]);
             dataRow.push(row["SUKU_BUNGA_USD_LIBOR_6M2"]);
             dataRow.push(row["PLN_RECEIVE_PRINCIPAL_USD"]);
             dataRow.push(row["PLN_RECEIVE_COUPON_USD"]);
@@ -576,27 +569,26 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pTenor) {
             {width: 100, targets: 8},
             {width: 100, targets: 9},
             {width: 140, targets: 10},
-            {width: 140, targets: 11},
+            {width: 130, targets: 11},
             {width: 130, targets: 12},
             {width: 130, targets: 13},
-            {width: 130, targets: 14},
+            {width: 100, targets: 14},
             {width: 100, targets: 15},
-            {width: 100, targets: 16},
+            {width: 130, targets: 17},
             {width: 130, targets: 18},
-            {width: 130, targets: 19},
-            {width: 120, targets: 20},
+            {width: 120, targets: 19},
+            {width: 140, targets: 20},
             {width: 140, targets: 21},
-            {width: 140, targets: 22},
-            {width: 120, targets: 23},
-            {width: 130, targets: 24},
+            {width: 120, targets: 22},
+            {width: 130, targets: 23},
             {className: "datatables_action", "targets": [8,9,10,12,13,14,17,18,19,20,21,22,24]},
             {
                 "bSortable": true,
-                "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 ,24, 25]
+                "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 ,24]
             }
             ,
             {
-                "aTargets": [25],
+                "aTargets": [24],
                 "mRender": function (data, type, full) {
                     if(newRoleUser[0] == "ROLE_MS_LIKUIDITAS"){
                         return "-"
@@ -713,7 +705,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pTenor) {
             {"data": "JUMLAH_HARI", "defaultContent": ""},
             {"data": "NOTIONAL_USD", "defaultContent": ""},
             {"data": "LIBOR", "defaultContent": ""},
-            {"data": "SUKU_BUNGA_USD", "defaultContent": ""},
             {"data": "SUKU_BUNGA_USD", "defaultContent": ""},
             {"data": "RECEIVE_PRINCIPAL", "defaultContent": ""},
             {"data": "RECEIVE_COUPON", "defaultContent": ""},
