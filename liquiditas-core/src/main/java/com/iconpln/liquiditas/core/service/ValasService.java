@@ -1653,6 +1653,7 @@ public class ValasService {
         for(int x = 0; x < rowSize; x++){
             System.out.println("ISI ROW : "+ row.getCell(x));
             if(row.getCell(x) != null && row.getCell(x).toString().length() > 0){
+                System.out.println("PANJANG :"+ row.getCell(x).toString().length());
                 return false;
             }
         }

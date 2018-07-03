@@ -1017,6 +1017,11 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
         var value = $('.dataTables_filter input').val();
         tempTableSearch = value;
     });
+    $('#forcbparent').append("<input type=\"checkbox\" id='cbparent'> ");
+
+    $("#cbparent").click(function(){
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
 
     $('.dataTables_filter').each(function () {
         $(this).append('<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
