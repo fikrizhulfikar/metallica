@@ -1,6 +1,10 @@
 /**
  * Created by israjhaliri on 1/22/18.
  */
+
+var norut9, norut10, norut11, norut12, norut13, norut15, norut16, norut17 ;
+
+
 $(document).ready(function () {
     initDataTable();
     setInterval(function () {
@@ -39,33 +43,34 @@ function initDataTable() {
                     }
                     var canEdit = isCanEdit(val.NOURUT);
                     var html = "";
+
                     if (canEdit == -1) {
                         html = '<tr>' +
-                            '<td style="color: black">' + no + '</td>' +
-                            '<td style="color: black">' + val.KETERANGAN + '</td>' +
-                            '<td>-</td>' +
-                            '<td style="color: black">' + val.TANGGAL1 + '</td>' +
-                            '<td style="color: black">' + val.TANGGAL2 + '</td>' +
-                            '<td style="color: black">' + val.TANGGAL3 + '</td>' +
-                            '<td style="color: black">' + val.TANGGAL4 + '</td>' +
-                            '<td style="color: black">' + val.TANGGAL5 + '</td>' +
-                            '<td style="color: black">' + val.TANGGAL6 + '</td>' +
-                            '<td style="color: black">' + val.TANGGAL7 + '</td>' +
-                            '<td style="background-color:#67a2d8;color: white">' + val.TOTAL + '</td>' +
+                            '<td style="color: black" align="center">' + no + '</td>' +
+                            '<td style="color: black">'+'<a>&nbsp;</a>'+ val.KETERANGAN + '</td>' +
+                            '<td></td>' +
+                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL1, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL2, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL3, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL4, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL5, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL6, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL7, 2, ".", ",") + '</td>' +
+                            '<td style="background-color:#67a2d8;color: white" align="right">' + accounting.formatNumber(val.TOTAL, 2, ".", ",") + '</td>'
                             '</tr>';
                     } else {
                         html = '<tr id="'+val.NOURUT+'">' +
-                            '<td style="color: black">' + no + '</td>' +
+                            '<td style="color: black" align="center">' + no + '</td>' +
                             '<td style="color: black">' + val.KETERANGAN + '</td>' +
                             '<td style="text-align:center"><img src="/static/images/add.svg" height="12.5" width="12.5" onclick="showModal(\''+val.NOURUT+'\')"/></td>' +
-                            '<td style="color: black">' + val.TANGGAL1 + '</td>' +
-                            '<td style="color: black">' + val.TANGGAL2 + '</td>' +
-                            '<td style="color: black">' + val.TANGGAL3 + '</td>' +
-                            '<td style="color: black">' + val.TANGGAL4 + '</td>' +
-                            '<td style="color: black">' + val.TANGGAL5 + '</td>' +
-                            '<td style="color: black">' + val.TANGGAL6 + '</td>' +
-                            '<td style="color: black">' + val.TANGGAL7 + '</td>' +
-                            '<td style="background-color:#67a2d8;color: white">' + val.TOTAL + '</td>' +
+                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL1, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL2, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL3, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL4, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL5, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL6, 2, ".", ",") + '</td>' +
+                            '<td style="color: black" align="right">' + accounting.formatNumber(val.TANGGAL7, 2, ".", ",") + '</td>' +
+                            '<td style="background-color:#67a2d8;color: white" align="right">' + accounting.formatNumber(val.TOTAL, 2, ".", ",") + '</td>'
                             '</tr>';
                     }
                     $('#table-main tbody').append(html);
@@ -205,6 +210,7 @@ function simpan() {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(json),
         success: function (d) {
+            location.reload();
 
         },
         error: function (e) {
