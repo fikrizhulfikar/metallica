@@ -784,7 +784,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                                         '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
                                     if(newRoleUser[0] == "ROLE_MS_PEMBELANJAAN" || newRoleUser[0] == "ROLE_ADMIN"){
                                         ret_value = ret_value +
-                                            '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Approve MS" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +10+ '\')"><i class="fa fa-arrows-alt"></i></button>';
+                                            '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Approve MS" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +5+ '\')"><i class="fa fa-arrows-alt"></i></button>';
                                     }
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
@@ -792,7 +792,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                                         '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
                                         '</div>'
                                 }
-                                else if (full.STATUS_TRACKING == "APPROVE BY MS"){//ini
+                                else if (full.STATUS_TRACKING == "APPROVE BY MS"){
 
                                     ret_value =
                                         '<div class="btn-group">' +
@@ -800,7 +800,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                                         var role = newRoleUser[0];
                                         if(newRoleUser[0] == "ROLE_ADMIN" || role.includes("KADIV")){
                                             ret_value = ret_value +
-                                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified KADIV" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +9+ '\')"><i class="fa fa-arrows-alt"></i></button>';
+                                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Approve KADIV" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +10+ '\')"><i class="fa fa-arrows-alt"></i></button>';
                                         }
                                         ret_value = ret_value +
                                             '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
@@ -808,7 +808,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                                             '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
                                             '</div>'
                                 }else if (full.STATUS_TRACKING == "APPROVE BY KADIV"){
-
                                     ret_value =
                                         '<div class="btn-group">' +
                                         '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
@@ -891,7 +890,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                                     ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
                                 }
                             }
-                            else if (full.STATUS_TRACKING == "APPROVE BY MS"){
+                            else if (full.STATUS_TRACKING == "APPROVE BY KADIV"){
                                 var role = newRoleUser[0];
 
                                 if(role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN"){
