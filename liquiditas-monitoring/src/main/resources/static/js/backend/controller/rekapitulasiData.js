@@ -715,6 +715,15 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                 {
                     "bSortable": true,
                     "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+                },{
+                    "aTargets":
+                        [5],
+                    "mRender":
+
+                        function (data, type, full) {
+                            return accounting.formatNumber(full.TOTAL_TAGIHAN, 2, ".", ",")
+                        }
+
                 },
                 {
                     "aTargets": [20],
@@ -844,16 +853,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
 
                 },
                 {
-                    "aTargets":
-                        [5],
-                    "mRender":
-
-                        function (data, type, full) {
-                            return accounting.formatNumber(full.TOTAL_TAGIHAN, 2, ".", ",")
-                        }
-
-                },
-                {
                     "aTargets": [21],
                     "mRender": function (data, type, full) {
                         var ret_value =
@@ -895,6 +894,14 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
 
                                 if(newRoleUser[0] == "ROLE_MS_PEMBELANJAAN" || newRoleUser[0] == "ROLE_ADMIN"){
                                     ret_value = '<input class="cb" type="checkbox" data-value=\'{"5" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                }else {
+                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                }
+                            }
+                            else if (full.STATUS_TRACKING == "APPROVE BY MS"){
+
+                                if(newRoleUser[0] == "ROLE_ADMIN" || role.includes("KADIV")){
+                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"10" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
                                 }else {
                                     ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
                                 }

@@ -1023,6 +1023,14 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
                                 ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "' + full.ID_TRIPARTITE + '"}\' id="cbcheckbox">';
                             }
                         }
+                        else if (full.STATUS_TRACKING == "APPROVE BY MS"){
+
+                            if(newRoleUser[0] == "ROLE_ADMIN" || role.includes("KADIV")){
+                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"10" : "'+full.ID_TRIPARTITE+'"}\' id="cbcheckbox">';
+                            }else {
+                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "'+full.ID_TRIPARTITE+'"}\' id="cbcheckbox">';
+                            }
+                        }
                         else if (full.STATUS_TRACKING == "APPROVE BY KADIV") {
                             var role = newRoleUser[0];
 
