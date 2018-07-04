@@ -1017,8 +1017,8 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
         var value = $('.dataTables_filter input').val();
         tempTableSearch = value;
     });
+    $('#forcbparent').empty();
     $('#forcbparent').append("<input type=\"checkbox\" id='cbparent'> ");
-
     $("#cbparent").click(function(){
         $('input:checkbox').not(this).prop('checked', this.checked);
     });

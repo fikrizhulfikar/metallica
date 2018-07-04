@@ -1093,7 +1093,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
         $(this).append('<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
             '<button class="btn btn-verified btn-danger btn-sm" id="btn-hapus" style="margin-left: 10px" type="button" onclick="delete_datas()"><i class="fa fa-close"></i></button>');
     });
-
+    $('#forcbparent').empty();
     $('#forcbparent').append("<input type=\"checkbox\" id='cbparent'> ");
 
     $("#cbparent").click(function(){
