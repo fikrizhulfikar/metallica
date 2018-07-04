@@ -10,6 +10,7 @@ public class Notification {
     private boolean isSeen;
     private String title;
     private String message;
+    private String additionalInfo;
     private String topic;
 
     public Long getId() {
@@ -60,6 +61,14 @@ public class Notification {
         this.message = message;
     }
 
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
+
     public String getTopic() {
         return topic;
     }
@@ -80,6 +89,7 @@ public class Notification {
         private boolean isSeen;
         private String title;
         private String message;
+        private String additionalInfo;
         private String topic;
 
         private Builder() {
@@ -92,6 +102,11 @@ public class Notification {
 
         public Builder message(String message) {
             this.message = message;
+            return this;
+        }
+
+        public Builder additionalInfo(String additionalInfo) {
+            this.additionalInfo = additionalInfo;
             return this;
         }
 
@@ -108,6 +123,7 @@ public class Notification {
             notification.isSeen = isSeen;
             notification.title = title;
             notification.message = message;
+            notification.additionalInfo = additionalInfo;
             notification.topic = topic;
             return notification;
         }

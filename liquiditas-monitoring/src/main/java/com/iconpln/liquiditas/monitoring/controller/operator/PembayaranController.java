@@ -3,6 +3,7 @@ package com.iconpln.liquiditas.monitoring.controller.operator;
 import com.iconpln.liquiditas.core.domain.Notification;
 import com.iconpln.liquiditas.core.service.ValasService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
+import com.iconpln.liquiditas.monitoring.utils.NamedIdentifier;
 import com.iconpln.liquiditas.monitoring.utils.NotificationUtil;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
 import java.io.File;
@@ -215,6 +216,10 @@ public class PembayaranController {
         AppUtils.getLogger(this).debug("pTipeTransaksi : {} ", pTipeTransaksi);
         AppUtils.getLogger(this).debug("pTglTerimaInvoice : {} ", pTglTerimaInvoice);
         try {
+            Notification notification = Notification.builder()
+                    .topic(pJenisPembayaran)
+                    .title(NamedIdentifier.REKAP_PEMBAYARAN.getName())
+                    .build();
             if (pIdValas != null && !pIdValas.equals("")) {
                 String jenisPembayaranSebelum = valasService.getIdPembayaranByIdValas(pIdValas);
 
@@ -222,32 +227,32 @@ public class PembayaranController {
                 Map<String, Object> outSesudah = valasService.getNotificatonDetail(pJenisPembayaran, pVendor);
 
                 if (jenisPembayaranSebelum != null) {
-                    Notification notification = Notification.builder()
-                            .message(""
-                                    + WebUtils.getUsernameLogin() + " telah melakukan Perubahan/Update Data pada aplikasi."
-                                    + " " + outSebelum.getOrDefault("OUT_NAMA_JENIS_PEMBAYARAN", "") + "-" + outSebelum.getOrDefault("OUT_NAMA_VENDOR", "") + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + "."
-                                    + " Perubahan: " + outSesudah.getOrDefault("OUT_NAMA_JENIS_PEMBAYARAN", "") + "-" + outSesudah.getOrDefault("OUT_NAMA_VENDOR", "") + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + "."
-                            )
-                            .topic(pJenisPembayaran)
-                            .title("Pembayaran")
-                            .build();
-                    notificationUtil.notifyMessage(notification);
+                    notification.setMessage(""
+                            + WebUtils.getUsernameLogin() + " telah melakukan Perubahan/Update Data pada aplikasi."
+                            + " " + outSebelum.getOrDefault("OUT_NAMA_JENIS_PEMBAYARAN", "") + "-" + outSebelum.getOrDefault("OUT_NAMA_VENDOR", "") + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + "."
+                            + " Perubahan: " + outSesudah.getOrDefault("OUT_NAMA_JENIS_PEMBAYARAN", "") + "-" + outSesudah.getOrDefault("OUT_NAMA_VENDOR", "") + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + "."
+                    );
                 }
             } else {
                 Map<String, Object> out = valasService.getNotificatonDetail(pJenisPembayaran, pVendor);
                 Object namaJenisPembayaran = out.getOrDefault("OUT_NAMA_JENIS_PEMBAYARAN", "");
                 Object namaVendor = out.getOrDefault("OUT_NAMA_VENDOR", "");
-                Notification notification = Notification.builder()
-                        .message(""
-                                + WebUtils.getUsernameLogin() + " telah melakukan Input Data pada aplikasi. "
-                                + namaJenisPembayaran + "-" + namaVendor + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + "."
-                        )
-                        .topic(pJenisPembayaran)
-                        .title("Pembayaran")
-                        .build();
-                notificationUtil.notifyMessage(notification);
+                notification.setMessage(""
+                        + WebUtils.getUsernameLogin() + " telah melakukan Input Data pada aplikasi. "
+                        + namaJenisPembayaran + "-" + namaVendor + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + "."
+                );
             }
-            return valasService.insPembayaran(pIdValas, pJenisPembayaran, pTglJatuhTempo, pVendor, pCurr, pNilaiTagihan, pBankTujuan, pBankPembayar, pUnitPenerima, pNoTagihan, pTglTagihan, pNoNotdin, pTglNotdin, pStatusValas, WebUtils.getUsernameLogin(), pKeterangan, pTipeTransaksi, pTglTerimaInvoice);
+            Map<String, Object> res = valasService.insPembayaran(pIdValas, pJenisPembayaran, pTglJatuhTempo, pVendor, pCurr, pNilaiTagihan, pBankTujuan, pBankPembayar, pUnitPenerima, pNoTagihan, pTglTagihan, pNoNotdin, pTglNotdin, pStatusValas, WebUtils.getUsernameLogin(), pKeterangan, pTipeTransaksi, pTglTerimaInvoice);
+            Object obj = res.get("return");
+            if (obj != null) {
+                String result = (String) obj;
+                if (pIdValas == null || pIdValas.equals("") || pIdValas.equals(" ")) {
+                    pIdValas = result.split(";")[1];
+                }
+            }
+            notification.setAdditionalInfo(NamedIdentifier.REKAP_PEMBAYARAN.getValue() + ";" +pIdValas);
+            notificationUtil.notifyMessage(notification);
+            return res;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

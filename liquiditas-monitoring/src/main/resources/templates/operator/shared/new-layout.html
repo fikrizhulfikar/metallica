@@ -190,8 +190,9 @@
 
         var newItem = document.createElement('li');
         newItem.style.cssText = 'background-color:#f7f8f9';
+
         newItem.onclick = function () {
-            editSeenById(data.id);
+            showNotifModal(data.id, data.additionalInfo);
         };
         newItem.setAttribute("id", data.id);
         var divNode = document.createElement("div");
@@ -237,9 +238,9 @@
                 res.forEach(function (data) {
                     var backgroundColor = "";
                     if (data.seen == true) {
-                        backgroundColor = '<li id="'+data.id+'" style="background-color: white">\n';
+                        backgroundColor = '<li id="'+data.id+'" style="background-color: white" onclick="showNotifModal(null, \''+data.additionalInfo+'\')">\n';
                     } else {
-                        backgroundColor = '<li id="'+data.id+'" style="background-color: #f7f8f9" onclick="editSeenById(\''+data.id+'\')">\n';
+                        backgroundColor = '<li id="'+data.id+'" style="background-color: #f7f8f9" onclick="showNotifModal(\''+data.id+'\', \''+data.additionalInfo+'\')">\n';
                         count++;
                     }
                     var added =
@@ -271,7 +272,6 @@
             async: true,
             contentType: 'application/x-www-form-urlencoded',
             success: function(obj) {
-                console.log("Read: " + obj);
                 $('#'+key+'').css("background-color", "white");
                 var count = parseInt($("#notification_count").html());
                 count -= 1;
@@ -282,6 +282,20 @@
         });
     }
 
+    function showNotifModal(key, additionalInfo) {
+        if (key != null && key != 'null') {
+            editSeenById(key);
+        }
+        if (additionalInfo != null && additionalInfo != 'null') {
+            additionalInfo = additionalInfo.split(";");
+            if (additionalInfo !== null) {
+                var menu_id = additionalInfo[0];
+                var data_id = additionalInfo[1];
+                console.log(menu_id);
+                console.log(data_id);
+            }
+        }
+    }
     /*]]>*/
 </script>
 <div th:replace="${view} :: scripts-backend"></div>
