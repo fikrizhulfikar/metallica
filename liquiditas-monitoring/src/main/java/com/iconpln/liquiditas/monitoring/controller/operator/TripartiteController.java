@@ -181,6 +181,17 @@ public class TripartiteController {
 
         AppUtils.getLogger(this).debug("pIdTripartite : {} ", pIdTripartite);
         try {
+            String idJenisPembayaran = valasService.getIdPembayaranByIdTripartite(pIdTripartite);
+            Map<String, Object> res = valasService.getNotificatonDetail(idJenisPembayaran, null);
+
+            Notification notification = Notification.builder()
+                    .topic(idJenisPembayaran)
+                    .title(NamedIdentifier.TRIPARTITE.getName())
+                    .message(""
+                            + WebUtils.getUsernameLogin() + " telah menghapus Data pada aplikasi dengan jenis pembayaran "
+                            + " " + res.getOrDefault("OUT_NAMA_JENIS_PEMBAYARAN", ""))
+                    .build();
+            notificationUtil.notifyMessage(notification);
             return valasService.deleteTripartite(pIdTripartite);
         } catch (Exception e) {
             e.printStackTrace();
