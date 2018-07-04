@@ -169,18 +169,21 @@ public class PembayaranController {
         AppUtils.getLogger(this).debug("idValas : {} ", pIdValas);
         try {
             String idJenisPembayaran = valasService.getIdPembayaranByIdValas(pIdValas);
-            Map<String, Object> res = valasService.getNotificatonDetail(idJenisPembayaran, null);
-
-            Notification notification = Notification.builder()
-                    .topic(idJenisPembayaran)
-                    .title(NamedIdentifier.REKAP_PEMBAYARAN.getName())
-                    .message(""
-                        + WebUtils.getUsernameLogin() + " telah menghapus Data pada aplikasi dengan jenis pembayaran "
-                        + " " + res.getOrDefault("OUT_NAMA_JENIS_PEMBAYARAN", ""))
-                    .build();
-            notificationUtil.notifyMessage(notification);
+            String message = "";
+            Map<String, String> data = notificationUtil.getNotificationDetailByIdValas(pIdValas);
+            message += WebUtils.getUsernameLogin() + " telah melakukan penghapusan Data pada aplikasi. ";
+            message += data.get("NAMA_JENIS_PEMBAYARAN") + "-" + data.get("NAMA_VENDOR") +".";
             WebUtils.deleteFile(pIdValas);
-            return valasService.deletePembayaran(pIdValas);
+            Map<String, Object> res = valasService.deletePembayaran(pIdValas);
+            Notification notification =
+                    Notification.builder()
+                            .topic(idJenisPembayaran)
+                            .title(NamedIdentifier.REKAP_PEMBAYARAN.getName())
+                            .message(message)
+                            .additionalInfo(null)
+                            .build();
+            notificationUtil.notifyMessage(notification);
+            return res;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -227,33 +230,26 @@ public class PembayaranController {
         AppUtils.getLogger(this).debug("pTipeTransaksi : {} ", pTipeTransaksi);
         AppUtils.getLogger(this).debug("pTglTerimaInvoice : {} ", pTglTerimaInvoice);
         try {
-            Notification notification = Notification.builder()
-                    .topic(pJenisPembayaran)
-                    .title(NamedIdentifier.REKAP_PEMBAYARAN.getName())
-                    .build();
+            String message = "";
+            boolean isUpdate = false;
             if (pIdValas != null && !pIdValas.equals("")) {
-                String jenisPembayaranSebelum = valasService.getIdPembayaranByIdValas(pIdValas);
-
-                Map<String, Object> outSebelum = valasService.getNotificatonDetail(jenisPembayaranSebelum, pVendor);
-                Map<String, Object> outSesudah = valasService.getNotificatonDetail(pJenisPembayaran, pVendor);
-
-                if (jenisPembayaranSebelum != null) {
-                    notification.setMessage(""
-                            + WebUtils.getUsernameLogin() + " telah melakukan Perubahan/Update Data pada aplikasi."
-                            + " " + outSebelum.getOrDefault("OUT_NAMA_JENIS_PEMBAYARAN", "") + "-" + outSebelum.getOrDefault("OUT_NAMA_VENDOR", "") + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + "."
-                            + " Perubahan: " + outSesudah.getOrDefault("OUT_NAMA_JENIS_PEMBAYARAN", "") + "-" + outSesudah.getOrDefault("OUT_NAMA_VENDOR", "") + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + "."
-                    );
-                }
+                Map<String, String> sebelum = notificationUtil.getNotificationDetailByIdValas(pIdValas);
+                message += WebUtils.getUsernameLogin() + " telah melakukan Perubahan/Update Data pada aplikasi.";
+                message += sebelum.get("NAMA_JENIS_PEMBAYARAN") + "-" + sebelum.get("NAMA_VENDOR") + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + ".";
+                isUpdate = true;
             } else {
                 Map<String, Object> out = valasService.getNotificatonDetail(pJenisPembayaran, pVendor);
                 Object namaJenisPembayaran = out.getOrDefault("OUT_NAMA_JENIS_PEMBAYARAN", "");
                 Object namaVendor = out.getOrDefault("OUT_NAMA_VENDOR", "");
-                notification.setMessage(""
-                        + WebUtils.getUsernameLogin() + " telah melakukan Input Data pada aplikasi. "
-                        + namaJenisPembayaran + "-" + namaVendor + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + "."
-                );
+                message += WebUtils.getUsernameLogin() + " telah melakukan Input Data pada aplikasi. ";
+                message += namaJenisPembayaran + "-" + namaVendor + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + ".";
+                isUpdate = false;
             }
             Map<String, Object> res = valasService.insPembayaran(pIdValas, pJenisPembayaran, pTglJatuhTempo, pVendor, pCurr, pNilaiTagihan, pBankTujuan, pBankPembayar, pUnitPenerima, pNoTagihan, pTglTagihan, pNoNotdin, pTglNotdin, pStatusValas, WebUtils.getUsernameLogin(), pKeterangan, pTipeTransaksi, pTglTerimaInvoice);
+            if (isUpdate) {
+                Map<String, String> sesudah = notificationUtil.getNotificationDetailByIdValas(pIdValas);
+                message +=  "Perubahan: " + sesudah.get("NAMA_JENIS_PEMBAYARAN") + "-" + sesudah.get("NAMA_VENDOR") + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + ".";
+            }
             Object obj = res.get("return");
             if (obj != null) {
                 String result = (String) obj;
@@ -261,7 +257,13 @@ public class PembayaranController {
                     pIdValas = result.split(";")[1];
                 }
             }
-            notification.setAdditionalInfo(NamedIdentifier.REKAP_PEMBAYARAN.getValue() + ";" +pIdValas);
+            Notification notification =
+                    Notification.builder()
+                            .topic(pJenisPembayaran)
+                            .title(NamedIdentifier.REKAP_PEMBAYARAN.getName())
+                            .message(message)
+                            .additionalInfo(NamedIdentifier.REKAP_PEMBAYARAN.getValue()+";"+pIdValas)
+                            .build();
             notificationUtil.notifyMessage(notification);
             return res;
         } catch (Exception e) {
@@ -279,6 +281,7 @@ public class PembayaranController {
 
         AppUtils.getLogger(this).debug("idValas : {} ", pIdValas);
         try {
+            Map<String, Object> res = valasService.updStatus(pIdValas, pStatusInvoice, pDeskripsi, WebUtils.getUsernameLogin());
             String pJenisPembayaran = valasService.getIdPembayaranByIdValas(pIdValas);
             Notification notification = Notification.builder()
                     .topic(pJenisPembayaran)
@@ -288,7 +291,7 @@ public class PembayaranController {
                     .additionalInfo(NamedIdentifier.REKAP_PEMBAYARAN.getValue() + ";" + pIdValas)
                     .build();
             notificationUtil.notifyMessage(notification);
-            return valasService.updStatus(pIdValas, pStatusInvoice, pDeskripsi, WebUtils.getUsernameLogin());
+            return res;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

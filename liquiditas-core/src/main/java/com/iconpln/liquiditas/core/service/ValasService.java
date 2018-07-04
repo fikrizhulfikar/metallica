@@ -1507,24 +1507,28 @@ public class ValasService {
                 .addValue("p_id_valas", idValas);
 
         try {
-            return simpleJdbcCall.executeFunction(String.class, idValas);
+            String data = simpleJdbcCall.executeFunction(String.class, inParent);
+            return data;
         } catch (Exception e) {
-            return null;
+            e.printStackTrace();
         }
+        return null;
     }
 
     public String getIdPembayaranByIdTripartite(String idTripartite) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("pkg_valas")
-                .withFunctionName("getidpembayaranbyidtripartite");
+                .withFunctionName("getIdPemByIdTri");
         SqlParameterSource inParent = new MapSqlParameterSource()
                 .addValue("p_id_tripartite", idTripartite);
 
         try {
-            return simpleJdbcCall.executeFunction(String.class, idTripartite);
+            String data = simpleJdbcCall.executeFunction(String.class, inParent);
+            return data;
         } catch (Exception e) {
-            return null;
+            e.printStackTrace();
         }
+        return null;
     }
 
     public Map<String, Object> deletePlacement() {
