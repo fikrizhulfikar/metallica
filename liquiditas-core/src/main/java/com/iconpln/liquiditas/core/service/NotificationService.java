@@ -28,6 +28,7 @@ public class NotificationService {
                 .addValue("p_is_seen", notification.isSeen() ? "1" : "0", OracleTypes.VARCHAR)
                 .addValue("p_title", notification.getTitle(), OracleTypes.VARCHAR)
                 .addValue("p_message", notification.getMessage(), OracleTypes.VARCHAR)
+                .addValue("p_additional_info", notification.getAdditionalInfo(), OracleTypes.VARCHAR)
                 .addValue("p_topic", notification.getTopic(), OracleTypes.VARCHAR);
         BigDecimal result = call.executeFunction(BigDecimal.class, in);
         return result.longValue();
@@ -47,6 +48,7 @@ public class NotificationService {
             notification.setSeen(resultSet.getString("IS_SEEN").equalsIgnoreCase("0") ? false : true);
             notification.setTitle(resultSet.getString("TITLE"));
             notification.setTopic(resultSet.getString("TOPIC"));
+            notification.setAdditionalInfo(resultSet.getString("ADDITIONAL_INFO"));
             notification.setMessage(resultSet.getString("MESSAGE"));
             return notification;
         }).executeFunction(ArrayList.class, in);

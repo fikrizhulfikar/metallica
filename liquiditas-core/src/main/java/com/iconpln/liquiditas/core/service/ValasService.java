@@ -1513,6 +1513,20 @@ public class ValasService {
         }
     }
 
+    public String getIdPembayaranByIdTripartite(String idTripartite) {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_valas")
+                .withFunctionName("getidpembayaranbyidtripartite");
+        SqlParameterSource inParent = new MapSqlParameterSource()
+                .addValue("p_id_tripartite", idTripartite);
+
+        try {
+            return simpleJdbcCall.executeFunction(String.class, idTripartite);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public Map<String, Object> deletePlacement() {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withProcedureName("del_placement");

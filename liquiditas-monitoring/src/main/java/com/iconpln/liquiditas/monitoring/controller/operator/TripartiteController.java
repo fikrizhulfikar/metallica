@@ -1,5 +1,8 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
+import com.iconpln.liquiditas.core.domain.Notification;
+import com.iconpln.liquiditas.monitoring.utils.NamedIdentifier;
+import com.iconpln.liquiditas.monitoring.utils.NotificationUtil;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
 import com.iconpln.liquiditas.core.service.ValasService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
@@ -35,6 +38,9 @@ public class TripartiteController {
     ValasService valasService;
 
     @Autowired
+    private NotificationUtil notificationUtil;
+
+    @Autowired
     private ResourceLoader resourceLoader;
 
     @RequestMapping(value = "/ins_data", method = RequestMethod.POST)
@@ -61,6 +67,46 @@ public class TripartiteController {
             @RequestParam(value = "pDeskripsi", defaultValue = "") String pDeskripsi
     ) {
         try {
+            Notification notification = Notification.builder()
+                    .topic(pJenisPembayaran)
+                    .title(NamedIdentifier.TRIPARTITE.getName())
+                    .build();
+            if (pIdTripartite != null && !pIdTripartite.equals("")) {
+                String jenisPembayaranSebelum = valasService.getIdPembayaranByIdTripartite(pIdTripartite);
+
+                Map<String, Object> outSebelum = valasService.getNotificatonDetail(pJenisPembayaran, pVendor);
+                Map<String, Object> outSesudah = valasService.getNotificatonDetail(pJenisPembayaran, pVendor);
+
+                if (jenisPembayaranSebelum != null) {
+                    notification.setMessage(""
+                            + WebUtils.getUsernameLogin() + " telah melakukan Perubahan/Update Data pada aplikasi."
+                            + " " + outSebelum.getOrDefault("OUT_NAMA_JENIS_PEMBAYARAN", "") + "-" + outSebelum.getOrDefault("OUT_NAMA_VENDOR", "") + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNominalSblmPajak + "-" + pNoInvoice + "."
+                            + " Perubahan: " + outSesudah.getOrDefault("OUT_NAMA_JENIS_PEMBAYARAN", "") + "-" + outSesudah.getOrDefault("OUT_NAMA_VENDOR", "") + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNominalSblmPajak + "-" + pNoInvoice + "."
+                    );
+                }
+            } else {
+                Map<String, Object> out = valasService.getNotificatonDetail(pJenisPembayaran, pVendor);
+                Object namaJenisPembayaran = out.getOrDefault("OUT_NAMA_JENIS_PEMBAYARAN", "");
+                Object namaVendor = out.getOrDefault("OUT_NAMA_VENDOR", "");
+                notification.setMessage(""
+                        + WebUtils.getUsernameLogin() + " telah melakukan Input Data pada aplikasi. "
+                        + namaJenisPembayaran + "-" + namaVendor + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNominalSblmPajak + "-" + pNoInvoice + "."
+                );
+            }
+            Map<String, Object> res = valasService.insTripartite(pIdTripartite, pBank, pTglJatuhTempo, pCurr,
+                            pVendor, pJenisPembayaran, pNominalSblmPajak, pPajak,
+                            pNominalunderlying, pNominalTanpaUnderlying, pKursJisdor, pSpread,
+                            pNoInvoice, pTglInvoice, pStatusTripartite, WebUtils.getUsernameLogin(), pTipeTransaksi,
+                            pTglTerimaInvoice,pNoNotdin, pTglNotdin, pDeskripsi);
+            Object obj = res.get("return");
+            if (obj != null) {
+                String result = (String) obj;
+                if (pIdTripartite == null || pIdTripartite.equals("") || pIdTripartite.equals(" ")) {
+                    pIdTripartite = result.split(";")[1];
+                }
+            }
+            notification.setAdditionalInfo(NamedIdentifier.REKAP_PEMBAYARAN.getValue() + ";" +pIdTripartite);
+            notificationUtil.notifyMessage(notification);
             return valasService.insTripartite(pIdTripartite, pBank, pTglJatuhTempo, pCurr,
                     pVendor, pJenisPembayaran, pNominalSblmPajak, pPajak,
                     pNominalunderlying, pNominalTanpaUnderlying, pKursJisdor, pSpread,
@@ -135,6 +181,17 @@ public class TripartiteController {
 
         AppUtils.getLogger(this).debug("pIdTripartite : {} ", pIdTripartite);
         try {
+            String idJenisPembayaran = valasService.getIdPembayaranByIdTripartite(pIdTripartite);
+            Map<String, Object> res = valasService.getNotificatonDetail(idJenisPembayaran, null);
+
+            Notification notification = Notification.builder()
+                    .topic(idJenisPembayaran)
+                    .title(NamedIdentifier.TRIPARTITE.getName())
+                    .message(""
+                            + WebUtils.getUsernameLogin() + " telah menghapus Data pada aplikasi dengan jenis pembayaran "
+                            + " " + res.getOrDefault("OUT_NAMA_JENIS_PEMBAYARAN", ""))
+                    .build();
+            notificationUtil.notifyMessage(notification);
             return valasService.deleteTripartite(pIdTripartite);
         } catch (Exception e) {
             e.printStackTrace();
