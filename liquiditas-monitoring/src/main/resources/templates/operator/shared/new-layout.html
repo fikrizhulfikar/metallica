@@ -104,7 +104,7 @@
     </main>
 
     <!-- Modal Rekap Data -->
-    <div id="edit-rekap-modal" class="modal fade" role="dialog">
+    <div id="rekap-data-modal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -115,97 +115,97 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="pTipeTransaksi"><span style="color: red">*)</span>&nbsp;Tipe
+                                <label for="pTipeTransaksi_rekap_data"><span style="color: red">*)</span>&nbsp;Tipe
                                     Transaksi:</label>
-                                <select id="pTipeTransaksi" class="form-control" required="required" disabled="true">
+                                <select id="pTipeTransaksi_rekap_data" class="form-control" required="required" disabled="true">
                                     <option value="1">OPERASI</option>
                                     <option value="2">INVESTASI</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="pJenisPemabayaran"><span style="color: red">*)</span>&nbsp;Jenis
+                                <label for="pJenisPemabayaran_rekap_data"><span style="color: red">*)</span>&nbsp;Jenis
                                     Pembayaran:</label>
-                                <select id="pJenisPemabayaran" class="form-control" required="required" disabled="true">
+                                <select id="pJenisPemabayaran_rekap_data" class="form-control" required="required" disabled="true">
                                     <option value="">Pilih Data</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="pTglJatuhTempo">Tanggal Jatuh
+                                <label for="pTglJatuhTempo_rekap_data">Tanggal Jatuh
                                     Tempo:</label>
-                                <input type="text" class="form-control" id="pTglJatuhTempo" required="required" disabled="true"/>
+                                <input type="text" class="form-control" id="pTglJatuhTempo_rekap_data" required="required" disabled="true"/>
                             </div>
                             <div class="form-group">
-                                <label for="pVendor"><span style="color: red">*)</span>&nbsp;Vendor/Pengembang/Pemasok/Loan:</label>
-                                <select id="pVendor" class="form-control" required="required" disabled="true">
+                                <label for="pVendor_rekap_data"><span style="color: red">*)</span>&nbsp;Vendor/Pengembang/Pemasok/Loan:</label>
+                                <select id="pVendor_rekap_data" class="form-control" required="required" disabled="true">
                                     <option value="">Pilih Data</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="pCurrecny"><span style="color: red">*)</span>&nbsp;Currency:</label>
-                                <select id="pCurrecny" class="form-control" required="required" disabled="true">
+                                <label for="pCurrency_rekap_data"><span style="color: red">*)</span>&nbsp;Currency:</label>
+                                <select id="pCurrency_rekap_data" class="form-control" required="required" disabled="true">
                                     <option value="">Pilih Data</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="pNilaiTagihan"><span style="color: red">*)</span>&nbsp;Nilai
+                                <label for="pNilaiTagihan_rekap_data"><span style="color: red">*)</span>&nbsp;Nilai
                                     Tagihan:</label>
-                                <input type="number" class="form-control" id="pNilaiTagihan" required="required" disabled="true"/>
+                                <input type="number" class="form-control" id="pNilaiTagihan_rekap_data" required="required" disabled="true"/>
                             </div>
                             <div class="form-group">
-                                <label for="pBankTujuan"><span style="color: red">*)</span>&nbsp;Bank Tujuan
+                                <label for="pBankTujuan_rekap_data"><span style="color: red">*)</span>&nbsp;Bank Tujuan
                                     Pembayaran:</label>
-                                <select id="pBankTujuan" class="form-control" required="required" disabled="true">
+                                <select id="pBankTujuan_rekap_data" class="form-control" required="required" disabled="true">
                                     <option value="">Pilih Data</option>
                                 </select>
                             </div>
                             <div class="form-group" style="margin-top: 40px">
-                                <label for="pJenisPemabayaran">Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label><br/>
+                                <label for="pJenisPemabayaran_rekap_data">Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label><br/>
                                 <label>Gunakan titik (.) untuk koma (,)</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="pBankPembayar"><span style="color: red">*)</span>&nbsp;Bank
+                                <label for="pBankPembayar_rekap_data"><span style="color: red">*)</span>&nbsp;Bank
                                     Pembayar:</label>
-                                <select id="pBankPembayar" class="form-control" required="required" disabled="true">
+                                <select id="pBankPembayar_rekap_data" class="form-control" required="required" disabled="true">
                                     <option value="">Pilih Data</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="pUnitPenerima"><span style="color: red">*)</span>&nbsp;Nama
+                                <label for="pUnitPenerima_rekap_data"><span style="color: red">*)</span>&nbsp;Nama
                                     Kontrak/Loan/Unit
                                     Penerima/Pembangkit:</label>
-                                <select id="pUnitPenerima" class="form-control" required="required" disabled="true">
+                                <select id="pUnitPenerima_rekap_data" class="form-control" required="required" disabled="true">
                                     <option value="">Pilih Data</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="pTglTerimaInvoice"><span style="color: red">*)</span>&nbsp;Tanggal Tagihan
+                                <label for="pTglTerimaInvoice_rekap_data"><span style="color: red">*)</span>&nbsp;Tanggal Tagihan
                                     Diterima:</label>
-                                <input type="text" class="form-control" id="pTglTerimaInvoice" disabled="true"/>
+                                <input type="text" class="form-control" id="pTglTerimaInvoice_rekap_data" disabled="true"/>
                             </div>
                             <div class="form-group">
-                                <label for="pTglTagihan">Tanggal Tagihan:</label>
-                                <input type="text" class="form-control" id="pTglTagihan" disabled="true"/>
+                                <label for="pTglTagihan_rekap_data">Tanggal Tagihan:</label>
+                                <input type="text" class="form-control" id="pTglTagihan_rekap_data" disabled="true"/>
                             </div>
                             <div class="form-group">
-                                <label for="pNoTagihan">No Tagihan:</label>
-                                <input type="text" class="form-control" list="data-no-tagihan" autocomplete="on" name="pNoTagihan"
-                                       id="pNoTagihan" disabled="true"/>
+                                <label for="pNoTagihan_rekap_data">No Tagihan:</label>
+                                <input type="text" class="form-control" list="data-no-tagihan" autocomplete="on" name="pNoTagihan_rekap_data"
+                                       id="pNoTagihan_rekap_data" disabled="true"/>
                                 <datalist id="data-no-tagihan"></datalist>
                             </div>
                             <div class="form-group">
-                                <label for="pNoNotaDinas">No Nota Dinas:</label>
-                                <input type="text" class="form-control" id="pNoNotaDinas" disabled="true"/>
+                                <label for="pNoNotaDinas_rekap_data">No Nota Dinas:</label>
+                                <input type="text" class="form-control" id="pNoNotaDinas_rekap_data" disabled="true"/>
                             </div>
                             <div class="form-group">
-                                <label for="pTglNotaDinas">Tanggal Nota Dinas:</label>
-                                <input type="text" class="form-control" id="pTglNotaDinas" disabled="true"/>
+                                <label for="pTglNotaDinas_rekap_data">Tanggal Nota Dinas:</label>
+                                <input type="text" class="form-control" id="pTglNotaDinas_rekap_data" disabled="true"/>
                             </div>
                             <div class="form-group">
-                                <label for="pKeterangan">Keterangan:</label>
-                                <input type="text" class="form-control" id="pKeterangan" list="data-keterangan" disabled="true"/>
-                                <datalist id="data-keterangan"></datalist>
+                                <label for="pKeterangan_rekap_data">Keterangan:</label>
+                                <input type="text" class="form-control" id="pKeterangan_rekap_data" list="data-keterangan-rekap-data" disabled="true"/>
+                                <datalist id="data-keterangan-rekap-data"></datalist>
                             </div>
                         </div>
                     </div>
@@ -407,14 +407,14 @@
             if (additionalInfo !== null) {
                 var menu_id = additionalInfo[0];
                 var data_id = additionalInfo[1];
-                edit_data(data_id);
+                showRekapData(data_id);
             }
         }
     }
 
 
 
-    function edit_data(id) {
+    function showRekapData(id) {
         showLoadingCss()
         $.ajax({
             url: baseUrl + "api_operator/pembayaran/edit_data",
@@ -426,45 +426,44 @@
             success: function (res) {
                 hideLoadingCss("")
                 idValas = id
-                $("#pTglJatuhTempo").val("");
-                $("#pNilaiTagihan").val("");
-                $("#pNoTagihan").val("");
-                $("#pTglTagihan").val("");
-                $("#pNoNotaDinas").val("");
-                $("#pTglNotaDinas").val("");
-                $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
-                $('#pTglTagihan').datepicker({dateFormat: 'dd/mm/yy'});
-                $('#pTglNotaDinas').datepicker({dateFormat: 'dd/mm/yy'});
+                $("#pTglJatuhTempo_rekap_data").val("");
+                $("#pNilaiTagihan_rekap_data").val("");
+                $("#pNoTagihan_rekap_data").val("");
+                $("#pTglTagihan_rekap_data").val("");
+                $("#pNoNotaDinas_rekap_data").val("");
+                $("#pTglNotaDinas_rekap_data").val("");
+                $('#pTglJatuhTempo_rekap_data').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
+                $('#pTglTagihan_rekap_data').datepicker({dateFormat: 'dd/mm/yy'});
+                $('#pTglNotaDinas_rekap_data').datepicker({dateFormat: 'dd/mm/yy'});
 
                 tempVendor = res[0].ID_VENDOR;
                 tempUnit = res[0].ID_UNIT;
 
-                setSelectJenisPembayaran("pJenisPemabayaran", "", res[0].ID_JENIS_PEMBAYARAN);
-                setSelectCurr("pCurrecny", "", res[0].CURRENCY, "REKAP");
-                setSelectBank("pBankTujuan", "", "TUJUAN", res[0].KODE_BANK_TUJUAN, "REKAP");
-                setSelectBank("pBankPembayar", "", "PEMBAYAR", res[0].KODE_BANK_PEMBAYAR, "REKAP");
-                setSelectVendor("pVendor", res[0].ID_JENIS_PEMBAYARAN, res[0].ID_VENDOR);
-                setSelectUnit("pUnitPenerima", res[0].ID_JENIS_PEMBAYARAN, res[0].ID_UNIT);
+                setSelectJenisPembayaran("pJenisPemabayaran_rekap_data", "", res[0].ID_JENIS_PEMBAYARAN);
+                setSelectCurr("pCurrency_rekap_data", "", res[0].CURRENCY, "REKAP");
+                setSelectBank("pBankTujuan_rekap_data", "", "TUJUAN", res[0].KODE_BANK_TUJUAN, "REKAP");
+                setSelectBank("pBankPembayar_rekap_data", "", "PEMBAYAR", res[0].KODE_BANK_PEMBAYAR, "REKAP");
+                setSelectVendor("pVendor_rekap_data", res[0].ID_JENIS_PEMBAYARAN, res[0].ID_VENDOR);
+                setSelectUnit("pUnitPenerima_rekap_data", res[0].ID_JENIS_PEMBAYARAN, res[0].ID_UNIT);
 
-                $("#pTglJatuhTempo").val(res[0].TGL_JATUH_TEMPO);
-                $("#pNilaiTagihan").val(res[0].TOTAL_TAGIHAN);
-                $("#pNoTagihan").val(res[0].NO_TAGIHAN);
-                $("#pTglTagihan").val(res[0].TGL_TAGIHAN);
-                $("#pNoNotaDinas").val(res[0].NO_NOTDIN);
-                $("#pTglNotaDinas").val(res[0].TGL_NOTDIN);
-                $("#pKeterangan").val(res[0].DESKRIPSI);
-                $("#pStatus").val(res[0].STATUS_VALAS);
-                $("#pTipeTransaksi").val(res[0].TIPE_TRANSAKSI);
-                $("#pTglTerimaInvoice").val(res[0].TGL_TERIMA_INVOICE);
+                $("#pTglJatuhTempo_rekap_data").val(res[0].TGL_JATUH_TEMPO);
+                $("#pNilaiTagihan_rekap_data").val(res[0].TOTAL_TAGIHAN);
+                $("#pNoTagihan_rekap_data").val(res[0].NO_TAGIHAN);
+                $("#pTglTagihan_rekap_data").val(res[0].TGL_TAGIHAN);
+                $("#pNoNotaDinas_rekap_data").val(res[0].NO_NOTDIN);
+                $("#pTglNotaDinas_rekap_data").val(res[0].TGL_NOTDIN);
+                $("#pKeterangan_rekap_data").val(res[0].DESKRIPSI);
+                $("#pTipeTransaksi_rekap_data").val(res[0].TIPE_TRANSAKSI);
+                $("#pTglTerimaInvoice_rekap_data").val(res[0].TGL_TERIMA_INVOICE);
 
                 setTimeout(function () {
-                    $("#pVendor").select2({
+                    $("#pVendor_rekap_data").select2({
                         width: "100%"
                     });
-                    $("#pUnitPenerima").select2({
+                    $("#pUnitPenerima_rekap_data").select2({
                         width: "100%"
                     });
-                    $('#edit-rekap-modal').modal({backdrop: 'static', keyboard: false});
+                    $('#rekap-data-modal').modal({backdrop: 'static', keyboard: false});
                 }, timeSowFormEdit);
                 hideLoadingCss()
 
