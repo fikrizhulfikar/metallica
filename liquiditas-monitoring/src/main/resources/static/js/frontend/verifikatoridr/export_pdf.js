@@ -934,12 +934,9 @@ function createUIPdf(allData) {
         margin: [40, 12.5, 40, 12.5]
     });
 
-
     var externalDataTotalRencanaBayar = []
     var externalDataBelumTerealisasi = []
     var externalDataSudahTerealisasi = []
-    console.log("ini ALlDATA", allData);
-
 
     $.each(allData.dataRencanaVsRealisasiIdr.return, function (index, v) {
         var date = new Date(v.JATUH_TEMPO);
@@ -1076,6 +1073,155 @@ function createUIPdf(allData) {
             table: {
                 headerRows: 1,
                 body: buildTableSudahTerealisasi(data, columns)
+            }
+        };
+    }
+
+    //      RENCANA PEMBAYARAN
+
+    var date = new Date();
+    var year = date.getUTCFullYear();
+
+    var date1 = new Date(date.setDate(date.getDate()));
+    var month1 = date1.getUTCMonth() + 1;
+
+    var date2 = new Date(date.setDate(date.getDate() + 1));
+    var month2 = date2.getUTCMonth() + 1;
+
+    var date3 = new Date(date.setDate(date.getDate() + 1));
+    var month3 = date3.getUTCMonth() + 1;
+
+    var date4 = new Date(date.setDate(date.getDate() + 1));
+    var month4 = date4.getUTCMonth() + 1;
+
+    var date5 = new Date(date.setDate(date.getDate() + 1));
+    var month5 = date5.getUTCMonth() + 1;
+
+    var date6 = new Date(date.setDate(date.getDate() + 1));
+    var month6 = date6.getUTCMonth() + 1;
+
+    var date7 = new Date(date.setDate(date.getDate() + 1));
+    var month7 = date7.getUTCMonth() + 1;
+
+    var columnRencanaPembayaran = [];
+    columnRencanaPembayaran.push({
+        text: "KETERANGAN",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [5, 12.5, 5, 12.5]
+    });
+    columnRencanaPembayaran.push({
+        text: (date1.getUTCDate()) + "/" + month1 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnRencanaPembayaran.push({
+        text: (date2.getUTCDate()) + "/" + month2 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnRencanaPembayaran.push({
+        text: (date3.getUTCDate()) + "/" + month3 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnRencanaPembayaran.push({
+        text: (date4.getUTCDate()) + "/" + month4 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnRencanaPembayaran.push({
+        text: (date5.getUTCDate()) + "/" + month5 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnRencanaPembayaran.push({
+        text: (date6.getUTCDate()) + "/" + month6 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnRencanaPembayaran.push({
+        text: (date7.getUTCDate()) + "/" + month7 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnRencanaPembayaran.push({
+        text: "TOTAL",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+
+    function spasi(sp) {
+        if (sp === 0 || sp === "0"){
+            return ""
+        }if (sp === 4 || sp === "4"){
+            return ""
+        }if (sp === 8 || sp === "8"){
+            return ""
+        }if (sp === 12 || sp === "12"){
+            return ""
+        }if (sp === 16 || sp === "16"){
+            return ""
+        }
+    }
+
+    var externalDataRencanaPembayaran = []
+    $.each(allData.dataCashFlow.return, function (index, v) {
+        var helloooow;
+        helloooow = {
+            KETERANGAN: spasi(v.SPASI) + v.KETERANGAN,
+            TANGGAL1: accounting.formatNumber(v.TANGGAL1, 2, ".", ","),
+            TANGGAL2: accounting.formatNumber(v.TANGGAL2, 2, ".", ","),
+            TANGGAL3: accounting.formatNumber(v.TANGGAL3, 2, ".", ","),
+            TANGGAL4: accounting.formatNumber(v.TANGGAL4, 2, ".", ","),
+            TANGGAL5: accounting.formatNumber(v.TANGGAL5, 2, ".", ","),
+            TANGGAL6: accounting.formatNumber(v.TANGGAL6, 2, ".", ","),
+            TANGGAL7: accounting.formatNumber(v.TANGGAL7, 2, ".", ","),
+            TOTAL: accounting.formatNumber(v.TOTAL, 2, ".", ","),
+        }
+        externalDataRencanaPembayaran.push(helloooow)
+    });
+
+    function buildTableRencanaPembayaran(data, columns) {
+        var body = [];
+
+        body.push(columns);
+        console.log(columns);
+
+        data.forEach(function (row, index) {
+            var dataRow = [];
+            // console.log("row : ", row);
+
+            dataRow.push(row["KETERANGAN"]);
+            dataRow.push({text: row["TANGGAL1"], alignment: "right"});
+            dataRow.push({text: row["TANGGAL2"], alignment: "right"});
+            dataRow.push({text: row["TANGGAL3"], alignment: "right"});
+            dataRow.push({text: row["TANGGAL4"], alignment: "right"});
+            dataRow.push({text: row["TANGGAL5"], alignment: "right"});
+            dataRow.push({text: row["TANGGAL6"], alignment: "right"});
+            dataRow.push({text: row["TANGGAL7"], alignment: "right"});
+            dataRow.push({text: row["TOTAL"], alignment: "right"});
+            body.push(dataRow);
+        });
+
+        return body;
+    }
+
+    function tableRencanaPembayaran(data, columns) {
+        return {
+            style: "tableExample",
+            color: "#444",
+            table: {
+                headerRows: 1,
+                body: buildTableRencanaPembayaran(data, columns)
             }
         };
     }
@@ -1410,7 +1556,6 @@ function createUIPdf(allData) {
         data.forEach(function (row, index) {
             var dataRow = [];
             // console.log("row : ", row);
-
             dataRow.push(row["NAMA_PEMBAYARAN"]);
             dataRow.push({text: row["TAGIHAN1"], alignment: "right"});
             dataRow.push({text: row["TAGIHAN2"], alignment: "right"});
@@ -1436,7 +1581,6 @@ function createUIPdf(allData) {
         };
     }
 
-
     // CREATE DOC
     var docDefinition = {
         pageOrientation: "landscape",
@@ -1449,13 +1593,11 @@ function createUIPdf(allData) {
             style: "subheader"
         },
             {
-
                 text: " ",
                 style: "header",
                 alignment: "center"
             },
             {
-
                 text: "SALDO IMPREST, IMPREST TERPUSAT & IMPOR",
                 style: "header",
                 alignment: "center"
@@ -1467,20 +1609,17 @@ function createUIPdf(allData) {
                 alignment: "center"
             },
             {
-
                 text: "SALDO SUBSIDI DAN KMK",
                 style: "header",
                 alignment: "center"
             },
             tableSubsidiKmk(externalDataSubsidiKmk, columnSubsidiKmk),
             {
-
                 text: " ",
                 style: "header",
                 alignment: "center"
             },
             {
-
                 text: "RECEIPT",
                 style: "header",
                 alignment: "center"
@@ -1503,13 +1642,12 @@ function createUIPdf(allData) {
             },
             tableRencanaBayarOperasiTerpusat(externalDataRencanaBayarOperasiTerpusat, columnRencanaOperasiTerpusat),
             {
-
                 text: " ",
                 style: "header",
-                alignment: "center"
+                alignment: "center",
+                pageBreak: "after"
             },
             {
-
                 text: " ",
                 style: "header",
                 alignment: "center",
@@ -1522,27 +1660,23 @@ function createUIPdf(allData) {
             },
             tableRencanaBayarImprestImpor(externalDataRencanaBayarImprestImpor, columnRencanaImprestImpor),
             {
-
                 text: " ",
                 style: "header",
                 alignment: "center"
             },
             {
-
-                text: "",
+                text: " ",
                 style: "header",
                 alignment: "center",
-                pageBreak: 'after'
+                pageBreak: "after"
             },
             {
-
                 text: "RENCANA BAYAR EQUIVALEN RUPIAH",
                 style: "header",
                 alignment: "center"
             },
             tableRencanaBayarEquivalenRupiah(externalDataRencanaBayarEquivalenRupiah, columnRencanaBayarEquivalenRupiah),
             {
-
                 text: " ",
                 style: "header",
                 alignment: "center",
@@ -1550,60 +1684,67 @@ function createUIPdf(allData) {
 
             },
             {
-
                 text: "RENCANA VS REALISASI",
                 style: "header",
                 alignment: "center",
             },
             {
-
                 text: "TOTAL RENCANA PEMBAYARAN",
                 style: "header",
                 alignment: "center"
             },
             tableRencanaBayar(externalDataTotalRencanaBayar, columnTableTotalRencanaBayar),
             {
-
                 text: " ",
                 style: "header",
                 alignment: "center"
             },
             {
-
                 text: "PEMBAYARAN YANG BELUM TEREALISASI",
                 style: "header",
                 alignment: "center"
             },
             tableBelumTerealisasi(externalDataBelumTerealisasi, columnTableBelumTerealisasi),
             {
-
                 text: " ",
                 style: "header",
                 alignment: "center"
             },
             {
-
                 text: "PEMBAYARAN YANG SUDAH TEREALISASI",
                 style: "header",
                 alignment: "center"
             },
             tableSudahTerealisasi(externalDataSudahTerealisasi, columnTableSudahTerealisasi),
             {
-
                 text: " ",
                 style: "header",
                 alignment: "center",
                 pageBreak: 'after'
             },
             {
-
                 text: "JENIS PEMBAYARAN",
                 style: "header",
                 alignment: "center"
             },
             {
-
                 text: "POSISI SALDO",
+                style: "header",
+                alignment: "left"
+            },
+            tableRencanaPembayaran(externalDataRencanaPembayaran, columnRencanaPembayaran),
+            {
+                text: " ",
+                style: "header",
+                alignment: "center",
+                pageBreak: 'after'
+            },
+            {
+                text: " ",
+                style: "header",
+                alignment: "center"
+            }, {
+                text: "TOTAL JENIS PEMBAYARAN",
                 style: "header",
                 alignment: "left"
             },
@@ -1624,7 +1765,8 @@ function createUIPdf(allData) {
                 style: "header",
                 alignment: "center"
             }, {
-                text: "TOTAL JENIS PEMBAYARAN",
+
+                text: "JENIS PEMBAYARAN",
                 style: "header",
                 alignment: "left"
             },
