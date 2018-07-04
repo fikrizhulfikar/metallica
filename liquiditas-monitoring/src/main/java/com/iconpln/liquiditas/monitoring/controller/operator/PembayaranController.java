@@ -168,6 +168,17 @@ public class PembayaranController {
 
         AppUtils.getLogger(this).debug("idValas : {} ", pIdValas);
         try {
+            String idJenisPembayaran = valasService.getIdPembayaranByIdValas(pIdValas);
+            Map<String, Object> res = valasService.getNotificatonDetail(idJenisPembayaran, null);
+
+            Notification notification = Notification.builder()
+                    .topic(idJenisPembayaran)
+                    .title(NamedIdentifier.REKAP_PEMBAYARAN.getName())
+                    .message(""
+                        + WebUtils.getUsernameLogin() + " telah menghapus Data pada aplikasi dengan jenis pembayaran "
+                        + " " + res.getOrDefault("OUT_NAMA_JENIS_PEMBAYARAN", ""))
+                    .build();
+            notificationUtil.notifyMessage(notification);
             WebUtils.deleteFile(pIdValas);
             return valasService.deletePembayaran(pIdValas);
         } catch (Exception e) {
@@ -223,7 +234,7 @@ public class PembayaranController {
             if (pIdValas != null && !pIdValas.equals("")) {
                 String jenisPembayaranSebelum = valasService.getIdPembayaranByIdValas(pIdValas);
 
-                Map<String, Object> outSebelum = valasService.getNotificatonDetail(pJenisPembayaran, pVendor);
+                Map<String, Object> outSebelum = valasService.getNotificatonDetail(jenisPembayaranSebelum, pVendor);
                 Map<String, Object> outSesudah = valasService.getNotificatonDetail(pJenisPembayaran, pVendor);
 
                 if (jenisPembayaranSebelum != null) {
@@ -268,6 +279,15 @@ public class PembayaranController {
 
         AppUtils.getLogger(this).debug("idValas : {} ", pIdValas);
         try {
+            String pJenisPembayaran = valasService.getIdPembayaranByIdValas(pIdValas);
+            Notification notification = Notification.builder()
+                    .topic(pJenisPembayaran)
+                    .title(NamedIdentifier.REKAP_PEMBAYARAN.getName())
+                    .message(""
+                            + WebUtils.getUsernameLogin()  + " telah meng-update status.")
+                    .additionalInfo(NamedIdentifier.REKAP_PEMBAYARAN.getValue() + ";" + pIdValas)
+                    .build();
+            notificationUtil.notifyMessage(notification);
             return valasService.updStatus(pIdValas, pStatusInvoice, pDeskripsi, WebUtils.getUsernameLogin());
         } catch (Exception e) {
             e.printStackTrace();

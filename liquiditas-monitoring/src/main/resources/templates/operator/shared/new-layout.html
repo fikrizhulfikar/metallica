@@ -217,7 +217,127 @@
         </div>
     </div>
 
-    <!-- -->
+    <!-- Tripartite -->
+    <div id="tripartite-data-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Tripartite</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pTipeTransaksi_tripartite"><span style="color: red">*)</span>&nbsp;Tipe
+                                    Transaksi:</label>
+                                <select id="pTipeTransaksi_tripartite" class="form-control" required="required" disabled="true">
+                                    <option value="1">OPERASI</option>
+                                    <option value="2">INVESTASI</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pJenisPemabayaran_tripartite"><span style="color: red">*)</span>&nbsp;Jenis Pembayaran:</label>
+                                <select id="pJenisPemabayaran_tripartite" class="form-control" disabled="true">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglJatuhTempo_tripartite">Jatuh Tempo:</label>
+                                <input type="text" class="form-control" id="pTglJatuhTempo_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglJatuhTempoH2_tripartite">H-2 Jatuh Tempo:</label>
+                                <input type="text" class="form-control" id="pTglJatuhTempoH2_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pVendor_tripartite"><span style="color: red">*)</span>&nbsp;Vendor/Pengembang/Pemasok/Loan:</label>
+                                <select id="pVendor_tripartite" class="form-control" disabled="true">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pBankCounterparty_tripartite"><span style="color: red">*)</span>&nbsp;Bank
+                                    Counterparty:</label>
+                                <select id="pBankCounterparty_tripartite" class="form-control" disabled="true">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCurrecny_tripartite"><span style="color: red">*)</span>&nbsp;Currency:</label>
+                                <select id="pCurrecny_tripartite" class="form-control" disabled="true">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNominalSebelumPajak_tripartite"><span style="color: red">*)</span>&nbsp;Nominal
+                                    Sebelum Pajak:</label>
+                                <input type="number" class="form-control" id="pNominalSebelumPajak_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPajak_tripartite"><span style="color: red">*)</span>&nbsp;Pajak (%):</label>
+                                <input type="number" min="0" max="100" class="form-control" id="pPajak_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group" style="margin-top: 40px">
+                                <label>Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label>
+                                <br/>
+                                <label>Gunakan titik (.) untuk koma (,)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pNominalDenganUnderlying_tripartite">Nominal Dengan Underlying:</label>
+                                <input type="number" class="form-control" id="pNominalDenganUnderlying_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNominalTanpaUnderlying_tripartite">Nominal Tanpa Underlying:</label>
+                                <input type="number" class="form-control" id="pNominalTanpaUnderlying_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pKursJisdor_tripartite">Kurs Jisdor:</label>
+                                <input type="number" class="form-control" id="pKursJisdor_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pSpread_tripartite">Spread:</label>
+                                <input type="number" class="form-control" id="pSpread_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglTerimaInvoice_tripartite"><span style="color: red">*)</span>&nbsp;Tgl Tagihan Diterima:</label>
+                                <input type="text" class="form-control" id="pTglTerimaInvoice_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglInvoice_tripartite"><span style="color: red">*)</span>&nbsp;Tgl Tagihan:</label>
+                                <input type="text" class="form-control" id="pTglInvoice_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoInvoice_tripartite" >No. Tagihan:</label>
+                                <datalist id="pilihan-no-invoice-tripartite"></datalist>
+                                <input type="text" list="data-no-invoice-tripartite" class="form-control" id="pNoInvoice_tripartite" disabled="true"/>
+                                <datalist id="data-no-invoice-tripartite">
+                                </datalist>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoNotdin_tripartite">No Nota Dinas:</label>
+                                <input type="text" class="form-control" id="pNoNotdin_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglNotaDinas_tripartite">Tgl Nota Dinas:</label>
+                                <input type="text" class="form-control" id="pTglNotaDinas_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDeskripsi_tripartite">Keterangan:</label>
+                                <input type="text" class="form-control" id="pDeskripsi_tripartite" list="list-keterangan-tripartite" disabled="true"/>
+                                <datalist id="list-keterangan-tripartite"></datalist>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 <footer class="app-footer" style="cursor: default">
@@ -407,12 +527,14 @@
             if (additionalInfo !== null) {
                 var menu_id = additionalInfo[0];
                 var data_id = additionalInfo[1];
-                showRekapData(data_id);
+                if (menu_id == 1 || menu_id == '1') {
+                    showRekapData(data_id);
+                } else {
+                    showTripartite('TRIPARTITE/20180626-000000002');
+                }
             }
         }
     }
-
-
 
     function showRekapData(id) {
         showLoadingCss()
@@ -467,6 +589,54 @@
                 }, timeSowFormEdit);
                 hideLoadingCss()
 
+            },
+            error: function () {
+                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+            }
+        });
+    }
+
+    function showTripartite(id) {
+        showLoadingCss();
+        $.ajax({
+            url: baseUrl + "api_operator/tripartite/edit_data",
+            dataType: 'JSON',
+            type: "GET",
+            data: {
+                pIdTripartite: id
+            },
+            success: function (res) {
+                hideLoadingCss("");
+                idTripartite = id;
+
+                $("#pTglJatuhTempo_tripartite").val(res[0].TGL_JATUH_TEMPO);
+                $("#pTglJatuhTempoH2_tripartite").val(res[0].H2_JATUH_TEMPO);
+                $("#pNominalSebelumPajak_tripartite").val(res[0].NOMINAL_SBLM_PAJAK);
+                $("#pPajak_tripartite").val(res[0].PAJAK);
+                $("#pNominalDenganUnderlying_tripartite").val(res[0].NOMINAL_UNDERLYING);
+                $("#pNominalTanpaUnderlying_tripartite").val(res[0].NOMINAL_TANPA_UNDERLYING);
+                $("#pSpread_tripartite").val(res[0].SPREAD);
+                $("#pNoInvoice_tripartite").val(res[0].NO_INVOICE);
+                $("#pTglInvoice_tripartite").val(res[0].TGL_TERIMA_INVOICE);
+                $("#pKursJisdor_tripartite").val(res[0].KURS_JISDOR);
+                $("#pTglTerimaInvoice_tripartite").val(res[0].TGL_INVOICE);
+                $("#pNoNotdin_tripartite").val(res[0].NO_NOTDIN);
+                // $("#pNoNotaDinas").val(res[0].TGL_NOTDIN);
+                $("#pDeskripsi_tripartite").val(res[0].DESKRIPSI);
+
+                tempVendor = res[0].ID_VENDOR;
+
+                setSelectJenisPembayaran("pJenisPemabayaran_tripartite", "TRIPARTITE", res[0].ID_JENIS_PEMBAYARAN);
+                setSelectBank("pBankCounterparty_tripartite", "", "PEMBAYAR", res[0].ID_BANK_CONTERPARTY, "TRIPARTITE");
+                setSelectCurr("pCurrency_tripartite", "", res[0].CURRENCY, "TRIPARTITE");
+                $("#pTipeTransaksi").val(res[0].TIPE_TRANSAKSI);
+
+                setTimeout(function () {
+                    $("#pVendor_tripartite").select2({
+                        width: "100%"
+                    });
+                    $('#tripartite-data-modal').modal({backdrop: 'static', keyboard: false});
+                }, timeSowFormEdit);
             },
             error: function () {
                 hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
