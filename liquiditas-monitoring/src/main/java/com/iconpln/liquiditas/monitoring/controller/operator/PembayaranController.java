@@ -283,7 +283,6 @@ public class PembayaranController {
         JSONObject json;
         for(String item : listData){
             json = new JSONObject(item);
-            AppUtils.getLogger(this).debug("jsonobject : {} ", json);
             Iterator<?> keys = json.keys();
             while( keys.hasNext() ){
                 String key = (String)keys.next();
@@ -299,10 +298,10 @@ public class PembayaranController {
                         break;
                     }
                 }
-                else {
+                /*else {
                     out.put("OUT_MSG", "DATA BERHASIL DIUBAH");
                     out.put("return", "1");
-                }
+                }*/
             }
         }
 
@@ -344,6 +343,52 @@ public class PembayaranController {
             }
         }
         return out;
+    }
+
+    @RequestMapping(value = "/multiple_edit", method = RequestMethod.POST)
+    public Map<String, Object> multipleEdit(
+            @RequestParam(value = "pData", defaultValue = "") String pData,
+            @RequestParam(value = "pTglJatuhTempo", defaultValue = "") String pTglJatuhTempo,
+            @RequestParam(value = "pBankPembayar", defaultValue = "") String pBankPembayar
+    ) {
+        Map<String, Object> out = null;
+        AppUtils.getLogger(this).debug("pdata : {} ", pData);
+        AppUtils.getLogger(this).debug("pTglJatuhTempo : {} ", pTglJatuhTempo);
+        pBankPembayar = (pBankPembayar.toString().equals("null") ? "" : pBankPembayar);
+        AppUtils.getLogger(this).debug("pBankPembayar : {} ", pBankPembayar);
+        String noBracket = pData.replaceAll("\\[", "").replaceAll("\\]","");
+        AppUtils.getLogger(this).debug("JSONValas : {} ", pData.replaceAll("\\[", "").replaceAll("\\]",""));
+        String[] listData = noBracket.split(",");
+        JSONObject json;
+        for(String item : listData){
+            json = new JSONObject(item);
+            Iterator<?> keys = json.keys();
+            while( keys.hasNext() ){
+                String key = (String)keys.next();
+                String value = json.getString(key);
+                AppUtils.getLogger(this).debug("  {}: {} ", key, value);
+                if(!key.equals("x")){
+                    try {
+//                        out = valasService.updStatus(value, key, pDeskripsi, WebUtils.getUsernameLogin());
+//                        out = valasService.insPembayaran(value, "", "", "", "", "", "", "", "", "", "", "", "", "", WebUtils.getUsernameLogin(), "", "", "");
+                        out = valasService.updateMultiplePembayaran(value, pTglJatuhTempo, pBankPembayar, WebUtils.getUsernameLogin());
+                        AppUtils.getLogger(this).debug("update {} : {} ", value, key);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        out = null;
+                        break;
+                    }
+                }
+                /*else {
+                    out.put("OUT_MSG", "DATA BERHASIL DIUBAH");
+                    out.put("return", "1");
+                }*/
+            }
+        }
+
+        AppUtils.getLogger(this).debug("statusInvoice : {} ", out);
+        return out;
+
     }
 
     @RequestMapping(value = "/upd_ket", method = RequestMethod.POST)

@@ -1024,16 +1024,14 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
         var value = $('.dataTables_filter input').val();
         tempTableSearch = value;
     });
-    $('#forcbparent').empty();
-    $('#forcbparent').append("<input type=\"checkbox\" id='cbparent'> ");
-    $("#cbparent").click(function(){
-        $('input:checkbox').not(this).prop('checked', this.checked);
-    });
 
     $('.dataTables_filter').each(function () {
-        $(this).append('<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
-            '<button class="btn btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="multiDelete()"><i class="fa fa-close"></i></button>');
+        $(this).append('<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
+            '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="multipleDelete()"><i class="fa fa-close"></i></button>'+
+            '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>');
     });
+
+    initCbparent();
 
   /*  $("#table-rekapitulasi").on('change',"input[type='checkbox']",function(e){
         if($(this).is(':checked')){
@@ -1112,7 +1110,7 @@ function update_datas() {
     });
 }
 
-function multiDelete() {
+function multipleDelete() {
     var id= $("#table-rekapitulasi input[type=checkbox]:checked").map(function() {
         return $(this).data("value");
     }).get();
@@ -1306,6 +1304,53 @@ function upload_server_xls() {
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
+        }
+    });
+}
+
+function  initCbparent() {
+    $('#forcbparent').empty();
+    $('#forcbparent').append("<input type=\"checkbox\" id='cbparent'> ");
+    $("#cbparent").click(function(){
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+}
+
+function openMultipleEditForm(){
+    setSelectBank("pNewBankPembayar", "", "PEMBAYAR", "", "REKAP");
+    $('#pNewTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
+    $('#multiple-edit-modal').modal({backdrop: 'static', keyboard: false});
+}
+
+function multipleUpdate() {
+    var id= $("#table-rekapitulasi input[type=checkbox]:checked").map(function() {
+        return $(this).data("value");
+    }).get();
+    var obj = new Object();
+    obj = id;
+    console.log("obj", obj);
+    console.log("id bank pembayar ",$("#pNewBankPembayar").val());
+    $.ajax({
+        url: baseUrl + "api_operator/pembayaran/multiple_edit",
+        dataType: 'JSON',
+        type: "POST",
+        data: {
+            pData: JSON.stringify(obj),
+            pTglJatuhTempo: $("#pNewTglJatuhTempo").val(),
+            pBankPembayar: $("#pNewBankPembayar").val()
+        },
+        success: function (res) {
+            hideLoadingCss("")
+            console.log("data upd_status :", res);
+            if (res.return == 1) {
+                alert(res.OUT_MSG);
+                location.reload();
+            } else {
+                alert(res.OUT_MSG);
+            }
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
         }
     });
 }

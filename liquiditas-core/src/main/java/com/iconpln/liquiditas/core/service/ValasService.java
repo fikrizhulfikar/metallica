@@ -77,6 +77,26 @@ public class ValasService {
         return out;
     }
 
+    //multiple edit
+    public Map<String, Object> updateMultiplePembayaran(
+            String pIdValas, String pTglJatuhTempo, String pBankPembayar, String pUpdateBy
+    ) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("edit_all_data");
+        Map<String, Object> out;
+        SqlParameterSource inParent = new MapSqlParameterSource()
+                .addValue("p_id_valas", pIdValas)
+                .addValue("p_jatuh_tempo", pTglJatuhTempo)
+                .addValue("p_bank", pBankPembayar)
+                .addValue("p_update_by", pUpdateBy)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        out = simpleJdbcCall.execute(inParent);
+        AppUtils.getLogger(this).info("data ins_rekap_data : {}", out);
+        return out;
+    }
+
     public List<Map<String, Object>> getListPembayaran(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pPembayaran, String pUserId, String sortBy, String sortDir, String pSearch) throws SQLException {
 
         AppUtils.getLogger(this).debug("data rekap search info = " +

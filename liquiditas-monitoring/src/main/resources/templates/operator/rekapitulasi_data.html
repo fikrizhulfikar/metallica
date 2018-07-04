@@ -348,6 +348,40 @@
             </div>
         </div>
     </div>
+    <div id="multiple-edit-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Multiple Edit Rekapitulasi Pembayaran</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pNewTglJatuhTempo">Tanggal Jatuh
+                                    Tempo:</label>
+                                <input type="text" class="form-control" id="pNewTglJatuhTempo" required="required"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pNewBankPembayar">Bank
+                                    Pembayar:</label>
+                                <select id="pNewBankPembayar" class="form-control" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="multipleUpdate()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </main>
 <div th:fragment="scripts-backend">
     <script src="/static/js/backend/controller/rekapitulasiData.js"></script>
