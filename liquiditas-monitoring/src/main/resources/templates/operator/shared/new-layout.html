@@ -103,6 +103,123 @@
     <main th:replace="${view} :: content" class="main">
     </main>
 
+    <!-- Modal Rekap Data -->
+    <div id="edit-rekap-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Rekapitulasi Pembayaran</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pTipeTransaksi"><span style="color: red">*)</span>&nbsp;Tipe
+                                    Transaksi:</label>
+                                <select id="pTipeTransaksi" class="form-control" required="required">
+                                    <option value="1">OPERASI</option>
+                                    <option value="2">INVESTASI</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pJenisPemabayaran"><span style="color: red">*)</span>&nbsp;Jenis
+                                    Pembayaran:</label>
+                                <select id="pJenisPemabayaran" class="form-control"
+                                        required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglJatuhTempo">Tanggal Jatuh
+                                    Tempo:</label>
+                                <input type="text" class="form-control" id="pTglJatuhTempo" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pVendor"><span style="color: red">*)</span>&nbsp;Vendor/Pengembang/Pemasok/Loan:</label>
+                                <select id="pVendor" class="form-control" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCurrecny"><span style="color: red">*)</span>&nbsp;Currency:</label>
+                                <select id="pCurrecny" class="form-control" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNilaiTagihan"><span style="color: red">*)</span>&nbsp;Nilai
+                                    Tagihan:</label>
+                                <input type="number" class="form-control" id="pNilaiTagihan" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pBankTujuan"><span style="color: red">*)</span>&nbsp;Bank Tujuan
+                                    Pembayaran:</label>
+                                <select id="pBankTujuan" class="form-control" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-top: 40px">
+                                <label for="pJenisPemabayaran">Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label><br/>
+                                <label>Gunakan titik (.) untuk koma (,)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pBankPembayar"><span style="color: red">*)</span>&nbsp;Bank
+                                    Pembayar:</label>
+                                <select id="pBankPembayar" class="form-control" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pUnitPenerima"><span style="color: red">*)</span>&nbsp;Nama
+                                    Kontrak/Loan/Unit
+                                    Penerima/Pembangkit:</label>
+                                <select id="pUnitPenerima" class="form-control" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglTerimaInvoice"><span style="color: red">*)</span>&nbsp;Tanggal Tagihan
+                                    Diterima:</label>
+                                <input type="text" class="form-control" id="pTglTerimaInvoice"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglTagihan">Tanggal Tagihan:</label>
+                                <input type="text" class="form-control" id="pTglTagihan"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoTagihan">No Tagihan:</label>
+                                <input type="text" class="form-control" list="data-no-tagihan" autocomplete="on" name="pNoTagihan"
+                                       id="pNoTagihan"/>
+                                <datalist id="data-no-tagihan"></datalist>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoNotaDinas">No Nota Dinas:</label>
+                                <input type="text" class="form-control" id="pNoNotaDinas"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglNotaDinas">Tanggal Nota Dinas:</label>
+                                <input type="text" class="form-control" id="pTglNotaDinas"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pKeterangan">Keterangan:</label>
+                                <input type="text" class="form-control" id="pKeterangan" list="data-keterangan"/>
+                                <datalist id="data-keterangan"></datalist>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- -->
+
 </div>
 <footer class="app-footer" style="cursor: default">
     <a><b>L'Metallica</b></a> © 2017 Administrator.
@@ -291,11 +408,74 @@
             if (additionalInfo !== null) {
                 var menu_id = additionalInfo[0];
                 var data_id = additionalInfo[1];
-                console.log(menu_id);
-                console.log(data_id);
+                edit_data(data_id);
             }
         }
     }
+
+
+
+    function edit_data(id) {
+        showLoadingCss()
+        $.ajax({
+            url: baseUrl + "api_operator/pembayaran/edit_data",
+            dataType: 'JSON',
+            type: "GET",
+            data: {
+                pIdValas: id
+            },
+            success: function (res) {
+                hideLoadingCss("")
+                idValas = id
+                $("#pTglJatuhTempo").val("");
+                $("#pNilaiTagihan").val("");
+                $("#pNoTagihan").val("");
+                $("#pTglTagihan").val("");
+                $("#pNoNotaDinas").val("");
+                $("#pTglNotaDinas").val("");
+                $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
+                $('#pTglTagihan').datepicker({dateFormat: 'dd/mm/yy'});
+                $('#pTglNotaDinas').datepicker({dateFormat: 'dd/mm/yy'});
+
+                tempVendor = res[0].ID_VENDOR;
+                tempUnit = res[0].ID_UNIT;
+
+                setSelectJenisPembayaran("pJenisPemabayaran", "", res[0].ID_JENIS_PEMBAYARAN);
+                setSelectCurr("pCurrecny", "", res[0].CURRENCY, "REKAP");
+                setSelectBank("pBankTujuan", "", "TUJUAN", res[0].KODE_BANK_TUJUAN, "REKAP");
+                setSelectBank("pBankPembayar", "", "PEMBAYAR", res[0].KODE_BANK_PEMBAYAR, "REKAP");
+                setSelectVendor("pVendor", res[0].ID_JENIS_PEMBAYARAN, res[0].ID_VENDOR);
+                setSelectUnit("pUnitPenerima", res[0].ID_JENIS_PEMBAYARAN, res[0].ID_UNIT);
+
+                $("#pTglJatuhTempo").val(res[0].TGL_JATUH_TEMPO);
+                $("#pNilaiTagihan").val(res[0].TOTAL_TAGIHAN);
+                $("#pNoTagihan").val(res[0].NO_TAGIHAN);
+                $("#pTglTagihan").val(res[0].TGL_TAGIHAN);
+                $("#pNoNotaDinas").val(res[0].NO_NOTDIN);
+                $("#pTglNotaDinas").val(res[0].TGL_NOTDIN);
+                $("#pKeterangan").val(res[0].DESKRIPSI);
+                $("#pStatus").val(res[0].STATUS_VALAS);
+                $("#pTipeTransaksi").val(res[0].TIPE_TRANSAKSI);
+                $("#pTglTerimaInvoice").val(res[0].TGL_TERIMA_INVOICE);
+
+                setTimeout(function () {
+                    $("#pVendor").select2({
+                        width: "100%"
+                    });
+                    $("#pUnitPenerima").select2({
+                        width: "100%"
+                    });
+                    $('#edit-rekap-modal').modal({backdrop: 'static', keyboard: false});
+                }, timeSowFormEdit);
+                hideLoadingCss()
+
+            },
+            error: function () {
+                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+            }
+        });
+    }
+
     /*]]>*/
 </script>
 <div th:replace="${view} :: scripts-backend"></div>
