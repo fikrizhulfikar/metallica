@@ -1,6 +1,6 @@
 function createUIPdf(allData) {
 
-     console.log("alldata : ",allData);
+    console.log("alldata : ", allData);
     // SaldoIdrDataImprst
     var columnSaldoIdrDataImprst = [];
 
@@ -43,20 +43,20 @@ function createUIPdf(allData) {
     $.each(allData.dataSaldoIdrImprest.return, function (index, v) {
         var helloooow = {
             BANK: v.BANK,
-            USD: accounting.formatNumber(v.IMPREST_TERPUSAT,2,".",","),
-            EUR: accounting.formatNumber(v.IMPREST_INVESTASI,2,".",","),
-            JPY: accounting.formatNumber(v.IMPREST_OPERASI,2,".",","),
-            USD_BOND: accounting.formatNumber(v.IMPOR,2,".",",")
+            USD: accounting.formatNumber(v.IMPREST_TERPUSAT, 2, ".", ","),
+            EUR: accounting.formatNumber(v.IMPREST_INVESTASI, 2, ".", ","),
+            JPY: accounting.formatNumber(v.IMPREST_OPERASI, 2, ".", ","),
+            USD_BOND: accounting.formatNumber(v.IMPOR, 2, ".", ",")
         }
         externalSaldoIdrDataImprst.push(helloooow)
     });
 
     var footTotalSaldoIdrImprest = {
         BANK: "TOTAL",
-        USD: accounting.formatNumber(allData.dataSaldoIdrImprest.OUT_TOTAL[0].JML_IMPREST_TERPUSAT,2,".",","),
-        EUR: accounting.formatNumber(allData.dataSaldoIdrImprest.OUT_TOTAL[0].JML_IMPREST_INVESTASI,2,".",","),
-        JPY: accounting.formatNumber(allData.dataSaldoIdrImprest.OUT_TOTAL[0].JML_IMPREST_OPERASI,2,".",","),
-        USD_BOND: accounting.formatNumber(allData.dataSaldoIdrImprest.OUT_TOTAL[0].JML_IMPOR,2,".",",")
+        USD: accounting.formatNumber(allData.dataSaldoIdrImprest.OUT_TOTAL[0].JML_IMPREST_TERPUSAT, 2, ".", ","),
+        EUR: accounting.formatNumber(allData.dataSaldoIdrImprest.OUT_TOTAL[0].JML_IMPREST_INVESTASI, 2, ".", ","),
+        JPY: accounting.formatNumber(allData.dataSaldoIdrImprest.OUT_TOTAL[0].JML_IMPREST_OPERASI, 2, ".", ","),
+        USD_BOND: accounting.formatNumber(allData.dataSaldoIdrImprest.OUT_TOTAL[0].JML_IMPOR, 2, ".", ",")
     }
     externalSaldoIdrDataImprst.push(footTotalSaldoIdrImprest)
 
@@ -118,16 +118,16 @@ function createUIPdf(allData) {
     $.each(allData.dataSaldoIdrSubsidiKmk.return, function (index, v) {
         var helloooow = {
             BANK: v.BANK,
-            SUBSIDI: accounting.formatNumber(v.SUBSIDI,2,".",","),
-            KMK: accounting.formatNumber(v.KMK,2,".",",")
+            SUBSIDI: accounting.formatNumber(v.SUBSIDI, 2, ".", ","),
+            KMK: accounting.formatNumber(v.KMK, 2, ".", ",")
         }
         externalDataSubsidiKmk.push(helloooow)
     });
 
     var footTotSubsidiKmk = {
         BANK: "TOTAL",
-        SUBSIDI: accounting.formatNumber(allData.dataSaldoIdrSubsidiKmk.OUT_TOTAL[0].JML_SUBSIDI,2,".",","),
-        KMK: accounting.formatNumber(allData.dataSaldoIdrSubsidiKmk.OUT_TOTAL[0].JML_KMK,2,".",",")
+        SUBSIDI: accounting.formatNumber(allData.dataSaldoIdrSubsidiKmk.OUT_TOTAL[0].JML_SUBSIDI, 2, ".", ","),
+        KMK: accounting.formatNumber(allData.dataSaldoIdrSubsidiKmk.OUT_TOTAL[0].JML_KMK, 2, ".", ",")
     };
 
     externalDataSubsidiKmk.push(footTotSubsidiKmk);
@@ -180,14 +180,14 @@ function createUIPdf(allData) {
     $.each(allData.dataSaldoIdrReceipt.return, function (index, v) {
         var helloooow = {
             BANK: v.BANK,
-            RECEIPT: accounting.formatNumber(v.RECEIPT,2,".",",")
+            RECEIPT: accounting.formatNumber(v.RECEIPT, 2, ".", ",")
         }
         externalDataReceipt.push(helloooow)
     });
 
     var footTotSubsidiKmk = {
         BANK: "TOTAL",
-        RECEIPT: accounting.formatNumber(allData.dataSaldoIdrSubsidiKmk.OUT_TOTAL[0].JML_RECEIPT,2,".",",")
+        RECEIPT: accounting.formatNumber(allData.dataSaldoIdrSubsidiKmk.OUT_TOTAL[0].JML_RECEIPT, 2, ".", ",")
     };
 
     externalDataReceipt.push(footTotSubsidiKmk);
@@ -239,14 +239,14 @@ function createUIPdf(allData) {
     $.each(allData.dataSaldoIdrReceipt.return, function (index, v) {
         var helloooow = {
             BANK: v.BANK,
-            RECEIPT: accounting.formatNumber(v.RECEIPT,2,".",",")
+            RECEIPT: accounting.formatNumber(v.RECEIPT, 2, ".", ",")
         }
         externalDataReceipt.push(helloooow)
     });
 
     var footTotSubsidiKmk = {
         BANK: "TOTAL",
-        RECEIPT: accounting.formatNumber(allData.dataSaldoIdrSubsidiKmk.OUT_TOTAL[0].JML_RECEIPT,2,".",",")
+        RECEIPT: accounting.formatNumber(allData.dataSaldoIdrSubsidiKmk.OUT_TOTAL[0].JML_RECEIPT, 2, ".", ",")
     };
 
     externalDataReceipt.push(footTotSubsidiKmk);
@@ -355,56 +355,56 @@ function createUIPdf(allData) {
         helloooow = {
             TGL: v.TGL,
             KETERANGAN: "SALDO AWAL",
-            OPRS_MANDIRI: accounting.formatNumber(v.SALDO_AWAL_MANDIRI_OPRS,2,".",","),
-            OPRS_BRI: accounting.formatNumber(v.SALDO_AWAL_BRI_OPRS,2,".",","),
-            OPRS_BNI: accounting.formatNumber(v.SALDO_AWAL_BNI_OPRS,2,".",","),
-            OPRS_BUKOPIN: accounting.formatNumber(v.SALDO_AWAL_BUKOPIN_OPRS,2,".",","),
-            INVES_MANDIRI: accounting.formatNumber(v.SALDO_AWAL_MANDIRI_INVES,2,".",","),
-            INVES_BRI: accounting.formatNumber(v.SALDO_AWAL_BRI_INVES,2,".",","),
-            INVES_BNI: accounting.formatNumber(v.SALDO_AWAL_BNI_INVES,2,".",","),
-            INVES_BUKOPIN: accounting.formatNumber(v.SALDO_AWAL_BUKOPIN_INVES,2,".",",")
+            OPRS_MANDIRI: accounting.formatNumber(v.SALDO_AWAL_MANDIRI_OPRS, 2, ".", ","),
+            OPRS_BRI: accounting.formatNumber(v.SALDO_AWAL_BRI_OPRS, 2, ".", ","),
+            OPRS_BNI: accounting.formatNumber(v.SALDO_AWAL_BNI_OPRS, 2, ".", ","),
+            OPRS_BUKOPIN: accounting.formatNumber(v.SALDO_AWAL_BUKOPIN_OPRS, 2, ".", ","),
+            INVES_MANDIRI: accounting.formatNumber(v.SALDO_AWAL_MANDIRI_INVES, 2, ".", ","),
+            INVES_BRI: accounting.formatNumber(v.SALDO_AWAL_BRI_INVES, 2, ".", ","),
+            INVES_BNI: accounting.formatNumber(v.SALDO_AWAL_BNI_INVES, 2, ".", ","),
+            INVES_BUKOPIN: accounting.formatNumber(v.SALDO_AWAL_BUKOPIN_INVES, 2, ".", ",")
         }
         externalDataRencanaBayarOperasiTerpusat.push(helloooow)
 
         helloooow = {
             TGL: v.TGL,
             KETERANGAN: "PINBUK,KMK,SUBSIDI",
-            OPRS_MANDIRI: accounting.formatNumber(v.SUBSIDI_MANDIRI_OPRS,2,".",","),
-            OPRS_BRI: accounting.formatNumber(v.SUBSIDI_BRI_OPRS,2,".",","),
-            OPRS_BNI: accounting.formatNumber(v.SUBSIDI_BNI_OPRS,2,".",","),
-            OPRS_BUKOPIN: accounting.formatNumber(v.SUBSIDI_BUKOPIN_OPRS,2,".",","),
-            INVES_MANDIRI: accounting.formatNumber(v.SUBSIDI_MANDIRI_INVES,2,".",","),
-            INVES_BRI: accounting.formatNumber(v.SUBSIDI_BRI_INVES,2,".",","),
-            INVES_BNI: accounting.formatNumber(v.SUBSIDI_BNI_INVES,2,".",","),
-            INVES_BUKOPIN: accounting.formatNumber(v.SUBSIDI_BUKOPIN_INVES,2,".",",")
+            OPRS_MANDIRI: accounting.formatNumber(v.SUBSIDI_MANDIRI_OPRS, 2, ".", ","),
+            OPRS_BRI: accounting.formatNumber(v.SUBSIDI_BRI_OPRS, 2, ".", ","),
+            OPRS_BNI: accounting.formatNumber(v.SUBSIDI_BNI_OPRS, 2, ".", ","),
+            OPRS_BUKOPIN: accounting.formatNumber(v.SUBSIDI_BUKOPIN_OPRS, 2, ".", ","),
+            INVES_MANDIRI: accounting.formatNumber(v.SUBSIDI_MANDIRI_INVES, 2, ".", ","),
+            INVES_BRI: accounting.formatNumber(v.SUBSIDI_BRI_INVES, 2, ".", ","),
+            INVES_BNI: accounting.formatNumber(v.SUBSIDI_BNI_INVES, 2, ".", ","),
+            INVES_BUKOPIN: accounting.formatNumber(v.SUBSIDI_BUKOPIN_INVES, 2, ".", ",")
         }
         externalDataRencanaBayarOperasiTerpusat.push(helloooow)
 
         helloooow = {
             TGL: v.TGL,
             KETERANGAN: "RENCANA PEMBAYARAN",
-            OPRS_MANDIRI: accounting.formatNumber(v.RENCANA_BAYARMANDIRI_OPRS,2,".",","),
-            OPRS_BRI: accounting.formatNumber(v.RENCANA_BAYARBRI_OPRS,2,".",","),
-            OPRS_BNI: accounting.formatNumber(v.RENCANA_BAYARBNI_OPRS,2,".",","),
-            OPRS_BUKOPIN: accounting.formatNumber(v.RENCANA_BAYARBUKOPIN_OPRS,2,".",","),
-            INVES_MANDIRI: accounting.formatNumber(v.RENCANA_BAYARMANDIRI_INVES,2,".",","),
-            INVES_BRI: accounting.formatNumber(v.RENCANA_BAYARBRI_INVES,2,".",","),
-            INVES_BNI: accounting.formatNumber(v.RENCANA_BAYARBNI_INVES,2,".",","),
-            INVES_BUKOPIN: accounting.formatNumber(v.RENCANA_BAYARBUKOPIN_INVES,2,".",",")
+            OPRS_MANDIRI: accounting.formatNumber(v.RENCANA_BAYARMANDIRI_OPRS, 2, ".", ","),
+            OPRS_BRI: accounting.formatNumber(v.RENCANA_BAYARBRI_OPRS, 2, ".", ","),
+            OPRS_BNI: accounting.formatNumber(v.RENCANA_BAYARBNI_OPRS, 2, ".", ","),
+            OPRS_BUKOPIN: accounting.formatNumber(v.RENCANA_BAYARBUKOPIN_OPRS, 2, ".", ","),
+            INVES_MANDIRI: accounting.formatNumber(v.RENCANA_BAYARMANDIRI_INVES, 2, ".", ","),
+            INVES_BRI: accounting.formatNumber(v.RENCANA_BAYARBRI_INVES, 2, ".", ","),
+            INVES_BNI: accounting.formatNumber(v.RENCANA_BAYARBNI_INVES, 2, ".", ","),
+            INVES_BUKOPIN: accounting.formatNumber(v.RENCANA_BAYARBUKOPIN_INVES, 2, ".", ",")
         }
         externalDataRencanaBayarOperasiTerpusat.push(helloooow)
 
         helloooow = {
             TGL: v.TGL,
             KETERANGAN: "SALDO AKHIR",
-            OPRS_MANDIRI: accounting.formatNumber(v.SALDO_AKHIR_MANDIRI_OPRS,2,".",","),
-            OPRS_BRI: accounting.formatNumber(v.SALDO_AKHIR_BRI_OPRS,2,".",","),
-            OPRS_BNI: accounting.formatNumber(v.SALDO_AKHIR_BNI_OPRS,2,".",","),
-            OPRS_BUKOPIN: accounting.formatNumber(v.SALDO_AKHIR_BUKOPIN_OPRS,2,".",","),
-            INVES_MANDIRI: accounting.formatNumber(v.SALDO_AKHIR_MANDIRI_INVES,2,".",","),
-            INVES_BRI: accounting.formatNumber(v.SALDO_AKHIR_BRI_INVES,2,".",","),
-            INVES_BNI: accounting.formatNumber(v.SALDO_AKHIR_BNI_INVES,2,".",","),
-            INVES_BUKOPIN: accounting.formatNumber(v.SALDO_AKHIR_BUKOPIN_INVES,2,".",",")
+            OPRS_MANDIRI: accounting.formatNumber(v.SALDO_AKHIR_MANDIRI_OPRS, 2, ".", ","),
+            OPRS_BRI: accounting.formatNumber(v.SALDO_AKHIR_BRI_OPRS, 2, ".", ","),
+            OPRS_BNI: accounting.formatNumber(v.SALDO_AKHIR_BNI_OPRS, 2, ".", ","),
+            OPRS_BUKOPIN: accounting.formatNumber(v.SALDO_AKHIR_BUKOPIN_OPRS, 2, ".", ","),
+            INVES_MANDIRI: accounting.formatNumber(v.SALDO_AKHIR_MANDIRI_INVES, 2, ".", ","),
+            INVES_BRI: accounting.formatNumber(v.SALDO_AKHIR_BRI_INVES, 2, ".", ","),
+            INVES_BNI: accounting.formatNumber(v.SALDO_AKHIR_BNI_INVES, 2, ".", ","),
+            INVES_BUKOPIN: accounting.formatNumber(v.SALDO_AKHIR_BUKOPIN_INVES, 2, ".", ",")
         }
         externalDataRencanaBayarOperasiTerpusat.push(helloooow)
         var ket = "<b style=color:#ff0000;>KURANG</b>";
@@ -541,56 +541,56 @@ function createUIPdf(allData) {
         helloooow = {
             TGL: v.TGL,
             KETERANGAN: "SALDO AWAL",
-            IMPREST_MANDIRI: accounting.formatNumber(v.SALDO_AWAL_MANDIRI_IMPRST,2,".",","),
-            IMPREST_BRI: accounting.formatNumber(v.SALDO_AWAL_BRI_IMPRST,2,".",","),
-            IMPREST_BNI: accounting.formatNumber(v.SALDO_AWAL_BNI_IMPRST,2,".",","),
-            IMPREST_BUKOPIN: accounting.formatNumber(v.SALDO_AWAL_BUKOPIN_IMPRST,2,".",","),
-            IMPOR_MANDIRI: accounting.formatNumber(v.SALDO_AWAL_MANDIRI_IMPOR,2,".",","),
-            IMPOR_BRI: accounting.formatNumber(v.SALDO_AWAL_BRI_IMPOR,2,".",","),
-            IMPOR_BNI: accounting.formatNumber(v.SALDO_AWAL_BNI_IMPOR,2,".",","),
-            IMPOR_BUKOPIN: accounting.formatNumber(v.SALDO_AWAL_BUKOPIN_IMPOR,2,".",",")
+            IMPREST_MANDIRI: accounting.formatNumber(v.SALDO_AWAL_MANDIRI_IMPRST, 2, ".", ","),
+            IMPREST_BRI: accounting.formatNumber(v.SALDO_AWAL_BRI_IMPRST, 2, ".", ","),
+            IMPREST_BNI: accounting.formatNumber(v.SALDO_AWAL_BNI_IMPRST, 2, ".", ","),
+            IMPREST_BUKOPIN: accounting.formatNumber(v.SALDO_AWAL_BUKOPIN_IMPRST, 2, ".", ","),
+            IMPOR_MANDIRI: accounting.formatNumber(v.SALDO_AWAL_MANDIRI_IMPOR, 2, ".", ","),
+            IMPOR_BRI: accounting.formatNumber(v.SALDO_AWAL_BRI_IMPOR, 2, ".", ","),
+            IMPOR_BNI: accounting.formatNumber(v.SALDO_AWAL_BNI_IMPOR, 2, ".", ","),
+            IMPOR_BUKOPIN: accounting.formatNumber(v.SALDO_AWAL_BUKOPIN_IMPOR, 2, ".", ",")
         }
         externalDataRencanaBayarImprestImpor.push(helloooow)
 
         helloooow = {
             TGL: v.TGL,
             KETERANGAN: "PINBUK,KMK,SUBSIDI DAN DEPOSTIO",
-            IMPREST_MANDIRI: accounting.formatNumber(v.SUBSIDI_MANDIRI_IMPRST,2,".",","),
-            IMPREST_BRI: accounting.formatNumber(v.SUBSIDI_BRI_IMPRST,2,".",","),
-            IMPREST_BNI: accounting.formatNumber(v.SUBSIDI_BNI_IMPRST,2,".",","),
-            IMPREST_BUKOPIN: accounting.formatNumber(v.SUBSIDI_BUKOPIN_IMPRST,2,".",","),
-            IMPOR_MANDIRI: accounting.formatNumber(v.SUBSIDI_MANDIRI_IMPOR,2,".",","),
-            IMPOR_BRI: accounting.formatNumber(v.SUBSIDI_BRI_IMPOR,2,".",","),
-            IMPOR_BNI: accounting.formatNumber(v.SUBSIDI_BNI_IMPOR,2,".",","),
-            IMPOR_BUKOPIN: accounting.formatNumber(v.SUBSIDI_BUKOPIN_IMPOR,2,".",",")
+            IMPREST_MANDIRI: accounting.formatNumber(v.SUBSIDI_MANDIRI_IMPRST, 2, ".", ","),
+            IMPREST_BRI: accounting.formatNumber(v.SUBSIDI_BRI_IMPRST, 2, ".", ","),
+            IMPREST_BNI: accounting.formatNumber(v.SUBSIDI_BNI_IMPRST, 2, ".", ","),
+            IMPREST_BUKOPIN: accounting.formatNumber(v.SUBSIDI_BUKOPIN_IMPRST, 2, ".", ","),
+            IMPOR_MANDIRI: accounting.formatNumber(v.SUBSIDI_MANDIRI_IMPOR, 2, ".", ","),
+            IMPOR_BRI: accounting.formatNumber(v.SUBSIDI_BRI_IMPOR, 2, ".", ","),
+            IMPOR_BNI: accounting.formatNumber(v.SUBSIDI_BNI_IMPOR, 2, ".", ","),
+            IMPOR_BUKOPIN: accounting.formatNumber(v.SUBSIDI_BUKOPIN_IMPOR, 2, ".", ",")
         }
         externalDataRencanaBayarImprestImpor.push(helloooow)
 
         helloooow = {
             TGL: v.TGL,
             KETERANGAN: "RENCANA PEMBAYARAN",
-            IMPREST_MANDIRI: accounting.formatNumber(v.RENCANA_BAYARMANDIRI_IMPRST,2,".",","),
-            IMPREST_BRI: accounting.formatNumber(v.RENCANA_BAYARBRI_IMPRST,2,".",","),
-            IMPREST_BNI: accounting.formatNumber(v.RENCANA_BAYARBNI_IMPRST,2,".",","),
-            IMPREST_BUKOPIN: accounting.formatNumber(v.RENCANA_BAYARBUKOPIN_IMPRST,2,".",","),
-            IMPOR_MANDIRI: accounting.formatNumber(v.RENCANA_BAYARMANDIRI_IMPOR,2,".",","),
-            IMPOR_BRI: accounting.formatNumber(v.RENCANA_BAYARBRI_IMPOR,2,".",","),
-            IMPOR_BNI: accounting.formatNumber(v.RENCANA_BAYARBNI_IMPOR,2,".",","),
-            IMPOR_BUKOPIN: accounting.formatNumber(v.RENCANA_BAYARBUKOPIN_IMPOR,2,".",",")
+            IMPREST_MANDIRI: accounting.formatNumber(v.RENCANA_BAYARMANDIRI_IMPRST, 2, ".", ","),
+            IMPREST_BRI: accounting.formatNumber(v.RENCANA_BAYARBRI_IMPRST, 2, ".", ","),
+            IMPREST_BNI: accounting.formatNumber(v.RENCANA_BAYARBNI_IMPRST, 2, ".", ","),
+            IMPREST_BUKOPIN: accounting.formatNumber(v.RENCANA_BAYARBUKOPIN_IMPRST, 2, ".", ","),
+            IMPOR_MANDIRI: accounting.formatNumber(v.RENCANA_BAYARMANDIRI_IMPOR, 2, ".", ","),
+            IMPOR_BRI: accounting.formatNumber(v.RENCANA_BAYARBRI_IMPOR, 2, ".", ","),
+            IMPOR_BNI: accounting.formatNumber(v.RENCANA_BAYARBNI_IMPOR, 2, ".", ","),
+            IMPOR_BUKOPIN: accounting.formatNumber(v.RENCANA_BAYARBUKOPIN_IMPOR, 2, ".", ",")
         }
         externalDataRencanaBayarImprestImpor.push(helloooow)
 
         helloooow = {
             TGL: v.TGL,
             KETERANGAN: "SALDO AKHIR",
-            IMPREST_MANDIRI: accounting.formatNumber(v.SALDO_AKHIR_MANDIRI_IMPRST,2,".",","),
-            IMPREST_BRI: accounting.formatNumber(v.SALDO_AKHIR_BRI_IMPRST,2,".",","),
-            IMPREST_BNI: accounting.formatNumber(v.SALDO_AKHIR_BNI_IMPRST,2,".",","),
-            IMPREST_BUKOPIN: accounting.formatNumber(v.SALDO_AKHIR_BUKOPIN_IMPRST,2,".",","),
-            IMPOR_MANDIRI: accounting.formatNumber(v.SALDO_AKHIR_MANDIRI_IMPOR,2,".",","),
-            IMPOR_BRI: accounting.formatNumber(v.SALDO_AKHIR_BRI_IMPOR,2,".",","),
-            IMPOR_BNI: accounting.formatNumber(v.SALDO_AKHIR_BNI_IMPOR,2,".",","),
-            IMPOR_BUKOPIN: accounting.formatNumber(v.SALDO_AKHIR_BUKOPIN_IMPOR,2,".",",")
+            IMPREST_MANDIRI: accounting.formatNumber(v.SALDO_AKHIR_MANDIRI_IMPRST, 2, ".", ","),
+            IMPREST_BRI: accounting.formatNumber(v.SALDO_AKHIR_BRI_IMPRST, 2, ".", ","),
+            IMPREST_BNI: accounting.formatNumber(v.SALDO_AKHIR_BNI_IMPRST, 2, ".", ","),
+            IMPREST_BUKOPIN: accounting.formatNumber(v.SALDO_AKHIR_BUKOPIN_IMPRST, 2, ".", ","),
+            IMPOR_MANDIRI: accounting.formatNumber(v.SALDO_AKHIR_MANDIRI_IMPOR, 2, ".", ","),
+            IMPOR_BRI: accounting.formatNumber(v.SALDO_AKHIR_BRI_IMPOR, 2, ".", ","),
+            IMPOR_BNI: accounting.formatNumber(v.SALDO_AKHIR_BNI_IMPOR, 2, ".", ","),
+            IMPOR_BUKOPIN: accounting.formatNumber(v.SALDO_AKHIR_BUKOPIN_IMPOR, 2, ".", ",")
         }
         externalDataRencanaBayarImprestImpor.push(helloooow)
         var ket = "<b style=color:red;>KURANG</b>";
@@ -699,40 +699,40 @@ function createUIPdf(allData) {
         helloooow = {
             TGL: v.TGL,
             KETERANGAN: "SALDO AWAL",
-            MANDIRI: accounting.formatNumber(v.SALDO_AWAL_MANDIRI,2,".",","),
-            BRI: accounting.formatNumber(v.SALDO_AWAL_BRI,2,".",","),
-            BNI: accounting.formatNumber(v.SALDO_AWAL_BNI,2,".",","),
-            BUKOPIN: accounting.formatNumber(v.SALDO_AWAL_BUKOPIN,2,".",",")
+            MANDIRI: accounting.formatNumber(v.SALDO_AWAL_MANDIRI, 2, ".", ","),
+            BRI: accounting.formatNumber(v.SALDO_AWAL_BRI, 2, ".", ","),
+            BNI: accounting.formatNumber(v.SALDO_AWAL_BNI, 2, ".", ","),
+            BUKOPIN: accounting.formatNumber(v.SALDO_AWAL_BUKOPIN, 2, ".", ",")
         }
         externalDataRencanaBayarEquivalenRupiah.push(helloooow)
 
         helloooow = {
             TGL: v.TGL,
             KETERANGAN: "PINBUK,KMK,SUBSIDI DAN DEPOSTIO",
-            MANDIRI: accounting.formatNumber(v.PINBUK_MANDIRI,2,".",","),
-            BRI: accounting.formatNumber(v.PINBUK_BRI,2,".",","),
-            BNI: accounting.formatNumber(v.PINBUK_BNI,2,".",","),
-            BUKOPIN: accounting.formatNumber(v.PINBUK_BUKOPIN,2,".",",")
+            MANDIRI: accounting.formatNumber(v.PINBUK_MANDIRI, 2, ".", ","),
+            BRI: accounting.formatNumber(v.PINBUK_BRI, 2, ".", ","),
+            BNI: accounting.formatNumber(v.PINBUK_BNI, 2, ".", ","),
+            BUKOPIN: accounting.formatNumber(v.PINBUK_BUKOPIN, 2, ".", ",")
         }
         externalDataRencanaBayarEquivalenRupiah.push(helloooow)
 
         helloooow = {
             TGL: v.TGL,
             KETERANGAN: "RENCANA PEMBAYARAN",
-            MANDIRI: accounting.formatNumber(v.RENCANA_BAYAR_MANDIRI,2,".",","),
-            BRI: accounting.formatNumber(v.RENCANA_BAYAR_BRI,2,".",","),
-            BNI: accounting.formatNumber(v.RENCANA_BAYAR_BNI,2,".",","),
-            BUKOPIN: accounting.formatNumber(v.RENCANA_BAYAR_BUKOPIN,2,".",",")
+            MANDIRI: accounting.formatNumber(v.RENCANA_BAYAR_MANDIRI, 2, ".", ","),
+            BRI: accounting.formatNumber(v.RENCANA_BAYAR_BRI, 2, ".", ","),
+            BNI: accounting.formatNumber(v.RENCANA_BAYAR_BNI, 2, ".", ","),
+            BUKOPIN: accounting.formatNumber(v.RENCANA_BAYAR_BUKOPIN, 2, ".", ",")
         }
         externalDataRencanaBayarEquivalenRupiah.push(helloooow)
 
         helloooow = {
             TGL: v.TGL,
             KETERANGAN: "SALDO AKHIR",
-            MANDIRI: accounting.formatNumber(v.SALDO_AKHIR_MANDIRI,2,".",","),
-            BRI: accounting.formatNumber(v.SALDO_AKHIR_BRI,2,".",","),
-            BNI: accounting.formatNumber(v.SALDO_AKHIR_BNI,2,".",","),
-            BUKOPIN: accounting.formatNumber(v.SALDO_AKHIR_BUKOPIN,2,".",",")
+            MANDIRI: accounting.formatNumber(v.SALDO_AKHIR_MANDIRI, 2, ".", ","),
+            BRI: accounting.formatNumber(v.SALDO_AKHIR_BRI, 2, ".", ","),
+            BNI: accounting.formatNumber(v.SALDO_AKHIR_BNI, 2, ".", ","),
+            BUKOPIN: accounting.formatNumber(v.SALDO_AKHIR_BUKOPIN, 2, ".", ",")
         }
         externalDataRencanaBayarEquivalenRupiah.push(helloooow)
         var ket = "<b style=color:red;>KURANG</b>";
@@ -784,113 +784,408 @@ function createUIPdf(allData) {
         };
     }
 
+    //      RENCANA VS REALISASI
+    var columnTableTotalRencanaBayar = [];
+    columnTableTotalRencanaBayar.push({
+        text: "JENIS PEMBAYARAN",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [14, 12.5, 14, 12.5]
+    });
 
-     //    JENIS PEMBAYARAN
+    columnTableTotalRencanaBayar.push({
+        text: "JATUH TEMPO",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [28, 12.5, 28, 12.5]
+    });
 
-        var columnPosisiSaldo = [];
-        columnPosisiSaldo.push({
-            text: "SALDO AWAL",
-            style: "tableHeader",
-            alignment: "center",
-            margin: [5, 12.5, 5, 12.5]
+    columnTableTotalRencanaBayar.push({
+        text: "IDR",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [40, 12.5, 40, 12.5]
+    });
+
+    columnTableTotalRencanaBayar.push({
+        text: "USD",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [40, 12.5, 40, 12.5]
+    });
+
+    columnTableTotalRencanaBayar.push({
+        text: "JPY",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [40, 12.5, 40, 12.5]
+    });
+
+    columnTableTotalRencanaBayar.push({
+        text: "EUR",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [40, 12.5, 40, 12.5]
+    });
+    columnTableTotalRencanaBayar.push({
+        text: "OTHER",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [40, 12.5, 40, 12.5]
+    });
+
+
+    var columnTableBelumTerealisasi = [];
+    columnTableBelumTerealisasi.push({
+        text: "JENIS PEMBAYARAN",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [14, 12.5, 14, 12.5]
+    });
+
+    columnTableBelumTerealisasi.push({
+        text: "JATUH TEMPO",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [28, 12.5, 28, 12.5]
+    });
+
+    columnTableBelumTerealisasi.push({
+        text: "IDR",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [40, 12.5, 40, 12.5]
+    });
+
+    columnTableBelumTerealisasi.push({
+        text: "USD",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [40, 12.5, 40, 12.5]
+    });
+
+    columnTableBelumTerealisasi.push({
+        text: "JPY",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [40, 12.5, 40, 12.5]
+    });
+
+    columnTableBelumTerealisasi.push({
+        text: "EUR",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [40, 12.5, 40, 12.5]
+    });
+    columnTableBelumTerealisasi.push({
+        text: "OTHER",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [40, 12.5, 40, 12.5]
+    });
+
+
+    var columnTableSudahTerealisasi = [];
+    columnTableSudahTerealisasi.push({
+        text: "JENIS PEMBAYARAN",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [14, 12.5, 14, 12.5]
+    });
+
+    columnTableSudahTerealisasi.push({
+        text: "JATUH TEMPO",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [28, 12.5, 28, 12.5]
+    });
+
+    columnTableSudahTerealisasi.push({
+        text: "IDR",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [40, 12.5, 40, 12.5]
+    });
+
+    columnTableSudahTerealisasi.push({
+        text: "USD",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [40, 12.5, 40, 12.5]
+    });
+
+    columnTableSudahTerealisasi.push({
+        text: "JPY",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [40, 12.5, 40, 12.5]
+    });
+
+    columnTableSudahTerealisasi.push({
+        text: "EUR",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [40, 12.5, 40, 12.5]
+    });
+    columnTableSudahTerealisasi.push({
+        text: "OTHER",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [40, 12.5, 40, 12.5]
+    });
+
+
+    var externalDataTotalRencanaBayar = []
+    var externalDataBelumTerealisasi = []
+    var externalDataSudahTerealisasi = []
+    console.log("ini ALlDATA", allData);
+
+
+    $.each(allData.dataRencanaVsRealisasiIdr.return, function (index, v) {
+        var date = new Date(v.JATUH_TEMPO);
+        var dateExport = date.toLocaleDateString();
+        var helloooow;
+
+        if ((v.STATUS_VALAS != 'RENCANA' && v.STATUS_VALAS != 'REALISASI') || v.STATUS == 'total bro') {
+            helloooow = {
+                JENIS_PEMBAYARAN: v.JENIS_PEMBAYARAN,
+                JATUH_TEMPO: dateExport,
+                IDR: accounting.formatNumber(v.IDR, 2, ".", ","),
+                USD: accounting.formatNumber(v.USD, 2, ".", ","),
+                JPY: accounting.formatNumber(v.JPY, 2, ".", ","),
+                EUR: accounting.formatNumber(v.EUR, 2, ".", ","),
+                OTHER: accounting.formatNumber(v.OTHER, 2, ".", ",")
+            }
+            externalDataTotalRencanaBayar.push(helloooow)
+        }
+        if (v.STATUS_VALAS == 'RENCANA') {
+            helloooow = {
+                JENIS_PEMBAYARAN: v.JENIS_PEMBAYARAN,
+                JATUH_TEMPO: dateExport,
+                IDR: accounting.formatNumber(v.IDR, 2, ".", ","),
+                USD: accounting.formatNumber(v.USD, 2, ".", ","),
+                JPY: accounting.formatNumber(v.JPY, 2, ".", ","),
+                EUR: accounting.formatNumber(v.EUR, 2, ".", ","),
+                OTHER: accounting.formatNumber(v.OTHER, 2, ".", ",")
+            }
+            externalDataBelumTerealisasi.push(helloooow)
+        }
+        if (v.STATUS_VALAS == 'REALISASI') {
+            helloooow = {
+                JENIS_PEMBAYARAN: v.JENIS_PEMBAYARAN,
+                JATUH_TEMPO: dateExport,
+                IDR: accounting.formatNumber(v.IDR, 2, ".", ","),
+                USD: accounting.formatNumber(v.USD, 2, ".", ","),
+                JPY: accounting.formatNumber(v.JPY, 2, ".", ","),
+                EUR: accounting.formatNumber(v.EUR, 2, ".", ","),
+                OTHER: accounting.formatNumber(v.OTHER, 2, ".", ",")
+            }
+            externalDataSudahTerealisasi.push(helloooow)
+        }
+    });
+
+    function buildTableTotalRencanaBayar(data, columns) {
+        var body = [];
+
+        body.push(columns);
+        console.log(columns);
+
+        data.forEach(function (row) {
+            var dataRow = [];
+            dataRow.push(row["JENIS_PEMBAYARAN"]);
+            dataRow.push(row["JATUH_TEMPO"]);
+            dataRow.push({text: row["IDR"], alignment: "right"});
+            dataRow.push({text: row["USD"], alignment: "right"});
+            dataRow.push({text: row["JPY"], alignment: "right"});
+            dataRow.push({text: row["EUR"], alignment: "right"});
+            dataRow.push({text: row["OTHER"], alignment: "right"});
+            body.push(dataRow);
         });
 
-        columnPosisiSaldo.push({
-            text: "TOTAL",
-            style: "tableHeader",
-            alignment: "center",
-            margin: [20, 12.5, 20, 12.5]
+        return body;
+    }
+
+    function buildTableBelumTerealisasi(data, columns) {
+        var body = [];
+
+        body.push(columns);
+        console.log(columns);
+
+        data.forEach(function (row) {
+            var dataRow = [];
+            dataRow.push(row["JENIS_PEMBAYARAN"]);
+            dataRow.push(row["JATUH_TEMPO"]);
+            dataRow.push({text: row["IDR"], alignment: "right"});
+            dataRow.push({text: row["USD"], alignment: "right"});
+            dataRow.push({text: row["JPY"], alignment: "right"});
+            dataRow.push({text: row["EUR"], alignment: "right"});
+            dataRow.push({text: row["OTHER"], alignment: "right"});
+            body.push(dataRow);
         });
 
-        var externalDataPosisiSaldo = []
-        var data1 = {
-                SALDO_AWAL: "POTENSI PENDAPATAN PTL",
-                TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_POTENSI,2,".",","),
-        }
-        externalDataPosisiSaldo.push(data1)
+        return body;
+    }
 
-        var data2 = {
-                SALDO_AWAL: "RECEIPT",
-                TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_RECEIPT,2,".",","),
-        }
-        externalDataPosisiSaldo.push(data2)
+    function buildTableSudahTerealisasi(data, columns) {
+        var body = [];
 
-        var data3 = {
-                SALDO_AWAL: "KMK",
-                TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_KMK,2,".",","),
-        }
-        externalDataPosisiSaldo.push(data3)
+        body.push(columns);
+        console.log(columns);
 
-        var data4 = {
-                SALDO_AWAL: "SUBSIDI",
-                TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_SUBSIDI,2,".",","),
-        }
-        externalDataPosisiSaldo.push(data4)
+        data.forEach(function (row) {
+            var dataRow = [];
+            dataRow.push(row["JENIS_PEMBAYARAN"]);
+            dataRow.push(row["JATUH_TEMPO"]);
+            dataRow.push({text: row["IDR"], alignment: "right"});
+            dataRow.push({text: row["USD"], alignment: "right"});
+            dataRow.push({text: row["JPY"], alignment: "right"});
+            dataRow.push({text: row["EUR"], alignment: "right"});
+            dataRow.push({text: row["OTHER"], alignment: "right"});
+            body.push(dataRow);
+        });
 
-        var data5 = {
-                SALDO_AWAL: "IMPREST OPERASI",
-                TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_OPERASI,2,".",","),
-        }
-        externalDataPosisiSaldo.push(data5)
+        return body;
+    }
 
-        var data6 = {
-                SALDO_AWAL: "IMPREST INVESTASI",
-                TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_INVESTASI,2,".",","),
-        }
-        externalDataPosisiSaldo.push(data6)
+    function tableRencanaBayar(data, columns) {
+        return {
+            style: "tableExample",
+            color: "#444",
+            table: {
+                headerRows: 1,
+                body: buildTableTotalRencanaBayar(data, columns)
+            }
+        };
+    }
 
-        var data7 = {
-                SALDO_AWAL: "IMPREST",
-                TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_IMPREST,2,".",","),
-        }
-        externalDataPosisiSaldo.push(data7)
+    function tableBelumTerealisasi(data, columns) {
+        return {
+            style: "tableExample",
+            color: "#444",
+            table: {
+                headerRows: 1,
+                body: buildTableBelumTerealisasi(data, columns)
+            }
+        };
+    }
 
-        var data8 = {
-                SALDO_AWAL: "IMPREST IMPOR",
-                TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_IMPOR,2,".",","),
-        }
-        externalDataPosisiSaldo.push(data8)
+    function tableSudahTerealisasi(data, columns) {
+        return {
+            style: "tableExample",
+            color: "#444",
+            table: {
+                headerRows: 1,
+                body: buildTableSudahTerealisasi(data, columns)
+            }
+        };
+    }
 
-        var data9 = {
-                SALDO_AWAL: "IMPREST VALAS",
-                TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_VALAS,2,".",","),
-        }
-        externalDataPosisiSaldo.push(data9)
+    //    JENIS PEMBAYARAN
 
-        var data10 = {
-                SALDO_AWAL: "TOTAL",
-                TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_AWAL,2,".",","),
-        }
-        externalDataPosisiSaldo.push(data10)
+    var columnPosisiSaldo = [];
+    columnPosisiSaldo.push({
+        text: "SALDO AWAL",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [5, 12.5, 5, 12.5]
+    });
 
-        function buildTablePosisiSaldo(data, columns) {
-            var body = [];
+    columnPosisiSaldo.push({
+        text: "TOTAL",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
 
-            body.push(columns);
-            console.log(columns);
+    var externalDataPosisiSaldo = [];
+    var data1 = {
+        SALDO_AWAL: "POTENSI PENDAPATAN PTL",
+        TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_POTENSI, 2, ".", ","),
+    }
+    externalDataPosisiSaldo.push(data1)
 
-            data.forEach(function (row, index) {
-                var dataRow = [];
-                // console.log("row : ", row);
+    var data2 = {
+        SALDO_AWAL: "RECEIPT",
+        TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_RECEIPT, 2, ".", ","),
+    }
+    externalDataPosisiSaldo.push(data2)
 
-                dataRow.push(row["SALDO_AWAL"]);
-                dataRow.push({text: row["TOTAL"], alignment: "right"});
-                body.push(dataRow);
-            });
+    var data3 = {
+        SALDO_AWAL: "KMK",
+        TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_KMK, 2, ".", ","),
+    }
+    externalDataPosisiSaldo.push(data3)
 
-            return body;
-        }
+    var data4 = {
+        SALDO_AWAL: "SUBSIDI",
+        TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_SUBSIDI, 2, ".", ","),
+    }
+    externalDataPosisiSaldo.push(data4)
 
-        function tablePosisiSaldo(data, columns) {
-            return {
-                style: "tableExample",
-                color: "#444",
-                table: {
-                    headerRows: 1,
-                    body: buildTablePosisiSaldo(data, columns)
-                }
-            };
-        }
+    var data5 = {
+        SALDO_AWAL: "IMPREST OPERASI",
+        TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_OPERASI, 2, ".", ","),
+    }
+    externalDataPosisiSaldo.push(data5)
+
+    var data6 = {
+        SALDO_AWAL: "IMPREST INVESTASI",
+        TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_INVESTASI, 2, ".", ","),
+    }
+    externalDataPosisiSaldo.push(data6)
+
+    var data7 = {
+        SALDO_AWAL: "IMPREST",
+        TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_IMPREST, 2, ".", ","),
+    }
+    externalDataPosisiSaldo.push(data7)
+
+    var data8 = {
+        SALDO_AWAL: "IMPREST IMPOR",
+        TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_IMPOR, 2, ".", ","),
+    }
+    externalDataPosisiSaldo.push(data8)
+
+    var data9 = {
+        SALDO_AWAL: "IMPREST VALAS",
+        TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_VALAS, 2, ".", ","),
+    }
+    externalDataPosisiSaldo.push(data9)
+
+    var data10 = {
+        SALDO_AWAL: "TOTAL",
+        TOTAL: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].SALDO_AWAL, 2, ".", ","),
+    }
+    externalDataPosisiSaldo.push(data10)
+
+    function buildTablePosisiSaldo(data, columns) {
+        var body = [];
+
+        body.push(columns);
+        console.log(columns);
+
+        data.forEach(function (row, index) {
+            var dataRow = [];
+            // console.log("row : ", row);
+
+            dataRow.push(row["SALDO_AWAL"]);
+            dataRow.push({text: row["TOTAL"], alignment: "right"});
+            body.push(dataRow);
+        });
+
+        return body;
+    }
+
+    function tablePosisiSaldo(data, columns) {
+        return {
+            style: "tableExample",
+            color: "#444",
+            table: {
+                headerRows: 1,
+                body: buildTablePosisiSaldo(data, columns)
+            }
+        };
+    }
 
     var date = new Date();
 
@@ -902,245 +1197,244 @@ function createUIPdf(allData) {
     var date2 = new Date(date.setDate(date.getDate() + 1));
     var month2 = date2.getUTCMonth() + 1;
 
-    var date3= new Date(date.setDate(date.getDate() + 1));
+    var date3 = new Date(date.setDate(date.getDate() + 1));
     var month3 = date3.getUTCMonth() + 1;
 
-    var date4= new Date(date.setDate(date.getDate() + 1));
+    var date4 = new Date(date.setDate(date.getDate() + 1));
     var month4 = date4.getUTCMonth() + 1;
 
-    var date5= new Date(date.setDate(date.getDate() + 1));
+    var date5 = new Date(date.setDate(date.getDate() + 1));
     var month5 = date5.getUTCMonth() + 1;
 
-    var date6= new Date(date.setDate(date.getDate() + 1));
+    var date6 = new Date(date.setDate(date.getDate() + 1));
     var month6 = date6.getUTCMonth() + 1;
 
-    var date7= new Date(date.setDate(date.getDate() + 1));
+    var date7 = new Date(date.setDate(date.getDate() + 1));
     var month7 = date7.getUTCMonth() + 1;
 
-        var columnJenisPembayaran = [];
-        columnJenisPembayaran.push({
-            text: "JENIS PEMBAYARAN",
-            style: "tableHeader",
-            alignment: "center",
-            margin: [5, 12.5, 5, 12.5]
-        });
-        columnJenisPembayaran.push({
-            text: (date1.getUTCDate())+"/"+month1+"/"+year,
-            style: "tableHeader",
-            alignment: "center",
-            margin: [20, 12.5, 20, 12.5]
-        });
-        columnJenisPembayaran.push({
-            text: (date2.getUTCDate())+"/"+month2+"/"+year,
-            style: "tableHeader",
-            alignment: "center",
-            margin: [20, 12.5, 20, 12.5]
-        });
-        columnJenisPembayaran.push({
-            text: (date3.getUTCDate())+"/"+month3+"/"+year,
-            style: "tableHeader",
-            alignment: "center",
-            margin: [20, 12.5, 20, 12.5]
-        });
-        columnJenisPembayaran.push({
-            text: (date4.getUTCDate())+"/"+month4+"/"+year,
-            style: "tableHeader",
-            alignment: "center",
-            margin: [20, 12.5, 20, 12.5]
-        });
-        columnJenisPembayaran.push({
-            text: (date5.getUTCDate())+"/"+month5+"/"+year,
-            style: "tableHeader",
-            alignment: "center",
-            margin: [20, 12.5, 20, 12.5]
-        });
-        columnJenisPembayaran.push({
-            text: (date6.getUTCDate())+"/"+month6+"/"+year,
-            style: "tableHeader",
-            alignment: "center",
-            margin: [20, 12.5, 20, 12.5]
-        });
-        columnJenisPembayaran.push({
-            text: (date7.getUTCDate())+"/"+month7+"/"+year,
-            style: "tableHeader",
-            alignment: "center",
-            margin: [20, 12.5, 20, 12.5]
-        });
-        columnJenisPembayaran.push({
-            text: "TOTAL",
-            style: "tableHeader",
-            alignment: "center",
-            margin: [20, 12.5, 20, 12.5]
-        });
+    var columnJenisPembayaran = [];
+    columnJenisPembayaran.push({
+        text: "JENIS PEMBAYARAN",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [5, 12.5, 5, 12.5]
+    });
+    columnJenisPembayaran.push({
+        text: (date1.getUTCDate()) + "/" + month1 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnJenisPembayaran.push({
+        text: (date2.getUTCDate()) + "/" + month2 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnJenisPembayaran.push({
+        text: (date3.getUTCDate()) + "/" + month3 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnJenisPembayaran.push({
+        text: (date4.getUTCDate()) + "/" + month4 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnJenisPembayaran.push({
+        text: (date5.getUTCDate()) + "/" + month5 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnJenisPembayaran.push({
+        text: (date6.getUTCDate()) + "/" + month6 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnJenisPembayaran.push({
+        text: (date7.getUTCDate()) + "/" + month7 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnJenisPembayaran.push({
+        text: "TOTAL",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
 
-        var externalDataJenisPembayaran = []
-        $.each(allData.dataRekapJenisPembayaran.return, function (index, v) {
-                var helloooow;
-                helloooow = {
-                    NAMA_PEMBAYARAN: v.NAMA_PEMBAYARAN,
-                    TAGIHAN1: accounting.formatNumber(v.TAGIHAN1,2,".",","),
-                    TAGIHAN2: accounting.formatNumber(v.TAGIHAN2,2,".",","),
-                    TAGIHAN3: accounting.formatNumber(v.TAGIHAN3,2,".",","),
-                    TAGIHAN4: accounting.formatNumber(v.TAGIHAN4,2,".",","),
-                    TAGIHAN5: accounting.formatNumber(v.TAGIHAN5,2,".",","),
-                    TAGIHAN6: accounting.formatNumber(v.TAGIHAN6,2,".",","),
-                    TAGIHAN7: accounting.formatNumber(v.TAGIHAN7,2,".",","),
-                    TOTAL_PERJENIS: accounting.formatNumber(v.TOTAL_TAGIHAN_PERJENIS,2,".",","),
-                }
-                externalDataJenisPembayaran.push(helloooow)
-            });
-
-        var helloooow = {
-            NAMA_PEMBAYARAN: "TOTAL",
-            TAGIHAN1: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].TOTAL_TAGIHAN1,2,".",","),
-            TAGIHAN2: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].TOTAL_TAGIHAN2,2,".",","),
-            TAGIHAN3: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].TOTAL_TAGIHAN3,2,".",","),
-            TAGIHAN4: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].TOTAL_TAGIHAN4,2,".",","),
-            TAGIHAN5: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].TOTAL_TAGIHAN5,2,".",","),
-            TAGIHAN6: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].TOTAL_TAGIHAN6,2,".",","),
-            TAGIHAN7: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].TOTAL_TAGIHAN7,2,".",","),
-            TOTAL_PERJENIS: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].TOTAL_PERJENIS,2,".",","),
+    var externalDataJenisPembayaran = []
+    $.each(allData.dataRekapJenisPembayaran.return, function (index, v) {
+        var helloooow;
+        helloooow = {
+            NAMA_PEMBAYARAN: v.NAMA_PEMBAYARAN,
+            TAGIHAN1: accounting.formatNumber(v.TAGIHAN1, 2, ".", ","),
+            TAGIHAN2: accounting.formatNumber(v.TAGIHAN2, 2, ".", ","),
+            TAGIHAN3: accounting.formatNumber(v.TAGIHAN3, 2, ".", ","),
+            TAGIHAN4: accounting.formatNumber(v.TAGIHAN4, 2, ".", ","),
+            TAGIHAN5: accounting.formatNumber(v.TAGIHAN5, 2, ".", ","),
+            TAGIHAN6: accounting.formatNumber(v.TAGIHAN6, 2, ".", ","),
+            TAGIHAN7: accounting.formatNumber(v.TAGIHAN7, 2, ".", ","),
+            TOTAL_PERJENIS: accounting.formatNumber(v.TOTAL_TAGIHAN_PERJENIS, 2, ".", ","),
         }
         externalDataJenisPembayaran.push(helloooow)
+    });
 
-        function buildTableJenisPembayaran(data, columns) {
-            var body = [];
+    var helloooow = {
+        NAMA_PEMBAYARAN: "TOTAL",
+        TAGIHAN1: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].TOTAL_TAGIHAN1, 2, ".", ","),
+        TAGIHAN2: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].TOTAL_TAGIHAN2, 2, ".", ","),
+        TAGIHAN3: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].TOTAL_TAGIHAN3, 2, ".", ","),
+        TAGIHAN4: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].TOTAL_TAGIHAN4, 2, ".", ","),
+        TAGIHAN5: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].TOTAL_TAGIHAN5, 2, ".", ","),
+        TAGIHAN6: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].TOTAL_TAGIHAN6, 2, ".", ","),
+        TAGIHAN7: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].TOTAL_TAGIHAN7, 2, ".", ","),
+        TOTAL_PERJENIS: accounting.formatNumber(allData.dataRekapJenisPembayaran.OUT_TOTAL[0].TOTAL_PERJENIS, 2, ".", ","),
+    }
+    externalDataJenisPembayaran.push(helloooow)
 
-            body.push(columns);
-            console.log(columns);
+    function buildTableJenisPembayaran(data, columns) {
+        var body = [];
 
-            data.forEach(function (row, index) {
-                var dataRow = [];
-                // console.log("row : ", row);
+        body.push(columns);
+        console.log(columns);
 
-                dataRow.push(row["NAMA_PEMBAYARAN"]);
-                dataRow.push({text: row["TAGIHAN1"], alignment: "right"});
-                dataRow.push({text: row["TAGIHAN2"], alignment: "right"});
-                dataRow.push({text: row["TAGIHAN3"], alignment: "right"});
-                dataRow.push({text: row["TAGIHAN4"], alignment: "right"});
-                dataRow.push({text: row["TAGIHAN5"], alignment: "right"});
-                dataRow.push({text: row["TAGIHAN6"], alignment: "right"});
-                dataRow.push({text: row["TAGIHAN7"], alignment: "right"});
-                dataRow.push({text: row["TOTAL_PERJENIS"], alignment: "right"});
-                body.push(dataRow);
-            });
+        data.forEach(function (row, index) {
+            var dataRow = [];
+            // console.log("row : ", row);
 
-            return body;
+            dataRow.push(row["NAMA_PEMBAYARAN"]);
+            dataRow.push({text: row["TAGIHAN1"], alignment: "right"});
+            dataRow.push({text: row["TAGIHAN2"], alignment: "right"});
+            dataRow.push({text: row["TAGIHAN3"], alignment: "right"});
+            dataRow.push({text: row["TAGIHAN4"], alignment: "right"});
+            dataRow.push({text: row["TAGIHAN5"], alignment: "right"});
+            dataRow.push({text: row["TAGIHAN6"], alignment: "right"});
+            dataRow.push({text: row["TAGIHAN7"], alignment: "right"});
+            dataRow.push({text: row["TOTAL_PERJENIS"], alignment: "right"});
+            body.push(dataRow);
+        });
+
+        return body;
+    }
+
+    function tableJenisPembayaran(data, columns) {
+        return {
+            style: "tableExample",
+            color: "#444",
+            table: {
+                headerRows: 1,
+                body: buildTableJenisPembayaran(data, columns)
+            }
+        };
+    }
+
+    var columnTotalJenisPembayaran = [];
+    columnTotalJenisPembayaran.push({
+        text: "SALDO AKHIR",
+        style: "tableHeader",
+        alignment: "center",
+        margin: [5, 12.5, 5, 12.5]
+    });
+    columnTotalJenisPembayaran.push({
+        text: (date1.getUTCDate()) + "/" + month1 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnTotalJenisPembayaran.push({
+        text: (date2.getUTCDate()) + "/" + month2 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnTotalJenisPembayaran.push({
+        text: (date3.getUTCDate()) + "/" + month3 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnTotalJenisPembayaran.push({
+        text: (date4.getUTCDate()) + "/" + month4 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnTotalJenisPembayaran.push({
+        text: (date5.getUTCDate()) + "/" + month5 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnTotalJenisPembayaran.push({
+        text: (date6.getUTCDate()) + "/" + month6 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+    columnTotalJenisPembayaran.push({
+        text: (date7.getUTCDate()) + "/" + month7 + "/" + year,
+        style: "tableHeader",
+        alignment: "center",
+        margin: [20, 12.5, 20, 12.5]
+    });
+
+    var externalDataTotalJenisPembayaran = []
+    $.each(allData.dataRekapJenisPembayaran.OUT_TOTAL, function (index, v) {
+        var helloooow;
+        helloooow = {
+            NAMA_PEMBAYARAN: "TOTAL",
+            TAGIHAN1: accounting.formatNumber(v.SALDO_AKHIR_TAGIHAN1, 2, ".", ","),
+            TAGIHAN2: accounting.formatNumber(v.SALDO_AKHIR_TAGIHAN2, 2, ".", ","),
+            TAGIHAN3: accounting.formatNumber(v.SALDO_AKHIR_TAGIHAN3, 2, ".", ","),
+            TAGIHAN4: accounting.formatNumber(v.SALDO_AKHIR_TAGIHAN4, 2, ".", ","),
+            TAGIHAN5: accounting.formatNumber(v.SALDO_AKHIR_TAGIHAN5, 2, ".", ","),
+            TAGIHAN6: accounting.formatNumber(v.SALDO_AKHIR_TAGIHAN6, 2, ".", ","),
+            TAGIHAN7: accounting.formatNumber(v.SALDO_AKHIR_TAGIHAN7, 2, ".", ","),
+            SALDO: accounting.formatNumber(v.TOTAL_SALDO_AKHIR, 2, ".", ","),
         }
+        externalDataTotalJenisPembayaran.push(helloooow)
+    });
 
-        function tableJenisPembayaran(data, columns) {
-            return {
-                style: "tableExample",
-                color: "#444",
-                table: {
-                    headerRows: 1,
-                    body: buildTableJenisPembayaran(data, columns)
-                }
-            };
-        }
+    function buildTableTotalJenisPembayaran(data, columns) {
+        var body = [];
 
-        var columnTotalJenisPembayaran = [];
-        columnTotalJenisPembayaran.push({
-            text: "SALDO AKHIR",
-            style: "tableHeader",
-            alignment: "center",
-            margin: [5, 12.5, 5, 12.5]
-        });
-        columnTotalJenisPembayaran.push({
-            text: (date1.getUTCDate())+"/"+month1+"/"+year,
-            style: "tableHeader",
-            alignment: "center",
-            margin: [20, 12.5, 20, 12.5]
-        });
-        columnTotalJenisPembayaran.push({
-            text: (date2.getUTCDate())+"/"+month2+"/"+year,
-            style: "tableHeader",
-            alignment: "center",
-            margin: [20, 12.5, 20, 12.5]
-        });
-        columnTotalJenisPembayaran.push({
-            text: (date3.getUTCDate())+"/"+month3+"/"+year,
-            style: "tableHeader",
-            alignment: "center",
-            margin: [20, 12.5, 20, 12.5]
-        });
-        columnTotalJenisPembayaran.push({
-            text: (date4.getUTCDate())+"/"+month4+"/"+year,
-            style: "tableHeader",
-            alignment: "center",
-            margin: [20, 12.5, 20, 12.5]
-        });
-        columnTotalJenisPembayaran.push({
-            text: (date5.getUTCDate())+"/"+month5+"/"+year,
-            style: "tableHeader",
-            alignment: "center",
-            margin: [20, 12.5, 20, 12.5]
-        });
-        columnTotalJenisPembayaran.push({
-            text: (date6.getUTCDate())+"/"+month6+"/"+year,
-            style: "tableHeader",
-            alignment: "center",
-            margin: [20, 12.5, 20, 12.5]
-        });
-        columnTotalJenisPembayaran.push({
-            text: (date7.getUTCDate())+"/"+month7+"/"+year,
-            style: "tableHeader",
-            alignment: "center",
-            margin: [20, 12.5, 20, 12.5]
+        body.push(columns);
+        console.log(columns);
+
+        data.forEach(function (row, index) {
+            var dataRow = [];
+            // console.log("row : ", row);
+
+            dataRow.push(row["NAMA_PEMBAYARAN"]);
+            dataRow.push({text: row["TAGIHAN1"], alignment: "right"});
+            dataRow.push({text: row["TAGIHAN2"], alignment: "right"});
+            dataRow.push({text: row["TAGIHAN3"], alignment: "right"});
+            dataRow.push({text: row["TAGIHAN4"], alignment: "right"});
+            dataRow.push({text: row["TAGIHAN5"], alignment: "right"});
+            dataRow.push({text: row["TAGIHAN6"], alignment: "right"});
+            dataRow.push({text: row["TAGIHAN7"], alignment: "right"});
+            body.push(dataRow);
         });
 
-        var externalDataTotalJenisPembayaran = []
-        $.each(allData.dataRekapJenisPembayaran.OUT_TOTAL, function (index, v) {
-                var helloooow;
-                helloooow = {
-                    NAMA_PEMBAYARAN: "TOTAL",
-                    TAGIHAN1: accounting.formatNumber(v.SALDO_AKHIR_TAGIHAN1,2,".",","),
-                    TAGIHAN2: accounting.formatNumber(v.SALDO_AKHIR_TAGIHAN2,2,".",","),
-                    TAGIHAN3: accounting.formatNumber(v.SALDO_AKHIR_TAGIHAN3,2,".",","),
-                    TAGIHAN4: accounting.formatNumber(v.SALDO_AKHIR_TAGIHAN4,2,".",","),
-                    TAGIHAN5: accounting.formatNumber(v.SALDO_AKHIR_TAGIHAN5,2,".",","),
-                    TAGIHAN6: accounting.formatNumber(v.SALDO_AKHIR_TAGIHAN6,2,".",","),
-                    TAGIHAN7: accounting.formatNumber(v.SALDO_AKHIR_TAGIHAN7,2,".",","),
-                    SALDO: accounting.formatNumber(v.TOTAL_SALDO_AKHIR,2,".",","),
-                }
-                externalDataTotalJenisPembayaran.push(helloooow)
-            });
+        return body;
+    }
 
-        function buildTableTotalJenisPembayaran(data, columns) {
-            var body = [];
-
-            body.push(columns);
-            console.log(columns);
-
-            data.forEach(function (row, index) {
-                var dataRow = [];
-                // console.log("row : ", row);
-
-                dataRow.push(row["NAMA_PEMBAYARAN"]);
-                dataRow.push({text: row["TAGIHAN1"], alignment: "right"});
-                dataRow.push({text: row["TAGIHAN2"], alignment: "right"});
-                dataRow.push({text: row["TAGIHAN3"], alignment: "right"});
-                dataRow.push({text: row["TAGIHAN4"], alignment: "right"});
-                dataRow.push({text: row["TAGIHAN5"], alignment: "right"});
-                dataRow.push({text: row["TAGIHAN6"], alignment: "right"});
-                dataRow.push({text: row["TAGIHAN7"], alignment: "right"});
-                body.push(dataRow);
-            });
-
-            return body;
-        }
-
-        function tableTotalJenisPembayaran(data, columns) {
-            return {
-                style: "tableExample",
-                color: "#444",
-                table: {
-                    headerRows: 1,
-                    body: buildTableTotalJenisPembayaran(data, columns)
-                }
-            };
-        }
-
+    function tableTotalJenisPembayaran(data, columns) {
+        return {
+            style: "tableExample",
+            color: "#444",
+            table: {
+                headerRows: 1,
+                body: buildTableTotalJenisPembayaran(data, columns)
+            }
+        };
+    }
 
 
     // CREATE DOC
@@ -1151,7 +1445,7 @@ function createUIPdf(allData) {
             style: "header",
             alignment: "center"
         }, {
-            text: "Tanggal Cetak : "+getDataNow(),
+            text: "Tanggal Cetak : " + getDataNow(),
             style: "subheader"
         },
             {
@@ -1196,12 +1490,12 @@ function createUIPdf(allData) {
                 text: " ",
                 style: "header",
                 alignment: "center",
-            },{
+            }, {
 
                 text: " ",
                 style: "header",
                 alignment: "center",
-            },{
+            }, {
 
                 text: "RENCANA BAYAR IMPREST OPERASI & INVESTASI TERPUSAT",
                 style: "header",
@@ -1235,7 +1529,7 @@ function createUIPdf(allData) {
             },
             {
 
-                text: " ",
+                text: "",
                 style: "header",
                 alignment: "center",
                 pageBreak: 'after'
@@ -1247,6 +1541,53 @@ function createUIPdf(allData) {
                 alignment: "center"
             },
             tableRencanaBayarEquivalenRupiah(externalDataRencanaBayarEquivalenRupiah, columnRencanaBayarEquivalenRupiah),
+            {
+
+                text: " ",
+                style: "header",
+                alignment: "center",
+                pageBreak: 'after'
+
+            },
+            {
+
+                text: "RENCANA VS REALISASI",
+                style: "header",
+                alignment: "center",
+            },
+            {
+
+                text: "TOTAL RENCANA PEMBAYARAN",
+                style: "header",
+                alignment: "center"
+            },
+            tableRencanaBayar(externalDataTotalRencanaBayar, columnTableTotalRencanaBayar),
+            {
+
+                text: " ",
+                style: "header",
+                alignment: "center"
+            },
+            {
+
+                text: "PEMBAYARAN YANG BELUM TEREALISASI",
+                style: "header",
+                alignment: "center"
+            },
+            tableBelumTerealisasi(externalDataBelumTerealisasi, columnTableBelumTerealisasi),
+            {
+
+                text: " ",
+                style: "header",
+                alignment: "center"
+            },
+            {
+
+                text: "PEMBAYARAN YANG SUDAH TEREALISASI",
+                style: "header",
+                alignment: "center"
+            },
+            tableSudahTerealisasi(externalDataSudahTerealisasi, columnTableSudahTerealisasi),
             {
 
                 text: " ",
@@ -1271,7 +1612,7 @@ function createUIPdf(allData) {
                 text: " ",
                 style: "header",
                 alignment: "center"
-            },{
+            }, {
 
                 text: "JENIS PEMBAYARAN",
                 style: "header",
@@ -1282,7 +1623,7 @@ function createUIPdf(allData) {
                 text: " ",
                 style: "header",
                 alignment: "center"
-            },{
+            }, {
                 text: "TOTAL JENIS PEMBAYARAN",
                 style: "header",
                 alignment: "left"

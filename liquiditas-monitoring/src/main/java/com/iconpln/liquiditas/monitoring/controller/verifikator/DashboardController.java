@@ -325,7 +325,6 @@ public class DashboardController {
     //GetAll_IDR//
     //////////////
     //////////////
-
     @RequestMapping(value = "/getall_data_dashboard_idr", method = RequestMethod.GET)
     public Map getAllDashboardIdr
     (@RequestParam(value = "pTglTerpusat", defaultValue = "") String pTglTerpusat,
@@ -342,6 +341,8 @@ public class DashboardController {
             data.put("dataRencanaBayarImprestDanImport", dashboardService.getRencanaBayarImprestDanImport(pTglImport));
             data.put("dataRencanaBayarEquivalenRupiah", dashboardService.getRencanaBayarEquivalenRupiah(pTglRupiah));
             data.put("dataRekapJenisPembayaran", dashboardService.getRekapJenisPembayaran());
+            data.put("dataCashFlow", dashboardService.getCashFlow());
+            data.put("dataRencanaVsRealisasiIdr", dashboardService.getRencanaVsRealisasiIdr());
             return data;
         } catch (Exception e) {
             e.printStackTrace();
@@ -390,6 +391,9 @@ public class DashboardController {
             List<Map<String, Object>> listJenisPembayaran = (List<Map<String, Object>>) dashboardService.getRekapJenisPembayaran().get("return");
             List<Map<String, Object>> listTotalJenisPembayaran = (List<Map<String, Object>>) dashboardService.getRekapJenisPembayaran().get("OUT_TOTAL");
 
+            List<Map<String, Object>> listCashFlow = (List<Map<String, Object>>) dashboardService.getCashFlow().get("return");
+            List<Map<String, Object>> listTotalCashFlow = (List<Map<String, Object>>) dashboardService.getCashFlow().get("OUT_TOTAL");
+
             AppUtils.getLogger(this).info("LIST DATA DETAIL IMPRST : {}", listDataSaldoIdrImprest.toString());
             AppUtils.getLogger(this).info("LIST DATA TOTAL IMPRST : {}", listTotalSaldoIdrImprest.toString());
             AppUtils.getLogger(this).info("LIST DATA REALISASI PLACEMENT : {}", listRealisasiPlacement.toString());
@@ -433,6 +437,8 @@ public class DashboardController {
             param.put("DATE7", AppUtils.getDateByPlus(6));
             param.put("DETAIL_JENIS_PEMBAYARAN", listJenisPembayaran);
             param.put("TOTAL_JENIS_PEMBAYARAN", listTotalJenisPembayaran);
+            param.put("DETAIL_CASH_FLOW", listCashFlow);
+            param.put("TOTAL_CASH_FLOW", listTotalCashFlow);
 
 
             XLSTransformer transformer = new XLSTransformer();

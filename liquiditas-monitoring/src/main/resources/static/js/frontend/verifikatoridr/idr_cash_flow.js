@@ -44,8 +44,8 @@ function initDataTable() {
                     if (canEdit == -1) {
                         html = '<tr>' +
                             '<td style="color: black" bgcolor="'+val.WARNA+'" align="center">' + no + '</td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'">'+ spasi(val.SPASI)+ val.KETERANGAN + '</td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right"></td>' +
+                            '<td style="border-right: none;" color: black" bgcolor="'+val.WARNA+'">'+ spasi(val.SPASI)+ val.KETERANGAN + '</td>' +
+                            '<td style="border-left: none;" bgcolor="'+val.WARNA+'" align="right"></td>' +
                             '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL1, 2, ".", ",") + '</td>' +
                             '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL2, 2, ".", ",") + '</td>' +
                             '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL3, 2, ".", ",") + '</td>' +
@@ -58,8 +58,8 @@ function initDataTable() {
                     } else {
                         html = '<tr id="'+val.NOURUT+'">' +
                             '<td style="color: black" bgcolor="'+val.WARNA+'" align="center">' + no + '</td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'">' + spasi(val.SPASI)+ val.KETERANGAN + '</td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="center"><img src="/static/images/add.svg" height="12.5" width="12.5" onclick="showModal(\''+val.NOURUT+'\')"/></td>' +
+                            '<td style="border-right: none;" color: black" bgcolor="'+val.WARNA+'">' + spasi(val.SPASI)+ val.KETERANGAN + '</td>' +
+                            '<td style="border-left: none;" bgcolor="'+val.WARNA+'" align="center"><img src="/static/images/add.svg" height="12.5" width="12.5" onclick="showModal(\''+val.NOURUT+'\')"/></td>' +
                             '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL1, 2, ".", ",") + '</td>' +
                             '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL2, 2, ".", ",") + '</td>' +
                             '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL3, 2, ".", ",") + '</td>' +
