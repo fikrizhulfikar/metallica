@@ -231,8 +231,7 @@ public class ValasService {
         AppUtils.getLogger(this).info("data del_rekap_pembayaran : {}", out);
         return out;
     }
-
-    public Map<String, Object> updReverse(String pIdValas, String pUpdateby, String pKeterangan) throws SQLException {
+    public Map<String, Object> updReverse(String pIdValas, String pStatusInvoice, String pUpdateby, String pKeterangan) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_VALAS")
@@ -242,6 +241,7 @@ public class ValasService {
                 .addValue("p_id_valas", pIdValas)
                 .addValue("p_update_by", pUpdateby)
                 .addValue("p_deskripsi", pKeterangan)
+                .addValue("p_status_invoice", pStatusInvoice)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         Map<String, Object> out = simpleJdbcCall.execute(in);
         AppUtils.getLogger(this).info("data upd_reverse_pembayaran : {}", out);

@@ -433,13 +433,15 @@ public class PembayaranController {
     @RequestMapping(value = "/upd_reverse", method = RequestMethod.POST)
     public Map<String, Object> updReverse(
             @RequestParam(value = "pIdValas", defaultValue = "") String pIdValas,
-            @RequestParam(value = "pKeterangan", defaultValue = "") String pKeterangan
+            @RequestParam(value = "pKeterangan", defaultValue = "") String pKeterangan,
+            @RequestParam(value = "pStatusInvoice", defaultValue = "") String pStatusInvoice
     ) {
 
         AppUtils.getLogger(this).debug("idValas : {} ", pIdValas);
         AppUtils.getLogger(this).debug("pKeterangan : {} ", pKeterangan);
+        AppUtils.getLogger(this).debug("pStatusInvoice : {} ", pStatusInvoice);
         try {
-            return valasService.updReverse(pIdValas, WebUtils.getUsernameLogin(), pKeterangan);
+            return valasService.updReverse(pIdValas, pStatusInvoice, WebUtils.getUsernameLogin(), pKeterangan );
         } catch (Exception e) {
             e.printStackTrace();
             return null;
