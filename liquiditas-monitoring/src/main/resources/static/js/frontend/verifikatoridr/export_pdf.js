@@ -1161,15 +1161,15 @@ function createUIPdf(allData) {
 
     function spasi(sp) {
         if (sp === 0 || sp === "0"){
-            return ""
+            return "."
         }if (sp === 4 || sp === "4"){
-            return ""
+            return ". "
         }if (sp === 8 || sp === "8"){
-            return ""
+            return ".    "
         }if (sp === 12 || sp === "12"){
-            return ""
+            return ".       "
         }if (sp === 16 || sp === "16"){
-            return ""
+            return ".         "
         }
     }
 
@@ -1185,7 +1185,7 @@ function createUIPdf(allData) {
             TANGGAL5: accounting.formatNumber(v.TANGGAL5, 2, ".", ","),
             TANGGAL6: accounting.formatNumber(v.TANGGAL6, 2, ".", ","),
             TANGGAL7: accounting.formatNumber(v.TANGGAL7, 2, ".", ","),
-            TOTAL: accounting.formatNumber(v.TOTAL, 2, ".", ","),
+            TOTAL: accounting.formatNumber(v.TOTAL, 2, ".", ",")
         }
         externalDataRencanaPembayaran.push(helloooow)
     });
@@ -1198,8 +1198,6 @@ function createUIPdf(allData) {
 
         data.forEach(function (row, index) {
             var dataRow = [];
-            // console.log("row : ", row);
-
             dataRow.push(row["KETERANGAN"]);
             dataRow.push({text: row["TANGGAL1"], alignment: "right"});
             dataRow.push({text: row["TANGGAL2"], alignment: "right"});
