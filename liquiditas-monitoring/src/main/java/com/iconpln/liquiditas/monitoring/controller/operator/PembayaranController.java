@@ -288,8 +288,12 @@ public class PembayaranController {
                     .title(NamedIdentifier.REKAP_PEMBAYARAN.getName())
                     .message(""
                             + WebUtils.getUsernameLogin()  + " telah meng-update status.")
-                    .additionalInfo(NamedIdentifier.REKAP_PEMBAYARAN.getValue() + ";" + pIdValas)
                     .build();
+            if (pIdValas.startsWith("TRIPARTITE")) {
+                  notification.setAdditionalInfo(NamedIdentifier.TRIPARTITE.getValue() + ";" + pIdValas);
+            } else {
+                notification.setAdditionalInfo(NamedIdentifier.REKAP_PEMBAYARAN.getValue() + ";" + pIdValas);
+            }
             notificationUtil.notifyMessage(notification);
             return res;
         } catch (Exception e) {
