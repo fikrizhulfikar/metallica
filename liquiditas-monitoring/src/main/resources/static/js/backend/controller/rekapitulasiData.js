@@ -906,7 +906,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                             }
                             else if (full.STATUS_TRACKING == "APPROVE BY MS"){
 
-                                if(newRoleUser[0] == "ROLE_ADMIN" || role.includes("KADIV")){
+                                if(newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "KADIV"){
                                     ret_value = '<input class="cb" type="checkbox" data-value=\'{"10" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
                                 }else {
                                     ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
@@ -915,7 +915,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                             else if (full.STATUS_TRACKING == "APPROVE BY KADIV"){
                                 var role = newRoleUser[0];
 
-                                if(role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN"){
+                                if(newRoleUser[0] == "KASIR" || newRoleUser[0] == "ROLE_ADMIN"){
                                     ret_value = '<input class="cb" type="checkbox" data-value=\'{"7" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
                                 }else {
                                     ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
