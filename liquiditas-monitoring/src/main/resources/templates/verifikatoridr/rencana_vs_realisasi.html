@@ -18,10 +18,24 @@
 <div class="app-body col-md-12" style="min-height: 400px;" th:fragment="content"
      xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="col-md-12">
-        <div class="col-md-12" align="center">
+        <div class="title col-md-6 row">
             <h6>
                 <b>REKAP PEMBAYARAN TGL : <span id="tglcetak">-</span></b>
             </h6>
+        </div>
+        <div class="col-md-6 row" align="right" style="margin-left: 45px;">
+            <div class="form-group col-md-6"></div>
+            <div class="form-group col-md-4 row">
+                <div class='input-group date'>
+                    <input type="text" style="border-radius: 5px" class="form-control" id="tgl_pencarian"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group col-md-2 row">
+                <button class="btn btn-default" onclick="search()">Cari</button>
+            </div>
         </div>
         <div class="view-table" id="div-table-main">
             <div class="col-md-12" align="center">

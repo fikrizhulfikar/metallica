@@ -305,6 +305,18 @@ public class DashboardService {
         return out;
     }
 
+    public Map<String, Object> getRencanaVsRealisasiIdrByTgl(String tglPencarian) {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_dashboard_idr")
+                .withFunctionName("get_rencana_realisasi_by_date");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tanggal", tglPencarian);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        out.put("tglcetak", new Date());
+        AppUtils.getLogger(this).info("data getRencanaVsRealisasiByTgl : {}", out);
+        return out;
+    }
+
     public Map<String, Object> getCashFlow() {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("package_cashflow")

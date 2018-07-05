@@ -476,6 +476,11 @@ public class DashboardController {
 
     }
 
+    @RequestMapping(value = "/idr_rencana_vs_realisasi_by_tgl", method = RequestMethod.GET)
+    public Map<String, Object> getRencanaVsRealisasiIdByTgl(@RequestParam("tgl_pencarian") String tgl) {
+        return dashboardService.getRencanaVsRealisasiIdrByTgl(tgl);
+    }
+
     @RequestMapping(value = "/idr_cash_flow", method = RequestMethod.GET)
     public Map getCashFlowIdr() {
         try {
