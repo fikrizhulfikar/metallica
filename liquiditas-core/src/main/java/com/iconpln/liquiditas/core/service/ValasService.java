@@ -2,19 +2,6 @@ package com.iconpln.liquiditas.core.service;
 
 import com.iconpln.liquiditas.core.domain.RekapPembayaran;
 import com.iconpln.liquiditas.core.utils.AppUtils;
-import oracle.jdbc.OracleTypes;
-import org.apache.poi.hssf.usermodel.*;
-import org.apache.tomcat.jdbc.pool.DataSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcCall;
-import org.springframework.stereotype.Repository;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Table;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -23,8 +10,27 @@ import java.sql.Types;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import oracle.jdbc.OracleTypes;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.tomcat.jdbc.pool.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.stereotype.Repository;
 
 /**
  * Created by israjhaliri on 8/1/17.
@@ -279,24 +285,28 @@ public class ValasService {
 
     public Map<String, Object> uploadXls(InputStream path, String user, String jenisFile, String idDerivatif) throws ParseException, SQLException {
         Map<String, Object> out = null;
-        HSSFWorkbook workbook = null;
+        Workbook workbook = null;
         Iterator<Row> rowIterator = null;
-        HSSFRow row = null;
-        HSSFCell cell = null;
+        Row row = null;
+        Cell cell = null;
         Map<String, Object> param = new HashMap<>();
         String idUpload = getIdUpload();
         int i = 0;
         List<Map<String, Object>> failedList = new ArrayList<>();
         try {
 
-            workbook = new HSSFWorkbook(path);
-            HSSFSheet sheet = workbook.getSheetAt(0);
+            try {
+                workbook = WorkbookFactory.create(path);
+            } catch (InvalidFormatException e) {
+                e.printStackTrace();
+            }
+            Sheet sheet = workbook.getSheetAt(0);
             rowIterator = sheet.iterator();
             Row row1 = sheet.getRow(1);
             List<String> list = new ArrayList<>();
             int x = 0;
             while (rowIterator.hasNext()) {
-                row = (HSSFRow) rowIterator.next();
+                row = rowIterator.next();
                 Row rrow = sheet.getRow(row.getRowNum());
                 int totalCell = sheet.getRow(0).getLastCellNum();
                 if(!isRowEmpty(rrow, totalCell)){
@@ -306,7 +316,7 @@ public class ValasService {
                         if (rrow.getCell(cellNum) == null) {
                             list.add("-");
                         } else if (rrow.getCell(cellNum).getCellType() == Cell.CELL_TYPE_NUMERIC) {
-                            if (HSSFDateUtil.isCellDateFormatted(rrow.getCell(cellNum))) {
+                            if (DateUtil.isCellDateFormatted(rrow.getCell(cellNum))) {
                                 DateFormat format = new SimpleDateFormat("dd-MMMM-yyyy", Locale.ENGLISH);
                                 AppUtils.getLogger(this).info("datatanggal {}: {}", rrow.getCell(cellNum).toString());
                                 if (jenisFile.equals("4")) {

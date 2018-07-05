@@ -3,8 +3,13 @@ package com.iconpln.liquiditas.core.service;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import oracle.jdbc.OracleTypes;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -826,18 +831,22 @@ public class MasterService {
 
     public Map<String, Object> uploadXls(InputStream path, String user, String jenisFile) throws ParseException, SQLException{
         Map<String, Object> out = null;
-        HSSFWorkbook workbook = null;
+        Workbook workbook = null;
         Iterator<Row> rowIterator = null;
-        HSSFRow row = null;
-        HSSFCell cell = null;
+        Row row = null;
+        Cell cell = null;
         Map<String, Object> param = new HashMap<>();
         String idUpload = getIdUpload();
         int i = 0;
         List<Map<String,Object>> failedList =  new ArrayList<>();
         try {
 
-            workbook = new HSSFWorkbook(path);
-            HSSFSheet sheet = workbook.getSheetAt(0);
+            try {
+                workbook = WorkbookFactory.create(path);
+            } catch (InvalidFormatException e) {
+                e.printStackTrace();
+            }
+            Sheet sheet = workbook.getSheetAt(0);
             rowIterator = sheet.iterator();
             Row row1 = sheet.getRow(1);
             List<String> list = new ArrayList<>();
@@ -845,7 +854,7 @@ public class MasterService {
             System.out.println("ROWNYA: "+ sheet.getPhysicalNumberOfRows());
             while (rowIterator.hasNext()) {
 
-                row = (HSSFRow) rowIterator.next();
+                row = rowIterator.next();
                 Row rrow = sheet.getRow(row.getRowNum());
                 int totalCell = sheet.getRow(0).getLastCellNum();
                 if(!isRowEmpty(rrow, totalCell)){
@@ -857,7 +866,7 @@ public class MasterService {
                             list.add("-");
                         }
                         else if(rrow.getCell(cellNum).getCellType() == Cell.CELL_TYPE_NUMERIC){
-                            if(HSSFDateUtil.isCellDateFormatted(rrow.getCell(cellNum))){
+                            if(DateUtil.isCellDateFormatted(rrow.getCell(cellNum))){
                                 DateFormat format = new SimpleDateFormat("dd-MMMM-yyyy", Locale.ENGLISH);
                                 AppUtils.getLogger(this).info("datatanggal {}: {}", rrow.getCell(cellNum).toString());
                                 list.add(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(format.parse(rrow.getCell(cellNum).toString())));
