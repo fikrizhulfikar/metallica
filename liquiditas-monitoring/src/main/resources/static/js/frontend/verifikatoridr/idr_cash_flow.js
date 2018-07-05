@@ -9,7 +9,7 @@ $(document).ready(function () {
     }, 60000);
 });
 
-const no_urut = [20,21,22,23,24,71,72,73,74,81,82,83,86,87];
+const no_urut = [20,21,23,24.1,24.2,71,72,73,74,81,82,83,86,87];
 
 function initDataTable() {
     showLoadingCss();

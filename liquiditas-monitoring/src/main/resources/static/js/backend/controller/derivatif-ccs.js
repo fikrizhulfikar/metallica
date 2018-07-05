@@ -5,7 +5,7 @@
 var idDeviratif;
 var table_derivatif_ccs;
 var allData;
-var tempTableSearch= "";
+var tempTableSearch = "";
 
 var srcTglAwal = null;
 var srcTglAkhir = null;
@@ -120,13 +120,13 @@ function edit_data(id) {
             $("#pBankCounterParty").val(),
             $("#pTenor").val(),
             $("#pJatuhTempo").val(res[0].JATUH_TEMPO),
-            $("#pJatuhTempo").datepicker({dateFormat : 'dd/mm/yy'}),
+            $("#pJatuhTempo").datepicker({dateFormat: 'dd/mm/yy'}),
             $("#pStartDate").val(res[0].START_DATE),
-            $("#pStartDate").datepicker({dateFormat : 'dd/mm/yy'}),
+            $("#pStartDate").datepicker({dateFormat: 'dd/mm/yy'}),
             $("#pEndDate").val(res[0].END_DATE),
-            $("#pEndDate").datepicker({dateFormat : 'dd/mm/yy'}),
+            $("#pEndDate").datepicker({dateFormat: 'dd/mm/yy'}),
             $("#pPayDate").val(res[0].PAY_DATE),
-            $("#pPayDate").datepicker({dateFormat : 'dd/mm/yy'}),
+            $("#pPayDate").datepicker({dateFormat: 'dd/mm/yy'}),
             $("#pNationalUsd").val(res[0].NOTIONAL_USD),
             $("#pLibor").val(res[0].LIBOR),
             $("#pPlnReceivePrincipalUsd").val(res[0].RECEIVE_PRINCIPAL),
@@ -136,8 +136,8 @@ function edit_data(id) {
             $("#pPlnPayPrincipal").val(res[0].PAY_PRINCIPAL),
             $("#pDiscountFactorIdr").val(res[0].DISCOUNT_FACTOR_IDR),
 
-            setSelectBank("pBankCounterParty", "", "PEMBAYAR", res[0].BANK_CONTERPARTY, "DERIVATIF");
-            setSelectTenor("pTenor", "", res[0].TENOR);
+            setSelectBank("pBankCounterParty", "", "PEMBAYAR", res[0].ID_BANK_CONTERPARTY, "DERIVATIF");
+            setSelectTenor("pTenor","",res[0].ID_TENOR);
 
             setTimeout(function () {
                 $('#edit-derivatif-ccs').modal({backdrop: 'static', keyboard: false});
@@ -190,7 +190,7 @@ function ins_data() {
 }
 
 function search(state) {
-    if ($("#tanggal_akhir").val() == "" && state != "load"  && $("#tanggal_awal").val() != "") {
+    if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
         alert("Mohon Lengkapi Tgl Akhir");
     } else {
         initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_tenor").val())
@@ -206,14 +206,14 @@ function getAllData() {
         dataType: 'JSON',
         type: "GET",
         data: {
-            pTglAwal :  $("#tanggal_awal").val(),
-            pTglAkhir : $("#tanggal_akhir").val(),
-            pBank : $("#cmb_bank").val(),
-            pTenor : $("#cmb_tenor").val()
+            pTglAwal: $("#tanggal_awal").val(),
+            pTglAkhir: $("#tanggal_akhir").val(),
+            pBank: $("#cmb_bank").val(),
+            pTenor: $("#cmb_tenor").val()
         },
         success: function (res) {
             allData = res;
-            console.log("res get_all_derivatif_ccs ",allData);
+            console.log("res get_all_derivatif_ccs ", allData);
         },
         error: function () {
             console.log("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -230,11 +230,11 @@ function exportXls() {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/derivatif/xls-ccs/" + tglAwal.replace(/\//g, "-") + "/" + tglAkhir.replace(/\//g, "-") + "/" + $("#cmb_bank").val() + "/" +$("#cmb_tenor").val());
+    window.open(baseUrl + "api_operator/derivatif/xls-ccs/" + tglAwal.replace(/\//g, "-") + "/" + tglAkhir.replace(/\//g, "-") + "/" + $("#cmb_bank").val() + "/" + $("#cmb_tenor").val());
 }
 
 function generatePDF() {
-    console.log("all data for pdf  : ",allData);
+    console.log("all data for pdf  : ", allData);
     var column = [];
     column.push({
         text: "NO.",
@@ -325,27 +325,33 @@ function generatePDF() {
         text: "NATIONAL (IDR)",
         style: "tableHeader",
         alignment: "center"
-    });column.push({
+    });
+    column.push({
         text: "SUKU BUNGA IDR (LIBOR 6M+2%)",
         style: "tableHeader",
         alignment: "center"
-    });column.push({
+    });
+    column.push({
         text: "PLN PAY PRINCIPAL (IDR)",
         style: "tableHeader",
         alignment: "center"
-    });column.push({
+    });
+    column.push({
         text: "PLN PAY COUPON (IDR)",
         style: "tableHeader",
         alignment: "center"
-    });column.push({
+    });
+    column.push({
         text: "TOTAL PEMBAYARAN PLN (IDR)",
         style: "tableHeader",
         alignment: "center"
-    });column.push({
+    });
+    column.push({
         text: "DISCOUNT FACTOR",
         style: "tableHeader",
         alignment: "center"
-    });column.push({
+    });
+    column.push({
         text: "PV (IDR)",
         style: "tableHeader",
         alignment: "center"
@@ -353,57 +359,57 @@ function generatePDF() {
 
     var externalDataRetrievedFromServer = []
 
-    $.each(allData, function( index, v ) {
-        console.log("v",v);
+    $.each(allData, function (index, v) {
+        console.log("v", v);
         var helloooow = {
-            NO : v.ROW_NUMBER,
+            NO: v.ROW_NUMBER,
             BANK_COUNTERPARTY: v.BANK_CONTERPARTY,
             TENOR: v.TENOR,
-            JATUH_TEMPO: v.JATUH_TEMPO ,
-            START_DATE: v.START_DATE ,
-            END_DATE: v.END_DATE ,
-            PAY_DATE: v.PAY_DATE ,
-            JUMLAH_HARI: v.JUMLAH_HARI ,
-            NATIONAL_USD: v.NOTIONAL_USD ,
+            JATUH_TEMPO: v.JATUH_TEMPO,
+            START_DATE: v.START_DATE,
+            END_DATE: v.END_DATE,
+            PAY_DATE: v.PAY_DATE,
+            JUMLAH_HARI: v.JUMLAH_HARI,
+            NATIONAL_USD: v.NOTIONAL_USD,
             LIBOR_6M: v.LIBOR,
-            SUKU_BUNGA_USD_LIBOR_6M2: v.SUKU_BUNGA_USD  ,
-            PLN_RECEIVE_PRINCIPAL_USD: v.RECEIVE_PRINCIPAL ,
-            PLN_RECEIVE_COUPON_USD: v.RECEIVE_COUPON ,
+            SUKU_BUNGA_USD_LIBOR_6M2: v.SUKU_BUNGA,
+            PLN_RECEIVE_PRINCIPAL_USD: v.RECEIVE_PRINCIPAL,
+            PLN_RECEIVE_COUPON_USD: v.RECEIVE_COUPON,
             TOTAL_PENERIMAAN_PLN_USD: v.TOTAL_PENERIMAAN,
-            RESET_DATE: v.RESET_DATE ,
-            DISCOUNT_FACTOR_USD: v.DISCOUNT_FACTOR_USD ,
-            PV_USD : v.PV_USD ,
-            NATIONAL_IDR: v.NOTIONAL_IDR ,
-            SUKU_BUNGA_IDR_LIBOR6M: v.SUKU_BUNGA_IDR ,
-            PLN_PAY_PRINCIPAL_IDR : v.PAY_PRINCIPAL ,
-            PLN_PAY_COUPON_IDR: v.PAY_COUPON ,
-            TOTAL_PEMBAYARAN_PLN_IDR : v.TOTAL_PEMBAYARAN ,
-            DISCOUNT_FACTOR_IDR: v.DISCOUNT_FACTOR_IDR ,
-            PV_IDR : v.PV_IDR ,
+            RESET_DATE: v.RESET_DATE,
+            DISCOUNT_FACTOR_USD: v.DISCOUNT_FACTOR_USD,
+            PV_USD: v.PV_USD,
+            NATIONAL_IDR: v.NOTIONAL_IDR,
+            SUKU_BUNGA_IDR_LIBOR6M: v.SUKU_BUNGA_IDR,
+            PLN_PAY_PRINCIPAL_IDR: v.PAY_PRINCIPAL,
+            PLN_PAY_COUPON_IDR: v.PAY_COUPON,
+            TOTAL_PEMBAYARAN_PLN_IDR: v.TOTAL_PEMBAYARAN,
+            DISCOUNT_FACTOR_IDR: v.DISCOUNT_FACTOR_IDR,
+            PV_IDR: v.PV_IDR,
 
-    //         // NOTIONAL_AMOUNT: accounting.formatNumber(v.NATIONAL_AMOUNT,2,".",","),
-    //         // LEG_1_FIXING_RATE: accounting.formatNumber(v.FIXING_RATE,2,".",","),
-    //         // LEG_1_NATIONAL_AMOUNT: accounting.formatNumber(v.NATIONAL_AMOUNT1,2,".",","),
-    //         // LEG_2_SWAP_POINT: accounting.formatNumber(v.SWAP_POINT,2,".",","),
-    //         // LEG_2_SWAP_RATE: accounting.formatNumber(v.SWAP_RATE,2,".",","),
-    //         // LEG_2_NATIONAL_AMOUNT: accounting.formatNumber(v.NATIONAL_AMOUNT2,2,".",","),
-    //         // BIAYA_SWAP: accounting.formatNumber(v.BIAYA_SWAP,2,".",","),
-    //         // BUNGA_DEPOSITO_UNTUK_HEDGING: accounting.formatNumber(v.BUNGA_DEPOSITE_HEDGING,2,".",","),
-    //         // NET_BIAYA_SWAP: accounting.formatNumber(v.NET_BIAYA_SWAP,2,".",","),
-    //         // SUMBER: v.SUMBER_DANA,
-    //         // PERUNTUKAN_DANA: v.PERUNTUKAN_DANA,
-    //         // STATUS: v.STATUS_DERIVATIF
+            //         // NOTIONAL_AMOUNT: accounting.formatNumber(v.NATIONAL_AMOUNT,2,".",","),
+            //         // LEG_1_FIXING_RATE: accounting.formatNumber(v.FIXING_RATE,2,".",","),
+            //         // LEG_1_NATIONAL_AMOUNT: accounting.formatNumber(v.NATIONAL_AMOUNT1,2,".",","),
+            //         // LEG_2_SWAP_POINT: accounting.formatNumber(v.SWAP_POINT,2,".",","),
+            //         // LEG_2_SWAP_RATE: accounting.formatNumber(v.SWAP_RATE,2,".",","),
+            //         // LEG_2_NATIONAL_AMOUNT: accounting.formatNumber(v.NATIONAL_AMOUNT2,2,".",","),
+            //         // BIAYA_SWAP: accounting.formatNumber(v.BIAYA_SWAP,2,".",","),
+            //         // BUNGA_DEPOSITO_UNTUK_HEDGING: accounting.formatNumber(v.BUNGA_DEPOSITE_HEDGING,2,".",","),
+            //         // NET_BIAYA_SWAP: accounting.formatNumber(v.NET_BIAYA_SWAP,2,".",","),
+            //         // SUMBER: v.SUMBER_DANA,
+            //         // PERUNTUKAN_DANA: v.PERUNTUKAN_DANA,
+            //         // STATUS: v.STATUS_DERIVATIF
         }
         externalDataRetrievedFromServer.push(helloooow)
     });
-    console.log("hasil push hellow",externalDataRetrievedFromServer)
+    console.log("hasil push hellow", externalDataRetrievedFromServer)
 
     function buildTableBody(data, columns) {
         var body = [];
 
         body.push(columns);
 
-        data.forEach(function(row) {
+        data.forEach(function (row) {
             var dataRow = [];
             console.log(row);
             dataRow.push(row["NO"]);
@@ -430,19 +436,19 @@ function generatePDF() {
             dataRow.push(row["TOTAL_PEMBAYARAN_PLN_IDR"]);
             dataRow.push(row["DISCOUNT_FACTOR_IDR"]);
             dataRow.push(row["PV_IDR"]);
-    //         // dataRow.push(row["TENOR"]);
-    //         // dataRow.push({text:row["NOTIONAL_AMOUNT"],alignment: "right"});
-    //         // dataRow.push({text:row["LEG_1_FIXING_RATE"],alignment: "right"});
-    //         // dataRow.push({text:row["LEG_1_NATIONAL_AMOUNT"],alignment: "right"});
-    //         // dataRow.push({text:row["LEG_2_SWAP_POINT"],alignment: "right"});
-    //         // dataRow.push({text:row["LEG_2_SWAP_RATE"],alignment: "right"});
-    //         // dataRow.push({text:row["LEG_2_NATIONAL_AMOUNT"],alignment: "right"});
-    //         // dataRow.push({text:row["BIAYA_SWAP"],alignment: "right"});
-    //         // dataRow.push({text:row["BUNGA_DEPOSITO_UNTUK_HEDGING"],alignment: "right"});
-    //         // dataRow.push({text:row["NET_BIAYA_SWAP"],alignment: "right"});
-    //         // dataRow.push(row["SUMBER"]);
-    //         // dataRow.push(row["PERUNTUKAN_DANA"]);
-    //         // dataRow.push(row["STATUS"]);
+            //         // dataRow.push(row["TENOR"]);
+            //         // dataRow.push({text:row["NOTIONAL_AMOUNT"],alignment: "right"});
+            //         // dataRow.push({text:row["LEG_1_FIXING_RATE"],alignment: "right"});
+            //         // dataRow.push({text:row["LEG_1_NATIONAL_AMOUNT"],alignment: "right"});
+            //         // dataRow.push({text:row["LEG_2_SWAP_POINT"],alignment: "right"});
+            //         // dataRow.push({text:row["LEG_2_SWAP_RATE"],alignment: "right"});
+            //         // dataRow.push({text:row["LEG_2_NATIONAL_AMOUNT"],alignment: "right"});
+            //         // dataRow.push({text:row["BIAYA_SWAP"],alignment: "right"});
+            //         // dataRow.push({text:row["BUNGA_DEPOSITO_UNTUK_HEDGING"],alignment: "right"});
+            //         // dataRow.push({text:row["NET_BIAYA_SWAP"],alignment: "right"});
+            //         // dataRow.push(row["SUMBER"]);
+            //         // dataRow.push(row["PERUNTUKAN_DANA"]);
+            //         // dataRow.push(row["STATUS"]);
             body.push(dataRow);
         });
 
@@ -462,12 +468,12 @@ function generatePDF() {
 
     var docDefinition = {
         pageOrientation: "landscape",
-        content: [ {
+        content: [{
             text: "DERIVATIF CCS",
             style: "header",
             alignment: "center"
         }, {
-            text: "Tanggal Cetak : "+getDataNow(),
+            text: "Tanggal Cetak : " + getDataNow(),
             style: "subheader"
         },
             table(externalDataRetrievedFromServer, column)
@@ -499,7 +505,7 @@ function generatePDF() {
     pdfMake.createPdf(docDefinition).open();
 }
 
-function upload_xls(pIdDerivatif){
+function upload_xls(pIdDerivatif) {
     $("#modal-upload-xls").modal("show");
 
     //getFilesRekap(pIdValas);
@@ -537,7 +543,7 @@ function upload_server_xls() {
             } else {
                 var obj = res.return[0];
                 alert("Terdapat kesalahan pada data. Download excel?");
-                window.location = "../api_operator/derivatif/download/5/"+obj["ID_UPLOAD"];
+                window.location = "../api_operator/derivatif/download/5/" + obj["ID_UPLOAD"];
                 search("load");
             }
         },
@@ -581,18 +587,18 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pTenor) {
             {width: 140, targets: 21},
             {width: 120, targets: 22},
             {width: 130, targets: 23},
-            {className: "datatables_action", "targets": [8,9,10,12,13,14,17,18,19,20,21,22,24]},
+            {className: "datatables_action", "targets": [8, 9, 10, 12, 13, 14, 17, 18, 19, 20, 21, 22, 24]},
             {
                 "bSortable": true,
-                "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 ,24]
+                "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
             }
             ,
             {
                 "aTargets": [24],
                 "mRender": function (data, type, full) {
-                    if(newRoleUser[0] == "ROLE_MS_LIKUIDITAS"){
+                    if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS") {
                         return "-"
-                    }else{
+                    } else {
                         var ret_value =
                             '<div class="btn-group">' +
                             '<button style="width: 15px !important;" class="btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_CCS + '\')"><i class="fa fa-pencil"></i></button>' +
@@ -607,7 +613,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pTenor) {
                 "aTargets": [8],
                 "mRender": function (data, type, full) {
 
-                    return accounting.formatNumber(full.NOTIONAL_USD,2,".",",")
+                    return accounting.formatNumber(full.NOTIONAL_USD, 2, ".", ",")
 
                 }
 
@@ -705,7 +711,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pTenor) {
             {"data": "JUMLAH_HARI", "defaultContent": ""},
             {"data": "NOTIONAL_USD", "defaultContent": ""},
             {"data": "LIBOR", "defaultContent": ""},
-            {"data": "SUKU_BUNGA_USD", "defaultContent": ""},
+            {"data": "SUKU_BUNGA", "defaultContent": ""},
             {"data": "RECEIVE_PRINCIPAL", "defaultContent": ""},
             {"data": "RECEIVE_COUPON", "defaultContent": ""},
             {"data": "TOTAL_PENERIMAAN", "defaultContent": ""},
@@ -727,9 +733,9 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pTenor) {
         }
     });
 
-    table_derivatif_ccs.on('search.dt', function() {
+    table_derivatif_ccs.on('search.dt', function () {
         var value = $('.dataTables_filter input').val();
-        console.log("VALUE SEARCH" ,value); // <-- the value
+        console.log("VALUE SEARCH", value); // <-- the value
         tempTableSearch = value;
     });
     console.log("tblDCcs", table_derivatif_ccs)

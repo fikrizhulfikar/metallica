@@ -5,7 +5,7 @@ $(document).ready(function () {
     initDataTable();
     setInterval(function () {
         initDataTable();
-    }, 60000);
+    }, 300000);
     $('#tgl_pencarian').datepicker({dateFormat: 'dd/mm/yy'});
 });
 
