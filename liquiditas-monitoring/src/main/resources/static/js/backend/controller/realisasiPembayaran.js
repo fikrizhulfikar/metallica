@@ -143,6 +143,7 @@ function reverse() {
         type: "POST",
         data: {
             pIdValas: idValas,
+            pStatusInvoice : '10',
             pKeterangan: $("#pKeterangan").val(),
         },
         success: function (res) {
