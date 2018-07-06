@@ -677,6 +677,7 @@ function show_modal(id) {
 }
 
 function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
+    console.log("USERLOGIN", newRoleUser[0]);
     showLoadingCss();
     $('#table-rekapitulasi tbody').empty();
     $('#table-rekapitulasi').dataTable().fnDestroy();
@@ -732,7 +733,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                             if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
                                 return "-"
                             }
-                            else if(newRoleUser[0] == "OSS"){
+                            else if(newRoleUser[0] == "ROLE_OSS"){
                                 ret_value =
                                     '<div class="btn-group">' +
                                     '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>' +
