@@ -332,7 +332,7 @@ public class DashboardService {
                 .withCatalogName("package_cashflow")
                 .withProcedureName("ins_cashflow");
         SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("in_nourut", cashFlow.getNoUrut(), OracleTypes.INTEGER)
+                .addValue("in_nourut", cashFlow.getNoUrut(), OracleTypes.NUMBER)
                 .addValue("in_tanggal", cashFlow.getTanggal(), OracleTypes.VARCHAR)
                 .addValue("in_nilai", cashFlow.getNilai(), OracleTypes.NUMBER);
         Map<String, Object> out = simpleJdbcCall.execute(in);

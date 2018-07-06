@@ -6,10 +6,10 @@ $(document).ready(function () {
     initDataTable();
     setInterval(function () {
         initDataTable();
-    }, 60000);
+    }, 300000);
 });
 
-const no_urut = [20,21,23,24.1,24.2,71,72,73,74,81,82,83,86,87];
+const no_urut = [20, 21, 23, 71, 72, 73, 74, 81, 82, 83, 86, 87, 93, 94];
 
 function initDataTable() {
     showLoadingCss();
@@ -39,38 +39,64 @@ function initDataTable() {
                         no = "";
                     }
                     var canEdit = isCanEdit(val.NOURUT);
-                    var warnaBgTable = val.WARNA;
                     var html = "";
-                    if (canEdit == -1) {
-                        html = '<tr>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="center">' + no + '</td>' +
-                            '<td style="border-right: none;" color: black" bgcolor="'+val.WARNA+'">'+ spasi(val.SPASI)+ val.KETERANGAN + '</td>' +
-                            '<td style="border-left: none;" bgcolor="'+val.WARNA+'" align="right"></td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL1, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL2, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL3, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL4, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL5, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL6, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL7, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TOTAL, 2, ".", ",") + '</td>'
-                            '</tr>';
-                    } else {
-                        html = '<tr id="'+val.NOURUT+'">' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="center">' + no + '</td>' +
-                            '<td style="border-right: none;" color: black" bgcolor="'+val.WARNA+'">' + spasi(val.SPASI)+ val.KETERANGAN + '</td>' +
-                            '<td style="border-left: none;" bgcolor="'+val.WARNA+'" align="center"><img src="/static/images/add.svg" height="12.5" width="12.5" onclick="showModal(\''+val.NOURUT+'\')"/></td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL1, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL2, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL3, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL4, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL5, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL6, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TANGGAL7, 2, ".", ",") + '</td>' +
-                            '<td style="color: black" bgcolor="'+val.WARNA+'" align="right">' + accounting.formatNumber(val.TOTAL, 2, ".", ",") + '</td>'
-                            '</tr>';
+
+                    var warnaBg = val.WARNA;
+                    html = '<tr>' +
+                        '<td bgcolor="' + warnaBg + '" align="center">' + no + '</td>' +
+                        '<td style="border-right: none;" bgcolor="' + warnaBg + '">' + spasi(val.SPASI) + val.KETERANGAN + '</td>';
+
+                    if(canEdit == -1){
+                        html = html+'<td style="border-left: none;" bgcolor="' + warnaBg + '" align="right"></td>';
                     }
+                    else{
+                        html = html + '<td style="border-left: none;" bgcolor="' + warnaBg + '" align="center"><img src="/static/images/add.svg" height="12.5" width="12.5" onclick="showModal(\'' + val.NOURUT + '\')"/></td>';
+                    }
+
+                    if (val.TANGGAL1 < 0) {
+                        html = html + '<td bgcolor="red" align="right">' + accounting.formatNumber(val.TANGGAL1, 2, ".", ",") + '</td>';
+                    } else {
+                        html = html + '<td bgcolor="' + warnaBg + '" align="right">' + accounting.formatNumber(val.TANGGAL1, 2, ".", ",") + '</td>';
+                    }
+                    if (val.TANGGAL2 < 0) {
+                        html = html + '<td bgcolor="red" align="right">' + accounting.formatNumber(val.TANGGAL2, 2, ".", ",") + '</td>';
+                    } else {
+                        html = html + '<td bgcolor="' + warnaBg + '" align="right">' + accounting.formatNumber(val.TANGGAL2, 2, ".", ",") + '</td>';
+                    }
+                    if (val.TANGGAL3 < 0) {
+                        html = html + '<td bgcolor="red" align="right">' + accounting.formatNumber(val.TANGGAL3, 2, ".", ",") + '</td>';
+                    } else {
+                        html = html + '<td bgcolor="' + warnaBg + '" align="right">' + accounting.formatNumber(val.TANGGAL3, 2, ".", ",") + '</td>';
+                    }
+                    if (val.TANGGAL4 < 0) {
+                        html = html + '<td bgcolor="red" align="right">' + accounting.formatNumber(val.TANGGAL4, 2, ".", ",") + '</td>';
+                    } else {
+                        html = html + '<td bgcolor="' + warnaBg + '" align="right">' + accounting.formatNumber(val.TANGGAL4, 2, ".", ",") + '</td>';
+                    }
+                    if (val.TANGGAL5 < 0) {
+                        html = html + '<td bgcolor="red" align="right">' + accounting.formatNumber(val.TANGGAL5, 2, ".", ",") + '</td>';
+                    } else {
+                        html = html + '<td bgcolor="' + warnaBg + '" align="right">' + accounting.formatNumber(val.TANGGAL5, 2, ".", ",") + '</td>';
+                    }
+                    if (val.TANGGAL6 < 0) {
+                        html = html + '<td bgcolor="red" align="right">' + accounting.formatNumber(val.TANGGAL6, 2, ".", ",") + '</td>';
+                    } else {
+                        html = html + '<td bgcolor="' + warnaBg + '" align="right">' + accounting.formatNumber(val.TANGGAL6, 2, ".", ",") + '</td>';
+                    }
+                    if (val.TANGGAL7 < 0) {
+                        html = html + '<td bgcolor="red" align="right">' + accounting.formatNumber(val.TANGGAL7, 2, ".", ",") + '</td>';
+                    } else {
+                        html = html + '<td bgcolor="' + warnaBg + '" align="right">' + accounting.formatNumber(val.TANGGAL7, 2, ".", ",") + '</td>';
+                    }
+                    if (val.TOTAL < 0) {
+                        html = html + '<td bgcolor="red" align="right">' + accounting.formatNumber(val.TOTAL, 2, ".", ",") + '</td>';
+                    } else {
+                        html = html + '<td bgcolor="' + warnaBg + '" align="right">' + accounting.formatNumber(val.TOTAL, 2, ".", ",") + '</td>';
+                    }
+
+                    html = html + '</tr>';
                     $('#table-main tbody').append(html);
+
                 });
                 hideLoadingCss()
             }
@@ -93,12 +119,26 @@ function noDataView() {
 
 function incDate(date, days) {
     date = new Date(date.getTime() + (86400000 * days));
-    return date.getDate()  + "/" + (date.getMonth()+1) + "/" + date.getFullYear()
+    return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
 }
 
 function isCanEdit(no) {
     return jQuery.inArray(no, no_urut);
 }
+
+// function isCanEdit2(no, ket) {
+//     if (ket === "- Pinjaman Lainnya") {
+//         return false;
+//     } else {
+//         return true;
+//     }
+//     return jQuery.inArray(no, no_urut);
+// }
+
+// function bgWarnaMinus(warna) {
+//
+//
+// }
 
 function showModal(no_urut) {
     $("#modal-no-urut").val(no_urut);
@@ -130,33 +170,37 @@ function showModal(no_urut) {
 
 
 function stringToDate(_date) {
-    var formatLowerCase= 'dd/mm/yyyy';
-    var formatItems=formatLowerCase.split('/');
-    var dateItems=_date.split('/');
-    var monthIndex=formatItems.indexOf("mm");
-    var dayIndex=formatItems.indexOf("dd");
-    var yearIndex=formatItems.indexOf("yyyy");
-    var month=parseInt(dateItems[monthIndex]);
-    month-=1;
-    var formatedDate = new Date(dateItems[yearIndex],month,dateItems[dayIndex]);
+    var formatLowerCase = 'dd/mm/yyyy';
+    var formatItems = formatLowerCase.split('/');
+    var dateItems = _date.split('/');
+    var monthIndex = formatItems.indexOf("mm");
+    var dayIndex = formatItems.indexOf("dd");
+    var yearIndex = formatItems.indexOf("yyyy");
+    var month = parseInt(dateItems[monthIndex]);
+    month -= 1;
+    var formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
     return formatedDate;
 }
 
 function dateToString(d) {
-    return d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear();
+    return d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
 }
 
 function spasi(sp) {
-    if (sp === 0 || sp === "0"){
-      return '<a>&nbsp;</a>'
-    }if (sp === 4 || sp === "4"){
-      return '<a>&nbsp;&nbsp;&nbsp;&nbsp;</a>'
-    }if (sp === 8 || sp === "8"){
-      return '<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>'
-    }if (sp === 12 || sp === "12"){
-      return '<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>'
-    }if (sp === 16 || sp === "16"){
-      return '<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>'
+    if (sp === 0 || sp === "0") {
+        return '<a>&nbsp;</a>'
+    }
+    if (sp === 4 || sp === "4") {
+        return '<a>&nbsp;&nbsp;&nbsp;&nbsp;</a>'
+    }
+    if (sp === 8 || sp === "8") {
+        return '<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>'
+    }
+    if (sp === 12 || sp === "12") {
+        return '<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>'
+    }
+    if (sp === 16 || sp === "16") {
+        return '<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>'
     }
 }
 
@@ -179,39 +223,39 @@ function simpan() {
     var tgl7 = $("#modal-tgl7").val();
     var json = [
         {
-            "noUrut" : no_urut,
-            "tanggal" : lbl_tgl1,
-            "nilai" : Number.parseFloat(tgl1)
+            "noUrut": no_urut,
+            "tanggal": lbl_tgl1,
+            "nilai": Number.parseFloat(tgl1)
         },
         {
-            "noUrut" : no_urut,
-            "tanggal" : lbl_tgl2,
-            "nilai" : Number.parseFloat(tgl2)
+            "noUrut": no_urut,
+            "tanggal": lbl_tgl2,
+            "nilai": Number.parseFloat(tgl2)
         },
         {
-            "noUrut" : no_urut,
-            "tanggal" : lbl_tgl3,
-            "nilai" : Number.parseFloat(tgl3)
+            "noUrut": no_urut,
+            "tanggal": lbl_tgl3,
+            "nilai": Number.parseFloat(tgl3)
         },
         {
-            "noUrut" : no_urut,
-            "tanggal" : lbl_tgl4,
-            "nilai" : Number.parseFloat(tgl4)
+            "noUrut": no_urut,
+            "tanggal": lbl_tgl4,
+            "nilai": Number.parseFloat(tgl4)
         },
         {
-            "noUrut" : no_urut,
-            "tanggal" : lbl_tgl5,
-            "nilai" : Number.parseFloat(tgl5)
+            "noUrut": no_urut,
+            "tanggal": lbl_tgl5,
+            "nilai": Number.parseFloat(tgl5)
         },
         {
-            "noUrut" : no_urut,
-            "tanggal" : lbl_tgl6,
-            "nilai" : Number.parseFloat(tgl6)
+            "noUrut": no_urut,
+            "tanggal": lbl_tgl6,
+            "nilai": Number.parseFloat(tgl6)
         },
         {
-            "noUrut" : no_urut,
-            "tanggal" : lbl_tgl7,
-            "nilai" : Number.parseFloat(tgl7)
+            "noUrut": no_urut,
+            "tanggal": lbl_tgl7,
+            "nilai": Number.parseFloat(tgl7)
         }
     ];
     console.log(json);
