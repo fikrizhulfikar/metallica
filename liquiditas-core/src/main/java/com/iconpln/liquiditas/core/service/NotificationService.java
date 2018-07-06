@@ -24,7 +24,6 @@ public class NotificationService {
                 .withFunctionName("SAVE_NOTIFICATION");
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_create_by", notification.getCreateBy(), OracleTypes.VARCHAR)
-                .addValue("p_create_date", notification.getCreateDate(), OracleTypes.DATE)
                 .addValue("p_is_seen", notification.isSeen() ? "1" : "0", OracleTypes.VARCHAR)
                 .addValue("p_title", notification.getTitle(), OracleTypes.VARCHAR)
                 .addValue("p_message", notification.getMessage(), OracleTypes.VARCHAR)
