@@ -339,12 +339,13 @@ function ins_data() {
         },
         success: function (res) {
             hideLoadingCss("");
-            console.log("ins log : ", res);
-            if (res.return == 1) {
+            var result = res.return.split(";")[0];
+            if (result == 1 || result == '1') {
                 alert(res.OUT_MSG);
                 // location.reload();
                 search("load");
                 $('#edit-tripartite-modal').modal('hide');
+                window.location.reload(true);
             } else {
                 alert(res.OUT_MSG);
             }
@@ -1438,10 +1439,10 @@ function update_status() {
         },
         success: function (res) {
             hideLoadingCss("")
-            console.log("data upd_status :", res);
-            if (res.return == 1) {
+            var result = res.return.split(";")[0];
+            if (result == 1 || result == '1') {
                 alert(res.OUT_MSG);
-                location.reload();
+                window.location.reload(true);
             } else {
                 alert(res.OUT_MSG);
             }

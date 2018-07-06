@@ -411,7 +411,7 @@
 
     }
 
-    function showMessageOutput(message) {
+    async function showMessageOutput(message) {
         var data = JSON.parse(message.body);
         var added =
             '<a href="#" class="dropdown-item">\n' +
@@ -447,8 +447,7 @@
             hideAfter : 5000,              // `false` to make it sticky or time in miliseconds to hide after
             textAlign : 'left',            // Alignment of text i.e. left, right, center
             position : 'bottom-right'       // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values to position the toast on page
-        })
-
+        });
     }
 
     //for send message to socket server
