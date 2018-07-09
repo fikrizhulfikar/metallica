@@ -17,13 +17,12 @@ public class NotificationServiceTest {
     @Autowired
     private NotificationService notificationService;
 
-    @Test
+//    @Test
     public void save() {
         Notification notification = new Notification();
         notification.setId(10L);
         notification.setCreateBy("ADMIN");
         notification.setCreateDate(new Date());
-        notification.setSeen(true);
         notification.setTitle("Notifikasi");
         notification.setTopic("P000029");
         notification.setMessage("Admin telah login.");
@@ -33,9 +32,10 @@ public class NotificationServiceTest {
     @Test
     public void findByTopics() {
         System.out.println("****************************");
-        List<Notification> notifications = notificationService.findByTopics("P00014,P00015");
+        List<Notification> notifications = notificationService.findByTopics("admin","P00014,P00015");
         System.out.println(notifications);
         System.out.println("****************************");
     }
+
 
 }

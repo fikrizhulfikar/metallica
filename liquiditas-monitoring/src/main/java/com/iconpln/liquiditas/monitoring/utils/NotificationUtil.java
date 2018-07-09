@@ -32,7 +32,6 @@ public class NotificationUtil {
 
     public void notifyMessage(Notification notification) {
         logger.debug("notifyMessage()");
-        notification.setSeen(false);
         notification.setCreateDate(new Date());
         notification.setCreateBy(SecurityContextHolder.getContext().getAuthentication().getName());
         long id = service.save(notification);
@@ -42,13 +41,13 @@ public class NotificationUtil {
         }
     }
 
-    public void editSeenById(long id) {
-        logger.debug("editSeenById {}", id);
-        service.editSeenById(id);
+    public void editSeenById(String username, long id) {
+        logger.debug("editSeenById : {} {}", username, id);
+        service.editSeenById(username, id);
     }
 
-    public List<Notification> findByTopics(String topics) {
-        return service.findByTopics(topics);
+    public List<Notification> findByTopics(String username, String topics) {
+        return service.findByTopics(username, topics);
     }
 
     public Map<String, String> getNotificationDetailByIdValas(String idValas) {

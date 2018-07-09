@@ -5,6 +5,7 @@ import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.core.domain.Notification;
 import com.iconpln.liquiditas.monitoring.config.UserDetailWrapper;
 import com.iconpln.liquiditas.monitoring.utils.NotificationUtil;
+import com.iconpln.liquiditas.monitoring.utils.WebUtils;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
@@ -31,19 +32,18 @@ public class NotificationController {
     private final Logger logger = AppUtils.getLogger(this);
 
     //Test
-    @GetMapping("/notify")
-    public ResponseEntity<String> notifyMessage() {
-        Notification notification = new Notification();
-        notification.setId(1L);
-        notification.setCreateBy("ADMIN");
-        notification.setCreateDate(new Date());
-        notification.setSeen(false);
-        notification.setTitle("Notifikasi");
-        notification.setTopic("P00024");
-        notification.setMessage("Admin telah login.");
-        notificationUtil.notifyMessage(notification);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @GetMapping("/notify")
+//    public ResponseEntity<String> notifyMessage() {
+//        Notification notification = new Notification();
+//        notification.setId(1L);
+//        notification.setCreateBy("ADMIN");
+//        notification.setCreateDate(new Date());
+//        notification.setTitle("Notifikasi");
+//        notification.setTopic("P00024");
+//        notification.setMessage("Admin telah login.");
+//        notificationUtil.notifyMessage(notification);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 
     @GetMapping("/get_notifications")
     public ResponseEntity<List<Notification>> findByTopics(Principal principal) {
@@ -51,12 +51,12 @@ public class NotificationController {
         String topics = wrapper.getTopics().stream()
                 .map(topic -> topic.trim())
                 .collect(Collectors.joining(","));
-        return new ResponseEntity<>(notificationUtil.findByTopics(topics), HttpStatus.OK);
+        return new ResponseEntity<>(notificationUtil.findByTopics(WebUtils.getUsernameLogin(), topics), HttpStatus.OK);
     }
 
     @PostMapping("/edit_seen_by_id/{id}")
     public ResponseEntity<String> read(@PathVariable("id") Long id) {
-        notificationUtil.editSeenById(id);
+        notificationUtil.editSeenById(WebUtils.getUsernameLogin(), id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

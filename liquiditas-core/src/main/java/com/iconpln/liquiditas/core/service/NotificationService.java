@@ -2,7 +2,11 @@ package com.iconpln.liquiditas.core.service;
 
 import com.iconpln.liquiditas.core.domain.Notification;
 import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import oracle.jdbc.OracleTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,7 +28,6 @@ public class NotificationService {
                 .withFunctionName("SAVE_NOTIFICATION");
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_create_by", notification.getCreateBy(), OracleTypes.VARCHAR)
-                .addValue("p_is_seen", notification.isSeen() ? "1" : "0", OracleTypes.VARCHAR)
                 .addValue("p_title", notification.getTitle(), OracleTypes.VARCHAR)
                 .addValue("p_message", notification.getMessage(), OracleTypes.VARCHAR)
                 .addValue("p_additional_info", notification.getAdditionalInfo(), OracleTypes.VARCHAR)
@@ -33,31 +36,34 @@ public class NotificationService {
         return result.longValue();
     }
 
-    public ArrayList<Notification> findByTopics(String topics) {
+    public ArrayList<Notification> findByTopics(String username, String topics) {
         SimpleJdbcCall call = new SimpleJdbcCall(jdbcTemplate)
                 .withCatalogName("PKG_LMETALLICA_NOTIFICATION")
                 .withFunctionName("FIND_BY_TOPICS");
         SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_username", username, OracleTypes.VARCHAR)
                 .addValue("p_topics", topics, OracleTypes.VARCHAR);
         return call.returningResultSet("result", (RowMapper<Notification>) (resultSet, i) -> {
             Notification notification = new Notification();
             notification.setId(resultSet.getLong("ID"));
             notification.setCreateBy(resultSet.getString("CREATE_BY"));
             notification.setCreateDate(resultSet.getDate("CREATE_DATE"));
-            notification.setSeen(resultSet.getString("IS_SEEN").equalsIgnoreCase("0") ? false : true);
             notification.setTitle(resultSet.getString("TITLE"));
             notification.setTopic(resultSet.getString("TOPIC"));
             notification.setAdditionalInfo(resultSet.getString("ADDITIONAL_INFO"));
             notification.setMessage(resultSet.getString("MESSAGE"));
+            String isSeen = resultSet.getString("IS_SEEN");
+            notification.setSeen((isSeen == null || isSeen.equalsIgnoreCase("0"))  ? false : true);
             return notification;
         }).executeFunction(ArrayList.class, in);
     }
 
-    public void editSeenById(Long id) {
+    public void editSeenById(String username, Long id) {
         SimpleJdbcCall call = new SimpleJdbcCall(jdbcTemplate)
                 .withCatalogName("PKG_LMETALLICA_NOTIFICATION")
-                .withProcedureName("EDIT_SEEN_BY_ID");
+                .withProcedureName("EDIT_SEEN");
         SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_username", username, OracleTypes.VARCHAR)
                 .addValue("p_id", id, OracleTypes.NUMBER);
         call.execute(in);
     }

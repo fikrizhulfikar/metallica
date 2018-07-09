@@ -7,11 +7,12 @@ public class Notification {
     private Long id;
     private String createBy;
     private Date createDate;
-    private boolean isSeen;
     private String title;
     private String message;
     private String additionalInfo;
     private String topic;
+
+    private boolean isSeen;
 
     public Long getId() {
         return id;
@@ -35,14 +36,6 @@ public class Notification {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
-    }
-
-    public boolean isSeen() {
-        return isSeen;
-    }
-
-    public void setSeen(boolean seen) {
-        isSeen = seen;
     }
 
     public String getTitle() {
@@ -75,6 +68,14 @@ public class Notification {
 
     public void setTopic(String topic) {
         this.topic = topic;
+    }
+
+    public boolean isSeen() {
+        return isSeen;
+    }
+
+    public void setSeen(boolean seen) {
+        isSeen = seen;
     }
 
     public static Builder builder() {
@@ -120,7 +121,6 @@ public class Notification {
             notification.id = id;
             notification.createBy = createBy;
             notification.createDate = createDate;
-            notification.isSeen = isSeen;
             notification.title = title;
             notification.message = message;
             notification.additionalInfo = additionalInfo;
@@ -136,7 +136,6 @@ public class Notification {
         sb.append("id=").append(id);
         sb.append(", createBy='").append(createBy).append('\'');
         sb.append(", createDate=").append(createDate);
-        sb.append(", isSeen=").append(isSeen);
         sb.append(", title='").append(title).append('\'');
         sb.append(", message='").append(message).append('\'');
         sb.append(", topic='").append(topic).append('\'');
