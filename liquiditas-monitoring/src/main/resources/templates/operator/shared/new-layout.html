@@ -417,10 +417,10 @@
             '<a href="#" class="dropdown-item">\n' +
             '  <div class="message">\n' +
             '    <div>\n' +
-            '      <small class="text-muted" id="notification_title">'+data.title+'</small>\n' +
-            '      <small class="text-muted float-right mt-1" id="notification_date">'+"now"+'</small>\n' +
+            '      <small class="text-muted" id="notification_title"><b>'+data.title+'</b></small>\n' +
+            '      <small class="text-muted float-right mt-1" id="notification_date"><b>'+"now"+'</b></small>\n' +
             '    </div>\n' +
-            '    <div class="small text-muted text-truncate" id="notification_body">'+data.message+'</div>\n' +
+            '    <div class="small text-muted text-truncate" id="notification_body"><b>'+data.message+'</b></div>\n' +
             '  </div>\n' +
             '</a>\n';
 
@@ -472,24 +472,35 @@
                 $("#notification_li").append(drop_down);
                 res.forEach(function (data) {
                     var backgroundColor = "";
+                    var added = "";
                     if (data.seen == true) {
                         backgroundColor = '<li id="'+data.id+'" style="background-color: white" onclick="showNotifModal(null, \''+data.additionalInfo+'\')">\n';
-                    } else {
-                        backgroundColor = '<li id="'+data.id+'" style="background-color: #f7f8f9" onclick="showNotifModal(\''+data.id+'\', \''+data.additionalInfo+'\')">\n';
-                        count++;
-                    }
-                    var added =
-                        backgroundColor +
+                        added += backgroundColor +
                         '<a href="#" class="dropdown-item">\n' +
                         '  <div class="message">\n' +
                         '    <div>\n' +
                         '      <small class="text-muted" id="notification_title">'+data.title+'</small>\n' +
-                        '      <small class="text-muted float-right mt-1" id="notification_date">'+new Date(data.createDate)+'</small>\n' +
+                        '      <small class="text-muted float-right mt-1" id="notification_date">'+formatDate(new Date(data.createDate))+'</small>\n' +
                         '    </div>\n' +
                         '    <div class="small text-muted text-truncate" id="notification_body">'+data.message+'</div>\n' +
                         '  </div>\n' +
                         '</a>\n' +
                         '</li>\n';
+                    } else {
+                        backgroundColor = '<li id="'+data.id+'" style="background-color: #f7f8f9" onclick="showNotifModal(\''+data.id+'\', \''+data.additionalInfo+'\')">\n';
+                        added += backgroundColor +
+                        '<a href="#" class="dropdown-item">\n' +
+                        '  <div class="message">\n' +
+                        '    <div>\n' +
+                        '      <small class="text-muted" id="notification_title"><b>'+data.title+'</b></small>\n' +
+                        '      <small class="text-muted float-right mt-1" id="notification_date"><b>'+formatDate(new Date(data.createDate))+'</b></small>\n' +
+                        '    </div>\n' +
+                        '    <div class="small text-muted text-truncate" id="notification_body"><b>'+data.message+'</b></div>\n' +
+                        '  </div>\n' +
+                        '</a>\n' +
+                        '</li>\n';
+                        count++;
+                    }
                     $("#notification_div").append(added);
                 });
                 $("#notification_count").html(count);
@@ -641,6 +652,21 @@
                 hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
             }
         });
+    }
+
+    function formatDate(date) {
+        var year = date.getFullYear(),
+            month = date.getMonth() + 1, // months are zero indexed
+            day = date.getDate(),
+            hour = date.getHours(),
+            minute = date.getMinutes(),
+            second = date.getSeconds(),
+            hourFormatted = hour % 12 || 12, // hour returned in 24 hour format
+            minuteFormatted = minute < 10 ? "0" + minute : minute,
+            morning = hour < 12 ? "am" : "pm";
+
+        return month + "/" + day + "/" + year + " " + hourFormatted + ":" +
+            minuteFormatted + morning;
     }
 
     /*]]>*/
