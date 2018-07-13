@@ -56,7 +56,7 @@ public class PembayaranController {
             @RequestParam(value = "length", defaultValue = "10") int length,
             @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
             @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
-            @RequestParam(value = "order[0][dir]", defaultValue = "ASC") String sortDir,
+            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
             @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
             @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
             @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
@@ -725,7 +725,7 @@ public class PembayaranController {
             case 18:
                 return "DESKRIPSI";
             default:
-                return "JENIS_PEMBAYARAN";
+                return "UPDATE_DATE";
         }
     }
 
