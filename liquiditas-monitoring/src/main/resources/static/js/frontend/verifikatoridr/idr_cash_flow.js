@@ -42,7 +42,7 @@ function initDataTable() {
                     var html = "";
 
                     var warnaBg = val.WARNA;
-                    html = '<tr>' +
+                    html = '<tr id="'+val.NOURUT+'">' +
                         '<td bgcolor="' + warnaBg + '" align="center">' + no + '</td>' +
                         '<td style="border-right: none;" bgcolor="' + warnaBg + '">' + spasi(val.SPASI) + val.KETERANGAN + '</td>';
 
@@ -142,13 +142,14 @@ function isCanEdit(no) {
 
 function showModal(no_urut) {
     $("#modal-no-urut").val(no_urut);
-    var tgl1 = document.getElementById("table-main").rows.namedItem(no_urut).cells[3].innerHTML;
-    var tgl2 = document.getElementById("table-main").rows.namedItem(no_urut).cells[4].innerHTML;
-    var tgl3 = document.getElementById("table-main").rows.namedItem(no_urut).cells[5].innerHTML;
-    var tgl4 = document.getElementById("table-main").rows.namedItem(no_urut).cells[6].innerHTML;
-    var tgl5 = document.getElementById("table-main").rows.namedItem(no_urut).cells[7].innerHTML;
-    var tgl6 = document.getElementById("table-main").rows.namedItem(no_urut).cells[8].innerHTML;
-    var tgl7 = document.getElementById("table-main").rows.namedItem(no_urut).cells[9].innerHTML;
+    var kolom = document.getElementById("table-main").rows.namedItem(no_urut);
+    var tgl1 = kolom.cells[3].innerHTML;
+    var tgl2 = kolom.cells[4].innerHTML;
+    var tgl3 = kolom.cells[5].innerHTML;
+    var tgl4 = kolom.cells[6].innerHTML;
+    var tgl5 = kolom.cells[7].innerHTML;
+    var tgl6 = kolom.cells[8].innerHTML;
+    var tgl7 = kolom.cells[9].innerHTML;
     $("#modal-cash-flow").modal("show");
     var datestring = $("#tglcetak").html();
     var d = stringToDate(datestring);
