@@ -906,8 +906,8 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                                 }
                             }
                             else if (full.STATUS_TRACKING == "APPROVE BY MS"){
-
-                                if(newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "KADIV"){
+                                console.log(newRoleUser[0]);
+                                if(newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "ROLE_KADIV"){
                                     ret_value = '<input class="cb" type="checkbox" data-value=\'{"10" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
                                 }else {
                                     ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
