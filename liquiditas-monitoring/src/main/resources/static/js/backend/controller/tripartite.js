@@ -868,11 +868,15 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
                     if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
                         return "-"
                     }
-                    else if(newRoleUser[0] == "OSS"){
+                    else if(newRoleUser[0] == "ROLE_OSS"){
                         ret_value =
                             '<div class="btn-group">' +
-                            '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>' +
-                            '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
+                            '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>';
+                        if (full.STATUS_TRACKING == "INPUT DATA") {
+                            ret_value = ret_value +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>';
+                        }
+                        ret_value = ret_value +
                             '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
                             '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-close"></i></button>' +
                             '</div>'
@@ -913,8 +917,11 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MS Keukon" onclick="upd_status_tracking(\'' + full.ID_TRIPARTITE + '\',\'' + 8 + '\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title ="Reverse" onclick ="reverse(\'' +full.ID_TRIPARTITE+'\',\'' +3+ '\')"><i class="fa fa-arrow-left"></i></button>';
                                 }
+                                if(newRoleUser[0] == "ROLE_ADMIN"){
+                                    ret_value = ret_value +
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>';
+                                }
                             ret_value = ret_value +
-                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-close"></i></button>' +
                                 '</div>'
@@ -930,14 +937,16 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
                                     '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DM Pembelanjaan" onclick="upd_status_tracking(\'' + full.ID_TRIPARTITE + '\',\'' + 4 + '\')"><i class="fa fa-arrows-alt"></i></button>'+
                                     '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title ="Reverse" onclick ="reverse(\'' +full.ID_TRIPARTITE+'\',\'' +3+ '\')"><i class="fa fa-arrow-left"></i></button>';
                             }
+                            if(newRoleUser[0] == "ROLE_ADMIN"){
+                                ret_value = ret_value +
+                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>';
+                            }
                             ret_value = ret_value +
-                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-close"></i></button>' +
                                 '</div>'
                         }
                         else if (full.STATUS_TRACKING == "VERIFIED BY DM PEMBELANJAAN") {
-
                             ret_value =
                                 '<div class="btn-group">' +
                                 '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>';
@@ -946,8 +955,11 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
                                     '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Approve MS" onclick="upd_status_tracking(\'' + full.ID_TRIPARTITE + '\',\'' + 5 + '\')"><i class="fa fa-arrows-alt"></i></button>'+
                                     '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title ="Reverse" onclick ="reverse(\'' +full.ID_TRIPARTITE+'\',\'' +4+ '\')"><i class="fa fa-arrow-left"></i></button>';
                             }
+                            if(newRoleUser[0] == "ROLE_ADMIN"){
                                 ret_value = ret_value +
-                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>';
+                            }
+                                ret_value = ret_value +
                                 '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-close"></i></button>' +
                                 '</div>'
@@ -962,9 +974,11 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
                                     '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Lunas" onclick="upd_status_tracking(\'' + full.ID_TRIPARTITE + '\',\'' + 10 + '\')"><i class="fa fa-arrows-alt"></i></button>'+
                                     '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title ="Reverse" onclick ="reverse(\'' +full.ID_TRIPARTITE+'\',\'' +5+ '\')"><i class="fa fa-arrow-left"></i></button>';
                             }
-                                ret_value = ret_value+
-
-                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
+                            if(newRoleUser[0] == "ROLE_ADMIN"){
+                                ret_value = ret_value +
+                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>';
+                            }
+                            ret_value = ret_value +
                                 '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-close"></i></button>' +
                                 '</div>'
@@ -979,8 +993,11 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
                                     '<button style="width: 15px !important;" id="option-lunas" class="btn-lunas btn-sm btn-warning" title="Lunas" onclick="upd_status_tracking(\'' +full.ID_TRIPARTITE+'\',\'' +7+ '\')"><i class="fa fa-arrows-alt"></i></button>'+
                                     '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title ="Reverse" onclick ="reverse(\'' +full.ID_TRIPARTITE+'\',\'' +10+ '\')"><i class="fa fa-arrow-left"></i></button>';
                             }
+                            if(newRoleUser[0] == "ROLE_ADMIN"){
+                                ret_value = ret_value +
+                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>';
+                            }
                             ret_value = ret_value +
-                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-pencil"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-upload"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-close"></i></button>' +
                                 '</div>'
