@@ -6,6 +6,7 @@ import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.monitoring.utils.NamedIdentifier;
 import com.iconpln.liquiditas.monitoring.utils.NotificationUtil;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +21,7 @@ import java.util.Map;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import net.sf.jxls.transformer.XLSTransformer;
 import org.apache.poi.ss.formula.NameIdentifier;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -67,13 +69,15 @@ public class PembayaranController {
 
         String sortBy = parseColumn(sortIndex);
         sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
         List<Map<String, Object>> list = new ArrayList<>();
         try {
             list = valasService.getListPembayaran(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, WebUtils.getUsernameLogin(), sortBy, sortDir, pSearch);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         Map mapData = new HashMap();
         mapData.put("draw", draw);
