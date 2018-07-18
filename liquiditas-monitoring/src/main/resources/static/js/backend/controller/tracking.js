@@ -98,6 +98,7 @@ function processTracking() {
                 $.each(res.return, function (key, val) {
                     var newHtml = "<tr>" +
                         "<td>" + val.NO_TAGIHAN + "</td>" +
+                        "<td>" + val.NO_NOTDIN + "</td>" +
                         "<td>" + val.JENIS_PEMBAYARAN + "</td>" +
                         "<td>" + val.JATUH_TEMPO + "</td>" +
                         "<td>" + val.VENDOR + "</td>" +
