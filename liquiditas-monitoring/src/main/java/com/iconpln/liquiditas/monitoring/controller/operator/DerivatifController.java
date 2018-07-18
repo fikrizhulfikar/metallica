@@ -132,8 +132,13 @@ public class DerivatifController {
     ) {
 
         List<Map<String, Object>> list = new ArrayList<>();
+
         try {
             String sortBy = parseColumn2(sortIndex);
+            sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+            if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+                sortDir = "DESC";
+            }
             list = valasService.getListDeviratif(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pStatusDerivatif, sortBy, sortDir, pSearch);
         } catch (Exception e) {
             e.printStackTrace();
@@ -173,6 +178,9 @@ public class DerivatifController {
             @RequestParam(value = "search[value]", defaultValue = "") String pSearch
     ) {
         String pSortBy = parseColumn(sortIndex);
+        if (pSortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
         List<Map<String, Object>> list = new ArrayList<>();
         try {
             list = valasService.getDerivatifCcsPss(((pStart / pLength) + 1), pLength, pTglAwal, pTglAkhir, pBank, pTenor, pSortBy, sortDir, pSearch);
@@ -212,6 +220,9 @@ public class DerivatifController {
         AppUtils.getLogger(this).info("get_derivatif_ccs_pss");
         try {
             String pSortBy = parseColumn(sortIndex);
+            if (pSortBy.equalsIgnoreCase("UPDATE_DATE")) {
+                sortDir = "DESC";
+            }
             return valasService.getDerivatifCcsPss(pStart, pLength,
                     pTglAwal, pTglAkhir, pBank, pTenor, pSortBy, sortDir, pSearch);
         } catch (Exception e) {

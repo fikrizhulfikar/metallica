@@ -81,6 +81,9 @@ public class DepositoController {
         List<Map<String, Object>> list = new ArrayList<>();
         try {
             String sortBy = parseColumn(sortIndex);
+            if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+                sortDir = "DESC";
+            }
             list = valasService.getListDeposito(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pKeterangan, sortBy, sortDir, pSearch);
         } catch (Exception e) {
             e.printStackTrace();

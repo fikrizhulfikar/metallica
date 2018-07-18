@@ -76,6 +76,9 @@ public class PembelianValasController {
         List<Map<String, Object>> list = new ArrayList<>();
         try {
             String sortBy = parseColumn(sortIndex);
+            if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+                sortDir = "DESC";
+            }
             list = valasService.getListPemebelianValas(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pDok1, pDok2, sortBy, sortDir, pSearch);
         } catch (Exception e) {
             e.printStackTrace();

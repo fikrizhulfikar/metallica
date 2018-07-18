@@ -130,6 +130,10 @@ public class TripartiteController {
     ) {
 
         sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        String sortBy = parseColumn(sortIndex);
+        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
         List<Map<String, Object>> list = new ArrayList<>();
         try {
             list = valasService.getListTripartite(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pJenisPembayaran, pStatus,WebUtils.getUsernameLogin(), parseColumn(sortIndex), sortDir, pSearch);
