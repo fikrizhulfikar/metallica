@@ -152,8 +152,7 @@ function openFormNew() {
     setSelectCurr("pCurrecny", "", "", "REKAP");
     setSelectBank2("pBankTujuan", "", "TUJUAN", "", "REKAP");
     setSelectBank("pBankPembayar", "", "PEMBAYAR", "", "REKAP");
-
-    if(newRoleUser[0]== "ROLE_OSS"){
+    if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
         $('#pTglJatuhTempo').prop('disabled', true);
     }
 

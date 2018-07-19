@@ -86,7 +86,7 @@ function openFormNew() {
     setSelectJenisPembayaran("pJenisPemabayaran", "TRIPARTITE", "")
     setSelectBank("pBankCounterparty", "", "PEMBAYAR", "", "TRIPARTITE");
     setSelectCurr("pCurrecny", "", "", "TRIPARTITE");
-    if(newRoleUser[0]== "ROLE_OSS"){
+    if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
         $('#pTglJatuhTempo').prop('disabled', true);
         $('#pTglJatuhTempoH2').prop('disabled', true);
     }
