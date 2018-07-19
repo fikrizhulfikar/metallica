@@ -22,7 +22,7 @@ public class NotificationServiceTest {
         Notification notification = new Notification();
         notification.setId(10L);
         notification.setCreateBy("ADMIN");
-        notification.setCreateDate(new Date());
+        notification.setCreateDate(new Date().getTime());
         notification.setTitle("Notifikasi");
         notification.setTopic("P000029");
         notification.setMessage("Admin telah login.");

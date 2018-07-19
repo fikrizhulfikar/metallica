@@ -32,7 +32,7 @@ public class NotificationUtil {
 
     public void notifyMessage(Notification notification) {
         logger.debug("notifyMessage()");
-        notification.setCreateDate(new Date());
+        notification.setCreateDate(new Date().getTime());
         notification.setCreateBy(SecurityContextHolder.getContext().getAuthentication().getName());
         long id = service.save(notification);
         if (id != 0) {

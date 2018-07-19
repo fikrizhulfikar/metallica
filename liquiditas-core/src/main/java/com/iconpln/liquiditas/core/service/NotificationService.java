@@ -47,7 +47,7 @@ public class NotificationService {
             Notification notification = new Notification();
             notification.setId(resultSet.getLong("ID"));
             notification.setCreateBy(resultSet.getString("CREATE_BY"));
-            notification.setCreateDate(resultSet.getDate("CREATE_DATE"));
+            notification.setCreateDate(resultSet.getTimestamp("CREATE_DATE").getTime());
             notification.setTitle(resultSet.getString("TITLE"));
             notification.setTopic(resultSet.getString("TOPIC"));
             notification.setAdditionalInfo(resultSet.getString("ADDITIONAL_INFO"));

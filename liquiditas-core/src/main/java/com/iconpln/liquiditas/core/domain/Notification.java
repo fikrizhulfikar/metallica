@@ -6,7 +6,7 @@ public class Notification {
 
     private Long id;
     private String createBy;
-    private Date createDate;
+    private long createDate;
     private String title;
     private String message;
     private String additionalInfo;
@@ -30,11 +30,11 @@ public class Notification {
         this.createBy = createBy;
     }
 
-    public Date getCreateDate() {
+    public long getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(long createDate) {
         this.createDate = createDate;
     }
 
@@ -86,7 +86,7 @@ public class Notification {
 
         private Long id;
         private String createBy;
-        private Date createDate;
+        private long createDate;
         private boolean isSeen;
         private String title;
         private String message;

@@ -500,7 +500,17 @@ public class PembayaranController {
         AppUtils.getLogger(this).debug("pKeterangan : {} ", pKeterangan);
         AppUtils.getLogger(this).debug("pStatusInvoice : {} ", pStatusInvoice);
         try {
-            return valasService.updReverse(pIdValas, pStatusInvoice, WebUtils.getUsernameLogin(), pKeterangan);
+            Map<String, Object> result = valasService.updReverse(pIdValas, pStatusInvoice, WebUtils.getUsernameLogin(), pKeterangan);
+            String idJenisPembayaran = valasService.getIdPembayaranByIdValas(pIdValas);
+            Notification notification =
+                    Notification.builder()
+                            .topic(idJenisPembayaran)
+                            .title(NamedIdentifier.REKAP_PEMBAYARAN.getName())
+                            .message(WebUtils.getUsernameLogin() + " telah me-reverse status.")
+                            .additionalInfo(NamedIdentifier.REKAP_PEMBAYARAN.getValue() + ";" + pIdValas)
+                            .build();
+            notificationUtil.notifyMessage(notification);
+            return result;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
