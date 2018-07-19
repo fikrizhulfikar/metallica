@@ -107,7 +107,10 @@ function duplicate_data(id) {
             $("#pStatus").val(res[0].STATUS_VALAS);
             $("#pTipeTransaksi").val(res[0].TIPE_TRANSAKSI);
             $("#pTglTerimaInvoice").val(res[0].TGL_TERIMA_INVOICE);
-
+            $('#pTglJatuhTempo').prop('disabled', false);
+            if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
+                $('#pTglJatuhTempo').prop('disabled', true);
+            }
             setTimeout(function () {
                 $("#pVendor").select2({
                     width: "100%"
@@ -152,6 +155,8 @@ function openFormNew() {
     setSelectCurr("pCurrecny", "", "", "REKAP");
     setSelectBank2("pBankTujuan", "", "TUJUAN", "", "REKAP");
     setSelectBank("pBankPembayar", "", "PEMBAYAR", "", "REKAP");
+
+    $('#pTglJatuhTempo').prop('disabled', false);
     if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
         $('#pTglJatuhTempo').prop('disabled', true);
     }
@@ -374,7 +379,10 @@ function edit_data(id) {
             $("#pStatus").val(res[0].STATUS_VALAS);
             $("#pTipeTransaksi").val(res[0].TIPE_TRANSAKSI);
             $("#pTglTerimaInvoice").val(res[0].TGL_TERIMA_INVOICE);
-
+            $('#pTglJatuhTempo').prop('disabled', false);
+            if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
+                $('#pTglJatuhTempo').prop('disabled', true);
+            }
             setTimeout(function () {
                 $("#pVendor").select2({
                     width: "100%"

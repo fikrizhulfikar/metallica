@@ -83,13 +83,17 @@ function openFormNew() {
         width: "100%"
     });
 
-    setSelectJenisPembayaran("pJenisPemabayaran", "TRIPARTITE", "")
-    setSelectBank("pBankCounterparty", "", "PEMBAYAR", "", "TRIPARTITE");
-    setSelectCurr("pCurrecny", "", "", "TRIPARTITE");
+    $('#pTglJatuhTempo').prop('disabled', false);
+    $('#pTglJatuhTempoH2').prop('disabled', false);
     if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
         $('#pTglJatuhTempo').prop('disabled', true);
         $('#pTglJatuhTempoH2').prop('disabled', true);
     }
+
+    setSelectJenisPembayaran("pJenisPemabayaran", "TRIPARTITE", "")
+    setSelectBank("pBankCounterparty", "", "PEMBAYAR", "", "TRIPARTITE");
+    setSelectCurr("pCurrecny", "", "", "TRIPARTITE");
+
     $('#edit-tripartite-modal').modal({backdrop: 'static', keyboard: false});
 
 }
@@ -151,7 +155,12 @@ function duplicate_data(id) {
             $("#pNoNotdin").val(res[0].NO_NOTDIN);
             $("#pNoNotaDinas").val(res[0].TGL_NOTDIN);
             $("#pDeskripsi").val(res[0].DESKRIPSI);
-
+            $('#pTglJatuhTempo').prop('disabled', false);
+            $('#pTglJatuhTempoH2').prop('disabled', false);
+            if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
+                $('#pTglJatuhTempo').prop('disabled', true);
+                $('#pTglJatuhTempoH2').prop('disabled', true);
+            }
             tempVendor = res[0].ID_VENDOR;
 
             setSelectJenisPembayaran("pJenisPemabayaran", "TRIPARTITE", res[0].ID_JENIS_PEMBAYARAN);
@@ -185,7 +194,12 @@ function edit_data(id) {
             hideLoadingCss("");
             idTripartite = id;
             console.log("data edit_data :", res);
-
+            $('#pTglJatuhTempo').prop('disabled', false);
+            $('#pTglJatuhTempoH2').prop('disabled', false);
+            if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
+                $('#pTglJatuhTempo').prop('disabled', true);
+                $('#pTglJatuhTempoH2').prop('disabled', true);
+            }
             $("#pTglJatuhTempo").val(res[0].TGL_JATUH_TEMPO);
             $("#pTglJatuhTempoH2").val(res[0].H2_JATUH_TEMPO);
             $("#pNominalSebelumPajak").val(res[0].NOMINAL_SBLM_PAJAK);
