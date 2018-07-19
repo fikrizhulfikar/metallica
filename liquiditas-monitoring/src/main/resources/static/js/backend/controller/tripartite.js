@@ -86,6 +86,10 @@ function openFormNew() {
     setSelectJenisPembayaran("pJenisPemabayaran", "TRIPARTITE", "")
     setSelectBank("pBankCounterparty", "", "PEMBAYAR", "", "TRIPARTITE");
     setSelectCurr("pCurrecny", "", "", "TRIPARTITE");
+    if(newRoleUser[0]== "ROLE_OSS"){
+        $('#pTglJatuhTempo').prop('disabled', true);
+        $('#pTglJatuhTempoH2').prop('disabled', true);
+    }
     $('#edit-tripartite-modal').modal({backdrop: 'static', keyboard: false});
 
 }
