@@ -1562,7 +1562,7 @@ public class ValasService {
      */
     public List<Map<String, Object>> getEmailJatuhTempo() {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("pkg_test_valas")
+                .withCatalogName("PKG_LMETALLICA_NOTIFICATION")
                 .withFunctionName("get_emails");
         try {
             List<Map<String, Object>> out = simpleJdbcCall.executeFunction(ArrayList.class);
@@ -1574,7 +1574,7 @@ public class ValasService {
 
     public List<RekapPembayaran> getRekapPembayaranByEmail(String email) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("pkg_test_valas")
+                .withCatalogName("PKG_LMETALLICA_NOTIFICATION")
                 .withFunctionName("get_rekap_pembayaran_by_email");
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_email", email);
@@ -1682,7 +1682,7 @@ public class ValasService {
 
     public Map<String, Object> getNotificatonDetail(String pIdJenisPembayaran, String pIdVendor) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_TEST_VALAS")
+                .withCatalogName("PKG_LMETALLICA_NOTIFICATION")
                 .withProcedureName("getNotificationDetail");
 
         SqlParameterSource in = new MapSqlParameterSource()
