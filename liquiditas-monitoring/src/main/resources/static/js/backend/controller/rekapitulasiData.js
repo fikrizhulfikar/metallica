@@ -741,6 +741,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                 {
                     "aTargets": [20],
                     "mRender": function (data, type, full) {
+
                         var ret_value;
                             if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
                                 return "-"
@@ -813,6 +814,11 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                                         ret_value = ret_value +
                                             '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DM Pembelanjaan" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +4+ '\')"><i class="fa fa-arrows-alt"></i></button>'+
                                             '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title ="Reverse" onclick ="reverse(\'' +full.ID_VALAS+'\',\'' +3+ '\')"><i class="fa fa-arrow-left"></i></button>';
+                                    }
+                                    else if(newRoleUser[0] == "ROLE_MS_KEUKON"){
+                                        ret_value = ret_value +
+                                            '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MS Keukon" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +8+ '\')"><i class="fa fa-arrows-alt"></i></button>';
+
                                     }
                                     if(newRoleUser[0] == "ROLE_ADMIN"){
                                         ret_value = ret_value +
