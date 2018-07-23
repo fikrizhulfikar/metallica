@@ -110,6 +110,18 @@
         }
     });
 </script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var roleUser = [[${#authentication.getAuthorities().toString()}]];
+    var thp1 = roleUser.replace("[", "");
+    var thp2 = thp1.replace("]", "");
+    var username = [[${#authentication.getPrincipal().getUsername().toString()}]];
+    var topics = [[${#authentication.getPrincipal().getTopics()}]];
+    var newRoleUser = thp2.split(", ");
+    /*]]>*/
+</script>
+<script th:src="@{/static/js/wsock.js}"></script>
+<script src="/static/js/jquery-toast-plugin-1.3.2/dist/jquery.toast.min.js"></script>
 <!--for add add javascript dynamically-->
 <div th:replace="${view} :: scripts-backend"></div>
 </body>

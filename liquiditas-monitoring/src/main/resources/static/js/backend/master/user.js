@@ -24,7 +24,6 @@ function getbyId(id) {
         },
         success: function (res) {
             hideLoadingCss("")
-            console.log("get by id : ", res);
             $("#pUsername").val(res[0].USERNAME);
             $("#pUsername").prop('disabled', true);
             $("#pEmail").val(res[0].EMAIL);
@@ -121,14 +120,12 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pketeranga
         "aoColumnDefs": [
             {
                 "bSortable": false,
-                "aTargets": [0, 1, 2, 3]
-            }
-            ,
+                "aTargets": [0, 1, 2, 3, 4]
+            },
             {
                 "aTargets": [5],
-                "sClass": "datatables_action-center",
+                "sClass": "datatables-action-center",
                 "mRender": function (data, type, full) {
-
                     var ret_value =
                         '<button style="width: 15px !important;" class="btn btn-info" title="Edit Data" onclick="getbyId(\'' + full.USERNAME + '\')"><i class="fa fa-pencil"></i></button>'
                     return ret_value;
