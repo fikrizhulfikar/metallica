@@ -181,7 +181,7 @@ function delete_data(id) {
                 console.log("delete log : ", res)
                 if (res.return == 1) {
                     alert(res.OUT_MSG);
-                    location.reload();
+                    table_rekapitulasi.reload();
                 } else {
                     alert(res.OUT_MSG);
                 }
@@ -1118,7 +1118,7 @@ function upd_status_tracking(idValas , pStatusinvoice){
             console.log("data upd_status :", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
-                location.reload();
+                table_rekapitulasi.reload();
             } else {
                 alert(res.OUT_MSG);
             }
@@ -1173,7 +1173,7 @@ function reverse(idValas, statusInvoice) {
             if (res.return == 1) {
                 alert(res.OUT_MSG);
                 idValas = "";
-                location.reload();
+                table_rekapitulasi.reload();
             } else {
                 alert(res.OUT_MSG);
             }
@@ -1205,8 +1205,8 @@ function update_datas() {
             hideLoadingCss("")
             console.log("data upd_status :", res);
             if (res.return == 1) {
-                alert(res.OUT_MSG);
-                location.reload();
+                alert(res.OUT_MSG)
+                table_rekapitulasi.reload();
             } else {
                 alert(res.OUT_MSG);
             }
@@ -1238,7 +1238,7 @@ function multipleDelete() {
             console.log("data upd_status :", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
-                location.reload();
+                table_rekapitulasi.reload();
             } else {
                 alert(res.OUT_MSG);
             }
@@ -1400,7 +1400,7 @@ function upload_server_xls() {
             console.log("res", res)
             if (res.V_RETURN == 0) {
                 alert("sukses");
-//                location.reload();
+                table_rekapitulasi.reload();
                 search("load");
             } else {
                 var obj = res.return[0];
@@ -1451,7 +1451,7 @@ function multipleUpdate() {
             console.log("data upd_status :", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
-                location.reload();
+                table_rekapitulasi.reload();
             } else {
                 alert(res.OUT_MSG);
             }
