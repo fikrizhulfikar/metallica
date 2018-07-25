@@ -1260,13 +1260,13 @@ function getFilesRekap(pIdValas) {
 
         success: function (data) {
             console.log("get files rekap  : ", data);
-
             $.each(data.data_pembayaran.return, function (index, val) {
-                console.log("jenis file", val.JENIS_FILE);
-                console.log("nama file", val.NAMA_FILE);
                 if (val.JENIS_FILE == 1) {
                     if (val.NAMA_FILE != "" || val.NAMA_FILE != null) {
                         var html = '<a target="_blank" href="/filePath/' + val.NAMA_FILE + '" id="btn-download-tanda-terima-invoice"><i class="fa fa-download"> ' + val.NAMA_FILE + ' </i></a>';
+                        $("#btn-download-tanda-terima-invoice").replaceWith(html);
+                    }else{
+                        var html = '<a id="btn-download-tanda-terima-invoice">-</a>';
                         $("#btn-download-tanda-terima-invoice").replaceWith(html);
                     }
                 }
@@ -1279,6 +1279,9 @@ function getFilesRekap(pIdValas) {
                     if (val.NAMA_FILE != "" || val.NAMA_FILE != null) {
                         var html = '<a target="_blank" href="/filePath/' + val.NAMA_FILE + '" id="btn-download-lembar-verifikasi"><i class="fa fa-download"> ' + val.NAMA_FILE + ' </i></a>';
                         $("#btn-download-lembar-verifikasi").replaceWith(html);
+                    }else {
+                        var html = '<a id="btn-download-lembar-verifikasi">-</a>';
+                        $("#btn-download-lembar-verifikasi").replaceWith(html);
                     }
                 }
                 else {
@@ -1290,6 +1293,9 @@ function getFilesRekap(pIdValas) {
                     if (val.NAMA_FILE != "" || val.NAMA_FILE != null) {
                         var html = '<a target="_blank" href="/filePath/' + val.NAMA_FILE + '" id="btn-download-file-tagihan"><i class="fa fa-download"> ' + val.NAMA_FILE + ' </i></a>';
                         $("#btn-download-file-tagihan").replaceWith(html);
+                    }else {
+                        var html = '<a id="btn-download-file-tagihan">-</a>';
+                        $("#btn-download-file-tagihan").replaceWith(html);
                     }
                 }
                 else {
@@ -1300,6 +1306,9 @@ function getFilesRekap(pIdValas) {
                 if (val.JENIS_FILE == 4) {
                     if (val.NAMA_FILE != "" || val.NAMA_FILE != null) {
                         var html = '<a target="_blank" href="/filePath/' + val.NAMA_FILE + '" id="btn-download-nota-dinas-pembayaran"><i class="fa fa-download"> ' + val.NAMA_FILE + ' </i></a>';
+                        $("#btn-download-nota-dinas-pembayaran").replaceWith(html);
+                    }else {
+                        var html = '<a target="_blank" id="btn-download-nota-dinas-pembayaran">-</a>';
                         $("#btn-download-nota-dinas-pembayaran").replaceWith(html);
                     }
                 }
