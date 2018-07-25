@@ -1362,6 +1362,9 @@ function getFiles(pIdValas) {
                         var html = '<a id="btn-download-tanda-terima-invoice">-</a>';
                         $("#btn-download-tanda-terima-invoice").replaceWith(html);
                     }
+                }else {
+                    var html = '<a id="btn-download-tanda-terima-invoice">-</a>';
+                    $("#btn-download-tanda-terima-invoice").replaceWith(html);
                 }
 
                 if (val.JENIS_FILE == 2) {
@@ -1372,6 +1375,9 @@ function getFiles(pIdValas) {
                         var html = '<a id="btn-download-lembar-verifikasi">-</a>';
                         $("#btn-download-lembar-verifikasi").replaceWith(html);
                     }
+                }else {
+                    var html = '<a id="btn-download-lembar-verifikasi">-</a>';
+                    $("#btn-download-lembar-verifikasi").replaceWith(html);
                 }
 
                 if (val.JENIS_FILE == 3) {
@@ -1382,6 +1388,9 @@ function getFiles(pIdValas) {
                         var html = '<a id="btn-download-file-tagihan">-</a>';
                         $("#btn-download-file-tagihan").replaceWith(html);
                     }
+                }else {
+                    var html = '<a id="btn-download-file-tagihan">-</a>';
+                    $("#btn-download-file-tagihan").replaceWith(html);
                 }
 
                 if (val.JENIS_FILE == 4) {
@@ -1392,6 +1401,9 @@ function getFiles(pIdValas) {
                         var html = '<a id="btn-download-nota-dinas-pembayaran">-</a>';
                         $("#btn-download-nota-dinas-pembayaran").replaceWith(html);
                     }
+                }else {
+                    var html = '<a id="btn-download-nota-dinas-pembayaran">-</a>';
+                    $("#btn-download-nota-dinas-pembayaran").replaceWith(html);
                 }
             });
         },
