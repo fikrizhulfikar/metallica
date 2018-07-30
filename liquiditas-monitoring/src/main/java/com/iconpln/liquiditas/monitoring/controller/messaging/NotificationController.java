@@ -9,6 +9,7 @@ import com.iconpln.liquiditas.monitoring.utils.WebUtils;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,12 +47,13 @@ public class NotificationController {
 //    }
 
     @GetMapping("/get_notifications")
-    public ResponseEntity<List<Notification>> findByTopics(Principal principal) {
+    public ResponseEntity<Map<String, Object>> findByTopics(Principal principal, @RequestParam(value = "start", defaultValue = "1") Integer start, @RequestParam(value = "length", defaultValue = "10") Integer length) {
         UserDetailWrapper wrapper = (UserDetailWrapper) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         String topics = wrapper.getTopics().stream()
                 .map(topic -> topic.trim())
                 .collect(Collectors.joining(","));
-        return new ResponseEntity<>(notificationUtil.findByTopics(WebUtils.getUsernameLogin(), topics), HttpStatus.OK);
+        ResponseEntity<Map<String, Object>> responseEntity = new ResponseEntity<>(notificationUtil.findByTopics(WebUtils.getUsernameLogin(), topics, start, length), HttpStatus.OK);
+        return responseEntity;
     }
 
     @PostMapping("/edit_seen_by_id/{id}")

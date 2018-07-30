@@ -1,6 +1,9 @@
 
 /*<![CDATA[*/
 
+var pageNumber = 1;
+var pageSize = 10;
+
 connect();
 getNotifications();
 
@@ -71,18 +74,20 @@ function showMessageOutput(message) {
 
 
 function getNotifications() {
+    pageNumber = 1;
     $.ajax({
         type: "GET",
-        url: baseUrl + "notification/get_notifications",
+        url: baseUrl + "notification/get_notifications?start="+pageNumber+"&length"+pageSize,
         async: true,
-        success: function(res) {
+        success: function(val) {
+            var res = val.data;
+            pageNumber = 1;
             var drop_down =
                 '<ul id="notification_div" class="dropdown-menu dropdown-menu-right dropdown-menu-lg show" style="width:750px !important;" >\n' +
                 '  <div class="dropdown-header text-center">\n' +
                 '   <strong id="notification_count_title"></strong>\n' +
                 '  </div>\n' +
                 '</ul>\n';
-            var count = 0;
             $("#notification_li").append(drop_down);
             res.forEach(function (data) {
                 var backgroundColor = "";
@@ -113,13 +118,32 @@ function getNotifications() {
                         '  </div>\n' +
                         '</a>\n' +
                         '</li>\n';
-                    count++;
                 }
                 $("#notification_div").append(added);
             });
-            $("#notification_count").html(count);
-            $("#notification_count_title").html('You have ' + count + ' unread message.');
 
+            var more = '<li style="background-color: white">\n' +
+                '<div id="more_id" class="dropdown-item text-center">\n' +
+                '  <div class="message">\n' +
+                '    <div>\n' +
+                '      <small class="text-muted">More</small>\n' +
+                '  </div>\n' +
+                '</div>\n' +
+                '</li>\n';
+
+
+            var element = document.getElementById("more_id");
+            if (element != null) {
+                element.parentNode.removeChild(element);
+            }
+            $("#notification_div").append(more);
+
+            $("#notification_count").html(val.unseen);
+            $("#notification_count_title").html('You have ' + val.unseen + ' unread message.');
+            $("#more_id").click(function(e){
+                moreNotification();
+                e.stopPropagation();
+            });
         }
     });
 
@@ -158,6 +182,70 @@ function showNotifModal(key, additionalInfo) {
             }
         }
     }
+}
+
+function moreNotification() {
+    pageNumber += 1;
+    $.ajax({
+        type: "GET",
+        url: baseUrl + "notification/get_notifications?start="+pageNumber+"&length"+pageSize,
+        async: true,
+        success: function(val) {
+            var res = val.data;
+            res.forEach(function (data) {
+                var backgroundColor = "";
+                var added = "";
+                if (data.seen == true) {
+                    backgroundColor = '<li id="'+data.id+'" style="background-color: white" onclick="showNotifModal(null, \''+data.additionalInfo+'\')">\n';
+                    added += backgroundColor +
+                        '<a href="#" class="dropdown-item">\n' +
+                        '  <div class="message">\n' +
+                        '    <div>\n' +
+                        '      <small class="text-muted" id="notification_title">'+data.title+'</small>\n' +
+                        '      <small class="text-muted float-right mt-1" id="notification_date">'+formatDate(new Date(data.createDate))+'</small>\n' +
+                        '    </div>\n' +
+                        '    <div class="small text-muted text-truncate" id="notification_body">'+data.message+'</div>\n' +
+                        '  </div>\n' +
+                        '</a>\n' +
+                        '</li>\n';
+                } else {
+                    backgroundColor = '<li id="'+data.id+'" style="background-color: #f7f8f9" onclick="showNotifModal(\''+data.id+'\', \''+data.additionalInfo+'\')">\n';
+                    added += backgroundColor +
+                        '<a href="#" class="dropdown-item">\n' +
+                        '  <div class="message">\n' +
+                        '    <div>\n' +
+                        '      <small class="text-muted" id="notification_title"><b>'+data.title+'</b></small>\n' +
+                        '      <small class="text-muted float-right mt-1" id="notification_date"><b>'+formatDate(new Date(data.createDate))+'</b></small>\n' +
+                        '    </div>\n' +
+                        '    <div class="small text-muted text-truncate" id="notification_body"><b>'+data.message+'</b></div>\n' +
+                        '  </div>\n' +
+                        '</a>\n' +
+                        '</li>\n';
+                }
+                $("#notification_div").append(added);
+            });
+            var more = '<li style="background-color: white">\n' +
+                '<div id="more_id" class="dropdown-item text-center">\n' +
+                '  <div class="message">\n' +
+                '    <div>\n' +
+                '      <small class="text-muted">More</small>\n' +
+                '  </div>\n' +
+                '</div>\n' +
+                '</li>\n';
+            var element = document.getElementById("more_id");
+            if (element != null) {
+                element.parentNode.removeChild(element);
+            }
+            $("#notification_div").append(more);
+
+            $("#notification_count").html(val.unseen);
+            $("#notification_count_title").html('You have ' + val.unseen + ' unread message.');
+            $("#more_id").click(function(e){
+                moreNotification();
+                e.stopPropagation();
+            });
+        }
+    });
 }
 
 function showRekapData(id) {

@@ -32,7 +32,7 @@ public class NotificationServiceTest {
     @Test
     public void findByTopics() {
         System.out.println("****************************");
-        List<Notification> notifications = notificationService.findByTopics("admin","P00014,P00015");
+        List<Notification> notifications = notificationService.findByTopics("admin","P00014,P00015", 1, 10);
         System.out.println(notifications);
         System.out.println("****************************");
     }

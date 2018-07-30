@@ -46,8 +46,13 @@ public class NotificationUtil {
         service.editSeenById(username, id);
     }
 
-    public List<Notification> findByTopics(String username, String topics) {
-        return service.findByTopics(username, topics);
+    public Map<String, Object> findByTopics(String username, String topics, int start, int length) {
+        List<Notification> notifications = service.findByTopics(username, topics, start, length);
+        Integer unseenNotification = service.countUnseenNotificationByTopics(username, topics).intValue();
+        Map<String, Object> map = new HashMap<>();
+        map.put("data", notifications);
+        map.put("unseen", unseenNotification);
+        return map;
     }
 
     public Map<String, String> getNotificationDetailByIdValas(String idValas) {
