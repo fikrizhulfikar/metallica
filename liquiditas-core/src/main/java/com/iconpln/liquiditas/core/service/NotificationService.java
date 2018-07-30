@@ -36,13 +36,15 @@ public class NotificationService {
         return result.longValue();
     }
 
-    public ArrayList<Notification> findByTopics(String username, String topics) {
+    public ArrayList<Notification> findByTopics(String username, String topics, int start, int length) {
         SimpleJdbcCall call = new SimpleJdbcCall(jdbcTemplate)
                 .withCatalogName("PKG_LMETALLICA_NOTIFICATION")
                 .withFunctionName("FIND_BY_TOPICS");
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_username", username, OracleTypes.VARCHAR)
-                .addValue("p_topics", topics, OracleTypes.VARCHAR);
+                .addValue("p_topics", topics, OracleTypes.VARCHAR)
+                .addValue("p_start", start, OracleTypes.NUMBER)
+                .addValue("p_length", length, OracleTypes.NUMBER);
         return call.returningResultSet("result", (RowMapper<Notification>) (resultSet, i) -> {
             Notification notification = new Notification();
             notification.setId(resultSet.getLong("ID"));
@@ -56,6 +58,16 @@ public class NotificationService {
             notification.setSeen((isSeen == null || isSeen.equalsIgnoreCase("0"))  ? false : true);
             return notification;
         }).executeFunction(ArrayList.class, in);
+    }
+
+    public BigDecimal countUnseenNotificationByTopics(String username, String topics) {
+        SimpleJdbcCall call = new SimpleJdbcCall(jdbcTemplate)
+                .withCatalogName("PKG_LMETALLICA_NOTIFICATION")
+                .withFunctionName("COUNT_UNSEEN_NOTIF");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_username", username, OracleTypes.VARCHAR)
+                .addValue("p_topics", topics, OracleTypes.VARCHAR);
+        return call.executeFunction(BigDecimal.class, in);
     }
 
     public void editSeenById(String username, Long id) {

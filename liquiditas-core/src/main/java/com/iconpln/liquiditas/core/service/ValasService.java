@@ -1,10 +1,14 @@
 package com.iconpln.liquiditas.core.service;
 
+import com.iconpln.liquiditas.core.domain.Placement;
+import com.iconpln.liquiditas.core.domain.PlacementAwal;
 import com.iconpln.liquiditas.core.domain.RekapPembayaran;
+import com.iconpln.liquiditas.core.domain.SumberPlacement;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.text.DateFormat;
@@ -16,6 +20,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import com.iconpln.liquiditas.core.utils.PlsqlUtils;
 import oracle.jdbc.OracleTypes;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -27,6 +33,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -40,6 +47,9 @@ public class ValasService {
 
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private PlsqlUtils plsqlUtils;
 
     private JdbcTemplate getJdbcTemplate() {
         return new JdbcTemplate(dataSource);
@@ -1270,17 +1280,53 @@ public class ValasService {
         return out;
     }
 
+    public List<SumberPlacement> findSumberPlacement() {
+        return plsqlUtils.function("pkg_dashboard_idr",
+                "get_sumber_placement",
+                "",
+                (resultSet, i) -> {
+                    SumberPlacement sumberPlacement = new SumberPlacement();
+                    sumberPlacement.setBank(resultSet.getString("BANK"));
+                    sumberPlacement.setKmk(resultSet.getBigDecimal("KMK"));
+                    sumberPlacement.setPotensi(resultSet.getBigDecimal("POTENSI"));
+                    sumberPlacement.setReceipt(resultSet.getBigDecimal("RECEIPT"));
+                    sumberPlacement.setSubsidi(resultSet.getBigDecimal("SUBSIDI"));
+                    return sumberPlacement;
+                },
+                new MapSqlParameterSource()
+        );
+    }
+
     public Map<String, Object> getPlacementAwal(String tglAkhir) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("pkg_dashboard_idr")
                 .withFunctionName("get_placement_awal");
 
-        SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("p_tanggal_akhir", tglAkhir);
+        SqlParameterSource in = new MapSqlParameterSource();
+//                .addValue("p_tanggal_akhir", tglAkhir);
         Map<String, Object> out = simpleJdbcCall.execute(in);
         AppUtils.getLogger(this).info("data getPlacementAwal : {}", out);
         return out;
+    }
+
+    public List<PlacementAwal> findPlacementAwal() {
+        return plsqlUtils.function("pkg_dashboard_idr",
+                "get_placement_awal",
+                "",
+                (resultSet, i) -> {
+                    PlacementAwal placementAwal = new PlacementAwal();
+                    placementAwal.setIdJenis(resultSet.getString("ID_JENIS"));
+                    placementAwal.setJenis(resultSet.getString("JENIS"));
+                    placementAwal.setKodeBank(resultSet.getString("KODE_BANK"));
+                    placementAwal.setTanggal(resultSet.getString("TANGGAL"));
+                    placementAwal.setNamaBank(resultSet.getString("NAMA_BANK"));
+                    placementAwal.setSaldoAwal(resultSet.getBigDecimal("SALDO_AWAL"));
+                    placementAwal.setSaldoAkhir(resultSet.getString("SALDO_AKHIR"));
+                    return placementAwal;
+                },
+                new MapSqlParameterSource()
+        );
     }
 
     public Map<String, Object> getListPlacement() throws SQLException {
@@ -1293,6 +1339,27 @@ public class ValasService {
         AppUtils.getLogger(this).info("data getListPlacement : {}", out);
         return out;
     }
+
+    public List<Placement> findPlacement() {
+        return plsqlUtils.function("pkg_dashboard_idr",
+                "get_list_placement",
+                "",
+                (resultSet, i) -> {
+                    Placement placement = new Placement();
+                    placement.setIdJenis(resultSet.getString("ID_JENIS"));
+                    placement.setJenis(resultSet.getString("JENIS"));
+                    placement.setTanggal(resultSet.getString("TANGGAL"));
+                    placement.setNamaBank(resultSet.getString("NAMA_BANK"));
+                    placement.setKodeBank(resultSet.getString("KODE_BANK"));
+                    placement.setReceipt(resultSet.getString("RECEIPT"));
+                    placement.setKmk(resultSet.getString("KMK"));
+                    placement.setSubsidi(resultSet.getString("SUBSIDI"));
+                    return placement;
+                },
+                new MapSqlParameterSource()
+        );
+    }
+
 
     public Map<String, Object> getDetilSumberdana(String pJenis, String pJenisSumberDana) throws SQLException {
 
