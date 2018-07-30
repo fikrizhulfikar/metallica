@@ -11,6 +11,7 @@ var tempVendor = "";
 var tempUnit = "";
 var tempTableSearch = "";
 
+var checkedArray = new Array();
 var srcTglAwal = null;
 var srcTglAkhir = null;
 $(document).ready(function () {
@@ -454,7 +455,6 @@ function getAllData() {
         },
         success: function (res) {
             allData = res;
-//            console.log(allData)
         },
         error: function (res) {
             console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
@@ -900,71 +900,77 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                 {
                     "aTargets": [21],
                     "mRender": function (data, type, full) {
-                        var ret_value =
-                            '';
+                        var value = new Object();
+                        var ret_value = '';
 
                         if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
                             return ""
                         } else {
                             if (full.STATUS_TRACKING == "INPUT DATA") {
-                                ret_value ='<input class="cb" type="checkbox" data-value=\'{"2" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                value = '{"2":"'+full.ID_VALAS+'"}';
 
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY USER") {
 
                                 if(newRoleUser[0] == "ROLE_DM_ENERGI" || newRoleUser[0] == "ROLE_DM_KEUKON_APLN" || newRoleUser[0] == "ROLE_DM_PENGUSAHAAN" || newRoleUser[0] == "ROLE_ADMIN"){
-                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"3" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                    value = '{"3":"'+full.ID_VALAS+'"}';
                                 }else {
-                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                    value = '{"x":"'+full.ID_VALAS+'"}';
                                 }
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY DM" && full.UPDATE_BY == "dmkeukonap" || full.UPDATE_BY == "dmkeukonslap" ){
 
                                 if(newRoleUser[0] == "ROLE_MS_KEUKON" || newRoleUser[0] == "ROLE_ADMIN"){
-                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"8" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                    value = '{"8":"'+full.ID_VALAS+'"}';
                                 }else {
-                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                    value = '{"x":"'+full.ID_VALAS+'"}';
                                 }
                             }
                             else if (full.UPDATE_BY == "dmkeukonslap" && full.STATUS_TRACKING == "VERIFIED BY DM"
                                 || full.UPDATE_BY !== "dmkeukonap" && full.STATUS_TRACKING == "VERIFIED BY DM"
                                 || full.STATUS_TRACKING == "VERIFIED BY MS KEUKON"){
                                 if(newRoleUser[0] == "ROLE_DM_PEMBELANJAAN"|| newRoleUser[0] == "ROLE_ADMIN"){
-                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"4" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                    value = '{"4":"'+full.ID_VALAS+'"}';
                                 }else {
-                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                    value = '{"x":"'+full.ID_VALAS+'"}';
                                 }
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY DM PEMBELANJAAN"){
 
                                 if(newRoleUser[0] == "ROLE_MS_PEMBELANJAAN" || newRoleUser[0] == "ROLE_ADMIN"){
-                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"5" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                    value = '{"5":"'+full.ID_VALAS+'"}';
                                 }else {
-                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                    value = '{"x":"'+full.ID_VALAS+'"}';
                                 }
                             }
                             else if (full.STATUS_TRACKING == "APPROVE BY MS"){
                                 console.log(newRoleUser[0]);
                                 if(newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "ROLE_KADIV"){
-                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"10" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                    value = '{"10":"'+full.ID_VALAS+'"}';
                                 }else {
-                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                    value = '{"x":"'+full.ID_VALAS+'"}';
                                 }
                             }
                             else if (full.STATUS_TRACKING == "APPROVE BY KADIV"){
                                 var role = newRoleUser[0];
 
                                 if(role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN"){
-                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"7" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                    value = '{"7":"'+full.ID_VALAS+'"}';
                                 }else {
-                                    ret_value = '<input class="cb" type="checkbox" data-value=\'{"x" : "'+full.ID_VALAS+'"}\' id="cbcheckbox">';
+                                    value = '{"x":"'+full.ID_VALAS+'"}';
                                 }
                             }
                             else {
-                                ret_value = '<input class="cb" type="checkbox" data-value=\'{"0" : "'+full.ID_VALAS+'"}\' id="cbcheckbox" enabled="false">';
+                                value = '{"0":"'+full.ID_VALAS+'"}';
                             }
                         }
-                        return ret_value;
+
+                        for (x=0; x<checkedArray.length;x++){
+                            if(JSON.stringify(checkedArray[x]) === value){
+                                return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' onchange='checkArray(this)' id='cbcheckbox' enabled='false' checked>";
+                            }
+                        }
+                        return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' onchange='checkArray(this)' id='cbcheckbox' enabled='false'>";
                     }
 
                 }
@@ -1081,6 +1087,8 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
         $(this).append(html);
     });
 
+
+
     initCbparent();
 
   /*  $("#table-rekapitulasi").on('change',"input[type='checkbox']",function(e){
@@ -1091,6 +1099,20 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
             $('#btn-verified').hide();
         }
     });*/
+}
+
+function checkArray(e) {
+    if($(e).is(":checked")) {
+        checkedArray.push($(e).data("value"));
+    }
+    else {
+        for (x = 0; x < checkedArray.length; x++){
+            if(checkedArray[x] == $(e).data("value")){
+                checkedArray.splice(x, 1);
+            }
+        }
+    }
+
 }
 
 function upload_file(pIdValas) {
@@ -1186,19 +1208,12 @@ function reverse(idValas, statusInvoice) {
 }
 
 function update_datas() {
-    var id= $("#table-rekapitulasi input[type=checkbox]:checked").map(function() {
-        return $(this).data("value");
-    }).get();
-    var obj = new Object();
-    obj = id;
-    console.log("obj", obj);
-    console.log("id",id.toString());
     $.ajax({
         url: baseUrl + "api_operator/pembayaran/multi_upd_status",
         dataType: 'JSON',
         type: "POST",
         data: {
-            pData: JSON.stringify(obj),
+            pData: JSON.stringify(checkedArray),
             // pStatusInvoice: statusInvoice,
         },
         success: function (res) {
@@ -1206,7 +1221,7 @@ function update_datas() {
             console.log("data upd_status :", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG)
-                table_rekapitulasi.reload();
+                window.location.reload(true);
             } else {
                 alert(res.OUT_MSG);
             }
@@ -1218,27 +1233,19 @@ function update_datas() {
 }
 
 function multipleDelete() {
-    var id= $("#table-rekapitulasi input[type=checkbox]:checked").map(function() {
-        return $(this).data("value");
-    }).get();
-    var obj = new Object();
-    obj = id;
-    console.log("obj", obj);
-    console.log("id",id.toString());
     $.ajax({
         url: baseUrl + "api_operator/pembayaran/multi_del_data",
         dataType: 'JSON',
         type: "POST",
         data: {
-            pData: JSON.stringify(obj),
-            // pStatusInvoice: statusInvoice,
+            pData: JSON.stringify(checkedArray)
         },
         success: function (res) {
             hideLoadingCss("")
             console.log("data upd_status :", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
-                table_rekapitulasi.reload();
+                window.location.reload(true);
             } else {
                 alert(res.OUT_MSG);
             }
@@ -1445,19 +1452,12 @@ function openMultipleEditForm(){
 }
 
 function multipleUpdate() {
-    var id= $("#table-rekapitulasi input[type=checkbox]:checked").map(function() {
-        return $(this).data("value");
-    }).get();
-    var obj = new Object();
-    obj = id;
-    console.log("obj", obj);
-    console.log("id bank pembayar ",$("#pNewBankPembayar").val());
     $.ajax({
         url: baseUrl + "api_operator/pembayaran/multiple_edit",
         dataType: 'JSON',
         type: "POST",
         data: {
-            pData: JSON.stringify(obj),
+            pData: JSON.stringify(checkedArray),
             pTglJatuhTempo: $("#pNewTglJatuhTempo").val(),
             pBankPembayar: $("#pNewBankPembayar").val()
         },
@@ -1466,7 +1466,7 @@ function multipleUpdate() {
             console.log("data upd_status :", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
-                table_rekapitulasi.reload();
+                window.location.reload(true);
             } else {
                 alert(res.OUT_MSG);
             }
