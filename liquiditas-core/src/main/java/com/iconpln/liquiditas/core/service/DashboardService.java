@@ -334,7 +334,7 @@ public class DashboardService {
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("in_nourut", cashFlow.getNoUrut(), OracleTypes.NUMBER)
                 .addValue("in_tanggal", cashFlow.getTanggal(), OracleTypes.VARCHAR)
-                .addValue("in_nilai", cashFlow.getNilai(), OracleTypes.NUMBER);
+                .addValue("in_nilai", cashFlow.getNilai(), OracleTypes.VARCHAR);
         Map<String, Object> out = simpleJdbcCall.execute(in);
         AppUtils.getLogger(this).info("data insCashFlow : {}", out);
         return out;

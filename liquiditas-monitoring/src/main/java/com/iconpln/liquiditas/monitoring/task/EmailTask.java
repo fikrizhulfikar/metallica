@@ -2,6 +2,7 @@ package com.iconpln.liquiditas.monitoring.task;
 
 import com.iconpln.liquiditas.core.domain.RekapPembayaran;
 import com.iconpln.liquiditas.core.service.ValasService;
+import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.monitoring.utils.EmailUtil;
 import com.iconpln.liquiditas.monitoring.utils.NamedMonth;
 import java.text.SimpleDateFormat;
@@ -30,7 +31,7 @@ public class EmailTask {
     @Autowired
     private ValasService valasService;
 
-    @Scheduled(cron = "0 0 7 * * ?")
+    @Scheduled(cron = "0 0/1 * * * ?")
     public void send() {
         Date now = new Date();
         String day = dayFormat.format(now);
@@ -45,8 +46,10 @@ public class EmailTask {
                 .collect(Collectors.toList());
             emails.stream().forEach(email -> {
             List<RekapPembayaran> rekapPembayarans = valasService.getRekapPembayaranByEmail(email);
+            rekapPembayarans.forEach(System.out::println);
             emailService.sendEmailWithAttachment(email, body, "Rekapitulasi Pembayaran", "REKAPITULASI_PEMBAYARAN.xls", rekapPembayarans);
         });
+        AppUtils.getLogger(this).debug("Send email.");
     }
 
 }

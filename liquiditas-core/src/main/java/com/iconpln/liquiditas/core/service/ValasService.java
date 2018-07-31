@@ -5,39 +5,27 @@ import com.iconpln.liquiditas.core.domain.PlacementAwal;
 import com.iconpln.liquiditas.core.domain.RekapPembayaran;
 import com.iconpln.liquiditas.core.domain.SumberPlacement;
 import com.iconpln.liquiditas.core.utils.AppUtils;
+import com.iconpln.liquiditas.core.utils.PlsqlUtils;
+import oracle.jdbc.OracleTypes;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.tomcat.jdbc.pool.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.stereotype.Repository;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import com.iconpln.liquiditas.core.utils.PlsqlUtils;
-import oracle.jdbc.OracleTypes;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.tomcat.jdbc.pool.DataSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcCall;
-import org.springframework.stereotype.Repository;
+import java.util.*;
 
 /**
  * Created by israjhaliri on 8/1/17.
@@ -1635,6 +1623,7 @@ public class ValasService {
             List<Map<String, Object>> out = simpleJdbcCall.executeFunction(ArrayList.class);
             return out;
         } catch (Exception e) {
+            AppUtils.getLogger(this).debug(e.getMessage());
             return new ArrayList<>();
         }
     }
@@ -1644,36 +1633,76 @@ public class ValasService {
                 .withCatalogName("PKG_LMETALLICA_NOTIFICATION")
                 .withFunctionName("get_rekap_pembayaran_by_email");
         SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("p_email", email);
+                .addValue("p_email", email, OracleTypes.VARCHAR);
+//        simpleJdbcCall.getJdbcTemplate().execute("alter session set NLS_NUMERIC_CHARACTERS = '.,'");
         try {
             List<Map<String, Object>> out = simpleJdbcCall.executeFunction(ArrayList.class, in);
             List<RekapPembayaran> rekapPembayarans = new ArrayList<>();
             out.stream().forEach(data -> {
                 RekapPembayaran rekapPembayaran = new RekapPembayaran();
 
-                rekapPembayaran.setIdVendor(data.get("ID_VENDOR").toString());
-                rekapPembayaran.setIdJenisPembayaran(data.get("ID_JENIS_PEMBAYARAN").toString());
-                rekapPembayaran.setIdUnit(data.get("ID_UNIT").toString());
-                rekapPembayaran.setCurrency(data.get("CURRENCY").toString());
-                rekapPembayaran.setTotalTagihan(new BigDecimal(data.get("TOTAL_TAGIHAN").toString()));
-                rekapPembayaran.setTglJatuhTempo(data.get("TGL_JATUH_TEMPO").toString());
-                rekapPembayaran.setKodeBankTujuan(data.get("KODE_BANK_TUJUAN").toString());
-                rekapPembayaran.setKodeBankPembayar(data.get("KODE_BANK_PEMBAYAR").toString());
-                rekapPembayaran.setNoTagihan(data.get("NO_TAGIHAN").toString());
-                rekapPembayaran.setTglTagihan(data.get("TGL_TAGIHAN").toString());
-                rekapPembayaran.setNoNotDin(data.get("NO_NOTDIN").toString());
-                rekapPembayaran.setTglNotDin(data.get("TGL_NOTDIN").toString());
-                rekapPembayaran.setStatusValas(data.get("STATUS_VALAS").toString());
-                rekapPembayaran.setCountdown(data.get("COUNT_DOWN").toString());
-                rekapPembayaran.setDeskripsi(data.get("DESKRIPSI").toString());
-                rekapPembayaran.setTipeTransaksi(data.get("TIPE_TRANSAKSI").toString());
-                rekapPembayaran.setTglTerimaInvoice(data.get("TGL_TERIMA_INVOICE").toString());
-                rekapPembayaran.setTglLunas(data.get("TGL_LUNAS").toString());
-                rekapPembayaran.setStatusTracking(data.get("STATUS_TRACKING").toString());
+                if (data.get("ID_VENDOR") != null) {
+                    rekapPembayaran.setIdVendor(data.get("ID_VENDOR").toString());
+                }
+                if (data.get("ID_JENIS_PEMBAYARAN") != null) {
+                    rekapPembayaran.setIdJenisPembayaran(data.get("ID_JENIS_PEMBAYARAN").toString());
+                }
+                if (data.get("ID_UNIT") != null) {
+                    rekapPembayaran.setIdUnit(data.get("ID_UNIT").toString());
+                }
+                if (data.get("CURRENCY") != null) {
+                    rekapPembayaran.setCurrency(data.get("CURRENCY").toString());
+                }
+                if (data.get("TOTAL_TAGIHAN") != null) {
+                    rekapPembayaran.setTotalTagihan(new BigDecimal(data.get("TOTAL_TAGIHAN").toString()));
+                }
+                if (data.get("TGL_JATUH_TEMPO") != null) {
+                    rekapPembayaran.setTglJatuhTempo(data.get("TGL_JATUH_TEMPO").toString());
+                }
+                if (data.get("KODE_BANK_TUJUAN") != null) {
+                    rekapPembayaran.setKodeBankTujuan(data.get("KODE_BANK_TUJUAN").toString());
+                }
+                if (data.get("KODE_BANK_PEMBAYAR") != null) {
+                    rekapPembayaran.setKodeBankPembayar(data.get("KODE_BANK_PEMBAYAR").toString());
+                }
+                if (data.get("NO_TAGIHAN") != null) {
+                    rekapPembayaran.setNoTagihan(data.get("NO_TAGIHAN").toString());
+                }
+                if (data.get("TGL_TAGIHAN") != null) {
+                    rekapPembayaran.setTglTagihan(data.get("TGL_TAGIHAN").toString());
+                }
+                if (data.get("NO_NOTDIN") != null) {
+                    rekapPembayaran.setNoNotDin(data.get("NO_NOTDIN").toString());
+                }
+                if (data.get("TGL_NOTDIN") != null) {
+                    rekapPembayaran.setTglNotDin(data.get("TGL_NOTDIN").toString());
+                }
+                if (data.get("STATUS_VALAS") != null) {
+                    rekapPembayaran.setStatusValas(data.get("STATUS_VALAS").toString());
+                }
+                if (data.get("COUNT_DOWN") != null) {
+                    rekapPembayaran.setCountdown(data.get("COUNT_DOWN").toString());
+                }
+                if (data.get("DESKRIPSI") != null) {
+                    rekapPembayaran.setDeskripsi(data.get("DESKRIPSI").toString());
+                }
+                if (data.get("TIPE_TRANSAKSI") != null) {
+                    rekapPembayaran.setTipeTransaksi(data.get("TIPE_TRANSAKSI").toString());
+                }
+                if (data.get("TGL_TERIMA_INVOICE") != null) {
+                    rekapPembayaran.setTglTerimaInvoice(data.get("TGL_TERIMA_INVOICE").toString());
+                }
+                if (data.get("TGL_LUNAS") != null) {
+                    rekapPembayaran.setTglLunas(data.get("TGL_LUNAS").toString());
+                }
+                if (data.get("STATUS_TRACKING") != null) {
+                    rekapPembayaran.setStatusTracking(data.get("STATUS_TRACKING").toString());
+                }
                 rekapPembayarans.add(rekapPembayaran);
             });
             return rekapPembayarans;
         } catch (Exception e) {
+            AppUtils.getLogger(this).debug(e.getMessage());
             return new ArrayList<>();
         }
     }

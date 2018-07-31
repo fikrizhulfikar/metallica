@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+
+import com.iconpln.liquiditas.core.utils.AppUtils;
 import org.apache.commons.codec.CharEncoding;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -56,7 +58,7 @@ public class EmailUtil {
         try {
             helper = new MimeMessageHelper(message, true, CharEncoding.UTF_8);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            AppUtils.getLogger(this).debug(e.getMessage());
         }
         try {
             helper.setFrom(from);
@@ -74,9 +76,9 @@ public class EmailUtil {
             helper.addAttachment(fileName, streamSource);
             javaMailSender.send(message);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            AppUtils.getLogger(this).debug(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            AppUtils.getLogger(this).debug(e.getMessage());
         }
     }
 

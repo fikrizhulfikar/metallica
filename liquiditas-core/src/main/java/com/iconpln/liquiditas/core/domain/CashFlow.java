@@ -4,7 +4,7 @@ public class CashFlow {
 
     private int noUrut;
     private String tanggal;
-    private double nilai;
+    private String nilai;
 
     public int getNoUrut() {
         return noUrut;
@@ -22,11 +22,11 @@ public class CashFlow {
         this.tanggal = tanggal;
     }
 
-    public double getNilai() {
+    public String getNilai() {
         return nilai;
     }
 
-    public void setNilai(double nilai) {
+    public void setNilai(String nilai) {
         this.nilai = nilai;
     }
 
