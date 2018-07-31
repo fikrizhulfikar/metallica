@@ -364,7 +364,7 @@ function ins_data() {
                 table_trepartite.reload();
                 search("load");
                 $('#edit-tripartite-modal').modal('hide');
-                window.location.reload(true);
+                table_rekapitulasi.reload();
             } else {
                 alert(res.OUT_MSG);
             }
@@ -1499,7 +1499,7 @@ function update_status() {
             var result = res.return.split(";")[0];
             if (result == 1 || result == '1') {
                 alert(res.OUT_MSG);
-                window.location.reload(true);
+                table_rekapitulasi.reload();
             } else {
                 alert(res.OUT_MSG);
             }

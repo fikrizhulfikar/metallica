@@ -327,7 +327,7 @@ function ins_data() {
                 alert(res.OUT_MSG);
                 search("load");
                 $('#edit-rekap-modal').modal('hide');
-                window.location.reload(true);
+                table_rekapitulasi.reload();
             } else {
                 alert(res.OUT_MSG);
             }
@@ -418,7 +418,7 @@ function update_status() {
             var result = res.return.split(";")[0];
             if (result == 1 || result == '1') {
                 alert(res.OUT_MSG);
-                window.location.reload(true);
+                table_rekapitulasi.reload();
             } else {
                 alert(res.OUT_MSG);
             }
@@ -1221,7 +1221,7 @@ function update_datas() {
             console.log("data upd_status :", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG)
-                window.location.reload(true);
+                table_rekapitulasi.reload();
             } else {
                 alert(res.OUT_MSG);
             }
@@ -1245,7 +1245,7 @@ function multipleDelete() {
             console.log("data upd_status :", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
-                window.location.reload(true);
+                table_rekapitulasi.reload();
             } else {
                 alert(res.OUT_MSG);
             }
@@ -1466,7 +1466,7 @@ function multipleUpdate() {
             console.log("data upd_status :", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
-                window.location.reload(true);
+                table_rekapitulasi.reload();
             } else {
                 alert(res.OUT_MSG);
             }
