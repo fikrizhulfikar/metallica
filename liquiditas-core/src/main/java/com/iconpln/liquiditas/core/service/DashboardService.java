@@ -316,8 +316,8 @@ public class DashboardService {
                     rencanaVsRealisasiIdr.setOther(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("OTHER")));
                     rencanaVsRealisasiIdr.setJatuhTempo(resultSet.getDate("JATUH_TEMPO").getTime());
                     rencanaVsRealisasiIdr.setJenisPembayaran(resultSet.getString("JENIS_PEMBAYARAN"));
-                    rencanaVsRealisasiIdr.setStatus("STATUS");
-                    rencanaVsRealisasiIdr.setStausValas("STATUS_VALAS");
+                    rencanaVsRealisasiIdr.setStatus(resultSet.getString("STATUS"));
+                    rencanaVsRealisasiIdr.setStausValas(resultSet.getString("STATUS_VALAS"));
                     return rencanaVsRealisasiIdr;
                 },
         new MapSqlParameterSource());
