@@ -2,7 +2,10 @@ package com.iconpln.liquiditas.core.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,6 +19,17 @@ public class AppUtils {
     private static class AppHolder {
 
         private static final AppUtils INSTANCE = new AppUtils();
+    }
+
+    private final DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+    private final DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+    public AppUtils() {
+//        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setCurrencySymbol("");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
     }
 
     public static AppUtils getInstance() {
@@ -66,6 +80,10 @@ public class AppUtils {
         } else {
             return String.format("%10.2f", number); // dj_segfault
         }
+    }
+
+    public String formatDecimalCurrency(BigDecimal decimal) {
+        return kursIndonesia.format(decimal);
     }
 
     public static String getDateTillSecondTrim(){

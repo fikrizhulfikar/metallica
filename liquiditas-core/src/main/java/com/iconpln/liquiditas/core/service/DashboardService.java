@@ -1,18 +1,26 @@
 package com.iconpln.liquiditas.core.service;
 
 import com.iconpln.liquiditas.core.domain.CashFlow;
+import com.iconpln.liquiditas.core.domain.RencanaVsRealisasiIdr;
 import com.iconpln.liquiditas.core.utils.AppUtils;
+
+import java.sql.ResultSet;
 import java.util.Date;
+
+import com.iconpln.liquiditas.core.utils.PlsqlUtils;
 import oracle.jdbc.OracleTypes;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +28,9 @@ import java.util.Map;
  */
 @Repository
 public class DashboardService {
+
+    @Autowired
+    private PlsqlUtils plsqlUtils;
 
     @Autowired
     private DataSource dataSource;
@@ -293,14 +304,26 @@ public class DashboardService {
     }
 
     public Map<String, Object> getRencanaVsRealisasiIdr() {
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("pkg_dashboard_idr")
-                .withFunctionName("get_rencana_vs_realisasi");
-
-        SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("out_data", OracleTypes.CURSOR);
-        Map<String, Object> out = simpleJdbcCall.execute(in);
-        out.put("tglcetak", new Date());
+        List<RencanaVsRealisasiIdr> result = plsqlUtils.function("pkg_dashboard_idr",
+                "get_rencana_vs_realisasi",
+                "out_data",
+                (resultSet, i) -> {
+                    RencanaVsRealisasiIdr rencanaVsRealisasiIdr = new RencanaVsRealisasiIdr();
+                    rencanaVsRealisasiIdr.setIdr(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("IDR")));
+                    rencanaVsRealisasiIdr.setEur(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("EUR")));
+                    rencanaVsRealisasiIdr.setJpy(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("JPY")));
+                    rencanaVsRealisasiIdr.setUsd(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("USD")));
+                    rencanaVsRealisasiIdr.setOther(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("OTHER")));
+                    rencanaVsRealisasiIdr.setJatuhTempo(resultSet.getDate("JATUH_TEMPO").getTime());
+                    rencanaVsRealisasiIdr.setJenisPembayaran(resultSet.getString("JENIS_PEMBAYARAN"));
+                    rencanaVsRealisasiIdr.setStatus("STATUS");
+                    rencanaVsRealisasiIdr.setStausValas("STATUS_VALAS");
+                    return rencanaVsRealisasiIdr;
+                },
+        new MapSqlParameterSource());
+        Map<String, Object> out = new HashMap<>();
+        out.put("return", result);
+        out.put("tglcetak", new Date().getTime());
         AppUtils.getLogger(this).info("data getRencanaVsRealisasi : {}", out);
         return out;
     }

@@ -23,6 +23,7 @@ public class PlsqlUtils {
     }
 
     public <T> List<T> function(String packageName, String functionName, String parameterName, RowMapper<T> rowMapper, SqlParameterSource parameterSource) {
+        jdbcTemplate.execute("alter session set NLS_NUMERIC_CHARACTERS = '.,'");
         return new SimpleJdbcCall(jdbcTemplate)
                 .withCatalogName(packageName)
                 .withFunctionName(functionName)
