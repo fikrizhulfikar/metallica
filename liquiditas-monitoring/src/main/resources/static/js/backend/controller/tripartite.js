@@ -361,10 +361,9 @@ function ins_data() {
             var result = res.return.split(";")[0];
             if (result == 1 || result == '1') {
                 alert(res.OUT_MSG);
-                table_trepartite.reload();
+                table_trepartite.ajax.reload();
                 search("load");
                 $('#edit-tripartite-modal').modal('hide');
-                table_rekapitulasi.reload();
             } else {
                 alert(res.OUT_MSG);
             }
@@ -1215,7 +1214,7 @@ function reverse(idTripartite, statusInvoice) {
             if (res.return == 1) {
                 alert(res.OUT_MSG);
                 idValas = "";
-                table_trepartite.reload();
+                table_trepartite.ajax.reload();
             } else {
                 alert(res.OUT_MSG);
             }
@@ -1241,7 +1240,7 @@ function update_datas() {
             console.log("data upd_status :", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
-                table_trepartite.reload();
+                table_trepartite.ajax.reload();
             } else {
                 alert(res.OUT_MSG);
             }
@@ -1265,7 +1264,7 @@ function delete_datas() {
             console.log("data upd_status :", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
-                table_trepartite.reload();
+                table_trepartite.ajax.reload();
             } else {
                 alert(res.OUT_MSG);
             }
@@ -1301,7 +1300,7 @@ function upd_status_tracking(idTripartite, pStatusinvoice) {
             console.log("data upd_status :", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
-                table_trepartite.reload();
+                table_trepartite.ajax.reload();
             } else {
                 alert(res.OUT_MSG);
             }
@@ -1499,7 +1498,7 @@ function update_status() {
             var result = res.return.split(";")[0];
             if (result == 1 || result == '1') {
                 alert(res.OUT_MSG);
-                table_rekapitulasi.reload();
+                table_trepartite.ajax.reload();
             } else {
                 alert(res.OUT_MSG);
             }
@@ -1540,7 +1539,7 @@ function upload_server_xls(jenisFile) {
             console.log("res", res);
             if (res.V_RETURN == 0) {
                 alert("sukses");
-                table_trepartite.reload();
+                table_trepartite.ajax.reload();
                 search("load");
             } else {
                 var obj = res.return[0];
@@ -1584,7 +1583,7 @@ function multipleUpdate() {
             console.log("data upd_status :", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
-                table_trepartite.reload();
+                table_trepartite.ajax.reload();
             } else {
                 alert(res.OUT_MSG);
             }
