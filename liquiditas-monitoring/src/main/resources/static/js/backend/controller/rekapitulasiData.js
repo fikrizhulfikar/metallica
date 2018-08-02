@@ -80,7 +80,7 @@ function duplicate_data(id) {
         success: function (res) {
             hideLoadingCss("")
             console.log("data duplicate :", res);
-
+            idValas = "";
             $("#pTglJatuhTempo").val("");
             $("#pNilaiTagihan").val("");
             $("#pNoTagihan").val("");

@@ -143,7 +143,7 @@ function duplicate_data(id) {
         success: function (res) {
             hideLoadingCss("");
             console.log("data duplicate :", res);
-
+            idTripartite = "";
             $("#pTglJatuhTempo").val(res[0].TGL_JATUH_TEMPO);
             $("#pTglJatuhTempoH2").val(res[0].H2_JATUH_TEMPO);
             $("#pNominalSebelumPajak").val(res[0].NOMINAL_SBLM_PAJAK);
