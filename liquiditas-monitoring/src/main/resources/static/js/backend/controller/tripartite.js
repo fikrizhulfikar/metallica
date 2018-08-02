@@ -9,6 +9,8 @@ var tempVendor;
 var tempTableSearch = "";
 
 var checkedArray = new Array();
+var cbParentArray = new Array();
+
 var srcTglAwal = null;
 var srcTglAkhir = null;
 $(document).ready(function () {
@@ -1125,6 +1127,18 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
             }
         },
         "drawCallback": function (settings) {
+
+            var currentPageNumber = this.api().page.info().page;
+            for (x=0;x<cbParentArray.length;x++){
+                if(cbParentArray[x] == currentPageNumber){
+                    $("#cbparent").prop('checked', true);
+                    break;
+                }
+                else{
+                    $("#cbparent").prop('checked', false);
+                }
+            }
+
             // $('th').removeClass('sorting_asc');
             $('th').removeClass('datatables_action');
             $('th').addClass('th-middle');
@@ -1464,17 +1478,39 @@ function upload_server(jenisFile) {
 }
 
 function checkArray(e) {
+    var isNew= true;
     if($(e).is(":checked")) {
-        checkedArray.push($(e).data("value"));
+        if(checkedArray.length == 0) {
+            checkedArray.push($(e).data("value"));
+        }else {
+            for (x = 0; x < checkedArray.length; x++){
+                var valArr = JSON.stringify(checkedArray[x]);
+                var valCb = JSON.stringify($(e).data("value"));
+                if(valArr == valCb){
+                    isNew=false;
+                    break;
+                }
+            }
+            if(isNew == true){
+                checkedArray.push($(e).data("value"));
+            }
+        }
     }
     else {
+        var total = $("#table-trepartite input[type=checkbox]:checked").map(function () {
+            return $(this).data("value");
+        }).get().length;
+        if(total == 0){
+            $("#cbparent").prop('checked', false);
+        }
         for (x = 0; x < checkedArray.length; x++){
-            if(checkedArray[x] == $(e).data("value")){
+            var valArr = JSON.stringify(checkedArray[x]);
+            var valCb = JSON.stringify($(e).data("value"));
+            if(valArr == valCb){
                 checkedArray.splice(x, 1);
             }
         }
     }
-
 }
 
 function show_modal(id) {
@@ -1558,10 +1594,22 @@ function  initCbparent() {
     $('#forcbparent').empty();
     $('#forcbparent').append("<input type=\"checkbox\" id='cbparent'> ");
     $("#cbparent").click(function(){
-        $('input:checkbox').not(this).prop('checked', this.checked);
+        var pageNumber = table_trepartite.page.info().page;
+        if($(this).is(":checked")) {
+            $('input:checkbox').not(this).prop('checked', this.checked).change();
+            cbParentArray.push(pageNumber);
+        }
+        else {
+            $('input:checkbox').not(this).prop('checked', this.checked).change();
+            for (x = 0; x < cbParentArray.length; x++) {
+                if (cbParentArray[x] == pageNumber) {
+                    cbParentArray.splice(x, 1);
+                }
+            }
+        }
+        console.log(checkedArray);
     });
 }
-
 function openMultipleEditForm(){
     setSelectBank("pNewBankCounterparty", "", "PEMBAYAR", "", "REKAP");
     $('#pNewTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
