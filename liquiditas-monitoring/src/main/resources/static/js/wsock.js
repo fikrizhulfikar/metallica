@@ -4,8 +4,13 @@
 var pageNumber = 1;
 var pageSize = 10;
 
-connect();
-getNotifications();
+$(function () {
+    connect();
+    getNotifications();
+    $("#notification_li").click(function () {
+        flagSeen();
+    });
+});
 
 function connect() {
     sockJsProtocols = ["xhr-streaming", "xhr-polling"];
@@ -162,6 +167,23 @@ function editSeenById(key) {
             $("#notification_count").html(count);
             $("#notification_count_title").html('You have ' + count + ' unread message.');
             $('#'+key+'').prop('onclick',null).off('click');
+        }
+    });
+}
+
+function flagSeen() {
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "notification/flag_seen",
+        async: true,
+        headers: {
+            Accept: "application/json; charset=utf-8",
+        },
+        success: function() {
+            $("#notification_count").html('0');
+        },
+        error: function (e) {
+            console.log(e);
         }
     });
 }

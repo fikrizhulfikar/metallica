@@ -31,7 +31,12 @@ public class ValasServiceTest {
 
     @Test
     public void test() {
-        System.out.println(dashboardService.getCashFlow());
+        try {
+            Map<String, Object> result = service.updStatus("REKAP/20180724-000000513", "2", "", "admin");
+            System.out.println(result);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

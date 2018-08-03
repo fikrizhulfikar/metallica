@@ -62,4 +62,10 @@ public class NotificationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PostMapping("/flag_seen")
+    public ResponseEntity<String> flagSeen() {
+        notificationUtil.flagSeen(WebUtils.getUsernameLogin());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
