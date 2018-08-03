@@ -329,14 +329,29 @@ public class DashboardService {
     }
 
     public Map<String, Object> getRencanaVsRealisasiIdrByTgl(String tglPencarian) {
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("pkg_dashboard_idr")
-                .withFunctionName("get_rencana_realisasi_by_date");
-        SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("p_tanggal", tglPencarian);
-        Map<String, Object> out = simpleJdbcCall.execute(in);
-        out.put("tglcetak", new Date());
-        AppUtils.getLogger(this).info("data getRencanaVsRealisasiByTgl : {}", out);
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("p_tanggal", tglPencarian);
+        List<RencanaVsRealisasiIdr> result = plsqlUtils.function("pkg_dashboard_idr",
+                "get_rencana_realisasi_by_date",
+                "out_data",
+                (resultSet, i) -> {
+                    RencanaVsRealisasiIdr rencanaVsRealisasiIdr = new RencanaVsRealisasiIdr();
+                    rencanaVsRealisasiIdr.setIdr(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("IDR")));
+                    rencanaVsRealisasiIdr.setEur(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("EUR")));
+                    rencanaVsRealisasiIdr.setJpy(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("JPY")));
+                    rencanaVsRealisasiIdr.setUsd(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("USD")));
+                    rencanaVsRealisasiIdr.setOther(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("OTHER")));
+                    rencanaVsRealisasiIdr.setJatuhTempo(resultSet.getDate("JATUH_TEMPO").getTime());
+                    rencanaVsRealisasiIdr.setJenisPembayaran(resultSet.getString("JENIS_PEMBAYARAN"));
+                    rencanaVsRealisasiIdr.setStatus(resultSet.getString("STATUS"));
+                    rencanaVsRealisasiIdr.setStausValas(resultSet.getString("STATUS_VALAS"));
+                    return rencanaVsRealisasiIdr;
+                },
+                parameters);
+        Map<String, Object> out = new HashMap<>();
+        out.put("return", result);
+        out.put("tglcetak", new Date().getTime());
+        AppUtils.getLogger(this).info("data getRencanaVsRealisasiByTgl {} : {}", tglPencarian, out);
         return out;
     }
 

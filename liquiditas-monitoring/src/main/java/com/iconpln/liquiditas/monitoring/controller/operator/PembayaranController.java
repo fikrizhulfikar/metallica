@@ -674,8 +674,6 @@ public class PembayaranController {
 
     public String generateReport(HttpServletResponse response, Map<String, Object> errorData, String tipe) {
         try {
-            AppUtils.getLogger(this).debug("Masuknih : {}", errorData);
-
             ServletOutputStream os = response.getOutputStream();
             response.setContentType("application/vnd.ms-excel");
             Map value = new HashMap();
@@ -687,8 +685,6 @@ public class PembayaranController {
             if (tipe.equals("download")) {
                 value.put("listFailed", errorData.get("return"));
             }
-
-            System.out.println("listFailed : " + value);
             XLSTransformer transformer = new XLSTransformer();
             InputStream streamTemplate = resourceLoader.getResource(resource).getInputStream();
             Workbook workbook = transformer.transformXLS(streamTemplate, value);
