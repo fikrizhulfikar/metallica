@@ -1633,14 +1633,12 @@ public class ValasService {
                 .withCatalogName("PKG_LMETALLICA_NOTIFICATION")
                 .withFunctionName("get_rekap_pembayaran_by_email");
         SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("p_email", email, OracleTypes.VARCHAR);
-//        simpleJdbcCall.getJdbcTemplate().execute("alter session set NLS_NUMERIC_CHARACTERS = '.,'");
+                .addValue("p_email", email);
         try {
             List<Map<String, Object>> out = simpleJdbcCall.executeFunction(ArrayList.class, in);
             List<RekapPembayaran> rekapPembayarans = new ArrayList<>();
             out.stream().forEach(data -> {
                 RekapPembayaran rekapPembayaran = new RekapPembayaran();
-
                 if (data.get("ID_VENDOR") != null) {
                     rekapPembayaran.setIdVendor(data.get("ID_VENDOR").toString());
                 }
@@ -1702,7 +1700,7 @@ public class ValasService {
             });
             return rekapPembayarans;
         } catch (Exception e) {
-            AppUtils.getLogger(this).debug(e.getMessage());
+            AppUtils.getLogger(this).debug("Error: {} ", e.getMessage());
             return new ArrayList<>();
         }
     }

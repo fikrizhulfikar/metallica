@@ -87,4 +87,9 @@ public class ValasTests {
 //		}
 	}
 
+	@Test
+	public void getRekapPembayaranByEmail() {
+		valasService.getRekapPembayaranByEmail("heri.siswanto@pln.co.id").forEach(System.out::println);
+	}
+
 }
