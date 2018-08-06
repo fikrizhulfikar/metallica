@@ -329,8 +329,8 @@ public class DashboardController {
     public Map getAllDashboardIdr
     (@RequestParam(value = "pTglTerpusat", defaultValue = "") String pTglTerpusat,
      @RequestParam(value = "pTglImport", defaultValue = "") String pTglImport,
-     @RequestParam(value = "pTglRupiah", defaultValue = "") String pTglRupiah) {
-
+     @RequestParam(value = "pTglRupiah", defaultValue = "") String pTglRupiah,
+     @RequestParam(value = "pTglRencana", defaultValue = "") String pTglRencana) {
         try {
             Map data = new HashMap();
             data.put("dataSaldoIdrImprest", dashboardService.getSaldoIdrImprest());
@@ -341,8 +341,9 @@ public class DashboardController {
             data.put("dataRencanaBayarImprestDanImport", dashboardService.getRencanaBayarImprestDanImport(pTglImport));
             data.put("dataRencanaBayarEquivalenRupiah", dashboardService.getRencanaBayarEquivalenRupiah(pTglRupiah));
             data.put("dataRekapJenisPembayaran", dashboardService.getRekapJenisPembayaran());
+            data.put("dataRencanaVsRealisasiIdr", dashboardService.getRencanaVsRealisasiIdrXls(pTglRencana));
             data.put("dataCashFlow", dashboardService.getCashFlow());
-            data.put("dataRencanaVsRealisasiIdr", dashboardService.getRencanaVsRealisasiIdr());
+//            data.put("dataRencanaVsRealisasiIdr", dashboardService.getRencanaVsRealisasiIdr());
             return data;
         } catch (Exception e) {
             e.printStackTrace();
