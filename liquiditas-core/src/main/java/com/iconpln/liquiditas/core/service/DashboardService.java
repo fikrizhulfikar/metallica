@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 
 import com.iconpln.liquiditas.core.utils.PlsqlUtils;
 import oracle.jdbc.OracleTypes;
@@ -22,9 +22,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by israjhaliri on 8/1/17.
@@ -358,9 +355,7 @@ public class DashboardService {
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         for(int x = 0; x<ret.size();x++){
             for(String key : ret.get(x).keySet()){
-                System.out.println("KEY: "+key+", VALUE: "+ ret.get(x).get(key));
                 if(key.equals("JATUH_TEMPO")){
-                    System.out.println("JATUHTEMPO="+df.format(ret.get(x).get(key)));
                     ret.get(x).put(key, df.format(ret.get(x).get(key)));
                 }
                 else if(key.equals("IDR") || key.equals("USD") || key.equals("JPY") || key.equals("EUR") || key.equals("OTHER")){
@@ -372,32 +367,6 @@ public class DashboardService {
         out.put("return", ret);
 
         AppUtils.getLogger(this).info("data getRencanaVsRealisasiIdrXls {}: {}", tglPencarian, out);
-        return out;
-    }
-    public Map<String, Object> getRencanaVsRealisasiIdrXlss() {
-        DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
-        List<RencanaVsRealisasiIdr> result = plsqlUtils.function("pkg_dashboard_idr",
-                "get_rencana_vs_realisasi",
-                "out_data",
-                (resultSet, i) -> {
-                    RencanaVsRealisasiIdr rencanaVsRealisasiIdr = new RencanaVsRealisasiIdr();
-                    rencanaVsRealisasiIdr.setIdr(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("IDR")));
-                    rencanaVsRealisasiIdr.setEur(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("EUR")));
-                    rencanaVsRealisasiIdr.setJpy(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("JPY")));
-                    rencanaVsRealisasiIdr.setUsd(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("USD")));
-                    rencanaVsRealisasiIdr.setOther(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("OTHER")));
-                    rencanaVsRealisasiIdr.setJatuhTempo(resultSet.getDate("JATUH_TEMPO").getTime());
-                    rencanaVsRealisasiIdr.setJatuhTempoDate(df.format(resultSet.getDate("JATUH_TEMPO")));
-                    rencanaVsRealisasiIdr.setJenisPembayaran(resultSet.getString("JENIS_PEMBAYARAN"));
-                    rencanaVsRealisasiIdr.setStatus(resultSet.getString("STATUS"));
-                    rencanaVsRealisasiIdr.setStausValas(resultSet.getString("STATUS_VALAS"));
-                    return rencanaVsRealisasiIdr;
-                },
-                new MapSqlParameterSource());
-        Map<String, Object> out = new HashMap<>();
-        out.put("return", result);
-        AppUtils.getLogger(this).info("data getRencanaVsRealisasiXls : {}", out.toString());
-        AppUtils.getLogger(this).info("data listrencanavsrealisasi : {}", result.get(0).toString());
         return out;
     }
 
@@ -433,11 +402,34 @@ public class DashboardService {
                 .withCatalogName("package_cashflow")
                 .withFunctionName("get_rekap_cashflow");
         Map<String, Object> out = simpleJdbcCall.execute();
-        for (int x=0; x<7; x++){
-
-        }
         out.put("tglcetak", new Date());
         AppUtils.getLogger(this).info("data cashFlow : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> getCashFlowXls() {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("package_cashflow")
+                .withFunctionName("get_rekap_cashflow");
+        Map<String, Object> out = simpleJdbcCall.execute();
+        List<Map<String, Object>> ret = (List<Map<String, Object>>)out.get("return");
+        for(int x = 0; x<ret.size();x++){
+            for(String key : ret.get(x).keySet()){
+                if(key.equals("TANGGAL1") || key.equals("TANGGAL2") || key.equals("TANGGAL3") || key.equals("TANGGAL4") || key.equals("TANGGAL5") || key.equals("TANGGAL6") || key.equals("TANGGAL7")){
+                    ret.get(x).put(key, AppUtils.getInstance().formatDecimalCurrency((BigDecimal) ret.get(x).get(key)));
+                }
+            }
+        }
+
+        List newList = new ArrayList();
+        Map<String, String> dates = new HashMap<>();
+        for (int x=0; x<7; x++){
+            dates.put("TANGGAL_"+(x+1), AppUtils.getDateByPlus(x));
+        }
+        newList.add(dates);
+        out.put("dates", newList);
+        out.put("return", ret);
+        AppUtils.getLogger(this).info("data cashFlowXls : {}", out);
         return out;
     }
 

@@ -392,13 +392,10 @@ public class DashboardController {
             List<Map<String, Object>> listJenisPembayaran = (List<Map<String, Object>>) dashboardService.getRekapJenisPembayaran().get("return");
             List<Map<String, Object>> listTotalJenisPembayaran = (List<Map<String, Object>>) dashboardService.getRekapJenisPembayaran().get("OUT_TOTAL");
 
-//            List<Map<String, Object>> listCashFlow = (List<Map<String, Object>>) dashboardService.getCashFlow().get("return");
+            List<Map<String, Object>> listCashFlow = (List<Map<String, Object>>) dashboardService.getCashFlowXls().get("return");
+            List<Map<String, Object>> listCashFlowDates = (List<Map<String, Object>>) dashboardService.getCashFlowXls().get("dates");
+
             List<Map<String, Object>> listRencanaPembayaran = (List<Map<String, Object>>) dashboardService.getRencanaVsRealisasiIdrXls(pTglRencana).get("return");
-//            if(pTglTerpusat == ""){
-//                listRencanaPembayaran = (List<Map<String, Object>>) dashboardService.getRencanaVsRealisasiIdr().get("return");
-//            }else{
-//                listRencanaPembayaran = (List<Map<String, Object>>) dashboardService.getRencanaVsRealisasiIdrByTgl(pTglTerpusat).get("return");
-//            }
 
 //            List<Map<String, Object>> listProyeksiArusKas = (List<Map<String, Object>>) dashboardService.getCashFlow().get("return");
 //            List<Map<String, Object>> listTotalProyeksiArusKas = (List<Map<String, Object>>) dashboardService.getCashFlow().get("OUT_TOTAL");
@@ -411,7 +408,8 @@ public class DashboardController {
             AppUtils.getLogger(this).info("LIST DATA TOTAL PINBUK, KMK, SUBSIDI : {}", listTotalSaldoIdrSubsidiKmk.toString());
             AppUtils.getLogger(this).info("LIST DATA DETAIL RECEIPT : {}", listDataSaldoIdrReceipt.toString());
             AppUtils.getLogger(this).info("LIST DATA TOTAL RECEIPT : {}", listTotalSaldoIdrReceipt.toString());
-//            AppUtils.getLogger(this).info("LIST DATA ARUS KAS : {}", listCashFlow.toString());
+            AppUtils.getLogger(this).info("LIST DATA ARUS KAS : {}", listCashFlow.toString());
+            AppUtils.getLogger(this).info("LIST DATA ARUS KAS DATES: {}", listCashFlowDates.toString());
             AppUtils.getLogger(this).info("LIST DATA RENCANAVSREALISASI : {}", listRencanaPembayaran.toString());
 //            AppUtils.getLogger(this).info("LIST DATA ARUS KAS : {}", listCashFlow.toString());
             //AppUtils.getLogger(this).info("LIST DATA DETAIL BAYAR OPERASI DAN INVESTASI TERPUSAT : {}", listBayarImprestOperasiTerpusat.toString());
@@ -433,7 +431,6 @@ public class DashboardController {
 
             param.put("DETAIL_RECEIPT", listDataSaldoIdrReceipt);
             param.put("TOTAL_RECEIPT", listTotalSaldoIdrReceipt);
-//            param.put("TOTAL_RENCANAVSREALISASI", listTotalSaldoIdrReceipt);
             param.put("DETAIL_RENCANA_PEMBAYARAN", listRencanaPembayaran);
             param.put("DETAIL_BANK_REALISASI_PLACEMENT", listDataBankRealisasiPlacement);
             param.put("DETAIL_BANK_REALISASI_PLACEMENT", listDataBankRealisasiPlacement);
@@ -452,7 +449,8 @@ public class DashboardController {
             param.put("DATE7", AppUtils.getDateByPlus(6));
             param.put("DETAIL_JENIS_PEMBAYARAN", listJenisPembayaran);
             param.put("TOTAL_JENIS_PEMBAYARAN", listTotalJenisPembayaran);
-//            param.put("DETAIL_CASH_FLOW", listCashFlow);
+            param.put("DETAIL_CASH_FLOW", listCashFlow);
+            param.put("DETAIL_CASH_FLOW_DATES", listCashFlowDates);
 
 
             XLSTransformer transformer = new XLSTransformer();
