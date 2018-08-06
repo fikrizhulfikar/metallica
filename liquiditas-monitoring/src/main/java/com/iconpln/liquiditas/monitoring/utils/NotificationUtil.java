@@ -46,6 +46,11 @@ public class NotificationUtil {
         service.editSeenById(username, id);
     }
 
+    public void flagSeen(String username) {
+        logger.debug("flagSeen : {} ", username);
+        service.flagSeen(username);
+    }
+
     public Map<String, Object> findByTopics(String username, String topics, int start, int length) {
         List<Notification> notifications = service.findByTopics(username, topics, start, length);
         Integer unseenNotification = service.countUnseenNotificationByTopics(username, topics).intValue();

@@ -187,7 +187,9 @@ public class PembayaranController {
                             .message(message)
                             .additionalInfo(null)
                             .build();
-            notificationUtil.notifyMessage(notification);
+            if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
+                notificationUtil.notifyMessage(notification);
+            }
             return res;
         } catch (Exception e) {
             e.printStackTrace();
@@ -261,15 +263,17 @@ public class PembayaranController {
                 if (pIdValas == null || pIdValas.equals("") || pIdValas.equals(" ")) {
                     pIdValas = result.split(";")[1];
                 }
+                if (result.split(";")[0].equals("1")) {
+                    Notification notification =
+                            Notification.builder()
+                                    .topic(pJenisPembayaran)
+                                    .title(NamedIdentifier.REKAP_PEMBAYARAN.getName())
+                                    .message(message)
+                                    .additionalInfo(NamedIdentifier.REKAP_PEMBAYARAN.getValue() + ";" + pIdValas)
+                                    .build();
+                    notificationUtil.notifyMessage(notification);
+                }
             }
-            Notification notification =
-                    Notification.builder()
-                            .topic(pJenisPembayaran)
-                            .title(NamedIdentifier.REKAP_PEMBAYARAN.getName())
-                            .message(message)
-                            .additionalInfo(NamedIdentifier.REKAP_PEMBAYARAN.getValue() + ";" + pIdValas)
-                            .build();
-            notificationUtil.notifyMessage(notification);
             return res;
         } catch (Exception e) {
             e.printStackTrace();
@@ -287,7 +291,9 @@ public class PembayaranController {
         AppUtils.getLogger(this).debug("idValas : {} ", pIdValas);
         try {
             Map<String, Object> res = valasService.updStatus(pIdValas, pStatusInvoice, pDeskripsi, WebUtils.getUsernameLogin());
-            notifyUpdateStatus(pIdValas);
+            if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
+                notifyUpdateStatus(pIdValas);
+            }
             return res;
         } catch (Exception e) {
             e.printStackTrace();
@@ -316,7 +322,9 @@ public class PembayaranController {
                 if (!key.equals("x")) {
                     try {
                         out = valasService.updStatus(value, key, pDeskripsi, WebUtils.getUsernameLogin());
-                        notifyUpdateStatus(value);
+                        if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
+                            notifyUpdateStatus(value);
+                        }
                         AppUtils.getLogger(this).debug("update {} : {} ", value, key);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -369,7 +377,9 @@ public class PembayaranController {
                                         .additionalInfo(null)
                                         .build();
                         out = valasService.deleteTripartite(value);
-                        notificationUtil.notifyMessage(notification);
+                        if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
+                            notificationUtil.notifyMessage(notification);
+                        }
                     } else {
                         Map<String, String> data = notificationUtil.getNotificationDetailByIdValas(value);
                         String idJenisPembayaran = valasService.getIdPembayaranByIdValas(value);
@@ -385,7 +395,9 @@ public class PembayaranController {
                                         .additionalInfo(null)
                                         .build();
                         out = valasService.deletePembayaran(value);
-                        notificationUtil.notifyMessage(notification);
+                        if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
+                            notificationUtil.notifyMessage(notification);
+                        }
                     }
                     AppUtils.getLogger(this).debug("id deleted : {} ", value);
                 } catch (Exception e) {
@@ -433,15 +445,17 @@ public class PembayaranController {
                             Map<String, String> sesudah = notificationUtil.getNotificationDetailByIdValas(value);
                             message += "Perubahan: " + sesudah.get("NAMA_JENIS_PEMBAYARAN") + "-" + sesudah.get("NAMA_VENDOR") + "-" + pTglJatuhTempo + ".";
 
-                            String idJenisPembayaran = valasService.getIdPembayaranByIdValas(value);
-                            Notification notification =
-                                    Notification.builder()
-                                            .topic(idJenisPembayaran)
-                                            .title(NamedIdentifier.REKAP_PEMBAYARAN.getName())
-                                            .message(message)
-                                            .additionalInfo(NamedIdentifier.REKAP_PEMBAYARAN.getValue() + ";" + value)
-                                            .build();
-                            notificationUtil.notifyMessage(notification);
+                            if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
+                                String idJenisPembayaran = valasService.getIdPembayaranByIdValas(value);
+                                Notification notification =
+                                        Notification.builder()
+                                                .topic(idJenisPembayaran)
+                                                .title(NamedIdentifier.REKAP_PEMBAYARAN.getName())
+                                                .message(message)
+                                                .additionalInfo(NamedIdentifier.REKAP_PEMBAYARAN.getValue() + ";" + value)
+                                                .build();
+                                notificationUtil.notifyMessage(notification);
+                            }
                         } else {
                             Map<String, String> sebelum = notificationUtil.getNotificationDetailByIdTripartite(value);
                             message += WebUtils.getUsernameLogin() + " telah melakukan Perubahan/Update Data pada aplikasi.";
@@ -451,15 +465,17 @@ public class PembayaranController {
                             Map<String, String> sesudah = notificationUtil.getNotificationDetailByIdTripartite(value);
                             message += "Perubahan: " + sesudah.get("NAMA_JENIS_PEMBAYARAN") + "-" + sesudah.get("NAMA_VENDOR") + "-" + pTglJatuhTempo + ".";
 
-                            String idJenisPembayaran = valasService.getIdPembayaranByIdTripartite(value);
-                            Notification notification =
-                                    Notification.builder()
-                                            .topic(idJenisPembayaran)
-                                            .title(NamedIdentifier.TRIPARTITE.getName())
-                                            .message(message)
-                                            .additionalInfo(NamedIdentifier.TRIPARTITE.getValue() + ";" + value)
-                                            .build();
-                            notificationUtil.notifyMessage(notification);
+                            if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
+                                String idJenisPembayaran = valasService.getIdPembayaranByIdTripartite(value);
+                                Notification notification =
+                                        Notification.builder()
+                                                .topic(idJenisPembayaran)
+                                                .title(NamedIdentifier.TRIPARTITE.getName())
+                                                .message(message)
+                                                .additionalInfo(NamedIdentifier.TRIPARTITE.getValue() + ";" + value)
+                                                .build();
+                                notificationUtil.notifyMessage(notification);
+                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -501,15 +517,17 @@ public class PembayaranController {
         AppUtils.getLogger(this).debug("pStatusInvoice : {} ", pStatusInvoice);
         try {
             Map<String, Object> result = valasService.updReverse(pIdValas, pStatusInvoice, WebUtils.getUsernameLogin(), pKeterangan);
-            String idJenisPembayaran = valasService.getIdPembayaranByIdValas(pIdValas);
-            Notification notification =
-                    Notification.builder()
-                            .topic(idJenisPembayaran)
-                            .title(NamedIdentifier.REKAP_PEMBAYARAN.getName())
-                            .message(WebUtils.getUsernameLogin() + " telah me-reverse status.")
-                            .additionalInfo(NamedIdentifier.REKAP_PEMBAYARAN.getValue() + ";" + pIdValas)
-                            .build();
-            notificationUtil.notifyMessage(notification);
+            if (((BigDecimal) result.get("return")).equals(BigDecimal.ONE)) {
+                String idJenisPembayaran = valasService.getIdPembayaranByIdValas(pIdValas);
+                Notification notification =
+                        Notification.builder()
+                                .topic(idJenisPembayaran)
+                                .title(NamedIdentifier.REKAP_PEMBAYARAN.getName())
+                                .message(WebUtils.getUsernameLogin() + " telah me-reverse status.")
+                                .additionalInfo(NamedIdentifier.REKAP_PEMBAYARAN.getValue() + ";" + pIdValas)
+                                .build();
+                notificationUtil.notifyMessage(notification);
+            }
             return result;
         } catch (Exception e) {
             e.printStackTrace();

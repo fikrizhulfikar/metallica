@@ -80,4 +80,13 @@ public class NotificationService {
         call.execute(in);
     }
 
+    public void flagSeen(String username) {
+        SimpleJdbcCall call = new SimpleJdbcCall(jdbcTemplate)
+                .withCatalogName("PKG_LMETALLICA_NOTIFICATION")
+                .withProcedureName("FLAG_SEEN");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_username", username, OracleTypes.VARCHAR);
+        call.execute(in);
+    }
+
 }

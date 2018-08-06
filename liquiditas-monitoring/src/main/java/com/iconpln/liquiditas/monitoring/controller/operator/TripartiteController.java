@@ -97,15 +97,17 @@ public class TripartiteController {
                 if (pIdTripartite == null || pIdTripartite.equals("") || pIdTripartite.equals(" ")) {
                     pIdTripartite = result.split(";")[1];
                 }
+                if (result.split(";")[0].equals("1")) {
+                    Notification notification =
+                            Notification.builder()
+                                    .topic(pJenisPembayaran)
+                                    .title(NamedIdentifier.TRIPARTITE.getName())
+                                    .message(message)
+                                    .additionalInfo(NamedIdentifier.TRIPARTITE.getValue()+";"+pIdTripartite)
+                                    .build();
+                    notificationUtil.notifyMessage(notification);
+                }
             }
-            Notification notification =
-                    Notification.builder()
-                            .topic(pJenisPembayaran)
-                            .title(NamedIdentifier.TRIPARTITE.getName())
-                            .message(message)
-                            .additionalInfo(NamedIdentifier.TRIPARTITE.getValue()+";"+pIdTripartite)
-                            .build();
-            notificationUtil.notifyMessage(notification);
             return res;
         } catch (Exception e) {
             e.printStackTrace();
@@ -186,14 +188,16 @@ public class TripartiteController {
             message += WebUtils.getUsernameLogin() + " telah melakukan penghapusan Data pada aplikasi. ";
             message += data.get("NAMA_JENIS_PEMBAYARAN") + "-" + data.get("NAMA_VENDOR") +".";
             Map<String, Object> res = valasService.deleteTripartite(pIdTripartite);
-            Notification notification =
-                    Notification.builder()
-                            .topic(idJenisPembayaran)
-                            .title(NamedIdentifier.TRIPARTITE.getName())
-                            .message(message)
-                            .additionalInfo(null)
-                            .build();
-            notificationUtil.notifyMessage(notification);
+            if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
+                Notification notification =
+                        Notification.builder()
+                                .topic(idJenisPembayaran)
+                                .title(NamedIdentifier.TRIPARTITE.getName())
+                                .message(message)
+                                .additionalInfo(null)
+                                .build();
+                notificationUtil.notifyMessage(notification);
+            }
             return res;
         } catch (Exception e) {
             e.printStackTrace();

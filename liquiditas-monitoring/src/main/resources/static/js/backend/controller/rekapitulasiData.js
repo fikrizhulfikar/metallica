@@ -1041,8 +1041,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                             $("#cbparent").prop('checked', false);
                         }
                     }
-                    $('th').removeClass('sorting_asc');
-                    $('th').removeClass('datatables_action');
                     $('th').addClass('th-middle');
                     $(".btn-update-status").hide();
                     $(".btn-edit-data").hide();
