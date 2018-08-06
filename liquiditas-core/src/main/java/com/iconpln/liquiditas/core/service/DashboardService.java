@@ -4,7 +4,10 @@ import com.iconpln.liquiditas.core.domain.CashFlow;
 import com.iconpln.liquiditas.core.domain.RencanaVsRealisasiIdr;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.iconpln.liquiditas.core.utils.PlsqlUtils;
@@ -325,6 +328,76 @@ public class DashboardService {
         out.put("return", result);
         out.put("tglcetak", new Date().getTime());
         AppUtils.getLogger(this).info("data getRencanaVsRealisasi : {}", out);
+        AppUtils.getLogger(this).info("data listrencanavsrealisasibknxls : {}", result.get(0).toString());
+        return out;
+    }
+
+    public Map<String, Object> getRencanaVsRealisasiIdrXls(String tglPencarian) throws SQLException {
+        Map<String, Object> out;
+        SqlParameterSource in;
+        SimpleJdbcCall simpleJdbcCall;
+        if(tglPencarian == ""){
+            simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                    .withCatalogName("pkg_dashboard_idr")
+                    .withFunctionName("get_rencana_vs_realisasi");
+
+            in = new MapSqlParameterSource()
+                    .addValue("out_data", OracleTypes.CURSOR);
+
+        }
+        else {
+            simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                    .withCatalogName("pkg_dashboard_idr")
+                    .withFunctionName("get_rencana_vs_realisasi");
+            in = new MapSqlParameterSource()
+                    .addValue("p_tanggal", tglPencarian);
+        }
+        out = simpleJdbcCall.execute(in);
+
+        List<Map<String, Object>> ret = (List<Map<String, Object>>)out.get("return");
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        for(int x = 0; x<ret.size();x++){
+            for(String key : ret.get(x).keySet()){
+                System.out.println("KEY: "+key+", VALUE: "+ ret.get(x).get(key));
+                if(key.equals("JATUH_TEMPO")){
+                    System.out.println("JATUHTEMPO="+df.format(ret.get(x).get(key)));
+                    ret.get(x).put(key, df.format(ret.get(x).get(key)));
+                }
+                else if(key.equals("IDR") || key.equals("USD") || key.equals("JPY") || key.equals("EUR") || key.equals("OTHER")){
+                    ret.get(x).put(key, AppUtils.getInstance().formatDecimalCurrency((BigDecimal) ret.get(x).get(key)));
+                }
+            }
+        }
+        out.clear();
+        out.put("return", ret);
+
+        AppUtils.getLogger(this).info("data getRencanaVsRealisasiIdrXls {}: {}", tglPencarian, out);
+        return out;
+    }
+    public Map<String, Object> getRencanaVsRealisasiIdrXlss() {
+        DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+        List<RencanaVsRealisasiIdr> result = plsqlUtils.function("pkg_dashboard_idr",
+                "get_rencana_vs_realisasi",
+                "out_data",
+                (resultSet, i) -> {
+                    RencanaVsRealisasiIdr rencanaVsRealisasiIdr = new RencanaVsRealisasiIdr();
+                    rencanaVsRealisasiIdr.setIdr(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("IDR")));
+                    rencanaVsRealisasiIdr.setEur(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("EUR")));
+                    rencanaVsRealisasiIdr.setJpy(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("JPY")));
+                    rencanaVsRealisasiIdr.setUsd(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("USD")));
+                    rencanaVsRealisasiIdr.setOther(AppUtils.getInstance().formatDecimalCurrency(resultSet.getBigDecimal("OTHER")));
+                    rencanaVsRealisasiIdr.setJatuhTempo(resultSet.getDate("JATUH_TEMPO").getTime());
+                    rencanaVsRealisasiIdr.setJatuhTempoDate(df.format(resultSet.getDate("JATUH_TEMPO")));
+                    rencanaVsRealisasiIdr.setJenisPembayaran(resultSet.getString("JENIS_PEMBAYARAN"));
+                    rencanaVsRealisasiIdr.setStatus(resultSet.getString("STATUS"));
+                    rencanaVsRealisasiIdr.setStausValas(resultSet.getString("STATUS_VALAS"));
+                    return rencanaVsRealisasiIdr;
+                },
+                new MapSqlParameterSource());
+        Map<String, Object> out = new HashMap<>();
+        out.put("return", result);
+        AppUtils.getLogger(this).info("data getRencanaVsRealisasiXls : {}", out.toString());
+        AppUtils.getLogger(this).info("data listrencanavsrealisasi : {}", result.get(0).toString());
         return out;
     }
 
@@ -360,6 +433,9 @@ public class DashboardService {
                 .withCatalogName("package_cashflow")
                 .withFunctionName("get_rekap_cashflow");
         Map<String, Object> out = simpleJdbcCall.execute();
+        for (int x=0; x<7; x++){
+
+        }
         out.put("tglcetak", new Date());
         AppUtils.getLogger(this).info("data cashFlow : {}", out);
         return out;

@@ -217,6 +217,7 @@
         var pTgl_Terpusat = sessionStorage.getItem("tempSearchTerpusat");
         var pTgl_Import = sessionStorage.getItem("tempSearchImprestImport");
         var pTgl_Rupiah = sessionStorage.getItem("tempSearchEquivalenRupiah");
+        var pTgl_Rencana = sessionStorage.getItem("tempSearchRencanaBayar");
         if(pTgl_Import == null){
             pTgl_Import = "";
         }
@@ -226,7 +227,10 @@
         if(pTgl_Rupiah == null){
             pTgl_Rupiah = "";
         }
-        window.location = "/api_dashboard/xls_idr?pTglImport="+pTgl_Import+"&pTglTerpusat="+pTgl_Terpusat+"&pTglRupiah="+pTgl_Rupiah;
+        if(pTgl_Rencana == null){
+            pTgl_Rencana = "";
+        }
+        window.location = "/api_dashboard/xls_idr?pTglImport="+pTgl_Import+"&pTglTerpusat="+pTgl_Terpusat+"&pTglRupiah="+pTgl_Rupiah+"&pTglRencana="+pTgl_Rencana;
 
     }
 
@@ -234,6 +238,7 @@
         var pTgl_Terpusat = sessionStorage.getItem("tempSearchTerpusat");
         var pTgl_Import = sessionStorage.getItem("tempSearchImprestImport");
         var pTgl_Rupiah = sessionStorage.getItem("tempSearchEquivalenRupiah");
+        var pTgl_Rencana = sessionStorage.getItem("tempSearchRencanaBayar");
 
         $.ajax({
             url: baseUrl + "api_dashboard/getall_data_dashboard_idr",

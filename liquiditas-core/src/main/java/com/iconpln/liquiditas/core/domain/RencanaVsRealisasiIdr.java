@@ -10,6 +10,7 @@ import java.util.Date;
 @JsonPropertyOrder({
         "JENIS_PEMBAYARAN",
         "JATUH_TEMPO",
+        "JATUH_TEMPO_DATE",
         "IDR",
         "USD",
         "JPY",
@@ -24,6 +25,8 @@ public class RencanaVsRealisasiIdr {
     private String jenisPembayaran;
     @JsonProperty("JATUH_TEMPO")
     private Long jatuhTempo;
+    @JsonProperty("JATUH_TEMPO_DATE")
+    private String jatuhTempoDate;
     @JsonProperty("IDR")
     private String idr;
     @JsonProperty("USD")
@@ -53,6 +56,14 @@ public class RencanaVsRealisasiIdr {
 
     public void setJatuhTempo(Long jatuhTempo) {
         this.jatuhTempo = jatuhTempo;
+    }
+
+    public String getJatuhTempoDate() {
+        return jatuhTempoDate;
+    }
+
+    public void setJatuhTempoDate(String jatuhTempoDate) {
+        this.jatuhTempoDate = jatuhTempoDate;
     }
 
     public String getIdr() {
