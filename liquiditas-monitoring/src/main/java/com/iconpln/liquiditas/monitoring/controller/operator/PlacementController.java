@@ -54,11 +54,10 @@ public class PlacementController {
 
     @RequestMapping(value = "/ins_saldo_potensi", method = RequestMethod.POST)
     public Map insSaldoPotensi(
-            @RequestParam(value = "pKodeBank", defaultValue = "") String pKodeBank,
-            @RequestParam(value = "pJumlah", defaultValue = "") String pJumlah
+            @RequestParam(value = "pData", defaultValue = "") String pData
     ) {
         try {
-            return valasService.insSaldoPotensi(pKodeBank, pJumlah);
+            return valasService.insSaldoPotensi(pData);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

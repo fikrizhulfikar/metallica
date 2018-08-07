@@ -10,6 +10,8 @@ import oracle.jdbc.OracleTypes;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -1426,17 +1428,26 @@ public class ValasService {
         return out;
     }
 
-    public Map<String, Object> insSaldoPotensi(String pKodeBank, String pJumlah) throws SQLException {
+    public Map<String, Object> insSaldoPotensi(String pData) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("pkg_dashboard_idr")
-                .withFunctionName("ins_saldo_potensi");
+                .withFunctionName("ins_saldo_potensi_new");
+        SqlParameterSource in;
+        Map<String, Object> out = null;
+        System.out.println("pData: "+pData);
+        JSONArray jsonArray = new JSONArray(pData);
 
-        SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("p_kode_bank", pKodeBank)
-                .addValue("p_jumlah", pJumlah);
-        Map<String, Object> out = simpleJdbcCall.execute(in);
-        AppUtils.getLogger(this).info("data insSaldoPotensi : {}", out);
+        for (Object item : jsonArray){
+            JSONObject obj = (JSONObject)item;
+            System.out.println(obj);
+            in = new MapSqlParameterSource()
+                    .addValue("p_kode_bank", obj.get("kdbank"))
+                    .addValue("p_h0", obj.get("potensi_h0"))
+                    .addValue("p_h1", obj.get("potensi_h1"));
+            out = simpleJdbcCall.execute(in);
+            AppUtils.getLogger(this).info("data insSaldoPotensi {}: {}", obj.get("kdbank"), out);
+        }
         return out;
     }
 
