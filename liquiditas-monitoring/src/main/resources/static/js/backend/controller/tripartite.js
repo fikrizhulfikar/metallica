@@ -356,6 +356,7 @@ function ins_data() {
             pTglTerimaInvoice: $("#pTglInvoice").val(),
             pNoNotdin: $("#pNoNotdin").val(),
             pTglNotdin: $("#pTglNotaDinas").val(),
+            pTipeTransaksi: $("#pTipeTransaksi").val(),
             pDeskripsi: $("#pDeskripsi").val()
         },
         success: function (res) {
