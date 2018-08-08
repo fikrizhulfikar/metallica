@@ -1082,8 +1082,14 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
         var value = $('.dataTables_filter input').val();
         tempTableSearch = value;
     });
+
+    $('.dataTables_length').each(function () {
+        var html = '<label style="margin-left: 250px; cursor:default;">Total tagihan: <text id="total_tagihan">0</text></label>';
+        $(this).append(html);
+    });
+
     $('.dataTables_filter').each(function () {
-        var html = '<button id="total_tagihan" class="btn-primary btn-sm" style="margin-left: 10px; cursor:default;" type="button" disabled>0</button>';
+        var html = '';
         if(newRoleUser[0] != "ROLE_OSS"){
             html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
                 '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
