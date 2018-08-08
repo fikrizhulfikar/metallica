@@ -1801,7 +1801,7 @@ public class ValasService {
         return out;
     }
 
-    public String getTotalTagihan(String tglAwal,
+    public BigDecimal getTotalTagihan(String tglAwal,
                                   String tglAkhir,
                                   String bank,
                                   String cur,
@@ -1817,10 +1817,10 @@ public class ValasService {
                 .addValue("p_user_id", userId, OracleTypes.VARCHAR)
                 .addValue("p_search", search, OracleTypes.VARCHAR);
 
-        String result = new SimpleJdbcCall(getJdbcTemplate())
+        BigDecimal result = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("pkg_valas")
                 .withFunctionName("get_total_tagihan")
-                .executeFunction(String.class, in);
+                .executeFunction(BigDecimal.class, in);
         return result;
     }
 

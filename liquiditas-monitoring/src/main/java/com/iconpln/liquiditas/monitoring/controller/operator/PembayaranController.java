@@ -697,7 +697,9 @@ public class PembayaranController {
                                      @RequestParam(value = "cur", defaultValue = "ALL") String cur,
                                      @RequestParam(value = "pembayaran", defaultValue = "ALL") String pembayaran,
                                      @RequestParam(value = "search", defaultValue = "") String search) {
-        return valasService.getTotalTagihan(tglAwal, tglAkhir, bank, cur, pembayaran, WebUtils.getUsernameLogin(), search);
+        BigDecimal result =  valasService.getTotalTagihan(tglAwal, tglAkhir, bank, cur, pembayaran, WebUtils.getUsernameLogin(), search);
+        String formatted = AppUtils.getInstance().formatDecimalCurrency(result);
+        return formatted;
     }
 
     public String generateReport(HttpServletResponse response, Map<String, Object> errorData, String tipe) {
