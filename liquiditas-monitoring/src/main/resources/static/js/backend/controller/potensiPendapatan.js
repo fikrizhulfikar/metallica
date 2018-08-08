@@ -35,8 +35,8 @@ function getAllData() {
                         "<td class=''>"+val.POTENSI_H0+"</td>"+
                         "<td class=''>"+val.POTENSI_H1+"</td>"+
                         "<td class=''>"+val.TOTAL+"</td>"+
-                        "<td align='center'><input id='hnol' width='100%' class='form-control' type='number' value='0'></td>" +
-                        "<td align='center'><input id='hsatu' width='100%' class='form-control' type='number' value='0'></td>" +
+                        "<td align='center'><input id='hnol' width='100%' class='form-control' type='number' value='"+val.POTENSI_H0+"'></td>" +
+                        "<td align='center'><input id='hsatu' width='100%' class='form-control' type='number' value='"+val.POTENSI_H1+"'></td>" +
                         // "<td align='center'><button class='btn btn-primary' style='cursor: pointer'>Save</button></td>" +
                         "</tr>";
                 }
