@@ -1790,6 +1790,29 @@ public class ValasService {
         return out;
     }
 
+    public String getTotalTagihan(String tglAwal,
+                                  String tglAkhir,
+                                  String bank,
+                                  String cur,
+                                  String pembayaran,
+                                  String userId,
+                                  String search) {
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", tglAwal, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", tglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_cur", cur, OracleTypes.VARCHAR)
+                .addValue("p_pembayaran", pembayaran, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR)
+                .addValue("p_search", search, OracleTypes.VARCHAR);
+
+        String result = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_valas")
+                .withFunctionName("get_total_tagihan")
+                .executeFunction(String.class, in);
+        return result;
+    }
+
     public boolean isRowEmpty(Row row, int rowSize){
         System.out.println("ROWSIZE ; "+rowSize);
         for(int x = 0; x < rowSize; x++){

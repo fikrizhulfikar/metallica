@@ -695,7 +695,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
     $('#table-rekapitulasi tbody').empty();
     $('#table-rekapitulasi').dataTable().fnDestroy();
     table_rekapitulasi = $('#table-rekapitulasi').DataTable({
-            // "sDom": '<"H"ilr><"clear">t<"F"p>',
             "serverSide": true,
             "oSearch": {"sSearch": tempTableSearch},
             "searching": true,
@@ -894,6 +893,9 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                                         '</div>'
                                 }
                             }
+
+
+
                         return ret_value;
                     }
 
@@ -1000,7 +1002,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
 
                         function (res) {
                             hideLoadingCss()
-                            console.log("get all data pss : ", res);
+                            getTotalTagihan();
                             return res.data;
                         }
                 }
@@ -1081,10 +1083,9 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
         tempTableSearch = value;
     });
     $('.dataTables_filter').each(function () {
-        var html = '';
-
+        var html = '<button id="total_tagihan" class="btn-primary btn-sm" style="margin-left: 10px; cursor:default;" type="button" disabled>0</button>';
         if(newRoleUser[0] != "ROLE_OSS"){
-            html = '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
+            html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
                 '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
         }
         html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
@@ -1094,6 +1095,8 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
 
 
     initCbparent();
+
+    $("div.toolbar").html('<b>Custom tool bar! Text/images etc.</b>');
 
   /*  $("#table-rekapitulasi").on('change',"input[type='checkbox']",function(e){
         if($(this).is(':checked')){
@@ -1509,6 +1512,27 @@ function multipleUpdate() {
             } else {
                 alert(res.OUT_MSG);
             }
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
+function getTotalTagihan() {
+    $.ajax({
+        url: baseUrl + "api_operator/pembayaran/get_total_tagihan",
+        type: "GET",
+        data: {
+            tgl_awal: $("#tanggal_awal").val(),
+            tgl_akhir: $("#tanggal_akhir").val(),
+            bank: $("#cmb_bank").val(),
+            cur: $("#cmb_currecny").val(),
+            pembayaran: $("#cmb_jenis_pemabayaran").val(),
+            search: tempTableSearch
+        },
+        success: function (res) {
+            $("#total_tagihan").html(res);
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")

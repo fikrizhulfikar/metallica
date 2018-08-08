@@ -1558,7 +1558,7 @@ pre {
       border: 0; } }
 
 .form-control {
-  display: block;
+  display: inline-block;
   width: 100%;
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
@@ -2475,32 +2475,12 @@ tbody.collapse.show {
 
 .custom-select {
   display: inline-block;
-  max-width: 100%;
-  height: calc(2.09375rem + 2px);
-  padding: 0.375rem 1.75rem 0.375rem 0.75rem;
-  line-height: 1.25;
-  color: #607d8b;
-  vertical-align: middle;
-  background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23333' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E") no-repeat right 0.75rem center;
-  background-size: 8px 10px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  appearance: none; }
-  .custom-select:focus {
-    border-color: #8ad4ee;
-    outline: none; }
-    .custom-select:focus::-ms-value {
-      color: #607d8b;
-      background-color: #fff; }
-  .custom-select:disabled {
-    color: #b0bec5;
-    background-color: #cfd8dc; }
-  .custom-select::-ms-expand {
-    opacity: 0; }
-
+  white-space: nowrap;
+}
 .custom-select-sm {
-  padding-top: 0.375rem;
-  padding-bottom: 0.375rem;
-  font-size: 75%; }
+  display: inline-block;
+  white-space: nowrap;
+}
 
 .custom-file {
   position: relative;
@@ -8927,3 +8907,33 @@ hr.transparent {
     border-right-color: #f86c6b; }
   *[dir="rtl"] .callout-success {
     border-right-color: #4dbd74; }
+
+
+div.dataTables_length {
+  float: left;
+  white-space: nowrap;
+}
+
+div.dataTables_filter {
+  float: right;
+  white-space: nowrap;
+}
+
+div.dataTables_info {
+  float: left;
+}
+
+div.dataTables_paginate {
+  float: right;
+}
+
+div.DTTT {
+  float: left;
+  margin-right: 50px;
+}
+
+div.buttons {
+  clear: both;
+}
+
+div.dataTables_filter input { width: 150px }

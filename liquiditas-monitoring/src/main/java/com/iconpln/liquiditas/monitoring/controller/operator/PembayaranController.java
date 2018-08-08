@@ -690,6 +690,16 @@ public class PembayaranController {
 
     }
 
+    @RequestMapping(value = "/get_total_tagihan", method = RequestMethod.GET)
+    public String getTotalTagihan(@RequestParam(value = "tgl_awal", defaultValue = "") String tglAwal,
+                                     @RequestParam(value = "tgl_akhir", defaultValue = "") String tglAkhir,
+                                     @RequestParam(value = "bank", defaultValue = "ALL") String bank,
+                                     @RequestParam(value = "cur", defaultValue = "ALL") String cur,
+                                     @RequestParam(value = "pembayaran", defaultValue = "ALL") String pembayaran,
+                                     @RequestParam(value = "search", defaultValue = "") String search) {
+        return valasService.getTotalTagihan(tglAwal, tglAkhir, bank, cur, pembayaran, WebUtils.getUsernameLogin(), search);
+    }
+
     public String generateReport(HttpServletResponse response, Map<String, Object> errorData, String tipe) {
         try {
             ServletOutputStream os = response.getOutputStream();
