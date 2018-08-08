@@ -13,31 +13,35 @@ function getAllData() {
             hideLoadingCss("")
             console.log("list potensi : ",res);
 
+            var newHtml;
             $.each(res.return, function (key, val) {
 
-                var newHtml;
 
                 if (newRoleUser[0] != "ROLE_MS_LIKUIDITAS" && newRoleUser[0] != "ROLE_DM_SETTLEMENT" && newRoleUser[0] != "ROLE_SETTLEMENT" && newRoleUser[0] != "ROLE_ADMIN" && newRoleUser[0] != "ROLE_MS_PENDAPATAN" && newRoleUser[0] != "ROLE_DM_TERPUSAT") {
 
                     newHtml ="<tr>"+
-                        "<th>"+val.BANK+"</td>"+
+                        "<td>"+val.BANK+"</td>"+
                         "<td style='display:none;' class='kdbank_potensi'>"+val.KODE_BANK+"</td>"+
-                        "<td class='kdbank_potensi'>"+val.JUMLAH+"</td>"+
+                        "<td class='kdbank_potensi'>"+val.POTENSI_H0+"</td>"+
+                        "<td class='kdbank_potensi'>"+val.POTENSI_H1+"</td>"+
+                        "<td class='kdbank_potensi'>"+val.TOTAL+"</td>"+
                         "<td align='center'><input width='100%' class='form-control' type='number' value='0'></td>" +
                         "<td align='center'>-</td>" +
                         "</tr>";
                 }else{
                     newHtml ="<tr>"+
-                        "<th>"+val.BANK+"</td>"+
+                        "<td>"+val.BANK+"</td>"+
                         "<td style='display:none;' class='kdbank_potensi'>"+val.KODE_BANK+"</td>"+
-                        "<td class='kdbank_potensi'>"+val.JUMLAH+"</td>"+
-                        "<td align='center'><input width='100%' class='form-control' type='number' value='0'></td>" +
-                        "<td align='center'><button class='btn btn-primary' style='cursor: pointer'>Save</button></td>" +
+                        "<td class=''>"+val.POTENSI_H0+"</td>"+
+                        "<td class=''>"+val.POTENSI_H1+"</td>"+
+                        "<td class=''>"+val.TOTAL+"</td>"+
+                        "<td align='center'><input id='hnol' width='100%' class='form-control' type='number' value='"+val.POTENSI_H0+"'></td>" +
+                        "<td align='center'><input id='hsatu' width='100%' class='form-control' type='number' value='"+val.POTENSI_H1+"'></td>" +
+                        // "<td align='center'><button class='btn btn-primary' style='cursor: pointer'>Save</button></td>" +
                         "</tr>";
                 }
                 $("#table-main").append(newHtml);
             });
-
 
         },
         error: function () {
@@ -46,21 +50,32 @@ function getAllData() {
     });
 }
 
-$('table').on('click', '.btn', function()
+function updatePotensi()
 {
-    var row = $(this).closest('tr'),
+    var row = $("#table-main").find('tr'),
         cells = row.find('td'),
         btnCell = $(this).parent();
-    console.log(row.find('.kdbank_potensi').html());
-    console.log(row.find('input').val());
+    var tes = document.querySelectorAll('td.kdbank_potensi');
+    var list = [];
+
+    $('#table-main > tbody  > tr').each(function() {
+        var cell = $(this).find('td');
+        var map = {};
+        map.kdbank = $(this).find('.kdbank_potensi').html();
+        map.potensi_h0 = cell.find('input#hnol').val();
+        map.potensi_h1 = cell.find('input#hsatu').val();
+        list.push(map)
+    });
+    console.log(list);
 
     $.ajax({
         url: baseUrl + "/api_operator/placement/ins_saldo_potensi",
         dataType: 'JSON',
         type: "POST",
         data : {
-            pKodeBank: row.find('.kdbank_potensi').html(),
-            pJumlah: row.find('input').val(),
+            /*pKodeBank: row.find('.kdbank_potensi').html(),
+            pJumlah: row.find('input').val(),*/
+            pData: JSON.stringify(list)
         },
         success: function (res) {
             console.log("res ins potensi : ",res);
@@ -77,4 +92,4 @@ $('table').on('click', '.btn', function()
         }
     });
 
-});
+};
