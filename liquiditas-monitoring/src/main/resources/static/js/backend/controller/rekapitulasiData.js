@@ -1089,7 +1089,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
     });
 
     $('.dataTables_filter').each(function () {
-        var html = '';
+        var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" data-target="#hide_column_modal"><i class="fa fa-arrows-alt"></i></button>';
         if(newRoleUser[0] != "ROLE_OSS"){
             html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
                 '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
@@ -1100,7 +1100,19 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
 
     initCbparent();
 
-    $("div.toolbar").html('<b>Custom tool bar! Text/images etc.</b>');
+    $('.checkbox-toggle').on( 'click', function (e) {
+        var column = table_rekapitulasi.column( $(this).attr('data-column') );
+        column.visible( ! column.visible() );
+        var id = this.attributes[0].value;
+        console.log(id);
+        if ($('#'+id).hasClass('btn-primary')) {
+            console.log($('#'+id));
+            $('#'+id).addClass('btn-success').removeClass('btn-primary');
+        } else {
+            console.log($('#'+id));
+            $('#'+id).addClass('btn-primary').removeClass('btn-success');
+        }
+    });
 
   /*  $("#table-rekapitulasi").on('change',"input[type='checkbox']",function(e){
         if($(this).is(':checked')){
