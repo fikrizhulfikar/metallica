@@ -314,7 +314,7 @@ public class ValasService {
                     for (int cellNum = 0; cellNum < totalCell; cellNum++) {
 
                         if (rrow.getCell(cellNum) == null) {
-                            list.add("-");
+                            list.add(null);
                         } else if (rrow.getCell(cellNum).getCellType() == Cell.CELL_TYPE_NUMERIC) {
                             if (DateUtil.isCellDateFormatted(rrow.getCell(cellNum))) {
                                 DateFormat format = new SimpleDateFormat("dd-MMMM-yyyy", Locale.ENGLISH);
