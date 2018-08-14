@@ -1002,7 +1002,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
 
                         function (res) {
                             hideLoadingCss()
-                            getTotalTagihan();
+                            // getTotalTagihan();
                             return res.data;
                         }
                 }
@@ -1083,13 +1083,14 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
         tempTableSearch = value;
     });
 
-    $('.dataTables_length').each(function () {
-        var html = '<label style="margin-left: 250px; cursor:default;">Total tagihan (Rp): <b id="total_tagihan">0</b></label>';
-        $(this).append(html);
-    });
+    // $('.dataTables_length').each(function () {
+    //     var html = '<label style="margin-left: 250px; cursor:default;">Total tagihan (Rp): <b id="total_tagihan">0</b></label>';
+    //     $(this).append(html);
+    // });
 
     $('.dataTables_filter').each(function () {
-        var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" data-target="#hide_column_modal"><i class="fa fa-arrows-alt"></i></button>';
+        var html = '';
+        // var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" data-target="#hide_column_modal"><i class="fa fa-arrows-alt"></i></button>';
         if(newRoleUser[0] != "ROLE_OSS"){
             html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
                 '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
@@ -1098,6 +1099,19 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
         $(this).append(html);
     });
 
+// $('.checkbox-toggle').on( 'click', function (e) {
+//     console.log(id);
+//     var column = table_rekapitulasi.column( $(this).attr('data-column') );
+//     column.visible( ! column.visible() );
+//     var id = this.attributes[0].value;
+//     if ($('#'+id).hasClass('btn-primary')) {
+//         console.log($('#'+id));
+//         $('#'+id).addClass('btn-success').removeClass('btn-primary');
+//     } else {
+//         console.log($('#'+id));
+//         $('#'+id).addClass('btn-primary').removeClass('btn-success');
+//     }
+// });
     initCbparent();
 
     $('.checkbox-toggle').on( 'click', function (e) {
