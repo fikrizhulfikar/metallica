@@ -1,6 +1,8 @@
 $(document).ready(function () {
     getAllData();
-
+    var date = new Date();
+    $("#date").text("Tanggal : "+ date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear());
+    console.log("date",date);
 });
 
 function getAllData() {
