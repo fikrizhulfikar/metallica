@@ -986,7 +986,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
                                 '</div>'
                         }
                         else if (full.STATUS_TRACKING == "APPROVE BY MS") {
-
+                            var role = newRoleUser[0];
                             ret_value =
                                 '<div class="btn-group">' +
                                 '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_TRIPARTITE + '\')"><i class="fa fa-clone"></i></button>';
@@ -1040,6 +1040,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pJenisPembayaran) {
                 "aTargets": [27],
                 "mRender": function (data, type, full) {
                     var value = new Object();
+                    var role = newRoleUser[0];
                     if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
                         return ""
                     } else {

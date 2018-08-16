@@ -3,6 +3,7 @@ package com.iconpln.liquiditas.monitoring.config;
 
 import com.iconpln.liquiditas.core.domain.Role;
 import com.iconpln.liquiditas.core.domain.User;
+import com.iconpln.liquiditas.core.service.LMetallicaService;
 import com.iconpln.liquiditas.core.service.UserService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class UserDetailsConfig implements UserDetailsService{
 
     @Autowired UserService userService;
 
+    @Autowired LMetallicaService lMetallicaService;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -45,7 +48,9 @@ public class UserDetailsConfig implements UserDetailsService{
                 grantedAuthorities.add(new SimpleGrantedAuthority(roles.getRole()));
             }
 
-            UserDetailWrapper userDetailWrapper = new UserDetailWrapper(user.getUsername(), user.getPassword(), grantedAuthorities, user.getTopics());
+            Set<String> grantedUris = new HashSet<>(lMetallicaService.grantedUris(username));
+
+            UserDetailWrapper userDetailWrapper = new UserDetailWrapper(user.getUsername(), user.getPassword(), grantedAuthorities, user.getTopics(), grantedUris);
             return userDetailWrapper;
         }
     }
