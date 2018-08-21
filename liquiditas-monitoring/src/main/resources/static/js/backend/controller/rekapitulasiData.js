@@ -1089,8 +1089,8 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
     // });
 
     $('.dataTables_filter').each(function () {
-        var html = '';
-        // var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" data-target="#hide_column_modal"><i class="fa fa-arrows-alt"></i></button>';
+        // var html = '';
+        var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" data-target="#hide_column_modal"><i class="fa fa-arrows-alt"></i></button>';
         if(newRoleUser[0] != "ROLE_OSS"){
             html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
                 '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
