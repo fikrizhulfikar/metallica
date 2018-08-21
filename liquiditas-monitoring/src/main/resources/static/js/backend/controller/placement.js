@@ -7,6 +7,31 @@ $(document).ready(function () {
     showLoadingCss();
 });
 
+var valas_mandiri_saldo_awal = null;
+var valas_bri_saldo_awal = null;
+var valas_bni_saldo_awal = null;
+var valas_bukopin_saldo_awal = null;
+
+var imprest_mandiri_saldo_awal = null;
+var imprest_bri_saldo_awal = null;
+var imprest_bni_saldo_awal = null;
+var imprest_bukopin_saldo_awal = null;
+
+var investasi_mandiri_saldo_awal = null;
+var investasi_bri_saldo_awal = null;
+var investasi_bni_saldo_awal = null;
+var investasi_bukopin_saldo_awal = null;
+
+var operasi_mandiri_saldo_awal = null;
+var operasi_bri_saldo_awal = null;
+var operasi_bni_saldo_awal = null;
+var operasi_bukopin_saldo_awal = null;
+
+var impor_mandiri_saldo_awal = null;
+var impor_bri_saldo_awal = null;
+var impor_bni_saldo_awal = null;
+var impor_bukopin_saldo_awal = null;
+
 function getSumberDana() {
     $.ajax({
         url: baseUrl + "api_operator/placement/get_sumber_placement",
@@ -185,14 +210,135 @@ function getPlacementAwal() {
         success: function (res) {
             hideLoadingCss("")
 
-             console.log("placement awal : ",res);
-
             var valas = [];
             var imprest = [];
             var investasi = [];
             var operasi = [];
             var impor = [];
             $.each(res.return, function (index, value) {
+
+                if (value.JENIS == "valas") {
+                    if (value.NAMA_BANK == "MANDIRI") {
+                        if (valas_mandiri_saldo_awal == null) {
+                            valas_mandiri_saldo_awal = value.SALDO_AWAL;
+                        }
+                    } else if (value.NAMA_BANK == "BRI") {
+                        if (valas_bri_saldo_awal == null) {
+                            valas_bri_saldo_awal = value.SALDO_AWAL;
+                        }
+                    } else if (value.NAMA_BANK == "BNI") {
+                        if (valas_bni_saldo_awal == null) {
+                            valas_bri_saldo_awal = value.SALDO_AWAL;
+                        }
+                    } else if (value.NAMA_BANK == "BUKOPIN") {
+                        if (valas_bukopin_saldo_awal == null) {
+                            valas_bri_saldo_awal = value.saldo_awal;
+                        }
+                    }
+                }
+
+                if (value.JENIS == "imprest") {
+                    if (value.NAMA_BANK == "MANDIRI") {
+                        if (imprest_mandiri_saldo_awal == null) {
+                            imprest_mandiri_saldo_awal = value.SALDO_AWAL;
+                        }
+                    } else if (value.NAMA_BANK == "BRI") {
+                        if (imprest_bri_saldo_awal == null) {
+                            imprest_bri_saldo_awal = value.SALDO_AWAL;
+                        }
+                    } else if (value.NAMA_BANK == "BNI") {
+                        if (imprest_bni_saldo_awal == null) {
+                            imprest_bni_saldo_awal = value.SALDO_AWAL;
+                        }
+                    } else if (value.NAMA_BANK == "BUKOPIN") {
+                        if (imprest_bukopin_saldo_awal == null) {
+                            imprest_bukopin_saldo_awal = value.saldo_awal;
+                        }
+                    }
+                }
+
+                if (value.JENIS == "investasi") {
+                    if (value.NAMA_BANK == "MANDIRI") {
+                        if (investasi_mandiri_saldo_awal == null) {
+                            investasi_mandiri_saldo_awal = value.SALDO_AWAL;
+                        }
+                    } else if (value.NAMA_BANK == "BRI") {
+                        if (investasi_bri_saldo_awal == null) {
+                            investasi_bri_saldo_awal = value.SALDO_AWAL;
+                        }
+                    } else if (value.NAMA_BANK == "BNI") {
+                        if (investasi_bni_saldo_awal == null) {
+                            investasi_bni_saldo_awal = value.SALDO_AWAL;
+                        }
+                    } else if (value.NAMA_BANK == "BUKOPIN") {
+                        if (investasi_bukopin_saldo_awal == null) {
+                            investasi_bukopin_saldo_awal = value.saldo_awal;
+                        }
+                    }
+                }
+
+                if (value.JENIS == "operasi") {
+                    if (value.NAMA_BANK == "MANDIRI") {
+                        if (operasi_mandiri_saldo_awal == null) {
+                            operasi_mandiri_saldo_awal = value.SALDO_AWAL;
+                        }
+                    } else if (value.NAMA_BANK == "BRI") {
+                        if (operasi_bri_saldo_awal == null) {
+                            operasi_bri_saldo_awal = value.SALDO_AWAL;
+                        }
+                    } else if (value.NAMA_BANK == "BNI") {
+                        if (operasi_bni_saldo_awal == null) {
+                            operasi_bni_saldo_awal = value.SALDO_AWAL;
+                        }
+                    } else if (value.NAMA_BANK == "BUKOPIN") {
+                        if (operasi_bukopin_saldo_awal == null) {
+                            operasi_bukopin_saldo_awal = value.saldo_awal;
+                        }
+                    }
+                }
+
+                if (value.JENIS == "operasi") {
+                    if (value.NAMA_BANK == "MANDIRI") {
+                        if (operasi_mandiri_saldo_awal == null) {
+                            operasi_mandiri_saldo_awal = value.SALDO_AWAL;
+                        }
+                    } else if (value.NAMA_BANK == "BRI") {
+                        if (operasi_bri_saldo_awal == null) {
+                            operasi_bri_saldo_awal = value.SALDO_AWAL;
+                        }
+                    } else if (value.NAMA_BANK == "BNI") {
+                        if (operasi_bni_saldo_awal == null) {
+                            operasi_bni_saldo_awal = value.SALDO_AWAL;
+                        }
+                    } else if (value.NAMA_BANK == "BUKOPIN") {
+                        if (operasi_bukopin_saldo_awal == null) {
+                            operasi_bukopin_saldo_awal = value.saldo_awal;
+                        }
+                    }
+                }
+
+                if (value.JENIS == "impor") {
+                    if (value.NAMA_BANK == "MANDIRI") {
+                        if (impor_mandiri_saldo_awal == null) {
+                            impor_mandiri_saldo_awal = value.SALDO_AWAL;
+                        }
+                    } else if (value.NAMA_BANK == "BRI") {
+                        if (impor_bri_saldo_awal == null) {
+                            impor_bri_saldo_awal = value.SALDO_AWAL;
+                        }
+                    } else if (value.NAMA_BANK == "BNI") {
+                        if (impor_bni_saldo_awal == null) {
+                            impor_bni_saldo_awal = value.SALDO_AWAL;
+                        }
+                    } else if (value.NAMA_BANK == "BUKOPIN") {
+                        if (impor_bukopin_saldo_awal == null) {
+                            impor_bukopin_saldo_awal = value.saldo_awal;
+                        }
+                    }
+                }
+
+                //
+
                 if (value.JENIS == "valas" && value.NAMA_BANK == "MANDIRI") {
                     temp = {
                         saldo_awal: {
@@ -362,19 +508,13 @@ function getPlacementAwal() {
                 }
             });
 
-            console.log("valas : ", valas);
-            // console.log("imprest : ", imprest);
-            // console.log("investasi : ", investasi);
-            // console.log("operasi : ", operasi);
-            // console.log("impor : ", impor);
-
             if (valas.length > 0) {
                 var html_saldo = "<tr id='saldo_awal_valas'>\n" +
                     "<td align='left' colspan=\"2\">SALDO AWAL</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(valas[0].saldo_awal.mandiri, 2, ".", ",") + "</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(valas[0].saldo_awal.bri, 2, ".", ",") + "</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(valas[0].saldo_awal.bni, 2, ".", ",") + "</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(valas[0].saldo_awal.bukopin, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(valas_mandiri_saldo_awal, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(valas_bri_saldo_awal, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(valas_bni_saldo_awal, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(valas_bukopin_saldo_awal, 2, ".", ",") + "</td>\n" +
                     "</tr>";
 
                 $("#table-imprest-valas tbody #saldo_awal_valas").replaceWith(html_saldo);
@@ -395,10 +535,10 @@ function getPlacementAwal() {
             if (imprest.length > 0) {
                 var html_saldo = "<tr id='saldo_awal_imprest'>\n" +
                     "<td align='left' colspan=\"2\">SALDO AWAL</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(imprest[0].saldo_awal.mandiri, 2, ".", ",") + "</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(imprest[0].saldo_awal.bri, 2, ".", ",") + "</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(imprest[0].saldo_awal.bni, 2, ".", ",") + "</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(imprest[0].saldo_awal.bukopin, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(imprest_mandiri_saldo_awal, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(imprest_bri_saldo_awal, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(imprest_bni_saldo_awal, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(imprest_bukopin_saldo_awal, 2, ".", ",") + "</td>\n" +
                     "</tr>";
 
                 $("#table-imprest tbody #saldo_awal_imprest").replaceWith(html_saldo);
@@ -419,10 +559,10 @@ function getPlacementAwal() {
             if (investasi.length > 0) {
                 var html_saldo = "<tr id='saldo_awal_investasi'>\n" +
                     "<td align='left' colspan=\"2\">SALDO AWAL</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(investasi[0].saldo_awal.mandiri, 2, ".", ",") + "</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(investasi[0].saldo_awal.bri, 2, ".", ",") + "</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(investasi[0].saldo_awal.bni, 2, ".", ",") + "</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(investasi[0].saldo_awal.bukopin, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(investasi_mandiri_saldo_awal, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(investasi_bri_saldo_awal, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(investasi_bni_saldo_awal, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(investasi_bukopin_saldo_awal, 2, ".", ",") + "</td>\n" +
                     "</tr>";
 
                 $("#table-investasi tbody #saldo_awal_investasi").replaceWith(html_saldo);
@@ -443,10 +583,10 @@ function getPlacementAwal() {
             if (operasi.length > 0) {
                 var html_saldo = "<tr id='saldo_awal_operasi'>\n" +
                     "<td align='left' colspan=\"2\">SALDO AWAL</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(operasi[0].saldo_awal.mandiri, 2, ".", ",") + "</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(operasi[0].saldo_awal.bri, 2, ".", ",") + "</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(operasi[0].saldo_awal.bni, 2, ".", ",") + "</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(operasi[0].saldo_awal.bukopin, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(operasi_mandiri_saldo_awal, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(operasi_bri_saldo_awal, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(operasi_bni_saldo_awal, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(operasi_bukopin_saldo_awal, 2, ".", ",") + "</td>\n" +
                     "</tr>";
 
                 $("#table-operasi tbody #saldo_awal_operasi").replaceWith(html_saldo);
@@ -467,10 +607,10 @@ function getPlacementAwal() {
             if (impor.length > 0) {
                 var html_saldo = "<tr id='saldo_awal_impor'>\n" +
                     "<td align='left' colspan=\"2\">SALDO AWAL</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(impor[0].saldo_awal.mandiri, 2, ".", ",") + "</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(impor[0].saldo_awal.bri, 2, ".", ",") + "</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(impor[0].saldo_awal.bni, 2, ".", ",") + "</td>\n" +
-                    "<td align='right'>" + accounting.formatNumber(impor[0].saldo_awal.bukopin, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(impor_mandiri_saldo_awal, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(impor_bri_saldo_awal, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(impor_bni_saldo_awal, 2, ".", ",") + "</td>\n" +
+                    "<td align='right'>" + accounting.formatNumber(impor_bukopin_saldo_awal, 2, ".", ",") + "</td>\n" +
                     "</tr>";
 
                 $("#table-impor tbody #saldo_awal_import").replaceWith(html_saldo);
