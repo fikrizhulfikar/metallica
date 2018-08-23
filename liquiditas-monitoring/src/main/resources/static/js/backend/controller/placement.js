@@ -316,13 +316,13 @@ function getPlacementAwal() {
                 if (value.JENIS == "investasi" && value.NAMA_BANK == "BRI") {
                     investasi[investasi_bri_index].saldo_awal.bri = value.SALDO_AWAL;
                     investasi[investasi_bri_index].saldo_akhir.bri = value.SALDO_AKHIR;
-                    console.log("DSFDSFSD : " + investasi_bri_index+ "" + value.SALDO_AKHIR);
                     investasi_bri_index++;
                 }
 
                 if (value.JENIS == "investasi" && value.NAMA_BANK == "BUKOPIN") {
                     investasi[investasi_bukopin_index].saldo_awal.bukopin = value.SALDO_AWAL;
-                    investasi[investasi_bukopin_index].saldo_akhir.bukopen = value.SALDO_AKHIR;
+                    investasi[investasi_bukopin_index].saldo_akhir.bukopin = value.SALDO_AKHIR;
+                    console.log("SALDO AKHIR: " + value.SALDO_AKHIR);
                     investasi_bukopin_index++;
                 }
 
