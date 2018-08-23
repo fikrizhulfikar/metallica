@@ -185,8 +185,6 @@ function getPlacementAwal() {
         success: function (res) {
             hideLoadingCss("")
 
-             console.log("placement awal : ",res);
-
             var valas = [];
             var imprest = [];
             var investasi = [];
@@ -247,88 +245,6 @@ function getPlacementAwal() {
                     }
                     operasi.push(temp)
                 }
-            });
-
-            $.each(res.return, function (index, value) {
-                if (value.JENIS == "valas" && value.NAMA_BANK == "BNI") {
-                    for (var i = 0; i < valas.length; i++) {
-                        valas[i].saldo_awal.bni = value.SALDO_AWAL;
-                        valas[i].saldo_akhir.bni = value.SALDO_AKHIR;
-                    }
-                }
-                if (value.JENIS == "valas" && value.NAMA_BANK == "BRI") {
-                    for (var i = 0; i < valas.length; i++) {
-                        valas[i].saldo_awal.bri = value.SALDO_AWAL;
-                        valas[i].saldo_akhir.bri = value.SALDO_AKHIR;
-                    }
-                }
-
-                if (value.JENIS == "valas" && value.NAMA_BANK == "BUKOPIN") {
-
-                    for (var i = 0; i < valas.length; i++) {
-                        valas[i].saldo_awal.bukopin = value.SALDO_AWAL;
-                        valas[i].saldo_akhir.bukopin = value.SALDO_AKHIR;
-                    }
-                }
-                if (value.JENIS == "imprest" && value.NAMA_BANK == "BNI") {
-                    for (var i = 0; i < imprest.length; i++) {
-                        imprest[i].saldo_awal.bni = value.SALDO_AWAL;
-                        imprest[i].saldo_akhir.bni = value.SALDO_AKHIR;
-                    }
-                }
-                if (value.JENIS == "imprest" && value.NAMA_BANK == "BRI") {
-                    for (var i = 0; i < imprest.length; i++) {
-                        imprest[i].saldo_awal.bri = value.SALDO_AWAL;
-                        imprest[i].saldo_akhir.bri = value.SALDO_AKHIR;
-                    }
-                }
-                if (value.JENIS == "imprest" && value.NAMA_BANK == "BUKOPIN") {
-                    for (var i = 0; i < imprest.length; i++) {
-                        imprest[i].saldo_awal.bukopin = value.SALDO_AWAL;
-                        imprest[i].saldo_akhir.bukopin = value.SALDO_AKHIR;
-                    }
-                }
-
-
-                if (value.JENIS == "investasi" && value.NAMA_BANK == "BNI") {
-                    for (var i = 0; i < investasi.length; i++) {
-                        investasi[i].saldo_awal.bni = value.SALDO_AWAL;
-                        investasi[i].saldo_akhir.bni = value.SALDO_AKHIR;
-                    }
-                }
-                if (value.JENIS == "investasi" && value.NAMA_BANK == "BRI") {
-                    for (var i = 0; i < investasi.length; i++) {
-                        investasi[i].saldo_awal.bri = value.SALDO_AWAL;
-                        investasi[i].saldo_akhir.bri = value.SALDO_AKHIR;
-                    }
-                }
-                if (value.JENIS == "investasi" && value.NAMA_BANK == "BUKOPIN") {
-                    for (var i = 0; i < investasi.length; i++) {
-                        investasi[i].saldo_awal.bukopin = value.SALDO_AWAL;
-                        investasi[i].saldo_akhir.bukopin = value.SALDO_AKHIR;
-                    }
-                }
-
-
-                if (value.JENIS == "operasi" && value.NAMA_BANK == "BNI") {
-                    for (var i = 0; i < operasi.length; i++) {
-                        operasi[i].saldo_awal.bni = value.SALDO_AWAL;
-                        operasi[i].saldo_akhir.bni = value.SALDO_AKHIR;
-                    }
-                }
-                if (value.JENIS == "operasi" && value.NAMA_BANK == "BRI") {
-                    for (var i = 0; i < operasi.length; i++) {
-                        operasi[i].saldo_awal.bri = value.SALDO_AWAL;
-                        operasi[i].saldo_akhir.bri = value.SALDO_AKHIR;
-                    }
-                }
-                if (value.JENIS == "operasi" && value.NAMA_BANK == "BUKOPIN") {
-                    for (var i = 0; i < operasi.length; i++) {
-                        operasi[i].saldo_awal.bukopin = value.SALDO_AWAL;
-                        operasi[i].saldo_akhir.bukopin = value.SALDO_AKHIR;
-                    }
-                }
-
                 if (value.JENIS == "impor" && value.NAMA_BANK == "MANDIRI") {
                     temp = {
                         saldo_awal: {
@@ -342,31 +258,111 @@ function getPlacementAwal() {
                     }
                     impor.push(temp)
                 }
+            });
+
+            var investasi_bri_index = 0;
+            var investasi_bni_index = 0;
+            var investasi_bukopin_index = 0;
+            var valas_bri_index = 0;
+            var valas_bni_index = 0;
+            var valas_bukopin_index = 0;
+            var imprest_bri_index = 0;
+            var imprest_bni_index = 0;
+            var imprest_bukopin_index = 0;
+            var operasi_bri_index = 0;
+            var operasi_bni_index = 0;
+            var operasi_bukopin_index = 0;
+            var impor_bri_index = 0;
+            var impor_bni_index = 0;
+            var impor_bukopin_index = 0;
+            $.each(res.return, function (index, value) {
+                if (value.JENIS == "valas" && value.NAMA_BANK == "BNI") {
+                    valas[valas_bni_index].saldo_awal.bni = value.SALDO_AWAL;
+                    valas[valas_bni_index].saldo_akhir.bni = value.SALDO_AKHIR;
+                    valas_bni_index++;
+                }
+                if (value.JENIS == "valas" && value.NAMA_BANK == "BRI") {
+                    valas[valas_bri_index].saldo_awal.bri = value.SALDO_AWAL;
+                    valas[valas_bri_index].saldo_akhir.bri = value.SALDO_AKHIR;
+                    valas_bri_index++;
+                }
+
+                if (value.JENIS == "valas" && value.NAMA_BANK == "BUKOPIN") {
+                    valas[valas_bukopin_index].saldo_awal.bukopin = value.SALDO_AWAL;
+                    valas[valas_bukopin_index].saldo_akhir.bukopin = value.SALDO_AKHIR;
+                    valas_bukopin_index++;
+                }
+                if (value.JENIS == "imprest" && value.NAMA_BANK == "BNI") {
+                    imprest[imprest_bni_index].saldo_awal.bni = value.SALDO_AWAL;
+                    imprest[imprest_bni_index].saldo_akhir.bni = value.SALDO_AKHIR;
+                    imprest_bni_index++;
+                }
+                if (value.JENIS == "imprest" && value.NAMA_BANK == "BRI") {
+                    imprest[imprest_bri_index].saldo_awal.bri = value.SALDO_AWAL;
+                    imprest[imprest_bri_index].saldo_akhir.bri = value.SALDO_AKHIR;
+                    imprest_bri_index++;
+                }
+                if (value.JENIS == "imprest" && value.NAMA_BANK == "BUKOPIN") {
+                    imprest[imprest_bukopin_index].saldo_awal.bukopin = value.SALDO_AWAL;
+                    imprest[imprest_bukopin_index].saldo_akhir.bukopin = value.SALDO_AKHIR;
+                    imprest_bukopin_index++;
+                }
+                if (value.JENIS == "investasi" && value.NAMA_BANK == "BNI") {
+                    investasi[investasi_bni_index].saldo_awal.bni = value.SALDO_AWAL;
+                    investasi[investasi_bni_index].saldo_akhir.bni = value.SALDO_AKHIR;
+                    investasi_bni_index++;
+                }
+
+                if (value.JENIS == "investasi" && value.NAMA_BANK == "BRI") {
+                    investasi[investasi_bri_index].saldo_awal.bri = value.SALDO_AWAL;
+                    investasi[investasi_bri_index].saldo_akhir.bri = value.SALDO_AKHIR;
+                    console.log("DSFDSFSD : " + investasi_bri_index+ "" + value.SALDO_AKHIR);
+                    investasi_bri_index++;
+                }
+
+                if (value.JENIS == "investasi" && value.NAMA_BANK == "BUKOPIN") {
+                    investasi[investasi_bukopin_index].saldo_awal.bukopin = value.SALDO_AWAL;
+                    investasi[investasi_bukopin_index].saldo_akhir.bukopen = value.SALDO_AKHIR;
+                    investasi_bukopin_index++;
+                }
+
+                if (value.JENIS == "operasi" && value.NAMA_BANK == "BNI") {
+                    operasi[operasi_bni_index].saldo_awal.bni = value.SALDO_AWAL;
+                    operasi[operasi_bni_index].saldo_akhir.bni = value.SALDO_AKHIR;
+                    operasi_bni_index++;
+                }
+                if (value.JENIS == "operasi" && value.NAMA_BANK == "BRI") {
+                    operasi[operasi_bri_index].saldo_awal.bri = value.SALDO_AWAL;
+                    operasi[operasi_bri_index].saldo_akhir.bri = value.SALDO_AKHIR;
+                    operasi_bri_index++;
+                }
+                if (value.JENIS == "operasi" && value.NAMA_BANK == "BUKOPIN") {
+                    operasi[operasi_bukopin_index].saldo_awal.bukopin = value.SALDO_AWAL;
+                    operasi[operasi_bukopin_index].saldo_akhir.bukopin = value.SALDO_AKHIR;
+                    operasi_bukopin_index++;
+                }
                 if (value.JENIS == "impor" && value.NAMA_BANK == "BNI") {
-                    for (var i = 0; i < impor.length; i++) {
-                        impor[i].saldo_awal.bni = value.SALDO_AWAL;
-                        impor[i].saldo_akhir.bni = value.SALDO_AKHIR;
-                    }
+                    impor[impor_bni_index].saldo_awal.bni = value.SALDO_AWAL;
+                    impor[impor_bni_index].saldo_akhir.bni = value.SALDO_AKHIR;
+                    impor_bni_index++;
                 }
                 if (value.JENIS == "impor" && value.NAMA_BANK == "BRI") {
-                    for (var i = 0; i < impor.length; i++) {
-                        impor[i].saldo_awal.bri = value.SALDO_AWAL;
-                        impor[i].saldo_akhir.bri = value.SALDO_AKHIR;
-                    }
+                    impor[impor_bri_index].saldo_awal.bri = value.SALDO_AWAL;
+                    impor[impor_bri_index].saldo_akhir.bri = value.SALDO_AKHIR;
+                    impor_bri_index++;
                 }
                 if (value.JENIS == "impor" && value.NAMA_BANK == "BUKOPIN") {
-                    for (var i = 0; i < impor.length; i++) {
-                        impor[i].saldo_awal.bukopin = value.SALDO_AWAL;
-                        impor[i].saldo_akhir.bukopin = value.SALDO_AKHIR;
-                    }
+                    impor[impor_bukopin_index].saldo_awal.bukopin = value.SALDO_AWAL;
+                    impor[impor_bukopin_index].saldo_akhir.bukopin = value.SALDO_AKHIR;
+                    impor_bukopin_index++;
                 }
             });
 
             console.log("valas : ", valas);
-            // console.log("imprest : ", imprest);
-            // console.log("investasi : ", investasi);
-            // console.log("operasi : ", operasi);
-            // console.log("impor : ", impor);
+            console.log("imprest : ", imprest);
+            console.log("investasi : ", investasi);
+            console.log("operasi : ", operasi);
+            console.log("impor : ", impor);
 
             if (valas.length > 0) {
                 var html_saldo = "<tr id='saldo_awal_valas'>\n" +
