@@ -23,6 +23,16 @@ public class PageOperatorController {
         return "operator/rekapitulasi_data";
     }
 
+    @RequestMapping("/rekap_belum")
+    public String rekapDataBelumVerifikasi() {
+        return "operator/rekap_belum";
+    }
+
+    @RequestMapping("/rekap_sudah")
+    public String rekapDataSudahVerifikasi() {
+        return "operator/rekap_sudah";
+    }
+
     @RequestMapping("/realisasi_pembayaran")
     public String realisasi_pembayaran() {
         return "operator/realisasi_pembayaran";

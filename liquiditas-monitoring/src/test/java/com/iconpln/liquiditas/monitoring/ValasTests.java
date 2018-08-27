@@ -67,7 +67,7 @@ public class ValasTests {
 	public void getListPembayaran() {
 //		try {
 		try {
-			valasService.getListPembayaran(1, 10, "01/01/2018", "01/05/2019"
+			valasService.getListPembayaranSudah(1, 10, "01/01/2018", "01/05/2019"
 					, "ALL", "ALL", "ALL"
 					, "admin", "JENIS_PEMBAYARAN", "DESC"
 					, "").forEach(stringObjectMap -> {

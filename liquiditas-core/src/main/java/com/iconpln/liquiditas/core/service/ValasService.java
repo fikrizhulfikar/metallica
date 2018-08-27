@@ -103,7 +103,7 @@ public class ValasService {
         return out;
     }
 
-    public List<Map<String, Object>> getListPembayaran(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pPembayaran, String pUserId, String sortBy, String sortDir, String pSearch) throws SQLException {
+    public List<Map<String, Object>> getListPembayaranBelum(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pPembayaran, String pUserId, String sortBy, String sortDir, String status, String pSearch) throws SQLException {
 
         AppUtils.getLogger(this).debug("data rekap search info = " +
                         "start : {}, " +
@@ -117,6 +117,7 @@ public class ValasService {
                         "pUserId : {}," +
                         "pSortBy : {}," +
                         "pSortDir : {}," +
+                        "pStatus : {}," +
                         "pSearch : {},",
 
                 pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, pUserId, sortBy, sortDir, pSearch);
@@ -136,11 +137,53 @@ public class ValasService {
                 .addValue("p_user_id", pUserId, Types.VARCHAR)
                 .addValue("p_sort_by", sortBy, Types.VARCHAR)
                 .addValue("p_sort_dir", sortDir, Types.VARCHAR)
+                .addValue("p_status", status, Types.VARCHAR)
                 .addValue("p_search", pSearch, Types.VARCHAR);
 
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
 
         AppUtils.getLogger(this).info("data get_rekap_pembayaran_pss : {}", resultset);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getListPembayaranSudah(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pPembayaran, String pUserId, String sortBy, String sortDir, String pSearch) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data rekap search info = " +
+                        "start : {}, " +
+                        "length : {}, " +
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, " +
+                        "pBank : {}, " +
+                        "pCurrency : {}, " +
+                        "pPembayaran : {}," +
+                        "pStatusValas : {}," +
+                        "pUserId : {}," +
+                        "pSortBy : {}," +
+                        "pSortDir : {}," +
+                        "pSearch : {},",
+
+                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, pUserId, sortBy, sortDir, pSearch);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_rekap_pembayaran_pss2");
+
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_start", pStart, Types.INTEGER)
+                .addValue("p_length", pLength, Types.INTEGER)
+                .addValue("p_tgl_awal", pTglAwal, Types.VARCHAR)
+                .addValue("p_tgl_akhir", pTglAkhir, Types.VARCHAR)
+                .addValue("p_bank", pBank, Types.VARCHAR)
+                .addValue("p_cur", pCurrency, Types.VARCHAR)
+                .addValue("p_pembayaran", pPembayaran, Types.VARCHAR)
+                .addValue("p_user_id", pUserId, Types.VARCHAR)
+                .addValue("p_sort_by", sortBy, Types.VARCHAR)
+                .addValue("p_sort_dir", sortDir, Types.VARCHAR)
+                .addValue("p_search", pSearch, Types.VARCHAR);
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_rekap_pembayaran_pss2 : {}", resultset);
         return resultset;
     }
 

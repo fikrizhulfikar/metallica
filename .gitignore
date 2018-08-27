@@ -10,6 +10,7 @@ liquiditas-scheduler/target/
 liquiditas-scheduler/liquiditas-log/*
 logs/
 out/
+/liquiditas-log/core.log
 
 upload_content_file/
 upload_profile_file/

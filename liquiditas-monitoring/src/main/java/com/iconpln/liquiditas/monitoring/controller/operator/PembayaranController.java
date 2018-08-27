@@ -51,8 +51,52 @@ public class PembayaranController {
     @Autowired
     private ResourceLoader resourceLoader;
 
-    @RequestMapping(value = "/get_data_rekapitulasi", method = RequestMethod.GET)
-    public Map listRekapData(
+    @RequestMapping(value = "/rekap_belum", method = RequestMethod.GET)
+    public Map listRekapDataBelum(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "10") int length,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
+            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
+            @RequestParam(value = "pPembayaran", defaultValue = "ALL") String pPembayaran,
+            @RequestParam(value = "pStatus", defaultValue = "") String pStatus,
+            @RequestParam(value = "search[value]", defaultValue = "") String pSearch
+    ) {
+
+        String sortBy = parseColumn(sortIndex);
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = valasService.getListPembayaranBelum(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, WebUtils.getUsernameLogin(), sortBy, sortDir, pStatus, pSearch);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("draw", draw);
+        mapData.put("data", list);
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
+        return mapData;
+    }
+
+    @RequestMapping(value = "/rekap_sudah", method = RequestMethod.GET)
+    public Map listRekapDataSudah(
             @RequestParam(value = "draw", defaultValue = "0") int draw,
             @RequestParam(value = "start", defaultValue = "0") int start,
             @RequestParam(value = "length", defaultValue = "10") int length,
@@ -74,7 +118,7 @@ public class PembayaranController {
         }
         List<Map<String, Object>> list = new ArrayList<>();
         try {
-            list = valasService.getListPembayaran(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, WebUtils.getUsernameLogin(), sortBy, sortDir, pSearch);
+            list = valasService.getListPembayaranSudah((start / length) + 1, length, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, WebUtils.getUsernameLogin(), sortBy, sortDir, pSearch);
         } catch (Exception e) {
             e.printStackTrace();
         }

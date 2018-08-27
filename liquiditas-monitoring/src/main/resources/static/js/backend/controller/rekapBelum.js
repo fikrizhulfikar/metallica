@@ -980,7 +980,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
             "ajax":
                 {
                     "url":
-                    baseUrl + "api_operator/pembayaran/get_data_rekapitulasi",
+                    baseUrl + "api_operator/pembayaran/rekap_belum",
                     "type":
                         "GET",
                     "dataType":
