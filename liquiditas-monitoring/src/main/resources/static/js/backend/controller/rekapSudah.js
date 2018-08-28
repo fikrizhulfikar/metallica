@@ -1077,7 +1077,118 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                     }
                 },
             "initComplete": function(settings, json) {
-
+                var api = this.api();
+                $.ajax({
+                    url: baseUrl + "api_operator/pembayaran/get_column",
+                    dataType: 'JSON',
+                    type: "GET",
+                    success: function (res) {
+                        var response = res.data[0];
+                        if (response.NOMOR == 1) {
+                            api.column(0).visible(true);
+                        } else {
+                            api.column(0).visible(false);
+                        }
+                        if (response.JENIS_PEMBAYARAN == 1) {
+                            api.column(1).visible(true);
+                        } else {
+                            api.column(1).visible(false);
+                        }
+                        if (response.JATUH_TEMPO == 1) {
+                            api.column(2).visible(true);
+                        } else {
+                            api.column(2).visible(false);
+                        }
+                        if (response.VENDOR == 1) {
+                            api.column(3).visible(true);
+                        } else {
+                            api.column(3).visible(false);
+                        }
+                        if (response.CURRENCY == 1) {
+                            api.column(4).visible(true);
+                        } else {
+                            api.column(4).visible(false);
+                        }
+                        if (response.NILAI_TAGIHAN == 1) {
+                            api.column(5).visible(true);
+                        } else {
+                            api.column(5).visible(false);
+                        }
+                        if (response.NAMA_KONTRAK == 1) {
+                            api.column(6).visible(true);
+                        } else {
+                            api.column(6).visible(false);
+                        }
+                        if (response.BANK_TUJUAN == 1) {
+                            api.column(7).visible(true);
+                        } else {
+                            api.column(7).visible(false);
+                        }
+                        if (response.BANK_PEMBAYAR == 1) {
+                            api.column(8).visible(true);
+                        } else {
+                            api.column(8).visible(false);
+                        }
+                        if (response.TGL_TERIMA_TAGIHAN == 1) {
+                            api.column(9).visible(true);
+                        } else {
+                            api.column(9).visible(false);
+                        }
+                        if (response.TGL_TAGIHAN == 1) {
+                            api.column(10).visible(true);
+                        } else {
+                            api.column(10).visible(false);
+                        }
+                        if (response.NO_TAGIHAN == 1) {
+                            api.column(11).visible(true);
+                        } else {
+                            api.column(11).visible(false);
+                        }
+                        if (response.TGL_NOTA_DINAS == 1) {
+                            api.column(12).visible(false);
+                        } else {
+                            api.column(12).visible(false);
+                        }
+                        if (response.NO_NOTA_DINAS == 1) {
+                            api.column(13).visible(true);
+                        } else {
+                            api.column(13).visible(false);
+                        }
+                        if (response.TGL_PEMBAYARAN == 1) {
+                            api.column(14).visible(true);
+                        } else {
+                            api.column(14).visible(false);
+                        }
+                        if (response.COUNTDOWN == 1) {
+                            api.column(15).visible(true);
+                        } else {
+                            api.column(15).visible(false);
+                        }
+                        if (response.STATUS == 1) {
+                            api.column(16).visible(true);
+                        } else {
+                            api.column(16).visible(false);
+                        }
+                        if (response.TIPE_TRANSAKSI == 1) {
+                            api.column(17).visible(true);
+                        } else {
+                            api.column(17).visible(false);
+                        }
+                        if (response.STATUS_TAGIHAN == 1) {
+                            api.column(18).visible(true);
+                        } else {
+                            api.column(18).visible(false);
+                        }
+                        if (response.KETERANGAN == 1) {
+                            api.column(19).visible(true);
+                        } else {
+                            api.column(19).visible(false);
+                        }
+                    },
+                    error: function () {
+                        hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+                    }
+                });
             }
         }
     );
@@ -1093,7 +1204,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
 
     $('.dataTables_filter').each(function () {
         // var html = '';
-        var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" data-target="#hide_column_modal"><i class="fa fa-arrows-alt"></i></button>';
+        var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
         if(newRoleUser[0] != "ROLE_OSS"){
             html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
                 '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
@@ -1102,19 +1213,10 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
         $(this).append(html);
     });
     initCbparent();
-    $('.checkbox-toggle').on( 'click', function (e) {
-        var column = table_rekapitulasi.column( $(this).attr('data-column') );
-        column.visible( ! column.visible() );
-        var id = this.attributes[0].value;
-        console.log(id);
-        if ($('#'+id).hasClass('btn-primary')) {
-            console.log($('#'+id));
-            $('#'+id).addClass('btn-success').removeClass('btn-primary');
-        } else {
-            console.log($('#'+id));
-            $('#'+id).addClass('btn-primary').removeClass('btn-success');
-        }
-    });
+    // $('.checkbox-toggle').on( 'click', function (e) {
+    //     var column = table_rekapitulasi.column( $(this).attr('data-column') );
+    //     column.visible( ! column.visible() );
+    // });
 }
 
 function checkArray(e) {

@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -1826,6 +1827,78 @@ public class ValasService {
         Map<String, Object> out = simpleJdbcCall.execute(in);
         AppUtils.getLogger(this).info("data ins_tripartite : {}", out);
         return out;
+    }
+
+    /**
+     * Rekap pembayaran
+     * @param userId userId
+     */
+    public List<Map<String, Object>> getColumn(String userId) throws SQLException {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_column");
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_user_id", userId);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+        AppUtils.getLogger(this).info("data get_derivatif_ccs_pss : {}", resultset);
+        return resultset;
+    }
+
+    /**
+     * Rekap pembayaran
+     */
+    public String saveColumn(
+            String userId,
+            int nomor,
+            int jenisPembayaran,
+            int jatuhTempo,
+            int vendor,
+            int currency,
+            int nilaiTagihan,
+            int namaKontrak,
+            int bankTujuan,
+            int bankPembayar,
+            int tglTerimaTagihan,
+            int tglTagihan,
+            int noTagihan,
+            int tglNotaDinas,
+            int noNotaDinas,
+            int tglPembayaran,
+            int countdown,
+            int status,
+            int tipeTransaksi,
+            int statusTagihan,
+            int keterangan) {
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR)
+                .addValue("p_nomor", nomor, OracleTypes.NUMBER)
+                .addValue("p_jenis_pembayaran", jenisPembayaran, OracleTypes.NUMBER)
+                .addValue("p_jatuh_tempo", jatuhTempo, OracleTypes.NUMBER)
+                .addValue("p_vendor", vendor, OracleTypes.NUMBER)
+
+                .addValue("p_currency", currency, OracleTypes.NUMBER)
+                .addValue("p_nilai_tagihan", nilaiTagihan, OracleTypes.NUMBER)
+                .addValue("p_nama_kontrak", namaKontrak, OracleTypes.NUMBER)
+                .addValue("p_bank_tujuan", bankTujuan, OracleTypes.NUMBER)
+                .addValue("p_bank_pembayar", bankPembayar, OracleTypes.NUMBER)
+
+                .addValue("p_tgl_terima_tagihan", tglTerimaTagihan, OracleTypes.NUMBER)
+                .addValue("p_tgl_tagihan", tglTagihan, OracleTypes.NUMBER)
+                .addValue("p_no_tagihan", noTagihan, OracleTypes.NUMBER)
+                .addValue("p_tgl_nota_dinas", tglNotaDinas, OracleTypes.NUMBER)
+                .addValue("p_no_nota_dinas", noNotaDinas, OracleTypes.NUMBER)
+
+                .addValue("p_tgl_pembayaran", tglPembayaran, OracleTypes.NUMBER)
+                .addValue("p_countdown", countdown, OracleTypes.NUMBER)
+                .addValue("p_status", status, OracleTypes.NUMBER)
+                .addValue("p_tipe_transaksi", tipeTransaksi, OracleTypes.NUMBER)
+                .addValue("p_status_tagihan", statusTagihan, OracleTypes.NUMBER)
+
+                .addValue("p_keterangan", keterangan, OracleTypes.NUMBER);
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_valas")
+                .withFunctionName("save_column_rekap");
+        return simpleJdbcCall.executeFunction(String.class, in);
     }
 
     public Map<String, Object> getNotificatonDetail(String pIdJenisPembayaran, String pIdVendor) {

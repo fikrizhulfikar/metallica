@@ -813,6 +813,72 @@ public class PembayaranController {
         }
     }
 
+    @RequestMapping(value = "/get_column", method = RequestMethod.GET)
+    public Map getColumn() {
+        Map data = new HashMap();
+        try {
+            data.put("data", valasService.getColumn(WebUtils.getUsernameLogin()));
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/save_column", method = RequestMethod.POST)
+    public Map saveColumn(@RequestParam("nomor") Integer nomor,
+                          @RequestParam("jenis_pembayaran") Integer jenisPembayaran,
+                          @RequestParam("jatuh_tempo") Integer jatuhTempo,
+                          @RequestParam("vendor") Integer vendor,
+                          @RequestParam("currency") Integer currency,
+                          @RequestParam("nilai_tagihan") Integer nilaiTagihan,
+                          @RequestParam("nama_kontrak") Integer namaKontrak,
+                          @RequestParam("bank_tujuan") Integer bankTujuan,
+                          @RequestParam("bank_pembayar") Integer bankPembayar,
+                          @RequestParam("tgl_terima_tagihan") Integer tglTerimaTagihan,
+                          @RequestParam("tgl_tagihan") Integer tglTagihan,
+                          @RequestParam("no_tagihan") Integer noTagihan,
+                          @RequestParam("tgl_nota_dinas") Integer tglNotaDinas,
+                          @RequestParam("no_nota_dinas") Integer noNotaDinas,
+                          @RequestParam("tgl_pembayaran") Integer tglPembayaran,
+                          @RequestParam("countdown") Integer countdown,
+                          @RequestParam("status") Integer status,
+                          @RequestParam("tipe_transaksi") Integer tipeTransaksi,
+                          @RequestParam("status_tagihan") Integer statusTagihan,
+                          @RequestParam("keterangan") Integer keterangan
+    ) {
+        Map data = new HashMap();
+        try {
+            String result = valasService.saveColumn(WebUtils.getUsernameLogin(),
+                    nomor,
+                    jenisPembayaran,
+                    jatuhTempo,
+                    vendor,
+                    currency,
+                    nilaiTagihan,
+                    namaKontrak,
+                    bankTujuan,
+                    bankPembayar,
+                    tglTerimaTagihan,
+                    tglTagihan,
+                    noTagihan,
+                    tglNotaDinas,
+                    noNotaDinas,
+                    tglPembayaran,
+                    countdown,
+                    status,
+                    tipeTransaksi,
+                    statusTagihan,
+                    keterangan
+            );
+            data.put("data", result);
+        } catch (Exception e) {
+            data.put("data", "Gagal menyimpan");
+            AppUtils.getLogger(this).debug("Error: {}", e.getMessage());
+        }
+        return data;
+    }
+
     public void notifyUpdateStatus(String pIdValas) {
         String pJenisPembayaran = valasService.getIdPembayaranByIdValas(pIdValas);
         Notification notification = Notification.builder()

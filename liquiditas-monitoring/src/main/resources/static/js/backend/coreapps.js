@@ -344,3 +344,186 @@ function getDataNow() {
     var newDate = date.toJSON().slice(0, 10).replace(new RegExp("-", 'g'), "/").split("/").reverse().join("/")
     return newDate
 }
+
+
+/**
+ * Rekap data
+ */
+function showColumn() {
+    $("#hide_column_modal").modal("show");
+    $.ajax({
+        url: baseUrl + "api_operator/pembayaran/get_column",
+        dataType: 'JSON',
+        type: "GET",
+        success: function (res) {
+            var response = res.data[0];
+            if (response.NOMOR == 1) {
+                $("#hc0").prop("checked", true);
+            } else {
+                $("#hc0").prop("checked", false);
+            }
+            if (response.JENIS_PEMBAYARAN == 1) {
+                $("#hc1").prop("checked", true);
+            } else {
+                $("#hc1").prop("checked", false);
+            }
+            if (response.JATUH_TEMPO == 1) {
+                $("#hc2").prop("checked", true);
+            } else {
+                $("#hc2").prop("checked", false);
+            }
+            if (response.VENDOR == 1) {
+                $("#hc3").prop("checked", true);
+            } else {
+                $("#hc3").prop("checked", false);
+            }
+            if (response.CURRENCY == 1) {
+                $("#hc4").prop("checked", true);
+            } else {
+                $("#hc4").prop("checked", false);
+            }
+            if (response.NILAI_TAGIHAN == 1) {
+                $("#hc5").prop("checked", true);
+            } else {
+                $("#hc5").prop("checked", false);
+            }
+            if (response.NAMA_KONTRAK == 1) {
+                $("#hc6").prop("checked", true);
+            } else {
+                $("#hc6").prop("checked", false);
+            }
+            if (response.BANK_TUJUAN == 1) {
+                $("#hc7").prop("checked", true);
+            } else {
+                $("#hc7").prop("checked", false);
+            }
+            if (response.BANK_PEMBAYAR == 1) {
+                $("#hc8").prop("checked", true);
+            } else {
+                $("#hc8").prop("checked", false);
+            }
+            if (response.TGL_TERIMA_TAGIHAN == 1) {
+                $("#hc9").prop("checked", true);
+            } else {
+                $("#hc9").prop("checked", false);
+            }
+            if (response.TGL_TAGIHAN == 1) {
+                $("#hc10").prop("checked", true);
+            } else {
+                $("#hc10").prop("checked", false);
+            }
+            if (response.NO_TAGIHAN == 1) {
+                $("#hc11").prop("checked", true);
+            } else {
+                $("#hc11").prop("checked", false);
+            }
+            if (response.TGL_NOTA_DINAS == 1) {
+                $("#hc12").prop("checked", true);
+            } else {
+                $("#hc12").prop("checked", false);
+            }
+            if (response.NO_NOTA_DINAS == 1) {
+                $("#hc13").prop("checked", true);
+            } else {
+                $("#hc13").prop("checked", false);
+            }
+            if (response.TGL_PEMBAYARAN == 1) {
+                $("#hc14").prop("checked", true);
+            } else {
+                $("#hc14").prop("checked", false);
+            }
+            if (response.COUNTDOWN == 1) {
+                $("#hc15").prop("checked", true);
+            } else {
+                $("#hc15").prop("checked", false);
+            }
+            if (response.STATUS == 1) {
+                $("#hc16").prop("checked", true);
+            } else {
+                $("#hc16").prop("checked", false);
+            }
+            if (response.TIPE_TRANSAKSI == 1) {
+                $("#hc17").prop("checked", true);
+            } else {
+                $("#hc17").prop("checked", false);
+            }
+            if (response.STATUS_TAGIHAN == 1) {
+                $("#hc18").prop("checked", true);
+            } else {
+                $("#hc18").prop("checked", false);
+            }
+            if (response.KETERANGAN == 1) {
+                $("#hc19").prop("checked", true);
+            } else {
+                $("#hc19").prop("checked", false);
+            }
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+
+}
+
+/**
+ * Rekap data
+ */
+function saveColumn() {
+    var hc0 = $("#hc0").prop('checked');
+    var hc1 = $("#hc1").prop('checked');
+    var hc2 = $("#hc2").prop('checked');
+    var hc3 = $("#hc3").prop('checked');
+    var hc4 = $("#hc4").prop('checked');
+    var hc5 = $("#hc5").prop('checked');
+    var hc6 = $("#hc6").prop('checked');
+    var hc7 = $("#hc7").prop('checked');
+    var hc8 = $("#hc8").prop('checked');
+    var hc9 = $("#hc9").prop('checked');
+    var hc10 = $("#hc10").prop('checked');
+    var hc11 = $("#hc11").prop('checked');
+    var hc12 = $("#hc12").prop('checked');
+    var hc13 = $("#hc13").prop('checked');
+    var hc14 = $("#hc14").prop('checked');
+    var hc15 = $("#hc15").prop('checked');
+    var hc16 = $("#hc16").prop('checked');
+    var hc17 = $("#hc17").prop('checked');
+    var hc18 = $("#hc18").prop('checked');
+    var hc19 = $("#hc19").prop('checked');
+
+    var data = {
+        "nomor" : hc0 == true ? 1 : 0,
+        "jenis_pembayaran" : hc1 == true ? 1 : 0,
+        "jatuh_tempo" : hc2 == true ? 1 : 0,
+        "vendor" : hc3 == true ? 1 : 0,
+        "currency" : hc4 == true ? 1 : 0,
+        "nilai_tagihan" : hc5 == true ? 1 : 0,
+        "nama_kontrak" : hc6 == true ? 1 : 0,
+        "bank_tujuan" : hc7 == true ? 1 : 0,
+        "bank_pembayar" : hc8 == true ? 1 : 0,
+        "tgl_terima_tagihan" : hc9 == true ? 1 : 0,
+        "tgl_tagihan" : hc10 == true ? 1 : 0,
+        "no_tagihan" : hc11 == true ? 1 : 0,
+        "tgl_nota_dinas" : hc12 == true ? 1 : 0,
+        "no_nota_dinas" : hc13 == true ? 1 : 0,
+        "tgl_pembayaran" : hc14 == true ? 1 : 0,
+        "countdown" : hc15 == true ? 1 : 0,
+        "status" : hc16 == true ? 1 : 0,
+        "tipe_transaksi" : hc17 == true ? 1 : 0,
+        "status_tagihan" : hc18 == true ? 1 : 0,
+        "keterangan" : hc19 == true ? 1 : 0
+    };
+
+    $.ajax({
+        url: baseUrl + "api_operator/pembayaran/save_column",
+        dataType: 'JSON',
+        type: "POST",
+        data: data,
+        success: function (res) {
+            alert(res.data);
+            document.location.reload();
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
