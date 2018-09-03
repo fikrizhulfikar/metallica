@@ -147,7 +147,7 @@ public class ValasService {
         return resultset;
     }
 
-    public List<Map<String, Object>> getListPembayaranSudah(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pPembayaran, String pUserId, String sortBy, String sortDir, String pSearch) throws SQLException {
+    public List<Map<String, Object>> getListPembayaranSudah(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pPembayaran, String pUserId, String sortBy, String sortDir, String pStatus, String pSearch) throws SQLException {
 
         AppUtils.getLogger(this).debug("data rekap search info = " +
                         "start : {}, " +
@@ -161,9 +161,10 @@ public class ValasService {
                         "pUserId : {}," +
                         "pSortBy : {}," +
                         "pSortDir : {}," +
+                        "pStatus : {}," +
                         "pSearch : {},",
 
-                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, pUserId, sortBy, sortDir, pSearch);
+                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, pUserId, sortBy, sortDir, pSearch, pSearch);
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_VALAS")
@@ -180,6 +181,7 @@ public class ValasService {
                 .addValue("p_user_id", pUserId, Types.VARCHAR)
                 .addValue("p_sort_by", sortBy, Types.VARCHAR)
                 .addValue("p_sort_dir", sortDir, Types.VARCHAR)
+                .addValue("p_status", pStatus, Types.VARCHAR)
                 .addValue("p_search", pSearch, Types.VARCHAR);
 
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);

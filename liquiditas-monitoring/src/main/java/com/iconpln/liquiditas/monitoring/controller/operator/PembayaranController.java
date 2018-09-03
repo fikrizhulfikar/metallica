@@ -108,6 +108,7 @@ public class PembayaranController {
             @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
             @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
             @RequestParam(value = "pPembayaran", defaultValue = "ALL") String pPembayaran,
+            @RequestParam(value = "status", defaultValue = "") String pStatus,
             @RequestParam(value = "search[value]", defaultValue = "") String pSearch
     ) {
 
@@ -118,7 +119,7 @@ public class PembayaranController {
         }
         List<Map<String, Object>> list = new ArrayList<>();
         try {
-            list = valasService.getListPembayaranSudah((start / length) + 1, length, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, WebUtils.getUsernameLogin(), sortBy, sortDir, pSearch);
+            list = valasService.getListPembayaranSudah((start / length) + 1, length, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, WebUtils.getUsernameLogin(), sortBy, sortDir, pStatus, pSearch);
         } catch (Exception e) {
             e.printStackTrace();
         }

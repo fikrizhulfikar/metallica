@@ -22,7 +22,7 @@ function getAllData() {
                     newHtml ="<tr>"+
                         "<th>"+val.BANK+"</td>"+
                         "<td style='display:none;' class='kdbank_potensi'>"+val.KODE_BANK+"</td>"+
-                        "<td class='kdbank_potensi'>"+val.JUMLAH+"</td>"+
+                        "<td class='kdbank_potensi'>"+accounting.formatNumber(val.JUMLAH, 2, ".", ",")+"</td>"+
                         "<td align='center'><input width='100%' class='form-control' type='number' value='0'></td>" +
                         "<td align='center'>-</td>" +
                         "</tr>";
@@ -30,7 +30,7 @@ function getAllData() {
                     newHtml ="<tr>"+
                     "<th>"+val.BANK+"</td>"+
                     "<td style='display:none;' class='kdbank_potensi'>"+val.KODE_BANK+"</td>"+
-                    "<td class='kdbank_potensi'>"+val.JUMLAH+"</td>"+
+                    "<td class='kdbank_potensi'>"+accounting.formatNumber(val.JUMLAH, 2, ".", ",")+"</td>"+
                     "<td align='center'><input width='100%' class='form-control' type='number' value='0'></td>" +
                     "<td align='center'><button class='btn btn-primary' style='cursor: pointer'>Save</button></td>" +
                     "</tr>";

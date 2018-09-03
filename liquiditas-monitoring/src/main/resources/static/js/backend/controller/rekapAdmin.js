@@ -34,6 +34,7 @@ $(document).ready(function () {
     setSelectBank("cmb_bank", "FILTER", "", "", "REKAP");
     setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
     setSelectJenisPembayaran("cmb_jenis_pemabayaran", "FILTER", "");
+    setSelectStatus("cmb_status");
     search("load");
     siap();
     inputKeterangan();
@@ -996,7 +997,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                             pCurrency,
                             pPembayaran:
                             pPembayaran,
-                            status : ''
+                            status: $("#cmb_status").val()
                         }
                     ,
                     "dataSrc":

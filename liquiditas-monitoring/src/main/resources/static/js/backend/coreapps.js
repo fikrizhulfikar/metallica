@@ -63,6 +63,11 @@ function setSelectBank(idHtml, jenis, jenisBank, idForSelected, form) {
     });
 }
 
+function setSelectStatus(idHtml) {
+    $("#" + idHtml + "").append('<option value="0">PENDING</option>');
+    $("#" + idHtml + "").append('<option value="2">WAITING</option>');
+}
+
 function setSelectBank2(idHtml, jenis, jenisBank, idForSelected, form) {
     $.ajax({
         url: baseUrl + "api_master/bank/get_data_bank",

@@ -24,9 +24,9 @@ function getAllData() {
                     newHtml ="<tr>"+
                         "<td>"+val.BANK+"</td>"+
                         "<td style='display:none;' class='kdbank_potensi'>"+val.KODE_BANK+"</td>"+
-                        "<td class='kdbank_potensi'>"+val.POTENSI_H0+"</td>"+
-                        "<td class='kdbank_potensi'>"+val.POTENSI_H1+"</td>"+
-                        "<td class='kdbank_potensi'>"+val.TOTAL+"</td>"+
+                        "<td class='kdbank_potensi'>"+accounting.formatNumber(val.POTENSI_H0, 2, ".", ",")+"</td>"+
+                        "<td class='kdbank_potensi'>"+accounting.formatNumber(val.POTENSI_H1, 2, ".", ",")+"</td>"+
+                        "<td class='kdbank_potensi'>"+accounting.formatNumber(val.TOTAL, 2, ".", ",")+"</td>"+
                         "<td align='center'><input width='100%' class='form-control' type='number' value='0'></td>" +
                         "<td align='center'>-</td>" +
                         "</tr>";
@@ -34,9 +34,9 @@ function getAllData() {
                     newHtml ="<tr>"+
                         "<td>"+val.BANK+"</td>"+
                         "<td style='display:none;' class='kdbank_potensi'>"+val.KODE_BANK+"</td>"+
-                        "<td class=''>"+val.POTENSI_H0+"</td>"+
-                        "<td class=''>"+val.POTENSI_H1+"</td>"+
-                        "<td class=''>"+val.TOTAL+"</td>"+
+                        "<td class=''>"+accounting.formatNumber(val.POTENSI_H0, 2, ".", ",")+"</td>"+
+                        "<td class=''>"+accounting.formatNumber(val.POTENSI_H1, 2, ".", ",")+"</td>"+
+                        "<td class=''>"+accounting.formatNumber(val.TOTAL, 2, ".", ",")+"</td>"+
                         "<td align='center'><input id='hnol' width='100%' class='form-control' type='number' value='"+val.POTENSI_H0+"'></td>" +
                         "<td align='center'><input id='hsatu' width='100%' class='form-control' type='number' value='"+val.POTENSI_H1+"'></td>" +
                         // "<td align='center'><button class='btn btn-primary' style='cursor: pointer'>Save</button></td>" +
