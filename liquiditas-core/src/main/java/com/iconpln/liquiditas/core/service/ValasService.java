@@ -1935,11 +1935,21 @@ public class ValasService {
                 .addValue("p_user_id", userId, OracleTypes.VARCHAR)
                 .addValue("p_search", search, OracleTypes.VARCHAR);
 
+        getJdbcTemplate().execute("alter session set NLS_NUMERIC_CHARACTERS = '.,'");
+
         BigDecimal result = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("pkg_valas")
                 .withFunctionName("get_total_tagihan")
                 .executeFunction(BigDecimal.class, in);
         return result;
+    }
+
+    public List<Map<String, Object>> getTotalPerCurrentcy() {
+        SqlParameterSource in = new MapSqlParameterSource();
+        return new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_valas")
+                .withFunctionName("get_total_percurrency")
+                .executeFunction(ArrayList.class, in);
     }
 
     public boolean isRowEmpty(Row row, int rowSize){

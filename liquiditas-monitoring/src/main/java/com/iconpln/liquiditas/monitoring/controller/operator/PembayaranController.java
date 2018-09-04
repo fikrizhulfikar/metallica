@@ -747,6 +747,11 @@ public class PembayaranController {
         return formatted;
     }
 
+    @RequestMapping(value = "/get_total_per_currency", method = RequestMethod.GET)
+    public List<Map<String, Object>> getTotalPerCurrency() {
+        return valasService.getTotalPerCurrentcy();
+    }
+
     public String generateReport(HttpServletResponse response, Map<String, Object> errorData, String tipe) {
         try {
             ServletOutputStream os = response.getOutputStream();

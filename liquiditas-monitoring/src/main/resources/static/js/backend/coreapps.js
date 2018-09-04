@@ -551,4 +551,19 @@ function getTotalTagihan() {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
         }
     });
+    $.ajax({
+        url: baseUrl + "api_operator/pembayaran/get_total_per_currency",
+        type: "GET",
+        success: function (res) {
+            var total_per_currency = $("#total_per_currency");
+            res.forEach(function (value) {
+                console.log(value);
+                var html = '<label class="form-control-label">' + '&nbsp;&nbsp;' +value.CURRENCY+' : <b>' + value.TOTAL + '</b></label>';
+                total_per_currency.append(html);
+            });
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
 }
