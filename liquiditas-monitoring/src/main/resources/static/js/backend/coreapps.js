@@ -558,7 +558,7 @@ function getTotalTagihan() {
             var total_per_currency = $("#total_per_currency");
             res.forEach(function (value) {
                 console.log(value);
-                var html = '<label class="form-control-label">' + '&nbsp;&nbsp;' +value.CURRENCY+' : <b>' + value.TOTAL + '</b></label>';
+                var html = '<label class="form-control-label">' + '&nbsp;&nbsp;' +value.CURRENCY+' : <b>' + accounting.formatNumber(value.TOTAL, 2, ".", ",") + '</b></label>';
                 total_per_currency.append(html);
             });
         },
