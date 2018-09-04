@@ -8,7 +8,6 @@ var timeSowFormEdit = 1000;
 function hideLoading(msg) {
     setTimeout(function () {
         waitingDialog.hide()
-//        console.log(msg);
         if (msg != "") {
             alert(msg);
         }
@@ -526,6 +525,27 @@ function saveColumn() {
         success: function (res) {
             alert(res.data);
             document.location.reload();
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
+function getTotalTagihan() {
+    $.ajax({
+        url: baseUrl + "api_operator/pembayaran/get_total_tagihan",
+        type: "GET",
+        data: {
+            tgl_awal: $("#tanggal_awal").val(),
+            tgl_akhir: $("#tanggal_akhir").val(),
+            bank: $("#cmb_bank").val(),
+            cur: $("#cmb_currecny").val(),
+            pembayaran: $("#cmb_jenis_pemabayaran").val(),
+            search: tempTableSearch
+        },
+        success: function (res) {
+            $("#total_tagihan").html(res);
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")

@@ -1003,7 +1003,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
 
                         function (res) {
                             hideLoadingCss()
-                            // getTotalTagihan();
+                            getTotalTagihan();
                             return res.data;
                         }
                 }
@@ -1200,10 +1200,10 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
         tempTableSearch = value;
     });
 
-    // $('.dataTables_length').each(function () {
-    //     var html = '<label style="margin-left: 250px; cursor:default;">Total tagihan (Rp): <b id="total_tagihan">0</b></label>';
-    //     $(this).append(html);
-    // });
+    $('.dataTables_length').each(function () {
+        var html = '<label style="margin-left: 250px; cursor:default;">Total tagihan (Rp): <b id="total_tagihan">0</b></label>';
+        $(this).append(html);
+    });
 
     $('.dataTables_filter').each(function () {
         // var html = '';
@@ -1216,10 +1216,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
         $(this).append(html);
     });
     initCbparent();
-    // $('.checkbox-toggle').on( 'click', function (e) {
-    //     var column = table_rekapitulasi.column( $(this).attr('data-column') );
-    //     column.visible( ! column.visible() );
-    // });
 }
 
 function checkArray(e) {
@@ -1628,27 +1624,6 @@ function multipleUpdate() {
             } else {
                 alert(res.OUT_MSG);
             }
-        },
-        error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-        }
-    });
-}
-
-function getTotalTagihan() {
-    $.ajax({
-        url: baseUrl + "api_operator/pembayaran/get_total_tagihan",
-        type: "GET",
-        data: {
-            tgl_awal: $("#tanggal_awal").val(),
-            tgl_akhir: $("#tanggal_akhir").val(),
-            bank: $("#cmb_bank").val(),
-            cur: $("#cmb_currecny").val(),
-            pembayaran: $("#cmb_jenis_pemabayaran").val(),
-            search: tempTableSearch
-        },
-        success: function (res) {
-            $("#total_tagihan").html(res);
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
