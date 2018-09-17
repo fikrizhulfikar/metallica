@@ -66,22 +66,22 @@ public class ValasTests {
 	@Test
 	public void getListPembayaran() {
 //		try {
-		try {
-			valasService.getListPembayaranSudah(1, 10, "01/01/2018", "01/05/2019"
-					, "ALL", "ALL", "ALL"
-					, "admin", "JENIS_PEMBAYARAN", "DESC", ""
-					, "").forEach(stringObjectMap -> {
-						stringObjectMap.forEach(new BiConsumer<String, Object>() {
-							@Override
-							public void accept(String s, Object o) {
-								System.out.println("Key: " + s);
-								System.out.println("Val: " + o);
-							}
-						});
-			});
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			valasService.getListPembayaranSudah(1, 10, "01/01/2018", "01/05/2019"
+//					, "ALL", "ALL", "ALL"
+//					, "admin", "JENIS_PEMBAYARAN", "DESC", ""
+//					, "").forEach(stringObjectMap -> {
+//						stringObjectMap.forEach(new BiConsumer<String, Object>() {
+//							@Override
+//							public void accept(String s, Object o) {
+//								System.out.println("Key: " + s);
+//								System.out.println("Val: " + o);
+//							}
+//						});
+//			});
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
 //		} catch (SQLException e) {
 //			e.printStackTrace();
 //		}

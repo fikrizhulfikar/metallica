@@ -104,7 +104,7 @@ public class ValasService {
         return out;
     }
 
-    public List<Map<String, Object>> getListPembayaranBelum(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pPembayaran, String pUserId, String sortBy, String sortDir, String status, String pSearch) throws SQLException {
+    public List<Map<String, Object>> getListPembayaranBelum(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pPembayaran, String pUserId, String sortBy, String sortDir, String status, String statusTracking, String pSearch) throws SQLException {
 
         AppUtils.getLogger(this).debug("data rekap search info = " +
                         "start : {}, " +
@@ -119,6 +119,7 @@ public class ValasService {
                         "pSortBy : {}," +
                         "pSortDir : {}," +
                         "pStatus : {}," +
+                        "pStatusTracking : {}," +
                         "pSearch : {},",
 
                 pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, pUserId, sortBy, sortDir, pSearch);
@@ -139,6 +140,7 @@ public class ValasService {
                 .addValue("p_sort_by", sortBy, Types.VARCHAR)
                 .addValue("p_sort_dir", sortDir, Types.VARCHAR)
                 .addValue("p_status", status, Types.VARCHAR)
+                .addValue("p_status_tracking", status, Types.VARCHAR)
                 .addValue("p_search", pSearch, Types.VARCHAR);
 
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
@@ -147,7 +149,7 @@ public class ValasService {
         return resultset;
     }
 
-    public List<Map<String, Object>> getListPembayaranSudah(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pPembayaran, String pUserId, String sortBy, String sortDir, String pStatus, String pSearch) throws SQLException {
+    public List<Map<String, Object>> getListPembayaranSudah(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pPembayaran, String pUserId, String sortBy, String sortDir, String pStatus, String pStatusTracking, String pSearch) throws SQLException {
 
         AppUtils.getLogger(this).debug("data rekap search info = " +
                         "start : {}, " +
@@ -162,6 +164,7 @@ public class ValasService {
                         "pSortBy : {}," +
                         "pSortDir : {}," +
                         "pStatus : {}," +
+                        "pStatusTracking : {}," +
                         "pSearch : {},",
 
                 pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, pUserId, sortBy, sortDir, pSearch, pSearch);
@@ -182,12 +185,79 @@ public class ValasService {
                 .addValue("p_sort_by", sortBy, Types.VARCHAR)
                 .addValue("p_sort_dir", sortDir, Types.VARCHAR)
                 .addValue("p_status", pStatus, Types.VARCHAR)
+                .addValue("p_status_tracking", pStatusTracking, Types.VARCHAR)
                 .addValue("p_search", pSearch, Types.VARCHAR);
 
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
 
-        AppUtils.getLogger(this).info("data get_rekap_pembayaran_pss2 : {}", resultset);
+        AppUtils.getLogger(this).debug("data get_rekap_pembayaran_pss2 : {}", resultset);
         return resultset;
+    }
+
+    /**
+     *  (:P_START, :P_LENGTH, :P_TGL_AWAL, :P_TGL_AKHIR, :P_BANK, :P_CUR, :P_PEMBAYARAN, :P_USER_ID, :P_SORT_BY, :P_SORT_DIR, :P_STATUS, :P_STATUS_TRACKING, :P_SEARCH)
+     */
+    public List<Map<String, Object>> getRejectPembayaran(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCur, String pPembayaran, String pUserId, String pSortBy, String pSortDir, String pStatus, String pStatusTracking, String pSearch) {
+
+        AppUtils.getLogger(this).debug("data rekap search info = " +
+                        "start : {}, " +
+                        "length : {}, " +
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, " +
+                        "pBank : {}, " +
+                        "pCurrency : {}, " +
+                        "pPembayaran : {}," +
+                        "pStatusValas : {}," +
+                        "pUserId : {}," +
+                        "pSortBy : {}," +
+                        "pSortDir : {}," +
+                        "pStatus : {}," +
+                        "pStatusTracking : {}," +
+                        "pSearch : {},",
+
+                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCur, pPembayaran, pUserId, pSortBy, pSortDir, pSearch, pStatusTracking, pSearch);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("GET_REJECT_PEMBAYARAN");
+
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_start", pStart, Types.INTEGER)
+                .addValue("p_length", pLength, Types.INTEGER)
+                .addValue("p_tgl_awal", pTglAwal, Types.VARCHAR)
+                .addValue("p_tgl_akhir", pTglAkhir, Types.VARCHAR)
+                .addValue("p_bank", pBank, Types.VARCHAR)
+                .addValue("p_cur", pCur, Types.VARCHAR)
+                .addValue("p_pembayaran", pPembayaran, Types.VARCHAR)
+                .addValue("p_user_id", pUserId, Types.VARCHAR)
+                .addValue("p_sort_by", pSortBy, Types.VARCHAR)
+                .addValue("p_sort_dir", pSortDir, Types.VARCHAR)
+                .addValue("p_status", pStatus, Types.VARCHAR)
+                .addValue("p_status_tracking", pStatusTracking, Types.VARCHAR)
+                .addValue("p_search", pSearch, Types.VARCHAR);
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+        AppUtils.getLogger(this).debug("data GET_REJECT_PEMBAYARAN : {}", resultset);
+        return resultset;
+    }
+
+    /**
+     * FUNCTION ins_reject_laporan(p_id_valas IN VARCHAR2, p_reject_by IN VARCHAR2) RETURN VARCHAR2;
+     **/
+    public String insRejectLaporan(String pIdValas, String pRejectBy) {
+        AppUtils.getLogger(this).debug("ins reject laporan = " +
+                "pIdValas : {}, " +
+                "pRejectBy : {}", pIdValas, pRejectBy);
+
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_id_valas", pIdValas, Types.VARCHAR)
+                .addValue("p_reject_by", pRejectBy, Types.VARCHAR);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("ins_reject_laporan");
+
+        return simpleJdbcCall.executeFunction(String.class, params);
     }
 
     public List<Map<String, Object>> getListRealisasi(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pPembayaran, String pUserId, String sortBy, String sortDir, String pSearch) throws SQLException {

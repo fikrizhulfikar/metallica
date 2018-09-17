@@ -92,6 +92,7 @@ public class PageOperatorController {
     public String potensi_pendapatan() {
         return "operator/potensi_pendapatan";
     }
+
     @RequestMapping("/penarikan_kmk")
     public String penarikan_kmk() {
         return "operator/penarikan_kmk";
@@ -101,4 +102,10 @@ public class PageOperatorController {
     public String penerimaan_subsidi() {
         return "operator/penerimaan_subsidi";
     }
+
+    @RequestMapping("/rekap_reject")
+    public String rekapReject() {
+        return "operator/rekap_reject";
+    }
+
 }

@@ -39,4 +39,9 @@ public class ValasServiceTest {
         }
     }
 
+    @Test
+    public void getRejectPembayaranTest() {
+        service.getRejectPembayaran(1, 10, "", "", "ALL", "ALL", "ALL", "admin", "REJECT_DATE", "ASC", "", "", "")
+                .forEach(System.out::println);
+    }
 }

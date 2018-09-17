@@ -35,6 +35,7 @@ $(document).ready(function () {
     setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
     setSelectJenisPembayaran("cmb_jenis_pemabayaran", "FILTER", "");
     setSelectStatus("cmb_status");
+    setSelectStatusTracking("cmb_status_tracking");
     search("load");
     siap();
     inputKeterangan();
@@ -435,7 +436,7 @@ function search(state) {
     if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
         alert("Mohon Lengkapi Tgl Akhir");
     } else {
-        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val(), $("#cmb_jenis_pemabayaran").val())
+        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val(), $("#cmb_jenis_pemabayaran").val(), $("#cmb_status_tracking").val())
         getAllData()
         srcTglAwal = $("#tanggal_awal").val()
         srcTglAkhir = $("#tanggal_akhir").val()
@@ -690,7 +691,7 @@ function show_modal(id) {
     $('#edit-reverse-modal').modal({backdrop: 'static', keyboard: false});
 }
 
-function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
+function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statusTracking) {
     console.log("USERLOGIN", newRoleUser[0]);
     showLoadingCss();
     $('#table-rekapitulasi tbody').empty();
@@ -997,7 +998,8 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                             pCurrency,
                             pPembayaran:
                             pPembayaran,
-                            status: $("#cmb_status").val()
+                            status: $("#cmb_status").val(),
+                            statusTracking: statusTracking
                         }
                     ,
                     "dataSrc":
