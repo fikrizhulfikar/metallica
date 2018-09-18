@@ -408,28 +408,28 @@ function edit_data(id) {
 function update_status() {
     showLoadingCss()
     $.ajax({
-        url: baseUrl + "api_operator/pembayaran/upd_status",
-        dataType: 'JSON',
-        type: "POST",
-        data: {
-            pIdValas: idValas,
-            pStatusInvoice: $("#pStatusInvoice").val(),
-            pDeskripsi: $("#pKeteranganStatus").val(),
-        },
-        success: function (res) {
-            hideLoadingCss("")
-            var result = res.return.split(";")[0];
-            if (result == 1 || result == '1') {
-                alert(res.OUT_MSG);
-                table_rekapitulasi.ajax.reload();
-            } else {
-                alert(res.OUT_MSG);
+            url: baseUrl + "api_operator/pembayaran/upd_status",
+            dataType: 'JSON',
+            type: "POST",
+            data: {
+                pIdValas: idValas,
+                pStatusInvoice: $("#pStatusInvoice").val(),
+                pDeskripsi: $("#pKeteranganStatus").val(),
+            },
+            success: function (res) {
+                hideLoadingCss("")
+                var result = res.return.split(";")[0];
+                if (result == 1 || result == '1') {
+                    alert(res.OUT_MSG);
+                    table_rekapitulasi.ajax.reload();
+                } else {
+                    alert(res.OUT_MSG);
+                }
+            },
+            error: function () {
+                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
             }
-        },
-        error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-        }
-    });
+        });
 }
 
 function search(state) {
@@ -1270,112 +1270,122 @@ function upload_file(pIdValas) {
 }
 
 function upd_status_tracking(idValas , pStatusinvoice){
-    showLoadingCss();
-    console.log("idvalas :",idValas);
-    console.log("satusinvoice :",pStatusinvoice);
-    $.ajax({
-        url: baseUrl + "api_operator/pembayaran/upd_status",
-        dataType: 'JSON',
-        type: "POST",
-        data: {
-            pIdValas: idValas,
-            pStatusInvoice:pStatusinvoice,
-        },
-        success: function (res) {
-            hideLoadingCss("")
-            console.log("data upd_status :", res);
-            if (res.return == 1) {
-                alert(res.OUT_MSG);
-                table_rekapitulasi.ajax.reload();
-            } else {
-                alert(res.OUT_MSG);
+    var stateCrf = confirm("Anda Yakin Akan Memverifikasi Tagihan Ini ?");
+    if (stateCrf == true) {
+        showLoadingCss();
+        console.log("idvalas :",idValas);
+        console.log("satusinvoice :",pStatusinvoice);
+        $.ajax({
+            url: baseUrl + "api_operator/pembayaran/upd_status",
+            dataType: 'JSON',
+            type: "POST",
+            data: {
+                pIdValas: idValas,
+                pStatusInvoice:pStatusinvoice,
+            },
+            success: function (res) {
+                hideLoadingCss("")
+                console.log("data upd_status :", res);
+                if (res.return == 1) {
+                    alert(res.OUT_MSG);
+                    table_rekapitulasi.ajax.reload();
+                } else {
+                    alert(res.OUT_MSG);
+                }
+            },
+            error: function () {
+                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
             }
-        },
-        error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-        }
-    });
+        });
+    }
 }
 
 function reverse(idValas, statusInvoice) {
-    var ket = $("#pKeterangan").val().toString();
-    var all_ket = [];
-    var ket_lama = localStorage.getItem("real_ktr");
+    var stateCrf = confirm("Anda Yakin Akan Mereverse Tagihan Ini ?");
+    if (stateCrf == true) {
+        var ket = $("#pKeterangan").val().toString();
+        var all_ket = [];
+        var ket_lama = localStorage.getItem("real_ktr");
 
-    if (ket_lama == null) {
-        localStorage.removeItem("real_ktr");
-        localStorage.removeItem("ktr");
-        localStorage.setItem("ktr", ket);
+        if (ket_lama == null) {
+            localStorage.removeItem("real_ktr");
+            localStorage.removeItem("ktr");
+            localStorage.setItem("ktr", ket);
 
-        all_ket.push(ket);
-        localStorage.setItem("real_ktr", all_ket);
-    }
-    else {
-        localStorage.setItem("ktr", ket);
+            all_ket.push(ket);
+            localStorage.setItem("real_ktr", all_ket);
+        }
+        else {
+            localStorage.setItem("ktr", ket);
 
-        var status = true;
-        var list_keterangan_lama = ket_lama.split(",");
-        for (var i = 0; i < list_keterangan_lama.length; i++) {
-            if (ket === list_keterangan_lama[i]) {
-                status = false
+            var status = true;
+            var list_keterangan_lama = ket_lama.split(",");
+            for (var i = 0; i < list_keterangan_lama.length; i++) {
+                if (ket === list_keterangan_lama[i]) {
+                    status = false
+                }
             }
-        }
-        if (status == true) {
-            list_keterangan_lama.push(ket);
-        }
-        localStorage.setItem("real_ktr", list_keterangan_lama);
-    }
-    showLoadingCss()
-    $.ajax({
-        url: baseUrl + "api_operator/pembayaran/upd_reverse",
-        dataType: 'JSON',
-        type: "POST",
-        data: {
-            pIdValas: idValas,
-            pStatusInvoice: statusInvoice,
-            pKeterangan: $("#pKeterangan").val(),
-        },
-        success: function (res) {
-            hideLoadingCss("")
-            console.log("data upd_reverse :", res);
-            if (res.return == 1) {
-                alert(res.OUT_MSG);
-                idValas = "";
-                table_rekapitulasi.ajax.reload();
-            } else {
-                alert(res.OUT_MSG);
+            if (status == true) {
+                list_keterangan_lama.push(ket);
             }
-        },
-        error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-
+            localStorage.setItem("real_ktr", list_keterangan_lama);
         }
-    });
+        showLoadingCss()
+        $.ajax({
+            url: baseUrl + "api_operator/pembayaran/upd_reverse",
+            dataType: 'JSON',
+            type: "POST",
+            data: {
+                pIdValas: idValas,
+                pStatusInvoice: statusInvoice,
+                pKeterangan: $("#pKeterangan").val(),
+            },
+            success: function (res) {
+                hideLoadingCss("")
+                console.log("data upd_reverse :", res);
+                if (res.return == 1) {
+                    alert(res.OUT_MSG);
+                    idValas = "";
+                    table_rekapitulasi.ajax.reload();
+                } else {
+                    alert(res.OUT_MSG);
+                }
+            },
+            error: function () {
+                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+
+            }
+        });
+    }
 }
 
 function update_datas() {
-    $.ajax({
-        url: baseUrl + "api_operator/pembayaran/multi_upd_status",
-        dataType: 'JSON',
-        type: "POST",
-        data: {
-            pData: JSON.stringify(checkedArray),
-            // pStatusInvoice: statusInvoice,
-        },
-        success: function (res) {
-            hideLoadingCss("")
-            console.log("data upd_status :", res);
-            if (res.return == 1) {
-                alert(res.OUT_MSG)
-                table_rekapitulasi.ajax.reload();
-            } else {
-                alert(res.OUT_MSG);
+    var stateCrf = confirm("Anda Yakin Akan Merverifikasi Tagihan Ini ?");
+    if (stateCrf == true) {
+        showLoadingCss();
+        $.ajax({
+            url: baseUrl + "api_operator/pembayaran/multi_upd_status",
+            dataType: 'JSON',
+            type: "POST",
+            data: {
+                pData: JSON.stringify(checkedArray),
+                // pStatusInvoice: statusInvoice,
+            },
+            success: function (res) {
+                hideLoadingCss("")
+                console.log("data upd_status :", res);
+                if (res.return == 1) {
+                    alert(res.OUT_MSG)
+                    table_rekapitulasi.ajax.reload();
+                } else {
+                    alert(res.OUT_MSG);
+                }
+            },
+            error: function () {
+                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
             }
-        },
-        error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-        }
-    });
+        });
+    }
 }
 
 function multipleDelete() {
