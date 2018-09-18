@@ -1210,7 +1210,12 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 
     $('.dataTables_filter').each(function () {
         // var html = '';
-        var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
+        var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" onclick="showColumn()">' +
+            '<i class="fa fa-arrows-alt"></i></button>';
+        /*button reject*/
+        html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" onclick="rejectData()">' +
+            '            <i class="fa fa-ban"></i></button>';
+
         if(newRoleUser[0] != "ROLE_OSS"){
             html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
                 '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
@@ -1263,7 +1268,6 @@ function upload_file(pIdValas) {
 
     getFilesRekap(pIdValas);
 }
-
 
 function upd_status_tracking(idValas , pStatusinvoice){
     showLoadingCss();
@@ -1375,27 +1379,54 @@ function update_datas() {
 }
 
 function multipleDelete() {
-    $.ajax({
-        url: baseUrl + "api_operator/pembayaran/multi_del_data",
-        dataType: 'JSON',
-        type: "POST",
-        data: {
-            pData: JSON.stringify(checkedArray)
-        },
-        success: function (res) {
-            hideLoadingCss("")
-            console.log("data upd_status :", res);
-            if (res.return == 1) {
-                alert(res.OUT_MSG);
-                table_rekapitulasi.ajax.reload();
-            } else {
-                alert(res.OUT_MSG);
+    var stateCrf = confirm("Anda Yakin Akan Menghapus Data Ini ?");
+    if (stateCrf == true) {
+        showLoadingCss()
+        $.ajax({
+            url: baseUrl + "api_operator/pembayaran/multi_del_data",
+            dataType: 'JSON',
+            type: "POST",
+            data: {
+                pData: JSON.stringify(checkedArray)
+            },
+            success: function (res) {
+                hideLoadingCss("")
+                console.log("data upd_status :", res);
+                if (res.return == 1) {
+                    alert(res.OUT_MSG);
+                    table_rekapitulasi.ajax.reload();
+                } else {
+                    alert(res.OUT_MSG);
+                }
+            },
+            error: function () {
+                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
             }
-        },
-        error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-        }
-    });
+        });
+    }
+}
+
+function rejectData() {
+    var stateCrf = confirm("Anda Yakin Akan Mereject Data Ini ?");
+    if (stateCrf == true) {
+        $.ajax({
+            url: baseUrl + "api_operator/pembayaran/reject_data",
+            dataType: 'JSON',
+            type: "POST",
+            data: {
+                pData: JSON.stringify(checkedArray)
+            },
+            success: function (res) {
+                hideLoadingCss("")
+                console.log("data reject status :", res);
+                alert(res.return);
+                table_rekapitulasi.ajax.reload();
+            },
+            error: function () {
+                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+            }
+        });
+    }
 }
 
 function getFilesRekap(pIdValas) {

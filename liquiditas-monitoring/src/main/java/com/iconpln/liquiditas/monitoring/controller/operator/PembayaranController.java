@@ -588,6 +588,36 @@ public class PembayaranController {
 
     }
 
+    @RequestMapping(value = "/reject_data", method = RequestMethod.POST)
+    public Map<String, Object> rejectData(
+            @RequestParam(value = "pData", defaultValue = "") String pData
+    ) {
+        Map<String, Object> out = null;
+        String noBracket = pData.replaceAll("\\[", "").replaceAll("\\]", "");
+        AppUtils.getLogger(this).debug("JSONValas : {} ", pData.replaceAll("\\[", "").replaceAll("\\]", ""));
+        String[] listData = noBracket.split(",");
+        JSONObject json;
+        for (String item : listData) {
+            json = new JSONObject(item);
+            AppUtils.getLogger(this).debug("jsonobject : {} ", json);
+            Iterator<?> keys = json.keys();
+            while (keys.hasNext()) {
+                String key = (String) keys.next();
+                String value = json.getString(key);
+                AppUtils.getLogger(this).debug("  {}: {} ", key, value);
+                try {
+                    out = valasService.rejectPembayaran(value, WebUtils.getUsernameLogin());
+                    AppUtils.getLogger(this).debug("id deleted : {} ", value);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    out = null;
+                    break;
+                }
+            }
+        }
+        return out;
+    }
+
     @RequestMapping(value = "/upd_ket", method = RequestMethod.POST)
     public Map<String, Object> updStatus(
             @RequestParam(value = "pIdValas", defaultValue = "") String pIdValas,

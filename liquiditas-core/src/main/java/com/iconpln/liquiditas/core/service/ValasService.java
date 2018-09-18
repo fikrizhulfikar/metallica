@@ -353,6 +353,22 @@ public class ValasService {
         AppUtils.getLogger(this).info("data del_rekap_pembayaran : {}", out);
         return out;
     }
+    public Map<String, Object> rejectPembayaran(String pIdValas, String pRejectBy) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("ins_reject_laporan");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_valas", pIdValas)
+                .addValue("p_reject_by", pRejectBy)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data ins_reject_laporan : {}", out);
+        return out;
+    }
+
     public Map<String, Object> updReverse(String pIdValas, String pStatusInvoice, String pUpdateby, String pKeterangan) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
