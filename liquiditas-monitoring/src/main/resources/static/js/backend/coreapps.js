@@ -553,7 +553,7 @@ function getTotalTagihan() {
             cur: $("#cmb_currecny").val(),
             pembayaran: $("#cmb_jenis_pemabayaran").val(),
             status: $("#cmb_status").val(),
-            status_tracking: $("#cmb_status_tracking").val(),
+            statusTracking: $("#cmb_status_tracking").val(),
             search: tempTableSearch
         },
         success: function (res) {
@@ -573,7 +573,7 @@ function getTotalTagihan() {
             cur: $("#cmb_currecny").val(),
             pembayaran: $("#cmb_jenis_pemabayaran").val(),
             status: $("#cmb_status").val(),
-            status_tracking: $("#cmb_status_tracking").val(),
+            statusTracking: $("#cmb_status_tracking").val(),
             search: tempTableSearch
         },
         success: function (res) {
