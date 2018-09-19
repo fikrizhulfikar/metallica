@@ -2011,6 +2011,8 @@ public class ValasService {
                                       String bank,
                                       String cur,
                                       String pembayaran,
+                                      String pStatus,
+                                      String pStatusTracking,
                                       String userId,
                                       String search) {
         SqlParameterSource in = new MapSqlParameterSource()
@@ -2019,6 +2021,8 @@ public class ValasService {
                 .addValue("p_bank", bank, OracleTypes.VARCHAR)
                 .addValue("p_cur", cur, OracleTypes.VARCHAR)
                 .addValue("p_pembayaran", pembayaran, OracleTypes.VARCHAR)
+                .addValue("p_status", pStatus, OracleTypes.VARCHAR)
+                .addValue("p_status_tracking", pStatusTracking, OracleTypes.VARCHAR)
                 .addValue("p_user_id", userId, OracleTypes.VARCHAR)
                 .addValue("p_search", search, OracleTypes.VARCHAR);
 
@@ -2036,6 +2040,8 @@ public class ValasService {
                                                           String pBank,
                                                           String pCur,
                                                           String pPembayaran,
+                                                          String pStatus,
+                                                          String pStatusTracking,
                                                           String pUserId,
                                                           String pSearch) {
         SqlParameterSource in = new MapSqlParameterSource()
@@ -2044,6 +2050,8 @@ public class ValasService {
                 .addValue("p_bank", pBank, OracleTypes.VARCHAR)
                 .addValue("p_cur", pCur, OracleTypes.VARCHAR)
                 .addValue("p_pembayaran", pPembayaran, OracleTypes.VARCHAR)
+                .addValue("p_status", pStatus, OracleTypes.VARCHAR)
+                .addValue("p_status_tracking", pStatusTracking, OracleTypes.VARCHAR)
                 .addValue("p_user_id", pUserId, OracleTypes.VARCHAR)
                 .addValue("p_search", pSearch, OracleTypes.VARCHAR);
         return new SimpleJdbcCall(getJdbcTemplate())

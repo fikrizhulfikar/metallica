@@ -823,8 +823,10 @@ public class PembayaranController {
                                   @RequestParam(value = "bank", defaultValue = "ALL") String bank,
                                   @RequestParam(value = "cur", defaultValue = "ALL") String cur,
                                   @RequestParam(value = "pembayaran", defaultValue = "ALL") String pembayaran,
+                                  @RequestParam(value = "status", defaultValue = "ALL") String status,
+                                  @RequestParam(value = "statusTracking", defaultValue = "ALL") String statusTracking,
                                   @RequestParam(value = "search", defaultValue = "") String search) {
-        BigDecimal result =  valasService.getTotalTagihan(tglAwal, tglAkhir, bank, cur, pembayaran, WebUtils.getUsernameLogin(), search);
+        BigDecimal result =  valasService.getTotalTagihan(tglAwal, tglAkhir, bank, cur, pembayaran, status, statusTracking, WebUtils.getUsernameLogin(), search);
         String formatted = AppUtils.getInstance().formatDecimalCurrency(result);
         return formatted;
     }
@@ -835,8 +837,10 @@ public class PembayaranController {
                                                          @RequestParam(value = "bank", defaultValue = "ALL") String bank,
                                                          @RequestParam(value = "cur", defaultValue = "ALL") String cur,
                                                          @RequestParam(value = "pembayaran", defaultValue = "ALL") String pembayaran,
+                                                         @RequestParam(value = "status", defaultValue = "ALL") String status,
+                                                         @RequestParam(value = "statusTracking", defaultValue = "ALL") String statusTracking,
                                                          @RequestParam(value = "search", defaultValue = "") String search) {
-        return valasService.getTotalPerCurrentcy(tglAwal, tglAkhir, bank, cur, pembayaran, WebUtils.getUsernameLogin(), search);
+        return valasService.getTotalPerCurrentcy(tglAwal, tglAkhir, bank, cur, pembayaran, status, statusTracking, WebUtils.getUsernameLogin(), search);
     }
 
     public String generateReport(HttpServletResponse response, Map<String, Object> errorData, String tipe) {
