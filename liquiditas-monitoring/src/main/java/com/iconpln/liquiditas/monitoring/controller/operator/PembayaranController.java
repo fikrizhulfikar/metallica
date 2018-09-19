@@ -64,8 +64,8 @@ public class PembayaranController {
             @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
             @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
             @RequestParam(value = "pPembayaran", defaultValue = "ALL") String pPembayaran,
-            @RequestParam(value = "pStatus", defaultValue = "") String pStatus,
-            @RequestParam(value = "pStatusTracking", defaultValue = "") String pStatusTracking,
+            @RequestParam(value = "status", defaultValue = "ALL") String pStatus,
+            @RequestParam(value = "statusTracking", defaultValue = "ALL") String pStatusTracking,
             @RequestParam(value = "search[value]", defaultValue = "") String pSearch
     ) {
 
@@ -109,8 +109,8 @@ public class PembayaranController {
             @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
             @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
             @RequestParam(value = "pPembayaran", defaultValue = "ALL") String pPembayaran,
-            @RequestParam(value = "status", defaultValue = "") String pStatus,
-            @RequestParam(value = "statusTracking", defaultValue = "") String pStatusTracking,
+            @RequestParam(value = "status", defaultValue = "ALL") String pStatus,
+            @RequestParam(value = "statusTracking", defaultValue = "ALL") String pStatusTracking,
             @RequestParam(value = "search[value]", defaultValue = "") String pSearch
     ) {
 
@@ -154,8 +154,8 @@ public class PembayaranController {
             @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
             @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
             @RequestParam(value = "pPembayaran", defaultValue = "ALL") String pPembayaran,
-            @RequestParam(value = "status", defaultValue = "") String pStatus,
-            @RequestParam(value = "statusTracking", defaultValue = "") String pStatusTracking,
+            @RequestParam(value = "status", defaultValue = "ALL") String pStatus,
+            @RequestParam(value = "statusTracking", defaultValue = "ALL") String pStatusTracking,
             @RequestParam(value = "search[value]", defaultValue = "") String pSearch
     ) {
 
@@ -819,19 +819,24 @@ public class PembayaranController {
 
     @RequestMapping(value = "/get_total_tagihan", method = RequestMethod.GET)
     public String getTotalTagihan(@RequestParam(value = "tgl_awal", defaultValue = "") String tglAwal,
-                                     @RequestParam(value = "tgl_akhir", defaultValue = "") String tglAkhir,
-                                     @RequestParam(value = "bank", defaultValue = "ALL") String bank,
-                                     @RequestParam(value = "cur", defaultValue = "ALL") String cur,
-                                     @RequestParam(value = "pembayaran", defaultValue = "ALL") String pembayaran,
-                                     @RequestParam(value = "search", defaultValue = "") String search) {
+                                  @RequestParam(value = "tgl_akhir", defaultValue = "") String tglAkhir,
+                                  @RequestParam(value = "bank", defaultValue = "ALL") String bank,
+                                  @RequestParam(value = "cur", defaultValue = "ALL") String cur,
+                                  @RequestParam(value = "pembayaran", defaultValue = "ALL") String pembayaran,
+                                  @RequestParam(value = "search", defaultValue = "") String search) {
         BigDecimal result =  valasService.getTotalTagihan(tglAwal, tglAkhir, bank, cur, pembayaran, WebUtils.getUsernameLogin(), search);
         String formatted = AppUtils.getInstance().formatDecimalCurrency(result);
         return formatted;
     }
 
     @RequestMapping(value = "/get_total_per_currency", method = RequestMethod.GET)
-    public List<Map<String, Object>> getTotalPerCurrency() {
-        return valasService.getTotalPerCurrentcy();
+    public List<Map<String, Object>> getTotalPerCurrency(@RequestParam(value = "tgl_awal", defaultValue = "") String tglAwal,
+                                                         @RequestParam(value = "tgl_akhir", defaultValue = "") String tglAkhir,
+                                                         @RequestParam(value = "bank", defaultValue = "ALL") String bank,
+                                                         @RequestParam(value = "cur", defaultValue = "ALL") String cur,
+                                                         @RequestParam(value = "pembayaran", defaultValue = "ALL") String pembayaran,
+                                                         @RequestParam(value = "search", defaultValue = "") String search) {
+        return valasService.getTotalPerCurrentcy(tglAwal, tglAkhir, bank, cur, pembayaran, WebUtils.getUsernameLogin(), search);
     }
 
     public String generateReport(HttpServletResponse response, Map<String, Object> errorData, String tipe) {

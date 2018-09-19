@@ -564,7 +564,16 @@ function getTotalTagihan() {
     $.ajax({
         url: baseUrl + "api_operator/pembayaran/get_total_per_currency",
         type: "GET",
+        data: {
+            tgl_awal: $("#tanggal_awal").val(),
+            tgl_akhir: $("#tanggal_akhir").val(),
+            bank: $("#cmb_bank").val(),
+            cur: $("#cmb_currecny").val(),
+            pembayaran: $("#cmb_jenis_pemabayaran").val(),
+            search: tempTableSearch
+        },
         success: function (res) {
+            $("#total_per_currency").html('');
             var total_per_currency = $("#total_per_currency");
             res.forEach(function (value) {
                 console.log(value);

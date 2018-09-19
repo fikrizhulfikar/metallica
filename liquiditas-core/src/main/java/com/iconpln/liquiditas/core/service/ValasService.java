@@ -140,7 +140,7 @@ public class ValasService {
                 .addValue("p_sort_by", sortBy, Types.VARCHAR)
                 .addValue("p_sort_dir", sortDir, Types.VARCHAR)
                 .addValue("p_status", status, Types.VARCHAR)
-                .addValue("p_status_tracking", status, Types.VARCHAR)
+                .addValue("p_status_tracking", statusTracking, Types.VARCHAR)
                 .addValue("p_search", pSearch, Types.VARCHAR);
 
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
@@ -353,6 +353,7 @@ public class ValasService {
         AppUtils.getLogger(this).info("data del_rekap_pembayaran : {}", out);
         return out;
     }
+
     public Map<String, Object> rejectPembayaran(String pIdValas, String pRejectBy) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -2006,12 +2007,12 @@ public class ValasService {
     }
 
     public BigDecimal getTotalTagihan(String tglAwal,
-                                  String tglAkhir,
-                                  String bank,
-                                  String cur,
-                                  String pembayaran,
-                                  String userId,
-                                  String search) {
+                                      String tglAkhir,
+                                      String bank,
+                                      String cur,
+                                      String pembayaran,
+                                      String userId,
+                                      String search) {
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_tgl_awal", tglAwal, OracleTypes.VARCHAR)
                 .addValue("p_tgl_akhir", tglAkhir, OracleTypes.VARCHAR)
@@ -2030,8 +2031,21 @@ public class ValasService {
         return result;
     }
 
-    public List<Map<String, Object>> getTotalPerCurrentcy() {
-        SqlParameterSource in = new MapSqlParameterSource();
+    public List<Map<String, Object>> getTotalPerCurrentcy(String pTglAwal,
+                                                          String pTglAkhir,
+                                                          String pBank,
+                                                          String pCur,
+                                                          String pPembayaran,
+                                                          String pUserId,
+                                                          String pSearch) {
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", pTglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", pTglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_bank", pBank, OracleTypes.VARCHAR)
+                .addValue("p_cur", pCur, OracleTypes.VARCHAR)
+                .addValue("p_pembayaran", pPembayaran, OracleTypes.VARCHAR)
+                .addValue("p_user_id", pUserId, OracleTypes.VARCHAR)
+                .addValue("p_search", pSearch, OracleTypes.VARCHAR);
         return new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("pkg_valas")
                 .withFunctionName("get_total_percurrency")
@@ -2050,3 +2064,4 @@ public class ValasService {
         return true;
     }
 }
+
