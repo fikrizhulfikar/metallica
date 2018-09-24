@@ -23,6 +23,12 @@ public class PageOperatorController {
         return "operator/rekapitulasi_data";
     }
 
+    @RequestMapping("/rekapitulasi_data_kasir")
+    public String rekap_data_kasir() {
+        return "operator/rekap_kasir";
+    }
+
+
     @RequestMapping("/rekap_belum")
     public String rekapDataBelumVerifikasi() {
         return "operator/rekap_belum";
