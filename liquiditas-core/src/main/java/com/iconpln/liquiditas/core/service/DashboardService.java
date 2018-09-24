@@ -251,7 +251,7 @@ public class DashboardService {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("pkg_dashboard_idr")
-                .withFunctionName("get_rencana_bayar_idr3");
+                .withFunctionName("get_renca na_bayar_idr3");
 
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_tanggal_akhir", tanggalAkhir);

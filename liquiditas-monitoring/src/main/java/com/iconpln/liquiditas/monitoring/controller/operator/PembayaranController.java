@@ -382,12 +382,15 @@ public class PembayaranController {
     public Map<String, Object> updStatus(
             @RequestParam(value = "pIdValas", defaultValue = "") String pIdValas,
             @RequestParam(value = "pStatusInvoice", defaultValue = "") String pStatusInvoice,
+            @RequestParam(value = "pIdJenisPembayaran", defaultValue = "") String pIdJenisPembayaran,
+            @RequestParam(value = "pCurrency", defaultValue = "") String pCurrency,
+            @RequestParam(value = "pTotalTagihan", defaultValue = "") String pTotalTagihan,
             @RequestParam(value = "pDeskripsi", defaultValue = "") String pDeskripsi
     ) {
 
         AppUtils.getLogger(this).debug("idValas : {} ", pIdValas);
         try {
-            Map<String, Object> res = valasService.updStatus(pIdValas, pStatusInvoice, pDeskripsi, WebUtils.getUsernameLogin());
+            Map<String, Object> res = valasService.updStatus(pIdValas, pStatusInvoice, pIdJenisPembayaran, pCurrency, pTotalTagihan, WebUtils.getUsernameLogin(),pDeskripsi);
             if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
                 notifyUpdateStatus(pIdValas);
             }
@@ -401,7 +404,12 @@ public class PembayaranController {
     @RequestMapping(value = "/multi_upd_status", method = RequestMethod.POST)
     public Map<String, Object> multiUpdStatus(
             @RequestParam(value = "pData", defaultValue = "") String pData,
+            @RequestParam(value = "pStatusInvoice", defaultValue = "") String pStatusInvoice,
+            @RequestParam(value = "pIdJenisPembayaran", defaultValue = "") String pIdJenisPembayaran,
+            @RequestParam(value = "pCurrency", defaultValue = "") String pCurrency,
+            @RequestParam(value = "pTotalTagihan", defaultValue = "") String pTotalTagihan,
             @RequestParam(value = "pDeskripsi", defaultValue = "") String pDeskripsi
+
     ) {
         Map<String, Object> out = null;
         AppUtils.getLogger(this).debug("pdata : {} ", pData);
@@ -418,7 +426,7 @@ public class PembayaranController {
                 AppUtils.getLogger(this).debug("  {}: {} ", key, value);
                 if (!key.equals("x")) {
                     try {
-                        out = valasService.updStatus(value, key, pDeskripsi, WebUtils.getUsernameLogin());
+                        out = valasService.updStatus(value, key, pIdJenisPembayaran, pCurrency, pTotalTagihan, WebUtils.getUsernameLogin(), pDeskripsi);
                         if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
                             notifyUpdateStatus(value);
                         }

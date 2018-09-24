@@ -32,7 +32,7 @@ public class ValasServiceTest {
     @Test
     public void test() {
         try {
-            Map<String, Object> result = service.updStatus("REKAP/20180724-000000513", "2", "", "admin");
+            Map<String, Object> result = service.updStatus("REKAP/20180724-000000513", "2", "P00016","IDR","60000","ADMIN","TEST");
             System.out.println(result);
         } catch (SQLException e) {
             e.printStackTrace();

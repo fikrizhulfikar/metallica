@@ -387,7 +387,7 @@ public class ValasService {
         return out;
     }
 
-    public Map<String, Object> updStatus(String pIdValas, String pStatusInvoice, String pDeskripsi, String pUpdateby) throws SQLException {
+    public Map<String, Object> updStatus(String pIdValas, String pStatusInvoice, String pIdJenisPembayaran, String pCurrency, String pTotalTagihan,  String pUpdateby,  String pDeskripsi) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_VALAS")
@@ -395,8 +395,11 @@ public class ValasService {
 
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_id_valas", pIdValas)
-                .addValue("p_update_by", pUpdateby)
                 .addValue("p_status_invoice", pStatusInvoice)
+                .addValue("p_id_jenis_pembayaran", pIdJenisPembayaran)
+                .addValue("p_currency", pCurrency)
+                .addValue("p_total_tagihan", pTotalTagihan)
+                .addValue("p_update_by", pUpdateby)
                 .addValue("p_deskripsi", pDeskripsi)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         Map<String, Object> out = simpleJdbcCall.execute(in);
