@@ -700,6 +700,7 @@ public class ValasService {
         } catch (IOException | NullPointerException e) {
             e.printStackTrace();
         }
+        AppUtils.getLogger(this).info("data ins tempt {}", out);
         return out;
     }
 

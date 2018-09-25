@@ -857,12 +857,12 @@ public class PembayaranController {
             response.setContentType("application/vnd.ms-excel");
             Map value = new HashMap();
 
-            System.out.println("value : " + value);
             String resource;
             response.setHeader("Content-Disposition", "attachment; filename=\"" + tipe + "_rekapitulasi.xls\"");
             resource = "classpath:/templates/report/" + tipe + "_rekapitulasi.xls";
             if (tipe.equals("download")) {
                 value.put("listFailed", errorData.get("return"));
+                System.out.println("error return :"+errorData.get("return"));
             }
             XLSTransformer transformer = new XLSTransformer();
             InputStream streamTemplate = resourceLoader.getResource(resource).getInputStream();
