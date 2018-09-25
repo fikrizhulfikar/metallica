@@ -37,6 +37,7 @@ $(document).ready(function () {
     search("load");
     setSelectStatus("cmb_status");
     setSelectStatusTracking("cmb_status_tracking");
+    setSelectJenisTagihan("pJenisTagihan");
     siap();
     inputKeterangan();
 });
