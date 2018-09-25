@@ -504,6 +504,17 @@ function saveColumn() {
     var hc18 = $("#hc18").prop('checked');
     var hc19 = $("#hc19").prop('checked');
 
+    var hc20 = $("#hc20").prop('checked');
+    var hc21 = $("#hc21").prop('checked');
+    var hc22 = $("#hc22").prop('checked');
+    var hc23 = $("#hc23").prop('checked');
+    var hc24 = $("#hc24").prop('checked');
+    var hc25 = $("#hc25").prop('checked');
+    var hc26 = $("#hc26").prop('checked');
+    var hc27 = $("#hc27").prop('checked');
+    var hc28 = $("#hc28").prop('checked');
+    var hc29 = $("#hc29").prop('checked');
+
     var data = {
         "nomor" : hc0 == true ? 1 : 0,
         "jenis_pembayaran" : hc1 == true ? 1 : 0,
@@ -524,7 +535,17 @@ function saveColumn() {
         "status" : hc16 == true ? 1 : 0,
         "tipe_transaksi" : hc17 == true ? 1 : 0,
         "status_tagihan" : hc18 == true ? 1 : 0,
-        "keterangan" : hc19 == true ? 1 : 0
+        "keterangan" : hc19 == true ? 1 : 0,
+        "nominal_sblm_pajak" : hc20 == true ? 1 : 0,
+        "pajak" : hc21 == true ? 1 : 0,
+        "nominal_stlh_pajak" : hc22 == true ? 1 : 0,
+        "nominal_underlying" : hc23 == true ? 1 : 0,
+        "nominal_tanpa_underlying" : hc24 == true ? 1 : 0,
+        "kurs_jidor" : hc25 == true ? 1 : 0,
+        "spread" : hc26 == true ? 1 : 0,
+        "kurs_transaksi" : hc27 == true ? 1 : 0,
+        "nominal_pembayaran_idr" : hc28 == true ? 1 : 0,
+        "jenis_tagihan" : hc29 == true ? 1 : 0,
     };
 
     $.ajax({

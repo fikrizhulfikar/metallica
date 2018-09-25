@@ -966,7 +966,17 @@ public class PembayaranController {
                           @RequestParam("status") Integer status,
                           @RequestParam("tipe_transaksi") Integer tipeTransaksi,
                           @RequestParam("status_tagihan") Integer statusTagihan,
-                          @RequestParam("keterangan") Integer keterangan
+                          @RequestParam("keterangan") Integer keterangan,
+                          @RequestParam("nominal_sblm_pajak") Integer nominalSblmPajak,
+                          @RequestParam("pajak") Integer pajak,
+                          @RequestParam("nominal_stlh_pajak") Integer nominalStlhPajak,
+                          @RequestParam("nominal_underlying") Integer nominalUnderlying,
+                          @RequestParam("nominal_tanpa_underlying") Integer nominalTanpaUnderlying,
+                          @RequestParam("kurs_jidor") Integer kursJidor,
+                          @RequestParam("spread") Integer spread,
+                          @RequestParam("kurs_transaksi") Integer kursTransaksi,
+                          @RequestParam("nominal_pembayaran_idr") Integer nominalPembayaranIdr,
+                          @RequestParam("jenis_tagihan") Integer jenisTagihan
     ) {
         Map data = new HashMap();
         try {
@@ -990,7 +1000,17 @@ public class PembayaranController {
                     status,
                     tipeTransaksi,
                     statusTagihan,
-                    keterangan
+                    keterangan,
+                    nominalSblmPajak,
+                    pajak,
+                    nominalStlhPajak,
+                    nominalUnderlying,
+                    nominalTanpaUnderlying,
+                    kursJidor,
+                    spread,
+                    kursTransaksi,
+                    nominalPembayaranIdr,
+                    jenisTagihan
             );
             data.put("data", result);
         } catch (Exception e) {
