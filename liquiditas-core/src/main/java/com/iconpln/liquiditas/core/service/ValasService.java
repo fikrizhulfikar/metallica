@@ -52,7 +52,9 @@ public class ValasService {
             String pCurr, String pNilaiTagihan, String pBankTujuan, String pBankPembayar,
             String pUnitPenerima, String pNoTagihan, String pTglTagihan, String pNoNotdin,
             String pTglNotdin, String pStatusValas, String pCreateBy, String pKeterangan,
-            String pTipeTransaksi, String pTglTerimaInvoice
+            String pTipeTransaksi, String pTglTerimaInvoice, String nominalSblmPajak,
+            String nominalUnderlying, String pajak, String nominalTanpaUnderlying,
+            String kursJisdor, String spread, String jenisTagihan
     ) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -78,11 +80,19 @@ public class ValasService {
                 .addValue("p_deskripsi", pKeterangan)
                 .addValue("p_tipe_transaksi", pTipeTransaksi)
                 .addValue("p_tgl_terima_invoice", pTglTerimaInvoice)
+                .addValue("p_nominal_sblm_pajak", nominalSblmPajak)
+                .addValue("p_nominal_underlying",  nominalUnderlying)
+                .addValue("p_pajak", pajak)
+                .addValue("p_nominal_tanpa_underlying", nominalTanpaUnderlying)
+                .addValue("p_kurs_jisdor", kursJisdor)
+                .addValue("p_spread", spread)
+                .addValue("p_jenis_tagihan", jenisTagihan)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data ins_rekap_data : {}", out);
         return out;
     }
+
 
     //multiple edit
     public Map<String, Object> updateMultiplePembayaran(

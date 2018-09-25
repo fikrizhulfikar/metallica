@@ -312,7 +312,14 @@ public class PembayaranController {
             @RequestParam(value = "pStatusValas", defaultValue = "") String pStatusValas,
             @RequestParam(value = "pKeterangan", defaultValue = "") String pKeterangan,
             @RequestParam(value = "pTipeTransaksi", defaultValue = "") String pTipeTransaksi,
-            @RequestParam(value = "pTglTerimaInvoice", defaultValue = "") String pTglTerimaInvoice
+            @RequestParam(value = "pTglTerimaInvoice", defaultValue = "") String pTglTerimaInvoice,
+            @RequestParam(value = "pNominalSblmPajak", defaultValue = "") String pNominalSblmPajak,
+            @RequestParam(value = "pNominalUnderlying", defaultValue = "") String pNominalUnderlying,
+            @RequestParam(value = "pPajak", defaultValue = "") String pPajak,
+            @RequestParam(value = "pNominalTanpaUnderlying", defaultValue = "") String pNominalTanpaUnderlying,
+            @RequestParam(value = "pKursJisdor", defaultValue = "") String pKursJisdor,
+            @RequestParam(value = "pSpread", defaultValue = "") String pSpread,
+            @RequestParam(value = "pJenisTagihan", defaultValue = "") String pJenisTagihan
     ) {
 
         AppUtils.getLogger(this).debug("idValas : {} ", pIdValas);
@@ -332,7 +339,13 @@ public class PembayaranController {
         AppUtils.getLogger(this).debug("pStatusValas : {} ", pStatusValas);
         AppUtils.getLogger(this).debug("pKeterangan : {} ", pKeterangan);
         AppUtils.getLogger(this).debug("pTipeTransaksi : {} ", pTipeTransaksi);
-        AppUtils.getLogger(this).debug("pTglTerimaInvoice : {} ", pTglTerimaInvoice);
+        AppUtils.getLogger(this).debug("pNominalSblmPajak : {} ", pNominalSblmPajak);
+        AppUtils.getLogger(this).debug("pNominalUnderlying : {} ", pNominalUnderlying);
+        AppUtils.getLogger(this).debug("pPajak : {} ", pPajak);
+        AppUtils.getLogger(this).debug("pNominalTanpaUnderlying : {} ", pNominalTanpaUnderlying);
+        AppUtils.getLogger(this).debug("pKursJisdor : {} ", pKursJisdor);
+        AppUtils.getLogger(this).debug("pSpread : {} ", pSpread);
+
         try {
             String message = "";
             boolean isUpdate = false;
@@ -349,7 +362,10 @@ public class PembayaranController {
                 message += namaJenisPembayaran + "-" + namaVendor + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + ".";
                 isUpdate = false;
             }
-            Map<String, Object> res = valasService.insPembayaran(pIdValas, pJenisPembayaran, pTglJatuhTempo, pVendor, pCurr, pNilaiTagihan, pBankTujuan, pBankPembayar, pUnitPenerima, pNoTagihan, pTglTagihan, pNoNotdin, pTglNotdin, pStatusValas, WebUtils.getUsernameLogin(), pKeterangan, pTipeTransaksi, pTglTerimaInvoice);
+            Map<String, Object> res = valasService.insPembayaran(pIdValas, pJenisPembayaran, pTglJatuhTempo, pVendor, pCurr, pNilaiTagihan,
+                    pBankTujuan, pBankPembayar, pUnitPenerima, pNoTagihan, pTglTagihan, pNoNotdin, pTglNotdin, pStatusValas,
+                    WebUtils.getUsernameLogin(), pKeterangan, pTipeTransaksi, pTglTerimaInvoice, pNominalSblmPajak, pNominalUnderlying,
+                    pPajak, pNominalTanpaUnderlying, pKursJisdor, pSpread, pJenisTagihan);
             if (isUpdate) {
                 Map<String, String> sesudah = notificationUtil.getNotificationDetailByIdValas(pIdValas);
                 message += "Perubahan: " + sesudah.get("NAMA_JENIS_PEMBAYARAN") + "-" + sesudah.get("NAMA_VENDOR") + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + ".";

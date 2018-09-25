@@ -321,7 +321,14 @@ function ins_data() {
             pStatusValas: $("#pStatus").val(),
             pKeterangan: $("#pKeterangan").val(),
             pTipeTransaksi: $("#pTipeTransaksi").val(),
-            pTglTerimaInvoice: $("#pTglTerimaInvoice").val()
+            pTglTerimaInvoice: $("#pTglTerimaInvoice").val(),
+            pNominalSblmPajak: $("#pNominalSebelumPajak").val(),
+            pNominalUnderlying: $("#pNominalUnderlying").val(),
+            pPajak: $("#pPajak").val(),
+            pNominalTanpaUnderlying: $("#pNominalTanpaUnderlying").val(),
+            pKursJisdor: $("#pKursJisdor").val(),
+            pSpread: $("#pSpread").val(),
+            pJenisTagihan: $("#pJenisTagihan").val()
         },
         success: function (res) {
             hideLoadingCss("")
