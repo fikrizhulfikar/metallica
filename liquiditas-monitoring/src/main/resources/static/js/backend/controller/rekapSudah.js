@@ -748,7 +748,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 
                 },
                 {
-                    "aTargets": [20],
+                    "aTargets": [28],
                     "mRender": function (data, type, full) {
 
                         var ret_value;
@@ -1039,7 +1039,15 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                     {"data": "STATUS_VALAS", "defaultContent": ""},
                     {"data": "TIPE_TRANSAKSI", "defaultContent": ""},
                     {"data": "STATUS_TRACKING", "defaultContent": ""},
-                    {"data": "DESKRIPSI", "defaultContent": ""}
+                    {"data": "DESKRIPSI", "defaultContent": ""},
+                    {"data": "NOMINAL_SLTH_PAJAK", "defaultContent": ""},
+                    {"data": "NOMINAL_SBLM_PAJAK", "defaultContent": ""},
+                    {"data": "NOMINAL_UNDERLYING", "defaultContent": ""},
+                    {"data": "PAJAK", "defaultContent": ""},
+                    {"data": "NOMINAL_TANPA_UNDERLYING", "defaultContent": ""},
+                    {"data": "KURS_JISDOR", "defaultContent": ""},
+                    {"data": "SPREAD", "defaultContent": ""},
+                    {"data": "JENIS_TAGIHAN", "defaultContent": ""}
                 ],
             "drawCallback":
 
