@@ -851,7 +851,28 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                         '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
                                         '</div>'
                                 }
-                                else if (full.STATUS_TRACKING == "APPROVE BY MS"){
+                                else if (full.STATUS_TRACKING == "APPROVE BY MS" && full.TOTAL_TAGIHAN <= "25000000000"  || full.STATUS_TRACKING == "APPROVE BY KADIV") {
+                                    ret_value =
+                                        '<div class="btn-group">' +
+                                        '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
+                                    var role = newRoleUser[0];
+                                    if(role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN") {
+                                        ret_value = ret_value +
+                                            '<button style="width: 15px !important;" id="option-lunas" class="btn-lunas btn-sm btn-warning" title="Lunas" onclick="upd_status_tracking(\'' + full.ID_VALAS + '\',\'' + 7 + '\',\'' + full.ID_JENIS_PEMBAYARAN + '\',\'' + full.CURRENCY + '\',\'' + full.TOTAL_TAGIHAN + '\')"><i class="fa fa-arrows-alt"></i></button>' +
+                                            '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title ="Reverse" onclick ="reverse(\'' + full.ID_VALAS + '\',\'' + 10 + '\')"><i class="fa fa-arrow-left"></i></button>';
+                                    }
+                                    if(newRoleUser[0] == "ROLE_ADMIN"){
+                                        ret_value = ret_value +
+                                            '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>';
+                                    }
+                                    ret_value = ret_value +
+                                        '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
+                                        '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                        '</div>'
+                                }
+
+
+                                else if (full.STATUS_TRACKING == "APPROVE BY MS" && full.TOTAL_TAGIHAN > "25000000000"){
                                     ret_value =
                                         '<div class="btn-group">' +
                                         '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
@@ -861,25 +882,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                                 '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Approve KADIV" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +10+ '\',\''+full.ID_JENIS_PEMBAYARAN+'\',\''+full.CURRENCY+'\',\''+full.TOTAL_TAGIHAN+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                                 '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title ="Reverse" onclick ="reverse(\'' +full.ID_VALAS+'\',\'' +5+ '\')"><i class="fa fa-arrow-left"></i></button>';
                                         }
-                                    if(newRoleUser[0] == "ROLE_ADMIN"){
-                                        ret_value = ret_value +
-                                            '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>';
-                                    }
-                                        ret_value = ret_value +
-                                            '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                            '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
-                                            '</div>'
-                                }else if (full.STATUS_TRACKING == "APPROVE BY KADIV" || full.STATUS_TRACKING == "APPROVE MS PEMBELANJAAN" && full.NILAI_TAGIHAN <= 25000000000 ){
-                                    ret_value =
-                                        '<div class="btn-group">' +
-                                        '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
-                                    var role = newRoleUser[0];
-                                    if(role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN"){
-                                        ret_value = ret_value +
-                                            '<button style="width: 15px !important;" id="option-lunas" class="btn-lunas btn-sm btn-warning" title="Lunas" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +7+ '\',\''+full.ID_JENIS_PEMBAYARAN+'\',\''+full.CURRENCY+'\',\''+full.TOTAL_TAGIHAN+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                            '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title ="Reverse" onclick ="reverse(\'' +full.ID_VALAS+'\',\'' +10+ '\')"><i class="fa fa-arrow-left"></i></button>';
-                                    }
-                                    
+
                                     if(newRoleUser[0] == "ROLE_ADMIN"){
                                         ret_value = ret_value +
                                             '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>';
