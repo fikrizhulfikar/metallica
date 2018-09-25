@@ -2017,7 +2017,7 @@ public class ValasService {
                 .addValue("p_keterangan", keterangan, OracleTypes.NUMBER)
 
                 .addValue("p_nominal_sblm_pajak", nominalSblmPajak, OracleTypes.NUMBER)
-                .addValue("p_pajak", keterangan, pajak, OracleTypes.NUMBER)
+                .addValue("p_pajak", pajak, OracleTypes.NUMBER)
                 .addValue("p_nominal_stlh_pajak", nominalStlhPajak, OracleTypes.NUMBER)
                 .addValue("p_nominal_underlying", nominalUnderlying, OracleTypes.NUMBER)
                 .addValue("p_nominal_tanpa_underlying", nominalTanpaUnderlying, OracleTypes.NUMBER)
