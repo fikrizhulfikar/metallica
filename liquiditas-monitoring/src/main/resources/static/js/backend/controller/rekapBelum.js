@@ -36,6 +36,7 @@ $(document).ready(function () {
     setSelectJenisPembayaran("cmb_jenis_pemabayaran", "FILTER", "");
     setSelectStatus("cmb_status");
     setSelectStatusTracking("cmb_status_tracking");
+    setSelectJenisTagihan("pJenisTagihan");
     search("load");
     siap();
     inputKeterangan();

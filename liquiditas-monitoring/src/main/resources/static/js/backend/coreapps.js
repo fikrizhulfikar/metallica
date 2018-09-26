@@ -611,3 +611,9 @@ function getTotalTagihan() {
         }
     });
 }
+
+function setSelectJenisTagihan(idHtml) {
+    $("#" + idHtml + "").append('<option value="vanilla">Vanilla</option>');
+    $("#" + idHtml + "").append('<option value="tripartite">Tripartite</option>');
+    $("#" + idHtml + "").append('<option value="jisdor">Jisdor</option>');
+}
