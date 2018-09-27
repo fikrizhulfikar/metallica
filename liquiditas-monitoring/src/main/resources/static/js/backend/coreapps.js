@@ -471,6 +471,56 @@ function showColumn() {
             } else {
                 $("#hc19").prop("checked", false);
             }
+            if (response.NOMINAL_SBLM_PAJAK == 1) {
+                $("#hc20").prop("checked", true);
+            } else {
+                $("#hc20").prop("checked", false);
+            }
+            if (response.PAJAK == 1) {
+                $("#hc21").prop("checked", true);
+            } else {
+                $("#hc21").prop("checked", false);
+            }
+            if (response.NOMINAL_STLH_PAJAK == 1) {
+                $("#hc22").prop("checked", true);
+            } else {
+                $("#hc22").prop("checked", false);
+            }
+            if (response.NOMINAL_UNDERLYING == 1) {
+                $("#hc23").prop("checked", true);
+            } else {
+                $("#hc23").prop("checked", false);
+            }
+            if (response.NOMINAL_TANPA_UNDERLYING == 1) {
+                $("#hc24").prop("checked", true);
+            } else {
+                $("#hc24").prop("checked", false);
+            }
+            if (response.KURS_JISDOR == 1) {
+                $("#hc25").prop("checked", true);
+            } else {
+                $("#hc25").prop("checked", false);
+            }
+            if (response.SPREAD == 1) {
+                $("#hc26").prop("checked", true);
+            } else {
+                $("#hc26").prop("checked", false);
+            }
+            if (response.KURS_TRANSAKSI == 1) {
+                $("#hc27").prop("checked", true);
+            } else {
+                $("#hc27").prop("checked", false);
+            }
+            if (response.NOMINAL_PEMBAYARAN_IDR == 1) {
+                $("#hc28").prop("checked", true);
+            } else {
+                $("#hc28").prop("checked", false);
+            }
+            if (response.JENIS_TAGIHAN == 1) {
+                $("#hc29").prop("checked", true);
+            } else {
+                $("#hc29").prop("checked", false);
+            }
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
