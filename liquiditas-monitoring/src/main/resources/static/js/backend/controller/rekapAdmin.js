@@ -756,7 +756,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 
                 },
                 {
-                    "aTargets": [28],
+                    "aTargets": [-2],
                     "mRender": function (data, type, full) {
 
                         var ret_value;
@@ -911,7 +911,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 
                 },
                 {
-                    "aTargets": [21],
+                    "aTargets": [-1],
                     "mRender": function (data, type, full) {
                         var value = new Object();
                         var ret_value = '';
@@ -1028,6 +1028,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                     {"data": "CURRENCY", "defaultContent": ""},
                     {"data": "TOTAL_TAGIHAN", "defaultContent": ""},
                     {"data": "ID_UNIT", "defaultContent": ""},
+                    {"data": "NAMA_KONTRAK", "defaultContent": ""},
                     {"data": "KODE_BANK_TUJUAN", "defaultContent": ""},
                     {"data": "KODE_BANK_PEMBAYAR", "defaultContent": ""},
                     {"data": "TGL_TERIMA_INVOICE", "defaultContent": ""},
@@ -1041,13 +1042,16 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                     {"data": "TIPE_TRANSAKSI", "defaultContent": ""},
                     {"data": "STATUS_TRACKING", "defaultContent": ""},
                     {"data": "DESKRIPSI", "defaultContent": ""},
-                    {"data": "NOMINAL_SLTH_PAJAK", "defaultContent": ""},
                     {"data": "NOMINAL_SBLM_PAJAK", "defaultContent": ""},
-                    {"data": "NOMINAL_UNDERLYING", "defaultContent": ""},
                     {"data": "PAJAK", "defaultContent": ""},
+                    {"data": "NOMINAL_STLH_PAJAK", "defaultContent": ""},
+                    {"data": "NOMINAL_UNDERLYING", "defaultContent": ""},
+                    {"data": "NOMINAL_TANPA_UNDERLYING", "defaultContent": ""},
                     {"data": "NOMINAL_TANPA_UNDERLYING", "defaultContent": ""},
                     {"data": "KURS_JISDOR", "defaultContent": ""},
                     {"data": "SPREAD", "defaultContent": ""},
+                    {"data": "KURS_TRANSAKSI", "defaultContent": ""},
+                    {"data": "NOMINAL_PEMBAYARAN_IDR", "defaultContent": ""},
                     {"data": "JENIS_TAGIHAN", "defaultContent": ""}
                 ],
             "drawCallback":
@@ -1205,6 +1209,56 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                             api.column(19).visible(true);
                         } else {
                             api.column(19).visible(false);
+                        }
+                        if (response.NOMINAL_SBLM_PAJAK == 1) {
+                            api.column(20).visible(true);
+                        } else {
+                            api.column(20).visible(false);
+                        }
+                        if (response.PAJAK == 1) {
+                            api.column(21).visible(true);
+                        } else {
+                            api.column(21).visible(false);
+                        }
+                        if (response.NOMINAL_STLH_PAJAK == 1) {
+                            api.column(22).visible(true);
+                        } else {
+                            api.column(22).visible(false);
+                        }
+                        if (response.NOMINAL_UNDERLYING == 1) {
+                            api.column(23).visible(true);
+                        } else {
+                            api.column(23).visible(false);
+                        }
+                        if (response.NOMINAL_TANPA_UNDERLYING == 1) {
+                            api.column(24).visible(true);
+                        } else {
+                            api.column(24).visible(false);
+                        }
+                        if (response.KURS_JISDOR == 1) {
+                            api.column(25).visible(true);
+                        } else {
+                            api.column(25).visible(false);
+                        }
+                        if (response.SPREAD == 1) {
+                            api.column(26).visible(true);
+                        } else {
+                            api.column(26).visible(false);
+                        }
+                        if (response.KURS_TRANSAKSI == 1) {
+                            api.column(27).visible(true);
+                        } else {
+                            api.column(27).visible(false);
+                        }
+                        if (response.NOMINAL_PEMBAYARAN_IDR == 1) {
+                            api.column(28).visible(true);
+                        } else {
+                            api.column(28).visible(false);
+                        }
+                        if (response.JENIS_TAGIHAN == 1) {
+                            api.column(29).visible(true);
+                        } else {
+                            api.column(29).visible(false);
                         }
                     },
                     error: function () {
