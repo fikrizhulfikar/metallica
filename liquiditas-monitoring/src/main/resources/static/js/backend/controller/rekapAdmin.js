@@ -15,6 +15,7 @@ var checkedArray = new Array();
 var cbParentArray = new Array();
 var srcTglAwal = null;
 var srcTglAkhir = null;
+var addedDays = 2;
 $(document).ready(function () {
     $('#pTglTerimaInvoice').datepicker({dateFormat: 'dd/mm/yy', maxDate: new Date()});
     $('#tanggal_awal').datepicker({dateFormat: 'dd/mm/yy'});
@@ -153,7 +154,13 @@ function openFormNew() {
     $("#pUnitPenerima").select2("val", "");
     $("#pVendor").select2("val", "");
 
-    $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
+    var date = new Date();
+    if(newRoleUser[0].replace(" ", "")!= "ROLE_ADMIN"){
+        date.setDate(date.getDate() + addedDays);
+    }
+
+    $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+
     $('#pTglTagihan').datepicker({dateFormat: 'dd/mm/yy'});
     $('#pTglNotaDinas').datepicker({dateFormat: 'dd/mm/yy'});
     setSelectJenisPembayaran("pJenisPemabayaran", "", "");
@@ -1227,7 +1234,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 
         if(newRoleUser[0] != "ROLE_OSS"){
             html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
-                '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
+                '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" style="margin-left: 10px" type="button" onclick="openMultipleEditForm(2)"><i class="fa fa-pencil"></i></button>';
         }
         html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
         $(this).append(html);

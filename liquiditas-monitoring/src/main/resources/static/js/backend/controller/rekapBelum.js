@@ -15,6 +15,8 @@ var checkedArray = new Array();
 var cbParentArray = new Array();
 var srcTglAwal = null;
 var srcTglAkhir = null;
+
+var addedDays;
 $(document).ready(function () {
     $('#pTglTerimaInvoice').datepicker({dateFormat: 'dd/mm/yy', maxDate: new Date()});
     $('#tanggal_awal').datepicker({dateFormat: 'dd/mm/yy'});
@@ -90,7 +92,11 @@ function duplicate_data(id) {
             $("#pTglTagihan").val("");
             $("#pNoNotaDinas").val("");
             $("#pTglNotaDinas").val("");
-            $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
+            var date = new Date();
+            if(newRoleUser[0].replace(" ", "")!= "ROLE_ADMIN"){
+                date.setDate(date.getDate() + addedDays);
+            }
+            $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
             $('#pTglTagihan').datepicker({dateFormat: 'dd/mm/yy'});
             $('#pTglNotaDinas').datepicker({dateFormat: 'dd/mm/yy'});
 
@@ -152,20 +158,21 @@ function openFormNew() {
     $("#pJenisPemabayaran").select2("val", "");
     $("#pUnitPenerima").select2("val", "");
     $("#pVendor").select2("val", "");
-
-    $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
+    var date = new Date();
+    if(newRoleUser[0].replace(" ", "")!= "ROLE_ADMIN"){
+        date.setDate(date.getDate() + addedDays);
+    }
+    $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
     $('#pTglTagihan').datepicker({dateFormat: 'dd/mm/yy'});
     $('#pTglNotaDinas').datepicker({dateFormat: 'dd/mm/yy'});
     setSelectJenisPembayaran("pJenisPemabayaran", "", "");
     setSelectCurr("pCurrecny", "", "", "REKAP");
     setSelectBank2("pBankTujuan", "", "TUJUAN", "", "REKAP");
     setSelectBank("pBankPembayar", "", "PEMBAYAR", "", "REKAP");
-
     $('#pTglJatuhTempo').prop('disabled', false);
     if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
         $('#pTglJatuhTempo').prop('disabled', true);
     }
-
     $('#edit-rekap-modal').modal({backdrop: 'static', keyboard: false});
 
 }
@@ -369,7 +376,11 @@ function edit_data(id) {
             $("#pTglTagihan").val("");
             $("#pNoNotaDinas").val("");
             $("#pTglNotaDinas").val("");
-            $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
+            var date = new Date();
+            if(newRoleUser[0].replace(" ", "")!= "ROLE_ADMIN"){
+                date.setDate(date.getDate() + addedDays);
+            }
+            $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
             $('#pTglTagihan').datepicker({dateFormat: 'dd/mm/yy'});
             $('#pTglNotaDinas').datepicker({dateFormat: 'dd/mm/yy'});
 
