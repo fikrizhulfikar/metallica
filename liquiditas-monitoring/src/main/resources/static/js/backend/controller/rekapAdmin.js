@@ -735,7 +735,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {"width": "20%", "targets": 0},
                 {
                     "bSortable": true,
-                    "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+                    "aTargets": [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
                 },{
                     "aTargets":
                         [5],
@@ -745,6 +745,10 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                             return accounting.formatNumber(full.TOTAL_TAGIHAN, 2, ".", ",")
                         }
 
+                },
+                {
+                    "aTargets": [ 6 ],
+                    "visible": false
                 },
                 {
                     "aTargets": [31],
@@ -1004,6 +1008,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                         function (res) {
                             hideLoadingCss()
                             getTotalTagihan();
+                            console.log(res.data);
                             return res.data;
                         }
                 }
@@ -1017,7 +1022,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                     {"data": "CURRENCY", "defaultContent": ""},
                     {"data": "TOTAL_TAGIHAN", "defaultContent": ""},
                     {"data": "ID_UNIT", "defaultContent": ""},
-                    {"data": "NAMA_KONTRAK", "defaultContent": ""},
+                    {"data": "ID_UNIT", "defaultContent": ""},
                     {"data": "KODE_BANK_TUJUAN", "defaultContent": ""},
                     {"data": "KODE_BANK_PEMBAYAR", "defaultContent": ""},
                     {"data": "TGL_TERIMA_INVOICE", "defaultContent": ""},
@@ -1128,11 +1133,11 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                         } else {
                             api.column(5).visible(false);
                         }
-                        if (response.NAMA_KONTRAK == 1) {
+                        /*if (response.NAMA_KONTRAK == 1) {
                             api.column(6).visible(true);
                         } else {
                             api.column(6).visible(false);
-                        }
+                        }*/
                         if (response.BANK_TUJUAN == 1) {
                             api.column(7).visible(true);
                         } else {
@@ -1193,10 +1198,15 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                         } else {
                             api.column(18).visible(false);
                         }
-                        if (response.KETERANGAN == 1) {
+                        if (response.STATUS_TRACKING == 1) {
                             api.column(19).visible(true);
                         } else {
                             api.column(19).visible(false);
+                        }
+                        if (response.KETERANGAN == 1) {
+                            api.column(20).visible(true);
+                        } else {
+                            api.column(20).visible(false);
                         }
                         if (response.NOMINAL_SBLM_PAJAK == 1) {
                             api.column(21).visible(true);
@@ -1216,7 +1226,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                         if (response.NOMINAL_UNDERLYING == 1) {
                             api.column(24).visible(true);
                         } else {
-                            api.column(25).visible(false);
+                            api.column(24).visible(false);
                         }
                         if (response.NOMINAL_TANPA_UNDERLYING == 1) {
                             api.column(25).visible(true);
