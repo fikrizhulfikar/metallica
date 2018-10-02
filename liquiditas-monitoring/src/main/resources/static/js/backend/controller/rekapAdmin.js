@@ -113,6 +113,13 @@ function duplicate_data(id) {
             $("#pStatus").val(res[0].STATUS_VALAS);
             $("#pTipeTransaksi").val(res[0].TIPE_TRANSAKSI);
             $("#pTglTerimaInvoice").val(res[0].TGL_TERIMA_INVOICE);
+            $("#pNominalSebelumPajak").val(res[0].NOMINAL_SBLM_PAJAK);
+            $("#pNominalUnderlying").val(res[0].NOMINAL_UNDERLYING);
+            $("#pPajak").val(res[0].PAJAK);
+            $("#pNominalTanpaUnderlying").val(res[0].NOMINAL_TANPA_UNDERLYING);
+            $("#pKursJisdor").val(res[0].KURS_JISDOR);
+            $("#pSpread").val(res[0].SPREAD);
+            $("#pJenisTagihan").val(res[0].JENIS_TAGIHAN);
             $('#pTglJatuhTempo').prop('disabled', false);
             if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
                 $('#pTglJatuhTempo').prop('disabled', true);
@@ -398,7 +405,13 @@ function edit_data(id) {
             $("#pStatus").val(res[0].STATUS_VALAS);
             $("#pTipeTransaksi").val(res[0].TIPE_TRANSAKSI);
             $("#pTglTerimaInvoice").val(res[0].TGL_TERIMA_INVOICE);
-            $('#pTglJatuhTempo').prop('disabled', false);
+            $("#pNominalSebelumPajak").val(res[0].NOMINAL_SBLM_PAJAK);
+            $("#pNominalUnderlying").val(res[0].NOMINAL_UNDERLYING);
+            $("#pPajak").val(res[0].PAJAK);
+            $("#pNominalTanpaUnderlying").val(res[0].NOMINAL_TANPA_UNDERLYING);
+            $("#pKursJisdor").val(res[0].KURS_JISDOR);
+            $("#pSpread").val(res[0].SPREAD);
+            $("#pJenisTagihan").val(res[0].JENIS_TAGIHAN);
             if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
                 $('#pTglJatuhTempo').prop('disabled', true);
             }
@@ -589,6 +602,57 @@ function generatePDF() {
         style: "tableHeader",
         alignment: "center"
     });
+    column.push({
+        text: "NOMINAL SBLM PAJAK",
+        style: "tableHeader",
+        alignment: "center"
+    });
+    column.push({
+        text: "PAJAK",
+        style: "tableHeader",
+        alignment: "center"
+    });
+    column.push({
+        text: "NOMINAL STLH PAJAK",
+        style: "tableHeader",
+        alignment: "center"
+    });
+    column.push({
+        text: "NOMINAL UNDERLYING",
+        style: "tableHeader",
+        alignment: "center"
+    });
+    column.push({
+        text: "NOMINAL TANPA UNDERLYING",
+        style: "tableHeader",
+        alignment: "center"
+    });
+    column.push({
+        text: "KURS JISDOR",
+        style: "tableHeader",
+        alignment: "center"
+    });
+    column.push({
+        text: "SPREAD",
+        style: "tableHeader",
+        alignment: "center"
+    });
+    column.push({
+        text: "KURS TRANSAKSI",
+        style: "tableHeader",
+        alignment: "center"
+    });
+    column.push({
+        text: "NOMINAL PEMBAYARAN IDR",
+        style: "tableHeader",
+        alignment: "center"
+    });
+    column.push({
+        text: "JENIS TAGIHAN",
+        style: "tableHeader",
+        alignment: "center"
+    });
+
 
     var externalDataRetrievedFromServer = []
     $.each(allData, function (index, v) {
@@ -612,6 +676,16 @@ function generatePDF() {
             STATUS: v.STATUS_VALAS,
             TIPE_TRANSAKSI: v.TIPE_TRANSAKSI,
             STATUS_TRACKING: v.STATUS_TRACKING,
+            NOMINAL_SBLM_PAJAK : v.NOMINAL_SBLM_PAJAK,
+            PAJAK : v.PAJAK,
+            NOMINAL_STLH_PAJAK : v.NOMINAL_STLH_PAJAK,
+            NOMINAL_UNDERLYING : v.NOMINAL_UNDERLYING,
+            NOMINAL_TANPA_UNDERLYING : v.NOMINAL_TANPA_UNDERLYING,
+            KURS_JISDOR : v.KURS_JISDOR,
+            SPREAD : v.SPREAD,
+            KURS_TRANSAKSI : v.KURS_TRANSAKSI,
+            NOMINAL_PEMBAYARAN_IDR : v.NOMINAL_PEMBAYARAN_IDR,
+            JENIS_TAGIHAN : v.JENIS_TAGIHAN,
         }
         externalDataRetrievedFromServer.push(helloooow)
     });
@@ -643,8 +717,16 @@ function generatePDF() {
             dataRow.push({text: row["COUNT_DOWN"], alignment: "right"});
             dataRow.push(row["STATUS"]);
             dataRow.push(row["TIPE_TRANSAKSI"]);
-            dataRow.push(row["STATUS_TRACKING"]);
-
+            dataRow.push(row["NOMINAL_SBLM_PAJAK"]);
+            dataRow.push(row["PAJAK"]);
+            dataRow.push(row["NOMINAL_STLH_PAJAK"]);
+            dataRow.push(row["NOMINAL_UNDERLYING"]);
+            dataRow.push(row["NOMINAL_TANPA_UNDERLYING"]);
+            dataRow.push(row["KURS_JISDOR"]);
+            dataRow.push(row["SPREAD"]);
+            dataRow.push(row["KURS_TRANSAKSI"]);
+            dataRow.push(row["NOMINAL_PEMBAYARAN_IDR"]);
+            dataRow.push(row["JENIS_TAGIHAN"]);
             body.push(dataRow);
         });
 
