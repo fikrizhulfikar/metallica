@@ -28,11 +28,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -889,6 +885,14 @@ public class PembayaranController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @RequestMapping(value = "/ins_reverse_reject", method = RequestMethod.POST)
+    public Map<String, Object> insReverseReject(@RequestParam("idValas") String idValas) {
+        String result = valasService.insReverseReject(idValas, WebUtils.getUsernameLogin());
+        Map<String, Object> map = new HashMap<>();
+        map.put("message", result);
+        return map;
     }
 
     private String parseColumn(int index) {

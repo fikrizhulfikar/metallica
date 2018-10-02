@@ -41,6 +41,13 @@ $(document).ready(function () {
     search("load");
     siap();
     inputKeterangan();
+    $('#check_all').change(function() {
+        if($(this).is(':checked')){
+            checkColumn(true);
+        } else {
+            checkColumn(false);
+        }
+    });
 });
 
 
@@ -1729,4 +1736,36 @@ function multipleUpdate() {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
         }
     });
+}
+
+function checkColumn(value) {
+    $("#hc0").prop("checked", value);
+    $("#hc1").prop("checked", value);
+    $("#hc2").prop("checked", value);
+    $("#hc3").prop("checked", value);
+    $("#hc4").prop("checked", value);
+    $("#hc5").prop("checked", value);
+    $("#hc6").prop("checked", value);
+    $("#hc7").prop("checked", value);
+    $("#hc8").prop("checked", value);
+    $("#hc9").prop("checked", value);
+    $("#hc10").prop("checked", value);
+    $("#hc11").prop("checked", value);
+    $("#hc12").prop("checked", value);
+    $("#hc13").prop("checked", value);
+    $("#hc14").prop("checked", value);
+    $("#hc15").prop("checked", value);
+    $("#hc16").prop("checked", value);
+    $("#hc17").prop("checked", value);
+    $("#hc18").prop("checked", value);
+    $("#hc19").prop("checked", value);
+    $("#hc21").prop("checked", value);
+    $("#hc22").prop("checked", value);
+    $("#hc23").prop("checked", value);
+    $("#hc24").prop("checked", value);
+    $("#hc25").prop("checked", value);
+    $("#hc26").prop("checked", value);
+    $("#hc27").prop("checked", value);
+    $("#hc28").prop("checked", value);
+    $("#hc29").prop("checked", value);
 }

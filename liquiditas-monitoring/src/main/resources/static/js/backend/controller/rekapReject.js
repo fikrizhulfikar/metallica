@@ -70,6 +70,19 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
             "scrollY": "300px",
             "scrollX": true,
             "scrollCollapse": true,
+            "columnDefs": [
+                {
+                    "targets": 19,
+                    "data": "ID_VALAS",
+                    "render" : function (data, type, row, meta) {
+                        var ret_value =
+                            '<div class="btn-group">' +
+                            '<button class="btn-reverse-data btn-ms btn-success" title="Reject" onclick="reverse_reject(\'' + data + '\')"><i class="fa fa-arrow-left"></i></button>' +
+                            '</div>'
+                        return ret_value;
+                    }
+                }
+            ],
             "ajax": {
                 "url": baseUrl + "api_operator/pembayaran/rekap_reject",
                 "type": "GET",
@@ -111,4 +124,24 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
             ]
         }
     );
+}
+
+function reverse_reject(idValas) {
+    showLoadingCss();
+    $.ajax({
+        url: baseUrl + "api_operator/pembayaran/ins_reverse_reject",
+        dataType: 'JSON',
+        type: "POST",
+        data: {
+            idValas: idValas,
+        },
+        success: function (res) {
+            hideLoadingCss("")
+            alert(res.message);
+            table_rekapitulasi_reject.ajax.reload();
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
 }
