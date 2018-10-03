@@ -16,7 +16,7 @@ var cbParentArray = new Array();
 var srcTglAwal = null;
 var srcTglAkhir = null;
 
-var addedDays;
+var addedDays = 2;
 $(document).ready(function () {
     $('#pTglTerimaInvoice').datepicker({dateFormat: 'dd/mm/yy', maxDate: new Date()});
     $('#tanggal_awal').datepicker({dateFormat: 'dd/mm/yy'});
@@ -94,7 +94,7 @@ function duplicate_data(id) {
             $("#pTglNotaDinas").val("");
             var date = new Date();
             if(newRoleUser[0].replace(" ", "")!= "ROLE_ADMIN"){
-                date.setDate(date.getDate() + addedDays);
+                date = new Date(date.setDate(date.getDate() + addedDays));
             }
             $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
             $('#pTglTagihan').datepicker({dateFormat: 'dd/mm/yy'});
@@ -140,7 +140,6 @@ function duplicate_data(id) {
 }
 
 function openFormNew() {
-
     idValas = "";
 
     $("#pTglJatuhTempo").val("");
@@ -160,7 +159,7 @@ function openFormNew() {
     $("#pVendor").select2("val", "");
     var date = new Date();
     if(newRoleUser[0].replace(" ", "")!= "ROLE_ADMIN"){
-        date.setDate(date.getDate() + addedDays);
+        date = new Date(date.setDate(date.getDate() + addedDays));
     }
     $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
     $('#pTglTagihan').datepicker({dateFormat: 'dd/mm/yy'});
@@ -378,7 +377,7 @@ function edit_data(id) {
             $("#pTglNotaDinas").val("");
             var date = new Date();
             if(newRoleUser[0].replace(" ", "")!= "ROLE_ADMIN"){
-                date.setDate(date.getDate() + addedDays);
+                date = new Date(date.setDate(date.getDate() + addedDays));
             }
             $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
             $('#pTglTagihan').datepicker({dateFormat: 'dd/mm/yy'});
