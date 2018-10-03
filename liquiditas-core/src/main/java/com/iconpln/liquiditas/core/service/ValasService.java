@@ -2102,6 +2102,18 @@ public class ValasService {
                 .executeFunction(ArrayList.class, in);
     }
 
+
+    public String insReverseReject(String idValas, String updateBy) {
+        //ins_reverse_reject
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_valas", idValas,OracleTypes.VARCHAR)
+                .addValue("p_update_by", updateBy,OracleTypes.VARCHAR);
+        return new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_valas")
+                .withFunctionName("ins_reverse_reject")
+                .executeFunction(String.class, in);
+    }
+
     public boolean isRowEmpty(Row row, int rowSize){
         System.out.println("ROWSIZE ; "+rowSize);
         for(int x = 0; x < rowSize; x++){
