@@ -1,6 +1,5 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
-import com.google.gson.Gson;
 import com.iconpln.liquiditas.core.domain.Notification;
 import com.iconpln.liquiditas.core.service.ValasService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
@@ -422,29 +421,23 @@ public class PembayaranController {
     ) {
         Map<String, Object> out = null;
         AppUtils.getLogger(this).debug("pdata : {} ", pData);
-        String noBracket = pData.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("},", "}|");
+        String noBracket = pData.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("},", "};");
         AppUtils.getLogger(this).debug("JSONValas : {} ", pData.replaceAll("\\[", "").replaceAll("\\]", ""));
-        String[] listData = noBracket.split("|");
-        JSONObject json = new JSONObject(noBracket);
+        String[] listData = noBracket.split(";");
+        JSONObject json ;
 
 
         for (String item : listData) {
             json = new JSONObject(item);
             Iterator<?> keys = json.keys();
-            while (keys.hasNext()) {
                 String key = (String) keys.next();
                 String value = json.getString(key);
-                String idJenis = json.getString(key);
-                String currency = json.getString(key);
-                String totalTagihan = json.getString(key);
-                AppUtils.getLogger(this).debug("  {}: {}: {}: {}: {} ", key, value, idJenis, currency, totalTagihan);
-                if (!key.equals("x")) {
+                if (!key.equals("x") && !key.equals("jenisPembayaran") && !key.equals("total") && !key.equals("currency")) {
                     try {
-                        out = valasService.updStatus(value, key, idJenis, currency, totalTagihan, WebUtils.getUsernameLogin(),pDeskripsi);
+                        out = valasService.updStatus(value, key, json.getString("jenisPembayaran"), json.getString("currency"), json.getString("total"), WebUtils.getUsernameLogin(),pDeskripsi);
                         if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
                             notifyUpdateStatus(value);
                         }
-                        AppUtils.getLogger(this).debug("update {}: {}: {}: {}: {} ", key, value, idJenis, currency, totalTagihan);
                     } catch (Exception e) {
                         e.printStackTrace();
                         out = null;
@@ -455,7 +448,7 @@ public class PembayaranController {
                     out.put("OUT_MSG", "DATA BERHASIL DIUBAH");
                     out.put("return", "1");
                 }*/
-            }
+
         }
 
         AppUtils.getLogger(this).debug("statusInvoice : {} ", out);
