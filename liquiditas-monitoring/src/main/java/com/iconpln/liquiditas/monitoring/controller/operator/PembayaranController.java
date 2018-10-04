@@ -1,5 +1,6 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
+import com.google.gson.Gson;
 import com.iconpln.liquiditas.core.domain.Notification;
 import com.iconpln.liquiditas.core.service.ValasService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
@@ -416,33 +417,34 @@ public class PembayaranController {
     @RequestMapping(value = "/multi_upd_status", method = RequestMethod.POST)
     public Map<String, Object> multiUpdStatus(
             @RequestParam(value = "pData", defaultValue = "") String pData,
-            @RequestParam(value = "pStatusInvoice", defaultValue = "") String pStatusInvoice,
-            @RequestParam(value = "pIdJenisPembayaran", defaultValue = "") String pIdJenisPembayaran,
-            @RequestParam(value = "pCurrency", defaultValue = "") String pCurrency,
-            @RequestParam(value = "pTotalTagihan", defaultValue = "") String pTotalTagihan,
             @RequestParam(value = "pDeskripsi", defaultValue = "") String pDeskripsi
 
     ) {
         Map<String, Object> out = null;
         AppUtils.getLogger(this).debug("pdata : {} ", pData);
-        String noBracket = pData.replaceAll("\\[", "").replaceAll("\\]", "");
+        String noBracket = pData.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("},", "}|");
         AppUtils.getLogger(this).debug("JSONValas : {} ", pData.replaceAll("\\[", "").replaceAll("\\]", ""));
-        String[] listData = noBracket.split(",");
-        JSONObject json;
+        String[] listData = noBracket.split("|");
+        JSONObject json = new JSONObject(noBracket);
+
+
         for (String item : listData) {
             json = new JSONObject(item);
             Iterator<?> keys = json.keys();
             while (keys.hasNext()) {
                 String key = (String) keys.next();
                 String value = json.getString(key);
-                AppUtils.getLogger(this).debug("  {}: {} ", key, value);
+                String idJenis = json.getString(key);
+                String currency = json.getString(key);
+                String totalTagihan = json.getString(key);
+                AppUtils.getLogger(this).debug("  {}: {}: {}: {}: {} ", key, value, idJenis, currency, totalTagihan);
                 if (!key.equals("x")) {
                     try {
-                        out = valasService.updStatus(value, key, pIdJenisPembayaran, pCurrency, pTotalTagihan, WebUtils.getUsernameLogin(), pDeskripsi);
+                        out = valasService.updStatus(value, key, idJenis, currency, totalTagihan, WebUtils.getUsernameLogin(),pDeskripsi);
                         if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
                             notifyUpdateStatus(value);
                         }
-                        AppUtils.getLogger(this).debug("update {} : {} ", value, key);
+                        AppUtils.getLogger(this).debug("update {}: {}: {}: {}: {} ", key, value, idJenis, currency, totalTagihan);
                     } catch (Exception e) {
                         e.printStackTrace();
                         out = null;
