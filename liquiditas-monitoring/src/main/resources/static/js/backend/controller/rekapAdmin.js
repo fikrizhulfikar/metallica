@@ -1379,17 +1379,17 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 
     $('.dataTables_filter').each(function () {
         // var html = '';
-        var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" onclick="showColumn()">' +
+        var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" title="Sembunyikan Kolom" data-toggle="modal" onclick="showColumn()">' +
             '<i class="fa fa-arrows-alt"></i></button>';
         /*button reject*/
-        html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" onclick="rejectData()">' +
+        html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="rejectData()">' +
             '            <i class="fa fa-ban"></i></button>';
 
         if(newRoleUser[0] != "ROLE_OSS"){
-            html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
-                '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" style="margin-left: 10px" type="button" onclick="openMultipleEditForm(2)"><i class="fa fa-pencil"></i></button>';
+            html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
+                '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" title="Multi Edit" style="margin-left: 10px" type="button" onclick="openMultipleEditForm(2)"><i class="fa fa-pencil"></i></button>';
         }
-        html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
+        html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Multi Delete" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
         $(this).append(html);
     });
     initCbparent();
