@@ -72,7 +72,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
             "scrollCollapse": true,
             "columnDefs": [
                 {
-                    "targets": 19,
+                    "targets": 28,
                     "data": "ID_VALAS",
                     "render" : function (data, type, row, meta) {
                         var ret_value =
@@ -103,24 +103,34 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
             },
             "columns": [
                 {"data": "ROW_NUMBER", "defaultContent": ""},
-                {"data": "ID_VALAS", "defaultContent": ""},
-                {"data": "ID_VENDOR", "defaultContent": ""},
-                {"data": "ID_UNIT", "defaultContent": ""},
+                {"data": "JENIS_TAGIHAN", "defaultContent": ""},
                 {"data": "ID_JENIS_PEMBAYARAN", "defaultContent": ""},
+                {"data": "TGL_JATUH_TEMPO", "defaultContent": ""},
+                {"data": "ID_VENDOR", "defaultContent": ""},
                 {"data": "CURRENCY", "defaultContent": ""},
                 {"data": "TOTAL_TAGIHAN", "defaultContent": ""},
-                {"data": "TGL_JATUH_TEMPO", "defaultContent": ""},
+                {"data": "ID_UNIT", "defaultContent": ""},
                 {"data": "KODE_BANK_TUJUAN", "defaultContent": ""},
                 {"data": "KODE_BANK_PEMBAYAR", "defaultContent": ""},
-                {"data": "NO_TAGIHAN", "defaultContent": ""},
-                {"data": "TGL_TAGIHAN", "defaultContent": ""},
-                {"data": "NO_NOTDIN", "defaultContent": ""},
-                {"data": "TGL_NOTDIN", "defaultContent": ""},
-                {"data": "COUNTDOWN", "defaultContent": ""},
-                {"data": "DESKRIPSI", "defaultContent": ""},
-                {"data": "TIPE_TRANSAKSI", "defaultContent": ""},
                 {"data": "TGL_TERIMA_INVOICE", "defaultContent": ""},
-                {"data": "STATUS_TRACKING", "defaultContent": ""}
+                {"data": "TGL_TAGIHAN", "defaultContent": ""},
+                {"data": "NO_TAGIHAN", "defaultContent": ""},
+                {"data": "TGL_NOTDIN", "defaultContent": ""},
+                {"data": "NO_NOTDIN", "defaultContent": ""},
+                {"data": "KURS_JISDOR", "defaultContent": ""},
+                {"data": "KURS_TRANSAKSI", "defaultContent": ""},
+                {"data": "NOMINAL_PEMBAYARAN_IDR", "defaultContent": ""},
+                {"data": "NOMINAL_SBLM_PAJAK", "defaultContent": ""},
+                {"data": "NOMINAL_STLH_PAJAK", "defaultContent": ""},
+                {"data": "NOMINAL_TANPA_UNDERLYING", "defaultContent": ""},
+                {"data": "NOMINAL_UNDERLYING", "defaultContent": ""},
+                {"data": "PAJAK", "defaultContent": ""},
+                {"data": "SPREAD", "defaultContent": ""},
+                {"data": "COUNT_DOWN", "defaultContent": ""},
+                {"data": "TIPE_TRANSAKSI", "defaultContent": ""},
+                {"data": "STATUS_TRACKING", "defaultContent": ""},
+                {"data": "DESKRIPSI", "defaultContent": ""},
+                {"data": "ID_VALAS", "defaultContent": ""}
             ]
         }
     );
@@ -145,3 +155,4 @@ function reverse_reject(idValas) {
         }
     });
 }
+
