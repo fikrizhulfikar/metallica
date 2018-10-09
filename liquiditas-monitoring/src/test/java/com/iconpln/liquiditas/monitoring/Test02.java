@@ -14,4 +14,11 @@ public class Test02 {
         jsonObject.put("data_id", "d");
         System.out.println(jsonObject);
     }
+
+    @Test
+    public void test(){
+        String tes="\\\"asda\\\"";
+        System.out.println(tes.replaceAll("\\\\\"", ""));
+
+    }
 }

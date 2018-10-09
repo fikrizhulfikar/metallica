@@ -2129,5 +2129,12 @@ public class ValasService {
         }
         return true;
     }
+
+    public String getPerfectJsonString(String jsonString){
+        jsonString = jsonString.replaceAll("\\[", "");
+        jsonString = jsonString.replaceAll("\\]", "");
+        jsonString = jsonString.replaceAll("},", "};");
+        return jsonString;
+    }
 }
 

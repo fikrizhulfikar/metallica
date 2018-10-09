@@ -420,18 +420,18 @@ public class PembayaranController {
 
     ) {
         Map<String, Object> out = null;
-        AppUtils.getLogger(this).debug("pdata : {} ", pData);
-        String noBracket = pData.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("},", "};");
-        AppUtils.getLogger(this).debug("JSONValas : {} ", pData.replaceAll("\\[", "").replaceAll("\\]", ""));
-        String[] listData = noBracket.split(";");
+        String jsonString = valasService.getPerfectJsonString(pData);
+        String[] listData = jsonString.split(";");
         JSONObject json ;
 
 
         for (String item : listData) {
             json = new JSONObject(item);
             Iterator<?> keys = json.keys();
+            while (keys.hasNext()) {
                 String key = (String) keys.next();
                 String value = json.getString(key);
+
                 if (!key.equals("x") && !key.equals("jenisPembayaran") && !key.equals("total") && !key.equals("currency")) {
                     try {
                         out = valasService.updStatus(value, key, json.getString("jenisPembayaran"), json.getString("currency"), json.getString("total"), WebUtils.getUsernameLogin(),pDeskripsi);
@@ -448,7 +448,7 @@ public class PembayaranController {
                     out.put("OUT_MSG", "DATA BERHASIL DIUBAH");
                     out.put("return", "1");
                 }*/
-
+            }
         }
 
         AppUtils.getLogger(this).debug("statusInvoice : {} ", out);
@@ -461,8 +461,8 @@ public class PembayaranController {
             @RequestParam(value = "pData", defaultValue = "") String pData
     ) {
         Map<String, Object> out = null;
-        String noBracket = pData.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("},", "};");
-        String[] listData = noBracket.split(";");
+        String jsonString = valasService.getPerfectJsonString(pData);
+        String[] listData = jsonString.split(";");
         JSONObject json;
         for (String item : listData) {
             json = new JSONObject(item);
@@ -529,8 +529,8 @@ public class PembayaranController {
     ) {
         Map<String, Object> out = null;
         pBankPembayar = (pBankPembayar.toString().equals("null") ? "" : pBankPembayar);
-        String noBracket = pData.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("},", "};");
-        String[] listData = noBracket.split(";");
+        String jsonString = valasService.getPerfectJsonString(pData);
+        String[] listData = jsonString.split(";");
         JSONObject json;
         for (String item : listData) {
             json = new JSONObject(item);
@@ -603,9 +603,8 @@ public class PembayaranController {
             @RequestParam(value = "pData", defaultValue = "") String pData
     ) {
         Map<String, Object> out = null;
-        String noBracket = pData.replaceAll("\\[", "").replaceAll("\\]", "");
-        AppUtils.getLogger(this).debug("JSONValas : {} ", pData.replaceAll("\\[", "").replaceAll("\\]", ""));
-        String[] listData = noBracket.split(",");
+        String jsonString = valasService.getPerfectJsonString(pData);
+        String[] listData = jsonString.split(",");
         JSONObject json;
         for (String item : listData) {
             json = new JSONObject(item);
