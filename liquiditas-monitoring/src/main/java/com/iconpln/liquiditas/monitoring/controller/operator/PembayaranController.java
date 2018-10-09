@@ -947,11 +947,13 @@ public class PembayaranController {
 
     @RequestMapping(value = "/save_column", method = RequestMethod.POST)
     public Map saveColumn(@RequestParam("nomor") Integer nomor,
+                          @RequestParam("jenis_tagihan") Integer jenisTagihan,
                           @RequestParam("jenis_pembayaran") Integer jenisPembayaran,
                           @RequestParam("jatuh_tempo") Integer jatuhTempo,
                           @RequestParam("vendor") Integer vendor,
                           @RequestParam("currency") Integer currency,
                           @RequestParam("nilai_tagihan") Integer nilaiTagihan,
+                          @RequestParam("unit") Integer unit,
                           @RequestParam("nama_kontrak") Integer namaKontrak,
                           @RequestParam("bank_tujuan") Integer bankTujuan,
                           @RequestParam("bank_pembayar") Integer bankPembayar,
@@ -975,7 +977,8 @@ public class PembayaranController {
                           @RequestParam("spread") Integer spread,
                           @RequestParam("kurs_transaksi") Integer kursTransaksi,
                           @RequestParam("nominal_pembayaran_idr") Integer nominalPembayaranIdr,
-                          @RequestParam("jenis_tagihan") Integer jenisTagihan
+                          @RequestParam("create_date") Integer createDate,
+                          @RequestParam("update_date") Integer updateDate
     ) {
         Map data = new HashMap();
         try {
@@ -1009,7 +1012,9 @@ public class PembayaranController {
                     spread,
                     kursTransaksi,
                     nominalPembayaranIdr,
-                    jenisTagihan
+                    jenisTagihan,
+                    createDate,
+                    updateDate
             );
             data.put("data", result);
         } catch (Exception e) {

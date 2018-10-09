@@ -1988,7 +1988,9 @@ public class ValasService {
             int spread,
             int kursTransaksi,
             int nominalPembayaranIdr,
-            int jenisTagihan) {
+            int jenisTagihan,
+            int updateDateTagihan,
+            int createDateTagihan) {
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_user_id", userId, OracleTypes.VARCHAR)
                 .addValue("p_nomor", nomor, OracleTypes.NUMBER)
@@ -2025,7 +2027,9 @@ public class ValasService {
                 .addValue("p_spread", spread, OracleTypes.NUMBER)
                 .addValue("p_kurs_transaksi", kursTransaksi, OracleTypes.NUMBER)
                 .addValue("p_nominal_pembayaran_idr", nominalPembayaranIdr, OracleTypes.NUMBER)
-                .addValue("p_jenis_tagihan", jenisTagihan, OracleTypes.NUMBER);
+                .addValue("p_jenis_tagihan", jenisTagihan, OracleTypes.NUMBER)
+                .addValue("p_update_date_tagihan", updateDateTagihan, OracleTypes.NUMBER)
+                .addValue("p_create_date_tagihan", createDateTagihan, OracleTypes.NUMBER);
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("pkg_valas")
                 .withFunctionName("save_column_rekap");
