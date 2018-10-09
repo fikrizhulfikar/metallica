@@ -851,7 +851,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {
                     "aTargets": [7],
                     "mRender": function (data, type, full) {
-                        return full.ID_UNIT;
+                        return full.STATUS_TRACKING;
                     }
 
                 },
