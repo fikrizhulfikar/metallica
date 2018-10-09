@@ -461,61 +461,60 @@ public class PembayaranController {
             @RequestParam(value = "pData", defaultValue = "") String pData
     ) {
         Map<String, Object> out = null;
-        String noBracket = pData.replaceAll("\\[", "").replaceAll("\\]", "");
-        AppUtils.getLogger(this).debug("JSONValas : {} ", pData.replaceAll("\\[", "").replaceAll("\\]", ""));
-        String[] listData = noBracket.split(",");
+        String noBracket = pData.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("},", "};");
+        String[] listData = noBracket.split(";");
         JSONObject json;
         for (String item : listData) {
             json = new JSONObject(item);
-            AppUtils.getLogger(this).debug("jsonobject : {} ", json);
             Iterator<?> keys = json.keys();
             while (keys.hasNext()) {
                 String key = (String) keys.next();
                 String value = json.getString(key);
-                AppUtils.getLogger(this).debug("  {}: {} ", key, value);
-                try {
-                    if (value.contains("TRIPARTITE")) {
-                        Map<String, String> data = notificationUtil.getNotificationDetailByIdValas(value);
-                        String idJenisPembayaran = valasService.getIdPembayaranByIdValas(value);
-                        WebUtils.deleteFile(value);
-                        String message = "";
-                        message += WebUtils.getUsernameLogin() + " telah melakukan penghapusan Data pada aplikasi. ";
-                        message += data.get("NAMA_JENIS_PEMBAYARAN") + "-" + data.get("NAMA_VENDOR") + ".";
-                        Notification notification =
-                                Notification.builder()
-                                        .topic(idJenisPembayaran)
-                                        .title(NamedIdentifier.TRIPARTITE.getName())
-                                        .message(message)
-                                        .additionalInfo(null)
-                                        .build();
-                        out = valasService.deleteTripartite(value);
-                        if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
-                            notificationUtil.notifyMessage(notification);
+                if (!key.equals("jenisPembayaran") && !key.equals("total") && !key.equals("currency")) {
+                    try {
+                        if (value.contains("TRIPARTITE")) {
+                            Map<String, String> data = notificationUtil.getNotificationDetailByIdValas(value);
+                            String idJenisPembayaran = valasService.getIdPembayaranByIdValas(value);
+                            WebUtils.deleteFile(value);
+                            String message = "";
+                            message += WebUtils.getUsernameLogin() + " telah melakukan penghapusan Data pada aplikasi. ";
+                            message += data.get("NAMA_JENIS_PEMBAYARAN") + "-" + data.get("NAMA_VENDOR") + ".";
+                            Notification notification =
+                                    Notification.builder()
+                                            .topic(idJenisPembayaran)
+                                            .title(NamedIdentifier.TRIPARTITE.getName())
+                                            .message(message)
+                                            .additionalInfo(null)
+                                            .build();
+                            out = valasService.deleteTripartite(value);
+                            if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
+                                notificationUtil.notifyMessage(notification);
+                            }
+                        } else {
+                            Map<String, String> data = notificationUtil.getNotificationDetailByIdValas(value);
+                            String idJenisPembayaran = valasService.getIdPembayaranByIdValas(value);
+                            WebUtils.deleteFile(value);
+                            String message = "";
+                            message += WebUtils.getUsernameLogin() + " telah melakukan penghapusan Data pada aplikasi. ";
+                            message += data.get("NAMA_JENIS_PEMBAYARAN") + "-" + data.get("NAMA_VENDOR") + ".";
+                            Notification notification =
+                                    Notification.builder()
+                                            .topic(idJenisPembayaran)
+                                            .title(NamedIdentifier.TRIPARTITE.getName())
+                                            .message(message)
+                                            .additionalInfo(null)
+                                            .build();
+                            out = valasService.deletePembayaran(value);
+                            if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
+                                notificationUtil.notifyMessage(notification);
+                            }
                         }
-                    } else {
-                        Map<String, String> data = notificationUtil.getNotificationDetailByIdValas(value);
-                        String idJenisPembayaran = valasService.getIdPembayaranByIdValas(value);
-                        WebUtils.deleteFile(value);
-                        String message = "";
-                        message += WebUtils.getUsernameLogin() + " telah melakukan penghapusan Data pada aplikasi. ";
-                        message += data.get("NAMA_JENIS_PEMBAYARAN") + "-" + data.get("NAMA_VENDOR") + ".";
-                        Notification notification =
-                                Notification.builder()
-                                        .topic(idJenisPembayaran)
-                                        .title(NamedIdentifier.TRIPARTITE.getName())
-                                        .message(message)
-                                        .additionalInfo(null)
-                                        .build();
-                        out = valasService.deletePembayaran(value);
-                        if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
-                            notificationUtil.notifyMessage(notification);
-                        }
+                        AppUtils.getLogger(this).debug("id deleted : {} ", value);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        out = null;
+                        break;
                     }
-                    AppUtils.getLogger(this).debug("id deleted : {} ", value);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    out = null;
-                    break;
                 }
             }
         }
@@ -529,13 +528,9 @@ public class PembayaranController {
             @RequestParam(value = "pBankPembayar", defaultValue = "") String pBankPembayar
     ) {
         Map<String, Object> out = null;
-        AppUtils.getLogger(this).debug("pdata : {} ", pData);
-        AppUtils.getLogger(this).debug("pTglJatuhTempo : {} ", pTglJatuhTempo);
         pBankPembayar = (pBankPembayar.toString().equals("null") ? "" : pBankPembayar);
-        AppUtils.getLogger(this).debug("pBankPembayar : {} ", pBankPembayar);
-        String noBracket = pData.replaceAll("\\[", "").replaceAll("\\]", "");
-        AppUtils.getLogger(this).debug("JSONValas : {} ", pData.replaceAll("\\[", "").replaceAll("\\]", ""));
-        String[] listData = noBracket.split(",");
+        String noBracket = pData.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("},", "};");
+        String[] listData = noBracket.split(";");
         JSONObject json;
         for (String item : listData) {
             json = new JSONObject(item);
@@ -544,7 +539,7 @@ public class PembayaranController {
                 String key = (String) keys.next();
                 String value = json.getString(key);
                 AppUtils.getLogger(this).debug("  {}: {} ", key, value);
-                if (!key.equals("x")) {
+                if (!key.equals("x") && !key.equals("jenisPembayaran") && !key.equals("total") && !key.equals("currency")) {
                     try {
                         AppUtils.getLogger(this).debug("update {} : {} ", value, key);
                         String message = "";
