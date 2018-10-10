@@ -815,6 +815,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {
                     "aTargets": [6],
                     "mRender": function (data, type, full) {
+                        return accounting.formatNumber(full.SPREAD,2,".",",");
                         return full.TOTAL_TAGIHAN;
                     }
 
@@ -921,7 +922,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {
                     "aTargets": [22],
                     "mRender": function (data, type, full) {
-                        return full.NOMINAL_SBLM_PAJAK;
+                        return accounting.formatNumber(full.NOMINAL_SBLM_PAJAK,2,".",",");
                     }
                 },
                 {
@@ -933,43 +934,44 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {
                     "aTargets": [24],
                     "mRender": function (data, type, full) {
-                        return full.NOMINAL_STLH_PAJAK;
+                        return accounting.formatNumber(full.NOMINAL_STLH_PAJAK,2,".",",");
                     }
                 },
                 {
                     "aTargets": [25],
                     "mRender": function (data, type, full) {
-                        return full.NOMINAL_UNDERLYING;
+                        return accounting.formatNumber(full.NOMINAL_UNDERLYING,2,".",",");
                     }
                 },
                 {
                     "aTargets": [26],
                     "mRender": function (data, type, full) {
-                        return full.NOMINAL_TANPA_UNDERLYING;
+                        return accounting.formatNumber(full.NOMINAL_TANPA_UNDERLYING,2,".",",");
                     }
                 },
                 {
                     "aTargets": [27],
                     "mRender": function (data, type, full) {
-                        return full.KURS_JISDOR;
+                        return accounting.formatNumber(full.KURS_JISDOR,2,".",",");
                     }
                 },
                 {
                     "aTargets": [28],
                     "mRender": function (data, type, full) {
+                        return accounting.formatNumber(full.SPREAD,2,".",",");
                         return full.SPREAD;
                     }
                 },
                 {
                     "aTargets": [29],
                     "mRender": function (data, type, full) {
-                        return full.KURS_TRANSAKSI;
+                        return accounting.formatNumber(full.KURS_TRANSAKSI,2,".",",");
                     }
                 },
                 {
                     "aTargets": [30],
                     "mRender": function (data, type, full) {
-                        return full.NOMINAL_PEMBAYARAN_IDR;
+                        return accounting.formatNumber(full.NOMINAL_PEMBAYARAN_IDR,2,".",",");
                     }
                 },
                 {

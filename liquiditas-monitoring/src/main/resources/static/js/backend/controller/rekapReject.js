@@ -81,7 +81,70 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                             '</div>'
                         return ret_value;
                     }
-                }
+                },
+                {
+                    "aTargets": [6],
+                    "mRender": function (data, type, full) {
+                        return accounting.formatNumber(full.TOTAL_TAGIHAN,2,".",",");
+                    }
+
+                },
+                {
+                    "aTargets": [15],
+                    "mRender": function (data, type, full) {
+                        return accounting.formatNumber(full.KURS_JISDOR,2,".",",");
+                    }
+
+                },
+                {
+                    "aTargets": [16],
+                    "mRender": function (data, type, full) {
+                        return accounting.formatNumber(full.KURS_TRANSAKSI,2,".",",");
+                    }
+
+                },
+                {
+                    "aTargets": [17],
+                    "mRender": function (data, type, full) {
+                        return accounting.formatNumber(full.NOMINAL_PEMBAYARAN_IDR,2,".",",");
+                    }
+
+                },
+                {
+                    "aTargets": [18],
+                    "mRender": function (data, type, full) {
+                        return accounting.formatNumber(full.NOMINAL_SBLM_PAJAK,2,".",",");
+                    }
+
+                },
+                {
+                    "aTargets": [19],
+                    "mRender": function (data, type, full) {
+                        return accounting.formatNumber(full.NOMINAL_STLH_PAJAK,2,".",",");
+                    }
+
+                },
+                {
+                    "aTargets": [20],
+                    "mRender": function (data, type, full) {
+                        return accounting.formatNumber(full.NOMINAL_TANPA_UNDERLYING,2,".",",");
+                    }
+
+                },
+                {
+                    "aTargets": [21],
+                    "mRender": function (data, type, full) {
+                        return accounting.formatNumber(full.NOMINAL_UNDERLYING,2,".",",");
+                    }
+
+                },
+                {
+                    "aTargets": [23],
+                    "mRender": function (data, type, full) {
+                        return accounting.formatNumber(full.SPREAD,2,".",",");
+                    }
+
+                },
             ],
             "ajax": {
                 "url": baseUrl + "api_operator/pembayaran/rekap_reject",
