@@ -917,7 +917,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {
                     "aTargets": [23],
                     "mRender": function (data, type, full) {
-                        return full.PAJAK;
+                        return full.PAJAK + "%";
                     }
                 },
                 {

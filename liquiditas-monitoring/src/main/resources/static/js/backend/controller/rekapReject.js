@@ -139,6 +139,13 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 
                 },
                 {
+                    "aTargets": [22],
+                    "mRender": function (data, type, full) {
+                        return full.PAJAK + "%";
+                    }
+
+                },
+                {
                     "aTargets": [23],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.SPREAD,2,".",",");
