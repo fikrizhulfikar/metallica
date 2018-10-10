@@ -604,7 +604,7 @@ public class PembayaranController {
     ) {
         Map<String, Object> out = null;
         String jsonString = valasService.getPerfectJsonString(pData);
-        String[] listData = jsonString.split(",");
+        String[] listData = jsonString.split(";");
         JSONObject json;
         for (String item : listData) {
             json = new JSONObject(item);
@@ -613,15 +613,18 @@ public class PembayaranController {
             while (keys.hasNext()) {
                 String key = (String) keys.next();
                 String value = json.getString(key);
-                AppUtils.getLogger(this).debug("  {}: {} ", key, value);
-                try {
-                    out = valasService.rejectPembayaran(value, WebUtils.getUsernameLogin());
-                    AppUtils.getLogger(this).debug("id deleted : {} ", value);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    out = null;
-                    break;
+                if (!key.equals("jenisPembayaran") && !key.equals("total") && !key.equals("currency")) {
+                    AppUtils.getLogger(this).debug("  {}: {} ", key, value);
+                    try {
+                        out = valasService.rejectPembayaran(value, WebUtils.getUsernameLogin());
+                        AppUtils.getLogger(this).debug("id rejected : {} ", value);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        out = null;
+                        break;
+                    }
                 }
+
             }
         }
         return out;
