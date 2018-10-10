@@ -1804,10 +1804,10 @@ function upload_server(jenisFile) {
     });
 }
 
-function upload_xls(){
+/*function upload_xls(){
     $("#modal-upload-xls").modal("show");
     //getFilesRekap(pIdValas);
-}
+}*/
 
 function upload_server_xls() {
     $("#modal-upload-xls").modal("hide");
