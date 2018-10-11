@@ -950,7 +950,7 @@ public class PembayaranController {
                           @RequestParam("vendor") Integer vendor,
                           @RequestParam("currency") Integer currency,
                           @RequestParam("nilai_tagihan") Integer nilaiTagihan,
-                          @RequestParam("unit") Integer unit,
+//                          @RequestParam("unit") Integer unit,
                           @RequestParam("nama_kontrak") Integer namaKontrak,
                           @RequestParam("bank_tujuan") Integer bankTujuan,
                           @RequestParam("bank_pembayar") Integer bankPembayar,
@@ -963,8 +963,6 @@ public class PembayaranController {
                           @RequestParam("countdown") Integer countdown,
                           @RequestParam("status") Integer status,
                           @RequestParam("tipe_transaksi") Integer tipeTransaksi,
-                          @RequestParam("status_tagihan") Integer statusTagihan,
-                          @RequestParam("keterangan") Integer keterangan,
                           @RequestParam("nominal_sblm_pajak") Integer nominalSblmPajak,
                           @RequestParam("pajak") Integer pajak,
                           @RequestParam("nominal_stlh_pajak") Integer nominalStlhPajak,
@@ -975,7 +973,9 @@ public class PembayaranController {
                           @RequestParam("kurs_transaksi") Integer kursTransaksi,
                           @RequestParam("nominal_pembayaran_idr") Integer nominalPembayaranIdr,
                           @RequestParam("create_date") Integer createDate,
-                          @RequestParam("update_date") Integer updateDate
+                          @RequestParam("update_date") Integer updateDate,
+                          @RequestParam("status_tagihan") Integer statusTagihan,
+                          @RequestParam("keterangan") Integer keterangan
     ) {
         Map data = new HashMap();
         try {
@@ -998,8 +998,6 @@ public class PembayaranController {
                     countdown,
                     status,
                     tipeTransaksi,
-                    statusTagihan,
-                    keterangan,
                     nominalSblmPajak,
                     pajak,
                     nominalStlhPajak,
@@ -1007,11 +1005,13 @@ public class PembayaranController {
                     nominalTanpaUnderlying,
                     kursJidor,
                     spread,
+                    jenisTagihan,
                     kursTransaksi,
                     nominalPembayaranIdr,
-                    jenisTagihan,
                     createDate,
-                    updateDate
+                    updateDate,
+                    statusTagihan,
+                    keterangan
             );
             data.put("data", result);
         } catch (Exception e) {

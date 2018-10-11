@@ -407,7 +407,7 @@ function showColumn() {
             } else {
                 $("#hc6").prop("checked", false);
             }
-            if (response.VENDOR == 1) {
+            if (response.NAMA_KONTRAK == 1) {
                 $("#hc7").prop("checked", true);
             } else {
                 $("#hc7").prop("checked", false);
@@ -467,75 +467,76 @@ function showColumn() {
             } else {
                 $("#hc18").prop("checked", false);
             }
-            if (response.STATUS_TAGIHAN == 1) {
+            if (response.NOMINAL_SBLM_PAJAK == 1) {
                 $("#hc19").prop("checked", true);
             } else {
                 $("#hc19").prop("checked", false);
             }
-            if (response.STATUS == 1) {
+            if (response.PAJAK == 1) {
                 $("#hc20").prop("checked", true);
             } else {
                 $("#hc20").prop("checked", false);
             }
-            if (response.KETERANGAN == 1) {
+            if (response.NOMINAL_STLH_PAJAK == 1) {
                 $("#hc21").prop("checked", true);
             } else {
                 $("#hc21").prop("checked", false);
             }
-            if (response.NOMINAL_SBLM_PAJAK == 1) {
+            if (response.NOMINAL_UNDERLYING == 1) {
                 $("#hc22").prop("checked", true);
             } else {
                 $("#hc22").prop("checked", false);
             }
-            if (response.PAJAK == 1) {
+            if (response.NOMINAL_TANPA_UNDERLYING == 1) {
                 $("#hc23").prop("checked", true);
             } else {
                 $("#hc23").prop("checked", false);
             }
-            if (response.NOMINAL_STLH_PAJAK == 1) {
+            if (response.KURS_JISDOR == 1) {
                 $("#hc24").prop("checked", true);
             } else {
                 $("#hc24").prop("checked", false);
             }
-            if (response.NOMINAL_UNDERLYING == 1) {
+            if (response.SPREAD == 1) {
                 $("#hc25").prop("checked", true);
             } else {
                 $("#hc25").prop("checked", false);
             }
-            if (response.NOMINAL_TANPA_UNDERLYING == 1) {
+            if (response.KURS_TRANSAKSI == 1) {
                 $("#hc26").prop("checked", true);
             } else {
                 $("#hc26").prop("checked", false);
             }
-            if (response.KURS_JISDOR == 1) {
+            if (response.NOMINAL_PEMBAYARAN_IDR == 1) {
                 $("#hc27").prop("checked", true);
             } else {
                 $("#hc27").prop("checked", false);
             }
-            if (response.SPREAD == 1) {
+            if (response.CREATE_DATE_TAGIHAN == 1) {
                 $("#hc28").prop("checked", true);
             } else {
                 $("#hc28").prop("checked", false);
             }
-            if (response.KURS_TRANSAKSI == 1) {
+            if (response.UPDATE_DATE_TAGIHAN == 1) {
                 $("#hc29").prop("checked", true);
             } else {
                 $("#hc29").prop("checked", false);
             }
-            if (response.NOMINAL_PEMBAYARAN_IDR == 1) {
+
+            if (response.STATUS_TAGIHAN == 1) {
                 $("#hc30").prop("checked", true);
             } else {
                 $("#hc30").prop("checked", false);
             }
-            if (response.CREATE_DATE_TAGIHAN == 1) {
+            /*if (response.STATUS == 1) {
+                $("#hc20").prop("checked", true);
+            } else {
+                $("#hc20").prop("checked", false);
+            }*/
+            if (response.KETERANGAN == 1) {
                 $("#hc31").prop("checked", true);
             } else {
                 $("#hc31").prop("checked", false);
-            }
-            if (response.UPDATE_DATE_TAGIHAN == 1) {
-                $("#hc32").prop("checked", true);
-            } else {
-                $("#hc32").prop("checked", false);
             }
         },
         error: function () {
@@ -569,7 +570,6 @@ function saveColumn() {
     var hc17 = $("#hc17").prop('checked');
     var hc18 = $("#hc18").prop('checked');
     var hc19 = $("#hc19").prop('checked');
-
     var hc20 = $("#hc20").prop('checked');
     var hc21 = $("#hc21").prop('checked');
     var hc22 = $("#hc22").prop('checked');
@@ -580,9 +580,8 @@ function saveColumn() {
     var hc27 = $("#hc27").prop('checked');
     var hc28 = $("#hc28").prop('checked');
     var hc29 = $("#hc29").prop('checked');
-    var hc30 = $("#hc29").prop('checked');
-    var hc31 = $("#hc29").prop('checked');
-    var hc32 = $("#hc29").prop('checked');
+    var hc30 = $("#hc30").prop('checked');
+    var hc31 = $("#hc30").prop('checked');
 
     var data = {
         "nomor" : hc0 == true ? 1 : 0,
@@ -592,34 +591,34 @@ function saveColumn() {
         "vendor" : hc4 == true ? 1 : 0,
         "currency" : hc5 == true ? 1 : 0,
         "nilai_tagihan" : hc6 == true ? 1 : 0,
-        "unit" : hc7 == true ? 1 : 0,
-        "nama_kontrak" : hc8 == true ? 1 : 0,
-        "bank_tujuan" : hc9 == true ? 1 : 0,
-        "bank_pembayar" : hc10 == true ? 1 : 0,
-        "tgl_terima_tagihan" : hc11 == true ? 1 : 0,
-        "tgl_tagihan" : hc12 == true ? 1 : 0,
-        "no_tagihan" : hc13 == true ? 1 : 0,
-        "tgl_nota_dinas" : hc14 == true ? 1 : 0,
-        "no_nota_dinas" : hc15 == true ? 1 : 0,
-        "tgl_pembayaran" : hc16 == true ? 1 : 0,
-        "countdown" : hc17 == true ? 1 : 0,
-        "status" : hc18 == true ? 1 : 0,
-        "tipe_transaksi" : hc19 == true ? 1 : 0,
-        "status_tagihan" : hc20 == true ? 1 : 0,
-        "keterangan" : hc21 == true ? 1 : 0,
-        "nominal_sblm_pajak" : hc22 == true ? 1 : 0,
-        "pajak" : hc23 == true ? 1 : 0,
-        "nominal_stlh_pajak" : hc24 == true ? 1 : 0,
-        "nominal_underlying" : hc25 == true ? 1 : 0,
-        "nominal_tanpa_underlying" : hc26 == true ? 1 : 0,
-        "kurs_jidor" : hc27 == true ? 1 : 0,
-        "spread" : hc28 == true ? 1 : 0,
-        "kurs_transaksi" : hc29 == true ? 1 : 0,
-        "nominal_pembayaran_idr" : hc30 == true ? 1 : 0,
-        "create_date" : hc31 == true ? 1 : 0,
-        "update_date" : hc32 == true ? 1 : 0
+        // "unit" : hc7 == true ? 1 : 0,
+        "nama_kontrak" : hc7 == true ? 1 : 0,
+        "bank_tujuan" : hc8 == true ? 1 : 0,
+        "bank_pembayar" : hc9 == true ? 1 : 0,
+        "tgl_terima_tagihan" : hc10 == true ? 1 : 0,
+        "tgl_tagihan" : hc11 == true ? 1 : 0,
+        "no_tagihan" : hc12 == true ? 1 : 0,
+        "tgl_nota_dinas" : hc13 == true ? 1 : 0,
+        "no_nota_dinas" : hc14 == true ? 1 : 0,
+        "tgl_pembayaran" : hc15 == true ? 1 : 0,
+        "countdown" : hc16 == true ? 1 : 0,
+        "status" : hc17 == true ? 1 : 0,
+        "tipe_transaksi" : hc18 == true ? 1 : 0,
+        "nominal_sblm_pajak" : hc19 == true ? 1 : 0,
+        "pajak" : hc20 == true ? 1 : 0,
+        "nominal_stlh_pajak" : hc21 == true ? 1 : 0,
+        "nominal_underlying" : hc22 == true ? 1 : 0,
+        "nominal_tanpa_underlying" : hc23 == true ? 1 : 0,
+        "kurs_jidor" : hc24 == true ? 1 : 0,
+        "spread" : hc25 == true ? 1 : 0,
+        "kurs_transaksi" : hc26 == true ? 1 : 0,
+        "nominal_pembayaran_idr" : hc27 == true ? 1 : 0,
+        "create_date" : hc28 == true ? 1 : 0,
+        "update_date" : hc29 == true ? 1 : 0,
+        "status_tagihan" : hc30 == true ? 1 : 0,
+        "keterangan" : hc31 == true ? 1 : 0
     };
-
+    console.log("data save column", data);
     $.ajax({
         url: baseUrl + "api_operator/pembayaran/save_column",
         dataType: 'JSON',

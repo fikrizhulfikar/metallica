@@ -750,15 +750,14 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {width: 100, targets: 29},
                 {width: 100, targets: 30},
                 {width: 100, targets: 31},
-                {width: 100, targets: 32},
                 {width: "20%", "targets": 0},
                 {
                     "bSortable": true,
-                    "aTargets": [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+                    "aTargets": [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
                 },
                 {
                     "bSortable": false,
-                    "aTargets": [33, 34]
+                    "aTargets": [32, 33]
                 },
                 {
                     "aTargets": [0],
@@ -812,170 +811,163 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {
                     "aTargets": [7],
                     "mRender": function (data, type, full) {
-                        return full.STATUS_TRACKING;
+                        return full.ID_UNIT;
                     }
 
                 },
                 {
                     "aTargets": [8],
                     "mRender": function (data, type, full) {
-                        return full.ID_UNIT;
+                        return full.KODE_BANK_TUJUAN;
                     }
 
                 },
                 {
                     "aTargets": [9],
                     "mRender": function (data, type, full) {
-                        return full.KODE_BANK_TUJUAN;
+                        return full.KODE_BANK_PEMBAYAR;
                     }
 
                 },
                 {
                     "aTargets": [10],
                     "mRender": function (data, type, full) {
-                        return full.KODE_BANK_PEMBAYAR;
+                        return full.TGL_TERIMA_INVOICE;
                     }
 
                 },
                 {
                     "aTargets": [11],
                     "mRender": function (data, type, full) {
-                        return full.TGL_TERIMA_INVOICE;
+                        return full.TGL_TAGIHAN;
                     }
 
                 },
                 {
                     "aTargets": [12],
                     "mRender": function (data, type, full) {
-                        return full.TGL_TAGIHAN;
+                        return full.NO_TAGIHAN;
                     }
 
                 },
                 {
                     "aTargets": [13],
                     "mRender": function (data, type, full) {
-                        return full.NO_TAGIHAN;
+                        return full.TGL_NOTDIN;
                     }
 
                 },
                 {
                     "aTargets": [14],
                     "mRender": function (data, type, full) {
-                        return full.TGL_NOTDIN;
+                        return full.NO_NOTDIN;
                     }
 
                 },
                 {
                     "aTargets": [15],
                     "mRender": function (data, type, full) {
-                        return full.NO_NOTDIN;
-                    }
-
-                },
-                {
-                    "aTargets": [16],
-                    "mRender": function (data, type, full) {
                         return full.TGL_LUNAS;
                     }
                 },
                 {
-                    "aTargets": [17],
+                    "aTargets": [16],
                     "mRender": function (data, type, full) {
                         return full.COUNT_DOWN;
                     }
                 },
                 {
-                    "aTargets": [18],
+                    "aTargets": [17],
                     "mRender": function (data, type, full) {
                         return full.STATUS_VALAS;
                     }
                 },
                 {
-                    "aTargets": [19],
+                    "aTargets": [18],
                     "mRender": function (data, type, full) {
                         return full.TIPE_TRANSAKSI;
                     }
                 },
                 {
-                    "aTargets": [20],
-                    "mRender": function (data, type, full) {
-                        return full.STATUS_VALAS;
-                    }
-                },
-                {
-                    "aTargets": [21],
-                    "mRender": function (data, type, full) {
-                        return full.DESKRIPSI;
-                    }
-                },
-                {
-                    "aTargets": [22],
+                    "aTargets": [19],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.NOMINAL_SBLM_PAJAK,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [23],
+                    "aTargets": [20],
                     "mRender": function (data, type, full) {
                         return full.PAJAK + "%";
                     }
                 },
                 {
-                    "aTargets": [24],
+                    "aTargets": [21],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.NOMINAL_STLH_PAJAK,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [25],
+                    "aTargets": [22],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.NOMINAL_UNDERLYING,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [26],
+                    "aTargets": [23],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.NOMINAL_TANPA_UNDERLYING,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [27],
+                    "aTargets": [24],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.KURS_JISDOR,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [28],
+                    "aTargets": [25],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.SPREAD,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [29],
+                    "aTargets": [26],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.KURS_TRANSAKSI,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [30],
+                    "aTargets": [27],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.NOMINAL_PEMBAYARAN_IDR,2,".",",");
                     }
-                },
-                {
-                    "aTargets": [31],
+                },{
+                    "aTargets": [28],
                     "mRender": function (data, type, full) {
                         return full.CREATE_DATE;
                     }
                 },
                 {
-                    "aTargets": [32],
+                    "aTargets": [29],
                     "mRender": function (data, type, full) {
                         return full.UPDATE_DATE;
                     }
                 },
+
                 {
-                    "aTargets": [33],
+                    "aTargets": [30],
+                    "mRender": function (data, type, full) {
+                        return full.STATUS_TRACKING;
+                    }
+                },
+                {
+                    "aTargets": [31],
+                    "mRender": function (data, type, full) {
+                        return full.DESKRIPSI;
+                    }
+                },
+                {
+                    "aTargets": [32],
                     "mRender": function (data, type, full) {
 
                         var ret_value;
@@ -1134,7 +1126,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 
                 },
                 {
-                    "aTargets": [34],
+                    "aTargets": [33],
                     "mRender": function (data, type, full) {
                         var value = new Object();
                         var ret_value = '';
@@ -1331,7 +1323,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                         } else {
                             api.column(6).visible(false);
                         }
-                        if (response.VENDOR == 1) {
+                        if (response.NAMA_KONTRAK == 1) {
                             api.column(7).visible(true);
                         } else {
                             api.column(7).visible(false);
@@ -1362,7 +1354,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                             api.column(12).visible(false);
                         }
                         if (response.TGL_NOTA_DINAS == 1) {
-                            api.column(13).visible(false);
+                            api.column(13).visible(true);
                         } else {
                             api.column(13).visible(false);
                         }
@@ -1391,75 +1383,70 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                         } else {
                             api.column(18).visible(false);
                         }
-                        if (response.STATUS_TAGIHAN == 1) {
+                        if (response.NOMINAL_SBLM_PAJAK == 1) {
                             api.column(19).visible(true);
                         } else {
                             api.column(19).visible(false);
                         }
-                        if (response.STATUS_TRACKING == 1) {
+                        if (response.PAJAK == 1) {
                             api.column(20).visible(true);
                         } else {
                             api.column(20).visible(false);
                         }
-                        if (response.KETERANGAN == 1) {
+                        if (response.NOMINAL_STLH_PAJAK == 1) {
                             api.column(21).visible(true);
                         } else {
                             api.column(21).visible(false);
                         }
-                        if (response.NOMINAL_SBLM_PAJAK == 1) {
+                        if (response.NOMINAL_UNDERLYING == 1) {
                             api.column(22).visible(true);
                         } else {
                             api.column(22).visible(false);
                         }
-                        if (response.PAJAK == 1) {
+                        if (response.NOMINAL_TANPA_UNDERLYING == 1) {
                             api.column(23).visible(true);
                         } else {
                             api.column(23).visible(false);
                         }
-                        if (response.NOMINAL_STLH_PAJAK == 1) {
+                        if (response.KURS_JISDOR == 1) {
                             api.column(24).visible(true);
                         } else {
                             api.column(24).visible(false);
                         }
-                        if (response.NOMINAL_UNDERLYING == 1) {
+                        if (response.SPREAD == 1) {
                             api.column(25).visible(true);
                         } else {
                             api.column(25).visible(false);
                         }
-                        if (response.NOMINAL_TANPA_UNDERLYING == 1) {
+                        if (response.KURS_TRANSAKSI == 1) {
                             api.column(26).visible(true);
                         } else {
                             api.column(26).visible(false);
                         }
-                        if (response.KURS_JISDOR == 1) {
+                        if (response.NOMINAL_PEMBAYARAN_IDR == 1) {
                             api.column(27).visible(true);
                         } else {
                             api.column(27).visible(false);
                         }
-                        if (response.SPREAD == 1) {
+                        if (response.CREATE_DATE_TAGIHAN == 1) {
                             api.column(28).visible(true);
                         } else {
                             api.column(28).visible(false);
                         }
-                        if (response.KURS_TRANSAKSI == 1) {
+                        if (response.UPDATE_DATE_TAGIHAN == 1) {
                             api.column(29).visible(true);
                         } else {
                             api.column(29).visible(false);
                         }
-                        if (response.NOMINAL_PEMBAYARAN_IDR == 1) {
+                        if (response.STATUS_TAGIHAN == 1) {
                             api.column(30).visible(true);
                         } else {
                             api.column(30).visible(false);
                         }
-                        if (response.CREATE_DATE_TAGIHAN == 1) {
+                        if (response.KETERANGAN == 1) {
                             api.column(31).visible(true);
                         } else {
                             api.column(31).visible(false);
-                        }
-                        if (response.UPDATE_DATE_TAGIHAN == 1) {
-                            api.column(32).visible(true);
-                        } else {
-                            api.column(32).visible(false);
                         }
                     },
                     error: function () {

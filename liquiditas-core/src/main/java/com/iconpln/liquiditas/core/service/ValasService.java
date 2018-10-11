@@ -1977,8 +1977,6 @@ public class ValasService {
             int countdown,
             int status,
             int tipeTransaksi,
-            int statusTagihan,
-            int keterangan,
             int nominalSblmPajak,
             int pajak,
             int nominalStlhPajak,
@@ -1986,11 +1984,13 @@ public class ValasService {
             int nominalTanpaUnderlying,
             int kursJidor,
             int spread,
+            int jenisTagihan,
             int kursTransaksi,
             int nominalPembayaranIdr,
-            int jenisTagihan,
             int updateDateTagihan,
-            int createDateTagihan) {
+            int createDateTagihan,
+            int statusTagihan,
+            int keterangan) {
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_user_id", userId, OracleTypes.VARCHAR)
                 .addValue("p_nomor", nomor, OracleTypes.NUMBER)
@@ -2014,10 +2014,6 @@ public class ValasService {
                 .addValue("p_countdown", countdown, OracleTypes.NUMBER)
                 .addValue("p_status", status, OracleTypes.NUMBER)
                 .addValue("p_tipe_transaksi", tipeTransaksi, OracleTypes.NUMBER)
-                .addValue("p_status_tagihan", statusTagihan, OracleTypes.NUMBER)
-
-                .addValue("p_keterangan", keterangan, OracleTypes.NUMBER)
-
                 .addValue("p_nominal_sblm_pajak", nominalSblmPajak, OracleTypes.NUMBER)
                 .addValue("p_pajak", pajak, OracleTypes.NUMBER)
                 .addValue("p_nominal_stlh_pajak", nominalStlhPajak, OracleTypes.NUMBER)
@@ -2029,7 +2025,9 @@ public class ValasService {
                 .addValue("p_nominal_pembayaran_idr", nominalPembayaranIdr, OracleTypes.NUMBER)
                 .addValue("p_jenis_tagihan", jenisTagihan, OracleTypes.NUMBER)
                 .addValue("p_update_date_tagihan", updateDateTagihan, OracleTypes.NUMBER)
-                .addValue("p_create_date_tagihan", createDateTagihan, OracleTypes.NUMBER);
+                .addValue("p_create_date_tagihan", createDateTagihan, OracleTypes.NUMBER)
+                .addValue("p_status_tagihan", statusTagihan, OracleTypes.NUMBER)
+                .addValue("p_keterangan", keterangan, OracleTypes.NUMBER);
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("pkg_valas")
                 .withFunctionName("save_column_rekap");
