@@ -739,6 +739,18 @@ public class PembayaranController {
                 paramDetail.put("TGL_INVOICE", data.get("TGL_TERIMA_INVOICE"));
                 paramDetail.put("STATUS_TRACKING", data.get("STATUS_TRACKING"));
                 paramDetail.put("DESKRIPSI", data.get("DESKRIPSI"));
+                paramDetail.put("UPDATE_DATE", data.get("UPDATE_DATE"));
+                paramDetail.put("CREATE_DATE", data.get("CREATE_DATE"));
+                paramDetail.put("KURS_TRANSAKSI", data.get("KURS_TRANSAKSI"));
+                paramDetail.put("SPREAD", data.get("SPREAD"));
+                paramDetail.put("NOMINAL_PEMBAYARAN_IDR", data.get("NOMINAL_PEMBAYARAN_IDR"));
+                paramDetail.put("KURS_JISDOR", data.get("KURS_JISDOR"));
+                paramDetail.put("NOMINAL_TANPA_UNDERLYING", data.get("NOMINAL_TANPA_UNDERLYING"));
+                paramDetail.put("NOMINAL_UNDERLYING", data.get("NOMINAL_UNDERLYING"));
+                paramDetail.put("NOMINAL_STLH_PAJAK", data.get("NOMINAL_STLH_PAJAK"));
+                paramDetail.put("PAJAK", data.get("PAJAK"));
+                paramDetail.put("NOMINAL_SBLM_PAJAK", data.get("NOMINAL_SBLM_PAJAK"));
+                paramDetail.put("JENIS_TAGIHAN", data.get("JENIS_TAGIHAN"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
