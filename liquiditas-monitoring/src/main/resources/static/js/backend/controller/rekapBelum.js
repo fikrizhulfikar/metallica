@@ -406,6 +406,12 @@ function edit_data(id) {
             $("#pTglNotaDinas").val(res[0].TGL_NOTDIN);
             $("#pKeterangan").val(res[0].DESKRIPSI);
             $("#pStatus").val(res[0].STATUS_VALAS);
+            $("#pNominalSebelumPajak").val(res[0].NOMINAL_SBLM_PAJAK);
+            $("#pNominalUnderlying").val(res[0].NOMINAL_UNDERLYING);
+            $("#pNominalTanpaUnderlying").val(res[0].NOMINAL_TANPA_UNDERLYING);
+            $("#pPajak").val(res[0].PAJAK);
+            $("#pKursJisdor").val(res[0].KURS_JISDOR);
+            $("#pSpread").val(res[0].SPREAD);
             $("#pTipeTransaksi").val(res[0].TIPE_TRANSAKSI);
             $("#pTglTerimaInvoice").val(res[0].TGL_TERIMA_INVOICE);
             $('#pTglJatuhTempo').prop('disabled', false);
@@ -808,8 +814,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {
                     "aTargets": [6],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.SPREAD,2,".",",");
-                        return full.TOTAL_TAGIHAN;
+                        return accounting.formatNumber(full.TOTAL_TAGIHAN,2,".",",");
                     }
 
                 },
@@ -1543,7 +1548,6 @@ function upload_file(pIdValas) {
 
     getFilesRekap(pIdValas);
 }
-
 
 function upd_status_tracking(idValas, pStatusInvoice, pIdJenisPembayaran, pCurrency, pTotalTagihan){
     showLoadingCss();
