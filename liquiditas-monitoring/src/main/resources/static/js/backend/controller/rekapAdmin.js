@@ -946,8 +946,10 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 },
                 {
                     "aTargets": [15],
+                    "visible": false,
                     "mRender": function (data, type, full) {
-                        return full.TGL_LUNAS;
+                        // return full.TGL_LUNAS;
+                        return "";
                     }
                 },
                 {
@@ -1448,7 +1450,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                             api.column(14).visible(false);
                         }
                         if (response.TGL_PEMBAYARAN == 1) {
-                            api.column(15).visible(true);
+                            api.column(15).visible(false);
                         } else {
                             api.column(15).visible(false);
                         }

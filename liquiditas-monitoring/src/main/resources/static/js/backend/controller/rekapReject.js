@@ -90,28 +90,28 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 
                 },
                 {
-                    "aTargets": [15],
+                    "aTargets": [22],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.KURS_JISDOR,2,".",",");
                     }
 
                 },
                 {
-                    "aTargets": [16],
+                    "aTargets": [24],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.KURS_TRANSAKSI,2,".",",");
                     }
 
                 },
                 {
-                    "aTargets": [17],
+                    "aTargets": [25],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.NOMINAL_PEMBAYARAN_IDR,2,".",",");
                     }
 
                 },
                 {
-                    "aTargets": [18],
+                    "aTargets": [17],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.NOMINAL_SBLM_PAJAK,2,".",",");
                     }
@@ -125,21 +125,21 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 
                 },
                 {
-                    "aTargets": [20],
+                    "aTargets": [21],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.NOMINAL_TANPA_UNDERLYING,2,".",",");
                     }
 
                 },
                 {
-                    "aTargets": [21],
+                    "aTargets": [20],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.NOMINAL_UNDERLYING,2,".",",");
                     }
 
                 },
                 {
-                    "aTargets": [22],
+                    "aTargets": [18],
                     "mRender": function (data, type, full) {
                         return full.PAJAK + "%";
                     }
@@ -187,17 +187,17 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {"data": "NO_TAGIHAN", "defaultContent": ""},
                 {"data": "TGL_NOTDIN", "defaultContent": ""},
                 {"data": "NO_NOTDIN", "defaultContent": ""},
-                {"data": "KURS_JISDOR", "defaultContent": ""},
-                {"data": "KURS_TRANSAKSI", "defaultContent": ""},
-                {"data": "NOMINAL_PEMBAYARAN_IDR", "defaultContent": ""},
-                {"data": "NOMINAL_SBLM_PAJAK", "defaultContent": ""},
-                {"data": "NOMINAL_STLH_PAJAK", "defaultContent": ""},
-                {"data": "NOMINAL_TANPA_UNDERLYING", "defaultContent": ""},
-                {"data": "NOMINAL_UNDERLYING", "defaultContent": ""},
-                {"data": "PAJAK", "defaultContent": ""},
-                {"data": "SPREAD", "defaultContent": ""},
                 {"data": "COUNT_DOWN", "defaultContent": ""},
                 {"data": "TIPE_TRANSAKSI", "defaultContent": ""},
+                {"data": "NOMINAL_SBLM_PAJAK", "defaultContent": ""},
+                {"data": "PAJAK", "defaultContent": ""},
+                {"data": "NOMINAL_STLH_PAJAK", "defaultContent": ""},
+                {"data": "NOMINAL_UNDERLYING", "defaultContent": ""},
+                {"data": "NOMINAL_TANPA_UNDERLYING", "defaultContent": ""},
+                {"data": "KURS_JISDOR", "defaultContent": ""},
+                {"data": "SPREAD", "defaultContent": ""},
+                {"data": "KURS_TRANSAKSI", "defaultContent": ""},
+                {"data": "NOMINAL_PEMBAYARAN_IDR", "defaultContent": ""},
                 {"data": "STATUS_TRACKING", "defaultContent": ""},
                 {"data": "DESKRIPSI", "defaultContent": ""},
                 {"data": "ID_VALAS", "defaultContent": ""}
