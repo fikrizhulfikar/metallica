@@ -1247,10 +1247,8 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 }
             ,
             "drawCallback":
-
                 function (settings) {
-                    $(".dataTables_scrollHeadInner").css({"width":"100%"});
-                    $(".table ").css({"width":"100%"});
+                    table_rekapitulasi.columns.adjust();
                     var currentPageNumber = this.api().page.info().page;
                     for (x=0;x<cbParentArray.length;x++){
                         if(cbParentArray[x] == currentPageNumber){

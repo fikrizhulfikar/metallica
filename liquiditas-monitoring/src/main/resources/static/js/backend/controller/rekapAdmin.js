@@ -794,9 +794,12 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
     table_rekapitulasi = $('#table-rekapitulasi').DataTable({
             "serverSide": true,
             "oSearch": {"sSearch": tempTableSearch},
+            "bLengthChange": false,
+            "scrollY": "100%",
+            "scrollX": "100%",
             "searching": true,
-            "scrollY": "300px",
-            "scrollX": true,
+            /*"scrollY": "300px",
+            "scrollX": true,*/
             "scrollCollapse": true,
             "aoColumnDefs": [
                 {width: 20, targets: 0},
@@ -1318,10 +1321,10 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 }
             ,
             "drawCallback":
-
                 function (settings) {
-                    $(".dataTables_scrollHeadInner").css({"width":"100%"});
-                    $(".table ").css({"width":"100%"});
+                    // $(".dataTables_scrollHeadInner").css({"width":"100%"});
+                    // $(".table ").css({"width":"100%"});
+                    table_rekapitulasi.columns.adjust();
                     var currentPageNumber = this.api().page.info().page;
                     for (x=0;x<cbParentArray.length;x++){
                         if(cbParentArray[x] == currentPageNumber){
@@ -1540,6 +1543,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                         } else {
                             api.column(31).visible(false);
                         }
+
                     },
                     error: function () {
                         hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -1573,6 +1577,10 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
         html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
         $(this).append(html);
     });
+
+    $('#table-rekapitulasi').DataTable()
+        .columns.adjust();
+
     initCbparent();
 }
 
