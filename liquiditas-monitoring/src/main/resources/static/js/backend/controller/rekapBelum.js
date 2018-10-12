@@ -892,89 +892,89 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {
                     "aTargets": [17],
                     "mRender": function (data, type, full) {
-                        return full.TIPE_TRANSAKSI;
+                        return full.STATUS_VALAS;
                     }
                 },
                 {
                     "aTargets": [18],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.NOMINAL_SBLM_PAJAK,2,".",",");
+                        return full.TIPE_TRANSAKSI;
                     }
                 },
                 {
                     "aTargets": [19],
                     "mRender": function (data, type, full) {
-                        return full.PAJAK + "%";
+                        return accounting.formatNumber(full.NOMINAL_SBLM_PAJAK,2,".",",");
                     }
                 },
                 {
                     "aTargets": [20],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.NOMINAL_STLH_PAJAK,2,".",",");
+                        return full.PAJAK + "%";
                     }
                 },
                 {
                     "aTargets": [21],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.NOMINAL_UNDERLYING,2,".",",");
+                        return accounting.formatNumber(full.NOMINAL_STLH_PAJAK,2,".",",");
                     }
                 },
                 {
                     "aTargets": [22],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.NOMINAL_TANPA_UNDERLYING,2,".",",");
+                        return accounting.formatNumber(full.NOMINAL_UNDERLYING,2,".",",");
                     }
                 },
                 {
                     "aTargets": [23],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.KURS_JISDOR,2,".",",");
+                        return accounting.formatNumber(full.NOMINAL_TANPA_UNDERLYING,2,".",",");
                     }
                 },
                 {
                     "aTargets": [24],
+                    "mRender": function (data, type, full) {
+                        return accounting.formatNumber(full.KURS_JISDOR,2,".",",");
+                    }
+                },
+                {
+                    "aTargets": [25],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.SPREAD,2,".",",");
                         return full.SPREAD;
                     }
                 },
                 {
-                    "aTargets": [25],
+                    "aTargets": [26],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.KURS_TRANSAKSI,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [26],
+                    "aTargets": [27],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.NOMINAL_PEMBAYARAN_IDR,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [27],
+                    "aTargets": [28],
                     "mRender": function (data, type, full) {
                         return full.CREATE_DATE;
                     }
                 },
                 {
-                    "aTargets": [28],
-                    "mRender": function (data, type, full) {
-                        return full.UPDATE_DATE;
-                    }
-                },
-
-                {
                     "aTargets": [29],
                     "mRender": function (data, type, full) {
-                        return full.STATUS_VALAS;
+                        return full.UPDATE_DATE;
                     }
                 },
                 {
                     "aTargets": [30],
                     "mRender": function (data, type, full) {
-                        return full.DESKRIPSI;
+                        return full.STATUS_TRACKING;
                     }
-                },{
+                },
+                {
                     "aTargets": [31],
                     "mRender": function (data, type, full) {
                         return full.DESKRIPSI;
