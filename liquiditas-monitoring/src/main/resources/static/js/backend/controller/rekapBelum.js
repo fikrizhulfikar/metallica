@@ -941,7 +941,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                     "aTargets": [25],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.SPREAD,2,".",",");
-                        return full.SPREAD;
                     }
                 },
                 {
