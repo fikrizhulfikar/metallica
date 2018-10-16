@@ -1057,7 +1057,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {
                     "aTargets": [32],
                     "mRender": function (data, type, full) {
-
                         var ret_value;
                         if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
                             return "-"
@@ -1087,7 +1086,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                     '</div>'
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY USER") {
-                                console.log("here");
                                 ret_value =
                                     '<div class="btn-group">' +
                                     '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
@@ -1375,7 +1373,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                     dataType: 'JSON',
                     type: "GET",
                     success: function (res) {
-                        console.log("res column", res);
                         var response = res.data[0];
                         if (response.NOMOR == 1) {
                             api.column(0).visible(true);
