@@ -72,7 +72,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
             "scrollCollapse": true,
             "columnDefs": [
                 {
-                    "targets": 28,
+                    "targets": [30],
                     "data": "ID_VALAS",
                     "render" : function (data, type, row, meta) {
                         var ret_value =
@@ -151,7 +151,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                         return accounting.formatNumber(full.SPREAD,2,".",",");
                     }
 
-                },
+                }
             ],
             "ajax": {
                 "url": baseUrl + "api_operator/pembayaran/rekap_reject",
@@ -199,7 +199,9 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {"data": "KURS_TRANSAKSI", "defaultContent": ""},
                 {"data": "NOMINAL_PEMBAYARAN_IDR", "defaultContent": ""},
                 {"data": "STATUS_TRACKING", "defaultContent": ""},
-                {"data": "DESKRIPSI", "defaultContent": ""},
+                {"data": "CREATE_DATE", "defaultContent": ""},
+                {"data": "UPDATE_DATE", "defaultContent": ""},
+                {"data": "DESKRIPSI", "defaultContent": "-"},
                 {"data": "ID_VALAS", "defaultContent": ""}
             ]
         }
