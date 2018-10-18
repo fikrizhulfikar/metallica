@@ -618,7 +618,7 @@ function saveColumn() {
         "status_tagihan" : hc30 == true ? 1 : 0,
         "keterangan" : hc31 == true ? 1 : 0
     };
-    console.log("data save column", data);
+    // console.log("data save column", data);
     $.ajax({
         url: baseUrl + "api_operator/pembayaran/save_column",
         dataType: 'JSON',
@@ -672,7 +672,7 @@ function getTotalTagihan() {
             $("#total_per_currency").html('');
             var total_per_currency = $("#total_per_currency");
             res.forEach(function (value) {
-                console.log(value);
+                // console.log(value);
                 var html = '<label class="form-control-label">' + '&nbsp;&nbsp;' +value.CURRENCY+' : <b>' + accounting.formatNumber(value.TOTAL, 2, ".", ",") + '</b></label>';
                 total_per_currency.append(html);
             });

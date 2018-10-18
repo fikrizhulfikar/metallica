@@ -790,14 +790,16 @@ function show_modal(id) {
 function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statusTracking) {
     showLoadingCss();
     $('#table-rekapitulasi tbody').empty();
-    $('#table-rekapitulasi').dataTable().fnDestroy();
+    // $('#table-rekapitulasi').dataTable().fnDestroy();
     table_rekapitulasi = $('#table-rekapitulasi').DataTable({
             "serverSide": true,
             "oSearch": {"sSearch": tempTableSearch},
             "bLengthChange": false,
             "scrollY": "100%",
             "scrollX": "100%",
+            // "order": [3],
             "searching": true,
+            bSortable: true,
             /*"scrollY": "300px",
             "scrollX": true,*/
             "scrollCollapse": true,
@@ -834,13 +836,13 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {width: 100, targets: 30},
                 {width: 100, targets: 31},
                 {width: "20%", "targets": 0},
-                {
+                /*{
                     "bSortable": true,
-                    "aTargets": [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
-                },
+                    "aTargets": [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+                },*/
                 {
-                    "bSortable": false,
-                    "aTargets": [32, 33]
+                    "sortable": false,
+                    "aTargets": [0, 32, 33]
                 },
                 {
                     "aTargets": [0],
@@ -1577,7 +1579,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 
     $('#table-rekapitulasi').DataTable()
         .columns.adjust();
-
+    console.log("table",table_rekapitulasi.order());
     initCbparent();
 }
 
