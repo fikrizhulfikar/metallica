@@ -902,40 +902,64 @@ public class PembayaranController {
     private String parseColumn(int index) {
         switch (index) {
             case 1:
-                return "JENIS_PEMBAYARAN";
+                return "JENIS_TAGIHAN";
             case 2:
-                return "JATUH_TEMPO";
+                return "JENIS_PEMBAYARAN";
             case 3:
-                return "VENDOR";
+                return "JATUH_TEMPO";
             case 4:
-                return "CURRENCY";
+                return "VENDOR";
             case 5:
-                return "TAGIHAN";
+                return "CURRENCY";
             case 6:
-                return "UNIT";
+                return "TAGIHAN";
             case 7:
-                return "BANK_TUJUAN";
+                return "UNIT";
             case 8:
-                return "BANK_PEMBAYAR";
+                return "BANK_TUJUAN";
             case 9:
-                return "TGL_TAGIHAN";
+                return "BANK_PEMBAYAR";
             case 10:
-                return "NO_TAGIHAN";
+                return "TGL_TERIMA_INVOICE";
             case 11:
-                return "TLG_NOTDIN";
+                return "TGL_TAGIHAN";
             case 12:
-                return "NO_NOTDIN";
+                return "NO_TAGIHAN";
             case 13:
-                return "TGL_LUNAS";
+                return "TGL_NOTDIN";
             case 14:
-                return "COUNT_DOWN";
+                return "NO_NOTDIN";
             case 15:
-                return "STATUS_VALAS";
+                return "TGL_LUNAS";
             case 16:
-                return "TIPE_TRANSAKSI";
+                return "COUNT_DOWN";
             case 17:
-                return "STATUS_TRACKING";
+                return "STATUS_VALAS";
             case 18:
+                return "TIPE_TRANSAKSI";
+            case 19:
+                return "NOMINAL_SBLM_PAJAK";
+            case 20:
+                return "PAJAK";
+            case 21:
+                return "NOMINAL_STLH_PAJAK";
+            case 22:
+                return "NOMINAL_UNDERLYING";
+            case 23:
+                return "NOMINAL_TANPA_UNDERLYING";
+            case 24:
+                return "KURS_JISDOR";
+            case 25:
+                return "SPREAD";
+            case 26:
+                return "KURS_TRANSAKSI";
+            case 27:
+                return "NOMINAL_PEMBAYARAN_IDR";
+            case 28:
+                return "CREATE_DATE";
+            case 30:
+                return "STATUS_TRACKING";
+            case 31:
                 return "DESKRIPSI";
             default:
                 return "UPDATE_DATE";
