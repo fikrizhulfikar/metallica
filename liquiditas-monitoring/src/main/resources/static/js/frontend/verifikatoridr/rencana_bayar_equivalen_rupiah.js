@@ -45,12 +45,13 @@ function initData(pTgl) {
         },
         success: function (res) {
             hideLoadingCss()
-            console.log(res);
+            console.log('TESTTT'+res);
             createUI(res.return)
         },
         error: function () {
             // hideLoadingCss("Gagal Ambil Data RENCANA BAYAR");
             hideLoadingCss();
+            console.log('ERROR');
             $("#table-main tbody").empty();
             var newHtml = "<tr>" +
                 "<td colspan='10' align='center'> No Data</td>" +
