@@ -794,7 +794,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
     table_rekapitulasi = $('#table-rekapitulasi').DataTable({
             "serverSide": true,
             "oSearch": {"sSearch": tempTableSearch},
-            "bLengthChange": false,
+            "bLengthChange": true,
             "scrollY": "100%",
             "scrollX": "100%",
             // "order": [3],
@@ -1578,7 +1578,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
     });
 
     table_rekapitulasi.columns.adjust();
-    console.log("table",table_rekapitulasi.order());
     initCbparent();
 }
 
