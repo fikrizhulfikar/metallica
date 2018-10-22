@@ -790,7 +790,7 @@ function show_modal(id) {
 function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statusTracking) {
     showLoadingCss();
     $('#table-rekapitulasi tbody').empty();
-    // $('#table-rekapitulasi').dataTable().fnDestroy();
+    $('#table-rekapitulasi').dataTable().fnDestroy();
     table_rekapitulasi = $('#table-rekapitulasi').DataTable({
             "serverSide": true,
             "oSearch": {"sSearch": tempTableSearch},
@@ -1577,8 +1577,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
         $(this).append(html);
     });
 
-    $('#table-rekapitulasi').DataTable()
-        .columns.adjust();
+    table_rekapitulasi.columns.adjust();
     console.log("table",table_rekapitulasi.order());
     initCbparent();
 }
