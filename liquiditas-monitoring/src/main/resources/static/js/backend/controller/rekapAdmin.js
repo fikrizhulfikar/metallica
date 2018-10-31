@@ -125,7 +125,7 @@ function duplicate_data(id) {
             $("#pNominalTanpaUnderlying").val(res[0].NOMINAL_TANPA_UNDERLYING);
             $("#pKursJisdor").val(res[0].KURS_JISDOR);
             $("#pSpread").val(res[0].SPREAD);
-            $("#pJenisTagihan").val(res[0].JENIS_TAGIHAN);
+            $("#pJenisTagihan").val(res[0].JENIS_TAGIHAN.toLowerCase());
             $('#pTglJatuhTempo').prop('disabled', false);
             if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
                 $('#pTglJatuhTempo').prop('disabled', true);
@@ -375,8 +375,7 @@ function edit_data(id) {
         },
         success: function (res) {
             hideLoadingCss("")
-            idValas = id
-
+            idValas = id;
             $("#pTglJatuhTempo").val("");
             $("#pNilaiTagihan").val("");
             $("#pNoTagihan").val("");
@@ -411,7 +410,7 @@ function edit_data(id) {
             $("#pNominalTanpaUnderlying").val(res[0].NOMINAL_TANPA_UNDERLYING);
             $("#pKursJisdor").val(res[0].KURS_JISDOR);
             $("#pSpread").val(res[0].SPREAD);
-            $("#pJenisTagihan").val(res[0].JENIS_TAGIHAN);
+            $("#pJenisTagihan").val(res[0].JENIS_TAGIHAN.toLowerCase());
             if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
                 $('#pTglJatuhTempo').prop('disabled', true);
             }
