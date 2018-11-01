@@ -1280,6 +1280,7 @@ function update_datas() {
             if (res.return == 1) {
                 alert(res.OUT_MSG)
                 table_rekapitulasi.ajax.reload();
+                checkedArray = new Array();
             } else {
                 alert(res.OUT_MSG);
             }
@@ -1540,6 +1541,7 @@ function multipleUpdate() {
                 search("load");
                 $('#multiple-edit-modal').modal('hide');
                 table_rekapitulasi.ajax.reload();
+                checkedArray = new Array();
             } else {
                 alert(res.OUT_MSG);
             }
