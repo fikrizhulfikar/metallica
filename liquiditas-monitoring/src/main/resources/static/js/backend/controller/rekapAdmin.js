@@ -1169,7 +1169,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                 ret_value =
                                     '<div class="btn-group">' +
                                     '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
-                                if(full.EQ_IDR > 25000000000){
+                                if(full.EQ_IDR > 35000000000){
                                     if(role == "ROLE_ADMIN"||role == "ROLE_KADIV") {
                                         ret_value = ret_value +
                                             '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified EVP" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +10+ '\',\''+full.ID_JENIS_PEMBAYARAN+'\',\''+full.CURRENCY+'\',\''+full.TOTAL_TAGIHAN+'\')"><i class="fa fa-arrows-alt"></i></button>';
@@ -1204,7 +1204,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                     '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
                                     '</div>'
                             }
-                            /*else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY OPERATION" && full.EQ_IDR > "25000000000"){
+                            /*else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY OPERATION" && full.EQ_IDR > "35000000000"){
                                 ret_value =
                                     '<div class="btn-group">' +
                                     '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
@@ -1281,14 +1281,14 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                     value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
                                 }
                             }
-                            else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY OPERATION" && full.EQ_IDR > "25000000000"){
+                            else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY OPERATION" && full.EQ_IDR > "35000000000"){
                                 if(newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "ROLE_KADIV"){
                                     value = '{"10":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
                                 }else {
                                     value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
                                 }
                             }
-                            else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY OPERATION" && full.TOTAL_TAGIHAN <= "25000000000"  || full.STATUS_TRACKING == "VERIFIED BY EVP"){
+                            else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY OPERATION" && full.TOTAL_TAGIHAN <= "35000000000"  || full.STATUS_TRACKING == "VERIFIED BY EVP"){
                                 var role = newRoleUser[0];
 
                                 if(role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN"){
