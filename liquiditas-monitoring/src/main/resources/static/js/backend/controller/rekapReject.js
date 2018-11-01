@@ -167,6 +167,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                     statusTracking : statusTracking
                 },
                 "dataSrc": function (res) {
+                    console.log("rejected", res);
                     hideLoadingCss()
                     return res.data;
                 }
@@ -188,6 +189,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {"data": "TGL_NOTDIN", "defaultContent": ""},
                 {"data": "NO_NOTDIN", "defaultContent": ""},
                 {"data": "COUNT_DOWN", "defaultContent": ""},
+                {"data": "STATUS_VALAS", "defaultContent": ""},
                 {"data": "TIPE_TRANSAKSI", "defaultContent": ""},
                 {"data": "NOMINAL_SBLM_PAJAK", "defaultContent": ""},
                 {"data": "PAJAK", "defaultContent": ""},
