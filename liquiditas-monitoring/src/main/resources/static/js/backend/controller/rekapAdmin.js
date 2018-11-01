@@ -1075,7 +1075,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                 '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
                                 '</div>';
                         }else {
-                            console.log("STATUS : " + full.STATUS_TRACKING + "/"+ full.TOTAL_TAGIHAN)
                             if (full.STATUS_TRACKING == "INPUT DATA") {
 
                                 ret_value =
@@ -1756,6 +1755,7 @@ function update_datas() {
                 if (res.return == 1) {
                     alert(res.OUT_MSG)
                     table_rekapitulasi.ajax.reload();
+                    checkedArray = new Array();
                 } else {
                     alert(res.OUT_MSG);
                 }
@@ -2020,7 +2020,7 @@ function openMultipleEditForm(){
 }
 
 function multipleUpdate() {
-
+    console.log("checkedArray", checkedArray);
     $.ajax({
         url: baseUrl + "api_operator/pembayaran/multiple_edit",
         dataType: 'JSON',
@@ -2037,6 +2037,7 @@ function multipleUpdate() {
                 search("load");
                 $('#multiple-edit-modal').modal('hide');
                 table_rekapitulasi.ajax.reload();
+                checkedArray = new Array();
             } else {
                 alert(res.OUT_MSG);
             }
@@ -2045,4 +2046,5 @@ function multipleUpdate() {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
         }
     });
+
 }
