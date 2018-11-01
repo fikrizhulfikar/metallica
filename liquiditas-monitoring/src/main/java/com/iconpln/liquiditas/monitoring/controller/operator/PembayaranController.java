@@ -648,14 +648,18 @@ public class PembayaranController {
     public Map<String, Object> updReverse(
             @RequestParam(value = "pIdValas", defaultValue = "") String pIdValas,
             @RequestParam(value = "pKeterangan", defaultValue = "") String pKeterangan,
-            @RequestParam(value = "pStatusInvoice", defaultValue = "") String pStatusInvoice
+            @RequestParam(value = "pStatusInvoice", defaultValue = "") String pStatusInvoice,
+            @RequestParam(value = "pIdJenisPembayaran", defaultValue = "") String pIdJenisPembayaran,
+            @RequestParam(value = "pCurrency", defaultValue = "") String pCurrency,
+            @RequestParam(value = "pTotalTagihan", defaultValue = "") String pTotalTagihan
+
     ) {
 
         AppUtils.getLogger(this).debug("idValas : {} ", pIdValas);
         AppUtils.getLogger(this).debug("pKeterangan : {} ", pKeterangan);
         AppUtils.getLogger(this).debug("pStatusInvoice : {} ", pStatusInvoice);
         try {
-            Map<String, Object> result = valasService.updReverse(pIdValas, pStatusInvoice, WebUtils.getUsernameLogin(), pKeterangan);
+            Map<String, Object> result = valasService.updReverse(pIdValas, pStatusInvoice, WebUtils.getUsernameLogin(), pKeterangan, pCurrency, pIdJenisPembayaran, pTotalTagihan);
             if (((BigDecimal) result.get("return")).equals(BigDecimal.ONE)) {
                 String idJenisPembayaran = valasService.getIdPembayaranByIdValas(pIdValas);
                 Notification notification =
