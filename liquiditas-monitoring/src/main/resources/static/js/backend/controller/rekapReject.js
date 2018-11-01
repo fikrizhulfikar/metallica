@@ -200,9 +200,9 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {"data": "SPREAD", "defaultContent": ""},
                 {"data": "KURS_TRANSAKSI", "defaultContent": ""},
                 {"data": "NOMINAL_PEMBAYARAN_IDR", "defaultContent": ""},
-                {"data": "STATUS_TRACKING", "defaultContent": ""},
                 {"data": "CREATE_DATE", "defaultContent": ""},
                 {"data": "UPDATE_DATE", "defaultContent": ""},
+                {"data": "STATUS_TRACKING", "defaultContent": ""},
                 {"data": "DESKRIPSI", "defaultContent": "-"},
                 {"data": "ID_VALAS", "defaultContent": ""}
             ]
