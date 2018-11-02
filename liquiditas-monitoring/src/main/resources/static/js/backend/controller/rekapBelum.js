@@ -1146,7 +1146,8 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                     "mRender": function (data, type, full) {
                         var value = new Object();
                         var ret_value = '';
-                        if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
+                        var role = newRoleUser[0];
+                        if (role == "ROLE_MS_LIKUIDITAS" || role == "ROLE_DM_LIKUIDITAS") {
                             return ""
                         } else {
                             if (full.STATUS_TRACKING == "INPUT DATA") {
@@ -1155,7 +1156,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY STAFF") {
 
-                                if(newRoleUser[0] == "ROLE_DM_ENERGI" || newRoleUser[0] == "ROLE_DM_KEUKON_APLN" || newRoleUser[0] == "ROLE_DM_PENGUSAHAAN" || newRoleUser[0] == "ROLE_ADMIN"){
+                                if(role == "ROLE_DM_ENERGI" || role == "ROLE_DM_KEUKON_APLN" || role == "ROLE_DM_PENGUSAHAAN" || newRoleUser[0] == "ROLE_ADMIN"){
                                     value = '{"3":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
                                 }else {
                                     value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
@@ -1172,7 +1173,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                             else if (full.UPDATE_BY == "dmkeukonslap" && full.STATUS_TRACKING == "VERIFIED BY MANAGER"
                                 || full.UPDATE_BY !== "dmkeukonap" && full.STATUS_TRACKING == "VERIFIED BY MANAGER"
                                 || full.STATUS_TRACKING == "VERIFIED BY VP TREASURY INVESTMENT"){
-                                if(newRoleUser[0] == "ROLE_DM_PEMBELANJAAN"|| newRoleUser[0] == "ROLE_ADMIN"){
+                                if(role == "ROLE_DM_PEMBELANJAAN"|| role == "ROLE_ADMIN"){
                                     value = '{"4":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
                                 }else {
                                     value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
@@ -1180,23 +1181,24 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY MANAGER PE"){
 
-                                if(newRoleUser[0] == "ROLE_MS_PEMBELANJAAN" || newRoleUser[0] == "ROLE_ADMIN"){
+                                if(role == "ROLE_MS_PEMBELANJAAN" || role == "ROLE_ADMIN"){
                                     value = '{"5":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
                                 }else {
                                     value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
                                 }
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY OPERATION"){
-                                if(newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "ROLE_KADIV"){
+                                if(role == "ROLE_ADMIN" || role == "ROLE_KADIV"){
                                     value = '{"10":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
+                                }if(role.includes("KASIR") && full.EQ_IDR < 35000000000){
+                                    value = '{"7":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
                                 }else {
                                     value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
                                 }
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY EVP"){
-                                var role = newRoleUser[0];
 
-                                if(role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN"){
+                                if(role.includes("KASIR") || role == "ROLE_ADMIN"){
                                     value = '{"7":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
                                 }else {
                                     value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';

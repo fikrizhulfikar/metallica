@@ -69,12 +69,12 @@ function setSelectStatus(idHtml) {
 
 function setSelectStatusTracking(idHtml) {
     $("#" + idHtml + "").append('<option value="1">INPUT DATA</option>');
-    $("#" + idHtml + "").append('<option value="2">VERIFIED BY USER</option>');
-    $("#" + idHtml + "").append('<option value="3">VERIFIED BY DM</option>');
-    $("#" + idHtml + "").append('<option value="4">VERIFIED BY DM PEMBELANJAAN</option>');
-    $("#" + idHtml + "").append('<option value="5">APPROVE BY MS</option>');
-    $("#" + idHtml + "").append('<option value="6">APPROVE BY MS KEUKON</option>');
-    $("#" + idHtml + "").append('<option value="7">APPROVE BY KDIV</option>');
+    $("#" + idHtml + "").append('<option value="2">VERIFIED BY STAFF</option>');
+    $("#" + idHtml + "").append('<option value="3">VERIFIED BY MANAGER</option>');
+    $("#" + idHtml + "").append('<option value="4">VERIFIED BY MANAGER PE</option>');
+    $("#" + idHtml + "").append('<option value="5">APPROVE BY VP TREASURY OPERATION</option>');
+    $("#" + idHtml + "").append('<option value="6">APPROVE BY VP TREASURY INVESTMENT</option>');
+    $("#" + idHtml + "").append('<option value="7">APPROVE BY EVP</option>');
 }
 
 function setSelectBank2(idHtml, jenis, jenisBank, idForSelected, form) {
