@@ -72,7 +72,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
             "scrollCollapse": true,
             "columnDefs": [
                 {
-                    "targets": [30],
+                    "targets": [31],
                     "data": "ID_VALAS",
                     "render" : function (data, type, row, meta) {
                         var ret_value =
