@@ -1921,8 +1921,7 @@ function  initCbparent() {
     });
 }
 
-function $("#pNewTglJatuhTempo").val("");
-$("#pNewBankPembayar").val("")openMultipleEditForm(){
+function openMultipleEditForm(){
     setSelectBank("pNewBankPembayar", "", "PEMBAYAR", "", "REKAP");
     $("#pNewTglJatuhTempo").val("");
     $("#pNewBankPembayar").val("");
