@@ -1921,8 +1921,11 @@ function  initCbparent() {
     });
 }
 
-function openMultipleEditForm(){
+function $("#pNewTglJatuhTempo").val("");
+$("#pNewBankPembayar").val("")openMultipleEditForm(){
     setSelectBank("pNewBankPembayar", "", "PEMBAYAR", "", "REKAP");
+    $("#pNewTglJatuhTempo").val("");
+    $("#pNewBankPembayar").val("");
     $('#pNewTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
     $('#multiple-edit-modal').modal({backdrop: 'static', keyboard: false});
 }

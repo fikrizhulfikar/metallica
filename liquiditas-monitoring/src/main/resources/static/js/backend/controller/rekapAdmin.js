@@ -1594,7 +1594,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 
         if(newRoleUser[0] != "ROLE_OSS"){
             html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
-                '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm(2)"><i class="fa fa-pencil"></i></button>';
+                '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
         }
         html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
         $(this).append(html);
@@ -2015,6 +2015,8 @@ function  initCbparent() {
 
 function openMultipleEditForm(){
     setSelectBank("pNewBankPembayar", "", "PEMBAYAR", "", "REKAP");
+    $("#pNewTglJatuhTempo").val("");
+    $("#pNewBankPembayar").val("")
     $('#pNewTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
     $('#multiple-edit-modal').modal({backdrop: 'static', keyboard: false});
 }
