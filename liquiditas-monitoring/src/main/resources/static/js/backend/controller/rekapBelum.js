@@ -1510,10 +1510,10 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 
 function initMultipleButton(role, jenis){
     console.log("JENIS", jenis);
-    $('.dataTables_filter').empty();
+    $('.multiple-button').empty();
     $('.dataTables_filter').each(function () {
         // var html = '';
-        var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
+        var html = '<span class="multiple-button"><button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
         html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="multipleReject()">' +
             '            <i class="fa fa-ban"></i></button>';
         if(role != "ROLE_OSS"){
@@ -1523,7 +1523,7 @@ function initMultipleButton(role, jenis){
                 html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" style="margin-left: 10px" type="button"  title="Edit Data" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
             }
         }
-        html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
+        html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button></span>';
         $(this).append(html);
     });
 }
