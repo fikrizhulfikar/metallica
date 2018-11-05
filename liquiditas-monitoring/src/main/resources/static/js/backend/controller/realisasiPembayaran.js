@@ -8,7 +8,7 @@ var table_rekapitulasi;
 var idValas = "";
 var allData;
 var tempTableSearch = "";
-
+var currency = "", totalTagihan ="", idJenisPembayaran="";
 var srcTglAwal = null;
 var srcTglAkhir = null;
 $(document).ready(function () {
@@ -143,8 +143,11 @@ function reverse() {
         type: "POST",
         data: {
             pIdValas: idValas,
-            pStatusInvoice : '10',
+            pStatusInvoice : '7',
             pKeterangan: $("#pKeterangan").val(),
+            pIdJenisPembayaran: idJenisPembayaran,
+            pCurrency: currency,
+            pTotalTagihan: totalTagihan
         },
         success: function (res) {
             hideLoadingCss("")
@@ -178,7 +181,6 @@ function getAllData() {
             pPembayaran: $("#cmb_jenis_pemabayaran").val()
         },
         success: function (res) {
-            console.log("al data  : " + res);
             allData = res;
         },
         error: function () {
@@ -463,8 +465,11 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
                             '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-info" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
                             '</div>';
                     } else {
+                        currency = full.CURRENCY;
+                        idJenisPembayaran = full.ID_JENIS_PEMBAYARAN;
+                        totalTagihan = full.TOTAL_TAGIHAN;
                         return '<div class="btn-group">' +
-                            '<button style="width: 15px !important;" class="btn-update-status btn-sm btn-success" title="Edit" onclick="show_modal(\'' + full.ID_VALAS + '\')"><i class="fa fa-arrow-left"></i></button>' +
+                            '<button style="width: 15px !important;" class="btn-update-status btn-sm btn-success" title="Reverse" onclick="show_modal(\'' + full.ID_VALAS + '\')"><i class="fa fa-arrow-left"></i></button>' +
                             '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-info" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
                             '</div>';
                     }
@@ -542,8 +547,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
             $('th').removeClass('sorting_asc');
             $('th').removeClass('datatables_action');
             $('th').addClass('th-middle');
-            console.log("length : ", newRoleUser.length);
-            console.log("length : ", newRoleUser[0]);
             $(".btn-update-status").hide();
             if (newRoleUser.length > 0) {
                 for (var i = 0; i < newRoleUser.length; i++) {

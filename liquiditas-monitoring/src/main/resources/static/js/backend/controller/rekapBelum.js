@@ -723,10 +723,10 @@ function show_modal(id) {
 }
 
 function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statusTracking) {
-    console.log("USERLOGIN", newRoleUser[0]);
     showLoadingCss();
     $('#table-rekapitulasi tbody').empty();
     $('#table-rekapitulasi').dataTable().fnDestroy();
+    var isKecil = "0";
     table_rekapitulasi = $('#table-rekapitulasi').DataTable({
             "serverSide": true,
             "oSearch": {"sSearch": tempTableSearch},
@@ -1244,7 +1244,8 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                     "dataSrc":
 
                         function (res) {
-                            hideLoadingCss()
+                            initMultipleButton(newRoleUser[0], res.data[0].JENIS);
+                            hideLoadingCss();
                             getTotalTagihan();
                             return res.data;
                         }
@@ -1482,18 +1483,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
         $(this).append(html);
     });
 
-    $('.dataTables_filter').each(function () {
-        // var html = '';
-        var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
-        html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="multipleReject()">' +
-            '            <i class="fa fa-ban"></i></button>';
-        if(newRoleUser[0] != "ROLE_OSS"){
-            html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
-                '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" style="margin-left: 10px" type="button"  title="Edit Data" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
-        }
-        html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
-        $(this).append(html);
-    });
+
     initCbparent();
     $('.checkbox-toggle').on( 'click', function (e) {
         var column = table_rekapitulasi.column( $(this).attr('data-column') );
@@ -1510,6 +1500,24 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
     });
 }
 
+function initMultipleButton(role, jenis){
+    console.log("JENIS", jenis)
+    $('.dataTables_filter').each(function () {
+        // var html = '';
+        var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
+        html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="multipleReject()">' +
+            '            <i class="fa fa-ban"></i></button>';
+        if(role != "ROLE_OSS"){
+            html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>';
+
+            if(jenis == "1"){
+                html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" style="margin-left: 10px" type="button"  title="Edit Data" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
+            }
+        }
+        html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
+        $(this).append(html);
+    });
+}
 function multipleReject() {
     var stateCrf = confirm("Anda Yakin Akan Mereject Data Ini ?");
     if (stateCrf == true) {
