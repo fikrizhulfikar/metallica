@@ -15,7 +15,6 @@ var checkedArray = new Array();
 var cbParentArray = new Array();
 var srcTglAwal = null;
 var srcTglAkhir = null;
-
 var addedDays = 2;
 $(document).ready(function () {
     $('#pTglTerimaInvoice').datepicker({dateFormat: 'dd/mm/yy', maxDate: new Date()});
@@ -125,6 +124,7 @@ function duplicate_data(id) {
             $("#pStatus").val(res[0].STATUS_VALAS);
             $("#pTipeTransaksi").val(res[0].TIPE_TRANSAKSI);
             $("#pTglTerimaInvoice").val(res[0].TGL_TERIMA_INVOICE);
+            $("#pJenisTagihan").val(res[0].JENIS_TAGIHAN.toLowerCase());
             $('#pTglJatuhTempo').prop('disabled', false);
             if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
                 $('#pTglJatuhTempo').prop('disabled', true);
@@ -1019,7 +1019,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                     '</div>'
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY STAFF") {
-                                console.log("here");
                                 ret_value =
                                     '<div class="btn-group">' +
                                     '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
@@ -1251,14 +1250,9 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                     "dataSrc":
 
                         function (res) {
-                        console.log("resdata", res.data);
                             if(res.data.length > 0){
                                 initMultipleButton(newRoleUser[0], res.data[0].JENIS);
                             }
-                            else{
-                                initMultipleButton(newRoleUser[0], "0");
-                            }
-
                             hideLoadingCss();
                             getTotalTagihan();
                             return res.data;
@@ -1515,7 +1509,8 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 }
 
 function initMultipleButton(role, jenis){
-    console.log("JENIS", jenis)
+    console.log("JENIS", jenis);
+    $('.dataTables_filter').empty();
     $('.dataTables_filter').each(function () {
         // var html = '';
         var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
