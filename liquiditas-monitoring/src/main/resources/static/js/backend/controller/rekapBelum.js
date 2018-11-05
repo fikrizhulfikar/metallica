@@ -1626,7 +1626,7 @@ function upd_status_tracking(idValas, pStatusInvoice, pIdJenisPembayaran, pCurre
     });
 }
 
-function reverse(idValas, statusInvoice) {
+function reverse(idValas, statusInvoice, currency, idJenisPembayaran, totalTagihan) {
     var ket = $("#pKeterangan").val().toString();
     var all_ket = [];
     var ket_lama = localStorage.getItem("real_ktr");
@@ -1663,6 +1663,9 @@ function reverse(idValas, statusInvoice) {
             pIdValas: idValas,
             pStatusInvoice: statusInvoice,
             pKeterangan: $("#pKeterangan").val(),
+            pCurrency: currency,
+            pIdJenisPembayaran: idJenisPembayaran,
+            pTotalTagihan: totalTagihan
         },
         success: function (res) {
             hideLoadingCss("")
