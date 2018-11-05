@@ -151,7 +151,12 @@ function openFormNew() {
     $("#pJenisPemabayaran").select2("val", "");
     $("#pUnitPenerima").select2("val", "");
     $("#pVendor").select2("val", "");
-
+    $("#pNominalSebelumPajak").val("");
+    $("#pNominalUnderlying").val("");
+    $("#pPajak").val("");
+    $("#pNominalTanpaUnderlying").val("");
+    $("#pKursJisdor").val("");
+    $("#pSpread").val("");
     $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
     $('#pTglTagihan').datepicker({dateFormat: 'dd/mm/yy'});
     $('#pTglNotaDinas').datepicker({dateFormat: 'dd/mm/yy'});

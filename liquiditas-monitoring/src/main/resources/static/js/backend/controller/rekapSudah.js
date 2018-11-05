@@ -159,7 +159,12 @@ function openFormNew() {
     $("#pJenisPemabayaran").select2("val", "");
     $("#pUnitPenerima").select2("val", "");
     $("#pVendor").select2("val", "");
-
+    $("#pNominalSebelumPajak").val("");
+    $("#pNominalUnderlying").val("");
+    $("#pPajak").val("");
+    $("#pNominalTanpaUnderlying").val("");
+    $("#pKursJisdor").val("");
+    $("#pSpread").val("");
     $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
     $('#pTglTagihan').datepicker({dateFormat: 'dd/mm/yy'});
     $('#pTglNotaDinas').datepicker({dateFormat: 'dd/mm/yy'});
@@ -259,7 +264,6 @@ function ins_data() {
         localStorage.removeItem("real_no_tagihan_RD");
         localStorage.removeItem("NT");
         localStorage.setItem("NT", no_ta);
-        console.log(no_ta);
 
         all_val.push(no_ta);
         localStorage.setItem("real_no_tagihan_RD", all_val);
@@ -307,7 +311,6 @@ function ins_data() {
     }
 
     showLoadingCss();
-    console.log("id valas : ", idValas)
     $.ajax({
         url: baseUrl + "api_operator/pembayaran/ins_data",
         dataType: 'JSON',
@@ -624,7 +627,6 @@ function generatePDF() {
 
         data.forEach(function (row) {
             var dataRow = [];
-            console.log(row);
             dataRow.push(row["NO"]);
             dataRow.push(row["JENIS_PEMBAYARAN"]);
             dataRow.push(row["JATUH_TEMPO"]);
@@ -707,7 +709,6 @@ function show_modal(id) {
 }
 
 function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statusTracking) {
-    console.log("USERLOGIN", newRoleUser[0]);
     showLoadingCss();
     $('#table-rekapitulasi tbody').empty();
     $('#table-rekapitulasi').dataTable().fnDestroy();
@@ -999,7 +1000,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                     '</div>'
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY STAFF") {
-                                console.log("here");
                                 ret_value =
                                     '<div class="btn-group">' +
                                     '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
@@ -1508,7 +1508,6 @@ function upload_file(pIdValas) {
 
 function upd_status_tracking(idValas , pStatusinvoice){
     showLoadingCss();
-    console.log("idvalas :",idValas);
     console.log("satusinvoice :",pStatusinvoice);
     $.ajax({
         url: baseUrl + "api_operator/pembayaran/upd_status",
@@ -1792,8 +1791,6 @@ function upload_server_xls() {
     formData.append('file', $('input[type=file]#file-xls')[0].files[0]);
     fileSize = $('input[type=file]#file-xls')[0].files[0].size / 1000;
     $("#file-xls").val('');
-
-    console.log(formData);
     $.ajax({
         crossOrigin: true,
         type: "POST",
@@ -1806,7 +1803,6 @@ function upload_server_xls() {
         processData: false,
         success: function (res) {
             hideLoadingCss("");
-            console.log("res", res)
             if (res.V_RETURN == 0) {
                 alert("sukses");
                 table_rekapitulasi.ajax.reload();

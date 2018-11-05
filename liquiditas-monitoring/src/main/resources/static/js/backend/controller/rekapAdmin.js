@@ -162,6 +162,12 @@ function openFormNew() {
     $("#pCurrecny").val("");
     $("#pBankPembayar").val("");
     $("#pTipeTransaksi").val("");
+    $("#pNominalSebelumPajak").val("");
+    $("#pNominalUnderlying").val("");
+    $("#pPajak").val("");
+    $("#pNominalTanpaUnderlying").val("");
+    $("#pKursJisdor").val("");
+    $("#pSpread").val("");
     $("#pBankTujuan").select2("val", "");
     $("#pJenisPemabayaran").select2("val", "");
     $("#pUnitPenerima").select2("val", "");
