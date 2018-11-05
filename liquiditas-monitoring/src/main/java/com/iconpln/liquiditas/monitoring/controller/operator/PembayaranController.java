@@ -782,7 +782,20 @@ public class PembayaranController {
         try {
             String pFileName = WebUtils.uploadFile(file, pIdValas, pJenisFile);
             if (!pFileName.equals("")) {
-                return valasService.uploadFileRekap(pIdValas, pJenisFile, new BigDecimal(pFileSize), pIdValas + pJenisFile + File.separator + pFileName, WebUtils.getUsernameLogin());
+                String idJenisPembayaran = valasService.getIdPembayaranByIdValas(pIdValas);
+                try {
+                    Map<String, Object> result = valasService.uploadFileRekap(pIdValas, pJenisFile, new BigDecimal(pFileSize), pIdValas + pJenisFile + File.separator + pFileName, WebUtils.getUsernameLogin());
+                    Notification notification = Notification.builder()
+                            .topic(idJenisPembayaran)
+                            .title(NamedIdentifier.REKAP_PEMBAYARAN.getName())
+                            .message(WebUtils.getUsernameLogin() + " telah menambahkan data (xls).")
+                            .additionalInfo(NamedIdentifier.REKAP_PEMBAYARAN.getValue() + ";" + pIdValas)
+                            .build();
+                    notificationUtil.notifyMessage(notification);
+                    return result;
+                } catch (Exception e) {
+                    return null;
+                }
             } else {
                 return null;
             }
