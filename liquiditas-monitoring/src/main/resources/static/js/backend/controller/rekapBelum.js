@@ -1251,7 +1251,14 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                     "dataSrc":
 
                         function (res) {
-                            initMultipleButton(newRoleUser[0], res.data[0].JENIS);
+                        console.log("resdata", res.data);
+                            if(res.data.length > 0){
+                                initMultipleButton(newRoleUser[0], res.data[0].JENIS);
+                            }
+                            else{
+                                initMultipleButton(newRoleUser[0], "0");
+                            }
+
                             hideLoadingCss();
                             getTotalTagihan();
                             return res.data;
