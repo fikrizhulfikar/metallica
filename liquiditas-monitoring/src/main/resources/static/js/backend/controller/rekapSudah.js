@@ -38,6 +38,7 @@ $(document).ready(function () {
     setSelectStatus("cmb_status");
     setSelectStatusTracking("cmb_status_tracking");
     setSelectJenisTagihan("pJenisTagihan");
+    setNominalSetelahPajak();
     siap();
     inputKeterangan();
     $('#check_all').change(function() {
@@ -48,7 +49,6 @@ $(document).ready(function () {
         }
     });
 });
-
 
 $("#tanggal_awal").change(function () {
     var tglAwalData = $('#tanggal_awal').val();
@@ -1505,7 +1505,6 @@ function upload_file(pIdValas) {
     getFilesRekap(pIdValas);
 }
 
-
 function upd_status_tracking(idValas , pStatusinvoice){
     showLoadingCss();
     console.log("satusinvoice :",pStatusinvoice);
@@ -1875,5 +1874,14 @@ function multipleUpdate() {
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
         }
+    });
+}
+
+function setNominalSetelahPajak() {
+    $('#pPajak, #pNominalSebelumPajak').bind('keyup paste change', function () {
+        var pPajak = $('#pPajak').val() || 0,
+            pNominalSebelumPajak = $('#pNominalSebelumPajak').val() || 0;
+        var pNominalSetelahPajak = pPajak * pNominalSebelumPajak / 100;
+        $('#pNominalSetelahPajak').val(pNominalSetelahPajak);
     });
 }

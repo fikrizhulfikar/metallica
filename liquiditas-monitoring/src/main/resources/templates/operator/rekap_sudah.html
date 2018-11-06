@@ -67,6 +67,7 @@
 
         </div>
     </div>
+
     <div id="edit-rekap-modal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -135,12 +136,16 @@
                                 <input type="text" class="form-control" id="pNominalSebelumPajak" required="required"/>
                             </div>
                             <div class="form-group">
-                                <label for="pNominalUnderlying">&nbsp;Nominal Underlying:</label>
-                                <input type="text" class="form-control" id="pNominalUnderlying"/>
+                                <label for="pPajak">&nbsp;Pajak (%):</label>
+                                <input type="text" class="form-control" id="pPajak"/>
                             </div>
                             <div class="form-group">
-                                <label for="pPajak"><span style="color: red">*)</span>&nbsp;Pajak:</label>
-                                <input type="text" class="form-control" id="pPajak" required="required"/>
+                                <label for="pNominalSetelahPajak">&nbsp;Nominal Setelah Pajak:</label>
+                                <input type="text" class="form-control" id="pNominalSetelahPajak" disabled="disabled" style="background-color: white"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNominalUnderlying">&nbsp;Nominal Underlying:</label>
+                                <input type="text" class="form-control" id="pNominalUnderlying"/>
                             </div>
                             <div class="form-group">
                                 <label for="pNominalTanpaUnderlying">&nbsp;Nominal Tanpa Underlying:</label>
@@ -211,7 +216,6 @@
                     <button type="button" class="btn btn-primary" onclick="ins_data()">Submit</button>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -681,6 +685,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="modal-upload-xls" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -708,6 +713,7 @@
             </div>
         </div>
     </div>
+
     <div id="multiple-edit-modal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">

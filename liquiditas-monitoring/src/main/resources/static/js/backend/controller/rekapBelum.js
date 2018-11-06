@@ -38,6 +38,7 @@ $(document).ready(function () {
     setSelectStatus("cmb_status");
     setSelectStatusTracking("cmb_status_tracking");
     setSelectJenisTagihan("pJenisTagihan");
+    setNominalSetelahPajak();
     search("load");
     siap();
     inputKeterangan();
@@ -1527,6 +1528,7 @@ function initMultipleButton(role, jenis){
         $(this).append(html);
     });
 }
+
 function multipleReject() {
     var stateCrf = confirm("Anda Yakin Akan Mereject Data Ini ?");
     if (stateCrf == true) {
@@ -1976,5 +1978,14 @@ function multipleUpdate() {
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
         }
+    });
+}
+
+function setNominalSetelahPajak() {
+    $('#pPajak, #pNominalSebelumPajak').bind('keyup paste change', function () {
+        var pPajak = $('#pPajak').val() || 0,
+            pNominalSebelumPajak = $('#pNominalSebelumPajak').val() || 0;
+        var pNominalSetelahPajak = pPajak * pNominalSebelumPajak / 100;
+        $('#pNominalSetelahPajak').val(pNominalSetelahPajak);
     });
 }
