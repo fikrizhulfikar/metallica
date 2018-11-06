@@ -56,7 +56,7 @@ function setNominalSetelahPajak() {
     $('#pPajak, #pNominalSebelumPajak').bind('keyup paste change', function () {
         var pPajak = $('#pPajak').val() || 0,
             pNominalSebelumPajak = $('#pNominalSebelumPajak').val() || 0;
-        var pNominalSetelahPajak = pPajak * pNominalSebelumPajak / 100;
+        var pNominalSetelahPajak = pNominalSebelumPajak - (pPajak * pNominalSebelumPajak / 100);
         $('#pNominalSetelahPajak').val(pNominalSetelahPajak);
     });
 }
