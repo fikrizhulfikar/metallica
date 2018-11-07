@@ -992,7 +992,16 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                     "mRender": function (data, type, full) {
 
                         var ret_value;
-                        if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
+                        if(newRoleUser[0].includes("DIVKEU")){
+                            ret_value =
+                                '<div class="btn-group">' +
+                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                '</div>'
+                        }
+                        else if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
                             return "-"
                         }
                         else if(newRoleUser[0] == "ROLE_OSS"){
@@ -1510,16 +1519,14 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 }
 
 function initMultipleButton(role, jenis){
-    console.log("JENIS", jenis);
     $('.multiple-button').empty();
     $('.dataTables_filter').each(function () {
         // var html = '';
         var html = '<span class="multiple-button"><button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
         html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="multipleReject()">' +
             '            <i class="fa fa-ban"></i></button>';
-        if(role != "ROLE_OSS"){
+        if(role != "ROLE_OSS" && !role.includes("DIVKEU")){
             html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>';
-
             if(jenis == "1"){
                 html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" style="margin-left: 10px" type="button"  title="Edit Data" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
             }
