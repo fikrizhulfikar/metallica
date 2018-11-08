@@ -1212,7 +1212,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 
                         function (res) {
                             hideLoadingCss()
-                            getTotalTagihan();
+                            getTotalTagihan2();
                             return res.data;
                         }
                 }

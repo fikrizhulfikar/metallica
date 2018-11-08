@@ -2082,7 +2082,61 @@ public class ValasService {
         return result;
     }
 
+    public BigDecimal getTotalTagihan2(String tglAwal,
+                                      String tglAkhir,
+                                      String bank,
+                                      String cur,
+                                      String pembayaran,
+                                      String pStatus,
+                                      String pStatusTracking,
+                                      String userId,
+                                      String search) {
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", tglAwal, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", tglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_cur", cur, OracleTypes.VARCHAR)
+                .addValue("p_pembayaran", pembayaran, OracleTypes.VARCHAR)
+                .addValue("p_status", pStatus, OracleTypes.VARCHAR)
+                .addValue("p_status_tracking", pStatusTracking, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR)
+                .addValue("p_search", search, OracleTypes.VARCHAR);
+
+        getJdbcTemplate().execute("alter session set NLS_NUMERIC_CHARACTERS = '.,'");
+
+        BigDecimal result = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_valas")
+                .withFunctionName("get_total_tagihan2")
+                .executeFunction(BigDecimal.class, in);
+        return result;
+    }
+
     public List<Map<String, Object>> getTotalPerCurrentcy(String pTglAwal,
+                                                          String pTglAkhir,
+                                                          String pBank,
+                                                          String pCur,
+                                                          String pPembayaran,
+                                                          String pStatus,
+                                                          String pStatusTracking,
+                                                          String pUserId,
+                                                          String pSearch) {
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", pTglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", pTglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_bank", pBank, OracleTypes.VARCHAR)
+                .addValue("p_cur", pCur, OracleTypes.VARCHAR)
+                .addValue("p_pembayaran", pPembayaran, OracleTypes.VARCHAR)
+                .addValue("p_status", pStatus, OracleTypes.VARCHAR)
+                .addValue("p_status_tracking", pStatusTracking, OracleTypes.VARCHAR)
+                .addValue("p_user_id", pUserId, OracleTypes.VARCHAR)
+                .addValue("p_search", pSearch, OracleTypes.VARCHAR);
+        return new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_valas")
+                .withFunctionName("get_total_percurrency")
+                .executeFunction(ArrayList.class, in);
+    }
+
+    public List<Map<String, Object>> getTotalPerCurrentcy2(String pTglAwal,
                                                           String pTglAkhir,
                                                           String pBank,
                                                           String pCur,

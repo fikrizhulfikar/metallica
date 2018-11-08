@@ -683,6 +683,55 @@ function getTotalTagihan() {
     });
 }
 
+function getTotalTagihan2() {
+    $.ajax({
+        url: baseUrl + "api_operator/pembayaran/get_total_tagihan2",
+        type: "GET",
+        data: {
+            tgl_awal: $("#tanggal_awal").val(),
+            tgl_akhir: $("#tanggal_akhir").val(),
+            bank: $("#cmb_bank").val(),
+            cur: $("#cmb_currecny").val(),
+            pembayaran: $("#cmb_jenis_pemabayaran").val(),
+            status: $("#cmb_status").val(),
+            statusTracking: $("#cmb_status_tracking").val(),
+            search: tempTableSearch
+        },
+        success: function (res) {
+            $("#total_tagihan").html(res);
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+    $.ajax({
+        url: baseUrl + "api_operator/pembayaran/get_total_per_currency2",
+        type: "GET",
+        data: {
+            tgl_awal: $("#tanggal_awal").val(),
+            tgl_akhir: $("#tanggal_akhir").val(),
+            bank: $("#cmb_bank").val(),
+            cur: $("#cmb_currecny").val(),
+            pembayaran: $("#cmb_jenis_pemabayaran").val(),
+            status: $("#cmb_status").val(),
+            statusTracking: $("#cmb_status_tracking").val(),
+            search: tempTableSearch
+        },
+        success: function (res) {
+            $("#total_per_currency").html('');
+            var total_per_currency = $("#total_per_currency");
+            res.forEach(function (value) {
+                // console.log(value);
+                var html = '<label class="form-control-label">' + '&nbsp;&nbsp;' +value.CURRENCY+' : <b>' + accounting.formatNumber(value.TOTAL, 2, ".", ",") + '</b></label>';
+                total_per_currency.append(html);
+            });
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
 function setSelectJenisTagihan(idHtml) {
     $("#" + idHtml + "").append('<option value="vanilla">Vanilla</option>');
     $("#" + idHtml + "").append('<option value="tripartite">Tripartite</option>');
