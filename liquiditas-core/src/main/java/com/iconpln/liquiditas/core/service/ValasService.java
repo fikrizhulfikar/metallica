@@ -2157,7 +2157,7 @@ public class ValasService {
                 .addValue("p_search", pSearch, OracleTypes.VARCHAR);
         return new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("pkg_valas")
-                .withFunctionName("get_total_percurrency")
+                .withFunctionName("get_total_percurrency2")
                 .executeFunction(ArrayList.class, in);
     }
 
