@@ -272,7 +272,7 @@ public class PembayaranController {
             message += WebUtils.getUsernameLogin() + " telah melakukan penghapusan Data pada aplikasi. ";
             message += data.get("NAMA_JENIS_PEMBAYARAN") + "-" + data.get("NAMA_VENDOR") + ".";
             WebUtils.deleteFile(pIdValas);
-            Map<String, Object> res = valasService.deletePembayaran(pIdValas);
+            Map<String, Object> res = valasService.deletePembayaran(pIdValas, WebUtils.getUsernameLogin());
             Notification notification =
                     Notification.builder()
                             .topic(idJenisPembayaran)
@@ -504,7 +504,7 @@ public class PembayaranController {
                                             .message(message)
                                             .additionalInfo(null)
                                             .build();
-                            out = valasService.deletePembayaran(value);
+                            out = valasService.deletePembayaran(value, WebUtils.getUsernameLogin());
                             if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
                                 notificationUtil.notifyMessage(notification);
                             }

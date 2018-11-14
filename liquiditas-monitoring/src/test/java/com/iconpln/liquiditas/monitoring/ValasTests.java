@@ -33,7 +33,7 @@ public class ValasTests {
 	@Test
 	public void deleteRekapTest() throws SQLException {
 		logger.info("RUN TEST DELETE REKAP DATA");
-		valasService.deletePembayaran("REKAP/20170823-000000001");
+		valasService.deletePembayaran("REKAP/20170823-000000001", "admin");
 	}
 
 	@Test

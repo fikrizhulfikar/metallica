@@ -99,12 +99,19 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {
                     "aTargets": [24],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.KURS_TRANSAKSI,2,".",",");
+                        return accounting.formatNumber(full.SPREAD,2,".",",");
                     }
 
                 },
                 {
                     "aTargets": [25],
+                    "mRender": function (data, type, full) {
+                        return accounting.formatNumber(full.KURS_TRANSAKSI,2,".",",");
+                    }
+
+                },
+                {
+                    "aTargets": [26],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.NOMINAL_PEMBAYARAN_IDR,2,".",",");
                     }

@@ -350,7 +350,7 @@ public class ValasService {
         return resultset;
     }
 
-    public Map<String, Object> deletePembayaran(String pIdValas) throws SQLException {
+    public Map<String, Object> deletePembayaran(String pIdValas, String pUserId) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_VALAS")
@@ -358,6 +358,7 @@ public class ValasService {
 
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_id_valas", pIdValas)
+                .addValue("p_user_id", pUserId)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         Map<String, Object> out = simpleJdbcCall.execute(in);
         AppUtils.getLogger(this).info("data del_rekap_pembayaran : {}", out);
