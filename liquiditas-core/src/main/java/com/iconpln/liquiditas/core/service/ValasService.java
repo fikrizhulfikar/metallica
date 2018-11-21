@@ -2162,6 +2162,15 @@ public class ValasService {
                 .executeFunction(ArrayList.class, in);
     }
 
+    public String cleansing(String idValas, String userId) {
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_valas", idValas, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR);
+        return new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_valas")
+                .withFunctionName("cleansing")
+                .executeFunction(String.class, in);
+    }
 
     public String insReverseReject(String idValas, String updateBy) {
         //ins_reverse_reject

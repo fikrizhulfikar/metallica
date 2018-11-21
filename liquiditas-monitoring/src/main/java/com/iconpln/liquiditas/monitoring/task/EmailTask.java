@@ -31,7 +31,7 @@ public class EmailTask {
     @Autowired
     private ValasService valasService;
 
-//    @Scheduled(cron = "0 0/1 * * * ?")
+//    @Scheduled(fixedRate = 1000)
     @Scheduled(cron = "0 0 7 * * ?")
     public void send() {
         Date now = new Date();
@@ -45,7 +45,7 @@ public class EmailTask {
                 .filter(stringObjectMap -> stringObjectMap.get("email") != null)
                 .map(stringObjectMap -> stringObjectMap.get("email").toString())
                 .collect(Collectors.toList());
-            emails.stream().forEach(email -> {
+        emails.forEach(email -> {
             List<RekapPembayaran> rekapPembayarans = valasService.getRekapPembayaranByEmail(email);
             emailService.sendEmailWithAttachment(email, body, "Rekapitulasi Pembayaran", "REKAPITULASI_PEMBAYARAN.xls", rekapPembayarans);
         });

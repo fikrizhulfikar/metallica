@@ -2095,3 +2095,22 @@ function setNominalSetelahPajak() {
         $('#pNominalSetelahPajak').val(pNominalSetelahPajak);
     });
 }
+
+function cleansing(idValas) {
+    showLoadingCss();
+    $.ajax({
+        url: baseUrl + "/api_cleansing/cleansing",
+        dataType: 'JSON',
+        type: "POST",
+        data: {
+            id_valas: idValas
+        },
+        success: function (res) {
+            alert(res);
+            hideLoadingCss()
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}

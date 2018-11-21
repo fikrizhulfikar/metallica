@@ -1,14 +1,9 @@
 package com.iconpln.liquiditas.monitoring.config;
 
-import com.iconpln.liquiditas.core.domain.User;
-import com.iconpln.liquiditas.core.service.LMetallicaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.ConfigAttribute;
-import org.springframework.security.access.method.P;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.stereotype.Component;
