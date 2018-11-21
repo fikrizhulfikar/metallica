@@ -2102,7 +2102,7 @@ function setNominalSetelahPajak() {
 function cleansing(idValas) {
     showLoadingCss();
     $.ajax({
-        url: baseUrl + "/api_cleansing/cleansing",
+        url: baseUrl + "/api_operator/pembayaran/cleansing",
         dataType: 'JSON',
         type: "POST",
         data: {
@@ -2122,7 +2122,7 @@ function multiCleansing() {
     var stateCrf = confirm("Apakah Anda Yakin Akan Melakukan Cleansing?");
     if (stateCrf){
         $.ajax({
-            url: baseUrl + "/api_cleansing/multi_cleansing",
+            url: baseUrl + "/api_operator/pembayaran/multi_cleansing",
             dataType: 'JSON',
             type: "POST",
             data: {
