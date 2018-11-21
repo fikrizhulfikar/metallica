@@ -1630,6 +1630,9 @@ function initMultipleButton(role, jenis){
                 html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" style="margin-left: 10px" type="button"  title="Edit Data" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
             }
         }
+        if(role.includes("KASIR")){
+            html = html + '<button class="btn-verified btn-success btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Cleansing" onclick="multiCleansing()"><i class="fa fa-check"></i></button>';
+        }
         html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button></span>';
         $(this).append(html);
     });
@@ -2116,7 +2119,7 @@ function cleansing(idValas) {
 }
 
 function multiCleansing() {
-    var stateCrf = confirm("Anda Yakin?");
+    var stateCrf = confirm("Apakah Anda Yakin Akan Melakukan Cleansing?");
     if (stateCrf){
         $.ajax({
             url: baseUrl + "/api_cleansing/multi_cleansing",
