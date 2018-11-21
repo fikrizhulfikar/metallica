@@ -2114,3 +2114,24 @@ function cleansing(idValas) {
         }
     });
 }
+
+function multiCleansing() {
+    var stateCrf = confirm("Anda Yakin?");
+    if (stateCrf){
+        $.ajax({
+            url: baseUrl + "/api_cleansing/multi_cleansing",
+            dataType: 'JSON',
+            type: "POST",
+            data: {
+                data: JSON.stringify(checkedArray),
+            },
+            success: function (res) {
+                hideLoadingCss("")
+                alert(res);
+            },
+            error: function () {
+                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+            }
+        });
+    }
+}
