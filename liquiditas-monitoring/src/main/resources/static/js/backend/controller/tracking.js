@@ -76,7 +76,6 @@ function detailTracking(id) {
 function processTracking() {
 
     var search = $("#search-no-tagihan").val().toString();
-
     if (search == "") {
         alert("Masukkan No Tagihan");
 
@@ -112,7 +111,8 @@ function processTracking() {
                 });
                 hideLoadingCss();
             },
-            error: function () {
+            error: function (error) {
+                console.log("GAGAL", error)
                 hideLoadingCss("Gagal Melakukan Proses, Harap Hubungi Administrator")
             }
         });

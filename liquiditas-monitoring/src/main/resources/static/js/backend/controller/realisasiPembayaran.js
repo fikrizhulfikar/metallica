@@ -108,7 +108,7 @@ function inputKeterangan() {
     }
 }
 
-function reverse() {
+function reverse(idValas, statusInvoice, idJenisPembayaran, currency, totalTagihan) {
     var ket = $("#pKeterangan").val().toString();
     var all_ket = [];
     var ket_lama = localStorage.getItem("real_ktr");
@@ -143,10 +143,10 @@ function reverse() {
         type: "POST",
         data: {
             pIdValas: idValas,
-            pStatusInvoice : '7',
+            pStatusInvoice: statusInvoice,
             pKeterangan: $("#pKeterangan").val(),
-            pIdJenisPembayaran: idJenisPembayaran,
             pCurrency: currency,
+            pIdJenisPembayaran: idJenisPembayaran,
             pTotalTagihan: totalTagihan
         },
         success: function (res) {
@@ -155,7 +155,7 @@ function reverse() {
             if (res.return == 1) {
                 alert(res.OUT_MSG);
                 idValas = "";
-                location.reload();
+                table_rekapitulasi.ajax.reload();
             } else {
                 alert(res.OUT_MSG);
             }
@@ -459,17 +459,37 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran) {
             {
                 "aTargets": [21],
                 "mRender": function (data, type, full) {
-
+                    var role = newRoleUser[0];
+                    currency = full.CURRENCY;
+                    idJenisPembayaran = full.ID_JENIS_PEMBAYARAN;
+                    totalTagihan = full.TOTAL_TAGIHAN;
                     if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS" || newRoleUser[0] == "ROLE_VICE_PRESIDENT_OPERATION" || newRoleUser[0] == "ROLE_VICE_PRESIDENT_INVESTMENT" || newRoleUser[0] == "ROLE_MANAGER_INVESTMENT_SLPMN" || newRoleUser[0] == "ROLE_MANAGER_INVESTMENT_APLN") {
                         return '<div class="btn-group">' +
                             '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-info" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
                             '</div>';
-                    } else {
+                    }
+                    if (newRoleUser[0] == "ROLE_ADMIN" && full.EQ_RUPIAH <= "35000000000" || role.includes("KASIR") && full.EQ_RUPIAH <= "35000000000") {
+
+                        return '<div class="btn-group">' +
+                            '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title ="Reverse" onclick ="reverse(\'' + full.ID_VALAS + '\',\'' + 7 + '\',\''+full.ID_JENIS_PEMBAYARAN+'\',\''+full.CURRENCY+'\',\''+full.TOTAL_TAGIHAN+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                            '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-info" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>'+
+                            '</div>';
+
+                    }
+                    if (newRoleUser[0] == "ROLE_ADMIN" && full.EQ_RUPIAH > "35000000000" || role.includes("KASIR") && full.EQ_RUPIAH > "35000000000") {
+
+                        return '<div class="btn-group">' +
+                            '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title ="Reverse" onclick ="reverse(\'' + full.ID_VALAS + '\',\'' + 8 + '\',\''+full.ID_JENIS_PEMBAYARAN+'\',\''+full.CURRENCY+'\',\''+full.TOTAL_TAGIHAN+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                            '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-info" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>'+
+                            '</div>';
+                    }
+                    else {
                         currency = full.CURRENCY;
                         idJenisPembayaran = full.ID_JENIS_PEMBAYARAN;
                         totalTagihan = full.TOTAL_TAGIHAN;
                         return '<div class="btn-group">' +
-                            '<button style="width: 15px !important;" class="btn-update-status btn-sm btn-success" title="Reverse" onclick="show_modal(\'' + full.ID_VALAS + '\')"><i class="fa fa-arrow-left"></i></button>' +
+                            '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title ="Reverse" onclick ="reverse(\'' + full.ID_VALAS + '\',\'' + 7 + '\',\''+full.ID_JENIS_PEMBAYARAN+'\',\''+full.CURRENCY+'\',\''+full.TOTAL_TAGIHAN+'\')><i class="fa fa-arrow-left"></i></button>'+
+                            /*'<button style="width: 15px !important;" class="btn-update-status btn-sm btn-success" title="Reverse" onclick="show_modal(\'' + full.ID_VALAS + '\')"><i class="fa fa-arrow-left"></i></button>' +*/
                             '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-info" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
                             '</div>';
                     }
