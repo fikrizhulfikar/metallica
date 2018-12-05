@@ -444,6 +444,66 @@ function edit_data(id) {
     });
 }
 
+function cetak_verifikasi(id) {pLVTglDocSap
+    $("#cetak-verifikasi-modal").modal("show");
+    var date = new Date();
+    $('#pTglTest').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglDiterima').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglEvaluasi').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglPenyetoran').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglDocSap').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglClearing').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglSkai').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglKontrak').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglSrtUnit').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglSrtVendor').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglKwitansi').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglNotaTagihan').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglBaVerifikasi').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglBaDenda').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglBappPenerimaan').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglBastp').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglBastpLisensi').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglCoo').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglCerManufacture').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglPabrikan').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglPenyediaBarang').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglBuktiTayang').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglFormulirSponsorship').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglTandaTerima').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglPenggunaanVoucher').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglDokPembangunan').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglLapKeuangan').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglListPenggunaanVoucher').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglDaftarTelepon').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglCodCertificate').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglStatementCod').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglPerformanceTest').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglBaPembacaan').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglPrintOut').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglBaKalibrasi').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglBeritaAcara').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglHasilSurvey').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglSuratPernyataan').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglBuktiBayarHak').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglCertificateResidence').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglFormDgt').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglOrder').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglFormulirCsr').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglCopySertifikat').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglSpPkp').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglNpwp').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglFcFakturPajak').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglLembaranPo').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglTransaksiTl').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglPaymentCertificate').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglBankGaransi').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglNdRekomendasi').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+    $('#pLVTglIjinLpjk').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
+
+}
+
 function update_status() {
     showLoadingCss()
     $.ajax({
@@ -1035,13 +1095,14 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                     '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
                                     '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
                                     '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Cetak Lembar Verifikasi" onclick=""><i class="fa fa-file-text-o"></i></button>' +
                                     '</div>'
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY STAFF OPERATION") {
                                 ret_value =
                                     '<div class="btn-group">' +
                                     '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
-                                if(newRoleUser[0] == "ROLE_MANAGER_PRIMARY_ENERGY" || newRoleUser[0] == "ROLE_MANAGER_OPERATION" || newRoleUser[0] == "ROLE_ADMIN"){
+                                if(newRoleUser[0] == "ROLE_MANAGER_PRIMARY_ENERGY"||newRoleUser[0] == "ROLE_MANAGER_POWER_PURCHASE" || newRoleUser[0] == "ROLE_MANAGER_OPERATION" || newRoleUser[0] == "ROLE_ADMIN"){
                                     ret_value = ret_value +'<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Manager" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +3+ '\',\''+full.ID_JENIS_PEMBAYARAN+'\',\''+full.CURRENCY+'\',\''+full.TOTAL_TAGIHAN+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title ="Reverse" onclick ="reverse(\'' + full.ID_VALAS + '\',\'' + 2 + '\',\''+full.ID_JENIS_PEMBAYARAN+'\',\''+full.CURRENCY+'\',\''+full.TOTAL_TAGIHAN+'\')"><i class="fa fa-arrow-left"></i></button>' ;
                                 }
@@ -1165,7 +1226,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                 ret_value =
                                     '<div class="btn-group">' +
                                     '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
-                                if(full.EQ_IDR > 35000000000){
+                                if(full.EQ_IDR > "35000000000"){
                                     if(role == "ROLE_ADMIN"||role == "ROLE_EXECUTIVE_VICE_PRESIDENT") {
                                         ret_value = ret_value +
                                             '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified EVP" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +10+ '\',\''+full.ID_JENIS_PEMBAYARAN+'\',\''+full.CURRENCY+'\',\''+full.TOTAL_TAGIHAN+'\')"><i class="fa fa-arrows-alt"></i></button>'+
@@ -1173,7 +1234,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                     }
                                 }
                                 else{
-                                    if(role == "ROLE_ADMIN"||role.includes("KASIR")) {
+                                    if(role == "ROLE_ADMIN"||role.includes("KASIR")||role == "ROLE_KASIR_INVESTASI") {
                                         ret_value = ret_value +
                                             '<button style="width: 15px !important;" id="option-lunas" class="btn-lunas btn-sm btn-warning" title="Lunas" onclick="upd_status_tracking(\'' + full.ID_VALAS + '\',\'' + 7 + '\',\'' + full.ID_JENIS_PEMBAYARAN + '\',\'' + full.CURRENCY + '\',\'' + full.TOTAL_TAGIHAN + '\')"><i class="fa fa-arrows-alt"></i></button>'+
                                             '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title ="Reverse" onclick ="reverse(\'' + full.ID_VALAS + '\',\'' + 9 + '\',\''+full.ID_JENIS_PEMBAYARAN+'\',\''+full.CURRENCY+'\',\''+full.TOTAL_TAGIHAN+'\')"><i class="fa fa-arrow-left"></i></button>' ;
@@ -1228,7 +1289,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY STAFF OPERATION") {
 
-                                if(role == "ROLE_MANAGER_PRIMARY_ENERGY" || role == "ROLE_MANAGER_OPERATION" || role == "ROLE_ADMIN" || role     == "ROLE_MANAGER_PAYMENT"){
+                                if(role == "ROLE_MANAGER_PRIMARY_ENERGY" || role == "ROLE_MANAGER_POWER_PURCHASE" || role == "ROLE_MANAGER_OPERATION" || role == "ROLE_ADMIN" || role     == "ROLE_MANAGER_PAYMENT"){
                                     value = '{"3":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
                                 }else {
                                     value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
@@ -1637,7 +1698,7 @@ function initMultipleButton(role, jenis){
         $(this).append(html);
     });
 }
-
+st
 function multipleReject() {
     var stateCrf = confirm("Anda Yakin Akan Mereject Data Ini ?");
     if (stateCrf == true) {
@@ -2120,8 +2181,11 @@ function cleansing(idValas) {
 
 function multiCleansing() {
     var stateCrf = confirm("Apakah Anda Yakin Akan Melakukan Cleansing?");
+    showLoadingCss();
+    console.log("TESTTT");
     if (stateCrf){
         $.ajax({
+
             url: baseUrl + "/api_operator/pembayaran/multi_cleansing",
             dataType: 'JSON',
             type: "POST",
@@ -2129,8 +2193,10 @@ function multiCleansing() {
                 data: JSON.stringify(checkedArray),
             },
             success: function (res) {
+                alert(res.response);
                 hideLoadingCss("")
-                alert(res);
+                console.log(res);
+                table_rekapitulasi.ajax.reload();
             },
             error: function () {
                 hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")

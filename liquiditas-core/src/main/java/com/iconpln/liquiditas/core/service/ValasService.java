@@ -270,6 +270,59 @@ public class ValasService {
         return simpleJdbcCall.executeFunction(String.class, params);
     }
 
+    public String insLembarVerifikasi(String pIdValas, String pUserId, String pPph21, String pPph22, String pPph4, String pNpwp,
+                                     String pSbujpk, String pNonLpjk, String pNoRekening, String pPenetapanSkai, String pSrtUnit,
+                                     String pSrtVendor, String pKwitansi, String pNotaTagihan, String pBaReview, String pBaVerifikasiDoc,
+                                     String pBaDenda, String pBappPenerimaan, String pBastp, String pBastpLisensi, String pCoo,
+                                     String pCerManufacture, String pPernyataanPabrikan, String pPernyataanPenyedia, String pBuktiTayang,
+                                     String pFrmlrSponsorship, String pTandaTerima, String pRekapVoucher, String pDokPembangunan,
+                                     String pLaporanKeuangan, String pDaftarTelepon, String pListVoucher, String pCodCertificate,
+                                     String pStatementCod, String pPrfmncProtocol, String pBaPembacaan, String pMops, String pBaPelaksanaan,
+                                     String pBeritaAcara, String pHasilSurvey, String pSuratPernyataan, String pBuktiBayarHak, String pBuktiBayarBpjs,
+                                     String pCerResidence, String pFormDgt, String pOrderBarang, String pFormulirCsr, String pCopySertifikat,
+                                     String pSpPkp, String pNoNpwp, String pFcFakturPajak, String pSkbPph, String pLembaranPo,
+                                     String pBaTransaksiTl, String pPaymentCertificate, String pBankGaransi, String pFakturPajak,
+                                     String pNdRekomendasi, String pSertifikatIjinLpjk, String pDiterimaOleh, String pTglEvaluasi,
+                                     String pKeterangan, String pTglPenyetoran, String pCatatan, String pDiketahuiOleh, String pVerifikasiOleh,
+                                     String pNoDocSap, String pNoDocClearing, String pTglSkai, String pTglSrtUnit, String pTglSrtVendor,
+                                     String pTglKwitansi, String pTglNotaTagihan, String pTglBaHasilReview, String pTglBaVerifikasiDoc,
+                                     String pTglBaDenda, String pTglBappPenerimaan, String pTglBastp, String pTglBastpLisensi, String pTglCoo,
+                                     String pTglManufacture, String pTglPabrik, String pTglPenyedia, String pTglBuktiTayang,
+                                     String pTglSponsorship, String pTglTandaTerima, String pTglRekapVoucher, String pTglDokPembangunan,
+                                     String pTglLapKeuangan, String pTglDaftarTelepon, String pTglListVoucher, String pTglCodCertificate,
+                                     String pTglStatementCod, String pTglPerfomanceTest, String pTglBaProduksiTl, String pTglPrintMops,
+                                     String pTglBaKalibrasi, String pTglBeritaAcara, String pTglHasilSurvey, String pTglSuratKomitmen,
+                                     String pTglBuktiHak, String pTglBuktiBpjs, String pTglCerResidence, String pTglFormDgt, String pTglOrder,
+                                     String pTglFormulirCsr, String pTglCopySertifikat, String pTglSpPkp, String pTglNoNpwp, String pTglFcFaktur,
+                                     String pTglSkbPph, String pTglLembaranPo, String pTglBaTransaksiTl, String pTglPaymentCer,
+                                     String pTglBankGaransi, String pTglFakturPajak, String pTglNdRekomendasi, String pTglCerLpjk, String pSumberDana,
+                                      String pMetodeBayar, String pNoVerifikasi, String pTglVerifikasi, String pJenisPembayaran, String pTipeTransaksi,
+                                      String pTglKontrak, String pVendor, String pUnit, String pBankPembayar, String pAlamatBank, String pNamaAccount) {
+        AppUtils.getLogger(this).debug("ins Lembar Verifikasi laporan = " +
+                "pIdValas : {}, " +
+                "pRejectBy : {}", pIdValas, pUserId);
+
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_id_valas", pIdValas, Types.VARCHAR)
+                .addValue("p_user_id", pUserId, Types.VARCHAR)
+                .addValue("p_pph21", pPph21, Types.VARCHAR)
+                .addValue("p_pph22", pPph22, Types.VARCHAR)
+                .addValue("p_pph4", pPph4, Types.VARCHAR)
+                .addValue("p_npwp", pNpwp, Types.VARCHAR)
+                .addValue("p_sbujpk", pSbujpk, Types.VARCHAR)
+                .addValue("p_nonlpjk", pNonLpjk, Types.VARCHAR)
+                .addValue("p_no_rekening", pNoRekening, Types.VARCHAR)
+                .addValue("p_penetapan_skai", pPenetapanSkai, Types.VARCHAR)
+                .addValue("p_srt_unit", pSrtUnit, Types.VARCHAR)
+                .addValue("p_srt_vendor", pSrtVendor, Types.VARCHAR);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("save_lembar_verifikasi");
+
+        return simpleJdbcCall.executeFunction(String.class, params);
+    }
+
     public List<Map<String, Object>> getListRealisasi(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pPembayaran, String pUserId, String sortBy, String sortDir, String pSearch) throws SQLException {
 
         AppUtils.getLogger(this).debug("data rekap search info = " +
