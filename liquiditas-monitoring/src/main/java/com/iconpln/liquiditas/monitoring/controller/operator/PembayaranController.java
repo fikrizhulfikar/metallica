@@ -1136,7 +1136,7 @@ public class PembayaranController {
                 String key = (String) keys.next();
                 String value = json.getString(key);
 
-                if (!key.equals("x") && !key.equals("jenisPembayaran") && !key.equals("total") && !key.equals("currency")) {
+                if (!key.equals("jenisPembayaran") && !key.equals("total") && !key.equals("currency")) {
                     try {
                         String response = valasService.cleansing(value, WebUtils.getUsernameLogin());
                         out.put("response", response);

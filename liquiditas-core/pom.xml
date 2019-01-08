@@ -32,7 +32,7 @@
             <id>development</id>
             <properties>
                 <activatedProperties>development</activatedProperties>
-                <db.url>jdbc:oracle:thin:@192.168.10.24:cisqa</db.url>
+                <db.url>jdbc:oracle:thin:@10.14.152.120:1591:cisqa</db.url>
                 <db.username>DASHBOARD</db.username>
                 <db.password>DASHBOARD</db.password>
             </properties>
@@ -45,7 +45,7 @@
             <id>testing</id>
             <properties>
                 <activatedProperties>testing</activatedProperties>
-                <db.url>jdbc:oracle:thin:@10.14.152.120:1591:cisqa</db.url>
+                <db.url>jdbc:oracle:thin:@192.168.10.24:1521:cisqa</db.url>
                 <db.username>DASHBOARD</db.username>
                 <db.password>DASHBOARD</db.password>
             </properties>
