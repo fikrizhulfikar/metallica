@@ -245,6 +245,24 @@ public class PembayaranController {
 
     }
 
+    @RequestMapping(value = "/get_all_pembayaran2", method = RequestMethod.GET)
+    public List getAllpembayaran2(
+            @RequestParam(value = "pStatusValas", defaultValue = "ALL") String pStatusValas,
+            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pCurr", defaultValue = "ALL") String pCurr,
+            @RequestParam(value = "pPembayaran", defaultValue = "ALL") String pPembayaran
+    ) {
+        try {
+            return valasService.getAllpembayaran2(pStatusValas, WebUtils.getUsernameLogin(), pTglAwal, pTglAkhir, pBank, pCurr, pPembayaran);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
     @RequestMapping(value = "/edit_data", method = RequestMethod.GET)
     public List getRekapDataById(
             @RequestParam(value = "pIdValas", defaultValue = "") String pId
@@ -715,6 +733,100 @@ public class PembayaranController {
             response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
 
             List<Map<String, Object>> listData = valasService.getAllpembayaran(pStatusValas, WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pBank, pCurr, pPembayaran);
+
+            AppUtils.getLogger(this).info("data rekap : {}, report : {}", pStatusValas, listData.toString());
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+
+            param.put("TITLE", title);
+            for (Map data : listData) {
+                Map paramDetail = new HashMap();
+                paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
+                paramDetail.put("ID_JENIS_PEMBAYARAN", data.get("ID_JENIS_PEMBAYARAN"));
+                paramDetail.put("TGL_JATUH_TEMPO", data.get("TGL_JATUH_TEMPO"));
+                paramDetail.put("ID_VENDOR", data.get("ID_VENDOR"));
+                paramDetail.put("CURRENCY", data.get("CURRENCY"));
+                paramDetail.put("TOTAL_TAGIHAN", data.get("TOTAL_TAGIHAN"));
+                paramDetail.put("EQ_RUPIAH", data.get("EQ_RUPIAH"));
+                paramDetail.put("ID_UNIT", data.get("ID_UNIT"));
+                paramDetail.put("KODE_BANK_TUJUAN", data.get("KODE_BANK_TUJUAN"));
+                paramDetail.put("KODE_BANK_PEMBAYAR", data.get("KODE_BANK_PEMBAYAR"));
+                paramDetail.put("NO_TAGIHAN", data.get("NO_TAGIHAN"));
+                paramDetail.put("TGL_TAGIHAN", data.get("TGL_TAGIHAN"));
+                paramDetail.put("NO_NOTDIN", data.get("NO_NOTDIN"));
+                paramDetail.put("TGL_NOTDIN", data.get("TGL_NOTDIN"));
+                paramDetail.put("COUNT_DOWN", data.get("COUNT_DOWN"));
+                paramDetail.put("STATUS_VALAS", data.get("STATUS_VALAS"));
+                paramDetail.put("TIPE_TRANSAKSI", data.get("TIPE_TRANSAKSI"));
+                paramDetail.put("TGL_INVOICE", data.get("TGL_TERIMA_INVOICE"));
+                paramDetail.put("STATUS_TRACKING", data.get("STATUS_TRACKING"));
+                paramDetail.put("DESKRIPSI", data.get("DESKRIPSI"));
+                paramDetail.put("UPDATE_DATE", data.get("UPDATE_DATE"));
+                paramDetail.put("CREATE_DATE", data.get("CREATE_DATE"));
+                paramDetail.put("KURS_TRANSAKSI", data.get("KURS_TRANSAKSI"));
+                paramDetail.put("SPREAD", data.get("SPREAD"));
+                paramDetail.put("NOMINAL_PEMBAYARAN_IDR", data.get("NOMINAL_PEMBAYARAN_IDR"));
+                paramDetail.put("KURS_JISDOR", data.get("KURS_JISDOR"));
+                paramDetail.put("NOMINAL_TANPA_UNDERLYING", data.get("NOMINAL_TANPA_UNDERLYING"));
+                paramDetail.put("NOMINAL_UNDERLYING", data.get("NOMINAL_UNDERLYING"));
+                paramDetail.put("NOMINAL_STLH_PAJAK", data.get("NOMINAL_STLH_PAJAK"));
+                paramDetail.put("PAJAK", data.get("PAJAK"));
+                paramDetail.put("NOMINAL_SBLM_PAJAK", data.get("NOMINAL_SBLM_PAJAK"));
+                paramDetail.put("JENIS_TAGIHAN", data.get("JENIS_TAGIHAN"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+
+
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/pembayaran.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Gagal Export Data :" + e.getMessage();
+        }
+    }
+
+    @RequestMapping(value = "/xls2/{pStatusValas}/{pTglAwal}/{pTglAkhir}/{pBank}/{pCurr}/{pPembayaran}", method = RequestMethod.GET)
+    public String export2(
+            @PathVariable String pStatusValas,
+            @PathVariable String pTglAwal,
+            @PathVariable String pTglAkhir,
+            @PathVariable String pBank,
+            @PathVariable String pCurr,
+            @PathVariable String pPembayaran,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
+
+            String tglAwal = "";
+            String tglAkhir = "";
+
+            if (!pTglAwal.equals("null")) {
+                tglAwal = pTglAwal;
+            }
+            if (!pTglAkhir.equals("null")) {
+                tglAkhir = pTglAkhir;
+            }
+
+            String title;
+            String namaFile;
+            if (Integer.valueOf(pStatusValas) > 0) {
+                title = "REALISASI PEMBAYARAN";
+                namaFile = "realisasi_pembayaran.xls";
+            } else {
+                title = "REKAPITULASI DATA";
+                namaFile = "rekapitulasi_data.xls";
+            }
+
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
+
+            List<Map<String, Object>> listData = valasService.getAllpembayaran2(pStatusValas, WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pBank, pCurr, pPembayaran);
 
             AppUtils.getLogger(this).info("data rekap : {}, report : {}", pStatusValas, listData.toString());
             Map param = new HashMap();

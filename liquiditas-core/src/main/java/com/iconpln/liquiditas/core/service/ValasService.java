@@ -389,6 +389,36 @@ public class ValasService {
         return resultset;
     }
 
+
+    public List<Map<String, Object>> getAllpembayaran2(String pStatusValas, String idUser, String pTglAwal, String pTglAkhir, String pBank, String pCurr, String pPembayaran) throws SQLException {
+
+        AppUtils.getLogger(this).debug("PARAM SEARCH pStatusValas : {}", pStatusValas);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pBank : {}", pBank);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pCurr : {}", pCurr);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pPembayaran : {}", pPembayaran);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_VALAS")
+                .withFunctionName("get_all_pembayaran_by_status2");
+
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_status_valas", pStatusValas);
+        params.put("p_userid", idUser);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_bank", pBank);
+        params.put("p_cur", pCurr);
+        params.put("p_pembayaran", pPembayaran);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_all_pembayaran_by_status2 : {} and userid {}", resultset, idUser);
+        return resultset;
+    }
+
+
     public List<Map<String, Object>> getPembayaranbyId(String pIdValas) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
