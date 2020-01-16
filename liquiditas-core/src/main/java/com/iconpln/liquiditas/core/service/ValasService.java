@@ -54,7 +54,8 @@ public class ValasService {
             String pTglNotdin, String pStatusValas, String pCreateBy, String pKeterangan,
             String pTipeTransaksi, String pTglTerimaInvoice, String nominalSblmPajak,
             String nominalUnderlying, String pajak, String nominalTanpaUnderlying,
-            String kursJisdor, String spread, String jenisTagihan
+            String kursJisdor, String spread, String jenisTagihan, String pPosAnggaran,
+            String pSubPosAnggaran, String pUnitAnggaran
     ) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -87,6 +88,9 @@ public class ValasService {
                 .addValue("p_kurs_jisdor", kursJisdor)
                 .addValue("p_spread", spread)
                 .addValue("p_jenis_tagihan", jenisTagihan)
+                .addValue("p_pos_anggaran", pPosAnggaran)
+                .addValue("p_sub_pos_anggaran", pSubPosAnggaran)
+                .addValue("p_unit_anggaran", pUnitAnggaran)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data ins_rekap_data : {}", out);
@@ -117,8 +121,8 @@ public class ValasService {
     public List<Map<String, Object>> getListPembayaranBelum(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pPembayaran, String pUserId, String sortBy, String sortDir, String status, String statusTracking, String pSearch) throws SQLException {
 
         AppUtils.getLogger(this).debug("data rekap search info = " +
-                        "start : {}, " +
-                        "length : {}, " +
+                        "pStart : {}, " +
+                        "pLength : {}, " +
                         "pTglAwal : {}, " +
                         "pTglAkhir : {}, " +
                         "pBank : {}, " +
@@ -364,6 +368,7 @@ public class ValasService {
     public List<Map<String, Object>> getAllpembayaran(String pStatusValas, String idUser, String pTglAwal, String pTglAkhir, String pBank, String pCurr, String pPembayaran) throws SQLException {
 
         AppUtils.getLogger(this).debug("PARAM SEARCH pStatusValas : {}", pStatusValas);
+        AppUtils.getLogger(this).debug("PARAM SEARCH puserid : {}", idUser);
         AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
         AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
         AppUtils.getLogger(this).debug("PARAM SEARCH pBank : {}", pBank);
@@ -390,9 +395,8 @@ public class ValasService {
     }
 
 
-    public List<Map<String, Object>> getAllpembayaran2(String pStatusValas, String idUser, String pTglAwal, String pTglAkhir, String pBank, String pCurr, String pPembayaran) throws SQLException {
+    public List<Map<String, Object>> getAllpembayaran2(String idUser, String pTglAwal, String pTglAkhir, String pBank, String pCurr, String pPembayaran) throws SQLException {
 
-        AppUtils.getLogger(this).debug("PARAM SEARCH pStatusValas : {}", pStatusValas);
         AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
         AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
         AppUtils.getLogger(this).debug("PARAM SEARCH pBank : {}", pBank);
@@ -405,7 +409,6 @@ public class ValasService {
 
 
         Map<String, Object> params = new HashMap<>();
-        params.put("p_status_valas", pStatusValas);
         params.put("p_userid", idUser);
         params.put("p_tgl_awal", pTglAwal);
         params.put("p_tgl_akhir", pTglAkhir);
@@ -1897,6 +1900,15 @@ public class ValasService {
                 if (data.get("ID_JENIS_PEMBAYARAN") != null) {
                     rekapPembayaran.setIdJenisPembayaran(data.get("ID_JENIS_PEMBAYARAN").toString());
                 }
+                if (data.get("UNIT_ANGGARAN") != null) {
+                    rekapPembayaran.setIdUnitAnggaran(data.get("UNIT_ANGGARAN").toString());
+                }
+//                if (data.get("POS_ANGGARAN") != null) {
+//                    rekapPembayaran.setIdPosAnggaran(data.get("POS_ANGGARAN").toString());
+//                }
+//                if (data.get("SUB_POS_ANGGARAN") != null) {
+//                    rekapPembayaran.setIdSubPosAnggaran(data.get("SUB_POS_ANGGARAN").toString());
+//                }
                 if (data.get("ID_UNIT") != null) {
                     rekapPembayaran.setIdUnit(data.get("ID_UNIT").toString());
                 }
@@ -2048,6 +2060,9 @@ public class ValasService {
             String userId,
             int nomor,
             int jenisPembayaran,
+            int unitAnggaran,
+            int posAnggaran,
+            int subPosAnggaran,
             int jatuhTempo,
             int vendor,
             int currency,
@@ -2082,6 +2097,9 @@ public class ValasService {
                 .addValue("p_user_id", userId, OracleTypes.VARCHAR)
                 .addValue("p_nomor", nomor, OracleTypes.NUMBER)
                 .addValue("p_jenis_pembayaran", jenisPembayaran, OracleTypes.NUMBER)
+                .addValue("p_unit_anggaran", unitAnggaran, OracleTypes.NUMBER)
+                .addValue("p_pos_anggaran", posAnggaran, OracleTypes.NUMBER)
+                .addValue("p_sub_pos_anggaran", subPosAnggaran, OracleTypes.NUMBER)
                 .addValue("p_jatuh_tempo", jatuhTempo, OracleTypes.NUMBER)
                 .addValue("p_vendor", vendor, OracleTypes.NUMBER)
 
@@ -2138,8 +2156,7 @@ public class ValasService {
     }
 
     public BigDecimal getTotalTagihan(String tglAwal,
-                                      String tglAkhir,
-                                      String bank,
+                                      String tglAkhir,String bank,
                                       String cur,
                                       String pembayaran,
                                       String pStatus,

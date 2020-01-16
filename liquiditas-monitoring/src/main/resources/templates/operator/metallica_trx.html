@@ -1,0 +1,476 @@
+<div th:fragment="stylesheets-backend">
+    <style>
+        button{ cursor: pointer
+        }
+        .table td {
+            padding-right: 0.75rem;
+            padding-bottom: 0.25rem;
+            padding-left: 0.75rem;
+            padding-top: 0.25rem;
+        }
+        div.dataTables_wrapper div.dataTables_paginate {
+            float: right !important;
+            text-align: left !important;
+            padding-left: 3px;
+            padding-right: 75px;
+        }
+
+        .lbl-src {
+            font-size: 12px;
+        }
+
+        .panel-custom {
+            overflow-x: hidden !important;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter {
+            text-align: right !important;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Rekapitulasi Data</li>
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
+                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS','ROLE_DM_LIKUIDITAS','ROLE_VICE_PRESIDENT_OPERATION','ROLE_VICE_PRESIDENT_INVESTMENT','ROLE_KASIR_IDR','ROLE_KASIR', 'ROLE_MANAGER_PAYMENT',
+                'ROLE_MANAGER_OPERATION','ROLE_MANAGER_INVESTMENT_APLN','ROLE_MANAGER_INVESTMENT_SLPMN','ROLE_MANAGER_POWER_PURCHASE','ROLE_MANAGER_PRIMARY_ENERGY','EXECUTIVE_VICE_PRESIDENT')">
+                    <i class="icon-pencil"></i> &nbsp;New Data
+                </button>
+            </div>
+        </li>
+    </ol>
+    <div id="edit-reverse-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Realisasi Pembayaran</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="pStatusInvoice">Status Invoice</label>
+                        <select id="pStatusInvoice" class="form-control" required="required">
+                            <option value=""></option>
+                            <option id="option-input" value="1">INPUT DATA</option>
+                            <option id="option-siap" value="2">SIAP BAYAR</option>
+                            <option id="option-lunas" value="3">LUNAS</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pKeteranganStatus">Keterangan:</label>
+                        <input type="text" class="form-control" id="pKeteranganStatus" required="required"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="update_status()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="edit-rekap-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Rekapitulasi Pembayaran</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pDocNo">&nbsp;Document No:</label>
+                                <input type="text" class="form-control" id="pDocNo" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDocDate">Document Date :</label>
+                                <input type="text" class="form-control" id="pDocDate" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPmtProposalId">&nbsp;PMT Proposal ID :</label>
+                                <input type="text" class="form-control" id="pPmtProposalId" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCompCode">&nbsp;Company Code :</label>
+                                <input type="text" class="form-control" id="pCompCode" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pFiscYear">&nbsp;Fisical Year :</label>
+                                <input type="text" class="form-control" id="pFiscYear" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pLineNo">&nbsp;Line No :</label>
+                                <input type="text" class="form-control" id="pLineNo" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDebitCreditInd">&nbsp;Debit Credit Ind :</label>
+                                <input type="text" class="form-control" id="pDebitCreditInd" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pGlAccount"> GL Account :</label>
+                                <input type="text" class="form-control" id="pGlAccount" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAmount"> Amount :</label>
+                                <input type="text" class="form-control" id="pAmount" required="required"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pExchangeRate"> Exchange Rate :</label>
+                                <input type="text" class="form-control" id="pExchangeRate" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCurrency"> Currency :</label>
+                                <input type="text" class="form-control" id="pCurrency" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPostingDate"> Posting Date :</label>
+                                <input type="text" class="form-control" id="pPostingDate" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pBusinessArea"> Business Area :</label>
+                                <input type="text" class="form-control" id="pBusinessArea" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCashCode"> Cash Code :</label>
+                                <input type="text" class="form-control" id="pCashCode" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pSumberDana"> Sumber Dana :</label>
+                                <input type="text" class="form-control" id="pSumberDana" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAssignment"> Assignment :</label>
+                                <input type="text" class="form-control" id="pAssignment" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDocHdrText"> Doc Hdr Text :</label>
+                                <input type="text" class="form-control" id="pDocHdrText" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pRemarks"> Remarks :</label>
+                                <input type="text" class="form-control" id="pRemarks" required="required"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="ins_data()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="hide_column_modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Hide Column</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" style="padding-left: 50px">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="check_all"/>
+                            <label class="form-check-label" for="check_all">Check All</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc0" data-column="0"/>
+                            <label class="form-check-label" for="hc0">NO</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc1" data-column="1"/>
+                            <label class="form-check-label" for="hc1">DOCUMENT NO</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc2" data-column="2"/>
+                            <label class="form-check-label" for="hc2">DOCUMENT DATE</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc3" data-column="3"/>
+                            <label class="form-check-label" for="hc3">PMT PROPOSAL ID</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc4" data-column="4"/>
+                            <label class="form-check-label" for="hc4">COMPANY CODE</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc5" data-column="5"/>
+                            <label class="form-check-label" for="hc5">FISICAL YEAR</label>
+                        </div>
+                        <div class="form-check">
+                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc6" data-column="6"/>
+                        <label class="form-check-label" for="hc6">LINE NUMBER</label>
+                        </div>
+                    <div class="form-check">
+                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc7" data-column="7"/>
+                        <label class="form-check-label" for="hc7">DEBIT/CREDIT</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc8" data-column="8"/>
+                        <label class="form-check-label" for="hc8">GL ACCOUNT</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc9" data-column="9"/>
+                        <label class="form-check-label" for="hc9">AMOUNT</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc10" data-column="10"/>
+                        <label class="form-check-label" for="hc10">EXCHANGE RATE</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc11" data-column="11"/>
+                        <label class="form-check-label" for="hc11">CURRENCY</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc12" data-column="12"/>
+                        <label class="form-check-label" for="hc12">POSTING DATE</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc13" data-column="13"/>
+                        <label class="form-check-label" for="hc13">BUSINESS AREA</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc14" data-column="14"/>
+                        <label class="form-check-label" for="hc14">CASH CODE</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc15" data-column="15"/>
+                        <label class="form-check-label" for="hc15">SUMBER DANA</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc16" data-column="16"/>
+                        <label class="form-check-label" for="hc16">ASSIGNMENT</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc17" data-column="17"/>
+                        <label class="form-check-label" for="hc17">DOC HDR TEXT</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc18" data-column="18"/>
+                        <label class="form-check-label" for="hc18">REMARKS</label>
+                    </div>
+                    <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc19" data-column="19"/>
+                            <label class="form-check-label" for="hc19">STATUS TRACKING</label>
+                    </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="saveColumn()">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+            <div id="filter">
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;">
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Tanggal Awal </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal"/>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Tanggal Akhir </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>
+                    </div>
+                </div>
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Currency </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="bacurrecnynk" id="cmb_currecny" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
+                    </div>
+                </div>
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Status Tracking</label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="status_tracking" id="cmb_status_tracking" class="form-control">
+                            <option value="">PILIH STATUS TRACKING</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="list-data" style="margin-top:25px;">
+                <div class="panel panel-default">
+                    <div class="panel-body panel-custom">
+                        <table id="table-rekapitulasi" class="table table-bordered table-striped">
+                            <thead style="font-size: 12px">
+                            <tr>
+                                <th>NO.</th>
+                                <th>DOCUMENT NO</th>
+                                <th>DOCUMENT DATE</th>
+                                <th>PMT PROPOSAL ID</th>-->
+                                <th>COMPANY CODE</th>
+                                <th>FISICAL YEAR</th>
+                                <th>LINE NUMBER</th>
+                                <th>DEBIT/CREDIT</th>
+                                <th>GL ACCOUNT</th><!--5-->
+                                <th>AMOUNT</th>
+                                <!--<th>STATUS TAGIHAN</th>-->
+                                <th>EXCHANGE RATE</th>
+                                <th>CURRENCY</th>
+                                <th>POSTING DATE</th>
+                                <th>BUSINESS AREA</th><!--10-->
+                                <th>CASH CODE</th>
+                                <th>SUMBER DANA</th>
+                                <th>ASSIGNMENT</th>
+                                <th>DOC HDR TEXT</th>
+                                <th>REMARKS</th>
+                                <th>STATUS TRACKING</th>
+                                <th>AKSI</th>
+                                <th id="forcbparent"></th>
+                            </tr>
+                            </thead>
+                            <tbody style="font-size: 12px">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+            <div id="total_per_currency" class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;">
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-upload-file" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title_modal">UPLOAD FILE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="input_file">
+                    <div class="form-group" style="display:none">
+                        <input type="text" class="form-control" id="temp-id-valas-file"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="file-tanda-terima-invoice">UPLOAD TANDA TERIMA INVOICE |
+                            <a href="" id="btn-download-tanda-terima-invoice">-</a></label>
+                        <input type="file" class="form-control" id="file-tanda-terima-invoice"
+                               accept="application/pdf,application/zip" onchange="upload_server('1')"/>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="file-lembar-verifikasi">UPLOAD LEMBAR VERIFIKASI | <a
+                                href="" id="btn-download-lembar-verifikasi">-</a></label>
+                        <input type="file" class="form-control" id="file-lembar-verifikasi"
+                               accept="application/pdf,application/zip" onchange="upload_server('2')"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="file-tagihan">UPLOAD INVOICE / TAGIHAN | <a href=""
+                                                                                                           id="btn-download-file-tagihan">-</a></label>
+                        <input type="file" class="form-control" id="file-tagihan"
+                               accept="application/pdf,application/zip" onchange="upload_server('3')"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="file-nota-dinas-pembayaran">UPLOAD NOTA DINAS PEMBAYARAN
+                            | <a href="" id="btn-download-nota-dinas-pembayaran">-</a></label>
+                        <input type="file" class="form-control" id="file-nota-dinas-pembayaran"
+                               accept="application/pdf,application/zip" onchange="upload_server('4')"/>
+                    </div>
+                    <div class="form-group">
+                        <p>File bertipe .zip atau pdf</p>
+                        <p>Disarankan Maksimal 5mb</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Selesai</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-upload-xls" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title_modal_upload_xls">UPLOAD FILE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="input_file_xls">
+                    <div class="form-group">
+                        <label class="form-control-label" for="file-tanda-terima-invoice">UPLOAD FILE XLS |
+                            <a th:href="@{/api_operator/pembayaran/template}" id="btn-download-template-data-pembayaran">
+                                Download Template
+                            </a></label>
+                        <input type="file" class="form-control" id="file-xls"
+                               accept="application/vnd.ms-excel"/>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal" onclick="upload_server_xls()">Selesai</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="multiple-edit-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Multiple Edit Rekapitulasi Pembayaran</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pNewTglJatuhTempo">Tanggal Jatuh
+                                    Tempo:</label>
+                                <input type="text" class="form-control" id="pNewTglJatuhTempo" required="required"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pNewBankPembayar">Bank
+                                    Pembayar:</label>
+                                <select id="pNewBankPembayar" class="form-control" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="multipleUpdate()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/metallicaTrx.js"></script>
+    <!--<script src="static/js/jquery.mask.min.js"></script>-->
+</div>

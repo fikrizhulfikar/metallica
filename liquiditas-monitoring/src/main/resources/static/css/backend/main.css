@@ -10,6 +10,18 @@ body {
 	background: #f9f9f9;
 }
 
+.right{
+	align: right;
+}
+
+.left{
+	align: left;
+}
+
+.center{
+	align: center;
+}
+
 a {
 	color: #428bca;
 }

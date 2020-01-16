@@ -182,6 +182,7 @@ function getAllData() {
         },
         success: function (res) {
             allData = res;
+            system.out.print(res);
         },
         error: function () {
             console.log("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -198,6 +199,7 @@ function exportXls() {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
+    console
     window.open(baseUrl + "api_operator/pembayaran/xls/1/" + tglAwal.replace(/\//g, "-") + "/" + tglAkhir.replace(/\//g, "-") + "/" + $("#cmb_bank").val() + "/" + $("#cmb_currecny").val() + "/" + $("#cmb_jenis_pemabayaran").val());
 }
 

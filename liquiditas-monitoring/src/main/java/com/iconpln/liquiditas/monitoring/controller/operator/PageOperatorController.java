@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Created by israj on 10/4/2016.
+ * Updated by Mr.Diaz on 31/10/2019
  */
 @Controller
 @RequestMapping("/page_operator")
@@ -114,4 +115,97 @@ public class PageOperatorController {
         return "operator/rekap_reject";
     }
 
+    @RequestMapping("/anggaran")
+    public String anggaran() {
+        return "operator/anggaran";
+    }
+
+    @RequestMapping("/rekap_invoice_belum")
+    public String rekap_invoice_belum() {
+        return "operator/rekap_invoice_belum";
+    }
+
+    @RequestMapping("/rekap_invoice_realisasi")
+    public String rekap_invoice_realisasi() {
+        return "operator/rekap_invoice_realisasi";
+    }
+    @RequestMapping("/rekap_invoice_sudah")
+    public String rekap_invoice_sudah() {
+        return "operator/rekap_invoice_sudah";
+    }
+
+    @RequestMapping("/rekap_invoice_group")
+    public String rekap_invoice_group() {
+        return "operator/rekap_invoice_group";
+    }
+
+    @RequestMapping("/rekap_invoice_reject")
+    public String rekap_invoice_reject() {
+        return "operator/rekap_invoice_reject";
+    }
+
+//    @RequestMapping("/metallica_trx")
+//    public String metallica_trx() {
+//        return "operator/metallica_trx";
+//    }
+//
+//    @RequestMapping("/pembelian_valas_trx")
+//    public String pembelian_valas_trx() {
+//        return "operator/pembelian_valas_trx";
+//    }
+
+    @RequestMapping("/rekap_invoice_lcl")
+    public String rekap_invoice_lcl() {
+        return "operator/rekap_invoice_lcl";
+    }
+
+    @RequestMapping("/rekap_invoice_lcl2")
+    public String rekap_invoice_lcl2() {
+        return "operator/rekap_invoice_lcl2";
+    }
+
+    @RequestMapping("/pembelian_valas_trx")
+    public String pembelian_valas_trx() {
+        return "operator/pembelian_valas_trx";
+    }
+
+    @RequestMapping("/pindah_buku_trx")
+    public String pindah_buku_trx() {
+        return "operator/pindah_buku_trx";
+    }
+
+    @RequestMapping("/operasi_khusus_trx")
+    public String operasi_khusus_trx() {
+        return "operator/operasi_khusus_trx";
+    }
+
+    @RequestMapping("/pembelian_valas_trx_verified")
+    public String pembelian_valas_trx_verified() {
+        return "operator/pembelian_valas_trx_verified";
+    }
+
+    @RequestMapping("/pembelian_valas_trx_lunas")
+    public String pembelian_valas_trx_lunas() {
+        return "operator/pembelian_valas_trx_lunas";
+    }
+
+    @RequestMapping("/pindah_buku_trx_verified")
+    public String pindah_buku_trx_verified() {
+        return "operator/pindah_buku_trx_verified";
+    }
+
+    @RequestMapping("/pindah_buku_trx_lunas")
+    public String pindah_buku_trx_lunas() {
+        return "operator/pindah_buku_trx_lunas";
+    }
+
+    @RequestMapping("/operasi_khusus_trx_verified")
+    public String operasi_khusus_trx_verified() {
+        return "operator/operasi_khusus_trx_verified";
+    }
+
+    @RequestMapping("/operasi_khusus_trx_lunas")
+    public String operasi_khusus_trx_lunas() {
+        return "operator/operasi_khusus_trx_lunas";
+    }
 }

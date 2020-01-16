@@ -9,6 +9,9 @@ public class RekapPembayaran {
     public String idVendor;
 //    @JsonProperty("ID_JENIS_PEMBAYARAN")
     public String idJenisPembayaran;
+    public String idUnitAnggaran;
+    public String idPosAnggaran;
+    public String idSubPosAnggaran;
 //    @JsonProperty("ID_UNIT")
     public String idUnit;
 //    @JsonProperty("CURRENCY")
@@ -58,6 +61,30 @@ public class RekapPembayaran {
 
     public void setIdJenisPembayaran(String idJenisPembayaran) {
         this.idJenisPembayaran = idJenisPembayaran;
+    }
+
+    public String getIdUnitAnggaran() {
+        return idUnitAnggaran;
+    }
+
+    public void setIdUnitAnggaran(String idUnitAnggaran) {
+        this.idUnitAnggaran = idUnitAnggaran;
+    }
+
+    public String getIdPosAnggaran() {
+        return idPosAnggaran;
+    }
+
+    public void setIdPosAnggaran(String idPosAnggaran) {
+        this.idPosAnggaran = idPosAnggaran;
+    }
+
+    public String getIdSubPosAnggaran() {
+        return idSubPosAnggaran;
+    }
+
+    public void setIdSubPosAnggaran(String idSubPosAnggaran) {
+        this.idSubPosAnggaran = idSubPosAnggaran;
     }
 
     public String getIdUnit() {
@@ -201,6 +228,9 @@ public class RekapPembayaran {
         final StringBuilder sb = new StringBuilder("RekapPembayaran{");
         sb.append("idVendor='").append(idVendor).append('\'');
         sb.append(", idJenisPembayaran='").append(idJenisPembayaran).append('\'');
+        sb.append(", idUnitAnggaran='").append(idUnitAnggaran).append('\'');
+        sb.append(", idPosAnggaran='").append(idPosAnggaran).append('\'');
+        sb.append(", idSubPosAnggaran='").append(idSubPosAnggaran).append('\'');
         sb.append(", idUnit='").append(idUnit).append('\'');
         sb.append(", currency='").append(currency).append('\'');
         sb.append(", totalTagihan=").append(totalTagihan);

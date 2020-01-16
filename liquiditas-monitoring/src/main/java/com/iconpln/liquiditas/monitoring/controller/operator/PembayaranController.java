@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.jxls.transformer.XLSTransformer;
 import org.apache.poi.ss.formula.NameIdentifier;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -247,7 +248,6 @@ public class PembayaranController {
 
     @RequestMapping(value = "/get_all_pembayaran2", method = RequestMethod.GET)
     public List getAllpembayaran2(
-            @RequestParam(value = "pStatusValas", defaultValue = "ALL") String pStatusValas,
             @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
             @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
             @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
@@ -255,7 +255,7 @@ public class PembayaranController {
             @RequestParam(value = "pPembayaran", defaultValue = "ALL") String pPembayaran
     ) {
         try {
-            return valasService.getAllpembayaran2(pStatusValas, WebUtils.getUsernameLogin(), pTglAwal, pTglAkhir, pBank, pCurr, pPembayaran);
+            return valasService.getAllpembayaran2(WebUtils.getUsernameLogin(), pTglAwal, pTglAkhir, pBank, pCurr, pPembayaran);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -333,7 +333,10 @@ public class PembayaranController {
             @RequestParam(value = "pNominalTanpaUnderlying", defaultValue = "") String pNominalTanpaUnderlying,
             @RequestParam(value = "pKursJisdor", defaultValue = "") String pKursJisdor,
             @RequestParam(value = "pSpread", defaultValue = "") String pSpread,
-            @RequestParam(value = "pJenisTagihan", defaultValue = "") String pJenisTagihan
+            @RequestParam(value = "pJenisTagihan", defaultValue = "") String pJenisTagihan,
+            @RequestParam(value = "pPosAnggaran", defaultValue = "") String pPosAnggaran,
+            @RequestParam(value = "pSubPosAnggaran", defaultValue = "") String pSubPosAnggaran,
+            @RequestParam(value = "pUnitAnggaran", defaultValue = "") String pUnitAnggaran
     ) {
 
         AppUtils.getLogger(this).debug("idValas : {} ", pIdValas);
@@ -359,6 +362,9 @@ public class PembayaranController {
         AppUtils.getLogger(this).debug("pNominalTanpaUnderlying : {} ", pNominalTanpaUnderlying);
         AppUtils.getLogger(this).debug("pKursJisdor : {} ", pKursJisdor);
         AppUtils.getLogger(this).debug("pSpread : {} ", pSpread);
+        AppUtils.getLogger(this).debug("pPosAnggaran : {} ", pPosAnggaran);
+        AppUtils.getLogger(this).debug("pSubPosAnggaran : {} ", pSubPosAnggaran);
+        AppUtils.getLogger(this).debug("pUnitAnggaran : {} ", pUnitAnggaran);
 
         try {
             String message = "";
@@ -379,7 +385,7 @@ public class PembayaranController {
             Map<String, Object> res = valasService.insPembayaran(pIdValas, pJenisPembayaran, pTglJatuhTempo, pVendor, pCurr, pNilaiTagihan,
                     pBankTujuan, pBankPembayar, pUnitPenerima, pNoTagihan, pTglTagihan, pNoNotdin, pTglNotdin, pStatusValas,
                     WebUtils.getUsernameLogin(), pKeterangan, pTipeTransaksi, pTglTerimaInvoice, pNominalSblmPajak, pNominalUnderlying,
-                    pPajak, pNominalTanpaUnderlying, pKursJisdor, pSpread, pJenisTagihan);
+                    pPajak, pNominalTanpaUnderlying, pKursJisdor, pSpread, pJenisTagihan, pPosAnggaran,pSubPosAnggaran,pUnitAnggaran);
             if (isUpdate) {
                 Map<String, String> sesudah = notificationUtil.getNotificationDetailByIdValas(pIdValas);
                 message += "Perubahan: " + sesudah.get("NAMA_JENIS_PEMBAYARAN") + "-" + sesudah.get("NAMA_VENDOR") + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + ".";
@@ -436,7 +442,7 @@ public class PembayaranController {
             @RequestParam(value = "pData", defaultValue = "") String pData,
             @RequestParam(value = "pDeskripsi", defaultValue = "") String pDeskripsi
 
-    ) {
+    ) throws JSONException {
         Map<String, Object> out = null;
         String jsonString = valasService.getPerfectJsonString(pData);
         String[] listData = jsonString.split(";");
@@ -477,7 +483,7 @@ public class PembayaranController {
     @RequestMapping(value = "/multi_del_data", method = RequestMethod.POST)
     public Map<String, Object> multiDelData(
             @RequestParam(value = "pData", defaultValue = "") String pData
-    ) {
+    ) throws JSONException {
         Map<String, Object> out = null;
         String jsonString = valasService.getPerfectJsonString(pData);
         String[] listData = jsonString.split(";");
@@ -544,7 +550,7 @@ public class PembayaranController {
             @RequestParam(value = "pData", defaultValue = "") String pData,
             @RequestParam(value = "pTglJatuhTempo", defaultValue = "") String pTglJatuhTempo,
             @RequestParam(value = "pBankPembayar", defaultValue = "") String pBankPembayar
-    ) {
+    ) throws JSONException {
         Map<String, Object> out = null;
         pBankPembayar = (pBankPembayar.toString().equals("null") ? "" : pBankPembayar);
         String jsonString = valasService.getPerfectJsonString(pData);
@@ -619,7 +625,7 @@ public class PembayaranController {
     @RequestMapping(value = "/reject_data", method = RequestMethod.POST)
     public Map<String, Object> rejectData(
             @RequestParam(value = "pData", defaultValue = "") String pData
-    ) {
+    ) throws JSONException {
         Map<String, Object> out = null;
         String jsonString = valasService.getPerfectJsonString(pData);
         String[] listData = jsonString.split(";");
@@ -773,6 +779,7 @@ public class PembayaranController {
                 paramDetail.put("PAJAK", data.get("PAJAK"));
                 paramDetail.put("NOMINAL_SBLM_PAJAK", data.get("NOMINAL_SBLM_PAJAK"));
                 paramDetail.put("JENIS_TAGIHAN", data.get("JENIS_TAGIHAN"));
+                paramDetail.put("TGL_LUNAS", data.get("TGL_LUNAS"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
@@ -790,9 +797,8 @@ public class PembayaranController {
         }
     }
 
-    @RequestMapping(value = "/xls2/{pStatusValas}/{pTglAwal}/{pTglAkhir}/{pBank}/{pCurr}/{pPembayaran}", method = RequestMethod.GET)
+    @RequestMapping(value = "/xls2/{pTglAwal}/{pTglAkhir}/{pBank}/{pCurr}/{pPembayaran}", method = RequestMethod.GET)
     public String export2(
-            @PathVariable String pStatusValas,
             @PathVariable String pTglAwal,
             @PathVariable String pTglAkhir,
             @PathVariable String pBank,
@@ -814,21 +820,17 @@ public class PembayaranController {
 
             String title;
             String namaFile;
-            if (Integer.valueOf(pStatusValas) > 0) {
-                title = "REALISASI PEMBAYARAN";
-                namaFile = "realisasi_pembayaran.xls";
-            } else {
-                title = "REKAPITULASI DATA";
-                namaFile = "rekapitulasi_data.xls";
-            }
+            title = "REKAPITULASI DATA SUDAH DI VERIFIKASI";
+            namaFile = "Rekap Sudah Diverifikasi.xls";
+
 
             ServletOutputStream os = response.getOutputStream();
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
 
-            List<Map<String, Object>> listData = valasService.getAllpembayaran2(pStatusValas, WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pBank, pCurr, pPembayaran);
+            List<Map<String, Object>> listData = valasService.getAllpembayaran2(WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pBank, pCurr, pPembayaran);
 
-            AppUtils.getLogger(this).info("data rekap : {}, report : {}", pStatusValas, listData.toString());
+            AppUtils.getLogger(this).info("data rekap : {}, report : {}",listData.toString());
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
 
@@ -956,6 +958,7 @@ public class PembayaranController {
         }
     }
 
+
     @RequestMapping(value = "/download/{idUpload}", method = RequestMethod.GET)
     public String export(HttpServletResponse response,
                          @PathVariable String idUpload) throws SQLException {
@@ -1061,60 +1064,66 @@ public class PembayaranController {
             case 2:
                 return "JENIS_PEMBAYARAN";
             case 3:
-                return "JATUH_TEMPO";
+                return "UNIT_ANGGARAN";
             case 4:
-                return "VENDOR";
+                return "POS_ANGGARAN";
             case 5:
-                return "CURRENCY";
+                return "SUB_POS_ANGGARAN";
             case 6:
-                return "TAGIHAN";
+                return "JATUH_TEMPO";
             case 7:
-                return "UNIT";
+                return "VENDOR";
             case 8:
-                return "BANK_TUJUAN";
+                return "CURRENCY";
             case 9:
-                return "BANK_PEMBAYAR";
+                return "TAGIHAN";
             case 10:
-                return "TGL_TERIMA_INVOICE";
+                return "UNIT";
             case 11:
-                return "TGL_TAGIHAN";
+                return "BANK_TUJUAN";
             case 12:
-                return "NO_TAGIHAN";
+                return "BANK_PEMBAYAR";
             case 13:
-                return "TGL_NOTDIN";
+                return "TGL_TERIMA_INVOICE";
             case 14:
-                return "NO_NOTDIN";
+                return "TGL_TAGIHAN";
             case 15:
-                return "TGL_LUNAS";
+                return "NO_TAGIHAN";
             case 16:
-                return "COUNT_DOWN";
+                return "TGL_NOTDIN";
             case 17:
-                return "STATUS_VALAS";
+                return "NO_NOTDIN";
             case 18:
-                return "TIPE_TRANSAKSI";
+                return "TGL_LUNAS";
             case 19:
-                return "NOMINAL_SBLM_PAJAK";
+                return "COUNT_DOWN";
             case 20:
-                return "PAJAK";
+                return "STATUS_VALAS";
             case 21:
-                return "NOMINAL_STLH_PAJAK";
+                return "TIPE_TRANSAKSI";
             case 22:
-                return "NOMINAL_UNDERLYING";
+                return "NOMINAL_SBLM_PAJAK";
             case 23:
-                return "NOMINAL_TANPA_UNDERLYING";
+                return "PAJAK";
             case 24:
-                return "KURS_JISDOR";
+                return "NOMINAL_STLH_PAJAK";
             case 25:
-                return "SPREAD";
+                return "NOMINAL_UNDERLYING";
             case 26:
-                return "KURS_TRANSAKSI";
+                return "NOMINAL_TANPA_UNDERLYING";
             case 27:
-                return "NOMINAL_PEMBAYARAN_IDR";
+                return "KURS_JISDOR";
             case 28:
-                return "CREATE_DATE";
+                return "SPREAD";
+            case 29:
+                return "KURS_TRANSAKSI";
             case 30:
-                return "STATUS_TRACKING";
+                return "NOMINAL_PEMBAYARAN_IDR";
             case 31:
+                return "CREATE_DATE";
+            case 32:
+                return "STATUS_TRACKING";
+            case 33:
                 return "DESKRIPSI";
             default:
                 return "UPDATE_DATE";
@@ -1137,6 +1146,9 @@ public class PembayaranController {
     public Map saveColumn(@RequestParam("nomor") Integer nomor,
                           @RequestParam("jenis_tagihan") Integer jenisTagihan,
                           @RequestParam("jenis_pembayaran") Integer jenisPembayaran,
+                          @RequestParam("unit_anggaran") Integer unitAnggaran,
+                          @RequestParam("pos_anggaran") Integer posAnggaran,
+                          @RequestParam("sub_pos_anggaran") Integer subPosAnggaran,
                           @RequestParam("jatuh_tempo") Integer jatuhTempo,
                           @RequestParam("vendor") Integer vendor,
                           @RequestParam("currency") Integer currency,
@@ -1173,6 +1185,9 @@ public class PembayaranController {
             String result = valasService.saveColumn(WebUtils.getUsernameLogin(),
                     nomor,
                     jenisPembayaran,
+                    unitAnggaran,
+                    posAnggaran,
+                    subPosAnggaran,
                     jatuhTempo,
                     vendor,
                     currency,
@@ -1234,7 +1249,7 @@ public class PembayaranController {
     }
 
     @PostMapping("/multi_cleansing")
-    public Map<String, Object> multiCleansing(@RequestParam("data") String data) {
+    public Map<String, Object> multiCleansing(@RequestParam("data") String data) throws JSONException {
         Map<String, Object> out = new HashMap<>();
         String jsonString = valasService.getPerfectJsonString(data);
         String[] listData = jsonString.split(";");

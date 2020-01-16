@@ -97,6 +97,9 @@ public class EmailUtil {
         dataJatuhTempo.add(Arrays.asList(
                 "VENDOR",
                 "JENIS_PEMBAYARAN",
+                "UNIT_ANGGARAN",
+                "POS_ANGGARAN",
+                "SUB_POS_ANGGARAN",
                 "UNIT",
                 "CURRENCY",
                 "TOTAL_TAGIHAN",
@@ -118,6 +121,9 @@ public class EmailUtil {
         for (RekapPembayaran rekapPembayaran : data) {
             dataJatuhTempo.add(Arrays.asList(rekapPembayaran.getIdVendor()
                     , rekapPembayaran.getIdJenisPembayaran()
+                    , rekapPembayaran.getIdUnitAnggaran()
+                    , rekapPembayaran.getIdPosAnggaran()
+                    , rekapPembayaran.getIdSubPosAnggaran()
                     , rekapPembayaran.getIdUnit()
                     , rekapPembayaran.getCurrency()
                     , rekapPembayaran.getTotalTagihan()

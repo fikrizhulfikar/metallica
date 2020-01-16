@@ -55,6 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider() {
             @Override
             protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
+                //BUAT LIHAT PASSWORD INPUTAN DARI UI//
+                //logger.info("Log in " + authentication.getCredentials());
+
                 Object salt = null;
 
                 if (getSaltSource() != null) {

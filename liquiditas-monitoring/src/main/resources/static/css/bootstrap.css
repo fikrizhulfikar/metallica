@@ -6726,6 +6726,19 @@ button.close {
     display: table-cell !important;
   }
 }
+
+.right{
+  align: right;
+}
+
+.left{
+  align: left;
+}
+
+.center{
+  align: center;
+}
+
 .visible-print-block {
   display: none !important;
 }

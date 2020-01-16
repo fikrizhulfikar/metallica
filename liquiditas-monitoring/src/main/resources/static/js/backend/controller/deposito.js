@@ -284,7 +284,7 @@ function generatePDF() {
     column.push({
         text: "NOMINAL",
         style: "tableHeader",
-        alignment: "center"
+        alignment: "cneter"
     });
     column.push({
         text: "INTEREST",

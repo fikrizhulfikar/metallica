@@ -467,7 +467,6 @@ function getAllData() {
         dataType: 'JSON',
         type: "GET",
         data: {
-            pStatusValas: "0",
             pTglAwal: $("#tanggal_awal").val(),
             pTglAkhir: $("#tanggal_akhir").val(),
             pBank: $("#cmb_bank").val(),
@@ -492,7 +491,7 @@ function exportXls() {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/pembayaran/xls2/0/" + tglAwal.replace(/\//g, "-") + "/" + tglAkhir.replace(/\//g, "-") + "/" + $("#cmb_bank").val() + "/" + $("#cmb_currecny").val() + "/" + $("#cmb_jenis_pemabayaran").val());
+    window.open(baseUrl + "api_operator/pembayaran/xls2/" + tglAwal.replace(/\//g, "-") + "/" + tglAkhir.replace(/\//g, "-") + "/" + $("#cmb_bank").val() + "/" + $("#cmb_currecny").val() + "/" + $("#cmb_jenis_pemabayaran").val());
 }
 
 function generatePDF() {

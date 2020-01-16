@@ -8,6 +8,13 @@ var table_rekapitulasi;
 var idValas = "";
 var allData;
 var tempVendor = "";
+var tempTipeTransaksi = "";
+var tempSubPosAnggaran = "";
+var tempSubPosAnggaran2 = "";
+var tempNilaiAnggaran = "";
+var tempNilaiTagihan = "";
+var tempCurrency = "";
+var tempUnitAnggaran = "";
 var tempUnit = "";
 var tempTableSearch = "";
 
@@ -17,6 +24,8 @@ var srcTglAwal = null;
 var srcTglAkhir = null;
 var addedDays = 2;
 $(document).ready(function () {
+    // $( '#pNilaiTagihan' ).mask('000.000.000.000.000', {reverse: true});
+    // $( '#pSisaAnggaran' ).mask('000.000.000.000.000', {reverse: true});
     $('#pTglTerimaInvoice').datepicker({dateFormat: 'dd/mm/yy', maxDate: new Date()});
     $('#tanggal_awal').datepicker({dateFormat: 'dd/mm/yy'});
     $('#tanggal_akhir').attr("disabled", "disabled");
@@ -32,13 +41,28 @@ $(document).ready(function () {
     $('#pBankTujuan').select2({
         width: '100%'
     });
+    $('#pPosAnggaran').select2({
+        width: '100%'
+    });
+    $('#pSubPosAnggaran').select2({
+        width: '100%'
+    });
+    $('#pUnitAnggaran').select2({
+        width: '100%'
+    });
     setSelectBank("cmb_bank", "FILTER", "", "", "REKAP");
     setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
     setSelectJenisPembayaran("cmb_jenis_pemabayaran", "FILTER", "");
     setSelectStatus("cmb_status");
     setSelectStatusTracking("cmb_status_tracking");
     setSelectJenisTagihan("pJenisTagihan");
+    setSelectPosAnggaran("pPosAnggaran", "", "","");
+    setSelectSubPosAnggaran("pSubPosAnggaran","","");
+    setSelectUnitAnggaran("pUnitAnggaran","");
+    setSelectNilaiAnggaran("pNilaiAnggaran", tempUnitAnggaran, tempSubPosAnggaran2);
+    setSelectSisaAnggaran("pSisaAnggaran", tempCurrency, tempNilaiTagihan );
     setNominalSetelahPajak();
+//    setSisaAnggaran();
     search("load");
     siap();
     inputKeterangan();
@@ -61,6 +85,15 @@ function setNominalSetelahPajak() {
     });
 }
 
+// function setSisaAnggaran() {
+//     $('#pNilaiAnggaran, #pNilaiTagihan').bind('keyup paste change', function () {
+//         var pNilaiAnggaran = $('#pNilaiAnggaran').val() || 0,
+//             pNilaiTagihan = $('#pNilaiTagihan').val() || 0;
+//         var pSisaAnggaran = pNilaiAnggaran - pNilaiTagihan;
+//         $('#pSisaAnggaran').val(pSisaAnggaran);
+//     });
+// }
+
 $("#tanggal_awal").change(function () {
     var tglAwalData = $('#tanggal_awal').val();
     if (tglAwalData == "") {
@@ -79,8 +112,52 @@ function selectJenisPembayaran(value) {
     setSelectUnit("pUnitPenerima", value, tempUnit);
 }
 
-function selectStatus(value) {
 
+function selectTipeTransaksi(value) {
+    tempTipeTransaksi = value;
+    $("#pPosAnggaran").select2("val", "");
+    setSelectPosAnggaran("pPosAnggaran", value, tempTipeTransaksi);
+}
+
+function selectPosAnggaran(value) {
+        $("#pSubPosAnggaran").select2("val", "");
+        setSelectSubPosAnggaran("pSubPosAnggaran", value, tempSubPosAnggaran);
+}
+
+function selectSubPosAnggaran(value) {
+    $("#pNilaiAnggaran").val("");
+    tempSubPosAnggaran2=value;
+    setSelectNilaiAnggaran("pNilaiAnggaran",tempSubPosAnggaran2, tempUnitAnggaran );
+}
+
+function selectUnitAnggaran(value) {
+    $("#pNilaiAnggaran").val("");
+    tempUnitAnggaran=value;
+    setSelectNilaiAnggaran("pNilaiAnggaran", tempSubPosAnggaran2, tempUnitAnggaran );
+}
+
+function selectNilaiTagihan(value) {
+    $("#pSisaAnggaran").val("");
+    tempNilaiTagihan=value;
+    setSelectSisaAnggaran("pSisaAnggaran", tempCurrency, tempNilaiTagihan );
+}
+
+function selectCurrency(value) {
+    $("#pSisaAnggaran").val("");
+    tempCurrency=value;
+    setSelectSisaAnggaran("pSisaAnggaran",tempCurrency, tempNilaiTagihan );
+}
+
+// function selectNilaiAnggaran(value) {
+//     $("#pSisaAnggaran").val("");
+//     tempNilaiAnggaran=value;
+//
+//     console.log('DIAZ :',tempNilaiAnggaran);
+//     setSelectSisaAnggaran("pSisaAnggaran",tempNilaiAnggaran, tempCurrency, tempNilaiTagihan );
+// }
+
+
+function selectStatus(value) {
     if (value != 1) {
         $("#pTglJatuhTempo").prop('disabled', false);
     } else {
@@ -113,12 +190,18 @@ function duplicate_data(id) {
 
             tempVendor = res[0].ID_VENDOR;
             tempUnit = res[0].ID_UNIT;
+            tempSubPosAnggaran = res[0].KODE_POS_ANGGARAN;
+
 
             setSelectJenisPembayaran("pJenisPemabayaran", "", res[0].ID_JENIS_PEMBAYARAN);
             setSelectCurr("pCurrecny", "", res[0].CURRENCY, "REKAP");
             setSelectBank2("pBankTujuan", "", "TUJUAN", res[0].KODE_BANK_TUJUAN, "REKAP");
             setSelectBank("pBankPembayar", "", "PEMBAYAR", res[0].KODE_BANK_PEMBAYAR, "REKAP");
-
+            setSelectPosAnggaran("pPosAnggaran","",res[0].ID_ANGGARAN);
+            setSelectSubPosAnggaran("pSubPosAnggaran","",res[0].KODE_POS_ANGGARAN);
+            setSelectUnitAnggaran("pUnitAnggaran",res[0].KODE_UNIT_EBUDGET);
+            setSelectNilaiAnggaran("pNilaiAnggaran", tempUnitAnggaran,tempSubPosAnggaran2);
+            setSelectSisaAnggaran("pSisaAnggaran", tempCurrency, tempNilaiTagihan );
             $("#pTglJatuhTempo").val(res[0].TGL_JATUH_TEMPO);
             $("#pNilaiTagihan").val(res[0].TOTAL_TAGIHAN);
             $("#pNoTagihan").val(res[0].NO_TAGIHAN);
@@ -144,8 +227,17 @@ function duplicate_data(id) {
                 $("#pVendor").select2({
                     width: "100%"
                 });
+                $("#pPosAnggaran").select2({
+                    width: "100%"
+                });
+                $("#pSubPosAnggaran").select2({
+                    width: "100%"
+                });
                 $("#pUnitPenerima").select2({
                     width: "100%"
+                });
+                $('#pUnitAnggaran').select2({
+                    width: '100%'
                 });
                 $('#edit-rekap-modal').modal({backdrop: 'static', keyboard: false});
             }, timeSowFormEdit);
@@ -160,7 +252,6 @@ function duplicate_data(id) {
 function openFormNew() {
 
     idValas = "";
-
     $("#pTglJatuhTempo").val("");
     $("#pNilaiTagihan").val("");
     $("#pNoTagihan").val("");
@@ -171,6 +262,10 @@ function openFormNew() {
     $("#pKeterangan").val("");
     $("#pCurrecny").val("");
     $("#pBankPembayar").val("");
+    $("#pPosAnggaran").select2("val", "");
+    $("#pUnitAnggaran").select2("val", "");
+    $("#pSubPosAnggaran").select2("val", "");
+    $("#pNilaiAnggaran").val("");
     $("#pTipeTransaksi").val("");
     $("#pNominalSebelumPajak").val("");
     $("#pNominalUnderlying").val("");
@@ -196,6 +291,11 @@ function openFormNew() {
     setSelectCurr("pCurrecny", "", "", "REKAP");
     setSelectBank2("pBankTujuan", "", "TUJUAN", "", "REKAP");
     setSelectBank("pBankPembayar", "", "PEMBAYAR", "", "REKAP");
+    setSelectPosAnggaran("pPosAnggaran","","","");
+    setSelectSubPosAnggaran("pSubPosAnggaran","","");
+    setSelectUnitAnggaran("pUnitAnggaran","");
+    setSelectNilaiAnggaran("pNilaiAnggaran", tempUnitAnggaran, tempSubPosAnggaran2 );
+    setSelectSisaAnggaran("pSisaAnggaran", tempCurrency, tempNilaiTagihan );
 
     $('#pTglJatuhTempo').prop('disabled', false);
     if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
@@ -345,6 +445,9 @@ function ins_data() {
             pNilaiTagihan: $("#pNilaiTagihan").val(),
             pBankTujuan: $("#pBankTujuan").val(),
             pBankPembayar: $("#pBankPembayar").val(),
+            pPosAnggaran: $("#pPosAnggaran").val(),
+            pUnitAnggaran: $("#pUnitAnggaran").val(),
+            pSubPosAnggaran: $("#pSubPosAnggaran").val(),
             pUnitPenerima: $("#pUnitPenerima").val(),
             pNoTagihan: $("#pNoTagihan").val(),
             pTglTagihan: $("#pTglTagihan").val(),
@@ -403,13 +506,18 @@ function edit_data(id) {
             $('#pTglNotaDinas').datepicker({dateFormat: 'dd/mm/yy'});
 
             tempVendor = res[0].ID_VENDOR;
+            tempSubPosAnggaran = res[0].KODE_POS_ANGGARAN;
             tempUnit = res[0].ID_UNIT;
 
             setSelectJenisPembayaran("pJenisPemabayaran", "", res[0].ID_JENIS_PEMBAYARAN);
             setSelectCurr("pCurrecny", "", res[0].CURRENCY, "REKAP");
             setSelectBank2("pBankTujuan", "", "TUJUAN", res[0].KODE_BANK_TUJUAN, "REKAP");
             setSelectBank("pBankPembayar", "", "PEMBAYAR", res[0].KODE_BANK_PEMBAYAR, "REKAP");
-
+            setSelectPosAnggaran("pPosAnggaran","",res[0].ID_ANGGARAN);
+            setSelectSubPosAnggaran("pSubPosAnggaran","",res[0].KODE_POS_ANGGARAN);
+            setSelectUnitAnggaran("pUnitAnggaran",res[0].KODE_UNIT_EBUDGET);
+            setSelectNilaiAnggaran("pNilaiAnggaran", tempUnitAnggaran, tempSubPosAnggaran2 );
+            setSelectSisaAnggaran("pSisaAnggaran",tempCurrency, tempNilaiTagihan );
             $("#pTglJatuhTempo").val(res[0].TGL_JATUH_TEMPO);
             $("#pNilaiTagihan").val(res[0].TOTAL_TAGIHAN);
             $("#pNoTagihan").val(res[0].NO_TAGIHAN);
@@ -435,6 +543,12 @@ function edit_data(id) {
                     width: "100%"
                 });
                 $("#pUnitPenerima").select2({
+                    width: "100%"
+                });
+                $("#pSubPosAnggaran").select2({
+                    width: "100%"
+                });
+                $("#pUnitAnggaran").select2({
                     width: "100%"
                 });
                 $('#edit-rekap-modal').modal({backdrop: 'static', keyboard: false});
@@ -529,6 +643,21 @@ function generatePDF() {
     });
     column.push({
         text: "JENIS PEMBAYARAN",
+        style: "tableHeader",
+        alignment: "center"
+    });
+    column.push({
+        text: "UNIT ANGGARAN",
+        style: "tableHeader",
+        alignment: "center"
+    });
+    column.push({
+        text: "POS ANGGARAN",
+        style: "tableHeader",
+        alignment: "center"
+    });
+    column.push({
+        text: "SUB POS ANGGARAN",
         style: "tableHeader",
         alignment: "center"
     });
@@ -674,6 +803,10 @@ function generatePDF() {
         var helloooow = {
             NO: v.ROW_NUMBER,
             JENIS_PEMBAYARAN: v.ID_JENIS_PEMBAYARAN,
+            UNIT_ANGGARAN: v.KODE_UNIT_EBUDGET,
+            POS_ANGGARAN: v.KODE_ANGGARAN,
+            SUB_POS_ANGGARAN: v.KODE_POS_ANGGARAN,
+            SISA_ANGGARAN: v.SISA_ANGGARAN,
             JATUH_TEMPO: v.TGL_JATUH_TEMPO,
             VENDOR: v.ID_VENDOR,
             CURRENCY: v.CURRENCY,
@@ -701,6 +834,10 @@ function generatePDF() {
             KURS_TRANSAKSI : v.KURS_TRANSAKSI,
             NOMINAL_PEMBAYARAN_IDR : v.NOMINAL_PEMBAYARAN_IDR,
             JENIS_TAGIHAN : v.JENIS_TAGIHAN,
+            CREATE_DATE : v.CREATE_DATE,
+            UPDATE_DATE : v.UPDATE_DATE,
+            DESKRIPSI : v.DESKRIPSI,
+            JENIS_TAGIHAN: v.JENIS_TAGIHAN,
         }
         externalDataRetrievedFromServer.push(helloooow)
     });
@@ -715,6 +852,9 @@ function generatePDF() {
             var dataRow = [];
             dataRow.push(row["NO"]);
             dataRow.push(row["JENIS_PEMBAYARAN"]);
+            dataRow.push(row["UNIT_ANGGARAN"]);
+            dataRow.push(row["POS_ANGGARAN"]);
+            dataRow.push(row["SUB_POS_ANGGARAN"]);
             dataRow.push(row["JATUH_TEMPO"]);
             dataRow.push(row["VENDOR"]);
             dataRow.push(row["CURRENCY"]);
@@ -731,6 +871,7 @@ function generatePDF() {
             dataRow.push({text: row["COUNT_DOWN"], alignment: "right"});
             dataRow.push(row["STATUS"]);
             dataRow.push(row["TIPE_TRANSAKSI"]);
+            dataRow.push(row["STATUS_TRACKING"]);
             dataRow.push(row["NOMINAL_SBLM_PAJAK"]);
             dataRow.push(row["PAJAK"]);
             dataRow.push(row["NOMINAL_STLH_PAJAK"]);
@@ -740,6 +881,10 @@ function generatePDF() {
             dataRow.push(row["SPREAD"]);
             dataRow.push(row["KURS_TRANSAKSI"]);
             dataRow.push(row["NOMINAL_PEMBAYARAN_IDR"]);
+            dataRow.push(row["JENIS_TAGIHAN"]);
+            dataRow.push(row["CREATE_DATE"]);
+            dataRow.push(row["UPDATE_DATE"]);
+            dataRow.push(row["DESKRIPSI"]);
             dataRow.push(row["JENIS_TAGIHAN"]);
             body.push(dataRow);
         });
@@ -806,6 +951,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
     showLoadingCss();
     $('#table-rekapitulasi tbody').empty();
     $('#table-rekapitulasi').dataTable().fnDestroy();
+
     table_rekapitulasi = $('#table-rekapitulasi').DataTable({
             "serverSide": true,
             "oSearch": {"sSearch": tempTableSearch},
@@ -839,6 +985,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {width: 100, targets: 17},
                 {width: 100, targets: 18},
                 {width: 100, targets: 19},
+                {width: 100, targets: 20},
                 {width: 100, targets: 21},
                 {width: 100, targets: 22},
                 {width: 100, targets: 23},
@@ -850,14 +997,20 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {width: 100, targets: 29},
                 {width: 100, targets: 30},
                 {width: 100, targets: 31},
+                {width: 100, targets: 32},
+                {width: 100, targets: 33},
+                {width: 100, targets: 34},
+                // {width: 100, targets: 35},
+                // {width: 100, targets: 36},
                 {width: "20%", "targets": 0},
-                /*{
+                { className: "datatables_action", "targets": [9,23,24,25,26,27,28,29] },
+                {
                     "bSortable": true,
-                    "aTargets": [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
-                },*/
+                    "aTargets": [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,32,33,34]
+                },
                 {
                     "sortable": false,
-                    "aTargets": [0, 32, 33]
+                    "aTargets": [0,35, 36]
                 },
                 {
                     "aTargets": [0],
@@ -883,209 +1036,231 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {
                     "aTargets": [3],
                     "mRender": function (data, type, full) {
-                        return full.TGL_JATUH_TEMPO;
+                        return full.KODE_UNIT_EBUDGET;
                     }
 
                 },
+
                 {
                     "aTargets": [4],
                     "mRender": function (data, type, full) {
-                        return full.ID_VENDOR;
+                        return full.KODE_ANGGARAN;
                     }
 
                 },
                 {
                     "aTargets": [5],
                     "mRender": function (data, type, full) {
-                        return full.CURRENCY;
+                        return full.KODE_POS_ANGGARAN;
                     }
 
                 },
                 {
                     "aTargets": [6],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.TOTAL_TAGIHAN,2,".",",");
+                        return full.TGL_JATUH_TEMPO;
                     }
 
                 },
                 {
                     "aTargets": [7],
                     "mRender": function (data, type, full) {
-                        return full.ID_UNIT;
+                        return full.ID_VENDOR;
                     }
 
                 },
                 {
                     "aTargets": [8],
                     "mRender": function (data, type, full) {
-                        return full.KODE_BANK_TUJUAN;
+                        return full.CURRENCY;
                     }
 
                 },
                 {
                     "aTargets": [9],
                     "mRender": function (data, type, full) {
-                        return full.KODE_BANK_PEMBAYAR;
+                        return accounting.formatNumber(full.TOTAL_TAGIHAN,2,".",",");
                     }
 
                 },
                 {
                     "aTargets": [10],
                     "mRender": function (data, type, full) {
-                        return full.TGL_TERIMA_INVOICE;
+                        return full.ID_UNIT;
                     }
 
                 },
                 {
                     "aTargets": [11],
                     "mRender": function (data, type, full) {
-                        return full.TGL_TAGIHAN;
+                        return full.KODE_BANK_TUJUAN;
                     }
 
                 },
                 {
                     "aTargets": [12],
                     "mRender": function (data, type, full) {
-                        return full.NO_TAGIHAN;
+                        return full.KODE_BANK_PEMBAYAR;
                     }
 
                 },
                 {
                     "aTargets": [13],
                     "mRender": function (data, type, full) {
-                        return full.TGL_NOTDIN;
+                        return full.TGL_TERIMA_INVOICE;
                     }
 
                 },
                 {
                     "aTargets": [14],
                     "mRender": function (data, type, full) {
-                        return full.NO_NOTDIN;
+                        return full.TGL_TAGIHAN;
                     }
 
                 },
                 {
                     "aTargets": [15],
-                    "visible": false,
                     "mRender": function (data, type, full) {
-                        // return full.TGL_LUNAS;
-                        return "";
+                        return full.NO_TAGIHAN;
                     }
+
                 },
                 {
                     "aTargets": [16],
                     "mRender": function (data, type, full) {
-                        return full.COUNT_DOWN;
+                        return full.TGL_NOTDIN;
                     }
+
                 },
                 {
                     "aTargets": [17],
                     "mRender": function (data, type, full) {
-                        return full.STATUS_VALAS;
+                        return full.NO_NOTDIN;
                     }
+
                 },
                 {
                     "aTargets": [18],
+                    "visible": false,
                     "mRender": function (data, type, full) {
-                        return full.TIPE_TRANSAKSI;
+                        //return full.TGL_LUNAS;
+                        return "";
                     }
                 },
                 {
                     "aTargets": [19],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.NOMINAL_SBLM_PAJAK,2,".",",");
+                        return full.COUNT_DOWN;
                     }
                 },
                 {
                     "aTargets": [20],
                     "mRender": function (data, type, full) {
-                        return full.PAJAK + "%";
+                        return full.STATUS_VALAS;
                     }
                 },
                 {
                     "aTargets": [21],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.NOMINAL_STLH_PAJAK,2,".",",");
+                        return full.TIPE_TRANSAKSI;
                     }
                 },
                 {
                     "aTargets": [22],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.NOMINAL_UNDERLYING,2,".",",");
+                        return accounting.formatNumber(full.NOMINAL_SBLM_PAJAK,2,".",",");
                     }
                 },
                 {
                     "aTargets": [23],
+                    "mRender": function (data, type, full) {
+                        return full.PAJAK + "%";
+                    }
+                },
+                {
+                    "aTargets": [24],
+                    "mRender": function (data, type, full) {
+                        return accounting.formatNumber(full.NOMINAL_STLH_PAJAK,2,".",",");
+                    }
+                },
+                {
+                    "aTargets": [25],
+                    "mRender": function (data, type, full) {
+                        return accounting.formatNumber(full.NOMINAL_UNDERLYING,2,".",",");
+                    }
+                },
+                {
+                    "aTargets": [26],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.NOMINAL_TANPA_UNDERLYING,2,".",",");
 
                     }
                 },
                 {
-                    "aTargets": [24],
+                    "aTargets": [27],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.KURS_JISDOR,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [25],
+                    "aTargets": [28],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.SPREAD,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [26],
+                    "aTargets": [29],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.KURS_TRANSAKSI,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [27],
+                    "aTargets": [30],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.NOMINAL_PEMBAYARAN_IDR,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [28],
+                    "aTargets": [31],
                     "mRender": function (data, type, full) {
                         return full.CREATE_DATE;
                     }
                 },
                 {
-                    "aTargets": [29],
+                    "aTargets": [32],
                     "mRender": function (data, type, full) {
                         return full.UPDATE_DATE;
                     }
                 },
 
                 {
-                    "aTargets": [30],
+                    "aTargets": [33],
                     "mRender": function (data, type, full) {
                         return full.STATUS_TRACKING;
                     }
 
                 },
                 {
-                    "aTargets": [31],
+                    "aTargets": [34],
                     "mRender": function (data, type, full) {
                         return full.DESKRIPSI;
                     }
                 },
                 {
-                    "aTargets": [32],
+                    "aTargets": [35],
                     "mRender": function (data, type, full) {
                         var ret_value;
                         /*alert('BOOOMB2'+full.STATUS_TRACKING);*/
-                    /*    if(newRoleUser[0].includes("DIVKEU")){
-                            ret_value =
-                                '<div class="btn-group">' +
-                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
-                                '</div>'
-                        } */
-                         if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
+                        /*    if(newRoleUser[0].includes("DIVKEU")){
+                                ret_value =
+                                    '<div class="btn-group">' +
+                                    '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                    '</div>'
+                            } */
+                        if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
                             return "-"
                         }
                         else if(newRoleUser[0] == "ROLE_OSS" ){
@@ -1109,7 +1284,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                 if(newRoleUser[0] == "ROLE_POWER_PURCHASE_LEASING" || newRoleUser[0] == "ROLE_PRIMARY_ENERGY" || newRoleUser[0] == "ROLE_OPERATION" || newRoleUser[0] == "PAYMENT" || newRoleUser[0] == "INVESTMENT_I" || newRoleUser[0] == "INVESTMENT_II" || newRoleUser[0] == "CENTRALIZED_RECEIPT"){
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Staff" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +2+ '\',\''+full.ID_JENIS_PEMBAYARAN+'\',\''+full.CURRENCY+'\',\''+full.TOTAL_TAGIHAN+'\')"><i class="fa fa-arrows-alt"></i></button>' ;
-                                 }
+                                }
                                 if(newRoleUser[0] == "ROLE_ADMIN"){
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>'+
@@ -1125,7 +1300,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                         '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
                                         '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' ;
                                 }
-                                   '</div>'
+                                '</div>'
 
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY STAFF OPERATION") {
@@ -1228,7 +1403,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                         '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' ;
                                 }
-                                    '</div>'
+                                '</div>'
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY MANAGER PE"){
 
@@ -1367,7 +1542,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                         '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' ;
                                 }
-                               '</div>'
+                                '</div>'
                             }
                             /*else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY OPERATION" && full.EQ_IDR > "25000000000"){
                                 ret_value =
@@ -1402,7 +1577,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 
                 },
                 {
-                    "aTargets": [33],
+                    "aTargets": [36],
                     "mRender": function (data, type, full) {
                         var value = new Object();
                         var ret_value = ''
@@ -1597,151 +1772,166 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                         } else {
                             api.column(2).visible(false);
                         }
-                        if (response.JATUH_TEMPO == 1) {
+                        if (response.UNIT_ANGGARAN == 1) {
                             api.column(3).visible(true);
                         } else {
                             api.column(3).visible(false);
                         }
-                        if (response.VENDOR == 1) {
+                        if (response.POS_ANGGARAN == 1) {
                             api.column(4).visible(true);
                         } else {
                             api.column(4).visible(false);
                         }
-                        if (response.CURRENCY == 1) {
+                        if (response.SUB_POS_ANGGARAN == 1) {
                             api.column(5).visible(true);
                         } else {
                             api.column(5).visible(false);
                         }
-                        if (response.NILAI_TAGIHAN == 1) {
+                        if (response.JATUH_TEMPO == 1) {
                             api.column(6).visible(true);
                         } else {
                             api.column(6).visible(false);
                         }
-                        if (response.NAMA_KONTRAK == 1) {
+                        if (response.VENDOR == 1) {
                             api.column(7).visible(true);
                         } else {
                             api.column(7).visible(false);
                         }
-                        if (response.BANK_TUJUAN == 1) {
+                        if (response.CURRENCY == 1) {
                             api.column(8).visible(true);
                         } else {
                             api.column(8).visible(false);
                         }
-                        if (response.BANK_PEMBAYAR == 1) {
+                        if (response.NILAI_TAGIHAN == 1) {
                             api.column(9).visible(true);
                         } else {
                             api.column(9).visible(false);
                         }
-                        if (response.TGL_TERIMA_TAGIHAN == 1) {
+                        if (response.NAMA_KONTRAK == 1) {
                             api.column(10).visible(true);
                         } else {
                             api.column(10).visible(false);
                         }
-                        if (response.TGL_TAGIHAN == 1) {
+                        if (response.BANK_TUJUAN == 1) {
                             api.column(11).visible(true);
                         } else {
                             api.column(11).visible(false);
                         }
-                        if (response.NO_TAGIHAN == 1) {
+                        if (response.BANK_PEMBAYAR == 1) {
                             api.column(12).visible(true);
                         } else {
                             api.column(12).visible(false);
                         }
-                        if (response.TGL_NOTA_DINAS == 1) {
+                        if (response.TGL_TERIMA_TAGIHAN == 1) {
                             api.column(13).visible(true);
                         } else {
                             api.column(13).visible(false);
                         }
-                        if (response.NO_NOTA_DINAS == 1) {
+                        if (response.TGL_TAGIHAN == 1) {
                             api.column(14).visible(true);
                         } else {
                             api.column(14).visible(false);
                         }
-                        if (response.TGL_PEMBAYARAN == 1) {
-                            api.column(15).visible(false);
+                        if (response.NO_TAGIHAN == 1) {
+                            api.column(15).visible(true);
                         } else {
                             api.column(15).visible(false);
                         }
-                        if (response.COUNTDOWN == 1) {
+                        if (response.TGL_NOTA_DINAS == 1) {
                             api.column(16).visible(true);
                         } else {
                             api.column(16).visible(false);
                         }
-                        if (response.STATUS == 1) {
+                        if (response.NO_NOTA_DINAS == 1) {
                             api.column(17).visible(true);
                         } else {
                             api.column(17).visible(false);
                         }
-                        if (response.TIPE_TRANSAKSI == 1) {
-                            api.column(18).visible(true);
+                        if (response.TGL_PEMBAYARAN == 1) {
+                            api.column(18).visible(false);
                         } else {
                             api.column(18).visible(false);
                         }
-                        if (response.NOMINAL_SBLM_PAJAK == 1) {
+                        if (response.COUNTDOWN == 1) {
                             api.column(19).visible(true);
                         } else {
                             api.column(19).visible(false);
                         }
-                        if (response.PAJAK == 1) {
+                        if (response.STATUS == 1) {
                             api.column(20).visible(true);
                         } else {
                             api.column(20).visible(false);
                         }
-                        if (response.NOMINAL_STLH_PAJAK == 1) {
+                        if (response.TIPE_TRANSAKSI == 1) {
                             api.column(21).visible(true);
                         } else {
                             api.column(21).visible(false);
                         }
-                        if (response.NOMINAL_UNDERLYING == 1) {
+                        if (response.NOMINAL_SBLM_PAJAK == 1) {
                             api.column(22).visible(true);
                         } else {
                             api.column(22).visible(false);
                         }
-                        if (response.NOMINAL_TANPA_UNDERLYING == 1) {
+                        if (response.PAJAK == 1) {
                             api.column(23).visible(true);
                         } else {
                             api.column(23).visible(false);
                         }
-                        if (response.KURS_JISDOR == 1) {
+                        if (response.NOMINAL_STLH_PAJAK == 1) {
                             api.column(24).visible(true);
                         } else {
                             api.column(24).visible(false);
                         }
-                        if (response.SPREAD == 1) {
+                        if (response.NOMINAL_UNDERLYING == 1) {
                             api.column(25).visible(true);
                         } else {
                             api.column(25).visible(false);
                         }
-                        if (response.KURS_TRANSAKSI == 1) {
+                        if (response.NOMINAL_TANPA_UNDERLYING == 1) {
                             api.column(26).visible(true);
                         } else {
                             api.column(26).visible(false);
                         }
-                        if (response.NOMINAL_PEMBAYARAN_IDR == 1) {
+                        if (response.KURS_JISDOR == 1) {
                             api.column(27).visible(true);
                         } else {
                             api.column(27).visible(false);
                         }
-                        if (response.CREATE_DATE_TAGIHAN == 1) {
+                        if (response.SPREAD == 1) {
                             api.column(28).visible(true);
                         } else {
                             api.column(28).visible(false);
                         }
-                        if (response.UPDATE_DATE_TAGIHAN == 1) {
+                        if (response.KURS_TRANSAKSI == 1) {
                             api.column(29).visible(true);
                         } else {
                             api.column(29).visible(false);
                         }
-
-                        if (response.STATUS_TAGIHAN == 1) {
+                        if (response.NOMINAL_PEMBAYARAN_IDR == 1) {
                             api.column(30).visible(true);
                         } else {
                             api.column(30).visible(false);
                         }
-                        if (response.KETERANGAN == 1) {
+                        if (response.CREATE_DATE_TAGIHAN == 1) {
                             api.column(31).visible(true);
                         } else {
                             api.column(31).visible(false);
+                        }
+                        if (response.UPDATE_DATE_TAGIHAN == 1) {
+                            api.column(32).visible(true);
+                        } else {
+                            api.column(32).visible(false);
+                        }
+
+                        if (response.STATUS_TAGIHAN == 1) {
+                            api.column(33).visible(true);
+                        } else {
+                            api.column(33).visible(false);
+                        }
+                        if (response.KETERANGAN == 1) {
+                            api.column(34).visible(true);
+                        } else {
+                            api.column(34).visible(false);
                         }
 
                     },

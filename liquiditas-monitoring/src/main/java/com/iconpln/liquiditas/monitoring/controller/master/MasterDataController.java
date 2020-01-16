@@ -10,6 +10,7 @@ import org.apache.commons.collections.map.HashedMap;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -608,6 +609,17 @@ public class MasterDataController {
     }
 
 
+    @RequestMapping(value = "/metode_bayar/get_list_metode_bayar", method = RequestMethod.GET)
+    public List<Map<String,Object>> listMetodeBayar() {
+
+        try{
+            return masterService.getListMetodeBayar();
+        }catch (Exception e){
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
     @RequestMapping(value = "/sumber_dana/get_data_list_sumber_dana", method = RequestMethod.GET)
     public List<Map<String,Object>> listSumberDana() {
 
@@ -619,6 +631,60 @@ public class MasterDataController {
         }
     }
 
+//    @RequestMapping(value = "/pos_anggaran/get_pos_anggaran", method = RequestMethod.GET)
+//    public List<Map<String,Object>> getPosAnggaran() {
+//        try {
+//            return masterService.getPosAnggaran();
+//        } catch (Exception e) {
+//            AppUtils.getLogger(this).debug(e.getMessage());
+//            return null;
+//        }
+//    }
+
+    @RequestMapping(value = "/pos_anggaran/get_pos_anggaran", method = RequestMethod.GET)
+    public List<Map<String,Object>> getPosAnggaran(@RequestParam(value = "pTipeTransaksi", defaultValue = "") String pTipeTransaksi) {
+
+        try{
+            return masterService.getPosAnggaran(pTipeTransaksi);
+        }catch (Exception e){
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/unit_anggaran/get_unit", method = RequestMethod.GET)
+    public List<Map<String,Object>> getUnit() {
+        try {
+            return masterService.getUnit();
+        } catch (Exception e) {
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/sub_pos_anggaran/get_sub_pos_anggaran", method = RequestMethod.GET)
+    public List<Map<String,Object>> getSubPosAnggaran(@RequestParam(value = "pPosAnggaran", defaultValue = "") String pPosAnggaran) {
+
+        try{
+            return masterService.getSubPosAnggaran(pPosAnggaran);
+        }catch (Exception e){
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/nilai_anggaran/get_nilai_anggaran", method = RequestMethod.GET)
+    public List<Map<String,Object>> getNilaiAnggaran(
+            @RequestParam(value = "pSubPosAnggaran", defaultValue = "") String pSubPosAnggaran,
+            @RequestParam(value = "pUnitAnggaran", defaultValue = "") String pUnitAnggaran){
+
+        try{
+            return masterService.getNilaiAnggaran(pSubPosAnggaran, pUnitAnggaran);
+        }catch (Exception e){
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
 
     @RequestMapping(value = "/sumber_dana/get_sumber_dana_pss", method = RequestMethod.GET)
     public Map sumberDanaPss(
