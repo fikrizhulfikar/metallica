@@ -1,0 +1,383 @@
+<div th:fragment="stylesheets-backend">
+    <style>
+        button{ cursor: pointer
+        }
+        .table td {
+            padding-right: 0.75rem;
+            padding-bottom: 0.25rem;
+            padding-left: 0.75rem;
+            padding-top: 0.25rem;
+        }
+        .table th, .table td {
+            /*padding: 0.3rem !important;*/
+        }
+
+        div.dataTables_wrapper div.dataTables_paginate {
+            float: right !important;
+            text-align: left !important;
+            padding-left: 0px;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter {
+            text-align: right !important;
+        }
+
+        .lbl-src{
+            font-size: 12px;
+        }
+        .panel-custom {
+            overflow-x: hidden !important;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Tripartite</li>
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
+                <a style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</a>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
+                <button  style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="openFormNew()" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS','ROLE_MS_PEMBELANJAAN','ROLE_MS_KEUKON','ROLE_MS_KEUKON','ROLE_KASIR_IDR','ROLE_KASIR')"><i class="icon-pencil"></i> &nbsp;New Data
+                </button>
+            </div>
+        </li>
+    </ol>
+    <div class="modal fade" id="modal-upload-file" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title_modal">UPLOAD FILE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="input_file">
+                    <div class="form-group" style="display:none">
+                        <input type="text" class="form-control" id="temp-id-valas-file"
+                               accept="application/pdf,application/zip" onchange="upload_server('1')"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="file-tanda-terima-invoice">UPLOAD TANDA TERIMA INVOICE |
+                            <a href="" id="btn-download-tanda-terima-invoice">-</a></label>
+                        <input type="file" class="form-control" id="file-tanda-terima-invoice"
+                               accept="application/pdf,application/zip" onchange="upload_server('1')"/>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="file-lembar-verifikasi">UPLOAD LEMBAR VERIFIKASI | <a
+                                href="" id="btn-download-lembar-verifikasi">-</a></label>
+                        <input type="file" class="form-control" id="file-lembar-verifikasi"
+                               accept="application/pdf,application/zip" onchange="upload_server('2')"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="file-tagihan">UPLOAD INVOICE / TAGIHAN | <a
+                                href="" id="btn-download-file-tagihan">-</a></label>
+                        <input type="file" class="form-control" id="file-tagihan"
+                               accept="application/pdf,application/zip" onchange="upload_server('3')"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="file-nota-dinas-pembayaran">UPLOAD NOTA DINAS PEMBAYARAN
+                            | <a href="" id="btn-download-nota-dinas-pembayaran">-</a></label>
+                        <input type="file" class="form-control" id="file-nota-dinas-pembayaran"
+                               accept="application/pdf,application/zip" onchange="upload_server('4')"/>
+                    </div>
+                    <div class="form-group">
+                        <p>File bertipe .zip atau pdf</p>
+                        <p>Disarankan Maksimal 5mb</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Selesai</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="edit-reverse-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Realisasi Pembayaran</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="pStatusInvoice">Status Invoice</label>
+                        <select id="pStatusInvoice" class="form-control" required="required">
+                            <option value=""></option>
+                            <option id="option-input" value="1">INPUT DATA</option>
+                            <option id="option-siap" value="2">SIAP BAYAR</option>
+                            <option id="option-lunas" value="3">LUNAS</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pKeteranganStatus">Keterangan:</label>
+                        <input type="text" class="form-control" id="pKeteranganStatus" required="required"/>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" onclick="update_status()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="edit-tripartite-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Tripartite</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pTipeTransaksi"><span style="color: red">*)</span>&nbsp;Tipe
+                                    Transaksi:</label>
+                                <select id="pTipeTransaksi" class="form-control" required="required">
+                                    <option value="1">OPERASI</option>
+                                    <option value="2">INVESTASI</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pJenisPemabayaran"><span style="color: red">*)</span>&nbsp;Jenis Pembayaran:</label>
+                                <select id="pJenisPemabayaran" class="form-control"
+                                        onChange="selectJenisPembayaran(this.value);">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglJatuhTempo">Jatuh Tempo:</label>
+                                <input type="text" class="form-control" id="pTglJatuhTempo"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglJatuhTempoH2">H-2 Jatuh Tempo:</label>
+                                <input type="text" class="form-control" id="pTglJatuhTempoH2"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pVendor"><span style="color: red">*)</span>&nbsp;Vendor/Pengembang/Pemasok/Loan:</label>
+                                <select id="pVendor" class="form-control">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pBankCounterparty"><span style="color: red">*)</span>&nbsp;Bank
+                                    Counterparty:</label>
+                                <select id="pBankCounterparty" class="form-control">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCurrecny"><span style="color: red">*)</span>&nbsp;Currency:</label>
+                                <select id="pCurrecny" class="form-control">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNominalSebelumPajak"><span style="color: red">*)</span>&nbsp;Nominal
+                                    Sebelum Pajak:</label>
+                                <input type="number" class="form-control" id="pNominalSebelumPajak"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPajak"><span style="color: red">*)</span>&nbsp;Pajak (%):</label>
+                                <input type="number" min="0" max="100" class="form-control" id="pPajak"/>
+                            </div>
+                            <div class="form-group" style="margin-top: 40px">
+                                <label>Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label>
+                                <br/>
+                                <label>Gunakan titik (.) untuk koma (,)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pNominalDenganUnderlying">Nominal Dengan Underlying:</label>
+                                <input type="number" class="form-control" id="pNominalDenganUnderlying"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNominalTanpaUnderlying">Nominal Tanpa Underlying:</label>
+                                <input type="number" class="form-control" id="pNominalTanpaUnderlying"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pKursJisdor">Kurs Jisdor:</label>
+                                <input type="number" class="form-control" id="pKursJisdor"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pSpread">Spread:</label>
+                                <input type="number" class="form-control" id="pSpread"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglTerimaInvoice"><span style="color: red">*)</span>&nbsp;Tgl Tagihan Diterima:</label>
+                                <input type="text" class="form-control" id="pTglTerimaInvoice"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglInvoice"><span style="color: red">*)</span>&nbsp;Tgl Tagihan:</label>
+                                <input type="text" class="form-control" id="pTglInvoice"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoInvoice" >No. Tagihan:</label>
+                                <datalist id="pilihan-no-invoice"></datalist>
+                                <input type="text" list="data-no-invoice" class="form-control" id="pNoInvoice"/>
+                                <datalist id="data-no-invoice">
+                                </datalist>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoNotdin">No Nota Dinas:</label>
+                                <input type="text" class="form-control" id="pNoNotdin"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglInvoice">Tgl Nota Dinas:</label>
+                                <input type="text" class="form-control" id="pTglNotaDinas"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDeskripsi">Keterangan:</label>
+                                <input type="text" class="form-control" id="pDeskripsi" list="list-keterangan"/>
+                                <datalist id="list-keterangan"></datalist>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="ins_data()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+            <div id="filter">
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;">
+                    <div class="col-md-1" style="padding-right: 0px;"><label class="lbl-src">Tanggal Awal </label></div>
+                    <div class="col-md-3" style="padding-right: 0px;"><input type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal"/></div>
+                    <div class="col-md-1" style="padding-right: 0px;"><label class="lbl-src">Tanggal Akhir </label></div>
+                    <div class="col-md-3" style="padding-right: 0px;"><input type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/></div>
+                    <div class="col-md-1" style="padding-right: 0px;"><label class="lbl-src">Bank Counterparty </label></div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="bank" id="cmb_bank" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
+                    <div class="col-md-1" style="padding-right: 0px;"><label class="lbl-src">Jenis Pembayaran </label></div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="jenis_pemabayaran" id="cmb_jenis_pemabayaran" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
+                    <div class="col-md-3" style="padding-right: 0px;"><button onclick="search()" class="btn btn-primary" style="width: 100%; border-radius: 3px">Search</button></div>
+                </div>
+            </div>
+            <div class="list-data" style="margin-top:50px;">
+                <div class="panel panel-default">
+                    <div class="panel-body panel-custom">
+                        <table id="table-trepartite" class="table table-bordered table-striped"
+                               style="margin-left: 0px;">
+                            <thead style="font-size: 12px">
+                            <tr>
+                                <th>NO.</th>
+                                <th>JENIS PEMBAYARAN</th>
+                                <th>JATUH TEMPO</th>
+                                <th>H-2 JATUH TEMPO</th>
+                                <th>PENGEMBANG/ VENDOR</th>
+                                <th>BANK COUNTERPARTY</th>
+                                <th>CURRENCY</th>
+                                <th>NOMINAL SEBELUM PAJAK</th>
+                                <th>PAJAK</th>
+                                <th>NOMINAL SETELAH PAJAK</th>
+                                <th>NOMINAL DENGAN UNDERLYING</th>
+                                <th>NOMINAL TANPA UNDERLYING</th>
+                                <th>KURS JISDOR</th>
+                                <th>SPREAD</th>
+                                <th>KURS TRANSAKSI</th>
+                                <th>NOMINAL PEMBAYARAN IDR</th>
+                                <th>TANGGAL TERIMA TAGIHAN</th>
+                                <th>TGL. TAGIHAN</th>
+                                <th>NO. TAGIHAN</th>
+                                <th>TGL. NOTA DINAS PEMBAYARAN</th>
+                                <th>NO. NOTA DINAS PEMBAYARAN</th>
+                                <th>TGL PEMBAYARAN</th>
+                                <th>COUNTDOWN</th>
+                                <th>TIPE TRANSAKSI</th>
+                                <th>STATUS TAGIHAN</th>
+                                <th>KETERANGAN</th>
+                                <th>AKSI</th>
+                                <th id="forcbparent"></th>
+                            </tr>
+                            </thead>
+                            <tbody style="font-size: 12px">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-upload-xls" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title_modal_upload_xls">UPLOAD FILE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="input_file_xls">
+                    <div class="form-group">
+                        <label class="form-control-label" for="file-tanda-terima-invoice">UPLOAD FILE XLS |
+                            <a th:href="@{/api_operator/tripartite/template}" id="btn-download-template-data-pembayaran">
+                                Download Template
+                            </a></label>
+                        <input type="file" class="form-control" id="file-xls"
+                               accept="application/vnd.ms-excel"/>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal" onclick="upload_server_xls()">Selesai</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="multiple-edit-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Multiple Edit Rekapitulasi Pembayaran</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pNewTglJatuhTempo">Tanggal Jatuh
+                                    Tempo:</label>
+                                <input type="text" class="form-control" id="pNewTglJatuhTempo" required="required"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pNewBankCounterparty"><span style="color: red">*)</span>&nbsp;Bank
+                                    Counterparty:</label>
+                                <select id="pNewBankCounterparty" class="form-control">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="multipleUpdate()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/tripartite.js"></script>
+</div>

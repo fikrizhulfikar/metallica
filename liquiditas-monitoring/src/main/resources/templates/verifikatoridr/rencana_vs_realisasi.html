@@ -1,0 +1,108 @@
+<div th:fragment="stylesheets-frontend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        th {
+            font-size: 11px;
+            vertical-align: middle
+        }
+        td{font-size: 10px; vertical-align: middle !important; }
+
+        td, th {
+            padding: 1px !important;
+        }
+        .title-table-new{
+            font-size: 9px;
+        }
+
+    </style>
+</div>
+<div class="app-body col-md-12" style="min-height: 400px;" th:fragment="content"
+     xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="col-md-12">
+        <div class="title col-md-6 row">
+            <h6>
+                <b>REKAP PEMBAYARAN TGL : <span id="tglcetak">-</span></b>
+            </h6>
+        </div>
+        <div class="col-md-6 row" align="right" style="margin-left: 45px;">
+            <div class="form-group col-md-6"></div>
+            <div class="form-group col-md-4 row">
+                <div class='input-group date'>
+                    <input type="text" style="border-radius: 5px" class="form-control" id="tgl_pencarian"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group col-md-2 row">
+                <button class="btn btn-default" onclick="search()">Cari</button>
+            </div>
+        </div>
+        <div class="view-table" id="div-table-main">
+            <div class="col-md-12" align="center">
+                <h6>
+                    <b>TOTAL RENCANA PEMBAYARAN</b>
+                </h6>
+            </div>
+            <table width="100%" id="table-main-rencana" class="table table-bordered" style="margin-bottom: 15px !important;">
+                <thead>
+                <tr>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">JENIS PEMBAYARAN</th>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">JATUH TEMPO</th>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">IDR</th>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">USD</th>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">JPY</th>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">EUR</th>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">OTHER</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <div class="col-md-12" align="center">
+                <h6>
+                    <b>PEMBAYARAN YANG BELUM TEREALISASI</b>
+                </h6>
+            </div>
+            <table width="100%" id="table-rencana" class="table table-bordered" style="margin-bottom: 15px !important;">
+                <thead>
+                <tr>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">JENIS PEMBAYARAN</th>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">JATUH TEMPO</th>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">IDR</th>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">USD</th>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">JPY</th>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">EUR</th>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">OTHER</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            <div class="col-md-12" align="center">
+                <h6>
+                    <b>PEMBAYARAN YANG SUDAH TEREALISASI</b>
+                </h6>
+            </div>
+            <table width="100%" id="table-main-realisasi" class="table table-bordered" style="margin-bottom: 15px !important;">
+                <thead>
+                <tr>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">JENIS PEMBAYARAN</th>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">JATUH TEMPO</th>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">IDR</th>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">USD</th>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">JPY</th>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">EUR</th>
+                    <th style="background: #a5bfff;vertical-align: middle !important;" width="11.11%;" rowspan="2">OTHER</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div th:fragment="scripts-frontend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <script src="/static/js/frontend/verifikatoridr/idr_rencana_vs_realisasi.js"></script>
+</div>

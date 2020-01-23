@@ -1,0 +1,59 @@
+<div th:fragment="stylesheets-frontend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        th {
+            font-size: 11px;
+            vertical-align: middle
+        }
+        td{font-size: 10px; vertical-align: middle !important; }
+
+        td, th {
+            padding: 1px !important;
+        }
+        .title-table-new{
+            font-size: 9px;
+        }
+    </style>
+</div>
+<div class="app-body col-md-12" style="min-height: 400px;" th:fragment="content" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="col-md-12">
+        <div class="title col-md-6 row">
+            <h6>
+                <b>RENCANA BAYAR IMPREST &amp; IMPOR</b>
+            </h6>
+        </div>
+        <div class="col-md-6 row" align="right" style="margin-left: 45px;">
+            <input type="text" id="search-rencana-imprest-import"/> &nbsp;
+            <button style="padding: 2px 4px 2px 4px !important;" class="btn btn-default" onclick="search()">Cari
+            </button>
+        </div>
+
+        <div class="view-table" id="div-table-main" style="width:100%; height:690px; overflow:auto;">
+            <table width="100%" id="table-main" class="table table-bordered" style="margin-bottom: 0px !important;">
+                <thead>
+                <tr>
+                    <th id="col-tgl" style="background: #a5bfff;vertical-align: middle !important;" width="9%;" rowspan="2">TANGGAL</th>
+                    <th id="col-ket" style="background: #a5bfff;vertical-align: middle !important;" width="9%;" rowspan="2">KETERANGAN
+                    </th>
+                    <th colspan="4" style="background: #ff7b7b">IMPREST</th>
+                    <th colspan="4" style="background: #c0a4fd">IMPOR</th>
+                <tr>
+                    <th width="9%" style="background: #ff7b7b">MANDIRI</th>
+                    <th width="9%" style="background: #ff7b7b">BRI</th>
+                    <th width="9%" style="background: #ff7b7b">BNI</th>
+                    <th width="9%" style="background: #ff7b7b">BUKOPIN</th>
+                    <th width="9%" style="background: #c0a4fd">MANDIRI</th>
+                    <th width="9%" style="background: #c0a4fd">BRI</th>
+                    <th width="9%" style="background: #c0a4fd">BNI</th>
+                    <th width="9%" style="background: #c0a4fd">BUKOPIN</th>
+                </tr>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div th:fragment="scripts-frontend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <script src="/static/js/frontend/verifikatoridr/rencana_bayar_imprest_import.js"></script>
+</div>

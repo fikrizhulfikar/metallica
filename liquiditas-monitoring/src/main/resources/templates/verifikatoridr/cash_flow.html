@@ -1,0 +1,126 @@
+<div th:fragment="stylesheets-frontend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        th {
+            font-size: 11px;
+            vertical-align: middle
+        }
+        td{
+            font-size: 10px;
+            vertical-align: middle !important;
+        }
+
+        td, th {
+            padding: 1px !important;
+        }
+        .title-table-new{
+            font-size: 9px;
+        }
+
+    </style>
+</div>
+<div class="app-body col-md-12" style="min-height: 400px;" th:fragment="content"
+     xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="col-md-12">
+        <div class="col-md-12" align="center">
+            <h6>
+                <b>REKAP PEMBAYARAN TGL : <span id="tglcetak">-</span></b>
+            </h6>
+        </div>
+        <div class="view-table" id="div-table-main">
+            <div class="col-md-12" align="center">
+                <h6>
+                    <b>RENCANA PEMBAYARAN</b>
+                </h6>
+            </div>
+            <table width="100%" id="table-main" class="table table-bordered" style="margin-bottom: 15px !important;">
+                <thead>
+                <tr>
+                    <!--<th style="background: #a5bfff;vertical-align: middle !important;" width="5%;" rowspan="2">NOMOR URUT</th>-->
+                    <th style="background: #3a9a99;vertical-align: middle !important;" width="3%;" rowspan="2">NO</th>
+                    <th style="border-right: none; background: #3a9a99;vertical-align: middle !important;" width="16%;" rowspan="2">KETERANGAN</th>
+                    <th style="border-left: none; background: #3a9a99;vertical-align: middle !important;" width="3%;" rowspan="2"></th>
+                    <th id="tgl1" style="background: #4ddedd;vertical-align: middle !important;" width="8%;" rowspan="2"></th>
+                    <th id="tgl2" style="background: #3a9a99;vertical-align: middle !important;" width="8%;" rowspan="2"></th>
+                    <th id="tgl3" style="background: #4ddedd;vertical-align: middle !important;" width="8%;" rowspan="2"></th>
+                    <th id="tgl4" style="background: #3a9a99;vertical-align: middle !important;" width="8%;" rowspan="2"></th>
+                    <th id="tgl5" style="background: #4ddedd;vertical-align: middle !important;" width="8%;" rowspan="2"></th>
+                    <th id="tgl6" style="background: #3a9a99;vertical-align: middle !important;" width="8%;" rowspan="2"></th>
+                    <th id="tgl7" style="background: #4ddedd;vertical-align: middle !important;" width="8%;" rowspan="2"></th>
+                    <th style="background: #4995e1;vertical-align: middle !important;" width="9.11%;" rowspan="2">TOTAL</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-cash-flow" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form class="form-horizontal">
+                            <input type="hidden" id="modal-no-urut" />
+                            <div class="form-group">
+                                <label id="id-modal-tgl1" class="control-label col-sm-2" for="modal-tgl1">-</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="modal-tgl1" name="modal-tgl1" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label id="id-modal-tgl2" class="control-label col-sm-2" for="modal-tgl2">-</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="modal-tgl2" name="modal-tgl2" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label id="id-modal-tgl3" class="control-label col-sm-2" for="modal-tgl3">-</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="modal-tgl3" name="modal-tgl3" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label id="id-modal-tgl4" class="control-label col-sm-2" for="modal-tgl4">-</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="modal-tgl4" name="modal-tgl4" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label id="id-modal-tgl5" class="control-label col-sm-2" for="modal-tgl5">-</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="modal-tgl5" name="modal-tgl5" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label id="id-modal-tgl6" class="control-label col-sm-2" for="modal-tgl6">-</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="modal-tgl6" name="modal-tgl6" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label id="id-modal-tgl7" class="control-label col-sm-2" for="modal-tgl7">-</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="modal-tgl7" name="modal-tgl7" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal" onclick="simpan()">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div th:fragment="scripts-frontend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <script src="/static/js/frontend/verifikatoridr/idr_cash_flow.js"></script>
+</div>

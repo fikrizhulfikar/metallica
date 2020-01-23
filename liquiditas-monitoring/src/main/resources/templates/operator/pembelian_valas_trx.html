@@ -1,0 +1,362 @@
+<div th:fragment="stylesheets-backend">
+    <style>
+        button{ cursor: pointer
+        }
+        .table td {
+            padding-right: 0.75rem;
+            padding-bottom: 0.25rem;
+            padding-left: 0.75rem;
+            padding-top: 0.25rem;
+        }
+        div.dataTables_wrapper div.dataTables_paginate {
+            float: right !important;
+            text-align: left !important;
+            padding-left: 0px;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter {
+            text-align: right !important;
+        }
+        thead {
+            font-size: 12px; !important;
+        }
+        tbody {
+            font-size: 12px; !important;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Transaksi Pembelian Valas </li>
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
+                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')">
+                    <i class="icon-pencil"></i> &nbsp;New Data
+                </button>
+            </div>
+        </li>
+    </ol>
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+            <div id="filter">
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;">
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Tanggal Awal </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal"/>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Tanggal Akhir </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Bank </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="bank" id="cmb_bank" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Currency </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="bacurrecnynk" id="cmb_currecny" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Metode Bayar</label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="cmb_cara_pembayaran" id="cmb_cara_pembayaran" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
+                    </div>
+                </div>
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
+
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Status Tracking</label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="status_tracking" id="cmb_status_tracking" class="form-control">
+                            <option value="">PILIH STATUS TRACKING</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="list-data" style="margin-top:25px;">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <table id="table-rekapitulasi" class="table table-bordered table-striped">
+                            <thead style="font-size: 12px">
+                            <tr>
+                                <th>NO.</th>
+                                <th>DOCUMENT DATE</th>
+                                <th>POSTING DATE</th>
+                                <th>DOCUMENT NUMBER</th>
+                                <th>REFERENCE</th>
+                                <th>FISCAL YEAR</th>
+                                <th>COMPANY CODE</th>
+                                <th>BUSINESS AREA</th>
+                                <th>CURRENCY</th>
+                                <th>EXCHANGE RATE</th>
+                                <th>DOC HDR TEXT</th>
+                                <th>STATUS TRACKING</th>
+                                <th width="120px">AKSI</th>
+                                <th id="forcbparent"></th>
+                            </tr>
+                            </thead>
+                            <tbody style="font-size: 12px">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Pembelian Valas</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pHeadDocDate">&nbsp;Document Date :</label>
+                                <input type="text" class="form-control" id="pHeadDocDate" style="background-color: white" value="" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pHeadPostingDate">&nbsp;Posting Date :</label>
+                                <input type="text" class="form-control" id="pHeadPostingDate" style="background-color: white" value="" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pHeadDocNo">&nbsp;Document Number :</label>
+                                <input type="number" class="form-control" id="pHeadDocNo" style="background-color: white" value="" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pHeadReference">&nbsp;Reference :</label>
+                                <input type="text" class="form-control" id="pHeadReference" style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pHeadFiscYear">Fiscal Year :</label>
+                                <input type="number" class="form-control" id="pHeadFiscYear" style="background-color: white" value="" required="required"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pHeadCompCode">&nbsp;Company Code :</label>
+                                <input type="number" class="form-control" id="pHeadCompCode" style="background-color: white" value="" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pHeadBusArea">&nbsp;Business Area :</label>
+                                <input type="text" class="form-control" id="pHeadBusArea" style="background-color: white" value="" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pHeadDocHdrTxt">&nbsp;Doc Hdr Text :</label>
+                                <textarea class="form-control" id="pHeadDocHdrTxt" style="background-color: white" value=""></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="pHeadCurrency">&nbsp;Currency :</label>
+                                <select class="form-control" id="pHeadCurrency" style="background-color: white" required="required">
+                                    <option value="IDR">IDR</option>
+                                    <option value="USD">USD</option>
+                                    <option value="JPY">JPY</option>
+                                </select>
+                            </div>
+                            <div class="form-group pExcRate">
+                                <label for="pHeadExchangeRate">Exchange Rate</label>
+                                <input type="number" class="form-control" id="pHeadExchangeRate" style="background-color: white" required="required"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="ins_data()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-upload-xls" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title_modal_upload_xls">UPLOAD FILE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="input_file_xls">
+                    <div class="form-group" style="display:none">
+                        <input type="text" class="form-control" id="temp-xls"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">UPLOAD FILE XLS |
+                            <a th:href="@{/api_master/template/2}" id="btn-download-template-data-bank">
+                                Download Template
+                            </a></label>
+                        <input type="file" class="form-control" id="file-xls"
+                               accept="application/vnd.ms-excel"/>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal" onclick="upload_server_xls()">Selesai</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="detail-data container-fluid" style="display: none;">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div id="form-detail">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="pDetailDocumentNumber"><span style="color: red">*)</span>&nbsp;Document Number :</label>
+                                <input type="text" class="form-control" id="pDetailDocumentNumber" readonly="readonly"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDetailPmtProposalId"><span style="color: red">*)</span>&nbsp;Proposal Payment Id :</label>
+                                <input type="text" class="form-control" id="pDetailPmtProposalId" readonly="readonly"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDetailCompCode"><span style="color: red">*)</span>&nbsp;Company Code:</label>
+                                <input type="text" id="pDetailCompCode" class="form-control" readonly="readonly" />
+                            </div>
+                            <div class="form-group">
+                                <label for="pDetailFiscYear"><span style="color: red">*)</span>&nbsp;Fiscal Year :</label>
+                                <input type="text" class="form-control" id="pDetailFiscYear" readonly="readonly"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDetailLineNo"><span style="color: red">*)</span>&nbsp;Line Number :</label>
+                                <input type="text" class="form-control" id="pDetailLineNo" />
+                            </div>
+                            <div class="form-group">
+                                <label for="pDetailCostCtr"><span style="color: red">*)</span>Cost Center : </label>
+                                <input type="text" id="pDetailCostCtr" class="form-control" required="required"/>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="pDetailDrCrInd"><span style="color: red">*)</span>&nbsp;Debit Credit Indicator :</label>
+                                <select id="pDetailDrCrInd" class="form-control" required="required">
+                                    <option value="H">Credit</option>
+                                    <option value="S">Debit</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDetailGlAccount"><span style="color: red">*)</span>&nbsp;GL Account :</label>
+                                <select class="form-control" id="pDetailGlAccount" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDetailAmount"><span style="color: red">*)</span>&nbsp;Amount :</label>
+                                <input type="text" class="form-control" id="pDetailAmount" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDetailReference"><span style="color: red">*)</span>&nbsp;Reference :</label>
+                                <input type="text" class="form-control" id="pDetailReference" readonly="readonly"/>
+                            </div>
+                            <div class="form-group pExchangeRate">
+                                <label for="pDetailExchangeRate"><span style="color: red">*)</span>&nbsp;Exchange Rate :</label>
+                                <input type="text" class="form-control" id="pDetailExchangeRate" readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="pDetailBusArea"><span style="color: red">*)</span>&nbsp;Business Area :</label>
+                                <input type="text" class="form-control" id="pDetailBusArea" readonly="readonly"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDetailPostDate"><span style="color: red">*)</span>&nbsp;Posting Date :</label>
+                                <input type="text" class="form-control" id="pDetailPostDate" readonly="readonly"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDetailCurrency"><span style="color: red">*)</span>&nbsp;Currency :</label>
+                                <input type="text" class="form-control" id="pDetailCurrency" readonly="readonly" />
+                            </div>
+                            <div class="form-group">
+                                <label for="pDetailRemarks"><span style="color: red">*)</span>&nbsp;Remarks :</label>
+                                <input type="text" class="form-control" id="pDetailRemarks" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDetailCashCode"><span style="color: red">*)</span>Cash Code : </label>
+                                <select id="pDetailCashCode" class="form-control">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div align="right">
+                        <button onclick="AddToTable()" class="btn btn-success">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--        start of detail item-->
+        <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
+            <table id="table-main-detail" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>DOCUMENT NUMBER</th>
+                    <th>PAYMENT PROPOSAL</th>
+                    <th>COMPANY CODE</th>
+                    <th>CASH CODE</th>
+                    <th>FISCAL YEAR</th>
+                    <th>LINE NUMBER</th>
+                    <th>DEBIT CREDIT INDICATOR</th>
+                    <th>GL ACCOUNT</th>
+                    <th>AMOUNT</th>
+                    <th>CURRENCY</th>
+                    <th>COST CENTER</th>
+                    <th>BUSINESS AREA</th>
+                    <th>REMARKS</th>
+                    <th>MASUK</th>
+                    <th>AKSI</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="3"></td>
+                    <td colspan="3"></td>
+                    <td colspan="8"></td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div align="right">
+            <button class="btn btn-danger" onclick="back()"><i class="fa fa-arrow-circle-left"> &nbsp; Back</i></button>
+            <button onclick="submitChild()" class="btn btn-success">Submit</button>
+            <button onclick="showToast()" class="btn btn-sm btn-info">Toast</button>
+        </div>
+<!--        end of detail item-->
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/pembelianValasTrx.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+</div>

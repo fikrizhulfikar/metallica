@@ -1,0 +1,41 @@
+liquiditas/target/
+liquiditas-log/*
+liquiditas-core/target/
+liquiditas-core/liquiditas-log/*
+liquiditas-monitoring/target/
+liquiditas-monitoring/liquiditas-log/*
+liquiditas-fcm/target/
+liquiditas-fcm/liquiditas-log/*
+liquiditas-scheduler/target/
+liquiditas-scheduler/liquiditas-log/*
+logs/
+out/
+/liquiditas-log/core.log
+
+upload_content_file/
+upload_profile_file/
+
+*.log
+
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.DS_Store
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+nbdist/
+.nb-gradle/

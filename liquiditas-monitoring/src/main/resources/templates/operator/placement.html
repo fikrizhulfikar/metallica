@@ -1,0 +1,536 @@
+<div th:fragment="stylesheets-backend">
+    <style>
+        th {
+            font-size: 11px;
+            text-align: center;
+            vertical-align: middle
+        }
+
+        td {
+            font-size: 10px;
+        }
+
+        td, th {
+            padding: 2px !important;
+        }
+
+        .carousel-control {
+            width: 8% !important;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">Placement</li>
+
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <button class="btn btn-secondary" onclick="deletePlacement()"><i class="icon-docs"></i>&nbsp;Reset Data</button>
+            </div>
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <button class="btn btn-secondary" onclick="exportXls(0)"><i class="icon-docs"></i>&nbsp;Xls</button>
+            </div>
+        </li>
+    </ol>
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div id="modal-sumber-dana" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Set Dana</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table width="100%" id="table-set-dana" class="table table-bordered"
+                               style="margin-bottom: 0px !important;">
+                            <thead>
+                            <tr>
+                                <th width="10%;">BANK</th>
+                                <th width="20%;">Outstanding Sumber Dana</th>
+                                <th width="10%;">MANDIRI</th>
+                                <th width="10%;">BRI</th>
+                                <th width="10%;">BNI</th>
+                                <th width="10%;">BUKOPIN</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_SETTLEMENT','ROLE_MS_LIKUIDITAS','ROLE_DM_SETTLEMENT','ROLE_DM_INSTANSI_VERTIKAL','ROLE_DM_RECEIPT','ROLE_DM_TERPUSAT','ROLE_MS_PENDAPATAN')"
+                                type="button" class="btn btn-info" onclick="recordSetDana()">Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="view-table" id="div-table-selisih-dana" style="width:100%;">
+                    <table width="100%" id="table-sumber-dana" class="table table-bordered"
+                           style="margin-bottom: 0px !important;">
+                        <thead>
+                        <tr>
+                            <th style="background: #95B3D7" colspan="5">Outstanding Sumber Dana</th>
+                        <tr>
+                            <th style="background: #95B3D7" width="10%;">BANK</th>
+                            <th style="background: #95B3D7" width="10%;">RECEIPT</th>
+                            <th style="background: #95B3D7" width="10%;">KMK</th>
+                            <th style="background: #95B3D7" width="10%;">SUBSIDI</th>
+                            <th style="background: #95B3D7" width="10%;">POTENSI PENDAPATAN</th>
+                        </tr>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12" align="right">
+
+            </div>
+            <div class="col-md-12">
+                <div class="table" id="div-table-imprest-valas" style="width: 100%">
+                    <table width="100%" id="table-imprest-valas" class="table table-bordered"
+                           style="margin-bottom: 0px !important;">
+                        <thead>
+                        <tr>
+                            <th style="background: #B8CCE4; vertical-align: middle !important;" rowspan="2" colspan="2">
+                                KETERANGAN
+                            </th>
+                            <th style="background: #00B0F0; vertical-align: middle !important;" colspan="6">IMPREST
+                                VALAS
+                                <button style="float: right;" onclick="exportXls(5)"><i class="icon-docs"></i>&nbsp;Xls
+                                </button>
+                            </th>
+                        <tr>
+                            <th style="background: #00B0F0" width="19%;">MANDIRI</th>
+                            <th style="background: #00B0F0" width="19%;">BRI</th>
+                            <th style="background: #00B0F0" width="19%;">BNI</th>
+                            <th style="background: #00B0F0" width="19%;">BUKOPIN</th>
+                        </tr>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr id="saldo_awal_valas">
+                            <td align="left" colspan="2">SALDO AWAL</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                        </tr>
+                        <tr id="receipt_valas">
+                            <td align="right"></td>
+                            <td align="left">
+                                <button onclick="openSetDana('5','1','1')">Set</button>
+                                RECEIPT
+                            </td>
+                            <td align="right" id="total_valas_receipt_mandiri">-</td>
+                            <td align="right" id="total_valas_receipt_bri">-</td>
+                            <td align="right" id="total_valas_receipt_bni">-</td>
+                            <td align="right" id="total_valas_receipt_bukopin">-</td>
+                        </tr>
+                        <tr id="subsidi_valas">
+                            <td align="left">MUTASI KREDIT</td>
+                            <td align="left">
+                                <button onclick="openSetDana('5','3','3')">Set</button>
+                                SUBSIDI
+                            </td>
+                            <td align="right" id="total_valas_subsidi_mandiri">-</td>
+                            <td align="right" id="total_valas_subsidi_bri">-</td>
+                            <td align="right" id="total_valas_subsidi_bni">-</td>
+                            <td align="right" id="total_valas_subsidi_bukopin">-</td>
+                        </tr>
+                        <tr id="kmk_valas">
+                            <td align="right"></td>
+                            <td align="left">
+                                <button onclick="openSetDana('5','2','2')">Set</button>
+                                KMK
+                            </td>
+                            <td align="right" id="total_valas_kmk_mandiri">-</td>
+                            <td align="right" id="total_valas_kmk_bri">-</td>
+                            <td align="right" id="total_valas_kmk_bni">-</td>
+                            <td align="right" id="total_valas_kmk_bukopin">-</td>
+                        </tr>
+                        <tr id="potensi_valas">
+                            <td align="right"></td>
+                            <td align="left">
+                                <button onclick="openSetDana('5','4','4')">Set</button>
+                                POTENSI
+                            </td>
+                            <td align="right" id="total_valas_potensi_mandiri">-</td>
+                            <td align="right" id="total_valas_potensi_bri">-</td>
+                            <td align="right" id="total_valas_potensi_bni">-</td>
+                            <td align="right" id="total_valas_potensi_bukopin">-</td>
+                        </tr>
+                        <tr id="saldo_akhir_valas">
+                            <td align="left" colspan="2">SALDO -</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="table" id="div-table-imprest" style="width: 100%">
+                    <table width="100%" id="table-imprest" class="table table-bordered"
+                           style="margin-bottom: 0px !important;">
+                        <thead>
+                        <tr>
+                            <th style="background: #B8CCE4; vertical-align: middle !important;" rowspan="2" colspan="2">
+                                KETERANGAN
+                            </th>
+                            <th style="background: #00B0F0" colspan="6">IMPREST
+                                <button style="float: right;" onclick="exportXls(3)"><i class="icon-docs"></i>&nbsp;Xls
+                                </button>
+                            </th>
+                        <tr>
+                            <th style="background: #00B0F0" width="19%;">MANDIRI</th>
+                            <th style="background: #00B0F0" width="19%;">BRI</th>
+                            <th style="background: #00B0F0" width="19%;">BNI</th>
+                            <th style="background: #00B0F0" width="19%;">BUKOPIN</th>
+                        </tr>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr id="saldo_awal_imprest">
+                            <td align="left" colspan="2">SALDO AWAL</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                        </tr>
+                        <tr id="receipt_imprest">
+                            <td align="right"></td>
+                            <td align="left">
+                                <button onclick="openSetDana('3','1','1')">Set</button>
+                                RECEIPT
+                            </td>
+                            <td align="right" id="total_imprest_receipt_mandiri">-</td>
+                            <td align="right" id="total_imprest_receipt_bri">-</td>
+                            <td align="right" id="total_imprest_receipt_bni">-</td>
+                            <td align="right" id="total_imprest_receipt_bukopin">-</td>
+                        </tr>
+                        <tr id="subsidi_imprest">
+                            <td align="left">MUTASI KREDIT</td>
+                            <td align="left">
+                                <button onclick="openSetDana('3','3','3')">Set</button>
+                                SUBSIDI
+                            </td>
+                            <td align="right" id="total_imprest_subsidi_mandiri">-</td>
+                            <td align="right" id="total_imprest_subsidi_bri">-</td>
+                            <td align="right" id="total_imprest_subsidi_bni">-</td>
+                            <td align="right" id="total_imprest_subsidi_bukopin">-</td>
+                        </tr>
+                        <tr id="kmk_imprest">
+                            <td align="right"></td>
+                            <td align="left">
+                                <button onclick="openSetDana('3','2','2')">Set</button>
+                                KMK
+                            </td>
+                            <td align="right" id="total_imprest_kmk_mandiri">-</td>
+                            <td align="right" id="total_imprest_kmk_bri">-</td>
+                            <td align="right" id="total_imprest_kmk_bni">-</td>
+                            <td align="right" id="total_imprest_kmk_bukopin">-</td>
+                        </tr>
+                        <tr id="potensi_imprest">
+                            <td align="right"></td>
+                            <td align="left">
+                                <button onclick="openSetDana('3','4','4')">Set</button>
+                                POTENSI
+                            </td>
+                            <td align="right" id="total_imprest_potensi_mandiri">-</td>
+                            <td align="right" id="total_imprest_potensi_bri">-</td>
+                            <td align="right" id="total_imprest_potensi_bni">-</td>
+                            <td align="right" id="total_imprest_potensi_bukopin">-</td>
+                        </tr>
+                        <tr id="saldo_akhir_imprest">
+                            <td align="left" colspan="2">SALDO -</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="table" id="div-table-investasi" style="width: 100%">
+                    <table width="100%" id="table-investasi" class="table table-bordered"
+                           style="margin-bottom: 0px !important;">
+                        <thead>
+                        <tr>
+                            <th style="background: #B8CCE4; vertical-align: middle !important;" rowspan="2" colspan="2">
+                                KETERANGAN
+                            </th>
+                            <th style="background: #00B0F0" colspan="6">IMPREST INVESTASI TERPUSAT
+                                <button style="float: right;" onclick="exportXls(2)"><i class="icon-docs"></i>&nbsp;Xls
+                                </button>
+                            </th>
+                        <tr>
+                            <th style="background: #00B0F0" width="19%;">MANDIRI</th>
+                            <th style="background: #00B0F0" width="19%;">BRI</th>
+                            <th style="background: #00B0F0" width="19%;">BNI</th>
+                            <th style="background: #00B0F0" width="19%;">BUKOPIN</th>
+                        </tr>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr id="saldo_awal_investasi">
+                            <td align="left" colspan="2">SALDO AWAL</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                        </tr>
+                        <tr id="receipt_investasi">
+                            <td align="right"></td>
+                            <td align="left">
+                                <button onclick="openSetDana('2','1','1')">Set</button>
+                                RECEIPT
+                            </td>
+                            <td align="right" id="total_investasi_receipt_mandiri">-</td>
+                            <td align="right" id="total_investasi_receipt_bri">-</td>
+                            <td align="right" id="total_investasi_receipt_bni">-</td>
+                            <td align="right" id="total_investasi_receipt_bukopin">-</td>
+                        </tr>
+                        <tr id="subsidi_investasi">
+                            <td align="left">MUTASI KREDIT</td>
+                            <td align="left">
+                                <button onclick="openSetDana('2','3','3')">Set</button>
+                                SUBSIDI
+                            </td>
+                            <td align="right" id="total_investasi_subsidi_mandiri">-</td>
+                            <td align="right" id="total_investasi_subsidi_bri">-</td>
+                            <td align="right" id="total_investasi_subsidi_bni">-</td>
+                            <td align="right" id="total_investasi_subsidi_bukopin">-</td>
+                        </tr>
+                        <tr id="kmk_investasi">
+                            <td align="right"></td>
+                            <td align="left">
+                                <button onclick="openSetDana('2','2','2')">Set</button>
+                                KMK
+                            </td>
+                            <td align="right" id="total_investasi_kmk_mandiri">-</td>
+                            <td align="right" id="total_investasi_kmk_bri">-</td>
+                            <td align="right" id="total_investasi_kmk_bni">-</td>
+                            <td align="right" id="total_investasi_kmk_bukopin">-</td>
+                        </tr>
+                        <tr id="potensi_investasi">
+                            <td align="right"></td>
+                            <td align="left">
+                                <button onclick="openSetDana('2','4','4')">Set</button>
+                                POTENSI
+                            </td>
+                            <td align="right" id="total_investasi_potensi_mandiri">-</td>
+                            <td align="right" id="total_investasi_potensi_bri">-</td>
+                            <td align="right" id="total_investasi_potensi_bni">-</td>
+                            <td align="right" id="total_investasi_potensi_bukopin">-</td>
+                        </tr>
+                        <tr id="saldo_akhir_ivestasi">
+                            <td align="left" colspan="2">SALDO -</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="table" id="div-table-operasi" style="width: 100%">
+                    <table width="100%" id="table-operasi" class="table table-bordered"
+                           style="margin-bottom: 0px !important;">
+                        <thead>
+                        <tr>
+                            <th style="background: #B8CCE4; vertical-align: middle !important;" rowspan="2" colspan="2">
+                                KETERANGAN
+                            </th>
+                            <th style="background: #00B0F0" colspan="6">IMPREST OPERASI TERPUSAT
+                                <button style="float: right;" onclick="exportXls(1)"><i class="icon-docs"></i>&nbsp;Xls
+                                </button>
+                            </th>
+                        <tr>
+                            <th style="background: #00B0F0" width="19%;">MANDIRI</th>
+                            <th style="background: #00B0F0" width="19%;">BRI</th>
+                            <th style="background: #00B0F0" width="19%;">BNI</th>
+                            <th style="background: #00B0F0" width="19%;">BUKOPIN</th>
+                        </tr>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr id="saldo_awal_operasi">
+                            <td align="left" colspan="2">SALDO AWAL</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                        </tr>
+                        <tr id="receipt_operasi">
+                            <td align="right"></td>
+                            <td align="left">
+                                <button onclick="openSetDana('1','1','1')">Set</button>
+                                RECEIPT
+                            </td>
+                            <td align="right" id="total_operasi_receipt_mandiri">-</td>
+                            <td align="right" id="total_operasi_receipt_bri">-</td>
+                            <td align="right" id="total_operasi_receipt_bni">-</td>
+                            <td align="right" id="total_operasi_receipt_bukopin">-</td>
+                        </tr>
+                        <tr id="subsidi_operasi">
+                            <td align="left">MUTASI KREDIT</td>
+                            <td align="left">
+                                <button onclick="openSetDana('1','3','3')">Set</button>
+                                SUBSIDI
+                            </td>
+                            <td align="right" id="total_operasi_subsidi_mandiri">-</td>
+                            <td align="right" id="total_operasi_subsidi_bri">-</td>
+                            <td align="right" id="total_operasi_subsidi_bni">-</td>
+                            <td align="right" id="total_operasi_subsidi_bukopin">-</td>
+                        </tr>
+                        <tr id="kmk_operasi">
+                            <td align="right"></td>
+                            <td align="left">
+                                <button onclick="openSetDana('1','2','2')">Set</button>
+                                KMK
+                            </td>
+                            <td align="right" id="total_operasi_kmk_mandiri">-</td>
+                            <td align="right" id="total_operasi_kmk_bri">-</td>
+                            <td align="right" id="total_operasi_kmk_bni">-</td>
+                            <td align="right" id="total_operasi_kmk_bukopin">-</td>
+                        </tr>
+                        <tr id="potensi_operasi">
+                            <td align="right"></td>
+                            <td align="left">
+                                <button onclick="openSetDana('1','4','4')">Set</button>
+                                POTENSI
+                            </td>
+                            <td align="right" id="total_operasi_potensi_mandiri">-</td>
+                            <td align="right" id="total_operasi_potensi_bri">-</td>
+                            <td align="right" id="total_operasi_potensi_bni">-</td>
+                            <td align="right" id="total_operasi_potensi_bukopin">-</td>
+                        </tr>
+                        <tr id="saldo_akhir_operasi">
+                            <td align="left" colspan="2">SALDO -</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="table" id="div-table-impor" style="width: 100%">
+                    <table width="100%" id="table-impor" class="table table-bordered"
+                           style="margin-bottom: 0px !important;">
+                        <thead>
+                        <tr>
+                            <th style="background: #B8CCE4; vertical-align: middle !important;" rowspan="2" colspan="2">
+                                KETERANGAN
+                            </th>
+                            <th style="background: #00B0F0" colspan="6">IMPOR
+                                <button style="float: right;" onclick="exportXls(4)"><i class="icon-docs"></i>&nbsp;Xls
+                                </button>
+                            </th>
+                        <tr>
+                            <th style="background: #00B0F0" width="19%;">MANDIRI</th>
+                            <th style="background: #00B0F0" width="19%;">BRI</th>
+                            <th style="background: #00B0F0" width="19%;">BNI</th>
+                            <th style="background: #00B0F0" width="19%;">BUKOPIN</th>
+                        </tr>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr id="saldo_awal_import">
+                            <td align="left" colspan="2">SALDO AWAL</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                        </tr>
+                        <tr id="receipt_impor">
+                            <td align="right"></td>
+                            <td align="left">
+                                <button onclick="openSetDana('4','1','1')">Set</button>
+                                RECEIPT
+                            </td>
+                            <td align="right" id="total_impor_receipt_mandiri">-</td>
+                            <td align="right" id="total_impor_receipt_bri">-</td>
+                            <td align="right" id="total_impor_receipt_bni">-</td>
+                            <td align="right" id="total_impor_receipt_bukopin">-</td>
+                        </tr>
+                        <tr id="subsidi_impor">
+                            <td align="left">MUTASI KREDIT</td>
+                            <td align="left">
+                                <button onclick="openSetDana('4','3','3')">Set</button>
+                                SUBSIDI
+                            </td>
+                            <td align="right" id="total_impor_subsidi_mandiri">-</td>
+                            <td align="right" id="total_impor_subsidi_bri">-</td>
+                            <td align="right" id="total_impor_subsidi_bni">-</td>
+                            <td align="right" id="total_impor_subsidi_bukopin">-</td>
+                        </tr>
+                        <tr id="kmk_impor">
+                            <td align="right"></td>
+                            <td align="left">
+                                <button onclick="openSetDana('4','2','2')">Set</button>
+                                KMK
+                            </td>
+                            <td align="right" id="total_impor_kmk_mandiri">-</td>
+                            <td align="right" id="total_impor_kmk_bri">-</td>
+                            <td align="right" id="total_impor_kmk_bni">-</td>
+                            <td align="right" id="total_impor_kmk_bukopin">-</td>
+                        </tr>
+                        <tr id="potensi_impor">
+                            <td align="right"></td>
+                            <td align="left">
+                                <button onclick="openSetDana('4','4','4')">Set</button>
+                                POTENSI
+                            </td>
+                            <td align="right" id="total_impor_potensi_mandiri">-</td>
+                            <td align="right" id="total_impor_potensi_bri">-</td>
+                            <td align="right" id="total_impor_potensi_bni">-</td>
+                            <td align="right" id="total_impor_potensi_bukopin">-</td>
+                        </tr>
+                        <tr id="saldo_akhir_impor">
+                            <td align="left" colspan="2">SALDO -</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                            <td align="right">-</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/placement.js"></script>
+</div>

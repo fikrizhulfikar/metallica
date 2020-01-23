@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="UI - For calculte valas"/>
+    <meta name="author" content="ICON PLN"/>
+    <meta name="keyword" content="Valas Administrator"/>
+    <link rel="shortcut icon" href="/static/new-backend/img/icon.png"/>
+
+    <title>Valas Administrator</title>
+
+    <!-- Icons -->
+    <link href="/static/css/jquery-ui.css" rel="stylesheet"/>
+    <link href="/static/new-backend/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="/static/new-backend/css/simple-line-icons.css" rel="stylesheet"/>
+
+    <!-- Main styles for this application -->
+    <link href="/static/new-backend/css/style.css" rel="stylesheet"/>
+    <link href="/static/css/backend/jquery.dataTables.min.css" rel="stylesheet"/>
+    <link href="/static/css/select2.css" rel="stylesheet"/>
+    <link href="/static/css/select2-bootstrap.css" rel="stylesheet"/>
+    <link href="/static/js/jquery-toast-plugin-1.3.2/dist/jquery.toast.min.css" rel="stylesheet"/>
+    <style>
+        td.details-control {
+            background: url('/static/images/details_open.png') no-repeat center center;
+            cursor: pointer;
+        }
+
+        tr.shown td.details-control {
+            background: url('/static/images/details_close.png') no-repeat center center;
+        }
+
+        div.dataTables_wrapper div.dataTables_paginate {
+            float: left !important;
+            text-align: left !important;
+        }
+
+        .dataTables_length {
+            padding-left: -10px !important;
+        }
+
+        .panel-custom {
+            overflow-x: scroll;
+            padding: 10px 0px 10px 0px !important;
+        }
+
+        .dataTables_wrapper {
+            padding: 0px !important;
+        }
+
+        .color-active {
+            color: darkslategray;
+        }
+
+        .datatables_action {
+            text-align: right;
+        }
+
+        .datatables_action-center {
+            text-align: center;
+        }
+        .th-middle{
+            vertical-align: middle !important;
+            text-align: center !important;
+        }
+        #loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+            margin-top: 22.5%;
+        }
+
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <div th:replace="${view} :: stylesheets-backend"></div>
+
+
+
+</head>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+<div style="display: none" class="col-md-12" id="loader-div" align="center"><div id="loader"></div></div>
+<header th:replace="operator/shared/new-header :: header-param" class="app-header navbar">
+</header>
+
+<div class="app-body">
+    <div class="sidebar" th:replace="operator/shared/new-menu :: menu-param">
+    </div>
+
+    <main th:replace="${view} :: content" class="main">
+    </main>
+
+    <!-- Modal Rekap Data -->
+    <div id="rekap-data-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Rekapitulasi Pembayaran</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pTipeTransaksi_rekap_data"><span style="color: red">*)</span>&nbsp;Tipe
+                                    Transaksi:</label>
+                                <select id="pTipeTransaksi_rekap_data" class="form-control" required="required" disabled="true">
+                                    <option value="1">OPERASI</option>
+                                    <option value="2">INVESTASI</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pJenisPemabayaran_rekap_data"><span style="color: red">*)</span>&nbsp;Jenis
+                                    Pembayaran:</label>
+                                <select id="pJenisPemabayaran_rekap_data" class="form-control" required="required" disabled="true">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglJatuhTempo_rekap_data">Tanggal Jatuh
+                                    Tempo:</label>
+                                <input type="text" class="form-control" id="pTglJatuhTempo_rekap_data" required="required" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pVendor_rekap_data"><span style="color: red">*)</span>&nbsp;Vendor/Pengembang/Pemasok/Loan:</label>
+                                <select id="pVendor_rekap_data" class="form-control" required="required" disabled="true">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCurrency_rekap_data"><span style="color: red">*)</span>&nbsp;Currency:</label>
+                                <select id="pCurrency_rekap_data" class="form-control" required="required" disabled="true">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNilaiTagihan_rekap_data"><span style="color: red">*)</span>&nbsp;Nilai
+                                    Tagihan:</label>
+                                <input type="number" class="form-control" id="pNilaiTagihan_rekap_data" required="required" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pBankTujuan_rekap_data"><span style="color: red">*)</span>&nbsp;Bank Tujuan
+                                    Pembayaran:</label>
+                                <select id="pBankTujuan_rekap_data" class="form-control" required="required" disabled="true">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-top: 40px">
+                                <label for="pJenisPemabayaran_rekap_data">Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label><br/>
+                                <label>Gunakan titik (.) untuk koma (,)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pBankPembayar_rekap_data"><span style="color: red">*)</span>&nbsp;Bank
+                                    Pembayar:</label>
+                                <select id="pBankPembayar_rekap_data" class="form-control" required="required" disabled="true">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pUnitPenerima_rekap_data"><span style="color: red">*)</span>&nbsp;Nama
+                                    Kontrak/Loan/Unit
+                                    Penerima/Pembangkit:</label>
+                                <select id="pUnitPenerima_rekap_data" class="form-control" required="required" disabled="true">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglTerimaInvoice_rekap_data"><span style="color: red">*)</span>&nbsp;Tanggal Tagihan
+                                    Diterima:</label>
+                                <input type="text" class="form-control" id="pTglTerimaInvoice_rekap_data" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglTagihan_rekap_data">Tanggal Tagihan:</label>
+                                <input type="text" class="form-control" id="pTglTagihan_rekap_data" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoTagihan_rekap_data">No Tagihan:</label>
+                                <input type="text" class="form-control" list="data-no-tagihan" autocomplete="on" name="pNoTagihan_rekap_data"
+                                       id="pNoTagihan_rekap_data" disabled="true"/>
+                                <datalist id="data-no-tagihan"></datalist>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoNotaDinas_rekap_data">No Nota Dinas:</label>
+                                <input type="text" class="form-control" id="pNoNotaDinas_rekap_data" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglNotaDinas_rekap_data">Tanggal Nota Dinas:</label>
+                                <input type="text" class="form-control" id="pTglNotaDinas_rekap_data" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pKeterangan_rekap_data">Keterangan:</label>
+                                <input type="text" class="form-control" id="pKeterangan_rekap_data" list="data-keterangan-rekap-data" disabled="true"/>
+                                <datalist id="data-keterangan-rekap-data"></datalist>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Tripartite -->
+    <div id="tripartite-data-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Tripartite</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pTipeTransaksi_tripartite"><span style="color: red">*)</span>&nbsp;Tipe
+                                    Transaksi:</label>
+                                <select id="pTipeTransaksi_tripartite" class="form-control" required="required" disabled="true">
+                                    <option value="1">OPERASI</option>
+                                    <option value="2">INVESTASI</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pJenisPemabayaran_tripartite"><span style="color: red">*)</span>&nbsp;Jenis Pembayaran:</label>
+                                <select id="pJenisPemabayaran_tripartite" class="form-control" disabled="true">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglJatuhTempo_tripartite">Jatuh Tempo:</label>
+                                <input type="text" class="form-control" id="pTglJatuhTempo_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglJatuhTempoH2_tripartite">H-2 Jatuh Tempo:</label>
+                                <input type="text" class="form-control" id="pTglJatuhTempoH2_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pVendor_tripartite"><span style="color: red">*)</span>&nbsp;Vendor/Pengembang/Pemasok/Loan:</label>
+                                <select id="pVendor_tripartite" class="form-control" disabled="true">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pBankCounterparty_tripartite"><span style="color: red">*)</span>&nbsp;Bank
+                                    Counterparty:</label>
+                                <select id="pBankCounterparty_tripartite" class="form-control" disabled="true">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCurrecny_tripartite"><span style="color: red">*)</span>&nbsp;Currency:</label>
+                                <select id="pCurrecny_tripartite" class="form-control" disabled="true">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNominalSebelumPajak_tripartite"><span style="color: red">*)</span>&nbsp;Nominal
+                                    Sebelum Pajak:</label>
+                                <input type="number" class="form-control" id="pNominalSebelumPajak_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPajak_tripartite"><span style="color: red">*)</span>&nbsp;Pajak (%):</label>
+                                <input type="number" min="0" max="100" class="form-control" id="pPajak_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group" style="margin-top: 40px">
+                                <label>Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label>
+                                <br/>
+                                <label>Gunakan titik (.) untuk koma (,)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pNominalDenganUnderlying_tripartite">Nominal Dengan Underlying:</label>
+                                <input type="number" class="form-control" id="pNominalDenganUnderlying_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNominalTanpaUnderlying_tripartite">Nominal Tanpa Underlying:</label>
+                                <input type="number" class="form-control" id="pNominalTanpaUnderlying_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pKursJisdor_tripartite">Kurs Jisdor:</label>
+                                <input type="number" class="form-control" id="pKursJisdor_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pSpread_tripartite">Spread:</label>
+                                <input type="number" class="form-control" id="pSpread_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglTerimaInvoice_tripartite"><span style="color: red">*)</span>&nbsp;Tgl Tagihan Diterima:</label>
+                                <input type="text" class="form-control" id="pTglTerimaInvoice_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglInvoice_tripartite"><span style="color: red">*)</span>&nbsp;Tgl Tagihan:</label>
+                                <input type="text" class="form-control" id="pTglInvoice_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoInvoice_tripartite" >No. Tagihan:</label>
+                                <datalist id="pilihan-no-invoice-tripartite"></datalist>
+                                <input type="text" list="data-no-invoice-tripartite" class="form-control" id="pNoInvoice_tripartite" disabled="true"/>
+                                <datalist id="data-no-invoice-tripartite">
+                                </datalist>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoNotdin_tripartite">No Nota Dinas:</label>
+                                <input type="text" class="form-control" id="pNoNotdin_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglNotaDinas_tripartite">Tgl Nota Dinas:</label>
+                                <input type="text" class="form-control" id="pTglNotaDinas_tripartite" disabled="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDeskripsi_tripartite">Keterangan:</label>
+                                <input type="text" class="form-control" id="pDeskripsi_tripartite" list="list-keterangan-tripartite" disabled="true"/>
+                                <datalist id="list-keterangan-tripartite"></datalist>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<footer class="app-footer" style="cursor: default">
+    <a><b>L'Metallica</b></a> © 2017 Administrator.
+    <span class="float-right">Powered by <b><a>ICON </a></b>
+        </span>
+</footer>
+</body>
+<!-- Bootstrap and necessary plugins -->
+<script src="/static/new-backend/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/static/js/select2.min.js"></script>
+<script src="/static/new-backend/bower_components/tether/dist/js/tether.min.js"></script>
+<script src="/static/new-backend/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/static/js/backend/jquery.dataTables.min.js"></script>
+<script src="/static/js/backend/dataTables.bootstrap4.min.js"></script>
+<script src="/static/new-backend/bower_components/pace/pace.min.js"></script>
+<script src="/static/js/sockjs.min.js"></script>
+<script src="/static/js/stomp.min.js"></script>
+
+
+<!-- GenesisUI main scripts -->
+<script src="/static/new-backend/js/app.js"></script>
+<script src="/static/js/jquery-ui.js"></script>
+<script src="/static/js/show-dialog.js"></script>
+<script src="/static/js/maskedinput/jquery.maskmoney.js"></script>
+<script src="/static/js/maskedinput/jquery.mask.min.js"></script>
+<script src="/static/js/maskedinput/FormatMoney.js"></script>
+<script src="/static/js/pdfmake/pdfmake.min.js"></script>
+<script src="/static/js/pdfmake/vfs_fonts.js"></script>
+<script src="/static/js/backend/coreapps.js"></script>
+<script src="/static/js/accounting.min.js"></script>
+
+<script src="/static/js/sockjs.min.js"></script>
+<script src="/static/js/stomp.min.js"></script>
+
+<script src="/static/js/jquery-toast-plugin-1.3.2/dist/jquery.toast.min.js"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var roleUser = [[${#authentication.getAuthorities().toString()}]];
+    var thp1 = roleUser.replace("[", "");
+    var thp2 = thp1.replace("]", "");
+    var username = [[${#authentication.getPrincipal().getUsername().toString()}]];
+    var topics = [[${#authentication.getPrincipal().getTopics()}]];
+    var newRoleUser = thp2.split(", ");
+    /*]]>*/
+</script>
+<script th:src="@{/static/js/wsock.js}"></script>
+<script src="/static/js/jquery-toast-plugin-1.3.2/dist/jquery.toast.min.js"></script>
+
+<div th:replace="${view} :: scripts-backend"></div>
+</html>

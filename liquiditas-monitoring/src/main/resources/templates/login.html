@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+    <link href="/static/css/bootstrap.css" rel="stylesheet"/>
+    <link href="/static/css/font-awesome.css" rel="stylesheet"/>
+    <link href="/static/css/frontend/login.css" rel="stylesheet"/>
+    <link href="/static/css/common/animate.css" rel="stylesheet"/>
+    <link href="/static/css/common/daterangepicker.css" rel="stylesheet"/>
+    <link href="/static/css/common/select2.min.css" rel="stylesheet"/>
+    <link href="/static/css/common/util.css" rel="stylesheet"/>
+    <link rel="icon" href="/static/images/tab-icon.png"/>
+    <style>
+        body{
+            background: white !important;
+            font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif !important;
+        }
+        #load {
+            position: absolute;
+            top: calc(50% - 85px);
+            left: calc(50% - 60px);
+        }
+        #loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+            margin-top: 21.5%;
+        }
+
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body>
+<div id="load">
+    <div style="display: none" id="loader-div"><div id="loader"></div></div>
+</div>
+<div class="app-body">
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <form class="login100-form validate-form" name="f" th:action="@{/auth}" method="post">
+                    <span class="login100-form-title p-b-48">
+						<!--<i></i>-->
+					<img src="../static/images/lg-login.png" height="130" width="130"/>
+                    </span>
+                    <span class="login100-form-title p-b-26" style="margin-top: -25px; font-family: cursive">
+						L'Metallica
+					</span>
+                    <div align="center" th:if="${param.error}">
+                        <p style="color: orangered; margin-bottom: 10px">Invalid username and password.</p>
+                    </div>
+                    <div align="center" th:if="${param.logout}">
+                        <p style="color: cornflowerblue; margin-bottom: 10px">You have been logged out.</p>
+                    </div>
+                    <div class="wrap-input100 validate-input">
+                        <input class="input100" type="text" placeholder="Username" id="username" name="username"/>
+                        <span class="focus-input100"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input">
+                        <input class="input100" type="password" placeholder="Password" id="password" name="password"/>
+                        <span class="focus-input100"></span>
+                    </div>
+                    <div class="container-login100-form-btn">
+                        <div class="wrap-login100-form-btn">
+                            <div class="login100-form-bgbtn"></div>
+                            <button class="login100-form-btn" onclick="showLoadingCss()">
+                                Login
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/static/js/jquery-2.2.0.min.js"></script>
+<script src="/static/js/bootstrap.js"></script>
+<script src="/static/js/backend/coreapps.js"></script>
+</body>
+</html>
