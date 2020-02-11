@@ -63,7 +63,11 @@ function AddToTable() {
     var flag = 0;
     let amount = 0;
 
-    (exrate !== 0 || exrate !== "") ? amount = amt * exrate : amount = amt;
+
+    (exrate !== 0 || exrate !== "" || exrate !== "-") ? amount = amt * exrate : amount = amt;
+    console.log("Amt :",amt);
+    console.log("Exrate :",exrate);
+    console.log("Amount :",amount);
     if (drcrind == "" || glaccount == "" || amt == "" || remarks == "" || cash_code == "") {
         Swal.fire("Maaf!","Mohon Lengkapi Data", "warning");
         return;
@@ -165,7 +169,7 @@ function deleteHead (idMetallica){
 }
 
 function dele() {
-    $("#table-main-detail tbody").on('click','.trash', function () {
+    $("#table-main-detail tbody").on('click','.btn-warning', function () {
        pembelianValasDetail
            .row($(this).parents('tr'))
            .remove()
@@ -580,17 +584,6 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                         }
                 }
             ,
-        "columns": [
-            {"data": "ROW_NUMBER", "defaultContent": ""},
-            {"data": "DOCUMENT_DATE", "defaultContent": ""},
-            {"data": "POSTING_DATE", "defaultContent": ""},
-            {"data": "DOCUMENT_NUMBER", "defaultContent": ""},
-            {"data": "REFERENCE", "defaultContent": ""},
-            {"data": "COMPANY_CODE", "defaultContent": ""},
-            {"data": "BUSINESS_AREA", "defaultContent": ""},
-            {"data": "CURRENCY", "defaultContent": ""},
-            {"data": "DOC_HDR_TXT", "defaultContent": ""},
-        ],
             "drawCallback":
                 function (settings) {
                     // $(".dataTables_scrollHeadInner").css({"width":"100%"});
@@ -1004,7 +997,7 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
         },
         "footerCallback" : function (tfoot, data, start, end, display) {
             let api = this.api();
-            console.log("Data : ",data);
+            //console.log("Data : ",data);
             let debit = 0;
             let credit = 0;
             let balance = 0;

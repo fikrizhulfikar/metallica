@@ -1,5 +1,5 @@
 function rencanaBayarBarLine(){
-    const dataSource = {
+    let dataSource = {
         chart : {
             caption : "Analisa Realisasi Pembayaran",
             subcaption : "Treasury, PT. PLN (Persero)",
@@ -333,18 +333,22 @@ function tableRekeningInvestasi(){
 
 function tableMainDashboard(){
     let date = new Date();
-    // let current_date = dat
-    // let current_date = alert("Date : "+ date.getDay()+"/"+date.getMonth()+1+"/"+date.getFullYear());
+    let current_month = date.getMonth()+1;
+    let current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString();
+    // console.log("Current Date : ",current_full_date);
+
     for (let i=0; i<5; i++){
-        $("#header-tanggal").append("<td>"+date.getDate()+1+"/"+date.getMonth()+1+"/"+date.getFullYear()+"</td>");
-        $("#header_tanggal_realisasi").append("<td>"+date.getDate()+1+"/"+date.getMonth()+1+"/"+date.getFullYear()+"</td>");
+        let tgl = date.getDate()+i;
+        let month = date.getMonth()+1;
+        $("#header-tanggal").append("<td>"+tgl+"/"+0+month+"/"+date.getFullYear()+"</td>");
+        $("#header_tanggal_realisasi").append("<td>"+tgl+"/"+0+month+"/"+date.getFullYear()+"</td>");
     }
 
     let main_rencana = $("#main-rencana").DataTable({
         "ajax" : {
             "url": baseUrl + "api_operator/api_report/saldo_awal",
             "data" : {
-                "tanggal" : "20200122",
+                "tanggal" : current_full_date,
             },
             "type" : "GET",
             "dataType" : "json",
@@ -355,38 +359,104 @@ function tableMainDashboard(){
         "bInfo" : false,
         "bLengthChange" : false,
         "columns" : [
-            {
-                "data": null,
-                "render": (data, type, row) => {
-                    return '<td>'+data.URAIAN+'</td>';
-                }
-            },
+            {"data": null,"render": (data, type, row) => {return '<td>'+data.URAIAN+'</td>';}},
             {"data": "ISANAK","visible":false},
-            {
-                "data": null,
-                "render" : (data, type, row) => {
-                    return '<td><a href="" data-toggle="modal" data-target="#modal-detail"><i class="fa fa-info-circle"></i></a></td>';
-                }
-            },
-            {
-                "data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>'}
-            },
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
         ],
         "createdRow" : function (row, data, dataIndex){
-            // console.log("Data : ",data);
+            // console.log("Data Index: ",dataIndex);
+            console.log("Cok1 : ",$(row));
             const regexHead = RegExp("([A-Z])\\..");
             const regexChild1 = RegExp("([A-Z])\\.[(0-9)]");
 
-            if (data['ISANAK'] === 0 && !regexChild1.test(data["KODE"])){
+            if (data['ISANAK'] === 0 && !regexChild1.test(data["KODE"]) && dataIndex === 0){
+                $(row).css({
+                    "color" : "white",
+                    "background-color": "#a01629",
+                    "cursor" : "pointer",
+                });
+                $(row).addClass("super-parent");
+                $(row).attr("onclick", "showParents(this)");
+
+            }else if (data['ISANAK'] === 0 && !regexChild1.test(data["KODE"]) && dataIndex > 0){
                 $(row).css({
                     "color" : "white",
                     "background-color": "#16a085"
                 });
+                $(row).addClass("parent");
+                $(row).addClass("grand-parent");
+            }
+
+            if (data["ISANAK"] === 0 && regexChild1.test(data["KODE"])){
+                $(row).css({
+                    "background-color": "#f1c40f",
+                    "cursor": "pointer",
+
+                });
+                $(row).attr("onclick","showChild(this)");
+                $(row).addClass("parent");
+            };
+
+            if (data["ISANAK"] === 1){
+                $(row).addClass("child");
+                $(row).hide();
+            };
+
+            if (data["URAIAN"] === null) {$(row).remove()};
+        },
+        "initComplete" : (settings, json) => {
+            let parent = $(".super-parent").nextUntil(".grand-parent");
+            parent.hide();
+        }
+    });
+    let main_realisasi = $("#main-realisasi").DataTable({
+        "ajax" : {
+            "url": baseUrl + "api_operator/api_report/saldo_realisasi",
+            "data" : {
+                "tanggal" : current_full_date,
+            },
+            "type" : "GET",
+            "dataType" : "json",
+        },
+        "sorting": false,
+        "searching" : false,
+        "paging": false,
+        "bInfo" : false,
+        "bLengthChange" : false,
+        "columns" : [
+            {"data": null,"render": (data, type, row) => {return '<td>'+data.URAIAN+'</td>'}},
+            {"data": "KODE","visible":false},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_DMIN5)+'</td>'}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_DMIN4)+'</td>'}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_DMIN3)+'</td>'}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_DMIN2)+'</td>'}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_DMIN1)+'</td>'}},
+        ],
+        "createdRow" : function (row, data, dataIndex){
+            console.log("Data : ",data["URAIAN"]);
+            const regexHead = RegExp("([A-Z])\\..");
+            // const regexChild2 = RegExp("([A-Z])\\...")
+            const regexChild1 = RegExp("([A-Z])\\.[(0-9)]")
+
+            if (data['ISANAK'] === 0 && !regexChild1.test(data["KODE"]) && (data["URAIAN"] === "Saldo Awal" || data["URAIAN"] === "Saldo Akhir")){
+                $(row).css({
+                    "color" : "white",
+                    "background-color": "#a01629",
+                    "cursor" : "pointer",
+                });
+                $(row).addClass("super-parent");
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showParents(this)");
+            }else if(data['ISANAK'] === 0 && !regexChild1.test(data["KODE"])){
+                $(row).css({
+                    "color" : "white",
+                    "background-color": "#16a085"
+                });
+                $(row).addClass("grand-parent");
                 $(row).addClass("parent");
             }
 
@@ -406,62 +476,34 @@ function tableMainDashboard(){
             };
 
             if (data["URAIAN"] === null) {$(row).remove()};
-        }
-    });
-
-    let main_realisasi = $("#main-realisasi").DataTable({
-        "ajax" : {
-            "url": baseUrl + "api_operator/api_report/saldo_realisasi",
-            "data" : {
-                "tanggal" : "20200122",
-            },
-            "type" : "GET",
-            "dataType" : "json",
         },
-        "sorting": false,
-        "searching" : false,
-        "paging": false,
-        "bInfo" : false,
-        "bLengthChange" : false,
-        "columns" : [
-            {
-                "data": null,
-                "render": (data, type, row) => {
-                    return '<td>'+data.URAIAN+'</td>'
-                }
-            },
-            {"data": "KODE","visible":false},
-            {
-                "data": null,
-                "render" : (data, type, row) => {
-                    return '<td><a href="" data-toggle="modal" data-target="#modal-detail"><i class="fa fa-info-circle"></i></a></td>';
-                }
-            },
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_DMIN5)+'</td>'}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_DMIN4)+'</td>'}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_DMIN3)+'</td>'}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_DMIN2)+'</td>'}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_DMIN1)+'</td>'}},
-        ],
-        "createdRow" : function (row, data, dataIndex){
-            console.log("Data : ",data["URAIAN"]);
-            const regexHead = RegExp("([A-Z])\\..");
-            const regexChild2 = RegExp("([A-Z])\\...")
-            const regexChild1 = RegExp("([A-Z])\\.[(0-9)]")
-            if (!regexHead.test(data['KODE'])){$(row).css("background-color", "#aece97");}
-            if (regexChild1.test(data["KODE"])){$(row).css("background-color", "#aece67")};
+        "initComplete" : (setting, json) => {
+            let parent1 = $(".super-parent").nextUntil(".grand-parent");
+            parent1.hide();
         }
     });
 }
+
+// function loadPivot(){
+//     $("#pivot").pivot([
+//         {color:"blue", shape : "circle"},
+//         {color:"red", shape : "triangle"},
+//     ],
+//         {
+//             rows : ["color"],
+//             cols : ["shape"],
+//         }
+//     )
+// }
 
 function showChild(el){
     let child = $(el).nextUntil(".parent");
-    (child.is(":visible")) ? child.hide() : child.show()
-    // console.log(child);
+    (child.is(":visible")) ? child.hide() : child.show();
 }
-
-
-
+function showParents(el){
+    let parent = $(el).nextUntil(".grand-parent");
+    (parent.is(":visible")) ? parent.hide() : parent.show();
+}
 
 $(document).ready(function () {
     gaugeChart();
@@ -475,5 +517,4 @@ $(document).ready(function () {
         interval : 1000*5,
         pause : "hover",
     });
-
 });

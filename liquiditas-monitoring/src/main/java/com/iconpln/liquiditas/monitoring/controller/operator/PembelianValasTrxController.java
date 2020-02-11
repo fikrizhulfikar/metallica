@@ -70,6 +70,7 @@ public class PembelianValasTrxController {
             mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
             mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
         }
+        System.out.println("Ini data List : "+ list);
         return mapData;
     }
 

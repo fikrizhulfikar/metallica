@@ -10,12 +10,11 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-block">
-                        <table id="main-rencana" class="table table-rencana-realisasi table-condensed" style="padding-bottom: 2rem;">
+                        <table id="main-rencana" class="table table-rencana-realisasi table-condensed table-bordered" style="padding-bottom: 2rem;">
                                 <thead>
                                     <tr>
                                         <td rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</td>
                                         <td rowspan="2">KODE</td>
-                                        <td rowspan="2" style="vertical-align: middle; text-align: center;">DETAIL</td>
                                         <td colspan="5" style="text-align: center; vertical-align: middle;">TANGGAL</td>
                                     </tr>
                                     <tr id="header-tanggal">
@@ -31,7 +30,6 @@
                                 <tr>
                                     <td rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</td>
                                     <td rowspan="2">KODE</td>
-                                    <td rowspan="2" style="vertical-align: middle; text-align: center;">DETAIL</td>
                                     <td colspan="5" style="text-align: center; vertical-align: middle;">TANGGAL</td>
                                 </tr>
                                 <tr id="header_tanggal_realisasi">
@@ -45,54 +43,77 @@
                     </div>
                 </div>
             </div>
-<!--            <div class="col-md">-->
-<!--                <div class="card">-->
-<!--                    <div class="card-block">-->
-<!--                        <div id="gauge-container" style="width: 100%;"></div>-->
-<!--                        <table class="table table-condensed">-->
-<!--                            <thead>-->
-<!--                                <tr><td colspan="2">KOMPOISI SALDO</td></tr>-->
-<!--                            </thead>-->
-<!--                                <tbody>-->
-<!--                                    <tr>-->
-<!--                                        <td>REKENING IMPREST</td>-->
-<!--                                        <td>200</td>-->
-<!--                                    </tr>-->
-<!--                                    <tr>-->
-<!--                                        <td>REKENING RESTRICTED</td>-->
-<!--                                        <td>200</td>-->
-<!--                                    </tr>-->
-<!--                                    <tr>-->
-<!--                                        <td>REKENING OEPRASIONAL LAINYA</td>-->
-<!--                                        <td>200</td>-->
-<!--                                    </tr>-->
-<!--                                    <tr>-->
-<!--                                        <td>REKENING DEPOSITO</td>-->
-<!--                                        <td>200</td>-->
-<!--                                    </tr>-->
-<!--                                    <tr>-->
-<!--                                        <td>TOTAL SALDO</td>-->
-<!--                                        <td>200</td>-->
-<!--                                    </tr>-->
-<!--                                </tbody>-->
-<!--                        </table>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-7">
+                <div class="card">
+                    <div class="card-block">
+                        <table class="table table-condensed" id="table-rencana-pembayaran-cashcode">
+                            <thead>
+                                <tr>
+                                    <th colspan="6" style="text-align: center;">RENCANA PEMBAYARAN</th>
+                                </tr>
+                                <tr>
+                                    <td>JENIS PEMBAYARAN</td>
+                                    <td>HARI 0</td>
+                                    <td>HARI 1</td>
+                                    <td>HARI 2</td>
+                                    <td>WEEK 1</td>
+                                    <td>MONTH 1</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1.2 PEMBAYARAN KAS KEPADA PEMASOK</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>1.2.1 PEMBELIAN TENAGA LISTRIK</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>1.2.2 SEWA PEMBANGKIT</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>1.2.3 BAHAN BAKAR DAN PEMBANGKIT</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-block">
                         <div id="chart-container" style="height: 35rem; width: 100%;"></div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <div class="card">
-                    <div class="card-block">
-                        <div id="barchart-rencanabayar" style="height: 35rem; width: 100%;"></div>
-                    </div>
+                    <div class="card-block" id="pivot"></div>
                 </div>
             </div>
         </div>

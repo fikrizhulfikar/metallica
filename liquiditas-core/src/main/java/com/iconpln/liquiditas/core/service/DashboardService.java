@@ -459,5 +459,4 @@ public class DashboardService {
         List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
         return out;
     }
-
 }
