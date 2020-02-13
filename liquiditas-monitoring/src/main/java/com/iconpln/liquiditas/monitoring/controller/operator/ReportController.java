@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Phaser;
 
 /**
  * Created by israjhaliri on 8/28/17.
@@ -89,6 +90,62 @@ public class ReportController {
         Map mapData = new HashMap();
         mapData.put("data", list);
 
+        return mapData;
+    }
+
+    @GetMapping(path = "/get_dashboard_recana_valas")
+    public Map getListTagihanCahscode(@RequestParam(value = "ptanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardRencanaValas(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+        return mapData;
+    }
+
+    @GetMapping(path = "/get_dashboard_rencana_imprest")
+    public Map getListRencanaImprest(@RequestParam(value = "ptanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardRencanaImprest(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+        return mapData;
+    }
+
+    @RequestMapping(path = "/get_dashboard_real_curr")
+    public Map getListRealisassiBankCurrency(@RequestParam(value = "ptanggal") String tanggal){
+        List<Map<String, Object>> list =  new ArrayList<>();
+
+        try {
+            list = dashboardService.getDahsboardRealBankCurr(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+        return mapData;
+    }
+
+    @RequestMapping(path = "/get_dashboard_real_bank")
+    public Map getListRealisassiBankCurrency(@RequestParam(value = "ptanggalawal") String tgl_awal, @RequestParam(value = "ptanggalakhir") String tgl_akhir){
+        List<Map<String, Object>> list =  new ArrayList<>();
+
+        try {
+            list = dashboardService.getDahsboardRealBank(tgl_awal,tgl_akhir);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        Map mapData = new HashMap();
+        mapData.put("data", list);
         return mapData;
     }
 }
