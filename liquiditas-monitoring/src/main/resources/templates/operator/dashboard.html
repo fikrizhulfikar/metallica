@@ -10,6 +10,12 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-block">
+                        <div class="col-md-4">
+                            <div class="form-group form-inline">
+                                <label for="dash_date">Piih Tanggal : </label>
+                                <input type="text" class="form-control" id="dash_date"/>
+                            </div>
+                        </div>
                         <table id="main-rencana" class="table table-rencana-realisasi table-condensed table-bordered" style="padding-bottom: 2rem;">
                                 <thead>
                                     <tr>
@@ -113,7 +119,96 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-block" id="pivot"></div>
+                    <div class="card-block table-responsive" >
+                        <table class="table table-condensed table-bordered" id="rencana_imprest_valas">
+                            <thead>
+                                <tr style="background: #f9dc84;">
+                                    <td colspan="10" style="text-align: center;">RENCANA PEMBAYARAN - IMPREST VALAS USD/EUR/JPY/OTHER</td>
+                                </tr>
+                                <tr id="header_tgl_imprest_valas" style="background-color: #8688ca; color: aliceblue;">
+                                    <td>BANK</td>
+                                    <td>KETERANGAN</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-condensed" id="dash_rencana_imprest">
+                                <thead>
+                                    <tr style="background: #f9dc84;">
+                                        <td colspan="10" style="text-align: center;">RENCANA PEMBAYARAN - IMPREST OPERASI TERPUSAT/ INVESTASI TERPUSAT/ IMPREST KANTOR PUSAT/ IMPOR
+                                        </td>
+                                    </tr>
+                                    <tr id="header_tgl_rencana_imprest" style="background-color: #8688ca; color: aliceblue;">
+                                        <td>BANK</td>
+                                        <td>KETERANGAN</td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <table class="table table-bordered table-condensed table-responsive" id="dash_real_bank_curr">
+                            <thead>
+                                <tr style="background-color: #f9dc84;">
+                                    <td colspan="13" style="text-align: center">REALISASI PEMBAYARAN - BANK (CURRENCY)</td>
+                                </tr>
+                                <tr style="background-color: #8688ca; color: whitesmoke; text-align: center">
+                                    <td rowspan="2" style="vertical-align: middle">JENIS PEMBYARAN</td>
+                                    <td colspan="3">HARI H</td>
+                                    <td colspan="3">1 MINGGU</td>
+                                    <td colspan="3">1 BULAN</td>
+                                    <td colspan="3">1 TAHUN</td>
+                                </tr>
+                                <tr style="background-color: #8688ca; color: whitesmoke; text-align: center">
+                                    <td>ori qur</td>
+                                    <td>eq idr</td>
+                                    <td>%</td>
+                                    <td>ori qur</td>
+                                    <td>eq idr</td>
+                                    <td>%</td>
+                                    <td>ori qur</td>
+                                    <td>eq idr</td>
+                                    <td>%</td>
+                                    <td>ori qur</td>
+                                    <td>eq idr</td>
+                                    <td>%</td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <table class="table table-bordered table-condensed table-responsive" id="dash_real_bank">
+                            <thead>
+
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -159,4 +254,5 @@
     <script src="/static/js/backend/controller/dashboard.js"></script>
     <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
     <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
+    <script src="/static/new-backend/js/dataTables.rowsGroup.js"></script>
 </div>

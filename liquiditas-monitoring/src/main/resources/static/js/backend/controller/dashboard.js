@@ -331,11 +331,14 @@ function tableRekeningInvestasi(){
     });
 }
 
-function tableMainDashboard(){
+function tableMainDashboard(_date){
+
     let date = new Date();
     let current_month = date.getMonth()+1;
-    let current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString();
-    // console.log("Current Date : ",current_full_date);
+    let current_full_date;
+    (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString() : current_full_date = _date;
+    // let current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString();
+    console.log("Current Date : ",current_full_date);
 
     for (let i=0; i<5; i++){
         let tgl = date.getDate()+i;
@@ -369,7 +372,7 @@ function tableMainDashboard(){
         ],
         "createdRow" : function (row, data, dataIndex){
             // console.log("Data Index: ",dataIndex);
-            console.log("Cok1 : ",$(row));
+            // console.log("Cok1 : ",$(row));
             const regexHead = RegExp("([A-Z])\\..");
             const regexChild1 = RegExp("([A-Z])\\.[(0-9)]");
 
@@ -484,17 +487,469 @@ function tableMainDashboard(){
     });
 }
 
-// function loadPivot(){
-//     $("#pivot").pivot([
-//         {color:"blue", shape : "circle"},
-//         {color:"red", shape : "triangle"},
-//     ],
-//         {
-//             rows : ["color"],
-//             cols : ["shape"],
-//         }
-//     )
-// }
+function tableRencanaImprestValas(_date){
+    let date = new Date();
+    let current_month = date.getMonth()+1;
+    let current_full_date;
+    (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString() : current_full_date = _date;
+
+    for (let i=0; i<8; i++){
+        let tgl = date.getDate()+i;
+        let month = date.getMonth()+1;
+        $("#header_tgl_imprest_valas").append("<td>"+tgl+"/"+0+month+"/"+date.getFullYear()+"</td>");
+    }
+
+    let tb_rencana_imprest_valas = $("#rencana_imprest_valas").DataTable({
+        "ajax" : {
+            "url" : baseUrl + "api_operator/api_report/get_dashboard_recana_valas",
+            "data" : {
+                "ptanggal" : current_full_date
+            },
+            "type" : "GET",
+            "dataType" : "JSON",
+        },
+        "sorting": false,
+        "searching" : false,
+        "paging": false,
+        "bInfo" : false,
+        "bLengthChange" : false,
+        "columns" : [
+            {
+                "name" : "bank",
+                "data" : "BANK",
+                "createdCell" : (cell) => {$(cell).css("background-color","white")}
+            },
+            {"data" : "URAIAN"},
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D0 === null){
+                            return "";}
+                        else if (data.RP_D0 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D0 === null) {
+                            return 0;
+                        }else {
+                            return data.RP_D0
+                        }
+                    }
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D1 === null){
+                            return "";}
+                        else if (data.RP_D1 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D1 === null) {
+                            return 0;
+                        }else {
+                            return data.RP_D1
+                        }
+                    }
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D2 === null){
+                            return "";
+                        }else if (data.RP_D2 == -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D2 === null) {
+                            return 0;
+                        }else {
+                            return data.RP_D2
+                        }
+                    }
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D3 === null){
+                            return "";
+                        }else if (data.RP_D3 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D3 === null) {
+                            return 0;
+                        }else {
+                            return data.RP_D3
+                        }
+                    }
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D4 === null){
+                            return "";
+                        }else if (data.RP_D4 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D4 === null) {
+                            return 0;
+                        }else {
+                            return data.RP_D4
+                        }
+                    }
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D4 === null){
+                            return "";
+                        }else if (data.RP_D4 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D4 === null) {
+                            return 0;
+                        }else {
+                            return data.RP_D4
+                        }
+                    }
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D6 === null){
+                            return "";
+                        }else if (data.RP_D6 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D6 === null) {
+                            return 0;
+                        }else {
+                            return data.RP_D6
+                        }
+                    }
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D7 === null){
+                            return "";
+                        }else if (data.RP_D7 == -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D7 === null) {
+                            return 0;
+                        }else {
+                            return data.RP_D7
+                        }
+                    }
+                }
+            },
+        ],
+        "createdRow" : (row, data, dataIndex) => {
+            if (data["ISANAK"] === 0){
+                $(row).css({
+                    "background-color" : "#bed0cb",
+                })
+            }
+
+            if (data["URAIAN"] === "KETERANGAN"){
+                $(row).css({
+                    "background-color" : "#8688ca",
+                    "color" : "white",
+                })
+            }
+        },
+    })
+}
+
+function tableRencanaImpres(_date){
+    let date = new Date();
+    let current_month = date.getMonth()+1;
+    let current_full_date;
+    (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString() : current_full_date = _date;
+
+    for (let i=0; i<8; i++){
+        let tgl = date.getDate()+i;
+        let month = date.getMonth()+1;
+        $("#header_tgl_rencana_imprest").append("<td>"+tgl+"/"+0+month+"/"+date.getFullYear()+"</td>");
+    }
+
+    let tb_rencana_imprest_valas = $("#dash_rencana_imprest").DataTable({
+        "ajax" : {
+            "url" : baseUrl + "api_operator/api_report/get_dashboard_rencana_imprest",
+            "data" : {
+                "ptanggal" : current_full_date
+            },
+            "type" : "GET",
+            "dataType" : "JSON",
+        },
+        "sorting": false,
+        "searching" : false,
+        "paging": false,
+        "bInfo" : false,
+        "bLengthChange" : false,
+        "columns" : [
+            {
+                "headerSort" : false,
+                "data" : "BANK",
+                "createdCell" : (cell) => {$(cell).css("background-color","white")},
+            },
+            {"data" : "URAIAN"},
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D0 === null){
+                            return "";}
+                        else if (data.RP_D0 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D0 === null) {
+                            return 0;
+                        }else {
+                            return new Intl.NumberFormat().format(data.RP_D0);
+                        }
+                    }
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D1 === null){
+                            return "";}
+                        else if (data.RP_D1 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D1 === null) {
+                            return 0;
+                        }else {
+                            return new Intl.NumberFormat().format(data.RP_D1);
+                        }
+                    }
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D2 === null){
+                            return "";
+                        }else if (data.RP_D2 == -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D2 === null) {
+                            return 0;
+                        }else {
+                            return new Intl.NumberFormat().format(data.RP_D2);
+                        }
+                    }
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D3 === null){
+                            return "";
+                        }else if (data.RP_D3 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D3 === null) {
+                            return 0;
+                        }else {
+                            return new Intl.NumberFormat().format(data.RP_D3);
+                        }
+                    }
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D4 === null){
+                            return "";
+                        }else if (data.RP_D4 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D4 === null) {
+                            return 0;
+                        }else {
+                            return new Intl.NumberFormat().format(data.RP_D4);
+                        }
+                    }
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D4 === null){
+                            return "";
+                        }else if (data.RP_D4 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D4 === null) {
+                            return 0;
+                        }else {
+                            return new Intl.NumberFormat().format(data.RP_D4);
+                        }
+                    }
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D6 === null){
+                            return "";
+                        }else if (data.RP_D6 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D6 === null) {
+                            return 0;
+                        }else {
+                            return new Intl.NumberFormat().format(data.RP_D6);
+                        }
+                    }
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D7 === null){
+                            return "";
+                        }else if (data.RP_D7 == -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D7 === null) {
+                            return 0;
+                        }else {
+                            return new Intl.NumberFormat().format(data.RP_D7);
+                        }
+                    }
+                }
+            },
+        ],
+        "createdRow" : (row, data, dataIndex) => {
+            if (data["ISANAK"] === 0){
+                $(row).css({
+                    "background-color" : "#bed0cb",
+                })
+            }
+
+            if (data["URAIAN"] === "KETERANGAN"){
+                $(row).css({
+                    "background-color" : "#8688ca",
+                    "color" : "white",
+                })
+            }
+        },
+    })
+}
+
+function tableRealisasiBankCurrency(_date){
+    let date = new Date();
+    let current_month = date.getMonth()+1;
+    let current_full_date;
+    (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString() : current_full_date = _date;
+
+    let tb_dash_real_bank_curr = $("#dash_real_bank_curr").DataTable({
+        "ajax" : {
+            "url" : baseUrl + "api_operator/api_report/get_dashboard_real_curr",
+            "data" : {
+                "ptanggal" : "20200212"
+            },
+            "type" : "GET",
+            "dataType" : "JSON"
+        },
+        "sorting": false,
+        "searching" : false,
+        "paging": false,
+        "bInfo" : false,
+        "bLengthChange" : false,
+        "columns" : [
+            {"data" : "URAIAN"},
+            {"data": "ORI_CURR_NOW"},
+            {"data" : "EQ_IDR_NOW"},
+            {
+                "data" : "PERSEN_NOW",
+                "render": (data) => {
+                    return data.PERSEN_NOW + "%"
+                },
+                "createdCell" : (data) => {
+                    (data.NOURUT_CURRENCY === 0) ? $(cell).css("background-color","#ffad33") : $(cell).css("background-color","#f7d39e");
+
+                }
+            },
+            {"data": "ORI_CURR_WEEK"},
+            {"data" : "EQ_IDR_WEEK"},
+            {"data" : "PERSEN_WEEK"},
+            {"data": "ORI_CURR_MONTH"},
+            {"data" : "EQ_IDR_MONTH"},
+            {"data" : "PERSEN_MONTH"},
+            {"data": "ORI_CURR_YEAR"},
+            {"data" : "EQ_IDR_YEAR"},
+            {"data" : "PERSEN_YEAR"},
+        ],
+        "createdRow": (row, data, dataIndex) => {
+            if (data["NOURUT_CURRENCY"] === 0){
+                $(row).css({
+                    "font-weight": "bold",
+                    "background-color" : "#9bc3ff",
+                })
+            }
+        }
+    })
+}
+
+function tbDashRealBank(){
+    let tb_dash_real_bank = $("#dash_real_bank").DataTable({
+        "ajax" : {
+            "url" : baseUrl + "api_operator/api_report/get_dashboard_real_bank",
+            "data" : {
+                "ptanggalawal" : "20200212",
+                "ptanggalakhir" : "20200212"
+            },
+            "type" : "GET",
+            "dataType" : "JSON",
+        },
+        "columns" : [
+            {"data": "BANK"},
+            {"data": "CURRENCY"},
+            {"data": "RP_DINAMIS"},
+        ]
+    })
+}
 
 function showChild(el){
     let child = $(el).nextUntil(".parent");
@@ -512,9 +967,24 @@ $(document).ready(function () {
     tableRekeningInvestasi();
     rencanaBayarBarLine();
     tableMainDashboard();
+    tableRencanaImprestValas();
+    tableRencanaImpres();
+    tableRealisasiBankCurrency();
+    // tbDashRealBank();
 
     $("#dashboard-carousel").carousel({
         interval : 1000*5,
         pause : "hover",
     });
+
+    $("#dash_date").datepicker({dateFormat : "dd/mm/yy"});
+    // let dash_date = $("#dash_date").on("change", function (e) {
+    //     // console.log("Dash date : ", $("#dash_date").val());
+    //     let date_val = $("#dash_date").val()
+    //     let arr = date_val.split("/");
+    //     let reversed = arr.reverse();
+    //     let string_date = reversed.join("");
+    //     // console.log("Date Array : ",string_date);
+    //     tableMainDashboard(string_date);
+    // })
 });
