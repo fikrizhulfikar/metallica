@@ -1,0 +1,183 @@
+<div th:fragment="stylesheets-backend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        table {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+        }
+        table th {
+            font-size: 12px;
+            vertical-align: middle;
+        }
+        table td {
+            font-size: 12px;
+        }
+        tbody:hover td {
+            color: transparent;
+            text-shadow: 0 0 3px #aaa;
+        }
+
+        tbody:hover tr:hover td {
+            color: #444;
+            text-shadow: 0 1px 0 #fff;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Home</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <table id="main-rencana" class="table table-rencana-realisasi table-condensed" style="padding-bottom: 2rem;">
+                                <thead>
+                                    <tr>
+                                        <td rowspan="3" style="vertical-align: middle; text-align: center;">KETERANGAN</td>
+                                        <td rowspan="3">KODE</td>
+                                        <td rowspan="3" style="vertical-align: middle; text-align: center;">DETAIL</td>
+                                        <td colspan="5" style="background-color: #67a2d8; vertical-align: middle; text-align: center;"><b>RENCANA</b></td>
+                                    <tr>
+                                        <td colspan="5" style="text-align: center; vertical-align: middle;">TANGGAL</td>
+                                    </tr>
+                                    </tr>
+                                    <tr id="header-tanggal">
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        <table id="main-realisasi" class="table table-rencana-realisasi table-condensed">
+                            <thead>
+                                <tr>
+                                    <td rowspan="3" style="vertical-align: middle; text-align: center;">KETERANGAN</td>
+                                    <td rowspan="3">KODE</td>
+                                    <td rowspan="3" style="vertical-align: middle; text-align: center;">DETAIL</td>
+                                    <td colspan="5" style="background-color: #67a2d8; vertical-align: middle; text-align: center;"><b>REALISASI</b></td>
+                                <tr>
+                                    <td colspan="5" style="text-align: center; vertical-align: middle;">TANGGAL</td>
+                                </tr>
+                                </tr>
+                                <tr id="header_tanggal_realisasi">
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="col-md-12" style="padding-top: 0px;">
+                            <div><h6><b>2A</b></h6></div>
+                            <div align="center" id="chart-komposisi-saldo"></div>
+                            <div style="padding-bottom: 5px;"><h6><b> </b></h6></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="col-md-12" style="padding-top: 0px;">
+<!--                            <div><h6><b>2A</b></h6></div>-->
+                            <table id="table-komposisi-saldo" class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th style="background-color: #F4D35E" width="100%" colspan="2" align="center">REKAP KOMPOSISI SALDO</th>
+                                <tr>
+                                    <th style="background-color: #67a2d8" width="16.666%">JENIS REKENING</th>
+                                    <th style="background: #67a2d8" width="16.666%">TOTAL</th>
+                                </tr>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="col-md-12" style="padding-top: 0px;">
+                            <div><h6><b>3A</b></h6></div>
+                            <div align="center" id="chart-rencana-pembayaran1"></div>
+<!--                            <ul align="center" class="legend">-->
+<!--                                <li><span class="one"></span> RENCANA PEMBAYARAN PREMIER</li>-->
+<!--                                <li><span class="two"></span> RENCANA PEMBAYARAN SEKUNDER</li>-->
+<!--                                <li><span class="three"></span> RENCANA PEMBAYARAN TERSIER</li>-->
+<!--                            </ul>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="col-md-12" style="padding-top: 0px;">
+                            <div><h6><b>3B</b></h6></div>
+                            <div id="column-rencana-pembayaran" style="height: 35rem; width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="col-md-12" style="padding-top: 0px;">
+                            <div><h6><b>4A</b></h6></div>
+                            <div id="chart-container" style="height: 35rem; width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="col-md-12" style="padding-top: 0px;">
+                            <div><h6><b>4B</b></h6></div>
+                            <div id="column-realisasi-pembayaran" style="height: 35rem; width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--    modal detail -->
+    <div class="modal fade" id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/dashboard.js"></script>
+    <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
+    <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
+</div>
