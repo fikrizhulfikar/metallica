@@ -491,8 +491,10 @@ function tableRencanaImprestValas(_date){
     let date = new Date();
     let current_month = date.getMonth()+1;
     let current_full_date;
+    let groupColumn = 0;
     (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString() : current_full_date = _date;
 
+    $("#header_tgl_imprest_valas").append("<td style='text-align: center'>URAIAN</td>");
     for (let i=0; i<8; i++){
         let tgl = date.getDate()+i;
         let month = date.getMonth()+1;
@@ -515,17 +517,19 @@ function tableRencanaImprestValas(_date){
         "bLengthChange" : false,
         "columns" : [
             {
-                "name" : "bank",
+                "visible" : false,
                 "data" : "BANK",
                 "createdCell" : (cell) => {$(cell).css("background-color","white")}
             },
-            {"data" : "URAIAN"},
+            {"data" : "URAIAN", "width" : "9%"},
             {
+                "width" : "15%",
                 "data" : null,
                 "render" : (data) => {
                     if (data.URAIAN === "KETERANGAN") {
                         if (data.RP_D0 === null){
-                            return "";}
+                            return "";
+                        }
                         else if (data.RP_D0 === -1){
                             return "KURANG";
                         }
@@ -533,10 +537,11 @@ function tableRencanaImprestValas(_date){
                         if (data.RP_D0 === null) {
                             return 0;
                         }else {
-                            return data.RP_D0
+                            return new Intl.NumberFormat().format(data.RP_D0);
                         }
                     }
-                }
+                },
+                "createdCell" : (cell) => {$(cell).css("text-align","right")}
             },
             {
                 "data" : null,
@@ -551,10 +556,11 @@ function tableRencanaImprestValas(_date){
                         if (data.RP_D1 === null) {
                             return 0;
                         }else {
-                            return data.RP_D1
+                            return new Intl.NumberFormat().format(data.RP_D1);
                         }
                     }
-                }
+                },
+                "createdCell" : (cell) => {$(cell).css("text-align","right")}
             },
             {
                 "data" : null,
@@ -569,10 +575,11 @@ function tableRencanaImprestValas(_date){
                         if (data.RP_D2 === null) {
                             return 0;
                         }else {
-                            return data.RP_D2
+                            return new Intl.NumberFormat().format(data.RP_D2);
                         }
                     }
-                }
+                },
+                "createdCell" : (cell) => {$(cell).css("text-align","right")}
             },
             {
                 "data" : null,
@@ -587,10 +594,30 @@ function tableRencanaImprestValas(_date){
                         if (data.RP_D3 === null) {
                             return 0;
                         }else {
-                            return data.RP_D3
+                            return new Intl.NumberFormat().format(data.RP_D3);
                         }
                     }
-                }
+                },
+                "createdCell" : (cell) => {$(cell).css("text-align","right")}
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D4 === null) {
+                            return "";
+                        } else if (data.RP_D4 === -1) {
+                            return "KURANG";
+                        }
+                    } else {
+                        if (data.RP_D4 === null) {
+                            return 0;
+                        } else {
+                            return new Intl.NumberFormat().format(data.RP_D4);
+                        }
+                    }
+                },
+                "createdCell" : (cell) => {$(cell).css("text-align","right")}
             },
             {
                 "data" : null,
@@ -605,28 +632,11 @@ function tableRencanaImprestValas(_date){
                         if (data.RP_D4 === null) {
                             return 0;
                         }else {
-                            return data.RP_D4
+                            return new Intl.NumberFormat().format(data.RP_D4);
                         }
                     }
-                }
-            },
-            {
-                "data" : null,
-                "render" : (data) => {
-                    if (data.URAIAN === "KETERANGAN") {
-                        if (data.RP_D4 === null){
-                            return "";
-                        }else if (data.RP_D4 === -1){
-                            return "KURANG";
-                        }
-                    }else {
-                        if (data.RP_D4 === null) {
-                            return 0;
-                        }else {
-                            return data.RP_D4
-                        }
-                    }
-                }
+                },
+                "createdCell" : (cell) => {$(cell).css("text-align","right")}
             },
             {
                 "data" : null,
@@ -641,10 +651,11 @@ function tableRencanaImprestValas(_date){
                         if (data.RP_D6 === null) {
                             return 0;
                         }else {
-                            return data.RP_D6
+                            return new Intl.NumberFormat().format(data.RP_D6);
                         }
                     }
-                }
+                },
+                "createdCell" : (cell) => {$(cell).css("text-align","right")}
             },
             {
                 "data" : null,
@@ -659,10 +670,11 @@ function tableRencanaImprestValas(_date){
                         if (data.RP_D7 === null) {
                             return 0;
                         }else {
-                            return data.RP_D7
+                            return new Intl.NumberFormat().format(data.RP_D7);
                         }
                     }
-                }
+                },
+                "createdCell" : (cell) => {$(cell).css("text-align","right")}
             },
         ],
         "createdRow" : (row, data, dataIndex) => {
@@ -679,6 +691,20 @@ function tableRencanaImprestValas(_date){
                 })
             }
         },
+        "drawCallback" : function (settings){
+            var api = this.api();
+            var rows = api.rows({page:'current'}).nodes();
+            var last = null;
+
+            api.column(groupColumn, {page:'current'}).data().each( function ( group, i ) {
+                if ( last !== group ) {
+                    $(rows).eq( i ).before(
+                        '<tr class="group"><td rowspan="11" style="vertical-align: middle;text-align: center; font-weight: bold">'+group+'</td></tr>'
+                    );
+                    last = group;
+                }
+            } );
+        }
     })
 }
 
@@ -686,8 +712,10 @@ function tableRencanaImpres(_date){
     let date = new Date();
     let current_month = date.getMonth()+1;
     let current_full_date;
+    let groupColumn = 0;
     (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString() : current_full_date = _date;
 
+    $("#header_tgl_rencana_imprest").append("<td style='text-align: center;'>URAIAN</td>");
     for (let i=0; i<8; i++){
         let tgl = date.getDate()+i;
         let month = date.getMonth()+1;
@@ -710,12 +738,13 @@ function tableRencanaImpres(_date){
         "bLengthChange" : false,
         "columns" : [
             {
-                "headerSort" : false,
+                "visible" : false,
                 "data" : "BANK",
                 "createdCell" : (cell) => {$(cell).css("background-color","white")},
             },
             {"data" : "URAIAN"},
             {
+                "width" : "12%",
                 "data" : null,
                 "render" : (data) => {
                     if (data.URAIAN === "KETERANGAN") {
@@ -731,6 +760,9 @@ function tableRencanaImpres(_date){
                             return new Intl.NumberFormat().format(data.RP_D0);
                         }
                     }
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css("text-align","right");
                 }
             },
             {
@@ -749,6 +781,9 @@ function tableRencanaImpres(_date){
                             return new Intl.NumberFormat().format(data.RP_D1);
                         }
                     }
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css("text-align","right");
                 }
             },
             {
@@ -767,6 +802,9 @@ function tableRencanaImpres(_date){
                             return new Intl.NumberFormat().format(data.RP_D2);
                         }
                     }
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css("text-align","right");
                 }
             },
             {
@@ -785,6 +823,9 @@ function tableRencanaImpres(_date){
                             return new Intl.NumberFormat().format(data.RP_D3);
                         }
                     }
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css("text-align","right");
                 }
             },
             {
@@ -803,6 +844,9 @@ function tableRencanaImpres(_date){
                             return new Intl.NumberFormat().format(data.RP_D4);
                         }
                     }
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css("text-align","right");
                 }
             },
             {
@@ -821,6 +865,9 @@ function tableRencanaImpres(_date){
                             return new Intl.NumberFormat().format(data.RP_D4);
                         }
                     }
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css("text-align","right");
                 }
             },
             {
@@ -839,6 +886,9 @@ function tableRencanaImpres(_date){
                             return new Intl.NumberFormat().format(data.RP_D6);
                         }
                     }
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css("text-align","right");
                 }
             },
             {
@@ -857,13 +907,16 @@ function tableRencanaImpres(_date){
                             return new Intl.NumberFormat().format(data.RP_D7);
                         }
                     }
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css("text-align","right");
                 }
             },
         ],
         "createdRow" : (row, data, dataIndex) => {
             if (data["ISANAK"] === 0){
                 $(row).css({
-                    "background-color" : "#bed0cb",
+                    "background-color" : "#ebfffa",
                 })
             }
 
@@ -874,6 +927,21 @@ function tableRencanaImpres(_date){
                 })
             }
         },
+        "drawCallback" : function (settings){
+            var api = this.api();
+            var rows = api.rows( {page:'current'} ).nodes();
+            var last=null;
+
+            api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
+                if ( last !== group ) {
+                    $(rows).eq( i ).before(
+                        '<tr class="group"><td rowspan="6" style="vertical-align: middle;text-align: center; font-weight: bold">'+group+'</td></tr>'
+                    );
+
+                    last = group;
+                }
+            } );
+        }
     })
 }
 
@@ -899,27 +967,60 @@ function tableRealisasiBankCurrency(_date){
         "bLengthChange" : false,
         "columns" : [
             {"data" : "URAIAN"},
-            {"data": "ORI_CURR_NOW"},
-            {"data" : "EQ_IDR_NOW"},
             {
-                "data" : "PERSEN_NOW",
-                "render": (data) => {
-                    return data.PERSEN_NOW + "%"
-                },
-                "createdCell" : (data) => {
-                    (data.NOURUT_CURRENCY === 0) ? $(cell).css("background-color","#ffad33") : $(cell).css("background-color","#f7d39e");
-
+                "data": "ORI_CURR_NOW",
+                "render" : (data) => {return new Intl.NumberFormat().format(data)},
+                "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {
+                    (rowData.NOURUT_CURRENCY === 0) ? $(cell).css({"background-color":"#ffad33","text-align" : "right"}) : (rowData.NOURUT_CURRENCY === 99) ? $(cell).css({"background-color":"#8688ca", "text-align" : "right"}) : $(cell).css({"background-color":"#f7d39e","text-align" : "right"});
                 }
             },
-            {"data": "ORI_CURR_WEEK"},
-            {"data" : "EQ_IDR_WEEK"},
-            {"data" : "PERSEN_WEEK"},
-            {"data": "ORI_CURR_MONTH"},
-            {"data" : "EQ_IDR_MONTH"},
-            {"data" : "PERSEN_MONTH"},
-            {"data": "ORI_CURR_YEAR"},
-            {"data" : "EQ_IDR_YEAR"},
-            {"data" : "PERSEN_YEAR"},
+            {"data" : "EQ_IDR_NOW", "render" : (data) => {return new Intl.NumberFormat().format(data)},"createdCell":(cell)=>{$(cell).css("text-align","right")}},
+            {
+                "data" : null,
+                "render": (data) => {
+                    return data.PERSEN_NOW + " %";
+                },
+                "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {
+                    // console.log("row Data : ",rowData);
+                    (rowData.NOURUT_CURRENCY === 0) ? $(cell).css({"background-color":"#ffad33","text-align" : "right"}) : (rowData.NOURUT_CURRENCY === 99) ? $(cell).css({"background-color":"#8688ca", "text-align" : "right"}) : $(cell).css({"background-color":"#f7d39e","text-align" : "right"});
+                }
+            },
+            {"data": "ORI_CURR_WEEK", "render" : (data) => {return new Intl.NumberFormat().format(data)},"createdCell":(cell)=>{$(cell).css("text-align","right")}},
+            {"data" : "EQ_IDR_WEEK" , "render" : (data) => {return new Intl.NumberFormat().format(data)},"createdCell":(cell)=>{$(cell).css("text-align","right")}},
+            {
+                "data" : null,
+                "render": (data) => {
+                    return data.PERSEN_WEEK + " %";
+                },
+                "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {
+                    // console.log("row Data : ",rowData);
+                    (rowData.NOURUT_CURRENCY === 0) ? $(cell).css({"background-color":"#ffad33","text-align" : "rigth"}) : (rowData.NOURUT_CURRENCY === 99) ? $(cell).css({"background-color":"#8688ca","text-align" : "rigth"}) : $(cell).css({"background-color":"#f7d39e","text-align" : "rigth"});
+                }
+            },
+            {"data": "ORI_CURR_MONTH", "render" : (data) => {return new Intl.NumberFormat().format(data)},"createdCell":(cell)=>{$(cell).css("text-align","right")}},
+            {"data" : "EQ_IDR_MONTH", "render" : (data) => {return new Intl.NumberFormat().format(data)},"createdCell":(cell)=>{$(cell).css("text-align","right")}},
+            {
+                "data" : null,
+                "render": (data) => {
+                    return  data.PERSEN_MONTH + " %";
+                },
+                "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {
+                    // console.log("row Data : ",rowData);
+                    (rowData.NOURUT_CURRENCY === 0) ? $(cell).css({"background-color":"#ffad33","text-align" : "rigth"}) : (rowData.NOURUT_CURRENCY === 99) ? $(cell).css({"background-color":"#8688ca","text-align" : "rigth"}) : $(cell).css({"background-color":"#f7d39e","text-align" : "right"});
+                }
+            },
+            {"data": "ORI_CURR_YEAR", "render" : (data) => {return new Intl.NumberFormat().format(data)},"createdCell":(cell)=>{$(cell).css("text-align","right")}},
+            {"data" : "EQ_IDR_YEAR", "render" : (data) => {return new Intl.NumberFormat().format(data)},"createdCell":(cell)=>{$(cell).css("text-align","right")}},
+            {
+                "data" : null,
+                "render": (data) => {
+                    return data.PERSEN_YEAR + " %";
+                },
+                "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {
+                    // console.log("row Data : ",rowData);
+                    (rowData.NOURUT_CURRENCY === 0) ? $(cell).css({"background-color":"#ffad33","text-align" : "rigth"}) : (rowData.NOURUT_CURRENCY === 99) ? $(cell).css({"background-color":"#8688ca","text-align" : "rigth"}) : $(cell).css({"background-color":"#f7d39e","text-align" : "rigth"});
+                }
+            },
         ],
         "createdRow": (row, data, dataIndex) => {
             if (data["NOURUT_CURRENCY"] === 0){
@@ -928,10 +1029,435 @@ function tableRealisasiBankCurrency(_date){
                     "background-color" : "#9bc3ff",
                 })
             }
+
+            if (data["NOURUT_CURRENCY"] === 99){
+                $(row).css({
+                    "font-weight": "bold",
+                    "background-color" : "#8688ca",
+                })
+            }
         }
     })
 }
 
+function tableRealisasiCashCode(){
+    let tb_realisasi_cashcode = $("#dash_real_cashcode").DataTable({
+        "ajax" : {
+            "url" : baseUrl + "api_operator/api_report/get_dashboard_real_cashcode",
+            "data" : {
+                "ptanggal" : "20200213"
+            },
+            "type" : "GET",
+            "dataType" : "JSON"
+        },
+        "sorting": false,
+        "searching" : false,
+        "paging": false,
+        "bInfo" : false,
+        "bLengthChange" : false,
+        "columns":[
+            {
+                "data":"URAIAN",
+                "createdCell" : (cell,cellData, rowData) => {
+                    if (cellData.startsWith(" ")){$(cell).css("padding-left","40px")}
+                }
+            },
+            {"data":"ORI_CURR_NOW", "render" : (data)=>{return Intl.NumberFormat().format(data)},"createdCell": (cell)=>{$(cell).css("text-align","right")}},
+            {"data":"EQ_IDR_NOW", "render" : (data)=>{return Intl.NumberFormat().format(data)},"createdCell": (cell)=>{$(cell).css("text-align","right")}},
+            {
+                "data":"PERSEN_NOW",
+                "createdCell" : (cell,cellData, rowData) => {
+                    if (rowData.ID_CASH_CODE === 999) {
+                        $(cell).css({
+                            "background-color":"#8688ca",
+                            "text-align" : "right"
+                        });
+                    }else $(cell).css({
+                        "background-color":"#f7d39e",
+                        "text-align" : "right"
+                    });
+                }
+            },
+            {"data":"ORI_CURR_WEEK", "render" : (data)=>{return Intl.NumberFormat().format(data)},"createdCell": (cell)=>{$(cell).css("text-align","right")}},
+            {"data":"EQ_IDR_WEEK", "render" : (data)=>{return Intl.NumberFormat().format(data)},"createdCell": (cell)=>{$(cell).css("text-align","right")}},
+            {"data":"PERSEN_WEEK", "createdCell" : (cell,cellData, rowData) => {
+                    if (rowData.ID_CASH_CODE === 999) {
+                        $(cell).css({
+                            "background-color":"#8688ca",
+                            "text-align" : "right"
+                        });
+                    }else $(cell).css({
+                        "background-color":"#f7d39e",
+                        "text-align" : "right"
+                    });
+                }},
+            {"data":"ORI_CURR_MONTH", "render" : (data)=>{return Intl.NumberFormat().format(data)},"createdCell": (cell)=>{$(cell).css("text-align","right")}},
+            {"data":"EQ_IDR_MONTH", "render" : (data)=>{return Intl.NumberFormat().format(data)},"createdCell": (cell)=>{$(cell).css("text-align","right")}},
+            {"data":"PERSEN_MONTH", "createdCell" : (cell,cellData, rowData) => {
+                    if (rowData.ID_CASH_CODE === 999) {
+                        $(cell).css({
+                            "background-color":"#8688ca",
+                            "text-align" : "right"
+                        });
+                    }else $(cell).css({
+                        "background-color":"#f7d39e",
+                        "text-align" : "right"
+                    });
+                }},
+            {"data":"ORI_CURR_YEAR", "render" : (data)=>{return Intl.NumberFormat().format(data)},"createdCell": (cell)=>{$(cell).css("text-align","right")}},
+            {"data":"EQ_IDR_YEAR", "render" : (data)=>{return Intl.NumberFormat().format(data)},"createdCell": (cell)=>{$(cell).css("text-align","right")}},
+            {"data":"PERSEN_YEAR", "createdCell" : (cell,cellData, rowData) => {
+                    if (rowData.ID_CASH_CODE === 999) {
+                        $(cell).css({
+                            "background-color":"#8688ca",
+                            "text-align" : "right"
+                        });
+                    }else $(cell).css({
+                        "background-color":"#f7d39e",
+                        "text-align" : "right"
+                    });
+                }},
+        ],
+        "createdRow" : (row, data, dataIndex) => {
+            if (data["ID_CASH_CODE"] === 999){
+                $(row).css({
+                    "background-color" : "#8688ca",
+                    "color" : "white",
+                    "font-weight" : "bold",
+                })
+            }
+        }
+    });
+}
+
+function tableRealisasiPembayaranJenis(_date){
+    let tb_realisasi_pembayaran_jenis = $("#dash_real_jenis").DataTable({
+        "ajax" : {
+            "url" : baseUrl + "api_operator/api_report/get_dashboard_real_jenis",
+            "data" : {
+                "ptanggal" : "20200213"
+            },
+            "type" : "GET",
+            "dataType" : "JSON"
+        },
+        "sorting": false,
+        "searching" : false,
+        "paging": false,
+        "bInfo" : false,
+        "bLengthChange" : false,
+        "columns" : [
+            {"data" : "URAIAN"},
+            {
+                "data" : "ORI_CURR_NOW",
+                "render" : (data) => {
+                    return new Intl.NumberFormat().format(data);
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css({
+                        "text-align" : "right"
+                    })
+                }
+            },
+            {
+                "data" : "EQ_IDR_NOW",
+                "render" : (data) => {
+                    return new Intl.NumberFormat().format(data);
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css({
+                        "text-align" : "right"
+                    })
+                }
+            },
+            {"data" : "PERSEN_NOW","createdCell" : (cell)=>{
+                    $(cell).css({
+                        "text-align" : "right"
+                    })
+                }},
+            {
+                "data" : "ORI_CURR_WEEK",
+                "render" : (data) => {
+                    return new Intl.NumberFormat().format(data);
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css({
+                        "text-align" : "right"
+                    })
+                }
+            },
+            {
+                "data" : "EQ_IDR_WEEK",
+                "render" : (data) => {
+                    return new Intl.NumberFormat().format(data);
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css({
+                        "text-align" : "right"
+                    })
+                }
+            },
+            {"data" : "PERSEN_WEEK","createdCell" : (cell)=>{
+                    $(cell).css({
+                        "text-align" : "right"
+                    })
+                }},
+            {
+                "data" : "ORI_CURR_MONTH",
+                "render" : (data) => {
+                    return new Intl.NumberFormat().format(data);
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css({
+                        "text-align" : "right"
+                    })
+                }
+            },
+            {
+                "data" : "EQ_IDR_MONTH",
+                "render" : (data) => {
+                    return new Intl.NumberFormat().format(data);
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css({
+                        "text-align" : "right"
+                    })
+                }
+            },
+            {"data" : "PERSEN_MONTH","createdCell" : (cell)=>{
+                    $(cell).css({
+                        "text-align" : "right"
+                    })
+                }},
+            {
+                "data" : "ORI_CURR_YEAR",
+                "render" : (data) => {
+                    return new Intl.NumberFormat().format(data);
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css({
+                        "text-align" : "right"
+                    })
+                }
+            },
+            {
+                "data" : "EQ_IDR_YEAR",
+                "render" : (data) => {
+                    return new Intl.NumberFormat().format(data);
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css({
+                        "text-align" : "right"
+                    })
+                }
+            },
+            {
+                "data" : "PERSEN_YEAR",
+                "createdCell" : (cell)=>{
+                    $(cell).css({
+                        "text-align" : "right"
+                    })
+                }
+            },
+        ],
+        "createdRow" : (row, data, dataIndex) => {
+            if (data["JENIS"] === data["URAIAN"]){
+                $(row).css({
+                   "background-color":"#ffad33",
+                    "color" : "white",
+                });
+            }
+            if (data["JENIS"] === "TOTAL"){
+                $(row).css({
+                    "background-color":"#8688ca",
+                    "color" : "white",
+                });
+            }
+        }
+    });
+}
+
+function tableRealisasiPerVendor(_date){
+    let groupColumn = 0;
+    let tb_realisasi_per_vendor = $("#dash_real_per_vendor").DataTable({
+        "ajax" : {
+            "url" : baseUrl + "api_operator/api_report/get_dashboard_real_vendor",
+            "data" : {
+                "ptanggal" : "20200208"
+            },
+            "type" : "GET",
+            "dataType" : "JSON"
+        },
+        "sorting": false,
+        "searching" : false,
+        "paging": false,
+        "bInfo" : false,
+        "bLengthChange" : false,
+        "columns" : [
+            {
+                "visible" : false,
+                "data" : "TANGGAL"},
+            {
+                "width": "10%",
+                "data" : "JENIS_PEMBAYARAN",
+                "render" : (data) => {
+                    return data;
+                },
+            },
+            {
+                "data" : "VENDOR_NAME",
+                "render" : (data) => {
+                    return data;
+                },
+            },
+            {"data" : "HOUSE_BANK"},
+            {
+                "data" : "CURRENCY",
+                "createdCell" : (cell)=>{
+                    $(cell).css({
+                        "text-align" : "right"
+                    })
+                }
+            },
+            {
+                "data" : "EQ_IDR",
+                "render" : (data) => {
+                    return new Intl.NumberFormat().format(data);
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css({
+                        "text-align" : "right"
+                    })
+                }
+            },
+        ],
+        "createdRow" : (row, data, dataIndex) => {
+            if (data["NOURUT"] === 99){
+                $(row).css({
+                    "background-color" : "#ffad33",
+                    "color" : "white"
+                });
+                $(row).addClass("stop");
+            }
+        },
+        "drawCallback" : function (settings){
+            var api = this.api();
+            var rows = api.rows( {page:'current'} ).nodes();
+            var last = null;
+            let array = api.column(groupColumn, {page:'current'} ).data();
+
+            api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
+                if ( last !== group ) {
+                    let count = 1;
+                    //looping ini digunakan untuk menghitung berapa banyak rowspan yang harus dilakukan
+                    for (let j=i; i<array.length; j++){
+                        let first = array[i];
+                        if (first !== array[j]) break;
+                        count += 1;
+                    }
+                    $(rows).eq( i ).before(
+                        '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold">'+group+'</td></tr>'
+                    );
+                    last = group;
+                }
+            } );
+        }
+    });
+}
+
+function tableRencanaPerVendor(_date){
+    let groupColumn = 0;
+    let tb_realisasi_per_vendor = $("#dash_rencana_per_vendor").DataTable({
+        "ajax" : {
+            "url" : baseUrl + "api_operator/api_report/get_dashboard_rencana_vendor",
+            "data" : {
+                "ptanggal" : "20200208"
+            },
+            "type" : "GET",
+            "dataType" : "JSON"
+        },
+        "sorting": false,
+        "searching" : false,
+        "paging": false,
+        "bInfo" : false,
+        "bLengthChange" : false,
+        "columns" : [
+            {
+                "visible" : false,
+                "data" : "TANGGAL"},
+            {
+                "width": "8%",
+                "data" : "JENIS_PEMBAYARAN",
+                "render" : (data) => {
+                    return data;
+                },
+            },
+            {
+                "width" : "26%",
+                "data" : "VENDOR_NAME",
+                "render" : (data) => {
+                    return data;
+                },
+            },
+            {"data" : "HOUSE_BANK"},
+            {
+                "data" : "CURRENCY",
+                "createdCell" : (cell)=>{
+                    $(cell).css({
+                        "text-align" : "right"
+                    })
+                }
+            },
+            {
+                "data" : "EQ_IDR",
+                "render" : (data) => {
+                    return new Intl.NumberFormat().format(data);
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css({
+                        "text-align" : "right"
+                    })
+                }
+            },
+        ],
+        "createdRow" : (row, data, dataIndex) => {
+            let cok = null;
+            // console.log("Fikri : ", data.TANGGAL);
+            if (cok !== data.TANGGAL){
+                let index = 0;
+            }
+            if (data["NOURUT"] === 99){
+                $(row).css({
+                    "background-color" : "#ffad33",
+                    "color" : "white"
+                });
+            }
+        },
+        "drawCallback" : function (settings){
+            var api = this.api();
+            var rows = api.rows( {page:'current'} ).nodes();
+            var last = null;
+            let array = api.column(groupColumn, {page:'current'} ).data();
+
+            api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
+                if ( last !== group ) {
+                    let count = 1;
+                    //looping ini digunakan untuk menghitung berapa banyak rowspan yang harus dilakukan
+                    for (let j=i; i<array.length; j++){
+                        let first = array[i];
+                        if (first !== array[j]) break;
+                        count += 1;
+                    }
+                    $(rows).eq( i ).before(
+                        '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold">'+group+'</td></tr>'
+                    );
+                    last = group;
+                }
+            } );
+        }
+    });
+}
+
+//jancok
 function tbDashRealBank(){
     let tb_dash_real_bank = $("#dash_real_bank").DataTable({
         "ajax" : {
@@ -970,6 +1496,10 @@ $(document).ready(function () {
     tableRencanaImprestValas();
     tableRencanaImpres();
     tableRealisasiBankCurrency();
+    tableRealisasiCashCode();
+    tableRealisasiPembayaranJenis();
+    tableRealisasiPerVendor();
+    tableRencanaPerVendor();
     // tbDashRealBank();
 
     $("#dashboard-carousel").carousel({
@@ -978,13 +1508,5 @@ $(document).ready(function () {
     });
 
     $("#dash_date").datepicker({dateFormat : "dd/mm/yy"});
-    // let dash_date = $("#dash_date").on("change", function (e) {
-    //     // console.log("Dash date : ", $("#dash_date").val());
-    //     let date_val = $("#dash_date").val()
-    //     let arr = date_val.split("/");
-    //     let reversed = arr.reverse();
-    //     let string_date = reversed.join("");
-    //     // console.log("Date Array : ",string_date);
-    //     tableMainDashboard(string_date);
-    // })
+
 });

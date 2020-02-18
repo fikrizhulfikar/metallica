@@ -51,107 +51,45 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-7">
-                <div class="card">
-                    <div class="card-block">
-                        <table class="table table-condensed" id="table-rencana-pembayaran-cashcode">
-                            <thead>
-                                <tr>
-                                    <th colspan="6" style="text-align: center;">RENCANA PEMBAYARAN</th>
-                                </tr>
-                                <tr>
-                                    <td>JENIS PEMBAYARAN</td>
-                                    <td>HARI 0</td>
-                                    <td>HARI 1</td>
-                                    <td>HARI 2</td>
-                                    <td>WEEK 1</td>
-                                    <td>MONTH 1</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1.2 PEMBAYARAN KAS KEPADA PEMASOK</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                </tr>
-                                <tr>
-                                    <td>1.2.1 PEMBELIAN TENAGA LISTRIK</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                </tr>
-                                <tr>
-                                    <td>1.2.2 SEWA PEMBANGKIT</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                </tr>
-                                <tr>
-                                    <td>1.2.3 BAHAN BAKAR DAN PEMBANGKIT</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-block">
-                        <div id="chart-container" style="height: 35rem; width: 100%;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-block table-responsive" >
-                        <table class="table table-condensed table-bordered" id="rencana_imprest_valas">
-                            <thead>
-                                <tr style="background: #f9dc84;">
-                                    <td colspan="10" style="text-align: center;">RENCANA PEMBAYARAN - IMPREST VALAS USD/EUR/JPY/OTHER</td>
-                                </tr>
-                                <tr id="header_tgl_imprest_valas" style="background-color: #8688ca; color: aliceblue;">
-                                    <td>BANK</td>
-                                    <td>KETERANGAN</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-block">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-condensed" id="dash_rencana_imprest">
+                    <div class="card-block" >
+                        <div class="card-title"><h5>20</h5></div>
+                        <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
+                            <table class="table table-condensed table-bordered" id="rencana_imprest_valas" style="width: 2000px">
                                 <thead>
                                     <tr style="background: #f9dc84;">
-                                        <td colspan="10" style="text-align: center;">RENCANA PEMBAYARAN - IMPREST OPERASI TERPUSAT/ INVESTASI TERPUSAT/ IMPREST KANTOR PUSAT/ IMPOR
+                                        <td colspan="11" style="text-align: center;">RENCANA PEMBAYARAN - IMPREST VALAS USD/EUR/JPY/OTHER</td>
+                                    </tr>
+                                    <tr id="header_tgl_imprest_valas" style="background-color: #8688ca; color: aliceblue;">
+                                        <td>BANK</td>
+                                        <td>BANK</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="card-title"><h5>21</h5></div>
+                        <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
+                            <table class="table table-bordered table-condensed" id="dash_rencana_imprest" style="width: 2000px">
+                                <thead>
+                                    <tr style="background: #f9dc84;">
+                                        <td colspan="11" style="text-align: center;">RENCANA PEMBAYARAN - IMPREST OPERASI TERPUSAT/ INVESTASI TERPUSAT/ IMPREST KANTOR PUSAT/ IMPOR
                                         </td>
                                     </tr>
-                                    <tr id="header_tgl_rencana_imprest" style="background-color: #8688ca; color: aliceblue;">
+                                    <tr id="header_tgl_rencana_imprest" style="background-color: #8688ca; color: aliceblue; text-align: center">
                                         <td>BANK</td>
-                                        <td>KETERANGAN</td>
+                                        <td>BANK</td>
                                     </tr>
                                 </thead>
                             </table>
@@ -164,8 +102,9 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-block">
-                        <table class="table table-bordered table-condensed table-responsive" id="dash_real_bank_curr">
-                            <thead>
+                        <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
+                            <table class="table table-bordered table-condensed table-responsive" id="dash_real_bank_curr" style="width: 1700px;">
+                                <thead>
                                 <tr style="background-color: #f9dc84;">
                                     <td colspan="13" style="text-align: center">REALISASI PEMBAYARAN - BANK (CURRENCY)</td>
                                 </tr>
@@ -190,8 +129,135 @@
                                     <td>eq idr</td>
                                     <td>%</td>
                                 </tr>
-                            </thead>
-                        </table>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
+                            <table class="table table-bordered table-condensed" id="dash_real_cashcode" style="width: 1500px">
+                                <thead>
+                                <tr style="background-color: #f9dc84;">
+                                    <td colspan="13" style="text-align: center">REALISASI PEMBAYARAN - JENIS (USD/EUR/JPY/MYR)</td>
+                                </tr>
+                                <tr style="background-color: #8688ca; color: whitesmoke; text-align: center">
+                                    <td rowspan="2" style="vertical-align: middle">JENIS PEMBYARAN</td>
+                                    <td colspan="3">HARI H</td>
+                                    <td colspan="3">1 MINGGU</td>
+                                    <td colspan="3">1 BULAN</td>
+                                    <td colspan="3">1 TAHUN</td>
+                                </tr>
+                                <tr style="background-color: #8688ca; color: whitesmoke; text-align: center">
+                                    <td>ori qur</td>
+                                    <td>eq idr</td>
+                                    <td>%</td>
+                                    <td>ori qur</td>
+                                    <td>eq idr</td>
+                                    <td>%</td>
+                                    <td>ori qur</td>
+                                    <td>eq idr</td>
+                                    <td>%</td>
+                                    <td>ori qur</td>
+                                    <td>eq idr</td>
+                                    <td>%</td>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
+                            <table class="table table-bordered table-condensed" id="dash_real_jenis" style="width: 1500px">
+                                <thead>
+                                <tr style="background-color: #f9dc84;">
+                                    <td colspan="13" style="text-align: center">REALISASI PEMBAYARAN - OPERASI/INVESTASI/DEBT SERVICE</td>
+                                </tr>
+                                <tr style="background-color: #8688ca; color: whitesmoke; text-align: center">
+                                    <td rowspan="2" style="vertical-align: middle">JENIS PEMBYARAN</td>
+                                    <td colspan="3">HARI H</td>
+                                    <td colspan="3">1 MINGGU</td>
+                                    <td colspan="3">1 BULAN</td>
+                                    <td colspan="3">1 TAHUN</td>
+                                </tr>
+                                <tr style="background-color: #8688ca; color: whitesmoke; text-align: center">
+                                    <td>ori qur</td>
+                                    <td>eq idr</td>
+                                    <td>%</td>
+                                    <td>ori qur</td>
+                                    <td>eq idr</td>
+                                    <td>%</td>
+                                    <td>ori qur</td>
+                                    <td>eq idr</td>
+                                    <td>%</td>
+                                    <td>ori qur</td>
+                                    <td>eq idr</td>
+                                    <td>%</td>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
+                            <table class="table table-bordered table-condensed" id="dash_real_per_vendor">
+                                <thead>
+                                    <tr style="background-color: #f9dc84;">
+                                        <td colspan="13" style="text-align: center">REALISASI PEMBAYARAN PER VENDOR</td>
+                                    </tr>
+                                    <tr style="background-color: #8688ca; color: whitesmoke; text-align: center">
+                                        <td style="vertical-align: middle">TANGGAL</td>
+                                        <td style="vertical-align: middle">TANGGAL</td>
+                                        <td>JENIS PEMBAYARAN</td>
+                                        <td>VENDOR</td>
+                                        <td>BANK</td>
+                                        <td>CURRENCY</td>
+                                        <td>EQ IDR</td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
+                            <table class="table table-bordered table-condensed" id="dash_rencana_per_vendor" style="width: 1700px">
+                                <thead>
+                                <tr style="background-color: #f9dc84;">
+                                    <td colspan="13" style="text-align: center">RENCANA PEMBAYARAN PER VENDOR</td>
+                                </tr>
+                                <tr style="background-color: #8688ca; color: whitesmoke; text-align: center">
+                                    <td style="vertical-align: middle">TANGGAL</td>
+                                    <td style="vertical-align: middle">TANGGAL</td>
+                                    <td>JENIS PEMBAYARAN</td>
+                                    <td>VENDOR</td>
+                                    <td>BANK</td>
+                                    <td>CURRENCY</td>
+                                    <td>EQ IDR</td>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
