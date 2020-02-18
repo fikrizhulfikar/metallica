@@ -167,9 +167,6 @@ public class InvoiceGroupController {
                         "","", json.getString("BANK_KEY"), "OUR","IDR",json.getString("RETRIEVAL_REF_NUMBER"),
                         ""
                 );
-//                if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
-//
-//                }
             }
             AppUtils.getLogger(this).debug("statusInvoice : {} ", out);
             return out;
