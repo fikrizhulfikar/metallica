@@ -122,9 +122,26 @@ public class PembelianValasTrxService {
         return resultset;
     }
 
+    public List<Map<String, Object>> getHeadById(String pIdMetallica
+    ){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("valas_head_trx_get_byid");
+
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_id_metallica",pIdMetallica, Types.VARCHAR);
+
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data pembelian_valas_trx_get : {}", resultset);
+//        System.out.println("Pembelian Valas Metallica : "+resultset);
+        return resultset;
+    }
+
     public Map<String, Object> insDetailPembelianValasTrx(
             String pIdMetallica, String pPostDate, String pDocNo, String pAmount, String pBusArea, String pReference,
-            String pCompCode, String pCashCode, String pUserId, String pCurrency, String pCostCtr, String pDrCrInd, String pExchangeRate,
+            String pCompCode, String pCashCode, String pSumberDana, String pUserId, String pCurrency, String pCostCtr, String pDrCrInd, String pExchangeRate,
             String pFiscYear, String pGlAccount, String pLineNo, String pPmtProposalId, String pRemarks, String pFlag
     )throws SQLException{
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -141,6 +158,7 @@ public class PembelianValasTrxService {
                 .addValue("p_reference", pReference)
                 .addValue("p_comp_code", pCompCode)
                 .addValue("p_cash_code", pCashCode)
+                .addValue("p_sumber_dana", pSumberDana)
                 .addValue("p_user_id", pUserId)
                 .addValue("p_currency", pCurrency)
                 .addValue("p_cost_ctr", pCostCtr)
