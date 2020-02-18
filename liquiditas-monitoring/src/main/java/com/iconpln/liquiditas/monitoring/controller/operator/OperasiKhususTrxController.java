@@ -1,6 +1,7 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
 import com.iconpln.liquiditas.core.domain.PindahBuku;
+import com.iconpln.liquiditas.core.domain.PindahBukuDetail;
 import com.iconpln.liquiditas.core.domain.ValasDetail;
 import com.iconpln.liquiditas.core.service.OperasiKhususTrxService;
 import com.iconpln.liquiditas.core.service.PindahBukuTrxService;
@@ -115,7 +116,9 @@ public class OperasiKhususTrxController {
             @RequestParam(value = "pBusArea", defaultValue = "") String pBusArea,
             @RequestParam(value = "pCurrency", defaultValue = "") String pCurrency,
             @RequestParam(value = "pDocHdrTxt", defaultValue = "") String pDocHdrTxt,
-            @RequestParam(value = "pUserId", defaultValue = "") String pUserId
+            @RequestParam(value = "pUserId", defaultValue = "") String pUserId,
+            @RequestParam(value = "pExchangeRate", defaultValue = "") String pExchangeRate,
+            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear
     ){
         AppUtils.getLogger(this).debug("pDocNo : {} ", pDocNo);
         AppUtils.getLogger(this).debug("pDocDate : {} ", pDocDate);
@@ -130,7 +133,7 @@ public class OperasiKhususTrxController {
         try {
             String messege = "";
             boolean isUpdate = false;
-            Map<String, Object> res  = operasiKhususTrxService.insOperasiKhusus(pIdMetallica, pDocDate, pPostDate, pDocNo, pReference, pCompCode, pBusArea, pCurrency, pDocHdrTxt, WebUtils.getUsernameLogin());
+            Map<String, Object> res  = operasiKhususTrxService.insOperasiKhusus(pIdMetallica, pDocDate, pPostDate, pDocNo, pReference, pCompCode, pBusArea, pCurrency, pDocHdrTxt, WebUtils.getUsernameLogin(), pExchangeRate, pFiscYear);
 
             return res;
         }catch (Exception e){
@@ -183,7 +186,7 @@ public class OperasiKhususTrxController {
         try {
             //String pSessionId = WebUtils.getUsernameLogin() + AppUtils.getDateTillSecondTrim();
             Map<String, Object> res = new HashedMap();
-            for (ValasDetail v : pindahBuku.getPindahBukuDetails()){
+            for (PindahBukuDetail v : pindahBuku.getPindahBukuDetails()){
 
                 res = operasiKhususTrxService.insDetailOperasiKhususTrx(pindahBuku.getpIdMetallica(),v.getpPostDate(), v.getpDocNo(), v.getpAmount(), v.getpBusArea(), v.getpReference(), v.getpCompCode(), WebUtils.getUsernameLogin(), v.getpCurrency(), v.getpDrCrInd(), v.getpExchangeRate(), v.getpFiscYear(), v.getpGlAccount(), v.getpLineNo(), v.getpPmtProposalId(), v.getpRemarks(), v.getpFlag());
             }

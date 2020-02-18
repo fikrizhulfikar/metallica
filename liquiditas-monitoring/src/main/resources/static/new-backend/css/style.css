@@ -1451,6 +1451,9 @@ pre {
     border-top: 2px solid #cfd8dc; }
   .table .table {
     background-color: #e4e5e6; }
+/*.table-rencana-realisasi td{*/
+/*  padding: 0.35rem;*/
+/*}*/
 
 .table-sm th,
 .table-sm td {
@@ -1568,7 +1571,7 @@ pre {
   background-image: none;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 0;
+  border-radius: 4px;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s; }
   .form-control::-ms-expand {
     background-color: transparent;

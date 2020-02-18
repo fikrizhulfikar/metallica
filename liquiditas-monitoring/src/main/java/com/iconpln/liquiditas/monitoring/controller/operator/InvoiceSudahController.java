@@ -6,7 +6,6 @@ import com.iconpln.liquiditas.core.service.InvoiceSudahService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.monitoring.utils.NotificationUtil;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -569,9 +568,10 @@ public class InvoiceSudahController {
     public Map<String, Object> createGroup(
             @RequestParam(value = "pData", defaultValue = "") String pData,
             @RequestParam(value = "pNamaGroup", defaultValue = "") String pNamaGroup
-    ) throws JSONException {
+    ) {
 
         Map<String, Object> out = null;
+        System.out.println("Fikri : "+pData);
         //pNamaGroup = (pNamaGroup.toString().equals("null") ? "" : pNamaGroup);
         String jsonString = invoiceSudahService.getPerfectJsonString(pData);
         String[] listData = jsonString.split(";");
@@ -587,7 +587,11 @@ public class InvoiceSudahController {
                // if (!key.equals("pCompCode") && !key.equals("pDocNo") && !key.equals("pFiscYear") && !key.equals("pLineItem") && !key.equals("pKet")) {
                     try {
                         System.out.println("DIAZZZZZ:"+json.getString("pCompCode"));
-                        out = invoiceSudahService.createGroup(json.getString("pCompCode"), json.getString("pDocNo"), json.getString("pFiscYear"), json.getString("pLineItem"),json.getString("pKet"), pNamaGroup, WebUtils.getUsernameLogin());
+                        out = invoiceSudahService.createGroup(
+                                json.getString("pCompCode"), json.getString("pDocNo"),
+                                json.getString("pFiscYear"), json.getString("pLineItem"),
+                                json.getString("pKet"), pNamaGroup, WebUtils.getUsernameLogin()
+                        );
                         if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
 
                         }

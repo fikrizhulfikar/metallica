@@ -1,21 +1,48 @@
 package com.iconpln.liquiditas.core.domain;
 
 public class PindahBukuDetail {
-    private String pPostDate ;
     private String pDocNo ;
-    private String pAmount ;
-    private String pBusArea ;
-    private String pReference ;
-    private String pCompCode ;
-    private String pCurrency ;
-    private String pDrCrInd ;
-    private String pExchangeRate ;
-    private String pFiscYear ;
-    private String pGlAccount ;
-    private String pLineNo ;
     private String pPmtProposalId ;
+    private String pCompCode ;
+    private String pCashCode ;
+    private String pFiscYear ;
+    private String pLineNo ;
+    private String pReference ;
+    private String pDrCrInd ;
+    private String pGlAccount ;
+    private String pAmount ;
+    private String pExchangeRate ;
+    private String pCurrency ;
+    private String pCostCtr;
+    private String pPostDate ;
+    private String pBusArea ;
     private String pRemarks ;
     private String pFlag ;
+    private String pSumberDana;
+
+    public String getpCostCtr() {
+        return pCostCtr;
+    }
+
+    public void setpCostCtr(String pCostCtr) {
+        this.pCostCtr = pCostCtr;
+    }
+
+    public String getpSumberDana() {
+        return pSumberDana;
+    }
+
+    public void setpSumberDana(String pSumberDana) {
+        this.pSumberDana = pSumberDana;
+    }
+
+    public String getpCashCode() {
+        return pCashCode;
+    }
+
+    public void setpCashCode(String pCashCode) {
+        this.pCashCode = pCashCode;
+    }
 
     public String getpPostDate() {
         return pPostDate;

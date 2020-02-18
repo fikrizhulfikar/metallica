@@ -49,7 +49,6 @@ public class MasterDataController {
             @RequestParam(value = "pJenisBank", defaultValue = "") String pJenisBank,
             @RequestParam(value = "pForm", defaultValue = "") String pForm
     ) {
-
         try{
             return masterService.getListBank(pJenis,pJenisBank,pForm);
         }catch (Exception e){
@@ -60,7 +59,7 @@ public class MasterDataController {
 
     @RequestMapping(value = "/bank/ins_bank_valas", method = RequestMethod.POST)
     public Map<String,Object> insBankValas(@RequestBody Bank bank) {
-
+        System.out.println("Bank Detail : "+bank.getBankDetails());
         AppUtils.getLogger(this).info("param : {}",bank.toString());
         try{
             String pSessionid = WebUtils.getUsernameLogin()+ AppUtils.getDateTillSecondTrim();
@@ -608,17 +607,6 @@ public class MasterDataController {
         }
     }
 
-
-    @RequestMapping(value = "/metode_bayar/get_list_metode_bayar", method = RequestMethod.GET)
-    public List<Map<String,Object>> listMetodeBayar() {
-
-        try{
-            return masterService.getListMetodeBayar();
-        }catch (Exception e){
-            AppUtils.getLogger(this).debug(e.getMessage());
-            return null;
-        }
-    }
 
     @RequestMapping(value = "/sumber_dana/get_data_list_sumber_dana", method = RequestMethod.GET)
     public List<Map<String,Object>> listSumberDana() {

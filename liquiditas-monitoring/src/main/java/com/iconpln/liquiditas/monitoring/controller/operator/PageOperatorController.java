@@ -15,8 +15,8 @@ import javax.servlet.http.HttpSession;
 public class PageOperatorController {
 
     @RequestMapping("/home")
-    public String home() {
-        return "operator/home";
+    public String dashboard() {
+        return "operator/dashboard";
     }
 
     @RequestMapping("/rekapitulasi_data")
@@ -129,6 +129,7 @@ public class PageOperatorController {
     public String rekap_invoice_realisasi() {
         return "operator/rekap_invoice_realisasi";
     }
+
     @RequestMapping("/rekap_invoice_sudah")
     public String rekap_invoice_sudah() {
         return "operator/rekap_invoice_sudah";
@@ -144,26 +145,17 @@ public class PageOperatorController {
         return "operator/rekap_invoice_reject";
     }
 
-//    @RequestMapping("/metallica_trx")
-//    public String metallica_trx() {
-//        return "operator/metallica_trx";
-//    }
-//
-//    @RequestMapping("/pembelian_valas_trx")
-//    public String pembelian_valas_trx() {
-//        return "operator/pembelian_valas_trx";
-//    }
-
-    @RequestMapping("/rekap_invoice_lcl")
-    public String rekap_invoice_lcl() {
-        return "operator/rekap_invoice_lcl";
+    @RequestMapping("/metallica_trx")
+    public String metallica_trx() {
+        return "operator/metallica_trx";
     }
 
-    @RequestMapping("/rekap_invoice_lcl2")
-    public String rekap_invoice_lcl2() {
-        return "operator/rekap_invoice_lcl2";
+    @RequestMapping("/metallica_pembelian_valas")
+    public String metallica_pembelian_valas() {
+        return "operator/metallica_pembelian_valas";
     }
 
+    //========================= TRANSAKSI METALLICA ===================================>
     @RequestMapping("/pembelian_valas_trx")
     public String pembelian_valas_trx() {
         return "operator/pembelian_valas_trx";
@@ -208,4 +200,6 @@ public class PageOperatorController {
     public String operasi_khusus_trx_lunas() {
         return "operator/operasi_khusus_trx_lunas";
     }
+
+
 }

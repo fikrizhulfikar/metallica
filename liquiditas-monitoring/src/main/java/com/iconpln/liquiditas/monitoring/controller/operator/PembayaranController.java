@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.jxls.transformer.XLSTransformer;
 import org.apache.poi.ss.formula.NameIdentifier;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -442,7 +441,7 @@ public class PembayaranController {
             @RequestParam(value = "pData", defaultValue = "") String pData,
             @RequestParam(value = "pDeskripsi", defaultValue = "") String pDeskripsi
 
-    ) throws JSONException {
+    ) {
         Map<String, Object> out = null;
         String jsonString = valasService.getPerfectJsonString(pData);
         String[] listData = jsonString.split(";");
@@ -483,7 +482,7 @@ public class PembayaranController {
     @RequestMapping(value = "/multi_del_data", method = RequestMethod.POST)
     public Map<String, Object> multiDelData(
             @RequestParam(value = "pData", defaultValue = "") String pData
-    ) throws JSONException {
+    ) {
         Map<String, Object> out = null;
         String jsonString = valasService.getPerfectJsonString(pData);
         String[] listData = jsonString.split(";");
@@ -550,7 +549,7 @@ public class PembayaranController {
             @RequestParam(value = "pData", defaultValue = "") String pData,
             @RequestParam(value = "pTglJatuhTempo", defaultValue = "") String pTglJatuhTempo,
             @RequestParam(value = "pBankPembayar", defaultValue = "") String pBankPembayar
-    ) throws JSONException {
+    ) {
         Map<String, Object> out = null;
         pBankPembayar = (pBankPembayar.toString().equals("null") ? "" : pBankPembayar);
         String jsonString = valasService.getPerfectJsonString(pData);
@@ -625,7 +624,7 @@ public class PembayaranController {
     @RequestMapping(value = "/reject_data", method = RequestMethod.POST)
     public Map<String, Object> rejectData(
             @RequestParam(value = "pData", defaultValue = "") String pData
-    ) throws JSONException {
+    ) {
         Map<String, Object> out = null;
         String jsonString = valasService.getPerfectJsonString(pData);
         String[] listData = jsonString.split(";");
@@ -1249,7 +1248,7 @@ public class PembayaranController {
     }
 
     @PostMapping("/multi_cleansing")
-    public Map<String, Object> multiCleansing(@RequestParam("data") String data) throws JSONException {
+    public Map<String, Object> multiCleansing(@RequestParam("data") String data) {
         Map<String, Object> out = new HashMap<>();
         String jsonString = valasService.getPerfectJsonString(data);
         String[] listData = jsonString.split(";");
