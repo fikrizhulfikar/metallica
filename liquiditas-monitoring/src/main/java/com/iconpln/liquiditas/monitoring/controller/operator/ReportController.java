@@ -3,6 +3,7 @@ package com.iconpln.liquiditas.monitoring.controller.operator;
 import com.iconpln.liquiditas.core.service.DashboardService;
 import net.sf.jxls.transformer.XLSTransformer;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.hibernate.validator.internal.metadata.aggregated.rule.OverridingMethodMustNotAlterParameterConstraints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.*;
@@ -144,6 +145,62 @@ public class ReportController {
         }catch (Exception e){
             e.printStackTrace();
         }
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+        return mapData;
+    }
+
+    @GetMapping(path = "/get_dashboard_real_cashcode")
+    public Map getListRealisasiCashcode(@RequestParam(value = "ptanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardRealCashcode(tanggal);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data",list);
+        return mapData;
+    }
+
+    @GetMapping(path = "/get_dashboard_real_jenis")
+    public Map getListRealisasiPembayaranJenis(@RequestParam(value = "ptanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardRealJenis(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+        return mapData;
+    }
+
+    @GetMapping(path = "/get_dashboard_real_vendor")
+    public Map getListRealisasiPembayaranPerVendor(@RequestParam(value = "ptanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+         try{
+             list = dashboardService.getDashboardRealVendor(tanggal);
+         }catch (Exception e){
+             e.printStackTrace();
+         }
+
+         Map mapData = new HashMap();
+         mapData.put("data", list);
+         return mapData;
+    }
+    @GetMapping(path = "/get_dashboard_rencana_vendor")
+    public Map getListRencanaPembayaranPerVendor(@RequestParam(value = "ptanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+        try{
+            list = dashboardService.getDashboardRencanaVendor(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         Map mapData = new HashMap();
         mapData.put("data", list);
         return mapData;
