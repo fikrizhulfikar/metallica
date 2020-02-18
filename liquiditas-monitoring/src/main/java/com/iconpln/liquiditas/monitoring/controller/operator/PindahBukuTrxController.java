@@ -1,6 +1,7 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
 import com.iconpln.liquiditas.core.domain.PindahBuku;
+import com.iconpln.liquiditas.core.domain.PindahBukuDetail;
 import com.iconpln.liquiditas.core.domain.Valas;
 import com.iconpln.liquiditas.core.domain.ValasDetail;
 import com.iconpln.liquiditas.core.service.PindahBukuTrxService;
@@ -73,6 +74,24 @@ public class PindahBukuTrxController {
         return mapData;
     }
 
+    @RequestMapping(value = "/get_pindah_buku_head_byid", method = RequestMethod.GET)
+    public Map getPindahBukuHeadById(
+            @RequestParam(value = "pIdMetallica") String pIdMetallica
+    ){
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = pindahBukuTrxService.getHeadById(pIdMetallica);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        return mapData;
+    }
+
     private String parseColumn(int index) {
         switch (index) {
             case 1:
@@ -115,7 +134,9 @@ public class PindahBukuTrxController {
             @RequestParam(value = "pBusArea", defaultValue = "") String pBusArea,
             @RequestParam(value = "pCurrency", defaultValue = "") String pCurrency,
             @RequestParam(value = "pDocHdrTxt", defaultValue = "") String pDocHdrTxt,
-            @RequestParam(value = "pUserId", defaultValue = "") String pUserId
+            @RequestParam(value = "pUserId", defaultValue = "") String pUserId,
+            @RequestParam(value = "pExchangeRate", defaultValue = "") String pExchangeRate,
+            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear
     ){
         AppUtils.getLogger(this).debug("pDocNo : {} ", pDocNo);
         AppUtils.getLogger(this).debug("pDocDate : {} ", pDocDate);
@@ -131,7 +152,7 @@ public class PindahBukuTrxController {
             String messege = "";
             boolean isUpdate = false;
 
-            Map<String, Object> res  = pindahBukuTrxService.insPindahBuku(pIdMetallica, pDocDate, pPostDate, pDocNo, pReference, pCompCode, pBusArea, pCurrency, pDocHdrTxt, WebUtils.getUsernameLogin());
+            Map<String, Object> res  = pindahBukuTrxService.insPindahBuku(pIdMetallica, pDocDate, pPostDate, pDocNo, pReference, pCompCode, pBusArea, pCurrency, pDocHdrTxt, WebUtils.getUsernameLogin(), pExchangeRate, pFiscYear);
 
             return res;
         }catch (Exception e){
@@ -184,9 +205,9 @@ public class PindahBukuTrxController {
         try {
             //String pSessionId = WebUtils.getUsernameLogin() + AppUtils.getDateTillSecondTrim();
             Map<String, Object> res = new HashedMap();
-            for (ValasDetail v : pindahBuku.getPindahBukuDetails()){
+            for (PindahBukuDetail p : pindahBuku.getPindahBukuDetails()){
 
-                res = pindahBukuTrxService.insDetailPindahBukuTrx(pindahBuku.getpIdMetallica(),v.getpPostDate(), v.getpDocNo(), v.getpAmount(), v.getpBusArea(), v.getpReference(), v.getpCompCode(), WebUtils.getUsernameLogin(), v.getpCurrency(), v.getpDrCrInd(), v.getpExchangeRate(), v.getpFiscYear(), v.getpGlAccount(), v.getpLineNo(), v.getpPmtProposalId(), v.getpRemarks(), v.getpFlag());
+                res = pindahBukuTrxService.insDetailPindahBukuTrx(pindahBuku.getpIdMetallica(),p.getpPostDate(), p.getpDocNo(), p.getpAmount(), p.getpBusArea(), p.getpReference(), p.getpCompCode(), WebUtils.getUsernameLogin(), p.getpCurrency(), p.getpDrCrInd(), p.getpExchangeRate(), p.getpFiscYear(), p.getpGlAccount(), p.getpLineNo(), p.getpPmtProposalId(), p.getpRemarks(), p.getpFlag(), p.getpCashCode(), p.getpCostCtr(), p.getpSumberDana());
             }
             return res;
         }catch (Exception e){
@@ -212,7 +233,7 @@ public class PindahBukuTrxController {
         }
     }
 
-    @RequestMapping(value = "/delete_pindah_buku_trx", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete_pindah_buku_item_trx", method = RequestMethod.POST)
     public Map<String, Object> deletePindaBukuItemTrx(
             @RequestParam(value = "pIdMetallica", defaultValue = "") String pIdMetallica,
             @RequestParam(value = "pItemId", defaultValue = "") String pItemId
@@ -384,6 +405,21 @@ public class PindahBukuTrxController {
             mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
             mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
         }
+        return mapData;
+    }
+
+    @GetMapping(path = "/get_currency")
+    public Map getCurrency (){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = pindahBukuTrxService.getCurrency();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
         return mapData;
     }
 }

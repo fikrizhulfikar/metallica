@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,7 +77,7 @@ public class PindahBukuTrxService {
 
     public Map<String, Object> insPindahBuku(
             String pIdMetallica, String pDocDate, String pPostDate, String pDocNo, String pReference,
-            String pCompCode, String pBusArea, String pCurrency, String pDocHdrTxt, String pUserId
+            String pCompCode, String pBusArea, String pCurrency, String pDocHdrTxt, String pUserId, String pExcRate, String pFiscYear
     ) throws SQLException{
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -93,7 +94,9 @@ public class PindahBukuTrxService {
                 .addValue("p_bus_area", pBusArea)
                 .addValue("p_currency", pCurrency)
                 .addValue("p_doc_hdr_txt",pDocHdrTxt)
-                .addValue("p_user_id",pUserId);
+                .addValue("p_user_id",pUserId)
+                .addValue("p_exchange_rate", pExcRate)
+                .addValue("p_fisc_year", pFiscYear);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data ins pindah_buku_trx :{}",out);
         return out;
@@ -125,7 +128,8 @@ public class PindahBukuTrxService {
     public Map<String, Object> insDetailPindahBukuTrx(
             String pIdMetallica, String pPostDate, String pDocNo, String pAmount, String pBusArea, String pReference,
             String pCompCode, String pUserId, String pCurrency, String pDrCrInd, String pExchangeRate,
-            String pFiscYear, String pGlAccount, String pLineNo, String pPmtProposalId, String pRemarks, String pFlag
+            String pFiscYear, String pGlAccount, String pLineNo, String pPmtProposalId, String pRemarks, String pFlag, String pCashCode, String pCostCtr,
+            String pSumberDana
     )throws SQLException{
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -149,10 +153,15 @@ public class PindahBukuTrxService {
                 .addValue("p_line_no", pLineNo)
                 .addValue("p_pmt_proposal_id", pPmtProposalId)
                 .addValue("p_remarks", pRemarks)
-                .addValue("p_flag", pFlag);
+                .addValue("p_flag", pFlag)
+                .addValue("p_cash_code", pCashCode)
+                .addValue("p_cost_ctr", pCostCtr)
+                .addValue("p_sumber_dana", pSumberDana)
+                .addValue("out",OracleTypes.VARCHAR);
 
         out = simpleJdbcCall.execute(inParams);
         AppUtils.getLogger(this).info("get ins_detail_pindah_buku_trx : {}", out);
+        AppUtils.getLogger(this).info("get ins_detail_pindah_buku_trx Param: {}", inParams);
         return out;
     }
 
@@ -309,6 +318,35 @@ public class PindahBukuTrxService {
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
 
         AppUtils.getLogger(this).info("data pembelian_valas_trx_lunas_get : {}", resultset);
+//        System.out.println("Pembelian Valas Metallica : "+resultset);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getCurrency(){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_currency");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("out", OracleTypes.CURSOR);
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+
+       return out;
+    }
+
+//to be done
+    public List<Map<String, Object>> getHeadById(String pIdMetallica
+    ){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("pindahbuku_head_trx_get_byid");
+
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_id_metallica",pIdMetallica, Types.VARCHAR);
+
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data pembelian_valas_trx_get : {}", resultset);
 //        System.out.println("Pembelian Valas Metallica : "+resultset);
         return resultset;
     }
