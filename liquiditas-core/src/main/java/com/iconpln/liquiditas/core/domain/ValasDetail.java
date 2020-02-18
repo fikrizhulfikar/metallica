@@ -4,6 +4,16 @@ public class ValasDetail {
     private String pPostDate ;
     private String pDocNo ;
     private String pCashCode;
+    private String pSumberDana;
+
+    public String getpSumberDana() {
+        return pSumberDana;
+    }
+
+    public void setpSumberDana(String pSumberDana) {
+        this.pSumberDana = pSumberDana;
+    }
+
     private String pAmount ;
     private String pBusArea ;
     private String pReference ;
