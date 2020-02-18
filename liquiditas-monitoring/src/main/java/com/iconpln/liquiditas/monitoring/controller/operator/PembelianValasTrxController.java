@@ -188,7 +188,7 @@ public class PembelianValasTrxController {
             //String pSessionId = WebUtils.getUsernameLogin() + AppUtils.getDateTillSecondTrim();
             Map<String, Object> res = new HashedMap();
             for (ValasDetail v : valas.getValasDetails()){
-                res = pembelianValasTrxService.insDetailPembelianValasTrx(valas.getpIdMetallica(),v.getpPostDate(), v.getpDocNo(), v.getpAmount(), v.getpBusArea(), v.getpReference(), v.getpCompCode(), v.getpCashCode() , WebUtils.getUsernameLogin(), v.getpCurrency(), v.getpCostCtr(),v.getpDrCrInd(), v.getpExchangeRate(), v.getpFiscYear(), v.getpGlAccount(), v.getpLineNo(), v.getpPmtProposalId(), v.getpRemarks(), v.getpFlag());
+                res = pembelianValasTrxService.insDetailPembelianValasTrx(valas.getpIdMetallica(),v.getpPostDate(), v.getpDocNo(), v.getpAmount(), v.getpBusArea(), v.getpReference(), v.getpCompCode(), v.getpCashCode() , v.getpSumberDana(), WebUtils.getUsernameLogin(), v.getpCurrency(), v.getpCostCtr(),v.getpDrCrInd(), v.getpExchangeRate(), v.getpFiscYear(), v.getpGlAccount(), v.getpLineNo(), v.getpPmtProposalId(), v.getpRemarks(), v.getpFlag());
             }
             return res;
         }catch (Exception e){
@@ -233,6 +233,13 @@ public class PembelianValasTrxController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @PostMapping(path = "/multiple_delete_head")
+    public Map<String,Object> multipleDeleteHead(@RequestParam(value = "pData") String data){
+        Map<String, Object> out = new HashMap<>();
+        System.out.println(data);
+        return out;
     }
 
     @RequestMapping(value = "/update_status", method = RequestMethod.POST)
@@ -374,6 +381,24 @@ public class PembelianValasTrxController {
             mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
             mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
         }
+        return mapData;
+    }
+
+    @RequestMapping(value = "/get_valas_head_byid", method = RequestMethod.GET)
+    public Map getValasHeadById(
+            @RequestParam(value = "pIdMetallica") String pIdMetallica
+    ){
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = pembelianValasTrxService.getHeadById(pIdMetallica);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
         return mapData;
     }
 

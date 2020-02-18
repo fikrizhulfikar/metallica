@@ -185,6 +185,7 @@
                                 <label for="pHeadExchangeRate">Exchange Rate</label>
                                 <input type="number" class="form-control" id="pHeadExchangeRate" style="background-color: white" required="required"/>
                             </div>
+                            <input type="hidden" id="pIdMetallica"/>
                         </div>
                     </div>
                 </div>
@@ -233,37 +234,46 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="pDetailDocumentNumber"><span style="color: red">*)</span>&nbsp;Document Number :</label>
+                                <label for="pDetailDocumentNumber">Document Number :</label>
                                 <input type="text" class="form-control" id="pDetailDocumentNumber" readonly="readonly"/>
                             </div>
                             <div class="form-group">
-                                <label for="pDetailPmtProposalId"><span style="color: red">*)</span>&nbsp;Proposal Payment Id :</label>
+                                <label for="pDetailPmtProposalId">Proposal Payment Id :</label>
                                 <input type="text" class="form-control" id="pDetailPmtProposalId" readonly="readonly"/>
                             </div>
                             <div class="form-group">
-                                <label for="pDetailCompCode"><span style="color: red">*)</span>&nbsp;Company Code:</label>
-                                <input type="text" id="pDetailCompCode" class="form-control" readonly="readonly" />
+                                <label for="pDetailReference">Reference :</label>
+                                <input type="text" class="form-control" id="pDetailReference" readonly="readonly"/>
                             </div>
                             <div class="form-group">
-                                <label for="pDetailFiscYear"><span style="color: red">*)</span>&nbsp;Fiscal Year :</label>
-                                <input type="text" class="form-control" id="pDetailFiscYear" readonly="readonly"/>
+                                <label for="pDetailDrCrInd"><span style="color: red">*)</span>&nbsp;Debit Credit Indicator :</label>
+                                <select id="pDetailDrCrInd" class="form-control" required="required">
+                                    <option value="C">Credit</option>
+                                    <option value="D">Debit</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="pDetailLineNo"><span style="color: red">*)</span>&nbsp;Line Number :</label>
                                 <input type="text" class="form-control" id="pDetailLineNo" />
                             </div>
                             <div class="form-group">
-                                <label for="pDetailCostCtr"><span style="color: red">*)</span>Cost Center : </label>
-                                <input type="text" id="pDetailCostCtr" class="form-control" required="required"/>
+                                <label for="pDetailRemarks"><span style="color: red">*)</span>&nbsp;Remarks :</label>
+                                <input type="text" class="form-control" id="pDetailRemarks" required="required"/>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="pDetailDrCrInd"><span style="color: red">*)</span>&nbsp;Debit Credit Indicator :</label>
-                                <select id="pDetailDrCrInd" class="form-control" required="required">
-                                    <option value="H">Credit</option>
-                                    <option value="S">Debit</option>
-                                </select>
+                                <label for="pDetailFiscYear">Fiscal Year :</label>
+                                <input type="text" class="form-control" id="pDetailFiscYear" readonly="readonly"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDetailCompCode">Company Code:</label>
+                                <input type="text" id="pDetailCompCode" class="form-control" readonly="readonly" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="pDetailAmount"><span style="color: red">*)</span>&nbsp;Amount :</label>
+                                <input type="number" class="form-control" id="pDetailAmount" required="required"/>
                             </div>
                             <div class="form-group">
                                 <label for="pDetailGlAccount"><span style="color: red">*)</span>&nbsp;GL Account :</label>
@@ -271,35 +281,35 @@
                                     <option value="">Pilih Data</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="pDetailAmount"><span style="color: red">*)</span>&nbsp;Amount :</label>
-                                <input type="text" class="form-control" id="pDetailAmount" required="required"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pDetailReference"><span style="color: red">*)</span>&nbsp;Reference :</label>
-                                <input type="text" class="form-control" id="pDetailReference" readonly="readonly"/>
-                            </div>
                             <div class="form-group pExchangeRate">
                                 <label for="pDetailExchangeRate"><span style="color: red">*)</span>&nbsp;Exchange Rate :</label>
                                 <input type="text" class="form-control" id="pDetailExchangeRate" readonly="readonly"/>
                             </div>
+                            <div class="form-group">
+                                <label for="pSumberDana"><span style="color: red">*)</span>&nbsp;Sumber Dana :</label>
+
+                                <select class="form-control" id="pSumberDana">
+                                    <option value="PMN">PMN</option>
+                                    <option value="NON PMN">NON PMN</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="pDetailBusArea"><span style="color: red">*)</span>&nbsp;Business Area :</label>
+                                <label for="pDetailBusArea">Business Area :</label>
                                 <input type="text" class="form-control" id="pDetailBusArea" readonly="readonly"/>
                             </div>
                             <div class="form-group">
-                                <label for="pDetailPostDate"><span style="color: red">*)</span>&nbsp;Posting Date :</label>
+                                <label for="pDetailPostDate">&nbsp;Posting Date :</label>
                                 <input type="text" class="form-control" id="pDetailPostDate" readonly="readonly"/>
                             </div>
                             <div class="form-group">
-                                <label for="pDetailCurrency"><span style="color: red">*)</span>&nbsp;Currency :</label>
+                                <label for="pDetailCurrency">Currency :</label>
                                 <input type="text" class="form-control" id="pDetailCurrency" readonly="readonly" />
                             </div>
                             <div class="form-group">
-                                <label for="pDetailRemarks"><span style="color: red">*)</span>&nbsp;Remarks :</label>
-                                <input type="text" class="form-control" id="pDetailRemarks" required="required"/>
+                                <label for="pDetailCostCtr"><span style="color: red">*)</span>Cost Center : </label>
+                                <input type="text" id="pDetailCostCtr" class="form-control" maxlength="10" minlength="10" required="required"/>
                             </div>
                             <div class="form-group">
                                 <label for="pDetailCashCode"><span style="color: red">*)</span>Cash Code : </label>
@@ -319,39 +329,39 @@
         <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
             <table id="table-main-detail" class="table table-striped">
                 <thead>
-                <tr>
-                    <th>DOCUMENT NUMBER</th>
-                    <th>PAYMENT PROPOSAL</th>
-                    <th>COMPANY CODE</th>
-                    <th>CASH CODE</th>
-                    <th>FISCAL YEAR</th>
-                    <th>LINE NUMBER</th>
-                    <th>DEBIT CREDIT INDICATOR</th>
-                    <th>GL ACCOUNT</th>
-                    <th>AMOUNT</th>
-                    <th>CURRENCY</th>
-                    <th>COST CENTER</th>
-                    <th>BUSINESS AREA</th>
-                    <th>REMARKS</th>
-                    <th>MASUK</th>
-                    <th>AKSI</th>
-                </tr>
+                    <tr>
+                        <th>DOCUMENT NUMBER</th>
+                        <th>PAYMENT PROPOSAL</th>
+                        <th>COMPANY CODE</th>
+                        <th>CASH CODE</th>
+                        <th>SUMBER DANA</th>
+                        <th>FISCAL YEAR</th>
+                        <th>LINE NUMBER</th>
+                        <th>DEBIT CREDIT INDICATOR</th>
+                        <th>GL ACCOUNT</th>
+                        <th>AMOUNT</th>
+                        <th>CURRENCY</th>
+                        <th>COST CENTER</th>
+                        <th>BUSINESS AREA</th>
+                        <th>REMARKS</th>
+                        <th>MASUK</th>
+                        <th>AKSI</th>
+                    </tr>
                 </thead>
                 <tbody>
                 </tbody>
                 <tfoot>
-                <tr>
-                    <td colspan="3"></td>
-                    <td colspan="3"></td>
-                    <td colspan="8"></td>
-                </tr>
+                    <tr>
+                        <td colspan="3"></td>
+                        <td colspan="3"></td>
+                        <td colspan="2"></td>
+                    </tr>
                 </tfoot>
             </table>
         </div>
         <div align="right">
             <button class="btn btn-danger" onclick="back()"><i class="fa fa-arrow-circle-left"> &nbsp; Back</i></button>
             <button onclick="submitChild()" class="btn btn-success">Submit</button>
-            <button onclick="showToast()" class="btn btn-sm btn-info">Toast</button>
         </div>
 <!--        end of detail item-->
     </div>
