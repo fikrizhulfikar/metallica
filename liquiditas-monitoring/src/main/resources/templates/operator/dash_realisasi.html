@@ -1,0 +1,92 @@
+<div th:fragment="stylesheets-backend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        table {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+        }
+        table th {
+            font-size: 12px;
+            vertical-align: middle;
+        }
+        table td {
+            font-size: 12px;
+        }
+<!--        tbody:hover td {-->
+<!--            color: transparent;-->
+<!--            text-shadow: 0 0 3px #aaa;-->
+<!--        }-->
+
+<!--        tbody:hover tr:hover td {-->
+<!--            color: #444;-->
+<!--            text-shadow: 0 1px 0 #fff;-->
+<!--        }-->
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Dashboard Realisasi</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div style="overflow-y:auto;">
+                            <iframe height="1000px" width="1300" src="http://10.14.153.169:8080/pivot/#!/auth/pivot"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <table class="table table-bordered table-condensed" id="dash_real_per_vendor" width="100%">
+                            <thead>
+                            <tr style="background-color: #f9dc84;">
+                                <th colspan="13" style="text-align: center; background: #F4D35E" width="100%">REALISASI PEMBAYARAN PER VENDOR</th>
+                            </tr>
+                            <tr style="background-color: #8688ca; color: black; text-align: center">
+                                <td style="vertical-align: middle; background: #F4D35E" width="16%">TANGGAL</td>
+                                <td style="vertical-align: middle; background: #F4D35E" width="16%">TANGGAL</td>
+                                <td style="background: #F4D35E" width="20%">JENIS PEMBAYARAN</td>
+                                <td style="background: #F4D35E" width="16%">VENDOR</td>
+                                <td style="background: #F4D35E" width="16%">BANK</td>
+                                <td style="background: #F4D35E" width="16%">CURRENCY</td>
+                                <td style="background: #F4D35E" width="16%">EQ IDR</td>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--    modal detail -->
+    <div class="modal fade" id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/dash_realisasi.js"></script>
+    <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
+    <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
+</div>

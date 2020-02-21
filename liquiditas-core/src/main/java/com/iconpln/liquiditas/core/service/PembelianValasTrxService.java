@@ -11,9 +11,11 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -352,6 +354,71 @@ public class PembelianValasTrxService {
 
             List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
             return out;
+    }
+
+    public BigDecimal getTotalTagihan(String tglAwal,
+                                      String tglAkhir,
+                                      String currency,
+                                      String userId,
+                                      String search) {
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", tglAwal, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", tglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_currency", currency, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR)
+                .addValue("p_search", search, OracleTypes.VARCHAR);
+
+        getJdbcTemplate().execute("alter session set NLS_NUMERIC_CHARACTERS = '.,'");
+
+        BigDecimal result = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_corpay")
+                .withFunctionName("get_total_tagihan_valas")
+                .executeFunction(BigDecimal.class, in);
+        return result;
+    }
+
+    public Map<String, Object> updStatus(String pIdMetallica, String pStatusTracking) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("valas_trx_verifikasi");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_metallica", pIdMetallica)
+                .addValue("p_status_tracking", pStatusTracking)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data upd_status_pembayaran : {}", out);
+        return out;
+    }
+
+    public String getPerfectJsonString(String jsonString){
+        jsonString = jsonString.replaceAll("\\[", "");
+        jsonString = jsonString.replaceAll("\\]", "");
+        jsonString = jsonString.replaceAll("},", "};");
+        return jsonString;
+    }
+
+    public List<Map<String, Object>> getAllpembayaran(String idUser, String pTglAwal, String pTglAkhir,  String pCurr) throws SQLException {
+
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pCurr : {}", pCurr);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_all_valas_by_status");
+
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_user_id", idUser);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_currency", pCurr);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_all_pembayaran_by_status2 : {} and userid {}", resultset, idUser);
+        return resultset;
     }
 
 }

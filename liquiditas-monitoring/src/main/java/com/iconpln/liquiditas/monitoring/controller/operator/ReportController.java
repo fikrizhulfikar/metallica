@@ -3,7 +3,6 @@ package com.iconpln.liquiditas.monitoring.controller.operator;
 import com.iconpln.liquiditas.core.service.DashboardService;
 import net.sf.jxls.transformer.XLSTransformer;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.hibernate.validator.internal.metadata.aggregated.rule.OverridingMethodMustNotAlterParameterConstraints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.*;
@@ -16,13 +15,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Phaser;
 
 /**
  * Created by israjhaliri on 8/28/17.
  */
 @RestController
-@RequestMapping("api_operator/api_report")
+@RequestMapping("/api_operator/api_report")
 public class ReportController {
 
     @Autowired
@@ -94,12 +92,60 @@ public class ReportController {
         return mapData;
     }
 
-    @GetMapping(path = "/get_dashboard_recana_valas")
-    public Map getListTagihanCahscode(@RequestParam(value = "ptanggal") String tanggal){
+    @GetMapping(path = "/per_bank")
+    public Map listDashboardPerBank(@RequestParam(value = "tanggal") String tanggal){
         List<Map<String, Object>> list = new ArrayList<>();
 
         try {
-            list = dashboardService.getDashboardRencanaValas(tanggal);
+            list = dashboardService.getDashboardBank(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @GetMapping(path = "/jenis_pembayaran")
+    public Map listDashboardJenisPembayaran(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardPembayaran(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @GetMapping(path = "/jenis_rekening")
+    public Map listDashboardJenisRekening(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardRekening(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @RequestMapping(path = "/get_dashboard_real_bank")
+    public Map getListRealisassiBankCurrency(@RequestParam(value = "ptanggalawal") String tgl_awal, @RequestParam(value = "ptanggalakhir") String tgl_akhir){
+        List<Map<String, Object>> list =  new ArrayList<>();
+
+        try {
+            list = dashboardService.getDahsboardRealBank(tgl_awal,tgl_akhir);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -108,15 +154,31 @@ public class ReportController {
         return mapData;
     }
 
-    @GetMapping(path = "/get_dashboard_rencana_imprest")
-    public Map getListRencanaImprest(@RequestParam(value = "ptanggal") String tanggal){
-        List<Map<String, Object>> list = new ArrayList<>();
+    //Update Senin 17/2/2020
 
-        try {
-            list = dashboardService.getDashboardRencanaImprest(tanggal);
+    @GetMapping(path = "/get_dashboard_rencana_vendor")
+    public Map getListRencanaPembayaranPerVendor(@RequestParam(value = "ptanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+        try{
+            list = dashboardService.getDashboardRencanaVendor(tanggal);
         }catch (Exception e){
             e.printStackTrace();
         }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+        return mapData;
+    }
+
+    @GetMapping(path = "/get_dashboard_real_vendor")
+    public Map getListRealisasiPembayaranPerVendor(@RequestParam(value = "ptanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+        try{
+            list = dashboardService.getDashboardRealVendor(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         Map mapData = new HashMap();
         mapData.put("data", list);
         return mapData;
@@ -128,20 +190,6 @@ public class ReportController {
 
         try {
             list = dashboardService.getDahsboardRealBankCurr(tanggal);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        Map mapData = new HashMap();
-        mapData.put("data", list);
-        return mapData;
-    }
-
-    @RequestMapping(path = "/get_dashboard_real_bank")
-    public Map getListRealisassiBankCurrency(@RequestParam(value = "ptanggalawal") String tgl_awal, @RequestParam(value = "ptanggalakhir") String tgl_akhir){
-        List<Map<String, Object>> list =  new ArrayList<>();
-
-        try {
-            list = dashboardService.getDahsboardRealBank(tgl_awal,tgl_akhir);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -179,28 +227,29 @@ public class ReportController {
         return mapData;
     }
 
-    @GetMapping(path = "/get_dashboard_real_vendor")
-    public Map getListRealisasiPembayaranPerVendor(@RequestParam(value = "ptanggal") String tanggal){
+    @GetMapping(path = "/get_dashboard_rencana_imprest")
+    public Map getListRencanaImprest(@RequestParam(value = "ptanggal") String tanggal){
         List<Map<String, Object>> list = new ArrayList<>();
-         try{
-             list = dashboardService.getDashboardRealVendor(tanggal);
-         }catch (Exception e){
-             e.printStackTrace();
-         }
 
-         Map mapData = new HashMap();
-         mapData.put("data", list);
-         return mapData;
-    }
-    @GetMapping(path = "/get_dashboard_rencana_vendor")
-    public Map getListRencanaPembayaranPerVendor(@RequestParam(value = "ptanggal") String tanggal){
-        List<Map<String, Object>> list = new ArrayList<>();
-        try{
-            list = dashboardService.getDashboardRencanaVendor(tanggal);
+        try {
+            list = dashboardService.getDashboardRencanaImprest(tanggal);
         }catch (Exception e){
             e.printStackTrace();
         }
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+        return mapData;
+    }
 
+    @GetMapping(path = "/get_dashboard_recana_valas")
+    public Map getListTagihanCahscode(@RequestParam(value = "ptanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardRencanaValas(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         Map mapData = new HashMap();
         mapData.put("data", list);
         return mapData;

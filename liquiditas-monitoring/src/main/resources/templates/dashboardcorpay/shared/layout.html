@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="valas admin" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="UI for valas"/>
+    <meta name="author" content="ICON PLN"/>
+    <meta name="keyword" content="valas admin"/>
+
+    <title>Valas Administrator</title>
+    <link rel="shortcut icon" href="/static/new-backend/img/icon.png"/>
+
+    <link href="/static/css/jquery-ui.css" rel="stylesheet"/>
+    <link href="/static/css/bootstrap.css" rel="stylesheet"/>
+    <link href="/static/css/font-awesome.css" rel="stylesheet"/>
+    <link href="/static/css/backend/jquery.gritter.css" rel="stylesheet"/>
+    <link href="/static/css/backend/pace-theme-minimal.css" rel="stylesheet"/>
+    <link href="/static/css/backend/main.css" rel="stylesheet"/>
+    <link href="/static/css/backend/skins.css" rel="stylesheet"/>
+    <link href="/static/css/backend/jquery.dataTables.min.css" rel="stylesheet"/>
+    <link href="/static/css/backend/custom_global.css" rel="stylesheet"/>
+    <style>
+        th, td, table {
+            /*background: #005fb5;*/
+            /*color: white;*/
+            border-color: black !Important;
+        }
+
+        .table-footer {
+            background: #5fb3ff;
+            color: white;
+        }
+
+        #ul-menu-dasboard li {
+            padding: 5px;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            background: rgba(187, 234, 234, 1) !important;
+            font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;
+            min-height: 100%;
+        }
+
+        .carousel-control {
+
+            font-size: 15px !important;
+            color: #001096 !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, .6) !important;
+            background-color: rgba(255, 232, 232, 0) !important;
+            filter: alpha(opacity=50) !important;
+            opacity: .2 !important;
+        }
+
+        .dropdown-menu {
+            left: 41% !important;
+        }
+
+        table {
+            background-color: rgba(213, 223, 234, 0.85) !important
+        }
+
+        #loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+            margin-top: 22.5%;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <!--for add add stylesheet dynamically-->
+    <div th:replace="${view} :: stylesheets-frontend"></div>
+</head>
+<body class="skin-blue">
+<div style="display: none" class="col-md-12" id="loader-div" align="center">
+    <div id="loader"></div>
+</div>
+<div class="app-body dropdown" align="center">
+    <button style="margin-left: 20px;margin-top: 8px;margin-bottom: 9px;" class="btn btn-xs btn-default dropdown-toggle"
+            type="button"
+            data-toggle="dropdown">
+        MENU&nbsp;<span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" id="ul-menu-dasboard">
+        <li th:each="menu : ${session.menus}" th:if="${menu.IS_API == 0 &#x26;&#x26; menu.root_id == 'mnuDashCorpay' &#x26;&#x26; menu.root_id != 'rootmenu'}">
+            <a href="#" th:href="@{${menu.form_id}}">
+                <i class="fa fa-bar-chart"></i><span th:text="${menu.text}">-</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#" th:href="@{/dash_corpay/saldo_rekening}">
+                <i class="fa fa-bar-chart"></i><span>&nbsp;KOMPOSISI SALDO dan LAINNYA</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" th:href="@{/dash_corpay/rencana_pembayaran}">
+                <i class="fa fa-bar-chart"></i><span>&nbsp;RENCANA PEMBAYARAN</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" th:href="@{/dash_corpay/realisasi_pembayaran}">
+                <i class="fa fa-bar-chart"></i><span>&nbsp;REALISASI PEMBAYARAN</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" th:href="@{/page_operator/home}">
+                <i class="fa fa-home"></i><span>&nbsp;Home</span>
+            </a>
+        </li>
+        <li>
+            <a onclick="generatePDF()">
+                <i class="fa fa-file"></i><span>&nbsp;Export PDF</span>
+            </a>
+        </li>
+        <li>
+            <a onclick="generateXLS()">
+                <i class="fa fa-file"></i><span>&nbsp;Export XLS</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/screensaver}">
+                <i class="fa fa-image"></i><span>&nbsp;Screen Saver</span>
+            </a>
+        </li>
+        <li>
+            <form id="form-logout" th:action="@{/logout}" method="post">
+            </form>
+            <a href="javascript:void(0)" onclick="logout()"><i class="fa fa-power-off"></i>&nbsp;Log Out</a>
+            <script>
+                function logout() {
+                    document.getElementById("form-logout").submit();
+                }
+            </script>
+        </li>
+    </ul>
+</div>
+<div class="app-body" th:replace="${view} :: content"></div>
+</body>
+<script>
+    var getUrl = window.location;
+    var baseUrl = getUrl.protocol + "//" + getUrl.host + "/";
+</script>
+<!-- Bootstrap and necessary plugins -->
+<script src="/static/js/jquery-2.2.0.min.js"></script>
+<script src="/static/js/jquery-ui.js"></script>
+<script src="/static/js/bootstrap.js"></script>
+<script src="/static/js/show-dialog.js"></script>
+<script src="/static/js/maskedinput/jquery.maskmoney.js"></script>
+<script src="/static/js/maskedinput/FormatMoney.js"></script>
+<script src="/static/js/backend/jquery.dataTables.min.js"></script>
+<script src="/static/js/backend/dataTables.bootstrap.js"></script>
+<!--<script src="/static/js/fushion-chart/fusioncharts.js"></script>-->
+<!--<script src="/static/js/fushion-chart/fusioncharts.charts.js"></script>-->
+<!--<script src="/static/js/fushion-chart/fusioncharts.powercharts.js"></script>-->
+<!--<script src="/static/js/fushion-chart/fusioncharts.gantt.js"></script>-->
+<!--<script src="/static/js/fushion-chart/fusioncharts.treemap.js"></script>-->
+<!--<script src="/static/js/fushion-chart/fusioncharts.zoomscatter.js"></script>-->
+<!--<script src="/static/js/fushion-chart/fusioncharts.maps.js"></script>-->
+<!--<script src="/static/js/fushion-chart/fusioncharts.widgets.js"></script>-->
+<!--<script src="/static/js/fushion-chart/fusioncharts.theme.fint.js"></script>-->
+<script src="/static/js/pdfmake/pdfmake.min.js"></script>
+<script src="/static/js/pdfmake/vfs_fonts.js"></script>
+<script src="/static/js/backend/coreapps.js"></script>
+<script src="/static/js/accounting.min.js"></script>
+<script>
+    /*<![CDATA[*/
+
+    var allData = [];
+    $(document).ready(function () {
+        $('.carousel').carousel({
+            interval: 1000 * 5
+        });
+    });
+
+    function generateXLS() {
+        var tgl_usd = sessionStorage.getItem("tempSearchUsdJpy");
+        var tgl_eur = sessionStorage.getItem("tempSearchEurOthers");
+        if(tgl_usd == null){
+            tgl_usd = "";
+        }
+        if(tgl_eur == null){
+            tgl_eur = "";
+        }
+        window.location = "/api_dashboard/xls?pTglUsd=" + tgl_usd + "&pTglEur=" + tgl_eur;
+    }
+
+    function generatePDF() {
+        var tgl_usd = sessionStorage.getItem("tempSearchUsdJpy");
+        var tgl_eur = sessionStorage.getItem("tempSearchEurOthers");
+        $.ajax({
+            url: baseUrl + "api_dashboard/getall_data_dashboard",
+            dataType: 'JSON',
+            type: "GET",
+            data: {
+                pTglUsd: tgl_usd,
+                pTglEur: tgl_eur
+            },
+            async: false,
+            success: function (res) {
+                console.log("all data : ", res);
+                allData = res;
+                createUIPdf(res);
+            },
+            error: function (res) {
+                console.log("error cannot get data pdf");
+                waitingDialog.hide();
+            }
+        });
+    }
+
+    /*]]>*/
+</script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var roleUser = [[${#authentication.getAuthorities().toString()}]];
+    var thp1 = roleUser.replace("[", "");
+    var thp2 = thp1.replace("]", "");
+    var username = [[${#authentication.getPrincipal().getUsername().toString()}]];
+    var topics = [[${#authentication.getPrincipal().getTopics()}]];
+    var newRoleUser = thp2.split(", ");
+    /*]]>*/
+</script>
+<script src="/static/js/frontend/verifikator/export_pdf.js"></script>
+<script src="/static/js/jquery-toast-plugin-1.3.2/dist/jquery.toast.min.js"></script>
+<!--<script th:src="@{/static/js/wsock.js}"></script>-->
+<script src="/static/js/sockjs.min.js"></script>
+<script src="/static/js/stomp.min.js"></script>
+<!--for add add javascript dynamically-->
+<div th:replace="${view} :: scripts-frontend"></div>
+</html>

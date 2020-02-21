@@ -223,6 +223,26 @@ function setSelectSumberDana(idHtml, idForSelected) {
     });
 }
 
+function setSelectMetodeBayar(idHtml, idForSelected) {
+    $.ajax({
+        url: baseUrl + "api_master/metode_bayar/get_list_metode_bayar",
+        dataType: 'JSON',
+        type: "GET",
+        success: function (res) {
+            $("#" + idHtml + "").html('');
+            $.each(res, function (key, val) {
+                $("#" + idHtml + "").append('<option value="' + val.CODE + '">' + val.VALUE + '</option>');
+            });
+            if (idForSelected != "") {
+                $("#" + idHtml + "").val(idForSelected);
+            }
+        },
+        error: function () {
+            $("#" + idHtml + "").html('<option value="">Pilih Data</option>');
+        }
+    });
+}
+
 function setSelectPosAnggaran(idHtml, tipeTransaksi,  idForSelected) {
     $.ajax({
         url: baseUrl + "api_master/pos_anggaran/get_pos_anggaran",

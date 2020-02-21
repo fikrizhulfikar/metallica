@@ -148,7 +148,7 @@ function duplicate_data(id) {
             if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
                 $('#pTglJatuhTempo').prop('disabled', true);
             }
-            $("#pVendor").select2({
+            se$("#pVendor").select2({
                 width: "100%"
             });
             $("#pSubPosAnggaran").select2({
@@ -160,8 +160,8 @@ function duplicate_data(id) {
             $('#pUnitAnggaran').select2({
                 width: '100%'
             });
-            $('#edit-rekap-modal').modal({backdrop: 'static', keyboard: false});
-
+                $('#edit-rekap-modal').modal({backdrop: 'static', keyboard: false});
+            }, timeSowFormEdit);
             hideLoadingCss()
         },
         error: function () {

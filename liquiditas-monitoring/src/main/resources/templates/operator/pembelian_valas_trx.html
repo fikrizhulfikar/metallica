@@ -30,7 +30,6 @@
         <li class="breadcrumb-item active" style="cursor: default">Transaksi Pembelian Valas </li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
                 <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')">
@@ -56,16 +55,6 @@
                         <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>
                     </div>
                     <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Bank </label>
-                    </div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="bank" id="cmb_bank" class="form-control">
-                            <option value="">Pilih Data</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
-                    <div class="col-md-1" style="padding-right: 0px;">
                         <label class="lbl-src">Currency </label>
                     </div>
                     <div class="col-md-3" style="padding-right: 0px;">
@@ -73,28 +62,23 @@
                             <option value="">Pilih Data</option>
                         </select>
                     </div>
+                </div>
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
                     <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Metode Bayar</label>
+
                     </div>
                     <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="cmb_cara_pembayaran" id="cmb_cara_pembayaran" class="form-control">
-                            <option value="">Pilih Data</option>
-                        </select>
+
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+
                     </div>
                     <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
                     <div class="col-md-3" style="padding-right: 0px;">
                         <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
-                    </div>
-                </div>
-                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
-
-                    <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Status Tracking</label>
-                    </div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="status_tracking" id="cmb_status_tracking" class="form-control">
-                            <option value="">PILIH STATUS TRACKING</option>
-                        </select>
                     </div>
                 </div>
             </div>
@@ -114,6 +98,7 @@
                                 <th>BUSINESS AREA</th>
                                 <th>CURRENCY</th>
                                 <th>EXCHANGE RATE</th>
+                                <th>TOTAL TAGIHAN</th>
                                 <th>DOC HDR TEXT</th>
                                 <th>STATUS TRACKING</th>
                                 <th width="120px">AKSI</th>
@@ -141,11 +126,11 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="pHeadDocDate">&nbsp;Document Date :</label>
-                                <input type="text" class="form-control" id="pHeadDocDate" style="background-color: white" value="" required="required"/>
+                                <input type="text" class="form-control" id="pHeadDocDate" style="background-color: white" value="" required="required" readonly="readonly"/>
                             </div>
                             <div class="form-group">
                                 <label for="pHeadPostingDate">&nbsp;Posting Date :</label>
-                                <input type="text" class="form-control" id="pHeadPostingDate" style="background-color: white" value="" required="required"/>
+                                <input type="text" class="form-control" id="pHeadPostingDate" style="background-color: white" value="" required="required" readonly="readonly"/>
                             </div>
                             <div class="form-group">
                                 <label for="pHeadDocNo">&nbsp;Document Number :</label>
@@ -245,19 +230,19 @@
                                 <label for="pDetailReference">Reference :</label>
                                 <input type="text" class="form-control" id="pDetailReference" readonly="readonly"/>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group just-for-input-data">
                                 <label for="pDetailDrCrInd"><span style="color: red">*)</span>&nbsp;Debit Credit Indicator :</label>
                                 <select id="pDetailDrCrInd" class="form-control" required="required">
                                     <option value="C">Credit</option>
                                     <option value="D">Debit</option>
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group just-for-input-data">
                                 <label for="pDetailLineNo"><span style="color: red">*)</span>&nbsp;Line Number :</label>
                                 <input type="text" class="form-control" id="pDetailLineNo" />
                             </div>
-                            <div class="form-group">
-                                <label for="pDetailRemarks"><span style="color: red">*)</span>&nbsp;Remarks :</label>
+                            <div class="form-group just-for-input-data">
+                                <label for="pDetailRemarks">&nbsp;Remarks :</label>
                                 <input type="text" class="form-control" id="pDetailRemarks" required="required"/>
                             </div>
                         </div>
@@ -271,13 +256,13 @@
                                 <input type="text" id="pDetailCompCode" class="form-control" readonly="readonly" />
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group just-for-input-data">
                                 <label for="pDetailAmount"><span style="color: red">*)</span>&nbsp;Amount :</label>
                                 <input type="number" class="form-control" id="pDetailAmount" required="required"/>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group just-for-input-data">
                                 <label for="pDetailGlAccount"><span style="color: red">*)</span>&nbsp;GL Account :</label>
-                                <select class="form-control" id="pDetailGlAccount" required="required">
+                                <select class="form-control" id="pDetailGlAccount" style="background-color: white" required="required">
                                     <option value="">Pilih Data</option>
                                 </select>
                             </div>
@@ -285,7 +270,7 @@
                                 <label for="pDetailExchangeRate"><span style="color: red">*)</span>&nbsp;Exchange Rate :</label>
                                 <input type="text" class="form-control" id="pDetailExchangeRate" readonly="readonly"/>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group just-for-input-data">
                                 <label for="pSumberDana"><span style="color: red">*)</span>&nbsp;Sumber Dana :</label>
 
                                 <select class="form-control" id="pSumberDana">
@@ -307,11 +292,11 @@
                                 <label for="pDetailCurrency">Currency :</label>
                                 <input type="text" class="form-control" id="pDetailCurrency" readonly="readonly" />
                             </div>
-                            <div class="form-group">
-                                <label for="pDetailCostCtr"><span style="color: red">*)</span>Cost Center : </label>
+                            <div class="form-group just-for-input-data">
+                                <label for="pDetailCostCtr">Cost Center : </label>
                                 <input type="text" id="pDetailCostCtr" class="form-control" maxlength="10" minlength="10" required="required"/>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group just-for-input-data">
                                 <label for="pDetailCashCode"><span style="color: red">*)</span>Cash Code : </label>
                                 <select id="pDetailCashCode" class="form-control">
                                     <option value="">Pilih Data</option>
@@ -319,7 +304,7 @@
                             </div>
                         </div>
                     </div>
-                    <div align="right">
+                    <div class="just-for-input-data" align="right">
                         <button onclick="AddToTable()" class="btn btn-success">Add</button>
                     </div>
                 </div>
@@ -361,7 +346,7 @@
         </div>
         <div align="right">
             <button class="btn btn-danger" onclick="back()"><i class="fa fa-arrow-circle-left"> &nbsp; Back</i></button>
-            <button onclick="submitChild()" class="btn btn-success">Submit</button>
+            <button onclick="submitChild()" class="btn btn-success just-for-input-data">Submit</button>
         </div>
 <!--        end of detail item-->
     </div>

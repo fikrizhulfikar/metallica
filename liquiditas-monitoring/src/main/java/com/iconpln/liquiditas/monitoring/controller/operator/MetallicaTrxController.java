@@ -517,114 +517,114 @@ public class MetallicaTrxController {
 //        return out;
 //    }
 
-    @RequestMapping(value = "/multiple_edit", method = RequestMethod.POST)
-    public Map<String, Object> multipleEdit(
-            @RequestParam(value = "pData", defaultValue = "") String pData,
-            @RequestParam(value = "pTglJatuhTempo", defaultValue = "") String pTglJatuhTempo,
-            @RequestParam(value = "pBankPembayar", defaultValue = "") String pBankPembayar
-    ) {
-        Map<String, Object> out = null;
-        pBankPembayar = (pBankPembayar.toString().equals("null") ? "" : pBankPembayar);
-        String jsonString = metallicaTrxService.getPerfectJsonString(pData);
-        String[] listData = jsonString.split(";");
-        JSONObject json;
-        for (String item : listData) {
-            json = new JSONObject(item);
-            Iterator<?> keys = json.keys();
-            while (keys.hasNext()) {
-                String key = (String) keys.next();
-                String value = json.getString(key);
-                AppUtils.getLogger(this).debug("  {}: {} ", key, value);
-                if (!key.equals("x") && !key.equals("jenisPembayaran") && !key.equals("total") && !key.equals("currency")) {
-                    try {
-                        AppUtils.getLogger(this).debug("update {} : {} ", value, key);
-                        String message = "";
-                        if (!value.startsWith("TRIPARTITE")) {
-                            Map<String, String> sebelum = notificationUtil.getNotificationDetailByIdValas(value);
-                            message += WebUtils.getUsernameLogin() + " telah melakukan Perubahan/Update Data pada aplikasi.";
-                            message += sebelum.get("NAMA_JENIS_PEMBAYARAN") + "-" + sebelum.get("NAMA_VENDOR") + "-" + pTglJatuhTempo + ".";
+//    @RequestMapping(value = "/multiple_edit", method = RequestMethod.POST)
+//    public Map<String, Object> multipleEdit(
+//            @RequestParam(value = "pData", defaultValue = "") String pData,
+//            @RequestParam(value = "pTglJatuhTempo", defaultValue = "") String pTglJatuhTempo,
+//            @RequestParam(value = "pBankPembayar", defaultValue = "") String pBankPembayar
+//    ) {
+//        Map<String, Object> out = null;
+//        pBankPembayar = (pBankPembayar.toString().equals("null") ? "" : pBankPembayar);
+//        String jsonString = metallicaTrxService.getPerfectJsonString(pData);
+//        String[] listData = jsonString.split(";");
+//        JSONObject json;
+//        for (String item : listData) {
+//            json = new JSONObject(item);
+//            Iterator<?> keys = json.keys();
+//            while (keys.hasNext()) {
+//                String key = (String) keys.next();
+//                String value = json.getString(key);
+//                AppUtils.getLogger(this).debug("  {}: {} ", key, value);
+//                if (!key.equals("x") && !key.equals("jenisPembayaran") && !key.equals("total") && !key.equals("currency")) {
+//                    try {
+//                        AppUtils.getLogger(this).debug("update {} : {} ", value, key);
+//                        String message = "";
+//                        if (!value.startsWith("TRIPARTITE")) {
+//                            Map<String, String> sebelum = notificationUtil.getNotificationDetailByIdValas(value);
+//                            message += WebUtils.getUsernameLogin() + " telah melakukan Perubahan/Update Data pada aplikasi.";
+//                            message += sebelum.get("NAMA_JENIS_PEMBAYARAN") + "-" + sebelum.get("NAMA_VENDOR") + "-" + pTglJatuhTempo + ".";
+//
+//                            out = metallicaTrxService.updateMultiplePembayaran(value, pTglJatuhTempo, pBankPembayar, WebUtils.getUsernameLogin());
+//                            Map<String, String> sesudah = notificationUtil.getNotificationDetailByIdValas(value);
+//                            message += "Perubahan: " + sesudah.get("NAMA_JENIS_PEMBAYARAN") + "-" + sesudah.get("NAMA_VENDOR") + "-" + pTglJatuhTempo + ".";
+//
+//                            if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
+//                                String idJenisPembayaran = metallicaTrxService.getIdPembayaranByIdValas(value);
+//                                Notification notification =
+//                                        Notification.builder()
+//                                                .topic(idJenisPembayaran)
+//                                                .title(NamedIdentifier.REKAP_PEMBAYARAN.getName())
+//                                                .message(message)
+//                                                .additionalInfo(NamedIdentifier.REKAP_PEMBAYARAN.getValue() + ";" + value)
+//                                                .build();
+//                                notificationUtil.notifyMessage(notification);
+//                            }
+//                        } else {
+//                            Map<String, String> sebelum = notificationUtil.getNotificationDetailByIdTripartite(value);
+//                            message += WebUtils.getUsernameLogin() + " telah melakukan Perubahan/Update Data pada aplikasi.";
+//                            message += sebelum.get("NAMA_JENIS_PEMBAYARAN") + "-" + sebelum.get("NAMA_VENDOR") + "-" + pTglJatuhTempo + ".";
+//
+//                            out = metallicaTrxService.updateMultiplePembayaran(value, pTglJatuhTempo, pBankPembayar, WebUtils.getUsernameLogin());
+//                            Map<String, String> sesudah = notificationUtil.getNotificationDetailByIdTripartite(value);
+//                            message += "Perubahan: " + sesudah.get("NAMA_JENIS_PEMBAYARAN") + "-" + sesudah.get("NAMA_VENDOR") + "-" + pTglJatuhTempo + ".";
+//
+//                            if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
+//                                String idJenisPembayaran = metallicaTrxService.getIdPembayaranByIdTripartite(value);
+//                                Notification notification =
+//                                        Notification.builder()
+//                                                .topic(idJenisPembayaran)
+//                                                .title(NamedIdentifier.TRIPARTITE.getName())
+//                                                .message(message)
+//                                                .additionalInfo(NamedIdentifier.TRIPARTITE.getValue() + ";" + value)
+//                                                .build();
+//                                notificationUtil.notifyMessage(notification);
+//                            }
+//                        }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                        out = null;
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//
+//        AppUtils.getLogger(this).debug("statusInvoice : {} ", out);
+//        return out;
+//
+//    }
 
-                            out = metallicaTrxService.updateMultiplePembayaran(value, pTglJatuhTempo, pBankPembayar, WebUtils.getUsernameLogin());
-                            Map<String, String> sesudah = notificationUtil.getNotificationDetailByIdValas(value);
-                            message += "Perubahan: " + sesudah.get("NAMA_JENIS_PEMBAYARAN") + "-" + sesudah.get("NAMA_VENDOR") + "-" + pTglJatuhTempo + ".";
-
-                            if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
-                                String idJenisPembayaran = metallicaTrxService.getIdPembayaranByIdValas(value);
-                                Notification notification =
-                                        Notification.builder()
-                                                .topic(idJenisPembayaran)
-                                                .title(NamedIdentifier.REKAP_PEMBAYARAN.getName())
-                                                .message(message)
-                                                .additionalInfo(NamedIdentifier.REKAP_PEMBAYARAN.getValue() + ";" + value)
-                                                .build();
-                                notificationUtil.notifyMessage(notification);
-                            }
-                        } else {
-                            Map<String, String> sebelum = notificationUtil.getNotificationDetailByIdTripartite(value);
-                            message += WebUtils.getUsernameLogin() + " telah melakukan Perubahan/Update Data pada aplikasi.";
-                            message += sebelum.get("NAMA_JENIS_PEMBAYARAN") + "-" + sebelum.get("NAMA_VENDOR") + "-" + pTglJatuhTempo + ".";
-
-                            out = metallicaTrxService.updateMultiplePembayaran(value, pTglJatuhTempo, pBankPembayar, WebUtils.getUsernameLogin());
-                            Map<String, String> sesudah = notificationUtil.getNotificationDetailByIdTripartite(value);
-                            message += "Perubahan: " + sesudah.get("NAMA_JENIS_PEMBAYARAN") + "-" + sesudah.get("NAMA_VENDOR") + "-" + pTglJatuhTempo + ".";
-
-                            if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
-                                String idJenisPembayaran = metallicaTrxService.getIdPembayaranByIdTripartite(value);
-                                Notification notification =
-                                        Notification.builder()
-                                                .topic(idJenisPembayaran)
-                                                .title(NamedIdentifier.TRIPARTITE.getName())
-                                                .message(message)
-                                                .additionalInfo(NamedIdentifier.TRIPARTITE.getValue() + ";" + value)
-                                                .build();
-                                notificationUtil.notifyMessage(notification);
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        out = null;
-                        break;
-                    }
-                }
-            }
-        }
-
-        AppUtils.getLogger(this).debug("statusInvoice : {} ", out);
-        return out;
-
-    }
-
-    @RequestMapping(value = "/reject_data", method = RequestMethod.POST)
-    public Map<String, Object> rejectData(
-            @RequestParam(value = "pData", defaultValue = "") String pData
-    ) {
-        Map<String, Object> out = null;
-        String jsonString = metallicaTrxService.getPerfectJsonString(pData);
-        String[] listData = jsonString.split(";");
-        JSONObject json;
-        for (String item : listData) {
-            json = new JSONObject(item);
-            AppUtils.getLogger(this).debug("jsonobject : {} ", json);
-            Iterator<?> keys = json.keys();
-            while (keys.hasNext()) {
-                String key = (String) keys.next();
-                String value = json.getString(key);
-                if (!key.equals("jenisPembayaran") && !key.equals("total") && !key.equals("currency")) {
-                    AppUtils.getLogger(this).debug("  {}: {} ", key, value);
-                    try {
-                        out = metallicaTrxService.rejectPembayaran(value, WebUtils.getUsernameLogin());
-                        AppUtils.getLogger(this).debug("id rejected : {} ", value);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        out = null;
-                        break;
-                    }
-                }
-
-            }
-        }
-        return out;
-    }
+//    @RequestMapping(value = "/reject_data", method = RequestMethod.POST)
+//    public Map<String, Object> rejectData(
+//            @RequestParam(value = "pData", defaultValue = "") String pData
+//    ) {
+//        Map<String, Object> out = null;
+//        String jsonString = metallicaTrxService.getPerfectJsonString(pData);
+//        String[] listData = jsonString.split(";");
+//        JSONObject json;
+//        for (String item : listData) {
+//            json = new JSONObject(item);
+//            AppUtils.getLogger(this).debug("jsonobject : {} ", json);
+//            Iterator<?> keys = json.keys();
+//            while (keys.hasNext()) {
+//                String key = (String) keys.next();
+//                String value = json.getString(key);
+//                if (!key.equals("jenisPembayaran") && !key.equals("total") && !key.equals("currency")) {
+//                    AppUtils.getLogger(this).debug("  {}: {} ", key, value);
+//                    try {
+//                        out = metallicaTrxService.rejectPembayaran(value, WebUtils.getUsernameLogin());
+//                        AppUtils.getLogger(this).debug("id rejected : {} ", value);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                        out = null;
+//                        break;
+//                    }
+//                }
+//
+//            }
+//        }
+//        return out;
+//    }
 
 //    @RequestMapping(value = "/upd_ket", method = RequestMethod.POST)
 //    public Map<String, Object> updStatus(
@@ -1188,36 +1188,36 @@ public class MetallicaTrxController {
         return metallicaTrxService.cleansing(idValas, WebUtils.getUsernameLogin());
     }
 
-    @PostMapping("/multi_cleansing")
-    public Map<String, Object> multiCleansing(@RequestParam("data") String data) {
-        Map<String, Object> out = new HashMap<>();
-        String jsonString = metallicaTrxService.getPerfectJsonString(data);
-        String[] listData = jsonString.split(";");
-        JSONObject json ;
-
-
-        for (String item : listData) {
-            json = new JSONObject(item);
-            Iterator<?> keys = json.keys();
-            while (keys.hasNext()) {
-                String key = (String) keys.next();
-                String value = json.getString(key);
-
-                if (!key.equals("jenisPembayaran") && !key.equals("total") && !key.equals("currency")) {
-                    try {
-                        String response = metallicaTrxService.cleansing(value, WebUtils.getUsernameLogin());
-                        out.put("response", response);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        out = null;
-                        break;
-                    }
-                }
-            }
-        }
-
-        AppUtils.getLogger(this).debug("multiCleansing : {} ", out);
-        return out;
-    }
+//    @PostMapping("/multi_cleansing")
+//    public Map<String, Object> multiCleansing(@RequestParam("data") String data) {
+//        Map<String, Object> out = new HashMap<>();
+//        String jsonString = metallicaTrxService.getPerfectJsonString(data);
+//        String[] listData = jsonString.split(";");
+//        JSONObject json ;
+//
+//
+//        for (String item : listData) {
+//            json = new JSONObject(item);
+//            Iterator<?> keys = json.keys();
+//            while (keys.hasNext()) {
+//                String key = (String) keys.next();
+//                String value = json.getString(key);
+//
+//                if (!key.equals("jenisPembayaran") && !key.equals("total") && !key.equals("currency")) {
+//                    try {
+//                        String response = metallicaTrxService.cleansing(value, WebUtils.getUsernameLogin());
+//                        out.put("response", response);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                        out = null;
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//
+//        AppUtils.getLogger(this).debug("multiCleansing : {} ", out);
+//        return out;
+//    }
 
 }

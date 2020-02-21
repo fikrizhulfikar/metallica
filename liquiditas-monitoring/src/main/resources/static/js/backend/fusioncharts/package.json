@@ -71,7 +71,6 @@
     "column-charts",
     "gantt-chart"
   ],
-  "license": "http://www.fusioncharts.com/buy/",
   "main": "fusioncharts.js",
   "name": "fusioncharts",
   "repository": {

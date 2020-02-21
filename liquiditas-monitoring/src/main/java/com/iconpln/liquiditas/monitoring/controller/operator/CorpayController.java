@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -57,6 +58,96 @@ public class CorpayController {
         List<Map<String, Object>> list = new ArrayList<>();
         try {
             list = corpayService.getListPembayaranBelum(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, WebUtils.getUsernameLogin(), sortBy, sortDir, pStatus, pStatusTracking, pSearch);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("draw", draw);
+        mapData.put("data", list);
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
+        return mapData;
+    }
+
+    @RequestMapping(value = "/get_invoice_lcl", method = RequestMethod.GET)
+    public Map listRekapDataLcl(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "10") int length,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
+            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
+            @RequestParam(value = "pCaraBayar", defaultValue = "ALL") String pCaraBayar,
+            @RequestParam(value = "status", defaultValue = "ALL") String pStatus,
+            @RequestParam(value = "statusTracking", defaultValue = "ALL") String pStatusTracking,
+            @RequestParam(value = "search[value]", defaultValue = "") String pSearch
+    ) {
+
+        String sortBy = parseColumn(sortIndex);
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = corpayService.getListInvoiceLcl(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, WebUtils.getUsernameLogin(), sortBy, sortDir, pStatus, pStatusTracking, pSearch);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("draw", draw);
+        mapData.put("data", list);
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
+        return mapData;
+    }
+
+    @RequestMapping(value = "/get_invoice_lcl2", method = RequestMethod.GET)
+    public Map listRekapDataLcl2(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "10") int length,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
+            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
+            @RequestParam(value = "pCaraBayar", defaultValue = "ALL") String pCaraBayar,
+            @RequestParam(value = "status", defaultValue = "ALL") String pStatus,
+            @RequestParam(value = "statusTracking", defaultValue = "ALL") String pStatusTracking,
+            @RequestParam(value = "search[value]", defaultValue = "") String pSearch
+    ) {
+
+        String sortBy = parseColumn(sortIndex);
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = corpayService.getListInvoiceLcl2(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, WebUtils.getUsernameLogin(), sortBy, sortDir, pStatus, pStatusTracking, pSearch);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -364,11 +455,11 @@ public class CorpayController {
             @RequestParam(value = "pInqCustomerName", defaultValue = "") String pInqCustomerName,
             @RequestParam(value = "pInqAccountNumber", defaultValue = "") String pInqAccountNumber,
             @RequestParam(value = "pInqAccountStatus", defaultValue = "") String pInqAccountStatus,
-            @RequestParam(value = "pKodeBankPenerima", defaultValue = "009") String pKodeBankPenerima,
-            @RequestParam(value = "pRetrievalReff", defaultValue = "") String pRetrievalReff,
-            @RequestParam(value = "pCustomerReffNum", defaultValue = "") String pCustomerReffNum,
-            @RequestParam(value = "pConfirmCode", defaultValue = "") String pConfirmCode,
-            @RequestParam(value = "pActualBayar", defaultValue = "20191231") String pActualBayar
+            @RequestParam(value = "pKodeBankPenerima", defaultValue = "") String pKodeBankPenerima,
+            @RequestParam(value = "pRetrievalRefNumber", defaultValue = "") String pRetrievalRefNumber,
+            @RequestParam(value = "pCustomerRefNumber", defaultValue = "") String pCustomerRefNumber,
+            @RequestParam(value = "pConfirmationCode", defaultValue = "") String pConfirmationCode,
+            @RequestParam(value = "pTglActBayar", defaultValue = "") String pTglActBayar
     ) {
         AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
 //        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
@@ -382,10 +473,44 @@ public class CorpayController {
 //        AppUtils.getLogger(this).info("pMetodePembayaran edit data: {}", pMetodePembayaran);
         try {
             Map<String, Object> res = corpayService.updatePembayaran(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pBankPembayar, pKeterangan, pTglRencanaBayar,pSumberDana,
-                    pMetodePembayaran,pNoRekHouseBank,pInqCustomerName,pInqAccountNumber,pInqAccountStatus, pKodeBankPenerima, pRetrievalReff, pCustomerReffNum, pConfirmCode,pActualBayar);
+                    pMetodePembayaran,pNoRekHouseBank,pInqCustomerName,pInqAccountNumber,pInqAccountStatus, pKodeBankPenerima, pRetrievalRefNumber,
+                    pCustomerRefNumber, pConfirmationCode, pTglActBayar);
             if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
             }
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/update_house_bank", method = RequestMethod.POST)
+    public Map<String, Object> updatePembayaran(
+            @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
+            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
+            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
+            @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem,
+            @RequestParam(value = "pKet", defaultValue = "") String pKet,
+            @RequestParam(value = "pBankPembayar", defaultValue = "") String pBankPembayar,
+            @RequestParam(value = "pNoRek", defaultValue = "") String pNoRek
+    ) {
+        AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
+//        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
+//        AppUtils.getLogger(this).info("pFiscYear edit data: {}", pFiscYear);
+//        AppUtils.getLogger(this).info("pLineItem edit data: {}", pLineItem);
+//        AppUtils.getLogger(this).info("pKet edit data: {}", pKet);
+//        AppUtils.getLogger(this).info("pBankPembayar edit data: {}", pBankPembayar);
+//        AppUtils.getLogger(this).info("pKeterangan edit data: {}", pKeterangan);
+//        AppUtils.getLogger(this).info("pTglRencanaBayar edit data: {}", pTglRencanaBayar);
+//        AppUtils.getLogger(this).info("pSumberDana edit data: {}", pSumberDana);
+//        AppUtils.getLogger(this).info("pMetodePembayaran edit data: {}", pMetodePembayaran);
+        try {
+            Map<String, Object> res = corpayService.updateHouseBank(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pBankPembayar, pNoRek
+                    );
+//            if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
+//
+//            }
             return res;
         } catch (Exception e) {
             e.printStackTrace();
@@ -417,6 +542,87 @@ public class CorpayController {
             if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
             }
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/kirim_notif", method = RequestMethod.POST)
+    public Map<String, Object> kirimNotif(
+            @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
+            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
+            @RequestParam(value = "pUserId", defaultValue = "") String pUserId
+    ) {
+        AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
+//        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
+//        AppUtils.getLogger(this).info("pFiscYear edit data: {}", pFiscYear);
+//        AppUtils.getLogger(this).info("pLineItem edit data: {}", pLineItem);
+//        AppUtils.getLogger(this).info("pKet edit data: {}", pKet);
+//        AppUtils.getLogger(this).info("pBankPembayar edit data: {}", pBankPembayar);
+//        AppUtils.getLogger(this).info("pKeterangan edit data: {}", pKeterangan);
+//        AppUtils.getLogger(this).info("pTglRencanaBayar edit data: {}", pTglRencanaBayar);
+//        AppUtils.getLogger(this).info("pSumberDana edit data: {}", pSumberDana);
+//        AppUtils.getLogger(this).info("pMetodePembayaran edit data: {}", pMetodePembayaran);
+        try {
+            Map<String, Object> res = corpayService.kirimNotif(pCompCode, pDocNo, WebUtils.getUsernameLogin());
+
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/validasi_notif", method = RequestMethod.POST)
+    public Map<String, Object> validasiNotif(
+            @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
+            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
+            @RequestParam(value = "pUserId", defaultValue = "") String pUserId,
+            @RequestParam(value = "pToken", defaultValue = "") String pToken
+    ) {
+        AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
+//        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
+//        AppUtils.getLogger(this).info("pFiscYear edit data: {}", pFiscYear);
+//        AppUtils.getLogger(this).info("pLineItem edit data: {}", pLineItem);
+//        AppUtils.getLogger(this).info("pKet edit data: {}", pKet);
+//        AppUtils.getLogger(this).info("pBankPembayar edit data: {}", pBankPembayar);
+//        AppUtils.getLogger(this).info("pKeterangan edit data: {}", pKeterangan);
+//        AppUtils.getLogger(this).info("pTglRencanaBayar edit data: {}", pTglRencanaBayar);
+//        AppUtils.getLogger(this).info("pSumberDana edit data: {}", pSumberDana);
+//        AppUtils.getLogger(this).info("pMetodePembayaran edit data: {}", pMetodePembayaran);
+        try {
+            Map<String, Object> res = corpayService.validasiNotif(pCompCode, pDocNo, WebUtils.getUsernameLogin(),pToken);
+
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/update_lunas_giro", method = RequestMethod.POST)
+    public Map<String, Object> updateLunasGiro(
+            @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
+            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
+            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
+            @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem,
+            @RequestParam(value = "pJenisTransaksi", defaultValue = "") String pJenisTransaksi
+    ) {
+        AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
+//        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
+//        AppUtils.getLogger(this).info("pFiscYear edit data: {}", pFiscYear);
+//        AppUtils.getLogger(this).info("pLineItem edit data: {}", pLineItem);
+//        AppUtils.getLogger(this).info("pKet edit data: {}", pKet);
+//        AppUtils.getLogger(this).info("pBankPembayar edit data: {}", pBankPembayar);
+//        AppUtils.getLogger(this).info("pKeterangan edit data: {}", pKeterangan);
+//        AppUtils.getLogger(this).info("pTglRencanaBayar edit data: {}", pTglRencanaBayar);
+//        AppUtils.getLogger(this).info("pSumberDana edit data: {}", pSumberDana);
+//        AppUtils.getLogger(this).info("pMetodePembayaran edit data: {}", pMetodePembayaran);
+        try {
+            Map<String, Object> res = corpayService.updateLunasGiro(pCompCode, pDocNo, pFiscYear, pLineItem, pJenisTransaksi, WebUtils.getUsernameLogin());
+
             return res;
         } catch (Exception e) {
             e.printStackTrace();
@@ -458,6 +664,36 @@ public class CorpayController {
         }
     }
 
+    @RequestMapping(value = "/update_status_giro", method = RequestMethod.POST)
+    public Map<String, Object> updateStatusGiro(
+            @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
+            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
+            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
+            @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem,
+            @RequestParam(value = "pKet", defaultValue = "") String pKet,
+            @RequestParam(value = "pStatusTracking", defaultValue = "") String pStatusTracking
+    ) {
+        AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
+//        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
+//        AppUtils.getLogger(this).info("pFiscYear edit data: {}", pFiscYear);
+//        AppUtils.getLogger(this).info("pLineItem edit data: {}", pLineItem);
+//        AppUtils.getLogger(this).info("pKet edit data: {}", pKet);
+//        AppUtils.getLogger(this).info("pBankPembayar edit data: {}", pBankPembayar);
+//        AppUtils.getLogger(this).info("pKeterangan edit data: {}", pKeterangan);
+//        AppUtils.getLogger(this).info("pTglRencanaBayar edit data: {}", pTglRencanaBayar);
+//        AppUtils.getLogger(this).info("pSumberDana edit data: {}", pSumberDana);
+//        AppUtils.getLogger(this).info("pMetodePembayaran edit data: {}", pMetodePembayaran);
+        try {
+            Map<String, Object> res = corpayService.updateStatusGiro(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pStatusTracking
+                    );
+
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @RequestMapping(value = "/reverse_status", method = RequestMethod.POST)
     public Map<String, Object> reverseStatus(
             @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
@@ -489,10 +725,98 @@ public class CorpayController {
         }
     }
 
+    @RequestMapping(value = "/reverse_sap", method = RequestMethod.POST)
+    public Map<String, Object> reverseSap(
+            @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
+            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
+            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
+            @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem,
+            @RequestParam(value = "pKet", defaultValue = "") String pKet
+    ) {
+        AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
+//        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
+//        AppUtils.getLogger(this).info("pFiscYear edit data: {}", pFiscYear);
+//        AppUtils.getLogger(this).info("pLineItem edit data: {}", pLineItem);
+//        AppUtils.getLogger(this).info("pKet edit data: {}", pKet);
+//        AppUtils.getLogger(this).info("pBankPembayar edit data: {}", pBankPembayar);
+//        AppUtils.getLogger(this).info("pKeterangan edit data: {}", pKeterangan);
+//        AppUtils.getLogger(this).info("pTglRencanaBayar edit data: {}", pTglRencanaBayar);
+//        AppUtils.getLogger(this).info("pSumberDana edit data: {}", pSumberDana);
+//        AppUtils.getLogger(this).info("pMetodePembayaran edit data: {}", pMetodePembayaran);
+        try {
+            Map<String, Object> res = corpayService.reverseSap(pCompCode, pDocNo, pFiscYear, pLineItem, pKet);
+
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @RequestMapping(value = "/get_bank_pembayar", method = RequestMethod.GET)
     public List<Map<String,Object>> getBankPembayar() {
         try {
             return corpayService.getBankPembayar();
+        } catch (Exception e) {
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_cash_code", method = RequestMethod.GET)
+    public List<Map<String,Object>> getCashCode() {
+        try {
+            return corpayService.getCashCode();
+        } catch (Exception e) {
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_house_bank", method = RequestMethod.GET)
+    public List<Map<String,Object>> getHouseBank(
+            @RequestParam(value = "pAccount", defaultValue = "") String pAccount
+    ) {
+        try {
+            return corpayService.getHouseBank(pAccount);
+        } catch (Exception e) {
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_kode_bank_pembayar", method = RequestMethod.GET)
+    public List<Map<String,Object>> getKodeBankPembayar(
+            @RequestParam(value = "pCurrency", defaultValue = "") String pCurrency
+    ) {
+        try {
+            return corpayService.getKodeBankPembayar(pCurrency);
+        } catch (Exception e) {
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_no_rekening", method = RequestMethod.GET)
+    public List<Map<String,Object>> getNoRekening(
+            @RequestParam(value = "pCurrency", defaultValue = "") String pCurrency,
+            @RequestParam(value = "pKodeBank", defaultValue = "") String pKodeBank
+    ) {
+        try {
+            return corpayService.getNoRekening(pCurrency, pKodeBank);
+        } catch (Exception e) {
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_nama_bank", method = RequestMethod.GET)
+    public List<Map<String,Object>> getNamaBank(
+            @RequestParam(value = "pCurrency", defaultValue = "") String pCurrency,
+            @RequestParam(value = "pKodeBank", defaultValue = "") String pKodeBank
+    ) {
+        try {
+            return corpayService.getNamaBank(pCurrency, pKodeBank);
         } catch (Exception e) {
             AppUtils.getLogger(this).debug(e.getMessage());
             return null;
@@ -566,58 +890,50 @@ public class CorpayController {
         return corpayService.getBallance(in_bank, in_source, in_beneficiary);
     }
 
-    @RequestMapping(value = "/create_group", method = RequestMethod.POST)
-    public Map<String, Object> createGroup(
-            @RequestParam(value = "pData", defaultValue = "") String pData,
-            @RequestParam(value = "pNamaGroup", defaultValue = "") String pNamaGroup
-    ) throws SQLException {
-
-        Map<String, Object> out = null;
-        //pNamaGroup = (pNamaGroup.toString().equals("null") ? "" : pNamaGroup);
-        System.out.println("Fikri2 : "+pData);
-        String jsonString = corpayService.getPerfectJsonString(pData);
-        JSONArray jsonArray = new JSONArray(pData);
-        System.out.println("JSON Array : "+jsonArray);
-        String[] listData = jsonString.split(";");
-        System.out.println("Jancok : "+listData.length);
-        int i=0;
-
-        try{
-            for (int j = 0; j < jsonArray.length(); j++) {
-                JSONObject json = jsonArray.getJSONObject(i);
-                json.getString("COMP_CODE");
-                System.out.println("Loop : "+i++);
-                System.out.println("DIAZZZZZ:"+json.getString("COMP_CODE"));
-                out = corpayService.insGroupTemp(
-                            json.getString("KET"), json.getString("COMP_CODE"), json.getString("DOC_NO"),
-                            json.getString("FISC_YEAR"),json.getString("DOC_TYPE"),json.getString("DOC_DATE"), json.getString("DOC_DATE2"), json.getString("POST_DATE"),
-                            json.getString("POST_DATE2"),json.getString("ENTRY_DATE"),json.getString("ENTRY_DATE2"), json.getString("REFERENCE"), json.getString("REV_WITH"), json.getString("REV_YEAR"),json.getString("DOC_HDR_TXT"),json.getString("CURRENCY"), json.getString("EXCH_RATE"), json.getString("REFERENCE_KEY"),
-                            json.getString("PMT_IND"),json.getString("TRANS_TYPE"),json.getString("SPREAD_VAL"), json.getString("LINE_ITEM"), json.getString("OI_IND"),
-                            json.getString("ACCT_TYPE"),json.getString("SPEC_GL"),json.getString("BUS_AREA"), json.getString("TPBA"), json.getString("AMT_LC"), json.getString("AMT_TC"),json.getString("AMT_WITH_BASE_TC"),json.getString("AMT_WITH_TC"), json.getString("AMOUNT"), json.getString("ASSIGNMENT"),
-                            json.getString("ITEM_TEXT"),json.getString("COST_CTR"),json.getString("GL_ACCT"), json.getString("CUSTOMER"), json.getString("CUSTOMER"),
-                            json.getString("VENDOR"),json.getString("VENDOR"),json.getString("BASE_DATE"), json.getString("TERM_PMT"), json.getString("DUE_ON"),
-                            json.getString("PMT_BLOCK"),json.getString("HOUSE_BANK"),json.getString("PRTNR_BANK_TYPE"), json.getString("BANK_KEY"), json.getString("BANK_ACCOUNT"),
-                            json.getString("ACCOUNT_HOLDER"),json.getString("PO_NUM"),json.getString("PO_ITEM"), json.getString("REF_KEY1"), json.getString("REF_KEY2"),
-                            json.getString("REF_KEY3"),json.getString("INT_ORDER"),json.getString("WBS_NUM"), json.getString("CASH_CODE"), json.getString("AMT_WITH_BASE_LC"),
-                            json.getString("AMT_WITH_LC"),json.getString("DR_CR_IND"),json.getString("CORP_PMT"), "", "",
-                            "",json.getString("METODE_PEMBAYARAN"),json.getString("TGL_RENCANA_BAYAR"), json.getString("SUMBER_DANA"), "",
-                            "","", "", json.getString("KETERANGAN"), "",
-                            "",pNamaGroup,json.getString("NO_REK_HOUSE_BANK"), json.getString("INQ_CUSTOMER_NAME"), json.getString("INQ_ACCOUNT_NUMBER"),
-                            json.getString("REF_KEY3"),json.getString("INT_ORDER"),json.getString("WBS_NUM"), json.getString("CASH_CODE"), json.getString("CONFIRMATION_CODE"),
-                            json.getString("TGL_ACT_BAYAR")
-                    );
-                if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
-
-                }
-            }
-            Map<String, Object> result = corpayService.createGroup(WebUtils.getUsernameLogin());
-            AppUtils.getLogger(this).debug("statusInvoice : {} ", out);
-            return out;
-        }catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
-    }
+//    @RequestMapping(value = "/create_group", method = RequestMethod.POST)
+//    public Map<String, Object> createGroup(
+//            @RequestParam(value = "pData", defaultValue = "") String pData,
+//            @RequestParam(value = "pNamaGroup", defaultValue = "") String pNamaGroup
+//    ) {
+//
+//        Map<String, Object> out = null;
+//        //pNamaGroup = (pNamaGroup.toString().equals("null") ? "" : pNamaGroup);
+//        String jsonString = corpayService.getPerfectJsonString(pData);
+//        String[] listData = jsonString.split(";");
+//        JSONObject json ;
+//
+//        for (String item : listData) {
+//            json = new JSONObject(item);
+//            Iterator<?> keys = json.keys();
+//            while (keys.hasNext()) {
+//                String key = (String) keys.next();
+//                String value = json.getString(key);
+//
+//               // if (!key.equals("pCompCode") && !key.equals("pDocNo") && !key.equals("pFiscYear") && !key.equals("pLineItem") && !key.equals("pKet")) {
+//                    try {
+//                        System.out.println("DIAZZZZZ:"+json.getString("pCompCode"));
+//                        out = corpayService.createGroup(json.getString("pCompCode"), json.getString("pDocNo"), json.getString("pFiscYear"), json.getString("pLineItem"),json.getString("pKet"), pNamaGroup, WebUtils.getUsernameLogin());
+//                        if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
+//
+//                        }
+//                        return out;
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                        out = null;
+//                        break;
+//                    }
+//               // }
+//                /*else {
+//                    out.put("OUT_MSG", "DATA BERHASIL DIUBAH");
+//                    out.put("return", "1");
+//                }*/
+//            }
+//        }
+//
+//        AppUtils.getLogger(this).debug("statusInvoice : {} ", out);
+//        return out;
+//
+//    }
 
     @RequestMapping(value = "/get_Ballance2", method = RequestMethod.POST)
     public String getBallance2(
@@ -640,18 +956,83 @@ public class CorpayController {
 
     @RequestMapping(value = "/inquiry", method = RequestMethod.POST)
     public String inquiry(
+            @RequestParam(value = "pMetodeBayar", defaultValue = "") String pMetodeBayar,
             @RequestParam(value = "pBank", defaultValue = "") String pBank,
             @RequestParam(value ="pSource", defaultValue = "") String pSource,
-            @RequestParam(value ="pBeneficiaryAccount", defaultValue = "") String pBeneficiaryAccount) {
+            @RequestParam(value ="pAccountNumber", defaultValue = "") String pAccountNumber,
+            @RequestParam(value ="pBeneficiaryAccount", defaultValue = "") String pBeneficiaryAccount,
+            @RequestParam(value ="pDestinationBankCode", defaultValue = "") String pDestinationBankCode){
         try {
-            String res = corpayService.doInquery(pBank, pSource, pBeneficiaryAccount);
-            System.out.println("TEST");
-            System.out.println(res);
-            // if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
-
-            //  }
+            String res = corpayService.doInquiry(pMetodeBayar, pBank, pSource, pAccountNumber,
+                    pBeneficiaryAccount, pDestinationBankCode);
             return res;
         } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/payment_status", method = RequestMethod.POST)
+    public String paymentStatus(
+            @RequestParam(value = "pBank", defaultValue = "") String pBank,
+            @RequestParam(value ="pRefNum", defaultValue = "")String pRefNum){
+        try {
+            String res = corpayService.doPaymentStatus(pBank, pRefNum);
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/create_group", method = RequestMethod.POST)
+    public Map<String, Object> createGroup(
+            @RequestParam(value = "pData", defaultValue = "") String pData,
+            @RequestParam(value = "pNamaGroup", defaultValue = "") String pNamaGroup
+    ) throws SQLException, JSONException {
+
+        Map<String, Object> out = null;
+        //pNamaGroup = (pNamaGroup.toString().equals("null") ? "" : pNamaGroup);
+        System.out.println("Fikri2 : "+pData);
+        String jsonString = corpayService.getPerfectJsonString(pData);
+        JSONArray jsonArray = new JSONArray(pData);
+        System.out.println("JSON Array : "+jsonArray);
+        String[] listData = jsonString.split(";");
+        System.out.println("Jancok : "+listData.length);
+        int i=0;
+
+        try{
+            for (int j = 0; j < jsonArray.length(); j++) {
+                JSONObject json = jsonArray.getJSONObject(i);
+                json.getString("COMP_CODE");
+                System.out.println("Loop : "+i++);
+                System.out.println("DIAZZZZZ:"+json.getString("COMP_CODE"));
+                out = corpayService.insGroupTemp(
+                        json.getString("KET"), json.getString("COMP_CODE"), json.getString("DOC_NO"),
+                        json.getString("FISC_YEAR"),json.getString("DOC_TYPE"),json.getString("DOC_DATE"), json.getString("DOC_DATE2"), json.getString("POST_DATE"),
+                        json.getString("POST_DATE2"),json.getString("ENTRY_DATE"),json.getString("ENTRY_DATE2"), json.getString("REFERENCE"), json.getString("REV_WITH"), json.getString("REV_YEAR"),json.getString("DOC_HDR_TXT"),json.getString("CURRENCY"), json.getString("EXCH_RATE"), json.getString("REFERENCE_KEY"),
+                        json.getString("PMT_IND"),json.getString("TRANS_TYPE"),json.getString("SPREAD_VAL"), json.getString("LINE_ITEM"), json.getString("OI_IND"),
+                        json.getString("ACCT_TYPE"),json.getString("SPEC_GL"),json.getString("BUS_AREA"), json.getString("TPBA"), json.getString("AMT_LC"), json.getString("AMT_TC"),json.getString("AMT_WITH_BASE_TC"),json.getString("AMT_WITH_TC"), json.getString("AMOUNT"), json.getString("ASSIGNMENT"),
+                        json.getString("ITEM_TEXT"),json.getString("COST_CTR"),json.getString("GL_ACCT"), json.getString("CUSTOMER"), json.getString("CUSTOMER"),
+                        json.getString("VENDOR"),json.getString("VENDOR"),json.getString("BASE_DATE"), json.getString("TERM_PMT"), json.getString("DUE_ON"),
+                        json.getString("PMT_BLOCK"),json.getString("HOUSE_BANK"),json.getString("PRTNR_BANK_TYPE"), json.getString("BANK_KEY"), json.getString("BANK_ACCOUNT"),
+                        json.getString("ACCOUNT_HOLDER"),json.getString("PO_NUM"),json.getString("PO_ITEM"), json.getString("REF_KEY1"), json.getString("REF_KEY2"),
+                        json.getString("REF_KEY3"),json.getString("INT_ORDER"),json.getString("WBS_NUM"), json.getString("CASH_CODE"), json.getString("AMT_WITH_BASE_LC"),
+                        json.getString("AMT_WITH_LC"),json.getString("DR_CR_IND"),json.getString("CORP_PMT"), "", "",
+                        "",json.getString("METODE_PEMBAYARAN"),json.getString("TGL_RENCANA_BAYAR"), json.getString("SUMBER_DANA"), "",
+                        "","", "", json.getString("KETERANGAN"), "",
+                        "",pNamaGroup,json.getString("NO_REK_HOUSE_BANK"), json.getString("INQ_CUSTOMER_NAME"), json.getString("INQ_ACCOUNT_NUMBER"),
+                        json.getString("REF_KEY3"),json.getString("INT_ORDER"),json.getString("WBS_NUM"), json.getString("CASH_CODE"), json.getString("CONFIRMATION_CODE"),
+                        json.getString("TGL_ACT_BAYAR")
+                );
+                if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
+
+                }
+            }
+            Map<String, Object> result = corpayService.createGroup(WebUtils.getUsernameLogin());
+            AppUtils.getLogger(this).debug("statusInvoice : {} ", out);
+            return out;
+        }catch (Exception e){
             e.printStackTrace();
             return null;
         }
@@ -675,13 +1056,13 @@ public class CorpayController {
             @RequestParam(value = "pFeeType", defaultValue = "") String pFeeType,
             @RequestParam(value = "pCurrency2", defaultValue = "") String pCurrency2,
             @RequestParam(value = "pRetrievalReff", defaultValue = "") String pRetrievalReff,
-            @RequestParam(value = "pDestinationBankCode", defaultValue = "") String pDestinationBankCode){
+            @RequestParam(value = "pDestinationBankCode", defaultValue = "") String pDestinationBankCode,
+            @RequestParam(value = "pConfirmationCode", defaultValue = "") String pConfirmationCode
+            ){
         try {
             String res = corpayService.payment(pMetodeBayar,pBank,pRefNum, pSource, pBeneficiaryAccount,pCurrency,
                     pAmount,pRemark,pBenefEmail,pBenefName,pBenefAddr1,pBenefAddr2,pDestinationBank,pFeeType,
-                    pCurrency2,pRetrievalReff,pDestinationBankCode);
-            System.out.println("TEST");
-            System.out.println(res);
+                    pCurrency2,pRetrievalReff,pDestinationBankCode, pConfirmationCode);
             // if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
             //  }
@@ -692,37 +1073,183 @@ public class CorpayController {
         }
     }
 
-    //for doPaymentGroup
-    @RequestMapping(value = "/do_payment_group", method = RequestMethod.POST)
-    public Map<String, Object> doPaymentGroup(@RequestParam(value = "pData", defaultValue = "") String itemArray){
-        Map<String, Object> out = null;
 
-        System.out.println("Fikri2 : "+itemArray);
-        String jsonString = corpayService.getPerfectJsonString(itemArray);
-        String[] listData = jsonString.split(";");
-        JSONObject json ;
-        for (String item : listData) {
-            json = new JSONObject(item);
-            Iterator<?> keys = json.keys();
-            while (keys.hasNext()) {
-                String key = (String) keys.next();
-                String value = json.getString(key);
-                try {
-                    System.out.println("DIAZZZZZ:"+json.getString("COMP_CODE"));
-                    out = corpayService.doPaymentGroup(itemArray);
-                    if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
-
-                    }
-                    return out;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    out = null;
-                    break;
-                }
-            }
+    @RequestMapping(value = "/verifikasi_tanggal", method = RequestMethod.POST)
+    public Map<String, Object> verifikasiTgl(
+            @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
+            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
+            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
+            @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem,
+            @RequestParam(value = "pKet", defaultValue = "") String pKet
+    ) {
+        AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
+        try {
+            Map<String, Object> res = corpayService.verifikasiTgl(pCompCode, pDocNo, pFiscYear, pLineItem, pKet);
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-//        Map<String, Object> result = corpayService.createGroup(WebUtils.getUsernameLogin());
-        AppUtils.getLogger(this).debug("statusInvoice : {} ", out);
-        return out;
+    }
+
+    @RequestMapping(value = "/get_invoice_verifikasi_tgl", method = RequestMethod.GET)
+    public Map getInvoiceVerifikasiTgl(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "10") int length,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
+            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
+            @RequestParam(value = "pCaraBayar", defaultValue = "ALL") String pCaraBayar,
+            @RequestParam(value = "status", defaultValue = "ALL") String pStatus,
+            @RequestParam(value = "statusTracking", defaultValue = "ALL") String pStatusTracking,
+            @RequestParam(value = "search[value]", defaultValue = "") String pSearch
+    ) {
+
+        String sortBy = parseColumn(sortIndex);
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = corpayService.getInvoiceVerifikasiTgl(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, WebUtils.getUsernameLogin(), sortBy, sortDir, pStatus, pStatusTracking, pSearch);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("draw", draw);
+        mapData.put("data", list);
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
+        return mapData;
+    }
+
+    @RequestMapping(value = "/get_invoice_verifikator", method = RequestMethod.GET)
+    public Map getInvoiceVerifikator(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "10") int length,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
+            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
+            @RequestParam(value = "pCaraBayar", defaultValue = "ALL") String pCaraBayar,
+            @RequestParam(value = "status", defaultValue = "ALL") String pStatus,
+            @RequestParam(value = "statusTracking", defaultValue = "ALL") String pStatusTracking,
+            @RequestParam(value = "search[value]", defaultValue = "") String pSearch
+    ) {
+
+        String sortBy = parseColumn(sortIndex);
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = corpayService.getInvoiceVerifikator(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, WebUtils.getUsernameLogin(), sortBy, sortDir, pStatus, pStatusTracking, pSearch);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("draw", draw);
+        mapData.put("data", list);
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
+        return mapData;
+    }
+
+    @RequestMapping(value = "/get_invoice_admin", method = RequestMethod.GET)
+    public Map getInvoiceAdmin(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "10") int length,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
+            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
+            @RequestParam(value = "pCaraBayar", defaultValue = "ALL") String pCaraBayar,
+            @RequestParam(value = "status", defaultValue = "ALL") String pStatus,
+            @RequestParam(value = "statusTracking", defaultValue = "ALL") String pStatusTracking,
+            @RequestParam(value = "search[value]", defaultValue = "") String pSearch
+    ) {
+
+        String sortBy = parseColumn(sortIndex);
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = corpayService.getInvoiceAdmin(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, WebUtils.getUsernameLogin(), sortBy, sortDir, pStatus, pStatusTracking, pSearch);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("draw", draw);
+        mapData.put("data", list);
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
+        return mapData;
+    }
+
+    @RequestMapping(value = "/laporan_komposisi_saldo", method = RequestMethod.GET)
+    public Map getDashboardPengelolaan() {
+        try {
+            return corpayService.getDashboardPengelolaan();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping(path = "/rincian_saldo")
+    public Map listDashboardPengelolaan2(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = corpayService.getDashboardPengelolaan2(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
     }
 }

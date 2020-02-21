@@ -1,8 +1,29 @@
-<div th:fragment="stylesheets-backend">
+<div th:fragment="stylesheets-backend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        table {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+        }
+        table th {
+            font-size: 12px;
+            vertical-align: middle;
+        }
+        table td {
+            font-size: 11px;
+        }
+<!--        tbody:hover td {-->
+<!--            color: transparent;-->
+<!--            text-shadow: 0 0 3px #aaa;-->
+<!--        }-->
+
+<!--        tbody:hover tr:hover td {-->
+<!--            color: #444;-->
+<!--            text-shadow: 0 1px 0 #fff;-->
+<!--        }-->
+    </style>
 </div>
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" style="cursor: default">Home</li>
+        <li class="breadcrumb-item active" style="cursor: default">Dashboard Managemen</li>
     </ol>
 
     <div class="container-fluid">
@@ -10,64 +31,70 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-block">
-                        <div class="col-md-4">
-                            <div class="form-group form-inline">
-                                <label for="dash_date">Piih Tanggal : </label>
-                                <input type="text" class="form-control" id="dash_date"/>
-                            </div>
-                        </div>
-                        <table id="main-rencana" class="table table-rencana-realisasi table-condensed table-bordered" style="padding-bottom: 2rem;">
-                                <thead>
-                                    <tr>
-                                        <td rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</td>
-                                        <td rowspan="2">KODE</td>
-                                        <td colspan="5" style="text-align: center; vertical-align: middle;">TANGGAL</td>
-                                    </tr>
-                                    <tr id="header-tanggal">
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-                        <table id="main-realisasi" class="table table-rencana-realisasi table-condensed">
+                        <div><h6><b>1A. RENCANA SALDO</b></h6></div>
+                        <table id="main-rencana" class="table table-rencana-realisasi table-condensed table-bordered"  style="margin-bottom: 20px;">
                             <thead>
+                            <tr>
+                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
+                                <th rowspan="2">KODE</th>
+                                <th colspan="5" style="text-align: center; vertical-align: middle;">TANGGAL</th>
+                            </tr>
+                            <tr id="header-tanggal">
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                        <div><h6><b>1B REALISASI SALDO</b></h6></div>
+                        <table id="main-realisasi" class="table table-rencana-realisasi table-condensed table-bordered">
+                            <thead>
+                            <tr>
+                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
+                                <th rowspan="2">KODE</th>
+                                <th colspan="5" style="text-align: center; vertical-align: middle;">TANGGAL</th>
+                            </tr>
+                            <tr id="header_tanggal_realisasi">
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="col-md-12" style="padding-top: 0px;">
+                            <div><h6><b>2A</b></h6></div>
+                            <div align="center" id="chart-komposisi-saldo"></div>
+                            <div style="padding-bottom: 5px;"><h6><b> </b></h6></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="col-md-12" style="padding-top: 0px;">
+                            <!--                            <div><h6><b>2A</b></h6></div>-->
+                            <table id="table-komposisi-saldo" class="table table-bordered">
+                                <thead>
                                 <tr>
-                                    <td rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</td>
-                                    <td rowspan="2">KODE</td>
-                                    <td colspan="5" style="text-align: center; vertical-align: middle;">TANGGAL</td>
+                                    <th style="background-color: #F4D35E; vertical-align: middle" width="100%" colspan="2">REKAP KOMPOSISI SALDO</th>
+                                <tr>
+                                    <th style="background-color: #67a2d8" width="16.666%">JENIS REKENING</th>
+                                    <th style="background: #67a2d8" width="16.666%">TOTAL</th>
                                 </tr>
-                                <tr id="header_tanggal_realisasi">
-
                                 </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-block" >
-                        <div class="card-title"><h5>20</h5></div>
-                        <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
-                            <table class="table table-condensed table-bordered" id="rencana_imprest_valas" style="width: 2000px">
-                                <thead>
-                                    <tr style="background: #f9dc84;">
-                                        <td colspan="11" style="text-align: center;">RENCANA PEMBAYARAN - IMPREST VALAS USD/EUR/JPY/OTHER</td>
-                                    </tr>
-                                    <tr id="header_tgl_imprest_valas" style="background-color: #8688ca; color: aliceblue;">
-                                        <td>BANK</td>
-                                        <td>BANK</td>
-                                    </tr>
                                 </thead>
                                 <tbody>
-
                                 </tbody>
                             </table>
                         </div>
@@ -76,218 +103,49 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-block">
-                        <div class="card-title"><h5>21</h5></div>
-                        <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
-                            <table class="table table-bordered table-condensed" id="dash_rencana_imprest" style="width: 2000px">
-                                <thead>
-                                    <tr style="background: #f9dc84;">
-                                        <td colspan="11" style="text-align: center;">RENCANA PEMBAYARAN - IMPREST OPERASI TERPUSAT/ INVESTASI TERPUSAT/ IMPREST KANTOR PUSAT/ IMPOR
-                                        </td>
-                                    </tr>
-                                    <tr id="header_tgl_rencana_imprest" style="background-color: #8688ca; color: aliceblue; text-align: center">
-                                        <td>BANK</td>
-                                        <td>BANK</td>
-                                    </tr>
-                                </thead>
-                            </table>
+                        <div class="col-md-12" style="padding-top: 0px;">
+                            <div><h6><b>3A</b></h6></div>
+                            <div align="center" id="chart-rencana-pembayaran1"></div>
+                            <!--                            <ul align="center" class="legend">-->
+                            <!--                                <li><span class="one"></span> RENCANA PEMBAYARAN PREMIER</li>-->
+                            <!--                                <li><span class="two"></span> RENCANA PEMBAYARAN SEKUNDER</li>-->
+                            <!--                                <li><span class="three"></span> RENCANA PEMBAYARAN TERSIER</li>-->
+                            <!--                            </ul>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="col-md-12" style="padding-top: 0px;">
+                            <div><h6><b>3B</b></h6></div>
+                            <div id="column-rencana-pembayaran" style="height: 35rem; width: 100%;"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-block">
-                        <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
-                            <table class="table table-bordered table-condensed table-responsive" id="dash_real_bank_curr" style="width: 1700px;">
-                                <thead>
-                                <tr style="background-color: #f9dc84;">
-                                    <td colspan="13" style="text-align: center">REALISASI PEMBAYARAN - BANK (CURRENCY)</td>
-                                </tr>
-                                <tr style="background-color: #8688ca; color: whitesmoke; text-align: center">
-                                    <td rowspan="2" style="vertical-align: middle">JENIS PEMBYARAN</td>
-                                    <td colspan="3">HARI H</td>
-                                    <td colspan="3">1 MINGGU</td>
-                                    <td colspan="3">1 BULAN</td>
-                                    <td colspan="3">1 TAHUN</td>
-                                </tr>
-                                <tr style="background-color: #8688ca; color: whitesmoke; text-align: center">
-                                    <td>ori qur</td>
-                                    <td>eq idr</td>
-                                    <td>%</td>
-                                    <td>ori qur</td>
-                                    <td>eq idr</td>
-                                    <td>%</td>
-                                    <td>ori qur</td>
-                                    <td>eq idr</td>
-                                    <td>%</td>
-                                    <td>ori qur</td>
-                                    <td>eq idr</td>
-                                    <td>%</td>
-                                </tr>
-                                </thead>
-                            </table>
+                        <div class="col-md-12" style="padding-top: 0px;">
+                            <div><h6><b>4A</b></h6></div>
+                            <div id="chart-container" style="height: 35rem; width: 100%;"></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-block">
-                        <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
-                            <table class="table table-bordered table-condensed" id="dash_real_cashcode" style="width: 1500px">
-                                <thead>
-                                <tr style="background-color: #f9dc84;">
-                                    <td colspan="13" style="text-align: center">REALISASI PEMBAYARAN - JENIS (USD/EUR/JPY/MYR)</td>
-                                </tr>
-                                <tr style="background-color: #8688ca; color: whitesmoke; text-align: center">
-                                    <td rowspan="2" style="vertical-align: middle">JENIS PEMBYARAN</td>
-                                    <td colspan="3">HARI H</td>
-                                    <td colspan="3">1 MINGGU</td>
-                                    <td colspan="3">1 BULAN</td>
-                                    <td colspan="3">1 TAHUN</td>
-                                </tr>
-                                <tr style="background-color: #8688ca; color: whitesmoke; text-align: center">
-                                    <td>ori qur</td>
-                                    <td>eq idr</td>
-                                    <td>%</td>
-                                    <td>ori qur</td>
-                                    <td>eq idr</td>
-                                    <td>%</td>
-                                    <td>ori qur</td>
-                                    <td>eq idr</td>
-                                    <td>%</td>
-                                    <td>ori qur</td>
-                                    <td>eq idr</td>
-                                    <td>%</td>
-                                </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-block">
-                        <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
-                            <table class="table table-bordered table-condensed" id="dash_real_jenis" style="width: 1500px">
-                                <thead>
-                                <tr style="background-color: #f9dc84;">
-                                    <td colspan="13" style="text-align: center">REALISASI PEMBAYARAN - OPERASI/INVESTASI/DEBT SERVICE</td>
-                                </tr>
-                                <tr style="background-color: #8688ca; color: whitesmoke; text-align: center">
-                                    <td rowspan="2" style="vertical-align: middle">JENIS PEMBYARAN</td>
-                                    <td colspan="3">HARI H</td>
-                                    <td colspan="3">1 MINGGU</td>
-                                    <td colspan="3">1 BULAN</td>
-                                    <td colspan="3">1 TAHUN</td>
-                                </tr>
-                                <tr style="background-color: #8688ca; color: whitesmoke; text-align: center">
-                                    <td>ori qur</td>
-                                    <td>eq idr</td>
-                                    <td>%</td>
-                                    <td>ori qur</td>
-                                    <td>eq idr</td>
-                                    <td>%</td>
-                                    <td>ori qur</td>
-                                    <td>eq idr</td>
-                                    <td>%</td>
-                                    <td>ori qur</td>
-                                    <td>eq idr</td>
-                                    <td>%</td>
-                                </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div></div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-block">
-                        <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
-                            <table class="table table-bordered table-condensed" id="dash_real_per_vendor">
-                                <thead>
-                                    <tr style="background-color: #f9dc84;">
-                                        <td colspan="13" style="text-align: center">REALISASI PEMBAYARAN PER VENDOR</td>
-                                    </tr>
-                                    <tr style="background-color: #8688ca; color: whitesmoke; text-align: center">
-                                        <td style="vertical-align: middle">TANGGAL</td>
-                                        <td style="vertical-align: middle">TANGGAL</td>
-                                        <td>JENIS PEMBAYARAN</td>
-                                        <td>VENDOR</td>
-                                        <td>BANK</td>
-                                        <td>CURRENCY</td>
-                                        <td>EQ IDR</td>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div></div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-block">
-                        <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
-                            <table class="table table-bordered table-condensed" id="dash_rencana_per_vendor" style="width: 1700px">
-                                <thead>
-                                <tr style="background-color: #f9dc84;">
-                                    <td colspan="13" style="text-align: center">RENCANA PEMBAYARAN PER VENDOR</td>
-                                </tr>
-                                <tr style="background-color: #8688ca; color: whitesmoke; text-align: center">
-                                    <td style="vertical-align: middle">TANGGAL</td>
-                                    <td style="vertical-align: middle">TANGGAL</td>
-                                    <td>JENIS PEMBAYARAN</td>
-                                    <td>VENDOR</td>
-                                    <td>BANK</td>
-                                    <td>CURRENCY</td>
-                                    <td>EQ IDR</td>
-                                </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-block">
-                        <table class="table table-bordered table-condensed table-responsive" id="dash_real_bank">
-                            <thead>
-
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-7">
-                <div class="carousel slide">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="card w-100">
-                                <div class="card-block">
-                                    <div id="stacked-column"></div>
-                                </div>
-                            </div>
+                        <div class="col-md-12" style="padding-top: 0px;">
+                            <div><h6><b>4B</b></h6></div>
+                            <div id="column-realisasi-pembayaran" style="height: 35rem; width: 100%;"></div>
                         </div>
                     </div>
                 </div>
@@ -295,7 +153,7 @@
         </div>
     </div>
 
-<!--    modal detail -->
+    <!--    modal detail -->
     <div class="modal fade" id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -320,5 +178,4 @@
     <script src="/static/js/backend/controller/dashboard.js"></script>
     <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
     <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
-    <script src="/static/new-backend/js/dataTables.rowsGroup.js"></script>
 </div>

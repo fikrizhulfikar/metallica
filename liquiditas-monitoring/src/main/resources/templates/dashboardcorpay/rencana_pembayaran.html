@@ -1,0 +1,152 @@
+<div th:fragment="stylesheets-frontend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        th {
+            font-size: 13px;
+            vertical-align: middle
+        }
+
+        td {
+            font-size: 11px;
+        }
+
+        td, th {
+            padding: 5px !important;
+        }
+        .carousel-control{
+            width : 8% !important;
+        }
+
+        /* basic positioning */
+        .legend { list-style: none; }
+        .legend li { float: left; margin-right: 10px; }
+        .legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+        /* your colors */
+        .legend .one { background-color: #ff00ff; }
+        .legend .two { background-color: #00ffff; }
+        .legend .three { background-color: #0000ff; }
+        .legend .four { background-color: #000000; }
+    </style>
+</div>
+<div style="margin-top: -15px;min-height: 400px" class="app-body col-md-12" th:fragment="content" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div align="center" class="title"><h5><b>PT. PLN (Persero) Divisi Treasury</b></h5></div>
+            <div align="center" class="title"><h5><b>DASHBOARD L'METALLICA TGL : <span id="tglcetak"></span></b></h5></div>
+        </div>
+        <div class="col-md-12" style="padding-right: 0px;" align="right">
+            <div id="chart-carousel" style="min-height: 465px;" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="item active" align="center">
+                        <div class="col-md-12" style="padding-top: 15px;">
+                            <div align="center" id="chart-rencana-pembayaran1"></div>
+                            <!--                            <div><h6><b>TOTAL SALDO IDR XXX</b></h6></div>-->
+                        </div>
+                        <div class="col-md-12" style="padding-top: 15px;">
+                            <!--                            <div><h6><b>3B</b></h6></div>-->
+                            <div class="col-md-2" style="padding-top: 0px;"></div>
+                            <div class="col-md-8" style="padding-top: 0px;">
+                                <div id="column-rencana-pembayaran" style="height: 35rem; width: 100%;"></div>
+                            </div>
+                            <div class="col-md-2" style="padding-top: 0px;"></div>
+
+                        </div>
+                    </div>
+                    <div class="item" align="center">
+                        <div class="col-md-12" style="margin-top: 30px; padding-right: 30px; padding-left: 30px;">
+                            <div class="view-table">
+                                <table id="table-rencana-pembayaran" class="table table-bordered" style="margin-bottom: 100px">
+                                    <thead>
+                                    <tr>
+                                        <th style="background-color: #F4D35E" width="100%" colspan="6">RENCANA PEMBAYARAN</th>
+                                    <tr>
+                                        <th style="background-color: #67a2d8" width="25%">JENIS PEMBAYARAN</th>
+                                        <th style="background: #67a2d8" width="15%">HARI 0</th>
+                                        <th style="background: #67a2d8" width="15%">HARI 1</th>
+                                        <th style="background: #67a2d8" width="15%">HARI 2</th>
+                                        <th style="background: #67a2d8" width="15%">MINGGU 1</th>
+                                        <th style="background: #67a2d8" width="15%">BULAN 1</th>
+                                    </tr>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item" align="center">
+                        <div class="col-md-12" style="margin-top: 30px; padding-right: 30px; padding-left: 30px;">
+                            <div class="view-table" >
+                                <table id="table-investasi-operasi" class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th style="background-color: #F4D35E" width="100%" colspan="8">RENCANA PEMBAYARAN - INVESTASI/OPERASI</th>
+                                    <tr>
+                                        <th style="background-color: #67a2d8" width="12.5%">TANGGAL</th>
+                                        <th style="background: #67a2d8" width="12.5%">JENIS PEMBAYARAN</th>
+                                        <th style="background: #67a2d8" width="12.5%">IDR</th>
+                                        <th style="background: #67a2d8" width="12.5%">USD</th>
+                                        <th style="background: #67a2d8" width="12.5%">EUR</th>
+                                        <th style="background: #67a2d8" width="12.5%">JPY</th>
+                                        <th style="background: #67a2d8" width="12.5%">MYR</th>
+                                        <th style="background: #67a2d8" width="12.5%">EQ IDR</th>
+                                    </tr>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item" align="center">
+                        <div class="col-md-12" style="margin-top: 30px; padding-right: 30px; padding-left: 30px;">
+                            <div class="view-table">
+                                <table class="table table-bordered" id="dash_rencana_imprest" width="100%">
+                                    <thead>
+                                    <tr style="background: #F4D35E;">
+                                        <th colspan="11" style="text-align: center;">RENCANA PEMBAYARAN - IMPREST OPERASI TERPUSAT/ INVESTASI TERPUSAT/ IMPREST KANTOR PUSAT/ IMPOR</th>
+                                    </tr>
+                                    <tr id="header_tgl_rencana_imprest" style="background-color: #67a2d8; color: black; text-align: center">
+                                        <td style="background-color: #67a2d8">BANK</td>
+                                        <td style="background-color: #67a2d8">BANK</td>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item" align="center">
+                        <div class="col-md-12" style="margin-top: 30px; padding-right: 30px; padding-left: 30px;">
+                            <div class="view-table">
+                                <table id="rencana_imprest_valas" class="table table-bordered" width="100%">
+                                    <thead>
+                                    <tr style="background: #F4D35E;">
+                                        <th colspan="11" style="text-align: center;">RENCANA PEMBAYARAN - IMPREST VALAS USD/EUR/JPY/OTHER</th>
+                                    </tr>
+                                    <tr id="header_tgl_imprest_valas" style="background-color: #67a2d8; color: black; text-align: center;">
+                                        <td>BANK</td>
+                                        <td>BANK</td>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="left carousel-control" href="#chart-carousel" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control" href="#chart-carousel" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:fragment="scripts-frontend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <script src="/static/js/frontend/dashboardcorpay/rencana_pembayaran.js"></script>
+    <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
+    <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
+</div>
+

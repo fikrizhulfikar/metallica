@@ -498,47 +498,47 @@ public class RejectController {
         }
     }
 
-    @RequestMapping(value = "/create_group", method = RequestMethod.POST)
-    public Map<String, Object> createGroup(
-            @RequestParam(value = "pData", defaultValue = "") String pData,
-            @RequestParam(value = "pNamaGroup", defaultValue = "") String pNamaGroup
-    ) {
-
-        Map<String, Object> out = null;
-        //pNamaGroup = (pNamaGroup.toString().equals("null") ? "" : pNamaGroup);
-        String jsonString = rejectService.getPerfectJsonString(pData);
-        String[] listData = jsonString.split(";");
-        JSONObject json ;
-
-        for (String item : listData) {
-            json = new JSONObject(item);
-            Iterator<?> keys = json.keys();
-            while (keys.hasNext()) {
-                String key = (String) keys.next();
-                String value = json.getString(key);
-
-                if (!key.equals("pCompCode") && !key.equals("pDocNo") && !key.equals("pFiscYear") && !key.equals("pLineItem") && !key.equals("pKet")) {
-                    try {
-                        out = rejectService.createGroup(json.getString("pCompCode"), json.getString("pDocNo"), json.getString("pFiscYear"), json.getString("pLineItem"),json.getString("pKet"), pNamaGroup, WebUtils.getUsernameLogin());
-                        if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
-
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        out = null;
-                        break;
-                    }
-                }
-                /*else {
-                    out.put("OUT_MSG", "DATA BERHASIL DIUBAH");
-                    out.put("return", "1");
-                }*/
-            }
-        }
-
-        AppUtils.getLogger(this).debug("statusInvoice : {} ", out);
-        return out;
-
-    }
+//    @RequestMapping(value = "/create_group", method = RequestMethod.POST)
+//    public Map<String, Object> createGroup(
+//            @RequestParam(value = "pData", defaultValue = "") String pData,
+//            @RequestParam(value = "pNamaGroup", defaultValue = "") String pNamaGroup
+//    ) {
+//
+//        Map<String, Object> out = null;
+//        //pNamaGroup = (pNamaGroup.toString().equals("null") ? "" : pNamaGroup);
+//        String jsonString = rejectService.getPerfectJsonString(pData);
+//        String[] listData = jsonString.split(";");
+//        JSONObject json ;
+//
+//        for (String item : listData) {
+//            json = new JSONObject(item);
+//            Iterator<?> keys = json.keys();
+//            while (keys.hasNext()) {
+//                String key = (String) keys.next();
+//                String value = json.getString(key);
+//
+//                if (!key.equals("pCompCode") && !key.equals("pDocNo") && !key.equals("pFiscYear") && !key.equals("pLineItem") && !key.equals("pKet")) {
+//                    try {
+//                        out = rejectService.createGroup(json.getString("pCompCode"), json.getString("pDocNo"), json.getString("pFiscYear"), json.getString("pLineItem"),json.getString("pKet"), pNamaGroup, WebUtils.getUsernameLogin());
+//                        if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
+//
+//                        }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                        out = null;
+//                        break;
+//                    }
+//                }
+//                /*else {
+//                    out.put("OUT_MSG", "DATA BERHASIL DIUBAH");
+//                    out.put("return", "1");
+//                }*/
+//            }
+//        }
+//
+//        AppUtils.getLogger(this).debug("statusInvoice : {} ", out);
+//        return out;
+//
+//    }
 
 }

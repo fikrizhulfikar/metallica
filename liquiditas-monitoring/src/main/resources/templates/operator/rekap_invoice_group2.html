@@ -1,0 +1,787 @@
+<div th:fragment="stylesheets-backend">
+    <style>
+        button{ cursor: pointer
+        }
+        .table td {
+            padding-right: 0.75rem;
+            padding-bottom: 0.25rem;
+            padding-left: 0.75rem;
+            padding-top: 0.25rem;
+        }
+        div.dataTables_wrapper div.dataTables_paginate {
+            float: right !important;
+            text-align: left !important;
+            padding-left: 3px;
+            padding-right: 75px;
+        }
+
+        .lbl-src {
+            font-size: 12px;
+        }
+
+        .panel-custom {
+            overflow-x: hidden !important;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter {
+            text-align: right !important;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Rekap Group Invoice</li>
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
+                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS','ROLE_DM_LIKUIDITAS','ROLE_VICE_PRESIDENT_OPERATION','ROLE_VICE_PRESIDENT_INVESTMENT','ROLE_KASIR_IDR','ROLE_KASIR', 'ROLE_MANAGER_PAYMENT',
+                'ROLE_MANAGER_OPERATION','ROLE_MANAGER_INVESTMENT_APLN','ROLE_MANAGER_INVESTMENT_SLPMN','ROLE_MANAGER_POWER_PURCHASE','ROLE_MANAGER_PRIMARY_ENERGY','EXECUTIVE_VICE_PRESIDENT')">
+                    <i class="icon-pencil"></i> &nbsp;New Data
+                </button>
+            </div>
+        </li>
+    </ol>
+    <div id="edit-reverse-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Realisasi Pembayaran</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="pStatusInvoice">Status Invoice</label>
+                        <select id="pStatusInvoice" class="form-control" required="required">
+                            <option value=""></option>
+                            <option id="option-input" value="1">INPUT DATA</option>
+                            <option id="option-siap" value="2">SIAP BAYAR</option>
+                            <option id="option-lunas" value="3">LUNAS</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pKeteranganStatus">Keterangan:</label>
+                        <input type="text" class="form-control" id="pKeteranganStatus" required="required"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="update_status()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="edit-rekap-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Rekapitulasi Pembayaran</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pJenisTagihan"><span style="color: red">*)</span>&nbsp;Jenis Tagihan:</label>
+                                <select id="pJenisTagihan" class="form-control" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTipeTransaksi"><span style="color: red">*)</span>&nbsp;Tipe
+                                    Transaksi:</label>
+                                <select id="pTipeTransaksi" onChange="selectTipeTransaksi(this.value);" class="form-control" required="required">
+                                    <option value="1">OPERASI</option>
+                                    <option value="2">INVESTASI</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pJenisPemabayaran"><span style="color: red">*)</span>&nbsp;Jenis
+                                    Pembayaran:</label>
+                                <select id="pJenisPemabayaran" class="form-control"
+                                        onChange="selectJenisPembayaran(this.value);" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglJatuhTempo">Tanggal Jatuh
+                                    Tempo:</label>
+                                <input type="text" class="form-control" id="pTglJatuhTempo" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pVendor"><span style="color: red">*)</span>&nbsp;Vendor/Pengembang/Pemasok/Loan:</label>
+                                <select id="pVendor" class="form-control" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pUnitAnggaran"><span style="color: red">*)</span>&nbsp;Unit Anggaran:</label>
+                                <select id="pUnitAnggaran" class="form-control"
+                                        onChange="selectUnitAnggaran(this.value);" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPosAnggaran"><span style="color: red">*)</span>&nbsp;Pos Anggaran:</label>
+                                <select id="pPosAnggaran" class="form-control"
+                                        onChange="selectPosAnggaran(this.value);" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pSubPosAnggaran"><span style="color: red">*)</span>&nbsp;Sub Pos Anggaran:</label>
+                                <select id="pSubPosAnggaran" class="form-control"
+                                        onChange="selectSubPosAnggaran(this.value);" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNilaiAnggaran">&nbsp;Nilai Anggaran :</label>
+                                <input type="text" class="form-control" id="pNilaiAnggaran" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCurrecny"><span style="color: red">*)</span>&nbsp;Currency:</label>
+                                <select id="pCurrecny" onChange="selectCurrency(this.value);" class="form-control" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNilaiTagihan"><span style="color: red">*)</span>&nbsp;Nilai
+                                    Tagihan:</label>
+                                <input type="number" onInput="selectNilaiTagihan(this.value);" class="form-control" id="pNilaiTagihan" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pSisaAnggaran">&nbsp;Sisa Anggaran:</label>
+                                <input type="text" class="form-control" id="pSisaAnggaran" disabled="disabled" style="background-color: white"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pBankTujuan"><span style="color: red">*)</span>&nbsp;Bank Tujuan
+                                    Pembayaran:</label>
+                                <select id="pBankTujuan" class="form-control" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+
+                            <!---->
+                            <div class="form-group">
+                                <label for="pNominalSebelumPajak">&nbsp;Nominal Sebelum Pajak:</label>
+                                <input type="text" class="form-control" id="pNominalSebelumPajak" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPajak">&nbsp;Pajak (%):</label>
+                                <input type="text" class="form-control" id="pPajak"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNominalSetelahPajak">&nbsp;Nominal Setelah Pajak:</label>
+                                <input type="text" class="form-control" id="pNominalSetelahPajak" disabled="disabled" style="background-color: white"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNominalUnderlying">&nbsp;Nominal Underlying:</label>
+                                <input type="text" class="form-control" id="pNominalUnderlying"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNominalTanpaUnderlying">&nbsp;Nominal Tanpa Underlying:</label>
+                                <input type="text" class="form-control" id="pNominalTanpaUnderlying"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pKursJisdor">&nbsp;Kurs Jisdor:</label>
+                                <input type="text" class="form-control" id="pKursJisdor"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pSpread">&nbsp;Spread:</label>
+                                <input type="text" class="form-control" id="pSpread" required="required"/>
+                            </div>
+                            <!---->
+                            <div class="form-group" style="margin-top: 40px">
+                                <label for="pJenisPemabayaran">Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label><br/>
+                                <label>Gunakan titik (.) untuk koma (,)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pBankPembayar"><span style="color: red">*)</span>&nbsp;Bank
+                                    Pembayar:</label>
+                                <select id="pBankPembayar" class="form-control" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pUnitPenerima"><span style="color: red">*)</span>&nbsp;Nama
+                                    Kontrak/Loan/Unit
+                                    Penerima/Pembangkit:</label>
+                                <select id="pUnitPenerima" class="form-control" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglTerimaInvoice"><span style="color: red">*)</span>&nbsp;Tanggal Tagihan
+                                    Diterima:</label>
+                                <input type="text" class="form-control" id="pTglTerimaInvoice"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglTagihan">Tanggal Tagihan:</label>
+                                <input type="text" class="form-control" id="pTglTagihan"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoTagihan">No Tagihan:</label>
+                                <input type="text" class="form-control" list="data-no-tagihan" autocomplete="on" name="pNoTagihan"
+                                       id="pNoTagihan"/>
+                                <datalist id="data-no-tagihan"></datalist>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoNotaDinas">No Nota Dinas:</label>
+                                <input type="text" class="form-control" id="pNoNotaDinas"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglNotaDinas">Tanggal Nota Dinas:</label>
+                                <input type="text" class="form-control" id="pTglNotaDinas"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pKeterangan">Keterangan:</label>
+                                <input type="text" class="form-control" id="pKeterangan" list="data-keterangan"/>
+                                <datalist id="data-keterangan"></datalist>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="ins_data()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="hide_column_modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Hide Column</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" style="padding-left: 50px">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="check_all"/>
+                            <label class="form-check-label" for="check_all">Check All</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc0" data-column="0"/>
+                            <label class="form-check-label" for="hc0">NO</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc1" data-column="1"/>
+                            <label class="form-check-label" for="hc1">NAMA GROUP</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc2" data-column="2"/>
+                            <label class="form-check-label" for="hc2">TANGGAL GROUP</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc3" data-column="3"/>
+                            <label class="form-check-label" for="hc3">GROUP BY</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc4" data-column="4"/>
+                            <label class="form-check-label" for="hc4">COMPANY CODE</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc5" data-column="5"/>
+                            <label class="form-check-label" for="hc5">DOCUMENT NUMBER</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc6" data-column="6"/>
+                            <label class="form-check-label" for="hc6">JUMLAH INVOICE</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc7" data-column="7"/>
+                            <label class="form-check-label" for="hc7">JUMLAH AMOUNT</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc8" data-column="8"/>
+                            <label class="form-check-label" for="hc8">STATUS TRACKING</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="saveColumn()">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+            <div id="filter">
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;">
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Tanggal Awal </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal"/>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Tanggal Akhir </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Bank </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="bank" id="cmb_bank" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Currency </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="bacurrecnynk" id="cmb_currecny" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Cara Pembayaran</label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="cara_pembayaran" id="cmb_cara_pembayaran" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
+                    </div>
+                </div>
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Status </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="status" id="cmb_status" class="form-control">
+                            <option value="">PILIH STATUS</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Status Tracking</label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="status_tracking" id="cmb_status_tracking" class="form-control">
+                            <option value="">PILIH STATUS TRACKING</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="list-data" style="margin-top:25px;">
+                <div class="panel panel-default">
+                    <div class="panel-body panel-custom">
+                        <table id="table-rekapitulasi" class="table table-bordered table-striped">
+                            <thead style="font-size: 12px">
+                            <tr>
+                                <th>NO.</th>
+                                <th>NAMA GROUP</th>
+                                <th>TANGGAL GROUP</th>
+                                <th>GROUP BY</th>
+                                <th>COMPANY CODE</th>
+                                <th>DOCUMENT NUMBER</th>
+                                <th>JUMLAH INVOICE</th>
+                                <th>JUMLAH AMOUNT</th>
+                                <th>STATUS TRACKING</th>
+                                <th>AKSI</th>
+                                <th id="forcbparent"></th>
+                            </tr>
+                            </thead>
+                            <tbody style="font-size: 12px">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+            <div id="total_per_currency" class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;">
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-upload-file" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title_modal">UPLOAD FILE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="input_file">
+                    <div class="form-group" style="display:none">
+                        <input type="text" class="form-control" id="temp-id-valas-file"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="file-tanda-terima-invoice">UPLOAD TANDA TERIMA INVOICE |
+                            <a href="" id="btn-download-tanda-terima-invoice">-</a></label>
+                        <input type="file" class="form-control" id="file-tanda-terima-invoice"
+                               accept="application/pdf,application/zip" onchange="upload_server('1')"/>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="file-lembar-verifikasi">UPLOAD LEMBAR VERIFIKASI | <a
+                                href="" id="btn-download-lembar-verifikasi">-</a></label>
+                        <input type="file" class="form-control" id="file-lembar-verifikasi"
+                               accept="application/pdf,application/zip" onchange="upload_server('2')"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="file-tagihan">UPLOAD INVOICE / TAGIHAN | <a href=""
+                                                                                                           id="btn-download-file-tagihan">-</a></label>
+                        <input type="file" class="form-control" id="file-tagihan"
+                               accept="application/pdf,application/zip" onchange="upload_server('3')"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="file-nota-dinas-pembayaran">UPLOAD NOTA DINAS PEMBAYARAN
+                            | <a href="" id="btn-download-nota-dinas-pembayaran">-</a></label>
+                        <input type="file" class="form-control" id="file-nota-dinas-pembayaran"
+                               accept="application/pdf,application/zip" onchange="upload_server('4')"/>
+                    </div>
+                    <div class="form-group">
+                        <p>File bertipe .zip atau pdf</p>
+                        <p>Disarankan Maksimal 5mb</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Selesai</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-upload-xls" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title_modal_upload_xls">UPLOAD FILE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="input_file_xls">
+                    <div class="form-group">
+                        <label class="form-control-label" for="file-tanda-terima-invoice">UPLOAD FILE XLS |
+                            <a th:href="@{/api_operator/pembayaran/template}" id="btn-download-template-data-pembayaran">
+                                Download Template
+                            </a></label>
+                        <input type="file" class="form-control" id="file-xls"
+                               accept="application/vnd.ms-excel"/>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal" onclick="upload_server_xls()">Selesai</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="edit-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Edit Invoice</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pKet">&nbsp;Jenis Pembayaran :</label>
+                                <input type="text" class="form-control" id="pKet" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCompanyCode">&nbsp;Company Code :</label>
+                                <input type="text" class="form-control" id="pCompanyCode" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoDoc">&nbsp;No Doc :</label>
+                                <input type="text" class="form-control" id="pNoDoc" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pFiscYear">&nbsp;Fiscal Year :</label>
+                                <input type="text" class="form-control" id="pFiscYear" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDocumentType">&nbsp;Document Type :</label>
+                                <input type="text" class="form-control" id="pDocumentType" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDocumentDate">&nbsp;Document Date :</label>
+                                <input type="text" class="form-control" id="pDocumentDate" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPostDate">&nbsp;Posting Date :</label>
+                                <input type="text" class="form-control" id="pPostDate" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pEntryDate">&nbsp;Entry Date :</label>
+                                <input type="text" class="form-control" id="pEntryDate" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pReference">&nbsp;Reference :</label>
+                                <input type="text" class="form-control" id="pReference" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pReverseWith">&nbsp;Reverse With :</label>
+                                <input type="text" class="form-control" id="pReverseWith" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pReverseYear">&nbsp;Reverse Year :</label>
+                                <input type="text" class="form-control" id="pReverseYear" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDocHdr">&nbsp;Document HDR TXT :</label>
+                                <input type="text" class="form-control" id="pDocHdr" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCurrency">&nbsp;Currency :</label>
+                                <input type="text" class="form-control" id="pCurrency" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pExchRate">&nbsp;Exchange Rate :</label>
+                                <input type="text" class="form-control" id="pExchRate" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pRefKey">&nbsp;Reference Key :</label>
+                                <input type="text" class="form-control" id="pRefKey" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPaymentIndicator">&nbsp;Payment Indicator :</label>
+                                <input type="text" class="form-control" id="pPaymentIndicator" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTransactionType">&nbsp;Transaction Type :</label>
+                                <input type="text" class="form-control" id="pTransactionType" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pSpreadValue">&nbsp;Spread Value :</label>
+                                <input type="text" class="form-control" id="pSpreadValue" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAccountType">&nbsp;Account Type :</label>
+                                <input type="text" class="form-control" id="pAccountType" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pBusinessArea">&nbsp;Business Area :</label>
+                                <input type="text" class="form-control" id="pBusinessArea" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTradingPartner">&nbsp;Trading Partner Bisnis Area :</label>
+                                <input type="text" class="form-control" id="pTradingPartner" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAmountLc">&nbsp;Amount In Local Currency :</label>
+                                <input type="text" class="form-control" id="pAmountLc" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAmountTc">&nbsp;Amount In Trasaction Currency :</label>
+                                <input type="text" class="form-control" id="pAmountTc" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAmountWhtBase">&nbsp;Amount WithHolding Base :</label>
+                                <input type="text" class="form-control" id="pAmountWhtBase" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAmountWht">&nbsp;Amount WithHolding :</label>
+                                <input type="text" class="form-control" id="pAmountWht" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTotalTagihan">&nbsp;Total Tagihan :</label>
+                                <input type="text" class="form-control" id="pTotalTagihan" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAssignment">&nbsp;Jenis Transaksi :</label>
+                                <input type="text" class="form-control" id="pAssignment" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pItemText"> Item Text :</label>
+                                <input type="text" class="form-control" id="pItemText" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCostCtr"> Cost Center Code :</label>
+                                <input type="text" class="form-control" id="pCostCtr" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pGlAccount"> GL Account Code :</label>
+                                <input type="text" class="form-control" id="pGlAccount" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNamaVendor"> Nama Vendor :</label>
+                                <input type="text" class="form-control" id="pNamaVendor" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNamaCustomer"> Nama Customer :</label>
+                                <input type="text" class="form-control" id="pNamaCustomer" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pLineItem"> Line Item :</label>
+                                <input type="text" class="form-control" id="pLineItem" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pBaseline"> Baseline Payment Date :</label>
+                                <input type="text" class="form-control" id="pBaseline" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTermOfPayment"> Term Of Payment :</label>
+                                <input type="text" class="form-control" id="pTermOfPayment" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglDueOn">Jatuh Tempo:</label>
+                                <input type="text" class="form-control" id="pTglDueOn" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPaymentBlock"> Payment Block Indikator :</label>
+                                <input type="text" class="form-control" id="pPaymentBlock" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pHouseBank"> House Bank Code :</label>
+                                <input type="text" class="form-control" id="pHouseBank" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPartnerBank"> Partner Bank Type :</label>
+                                <input type="text" class="form-control" id="pPartnerBank" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPoNum"> Purchase Order Item Number :</label>
+                                <input type="text" class="form-control" id="pPoNum" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pRefKey1"> Reference Key 1 :</label>
+                                <input type="text" class="form-control" id="pRefKey1" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pRefKey2"> Reference Key 2 :</label>
+                                <input type="text" class="form-control" id="pRefKey2" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pRefKey3"> Reference Key 3 :</label>
+                                <input type="text" class="form-control" id="pRefKey3" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pIntOrder"> Internal Order :</label>
+                                <input type="text" class="form-control" id="pIntOrder" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pWbsNum"> WBS Number :</label>
+                                <input type="text" class="form-control" id="pWbsNum" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCashCode"> Cash Code :</label>
+                                <input type="text" class="form-control" id="pCashCode" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDebitCredit"> Debit/Credit Indikator :</label>
+                                <input type="text" class="form-control" id="pDebitCredit" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAmountWthBaseLc"> Amount Withholding Base LC :</label>
+                                <input type="text" class="form-control" id="pAmountWthBaseLc" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAmountWthLc"> Amount Withholding LC :</label>
+                                <input type="text" class="form-control" id="pAmountWthLc" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoGiro">&nbsp;No Giro :</label>
+                                <input type="text" class="form-control" id="pNoGiro" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoNotDin">&nbsp;No Nota Dinas :</label>
+                                <input type="text" class="form-control" id="pNoNotDin" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pBankPenerima">&nbsp;Bank Penerima :</label>
+                                <input type="text" class="form-control" id="pBankPenerima" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoRekVendor">&nbsp;No Rekening Vendor/Customer :</label>
+                                <input type="text" class="form-control" id="pNoRekVendor" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAccountHolder"> Account Holder :</label>
+                                <input type="text" class="form-control" id="pAccountHolder" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pBankPembayaran"><span style="color: red">*)</span>&nbsp;Bank Pembayar:</label>
+                                <select id="pBankPembayaran" class="form-control"
+                                        onChange="selectBankPembayar(this.value);" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoRekPln"><span style="color: red">*)</span>&nbsp;No Rekening PLN:</label>
+                                <select id="pNoRekPln" class="form-control"
+                                        onChange="selectBankAccount(this.value);" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pSaldo">&nbsp;Saldo Rekening PLN :</label>
+                                <input type="text" class="form-control" id="pSaldo" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pMetodePembayaran"><span style="color: red">*)</span>&nbsp;Metode Pembayaran:</label>
+                                <select id="pMetodePembayaran" class="form-control">
+                                    <option value="">Pilih Data</option>
+                                    <option value="In House">In House</option>
+                                    <option value="Online Transfer">Online Transfer</option>
+                                    <option value="LLG">LLG</option>
+                                    <option value="RTGS">RTGS</option>
+                                    <option value="Kliring">Kliring</option>
+                                    <option value="TT">TT</option>
+                                    <option value="Valas">Valas</option>
+                                    <option value="Giro">Giro</option>
+                                    <option value="Internet Banking">Internet Banking</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pSumberDana"><span style="color: red">*)</span>&nbsp;Sumber Dana:</label>
+                                <select id="pSumberDana" class="form-control">
+                                    <option value="">Pilih Data</option>
+                                    <option value="PMN">PMN</option>
+                                    <option value="NON PMN - APLN">NON PMN - APLN</option>
+                                    <option value="NON PMN - BRIDGING">NON PMN - BRIDGING</option>
+                                    <option value="Rekening Imprest Valas">Rekening Imprest Valas</option>
+                                    <option value="Rekening Non Imprest Valas">Rekening Non Imprest Valas</option>
+
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglRencanaBayar"><span style="color: red">*)</span>&nbsp;Tanggal Rencana Bayar:</label>
+                                <input type="text" class="form-control" id="pTglRencanaBayar" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNewKeterangan">&nbsp;Keterangan :</label>
+                                <input type="text" class="form-control" id="pNewKeterangan" value=""/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="update_pembayaran()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/rekapInvoiceGroup.js"></script>
+    <!--<script src="static/js/jquery.mask.min.js"></script>-->
+</div>

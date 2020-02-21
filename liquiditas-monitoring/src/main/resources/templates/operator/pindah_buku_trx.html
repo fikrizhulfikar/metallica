@@ -27,10 +27,10 @@
 </div>
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" style="cursor: default">Pindah Buku</li>
+        <li class="breadcrumb-item active" style="cursor: default">Transaksi Pindah Buku</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>-->
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
                 <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')">
@@ -56,16 +56,6 @@
                         <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>
                     </div>
                     <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Bank </label>
-                    </div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="bank" id="cmb_bank" class="form-control">
-                            <option value="">Pilih Data</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
-                    <div class="col-md-1" style="padding-right: 0px;">
                         <label class="lbl-src">Currency </label>
                     </div>
                     <div class="col-md-3" style="padding-right: 0px;">
@@ -73,28 +63,23 @@
                             <option value="">Pilih Data</option>
                         </select>
                     </div>
+                </div>
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
                     <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Metode Bayar</label>
+
                     </div>
                     <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="cmb_cara_pembayaran" id="cmb_cara_pembayaran" class="form-control">
-                            <option value="">Pilih Data</option>
-                        </select>
+
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+
                     </div>
                     <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
                     <div class="col-md-3" style="padding-right: 0px;">
                         <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
-                    </div>
-                </div>
-                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
-
-                    <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Status Tracking</label>
-                    </div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="status_tracking" id="cmb_status_tracking" class="form-control">
-                            <option value="">PILIH STATUS TRACKING</option>
-                        </select>
                     </div>
                 </div>
             </div>
@@ -110,12 +95,15 @@
                                 <th>POSTING DATE</th>
                                 <th>DOCUMENT NUMBER</th>
                                 <th>REFERENCE</th>
+                                <th>FISCAL YEAR</th>
                                 <th>COMPANY CODE</th>
                                 <th>BUSINESS AREA</th>
                                 <th>CURRENCY</th>
+                                <th>EXCHANGE RATE</th>
+                                <th>TOTAL TAGIHAN</th>
                                 <th>DOC HDR TEXT</th>
                                 <th>STATUS TRACKING</th>
-                                <th>AKSI</th>
+                                <th width="120px">AKSI</th>
                                 <th id="forcbparent"></th>
                             </tr>
                             </thead>
@@ -145,7 +133,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="pHeadPostingDate">&nbsp;Posting Date :</label>
-                                <input type="text" class="form-control" id="pHeadPostingDate" style="background-color: white" value="" required="required"/>
+                                <input type="text" class="form-control" id="pHeadPostingDate" style="background-color: white" value="" required="required" readonly="readonly"/>
                             </div>
                             <div class="form-group">
                                 <label for="pHeadDocNo">&nbsp;Document Number :</label>
@@ -172,7 +160,9 @@
                             <div class="form-group">
                                 <label for="pHeadCurrency">&nbsp;Currency :</label>
                                 <select class="form-control" id="pHeadCurrency" style="background-color: white" required="required">
-
+                                    <option value="IDR">IDR</option>
+                                    <option value="USD">USD</option>
+                                    <option value="JPY">JPY</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -268,10 +258,6 @@
                                 <label for="pDetailCompCode">Company Code:</label>
                                 <input type="text" id="pDetailCompCode" class="form-control" readonly="readonly" />
                             </div>
-                            <div class="form-group" id="excRate">
-                                <label for="pDetailExchangeRate"><span style="color: red">*)</span>&nbsp;Exchange Rate :</label>
-                                <input type="text" class="form-control" id="pDetailExchangeRate" readonly="readonly"/>
-                            </div>
                             <div class="form-group just-for-input-data">
                                 <label for="pDetailAmount"><span style="color: red">*)</span>&nbsp;Amount :</label>
                                 <input type="number" class="form-control" id="pDetailAmount" required="required"/>
@@ -281,6 +267,10 @@
                                 <select class="form-control" id="pDetailGlAccount" required="required">
                                     <option value="">Pilih Data</option>
                                 </select>
+                            </div>
+                            <div class="form-group pExchangeRate">
+                                <label for="pDetailExchangeRate"><span style="color: red">*)</span>&nbsp;Exchange Rate :</label>
+                                <input type="text" class="form-control" id="pDetailExchangeRate"/>
                             </div>
                             <div class="form-group just-for-input-data">
                                 <label for="pSumberDana"><span style="color: red">*)</span>&nbsp;Sumber Dana :</label>
@@ -323,27 +313,25 @@
             </div>
         </div>
         <div class="table-responsive" style="margin-top: 50px;overflow-x: auto;">
-            <table id="table-main-detail" class="table table-bordered table-striped" width="100%"
-                   style="margin-right: 0px !important;" >
+            <table id="table-main-detail" class="table table-striped">
                 <thead>
                 <tr>
-<!--                    <th>DOCUMENT NUMBER</th>-->
-<!--                    <th>PAYMENT PROPOSAL</th>-->
-                    <th>COMPANY CODE</th>
-                    <th>CASH CODE</th>
-<!--                    <th>FISCAL YEAR</th>-->
-                    <th>LINE NUMBER</th>
-<!--                    <th>REFERENCE</th>-->
-                    <th>DEBIT CREDIT INDICATOR</th>
-                    <th>GL ACCOUNT</th>
-                    <th>AMOUNT</th>
-<!--                    <th>EXCHANGE RATE</th>-->
-                    <th>CURRENCY</th>
-<!--                    <th>POSTING DATE</th>-->
-                    <th>BUSINESS AREA</th>
-                    <th>REMARKS</th>
-                    <th>MASUK</th>
-                    <th>AKSI</th>
+                        <th>DOCUMENT NUMBER</th>
+                        <th>PAYMENT PROPOSAL</th>
+                        <th>COMPANY CODE</th>
+                        <th>CASH CODE</th>
+                        <th>SUMBER DANA</th>
+                        <th>FISCAL YEAR</th>
+                        <th>LINE NUMBER</th>
+                        <th>DEBIT CREDIT INDICATOR</th>
+                        <th>GL ACCOUNT</th>
+                        <th>AMOUNT</th>
+                        <th>CURRENCY</th>
+                        <th>COST CENTER</th>
+                        <th>BUSINESS AREA</th>
+                        <th>REMARKS</th>
+                        <th>MASUK</th>
+                        <th>AKSI</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -353,14 +341,14 @@
                 <tr>
                     <td colspan="3"></td>
                     <td colspan="3"></td>
-                    <td colspan="5"></td>
+                    <td colspan="2"></td>
                 </tr>
                 </tfoot>
             </table>
         </div>
         <div align="right">
             <button class="btn btn-danger" onclick="back()"><i class="fa fa-arrow-circle-left"> &nbsp; Back</i></button>
-            <button onclick="submitChild()" class="btn btn-success">Submit</button>
+            <button onclick="submitChild()" class="btn btn-success just-for-input-data">Submit</button>
         </div>
     </div>
 </main>

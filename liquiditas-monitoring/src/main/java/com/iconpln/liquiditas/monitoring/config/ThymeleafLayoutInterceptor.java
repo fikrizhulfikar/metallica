@@ -13,6 +13,7 @@ public class ThymeleafLayoutInterceptor extends HandlerInterceptorAdapter {
 
     private static final String DEFAULT_LAYOUT_VERIFIKATOR = "verifikator/shared/layout";
     private static final String DEFAULT_LAYOUT_VERIFIKATOR_IDR = "verifikatoridr/shared/layout";
+    private static final String DEFAULT_LAYOUT_DASHBOARD_CORPAY = "dashboardcorpay/shared/layout";
     private static final String DEFAULT_LAYOUT_OPERATOR = "operator/shared/new-layout";
     private static final String DEFAULT_VIEW_ATTRIBUTE_NAME = "view";
 
@@ -36,7 +37,10 @@ public class ThymeleafLayoutInterceptor extends HandlerInterceptorAdapter {
             modelAndView.setViewName(DEFAULT_LAYOUT_VERIFIKATOR);
         } else if (request.getRequestURI().startsWith("/page_idrverifikator")){
             modelAndView.setViewName(DEFAULT_LAYOUT_VERIFIKATOR_IDR);
-        } else if (request.getRequestURI().startsWith("/login")){}
+        }else if (request.getRequestURI().startsWith("/dash_corpay")){
+            modelAndView.setViewName(DEFAULT_LAYOUT_DASHBOARD_CORPAY);
+        }
+        else if (request.getRequestURI().startsWith("/login")){}
         else{
 
         }

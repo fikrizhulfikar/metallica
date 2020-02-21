@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import sun.java2d.pipe.SpanShapeRenderer;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -99,6 +100,23 @@ public class OperasiKhususTrxService {
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data ins operasi_khusus_trx :{}",out);
         return out;
+    }
+
+    public List<Map<String, Object>> getHeadById(String pIdMetallica
+    ){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("operasi_head_trx_get_byid");
+
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_id_metallica",pIdMetallica, Types.VARCHAR);
+
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data pembelian_valas_trx_get : {}", resultset);
+//        System.out.println("Pembelian Valas Metallica : "+resultset);
+        return resultset;
     }
 
     public List<Map<String, Object>> getDetails(
@@ -327,5 +345,69 @@ public class OperasiKhususTrxService {
         AppUtils.getLogger(this).info("data pembelian_valas_trx_lunas_get : {}", resultset);
 //        System.out.println("Pembelian Valas Metallica : "+resultset);
         return resultset;
+    }
+
+    public BigDecimal getTotalTagihan(String tglAwal,
+                                      String tglAkhir,
+                                      String currency,
+                                      String userId,
+                                      String search) {
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", tglAwal, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", tglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_currency", currency, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR)
+                .addValue("p_search", search, OracleTypes.VARCHAR);
+
+        getJdbcTemplate().execute("alter session set NLS_NUMERIC_CHARACTERS = '.,'");
+
+        BigDecimal result = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_corpay")
+                .withFunctionName("get_total_tagihan_operasi")
+                .executeFunction(BigDecimal.class, in);
+        return result;
+    }
+
+    public List<Map<String, Object>> getAllpembayaran(String idUser, String pTglAwal, String pTglAkhir,  String pCurr) throws SQLException {
+
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pCurr : {}", pCurr);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_all_operasi_by_status");
+
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_user_id", idUser);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_currency", pCurr);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_all_pembayaran_by_status2 : {} and userid {}", resultset, idUser);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getGlAccount(String pCurrency){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_gl_account");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_currency", pCurrency);
+
+        AppUtils.getLogger(this).info("pCurrency data : {}",pCurrency);
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+        return out;
+    }
+
+    public List<Map<String, Object>> getCashCode(){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_cash_code");
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+        return out;
     }
 }
