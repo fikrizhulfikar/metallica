@@ -20,6 +20,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.sql.SQLException;
 
@@ -57,12 +58,10 @@ public class DashboardService {
     }
 
     public Map<String, Object> getDeposito(Integer pStart, Integer pLength) throws SQLException {
-
         AppUtils.getLogger(this).debug("data get_deposito search info = " + "start : {}, " + "length : {}, ", pStart, pLength);
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_DASHBOARD_VALAS")
                 .withFunctionName("get_deposito");
-
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_start", pStart)
                 .addValue("p_length", pLength)
@@ -74,11 +73,9 @@ public class DashboardService {
     }
 
     public Map<String, Object> getRealisasiPembayaran(String pYear) throws SQLException {
-
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_DASHBOARD_VALAS")
                 .withFunctionName("get_layer5_tahun");
-
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_tahun", pYear)
                 .addValue("out_pie1", OracleTypes.CURSOR)
@@ -104,9 +101,6 @@ public class DashboardService {
         return out;
     }
 
-    ////////////
-    ///pTgl/////
-    ///////////
     public Map<String, Object> getRencanaBayarValutaAsingMingguanUsdJpy(String pTglUsd) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -446,4 +440,107 @@ public class DashboardService {
         return out;
     }
 
+    public List<Map<String, Object>> getDashboard(String tanggal){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_dashboard_header");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("ptanggal", tanggal, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public List<Map<String, Object>> getDashboardRealisasi(String tanggal){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_dashboard_header_real");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("ptanggal", tanggal, OracleTypes.VARCHAR);
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+        return out;
+    }
+
+    public List<Map<String, Object>> getDashboardRencanaValas(String tanggal){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_dashboard_rencana_valas");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("ptanggal", tanggal);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+        return out;
+    }
+
+    public List<Map<String, Object>> getDashboardRencanaImprest(String tanggal){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_dashboard_rencana_imprest");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("ptanggal", tanggal);
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+        return out;
+    }
+
+    public List<Map<String, Object>> getDahsboardRealBankCurr(String tanggal){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_dashboard_real_bank_curr");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("ptanggal", tanggal);
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+        return out;
+    }
+
+    public List<Map<String, Object>> getDahsboardRealBank(String tanggal_awal, String tanggal_akhir){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_dashboard_real_bank");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("ptanggalawal", tanggal_awal)
+                .addValue("ptanggalakhir", tanggal_akhir);
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+        return out;
+    }
+
+    public List<Map<String, Object>> getDashboardRealCashcode(String tanggal){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_dashboard_real_cashcode");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("ptanggal", tanggal);
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+        return out;
+    }
+
+
+    public List<Map<String, Object>> getDashboardRealJenis( String tanggal){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_dashboard_real_jenis");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("ptanggal", tanggal);
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+        return out;
+    }
+
+    public List<Map<String, Object>> getDashboardRealVendor( String tanggal){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_dashboard_real_vendor");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("ptanggal", tanggal);
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+        return out;
+    }
+
+    public List<Map<String, Object>> getDashboardRencanaVendor( String tanggal){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_dashboard_rencana_vendor");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("ptanggal", tanggal);
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+        return out;
+    }
 }

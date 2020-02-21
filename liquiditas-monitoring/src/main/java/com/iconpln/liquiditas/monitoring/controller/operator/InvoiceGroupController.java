@@ -5,7 +5,6 @@ import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.monitoring.utils.NotificationUtil;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -150,7 +149,7 @@ public class InvoiceGroupController {
     @RequestMapping(value = "/do_payment_group", method = RequestMethod.POST)
     public String createGroup(
             @RequestParam(value = "pData", defaultValue = "") String pData
-    ) throws SQLException, JSONException {
+    ) throws SQLException {
         String out = null;
         //pNamaGroup = (pNamaGroup.toString().equals("null") ? "" : pNamaGroup);
         System.out.println("Fikri2 : "+pData);
@@ -168,9 +167,6 @@ public class InvoiceGroupController {
                         "","", json.getString("BANK_KEY"), "OUR","IDR",json.getString("RETRIEVAL_REF_NUMBER"),
                         ""
                 );
-//                if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
-//
-//                }
             }
             AppUtils.getLogger(this).debug("statusInvoice : {} ", out);
             return out;

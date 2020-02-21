@@ -7,7 +7,7 @@ public class PindahBuku {
     private String pDocNo;
     private String pPmtProposalId;
 
-    private List<ValasDetail> pindahBukuDetails;
+    private List<PindahBukuDetail> pindahBukuDetails;
 
     public String getpIdMetallica() {
         return pIdMetallica;
@@ -33,11 +33,11 @@ public class PindahBuku {
         this.pPmtProposalId = pPmtProposalId;
     }
 
-    public List<ValasDetail> getPindahBukuDetails() {
+    public List<PindahBukuDetail> getPindahBukuDetails() {
         return pindahBukuDetails;
     }
 
-    public void setPindahBukuDetails(List<ValasDetail> pindahBukuDetails) {
+    public void setPindahBukuDetails(List<PindahBukuDetail> pindahBukuDetails) {
         this.pindahBukuDetails = pindahBukuDetails;
     }
 

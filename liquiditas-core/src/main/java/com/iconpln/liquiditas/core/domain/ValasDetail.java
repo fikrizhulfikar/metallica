@@ -3,6 +3,17 @@ package com.iconpln.liquiditas.core.domain;
 public class ValasDetail {
     private String pPostDate ;
     private String pDocNo ;
+    private String pCashCode;
+    private String pSumberDana;
+
+    public String getpSumberDana() {
+        return pSumberDana;
+    }
+
+    public void setpSumberDana(String pSumberDana) {
+        this.pSumberDana = pSumberDana;
+    }
+
     private String pAmount ;
     private String pBusArea ;
     private String pReference ;
@@ -15,7 +26,16 @@ public class ValasDetail {
     private String pLineNo ;
     private String pPmtProposalId ;
     private String pRemarks ;
+    private String pCostCtr;
     private String pFlag ;
+
+    public String getpCostCtr() {
+        return pCostCtr;
+    }
+
+    public void setpCostCtr(String pCostCtr) {
+        this.pCostCtr = pCostCtr;
+    }
 
     public String getpPostDate() {
         return pPostDate;
@@ -64,6 +84,10 @@ public class ValasDetail {
     public void setpCompCode(String pCompCode) {
         this.pCompCode = pCompCode;
     }
+
+    public String getpCashCode() {return this.pCashCode;}
+
+    public void setpCashCode(String pCashCode){ this.pCashCode = pCashCode;}
 
     public String getpCurrency() {
         return pCurrency;

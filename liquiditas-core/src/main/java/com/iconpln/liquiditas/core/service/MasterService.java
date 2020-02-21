@@ -144,18 +144,6 @@ public class MasterService {
         return resultset;
     }
 
-    public List<Map<String,Object>> getListMetodeBayar() throws SQLException {
-
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_MASTER")
-                .withFunctionName("get_list_metode_bayar");
-
-        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
-
-        AppUtils.getLogger(this).info("data get_list_metode_bayar : {}",resultset);
-        return resultset;
-    }
-
 //    public List<Map<String,Object>> getPosAnggaran() throws SQLException {
 //
 //        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())

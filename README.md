@@ -1,1 +1,1 @@
-# metallica
+Aplikasi Core Metallica

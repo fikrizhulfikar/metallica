@@ -50,6 +50,7 @@ public class PembelianValasTrxController {
         if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
             sortDir = "DESC";
         }
+
         List<Map<String, Object>> list = new ArrayList<>();
         try {
             list = pembelianValasTrxService.getListPembelianValasTrx(((start / length) + 1), length, pTglAwal, pTglAkhir, pCurrency, WebUtils.getUsernameLogin(), sortBy, sortDir, pStatus, pStatusTracking, pSearch);
@@ -69,6 +70,7 @@ public class PembelianValasTrxController {
             mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
             mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
         }
+        System.out.println("Ini data List : "+ list);
         return mapData;
     }
 
@@ -114,7 +116,9 @@ public class PembelianValasTrxController {
             @RequestParam(value = "pBusArea", defaultValue = "") String pBusArea,
             @RequestParam(value = "pCurrency", defaultValue = "") String pCurrency,
             @RequestParam(value = "pDocHdrTxt", defaultValue = "") String pDocHdrTxt,
-            @RequestParam(value = "pUserId", defaultValue = "") String pUserId
+            @RequestParam(value = "pUserId", defaultValue = "") String pUserId,
+            @RequestParam(value = "pExchangeRate", defaultValue = "") String pExchangeRate,
+            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscalYear
     ){
         AppUtils.getLogger(this).debug("pDocNo : {} ", pDocNo);
         AppUtils.getLogger(this).debug("pDocDate : {} ", pDocDate);
@@ -130,7 +134,7 @@ public class PembelianValasTrxController {
             String messege = "";
             boolean isUpdate = false;
 
-            Map<String, Object> res  = pembelianValasTrxService.insPembelian(pIdMetallica, pDocDate, pPostDate, pDocNo, pReference, pCompCode, pBusArea, pCurrency, pDocHdrTxt, WebUtils.getUsernameLogin());
+            Map<String, Object> res  = pembelianValasTrxService.insPembelian(pIdMetallica, pDocDate, pPostDate, pDocNo, pReference, pCompCode, pBusArea, pCurrency, pDocHdrTxt, WebUtils.getUsernameLogin(), pExchangeRate, pFiscalYear);
 
             return res;
         }catch (Exception e){
@@ -184,8 +188,7 @@ public class PembelianValasTrxController {
             //String pSessionId = WebUtils.getUsernameLogin() + AppUtils.getDateTillSecondTrim();
             Map<String, Object> res = new HashedMap();
             for (ValasDetail v : valas.getValasDetails()){
-
-                res = pembelianValasTrxService.insDetailPembelianValasTrx(valas.getpIdMetallica(),v.getpPostDate(), v.getpDocNo(), v.getpAmount(), v.getpBusArea(), v.getpReference(), v.getpCompCode(), WebUtils.getUsernameLogin(), v.getpCurrency(), v.getpDrCrInd(), v.getpExchangeRate(), v.getpFiscYear(), v.getpGlAccount(), v.getpLineNo(), v.getpPmtProposalId(), v.getpRemarks(), v.getpFlag());
+                res = pembelianValasTrxService.insDetailPembelianValasTrx(valas.getpIdMetallica(),v.getpPostDate(), v.getpDocNo(), v.getpAmount(), v.getpBusArea(), v.getpReference(), v.getpCompCode(), v.getpCashCode() , v.getpSumberDana(), WebUtils.getUsernameLogin(), v.getpCurrency(), v.getpCostCtr(),v.getpDrCrInd(), v.getpExchangeRate(), v.getpFiscYear(), v.getpGlAccount(), v.getpLineNo(), v.getpPmtProposalId(), v.getpRemarks(), v.getpFlag());
             }
             return res;
         }catch (Exception e){
@@ -230,6 +233,13 @@ public class PembelianValasTrxController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @PostMapping(path = "/multiple_delete_head")
+    public Map<String,Object> multipleDeleteHead(@RequestParam(value = "pData") String data){
+        Map<String, Object> out = new HashMap<>();
+        System.out.println(data);
+        return out;
     }
 
     @RequestMapping(value = "/update_status", method = RequestMethod.POST)
@@ -372,5 +382,45 @@ public class PembelianValasTrxController {
             mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
         }
         return mapData;
+    }
+
+    @RequestMapping(value = "/get_valas_head_byid", method = RequestMethod.GET)
+    public Map getValasHeadById(
+            @RequestParam(value = "pIdMetallica") String pIdMetallica
+    ){
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = pembelianValasTrxService.getHeadById(pIdMetallica);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        return mapData;
+    }
+
+    @RequestMapping(value = "/get_glaccount", method = RequestMethod.GET)
+    public List<Map<String, Object>> getGlAccount(@RequestParam(value = "pCurrency",defaultValue = "") String pCurrency){
+        try{
+            List<Map<String, Object>> result = pembelianValasTrxService.getGlAccount(pCurrency);
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_cashcode", method = RequestMethod.GET)
+    public List<Map<String, Object>> getCashCode(){
+        try {
+            List<Map<String, Object>> result = pembelianValasTrxService.getCashCode();
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 }

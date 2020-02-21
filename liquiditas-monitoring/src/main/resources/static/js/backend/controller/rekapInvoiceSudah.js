@@ -2137,6 +2137,7 @@ function openGetBallance(){
 
 function checkArray(e) {
     var isNew= true;
+    console.log("Checked :",e);
     if($(e).is(":checked")) {
         if(checkedArray.length == 0) {
             checkedArray.push($(e).data("value"));

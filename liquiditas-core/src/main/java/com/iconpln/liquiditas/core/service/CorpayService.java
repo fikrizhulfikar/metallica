@@ -18,6 +18,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.jdbc.core.simple.SimpleJdbcCallOperations;
 import org.springframework.stereotype.Repository;
 
 import javax.crypto.Mac;
@@ -25,6 +26,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
@@ -69,96 +71,6 @@ public class CorpayService {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("invoice_get");
-
-        SqlParameterSource params = new MapSqlParameterSource()
-                .addValue("p_start", pStart, Types.INTEGER)
-                .addValue("p_length", pLength, Types.INTEGER)
-                .addValue("p_tgl_awal", pTglAwal, Types.VARCHAR)
-                .addValue("p_tgl_akhir", pTglAkhir, Types.VARCHAR)
-                .addValue("p_bank", pBank, Types.VARCHAR)
-                .addValue("p_cur", pCurrency, Types.VARCHAR)
-                .addValue("p_cara_bayar", pCaraBayar, Types.VARCHAR)
-                .addValue("p_user_id", pUserId, Types.VARCHAR)
-                .addValue("p_sort_by", sortBy, Types.VARCHAR)
-                .addValue("p_sort_dir", sortDir, Types.VARCHAR)
-                .addValue("p_status", status, Types.VARCHAR)
-                .addValue("p_status_tracking", statusTracking, Types.VARCHAR)
-                .addValue("p_search", pSearch, Types.VARCHAR);
-
-        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
-
-        AppUtils.getLogger(this).info("data invoice_get : {}", resultset);
-        return resultset;
-    }
-
-    public List<Map<String, Object>> getListInvoiceLcl(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pCaraBayar, String pUserId, String sortBy, String sortDir, String status, String statusTracking, String pSearch) throws SQLException {
-
-        AppUtils.getLogger(this).debug("data rekap search info = " +
-                        "pStart : {}, " +
-                        "pLength : {}, " +
-                        "pTglAwal : {}, " +
-                        "pTglAkhir : {}, " +
-                        "pBank : {}, " +
-                        "pCurrency : {}, " +
-                        "pCaraBayar : {}," +
-                        "pStatusValas : {}," +
-                        "pUserId : {}," +
-                        "pSortBy : {}," +
-                        "pSortDir : {}," +
-                        "pStatus : {}," +
-                        "pStatusTracking : {}," +
-                        "pSearch : {},",
-
-                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, pUserId, sortBy, sortDir, pSearch);
-
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_CORPAY")
-                .withFunctionName("invoice_housebank_kosong_get");
-
-        SqlParameterSource params = new MapSqlParameterSource()
-                .addValue("p_start", pStart, Types.INTEGER)
-                .addValue("p_length", pLength, Types.INTEGER)
-                .addValue("p_tgl_awal", pTglAwal, Types.VARCHAR)
-                .addValue("p_tgl_akhir", pTglAkhir, Types.VARCHAR)
-                .addValue("p_bank", pBank, Types.VARCHAR)
-                .addValue("p_cur", pCurrency, Types.VARCHAR)
-                .addValue("p_cara_bayar", pCaraBayar, Types.VARCHAR)
-                .addValue("p_user_id", pUserId, Types.VARCHAR)
-                .addValue("p_sort_by", sortBy, Types.VARCHAR)
-                .addValue("p_sort_dir", sortDir, Types.VARCHAR)
-                .addValue("p_status", status, Types.VARCHAR)
-                .addValue("p_status_tracking", statusTracking, Types.VARCHAR)
-                .addValue("p_search", pSearch, Types.VARCHAR);
-
-        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
-
-        AppUtils.getLogger(this).info("data invoice_get : {}", resultset);
-        return resultset;
-    }
-
-    public List<Map<String, Object>> getListInvoiceLcl2(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pCaraBayar, String pUserId, String sortBy, String sortDir, String status, String statusTracking, String pSearch) throws SQLException {
-
-        AppUtils.getLogger(this).debug("data rekap search info = " +
-                        "pStart : {}, " +
-                        "pLength : {}, " +
-                        "pTglAwal : {}, " +
-                        "pTglAkhir : {}, " +
-                        "pBank : {}, " +
-                        "pCurrency : {}, " +
-                        "pCaraBayar : {}," +
-                        "pStatusValas : {}," +
-                        "pUserId : {}," +
-                        "pSortBy : {}," +
-                        "pSortDir : {}," +
-                        "pStatus : {}," +
-                        "pStatusTracking : {}," +
-                        "pSearch : {},",
-
-                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, pUserId, sortBy, sortDir, pSearch);
-
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_CORPAY")
-                .withFunctionName("invoice_housebank_isi_get");
 
         SqlParameterSource params = new MapSqlParameterSource()
                 .addValue("p_start", pStart, Types.INTEGER)
@@ -352,8 +264,9 @@ public class CorpayService {
 
     public Map<String, Object> updatePembayaran(
             String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet, String pBankPembayar, String pKeterangan, String pTglRencanaBayar,
-            String pSumberDana, String pMetodePembayaran, String pNoRekHouseBank, String pInqCustomerName, String pInqAccountNumber, String pInqAccountStatus,
-            String pKodeBankPenerima, String pRetrievalRefNumber, String pCustomerRefNumber, String pConfirmationCode, String pTglActBayar) throws SQLException {
+            String pSumberDana, String pMetodePembayaran, String pNoRekHouseBank,String pInqCustomerName, String pInqAccountNumber, String pInqAccountStatus,
+            String pKodeBankPenerima, String pRetrievalReffNum, String pCustReffNum, String pConfirmCode, String pActualBayar
+    ) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("invoice_edit");
@@ -374,35 +287,13 @@ public class CorpayService {
                 .addValue("p_inq_account_number", pInqAccountNumber)
                 .addValue("p_inq_account_status", pInqAccountStatus)
                 .addValue("p_kode_bank_penerima", pKodeBankPenerima)
-                .addValue("p_retrieval_ref_number", pRetrievalRefNumber)
-                .addValue("p_customer_ref_number", pCustomerRefNumber)
-                .addValue("p_confirmation_code", pConfirmationCode)
-                .addValue("p_tgl_act_bayar", pTglActBayar)
+                .addValue("p_retrieval_ref_number", pRetrievalReffNum)
+                .addValue("p_customer_ref_number", pCustReffNum)
+                .addValue("p_confirmation_code", pConfirmCode)
+                .addValue("p_tgl_act_bayar", pActualBayar)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data edit pembayaran : {}", out);
-        return out;
-    }
-
-    public Map<String, Object> updateHouseBank(
-            String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet, String pBankPembayar,
-            String pNoRek
-    ) throws SQLException {
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_CORPAY")
-                .withFunctionName("invoice_isi_housebank");
-        Map<String, Object> out;
-        SqlParameterSource inParent = new MapSqlParameterSource()
-                .addValue("p_comp_code", pCompCode)
-                .addValue("p_doc_no", pDocNo)
-                .addValue("p_fisc_year", pFiscYear)
-                .addValue("p_line_item", pLineItem)
-                .addValue("p_ket", pKet)
-                .addValue("p_bank_pembayar", pBankPembayar)
-                .addValue("p_no_rek", pNoRek)
-                .addValue("out_msg", OracleTypes.VARCHAR);
-        out = simpleJdbcCall.execute(inParent);
-        AppUtils.getLogger(this).info("data edit house bank : {}", out);
         return out;
     }
 
@@ -425,64 +316,6 @@ public class CorpayService {
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("update data lunas : {}", out);
-        return out;
-    }
-
-    public Map<String, Object> kirimNotif(
-            String pCompCode, String pDocNo,
-            String pUserId
-    ) throws SQLException {
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_CORPAY")
-                .withFunctionName("invoice_kirim_notif");
-        Map<String, Object> out;
-        SqlParameterSource inParent = new MapSqlParameterSource()
-                .addValue("p_comp_code", pCompCode)
-                .addValue("p_doc_no", pDocNo)
-                .addValue("p_user", pUserId)
-                .addValue("out_msg", OracleTypes.VARCHAR);
-        out = simpleJdbcCall.execute(inParent);
-        AppUtils.getLogger(this).info("update Kirim Notif : {}", out);
-        return out;
-    }
-
-    public Map<String, Object> validasiNotif(
-            String pCompCode, String pDocNo, String pUserId, String pToken
-
-    ) throws SQLException {
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_CORPAY")
-                .withFunctionName("invoice_validasi_notif");
-        Map<String, Object> out;
-        SqlParameterSource inParent = new MapSqlParameterSource()
-                .addValue("p_comp_code", pCompCode)
-                .addValue("p_doc_no", pDocNo)
-                .addValue("p_user", pUserId)
-                .addValue("p_token", pToken)
-                .addValue("out_msg", OracleTypes.VARCHAR);
-        out = simpleJdbcCall.execute(inParent);
-        AppUtils.getLogger(this).info("update validasi Notif : {}", out);
-        return out;
-    }
-
-    public Map<String, Object> updateLunasGiro(
-            String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pJenisTransaksi,
-            String pUserId
-    ) throws SQLException {
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_CORPAY")
-                .withFunctionName("invoice_upd_lunas_giro");
-        Map<String, Object> out;
-        SqlParameterSource inParent = new MapSqlParameterSource()
-                .addValue("p_comp_code", pCompCode)
-                .addValue("p_doc_no", pDocNo)
-                .addValue("p_fisc_year", pFiscYear)
-                .addValue("p_line_item", pLineItem)
-                .addValue("p_jenis_transaksi", pJenisTransaksi)
-                .addValue("p_user_id", pUserId)
-                .addValue("out_msg", OracleTypes.VARCHAR);
-        out = simpleJdbcCall.execute(inParent);
-        AppUtils.getLogger(this).info("update data lunas Giro : {}", out);
         return out;
     }
 
@@ -509,26 +342,6 @@ public class CorpayService {
         return out;
     }
 
-    public Map<String, Object> updateStatusGiro(
-            String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet, String pStatusTracking
-    ) throws SQLException {
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_CORPAY")
-                .withFunctionName("invoice_upd_status_giro");
-        Map<String, Object> out;
-        SqlParameterSource inParent = new MapSqlParameterSource()
-                .addValue("p_comp_code", pCompCode)
-                .addValue("p_doc_no", pDocNo)
-                .addValue("p_fisc_year", pFiscYear)
-                .addValue("p_line_item", pLineItem)
-                .addValue("p_ket", pKet)
-                .addValue("p_status_tracking", pStatusTracking)
-                .addValue("out_msg", OracleTypes.VARCHAR);
-        out = simpleJdbcCall.execute(inParent);
-        AppUtils.getLogger(this).info("data update status Giro : {}", out);
-        return out;
-    }
-
     public Map<String, Object> reverseStatus(
             String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet, String pStatusTracking
     ) throws SQLException {
@@ -549,25 +362,6 @@ public class CorpayService {
         return out;
     }
 
-    public Map<String, Object> reverseSap(
-            String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet
-    ) throws SQLException {
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_CORPAY")
-                .withFunctionName("invoice_reverse_to_sap");
-        Map<String, Object> out;
-        SqlParameterSource inParent = new MapSqlParameterSource()
-                .addValue("p_comp_code", pCompCode)
-                .addValue("p_doc_no", pDocNo)
-                .addValue("p_fisc_year", pFiscYear)
-                .addValue("p_line_item", pLineItem)
-                .addValue("p_ket", pKet)
-                .addValue("out_msg", OracleTypes.VARCHAR);
-        out = simpleJdbcCall.execute(inParent);
-        AppUtils.getLogger(this).info("data reverse SAP : {}", out);
-        return out;
-    }
-
     public List<Map<String,Object>> getBankPembayar() throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -578,65 +372,6 @@ public class CorpayService {
 
         AppUtils.getLogger(this).info("data get_bank_pembayar : {}",resultset);
 
-        return resultset;
-    }
-
-    public List<Map<String,Object>> getCashCode() throws SQLException {
-
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_CORPAY")
-                .withFunctionName("get_cash_code");
-
-        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
-
-        AppUtils.getLogger(this).info("data get_cash_code : {}",resultset);
-
-        return resultset;
-    }
-
-    public List<Map<String, Object>> getHouseBank(String pAccount) throws SQLException {
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_CORPAY")
-                .withFunctionName("get_house_bank");
-        Map<String, Object> params = new HashMap<>();
-        params.put("p_account", pAccount);
-        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
-        AppUtils.getLogger(this).info("data get_house_bank : {}", resultset);
-        return resultset;
-    }
-
-    public List<Map<String, Object>> getKodeBankPembayar(String pCurrency) throws SQLException {
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_CORPAY")
-                .withFunctionName("get_kode_bank_pembayar");
-        Map<String, Object> params = new HashMap<>();
-        params.put("p_currency", pCurrency);
-        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
-        AppUtils.getLogger(this).info("data get_house_bank : {}", resultset);
-        return resultset;
-    }
-
-    public List<Map<String, Object>> getNoRekening(String pCurrency, String pKodeBank) throws SQLException {
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_CORPAY")
-                .withFunctionName("get_no_rekening");
-        Map<String, Object> params = new HashMap<>();
-        params.put("p_currency", pCurrency);
-        params.put("p_kode_bank", pKodeBank);
-        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
-        AppUtils.getLogger(this).info("data get_no_rekening : {}", resultset);
-        return resultset;
-    }
-
-    public List<Map<String, Object>> getNamaBank(String pCurrency, String pKodeBank) throws SQLException {
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_CORPAY")
-                .withFunctionName("get_nama_bank");
-        Map<String, Object> params = new HashMap<>();
-        params.put("p_currency", pCurrency);
-        params.put("p_kode_bank", pKodeBank);
-        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
-        AppUtils.getLogger(this).info("data get_nama_bank : {}", resultset);
         return resultset;
     }
 
@@ -695,19 +430,131 @@ public class CorpayService {
         return resultset;
     }
 
-    public Map<String, Object> createGroup(String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet, String pNamaGroup, String pUserId) throws SQLException {
+    public Map<String, Object> insGroupTemp(
+            String pKet, String pCompCode, String pDocNo, String pFiscYear, String pDocType, String pDocDate,
+            String pDocDate2, String pPostDate, String pPostDate2, String pEntryDate, String pEntryDate2, String pReference,
+            String pRevWith, String pRevYear, String pDocHdrTxt, String pCurrency, String pExchRate, String pReferenceKey,
+            String pPmtInd, String pTransType, String pSpreadVal, String pLineItem, String pOiInd, String pAcctType, String pSpecGl,
+            String pBusArea, String pTpba, String pAmtLc, String pAmtTc, String pAmtWithBaseTc, String pAmtWithTc, String pAmount,
+            String pAssignment, String pItemText, String pCostCtr, String pGlAccount, String pCustomer, String pCustName, String pVendor,
+            String pVendorName, String pBaseDate, String pTermPmt, String pDueOn, String pPmtBlock, String pHouseBank, String pPrtnrBankType,
+            String pBankKey, String pBankAcct, String pAcctHolder, String pPoNum, String pPoItem, String pRefKey1,
+            String pRefKey2, String pRefKey3, String pIntOrder, String pWbsNum, String pCashCode, String pAmtWithBaseLc, String pAmtWithLc,
+            String pDrCrInd, String pCorpPmt, String pTglVerifikasiMaker, String pTglVerifikasiChecker, String pTglVerifikasiApprover,
+            String pMetodePembayaran, String pTglRencanaBayar, String pSumberDana, String pMaker, String pChecker, String pApprover,
+            String pCounter, String pKeterangan, String pFlagStatus, String pIdGroup, String pNamaGroup, String pNoRekHouseBank, String pInqCustomerName,
+            String pInqAcctNumber, String pInqAcctStatus, String pKodeBankPenerima, String pRetrievalRefNum, String pCustRefNum, String pConfirmCode,
+            String pTglActBayar
+    ) throws SQLException{
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("insert_group_temp");
+        Map<String, Object> out;
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_ket",pKet )
+                .addValue("p_comp_code", pCompCode)
+                .addValue("p_doc_no", pDocNo)
+                .addValue("p_fisc_year", pFiscYear)
+                .addValue("p_doc_type", pDocType)
+                .addValue("p_doc_date", pDocDate)
+                .addValue("p_doc_date2", pDocDate2)
+                .addValue("p_post_date", pPostDate)
+                .addValue("p_post_date2", pPostDate2)
+                .addValue("p_entry_date", pEntryDate)
+                .addValue("p_entry_date2", pEntryDate2)
+                .addValue("p_reference", pReference)
+                .addValue("p_rev_with", pRevWith)
+                .addValue("p_rev_year", pRevYear)
+                .addValue("p_doc_hdr_txt", pDocHdrTxt)
+                .addValue("p_currency", pCurrency)
+                .addValue("p_exch_rate", pExchRate)
+                .addValue("p_reference_key", pReferenceKey)
+                .addValue("p_pmt_ind", pPmtInd)
+                .addValue("p_trans_type", pTransType)
+                .addValue("p_spread_val", pSpreadVal)
+                .addValue("p_line_item", pLineItem)
+                .addValue("p_oi_ind", pOiInd)
+                .addValue("p_acct_type", pAcctType)
+                .addValue("p_spec_gl", pSpecGl)
+                .addValue("p_bus_area",pBusArea)
+                .addValue("p_tpba", pTpba)
+                .addValue("p_amt_lc", pAmtLc)
+                .addValue("p_amt_tc", pAmtTc)
+                .addValue("p_amt_with_base_tc", pAmtWithBaseTc)
+                .addValue("p_amt_with_tc", pAmtWithTc)
+                .addValue("p_amount", pAmount)
+                .addValue("p_assignment", pAssignment)
+                .addValue("p_item_text", pItemText)
+                .addValue("p_cost_ctr", pCostCtr)
+                .addValue("p_gl_acct", pGlAccount)
+                .addValue("p_customer", pCustomer)
+                .addValue("p_customer_name", pCustName)
+                .addValue("p_vendor", pVendor)
+                .addValue("p_vendor_name", pVendorName)
+                .addValue("p_base_date", pBaseDate)
+                .addValue("p_term_pmt", pTermPmt)
+                .addValue("p_due_on", pDueOn)
+                .addValue("p_pmt_block", pPmtBlock)
+                .addValue("p_house_bank", pHouseBank)
+                .addValue("p_prtnr_bank_type", pPrtnrBankType)
+                .addValue("p_bank_key", pBankKey)
+                .addValue("p_bank_account", pBankAcct)
+                .addValue("p_account_holder", pAcctHolder)
+                .addValue("p_po_num", pPoNum)
+                .addValue("p_po_item", pPoItem)
+                .addValue("p_ref_key1", pRefKey1)
+                .addValue("p_ref_key2", pRefKey2)
+                .addValue("p_ref_key3", pRefKey3)
+                .addValue("p_int_order", pIntOrder)
+                .addValue("p_wbs_num", pWbsNum)
+                .addValue("p_cash_code", pCashCode)
+                .addValue("p_amt_with_base_lc", pAmtWithBaseLc)
+                .addValue("p_amt_with_lc", pAmtWithLc)
+                .addValue("p_dr_cr_ind", pDrCrInd)
+                .addValue("p_corp_pmt", pCorpPmt)
+                .addValue("p_tgl_verifikasi_maker", pTglVerifikasiMaker)
+                .addValue("p_tgl_verifikasi_checker", pTglVerifikasiChecker)
+                .addValue("p_tgl_verifikasi_approver",pTglVerifikasiApprover)
+                .addValue("p_metode_pembayaran", pMetodePembayaran)
+                .addValue("p_tgl_rencana_bayar", pTglRencanaBayar)
+                .addValue("p_sumber_dana", pSumberDana)
+                .addValue("p_maker", pMaker)
+                .addValue("p_checker", pChecker)
+                .addValue("p_approver", pApprover)
+                .addValue("p_counter", pCounter)
+                .addValue("p_keterangan", pKeterangan)
+                .addValue("p_flag_status", pFlagStatus)
+                .addValue("p_id_group", pIdGroup)
+                .addValue("p_nama_group", pNamaGroup)
+                .addValue("p_no_rek_house_bank", pNoRekHouseBank)
+                .addValue("p_inq_customer_name", pInqCustomerName)
+                .addValue("p_inq_account_number", pInqAcctNumber)
+                .addValue("p_inq_account_status", pInqAcctStatus)
+                .addValue("p_kode_bank_penerima", pKodeBankPenerima)
+                .addValue("p_retrieval_ref_number", pRetrievalRefNum)
+                .addValue("p_customer_ref_number", pCustRefNum)
+                .addValue("p_confirmation_code", pConfirmCode)
+                .addValue("p_tgl_act_bayar",pTglActBayar)
+                .addValue("out_msg",OracleTypes.VARCHAR);
+
+        out = simpleJdbcCall.execute(param);
+        AppUtils.getLogger(this).info("data insert_group_temp : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> createGroup(String pUserId) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("create_group");
 
         SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("p_comp_code", pCompCode)
-                .addValue("p_doc_no", pDocNo)
-                .addValue("p_fisc_year", pFiscYear)
-                .addValue("p_line_item", pLineItem)
-                .addValue("p_ket", pKet)
-                .addValue("p_nama_group", pNamaGroup)
+//                .addValue("p_comp_code", pCompCode)
+//                .addValue("p_doc_no", pDocNo)
+//                .addValue("p_fisc_year", pFiscYear)
+//                .addValue("p_line_item", pLineItem)
+//                .addValue("p_ket", pKet)
+//                .addValue("p_nama_group", pNamaGroup)
                 .addValue("p_user_id", pUserId)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         Map<String, Object> out = simpleJdbcCall.execute(in);
@@ -857,7 +704,7 @@ public class CorpayService {
 public String payment(String pMetodeBayar, String pBank, String pRefNum, String pSource, String pBeneficiaryAccount,
                       String pCurrency, String pAmount, String pRemark, String pBenefEmail,
                       String pBenefName, String pBenefAddr1, String pBenefAddr2, String pDestinationBank,
-                      String pFeeType, String pCurrency2, String pRetrievalReff, String pDestinationBankCode, String pConfirmationCode ) throws IOException {
+                      String pFeeType, String pCurrency2, String pRetrievalReff, String pDestinationBankCode ) throws IOException {
         String res = null;
     Date date = new Date();
     SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmssSSS");
@@ -865,18 +712,18 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
        if (pMetodeBayar.equals("INHOUSE")){
            res = doPayment( pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
-                    pAmount, pRemark, pFeeType, pConfirmationCode);
+                    pAmount, pRemark, pFeeType);
        }
        if (pMetodeBayar.equals("RTGS")){
             res = doPaymentRtgs (pBank, refnum, pSource, pBeneficiaryAccount,
                     pCurrency, pAmount, pRemark, pBenefEmail,
-                    pBenefName, pBenefAddr1, pBenefAddr2, pDestinationBankCode,
+                    pBenefName, pBenefAddr1, pBenefAddr2, pDestinationBank,
                     pFeeType);
        }
        if (pMetodeBayar.equals("KLIRING")) {
            res = doPaymentKliring(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
                    pAmount, pRemark, pBenefEmail, pBenefName,
-                   pBenefAddr1, pBenefAddr2, pDestinationBankCode, pFeeType);
+                   pBenefAddr1, pBenefAddr2, pDestinationBank, pFeeType);
        }
     if (pMetodeBayar.equals("ONLINETRANSFER")) {
         res = doInterbankPayment ( pBank,  refnum,  pAmount,  pBeneficiaryAccount,
@@ -887,38 +734,9 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
     return res;
 }
 
-    public String doInquiry(String pMetodeBayar, String pBank, String pSource, String pAccountNumber, String pBeneficiaryAccount,
-                            String pDestinationBankCode) throws IOException {
-        String res = null;
-        Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-        String refnum = format.format(date.getTime())+"101";
 
-        if (pMetodeBayar.equals("INHOUSE")){ //inquiry inhouse
-            res = doInqueryInHouse(pBank, pSource, pBeneficiaryAccount);
-        }
-        if (pMetodeBayar.equals("GIRO")){ //inquiry inhouse
-            res = doInqueryInHouse(pBank, pSource, pBeneficiaryAccount);
-        }
-        if (pMetodeBayar.equals("INHOUSE")){ //inquiry inhouse
-            res = doInqueryInHouse(pBank, pSource, pBeneficiaryAccount);
-        }
-        if (pMetodeBayar.equals("RTGS")){ //inquiry interbank//
-            res = doInquiryInterbank (pBank, refnum, pAccountNumber,pDestinationBankCode, pBeneficiaryAccount);
-        }
-        if (pMetodeBayar.equals("KLIRING")) { //inquiry interbank//
-            res = doInquiryInterbank (pBank, refnum, pAccountNumber,pDestinationBankCode, pBeneficiaryAccount);
-        }
-        if (pMetodeBayar.equals("ONLINETRANSFER")) { //inquiry interbank//
-            res = doInquiryInterbank (pBank, refnum, pAccountNumber, pDestinationBankCode, pBeneficiaryAccount);
-
-        }
-        return res;
-    }
-
-
-    //===FUNCTION UNTUK INQUIRY DAN PAYMENT===//
-    public static String doInqueryInHouse (String pBank, String pSource, String pBeneficiaryAccount) throws UnsupportedEncodingException {
+    //===FUNCTION UNTUK PAYMENT===//
+    public static String doInquery (String pBank, String pSource, String pBeneficiaryAccount) throws UnsupportedEncodingException {
         id.co.pln.iconplus.engine.services.Token token = new id.co.pln.iconplus.engine.services.Token();
         id.co.pln.iconplus.engine.services.Signature signature = new id.co.pln.iconplus.engine.services.Signature();
         String timestamp = null;
@@ -936,84 +754,13 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         String token_str = token.getToken();
         String signature_str = signature.createSignature("s3cr3tk3y", body, timestamp);
 
-        return inqueryInHouse(timestamp,signature_str, body, token_str);
-    }
-
-    public static String doInquiryInterbank(String pBank, String pRefNum, String pAccountNumber, String pDestinationBankCode, String pBeneficiaryAccount) throws UnsupportedEncodingException {
-        id.co.pln.iconplus.engine.services.Token token = new id.co.pln.iconplus.engine.services.Token();
-        id.co.pln.iconplus.engine.services.Signature signature = new id.co.pln.iconplus.engine.services.Signature();
-
-        Map<String, String> headerBody = new HashMap<String, String>();
-        headerBody.clear();
-        headerBody.put("bank",pBank);
-        headerBody.put("customerReferenceNumber", pRefNum);
-        headerBody.put("sourceAccount", pAccountNumber);
-        headerBody.put("beneficiaryBankCode", pDestinationBankCode);
-        headerBody.put("beneficiaryAccount", pBeneficiaryAccount);
-
-        JSONObject bodyObject = new JSONObject(headerBody);
-        String body = bodyObject.toString();
-
-        Date newdate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        String timestamp = dateFormat.format(newdate.getTime());
-        String token_str = token.getToken();
-        String signature_str = signature.createSignature("s3cr3tk3y", body, timestamp);
-        String result = inqueryInterbank(timestamp,signature_str, body, token_str);
-        return result;
-    }
-
-    public static String inqueryInHouse(String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
-        String result = null;
-        HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doInquiry");
-        request.addHeader("Content-Type","application/json");
-        request.addHeader("api-key","s3cr3tk3y");
-        request.addHeader("timestamp",timestamp);
-        request.addHeader("signature",signature);
-
-        request.addHeader("Authorization","Bearer "+ token);
-
-        request.setEntity(new StringEntity(body));
-
-        try{
-            CloseableHttpClient httpClient = HttpClients.createDefault();
-            CloseableHttpResponse response = httpClient.execute(request);
-            result = EntityUtils.toString(response.getEntity());
-        }catch (Exception e){
-            //log.warning(e.getMessage());
-        }
-
-        return result;
-    }
-
-    public static String inqueryInterbank(String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
-        String result = null;
-        HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doInquiryInterBank");
-        request.addHeader("api-key","s3cr3tk3y");
-        request.addHeader("timestamp", timestamp);
-        request.addHeader("signature", signature);
-        request.addHeader("Content-Type","application/json");
-
-        request.addHeader("Authorization","Bearer "+ token);
-
-        request.setEntity(new StringEntity(body));
-
-        try{
-            CloseableHttpClient httpClient = HttpClients.createDefault();
-            CloseableHttpResponse response = httpClient.execute(request);
-            result = EntityUtils.toString(response.getEntity());
-            //System.out.println(request.getEntity().getContent());
-        }catch (Exception e){
-            //log.warning(e.getMessage());
-        }
-
-        return result;
+        return inquery(timestamp,signature_str, body, token_str);
     }
 
 
 
     public static String doPayment (String pBank, String pRefNum, String pSource,String pBeneficiaryAccount,
-                                    String pCurrency, String pAmount, String pRemark, String pFeeType, String pConfirmationCode) throws UnsupportedEncodingException {
+                                    String pCurrency, String pAmount, String pRemark, String pFeeType) throws UnsupportedEncodingException {
         id.co.pln.iconplus.engine.services.Token token = new id.co.pln.iconplus.engine.services.Token();
         id.co.pln.iconplus.engine.services.Signature signature = new id.co.pln.iconplus.engine.services.Signature();
         String timestamp = null;
@@ -1027,7 +774,6 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         headerBody.put("amount", pAmount);
         headerBody.put("remark", pRemark);
         headerBody.put("feeType", pFeeType);
-        headerBody.put("confirmationCode", pConfirmationCode);
         JSONObject bodyObject = new JSONObject(headerBody);
         String body = bodyObject.toString();
 
@@ -1041,7 +787,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String doPaymentRtgs (String pBank, String pRefNum, String pSource, String pBeneficiaryAccount,
                                         String pCurrency, String pAmount, String pRemark, String pBenefEmail,
-                                        String pBenefName, String pBenefAddr1, String pBenefAddr2, String pDestinationBankCode,
+                                        String pBenefName, String pBenefAddr1, String pBenefAddr2, String pDestinationBank,
                                         String pFeeType) throws UnsupportedEncodingException {
         id.co.pln.iconplus.engine.services.Token token = new id.co.pln.iconplus.engine.services.Token();
         id.co.pln.iconplus.engine.services.Signature signature = new id.co.pln.iconplus.engine.services.Signature();
@@ -1059,7 +805,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         headerBody.put("beneficiaryName",pBenefName);
         headerBody.put("beneficiaryAddress1",pBenefAddr1);
         headerBody.put("beneficiaryAddress2",pBenefAddr2);
-        headerBody.put("beneficiaryBankCode",pDestinationBankCode);
+        headerBody.put("destinationBankCode",pDestinationBank);
         headerBody.put("feeType",pFeeType);
 
 
@@ -1093,7 +839,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         headerBody.put("beneficiaryName", pBenefName);
         headerBody.put("beneficiaryAddress1",pBenefAddr1);
         headerBody.put("beneficiaryAddress2",pBenefAddr2);
-        headerBody.put("beneficiaryBankCode", pDestinationBank);
+        headerBody.put("destinationBankCode", pDestinationBank);
         headerBody.put("feeType", pFeeType);
 
         JSONObject bodyObject = new JSONObject(headerBody);
@@ -1107,7 +853,28 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         return inhousePaymentKliring(timestamp, signature_str, body, token_str);
     }
 
+    public static String inquery(String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
+        String result = null;
+        HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doInquiry");
+        request.addHeader("Content-Type","application/json");
+        request.addHeader("api-key","s3cr3tk3y");
+        request.addHeader("timestamp",timestamp);
+        request.addHeader("signature",signature);
 
+        request.addHeader("Authorization","Bearer "+ token);
+
+        request.setEntity(new StringEntity(body));
+
+        try{
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            CloseableHttpResponse response = httpClient.execute(request);
+            result = EntityUtils.toString(response.getEntity());
+        }catch (Exception e){
+            //log.warning(e.getMessage());
+        }
+
+        return result;
+    }
 
     public static String doInterbankPayment (String pBank, String pRefNum, String pAmount, String pBeneficiaryAccount,
                                              String pBenefName, String pDestinationBankCode, String pDestinationBank,
@@ -1121,12 +888,12 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         headerBody.put("bank",pBank);
         headerBody.put("customerReferenceNumber",pRefNum);
         headerBody.put("amount",pAmount);
-        headerBody.put("beneficiaryAccount",pBeneficiaryAccount);
-        headerBody.put("beneficiaryName",pBenefName);
-        headerBody.put("beneficiaryBankCode",pDestinationBankCode);
-        headerBody.put("beneficiaryBankName",pDestinationBank);
+        headerBody.put("destinationAccountNumber",pBeneficiaryAccount);
+        headerBody.put("destinationAccountName",pBenefName);
+        headerBody.put("destinationBankCode",pDestinationBankCode);
+        headerBody.put("destinationBankName",pDestinationBank);
         headerBody.put("retrievalReffNumber",pRetrievalReff);
-        headerBody.put("sourceAccount",pSource);
+        headerBody.put("sourceAccountNumber",pSource);
         headerBody.put("debitCurrency",pCurrency);
         headerBody.put("creditCurrency",pCurrency2);
         headerBody.put("remark",pRemark);
@@ -1227,137 +994,14 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
     }
     //===BATAS AKHIR UNTUK PAYMENT===//
 
-    public Map<String, Object> insGroupTemp(
-            String pKet, String pCompCode, String pDocNo, String pFiscYear, String pDocType, String pDocDate,
-            String pDocDate2, String pPostDate, String pPostDate2, String pEntryDate, String pEntryDate2, String pReference,
-            String pRevWith, String pRevYear, String pDocHdrTxt, String pCurrency, String pExchRate, String pReferenceKey,
-            String pPmtInd, String pTransType, String pSpreadVal, String pLineItem, String pOiInd, String pAcctType, String pSpecGl,
-            String pBusArea, String pTpba, String pAmtLc, String pAmtTc, String pAmtWithBaseTc, String pAmtWithTc, String pAmount,
-            String pAssignment, String pItemText, String pCostCtr, String pGlAccount, String pCustomer, String pCustName, String pVendor,
-            String pVendorName, String pBaseDate, String pTermPmt, String pDueOn, String pPmtBlock, String pHouseBank, String pPrtnrBankType,
-            String pBankKey, String pBankAcct, String pAcctHolder, String pPoNum, String pPoItem, String pRefKey1,
-            String pRefKey2, String pRefKey3, String pIntOrder, String pWbsNum, String pCashCode, String pAmtWithBaseLc, String pAmtWithLc,
-            String pDrCrInd, String pCorpPmt, String pTglVerifikasiMaker, String pTglVerifikasiChecker, String pTglVerifikasiApprover,
-            String pMetodePembayaran, String pTglRencanaBayar, String pSumberDana, String pMaker, String pChecker, String pApprover,
-            String pCounter, String pKeterangan, String pFlagStatus, String pIdGroup, String pNamaGroup, String pNoRekHouseBank, String pInqCustomerName,
-            String pInqAcctNumber, String pInqAcctStatus, String pKodeBankPenerima, String pRetrievalRefNum, String pCustRefNum, String pConfirmCode,
-            String pTglActBayar
-    ) throws SQLException{
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_CORPAY")
-                .withFunctionName("insert_group_temp");
+    //doPaymentGroup
+    public Map<String, Object> doPaymentGroup(String itemArray){
+        //loop doPayment as much as payment item
+
         Map<String, Object> out;
-        SqlParameterSource param = new MapSqlParameterSource()
-                .addValue("p_ket",pKet )
-                .addValue("p_comp_code", pCompCode)
-                .addValue("p_doc_no", pDocNo)
-                .addValue("p_fisc_year", pFiscYear)
-                .addValue("p_doc_type", pDocType)
-                .addValue("p_doc_date", pDocDate)
-                .addValue("p_doc_date2", pDocDate2)
-                .addValue("p_post_date", pPostDate)
-                .addValue("p_post_date2", pPostDate2)
-                .addValue("p_entry_date", pEntryDate)
-                .addValue("p_entry_date2", pEntryDate2)
-                .addValue("p_reference", pReference)
-                .addValue("p_rev_with", pRevWith)
-                .addValue("p_rev_year", pRevYear)
-                .addValue("p_doc_hdr_txt", pDocHdrTxt)
-                .addValue("p_currency", pCurrency)
-                .addValue("p_exch_rate", pExchRate)
-                .addValue("p_reference_key", pReferenceKey)
-                .addValue("p_pmt_ind", pPmtInd)
-                .addValue("p_trans_type", pTransType)
-                .addValue("p_spread_val", pSpreadVal)
-                .addValue("p_line_item", pLineItem)
-                .addValue("p_oi_ind", pOiInd)
-                .addValue("p_acct_type", pAcctType)
-                .addValue("p_spec_gl", pSpecGl)
-                .addValue("p_bus_area",pBusArea)
-                .addValue("p_tpba", pTpba)
-                .addValue("p_amt_lc", pAmtLc)
-                .addValue("p_amt_tc", pAmtTc)
-                .addValue("p_amt_with_base_tc", pAmtWithBaseTc)
-                .addValue("p_amt_with_tc", pAmtWithTc)
-                .addValue("p_amount", pAmount)
-                .addValue("p_assignment", pAssignment)
-                .addValue("p_item_text", pItemText)
-                .addValue("p_cost_ctr", pCostCtr)
-                .addValue("p_gl_acct", pGlAccount)
-                .addValue("p_customer", pCustomer)
-                .addValue("p_customer_name", pCustName)
-                .addValue("p_vendor", pVendor)
-                .addValue("p_vendor_name", pVendorName)
-                .addValue("p_base_date", pBaseDate)
-                .addValue("p_term_pmt", pTermPmt)
-                .addValue("p_due_on", pDueOn)
-                .addValue("p_pmt_block", pPmtBlock)
-                .addValue("p_house_bank", pHouseBank)
-                .addValue("p_prtnr_bank_type", pPrtnrBankType)
-                .addValue("p_bank_key", pBankKey)
-                .addValue("p_bank_account", pBankAcct)
-                .addValue("p_account_holder", pAcctHolder)
-                .addValue("p_po_num", pPoNum)
-                .addValue("p_po_item", pPoItem)
-                .addValue("p_ref_key1", pRefKey1)
-                .addValue("p_ref_key2", pRefKey2)
-                .addValue("p_ref_key3", pRefKey3)
-                .addValue("p_int_order", pIntOrder)
-                .addValue("p_wbs_num", pWbsNum)
-                .addValue("p_cash_code", pCashCode)
-                .addValue("p_amt_with_base_lc", pAmtWithBaseLc)
-                .addValue("p_amt_with_lc", pAmtWithLc)
-                .addValue("p_dr_cr_ind", pDrCrInd)
-                .addValue("p_corp_pmt", pCorpPmt)
-                .addValue("p_tgl_verifikasi_maker", pTglVerifikasiMaker)
-                .addValue("p_tgl_verifikasi_checker", pTglVerifikasiChecker)
-                .addValue("p_tgl_verifikasi_approver",pTglVerifikasiApprover)
-                .addValue("p_metode_pembayaran", pMetodePembayaran)
-                .addValue("p_tgl_rencana_bayar", pTglRencanaBayar)
-                .addValue("p_sumber_dana", pSumberDana)
-                .addValue("p_maker", pMaker)
-                .addValue("p_checker", pChecker)
-                .addValue("p_approver", pApprover)
-                .addValue("p_counter", pCounter)
-                .addValue("p_keterangan", pKeterangan)
-                .addValue("p_flag_status", pFlagStatus)
-                .addValue("p_id_group", pIdGroup)
-                .addValue("p_nama_group", pNamaGroup)
-                .addValue("p_no_rek_house_bank", pNoRekHouseBank)
-                .addValue("p_inq_customer_name", pInqCustomerName)
-                .addValue("p_inq_account_number", pInqAcctNumber)
-                .addValue("p_inq_account_status", pInqAcctStatus)
-                .addValue("p_kode_bank_penerima", pKodeBankPenerima)
-                .addValue("p_retrieval_ref_number", pRetrievalRefNum)
-                .addValue("p_customer_ref_number", pCustRefNum)
-                .addValue("p_confirmation_code", pConfirmCode)
-                .addValue("p_tgl_act_bayar",pTglActBayar)
-                .addValue("out_msg",OracleTypes.VARCHAR);
-
-        out = simpleJdbcCall.execute(param);
-        AppUtils.getLogger(this).info("data insert_group_temp : {}", out);
-        return out;
+        return null;
     }
 
-    public Map<String, Object> createGroup(String pUserId) throws SQLException {
-
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_CORPAY")
-                .withFunctionName("create_group");
-
-        SqlParameterSource in = new MapSqlParameterSource()
-//                .addValue("p_comp_code", pCompCode)
-//                .addValue("p_doc_no", pDocNo)
-//                .addValue("p_fisc_year", pFiscYear)
-//                .addValue("p_line_item", pLineItem)
-//                .addValue("p_ket", pKet)
-//                .addValue("p_nama_group", pNamaGroup)
-                .addValue("p_user_id", pUserId)
-                .addValue("out_msg", OracleTypes.VARCHAR);
-        Map<String, Object> out = simpleJdbcCall.execute(in);
-        AppUtils.getLogger(this).info("data create_group : {}", out);
-        return out;
-    }
 
 
 }
