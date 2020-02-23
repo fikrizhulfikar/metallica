@@ -142,6 +142,7 @@ function tableMainDashboard(_date){
         "bInfo" : false,
         "bLengthChange" : false,
         "columns" : [
+//            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT_JENIS+'</td>';}},
             {
                 "data": null,
                 "visible" : false,
