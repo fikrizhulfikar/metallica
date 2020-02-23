@@ -9,9 +9,26 @@ var cbParentArray = new Array();
 var Valas = "";
 var tablePembelianValasVerified;
 var pembelianValasVerifiedDetail;
+var srcTglAwal = null;
+var srcTglAkhir = null;
 $(document).ready(function () {
     initDataTable();
+       $('#tanggal_awal').datepicker({dateFormat: 'yymmdd'});
+        $('#tanggal_akhir').attr("disabled", "disabled");
+        $('#tanggal_akhir').datepicker({dateFormat: 'yymmdd'});
+        setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
     // getAllData();
+});
+
+$("#tanggal_awal").change(function () {
+    var tglAwalData = $('#tanggal_awal').val();
+    if (tglAwalData == "") {
+        // alert("Tanggal awal belum di tentukan");
+        $('#tanggal_akhir').val("");
+    } else {
+        $('#tanggal_akhir').attr("disabled", false);
+        $('#tanggal_akhir').datepicker({dateFormat: 'dd/mm/yy', minDate: tglAwalData});
+    }
 });
 
 function getbyId(id) {
@@ -160,6 +177,18 @@ function deleteHead (idMetallica){
     tablePembelianValasVerified.ajax.reload();
 }
 
+function exportXls() {
+    var tglAwal = "null";
+    if (srcTglAwal != "") {
+        tglAwal = srcTglAwal
+    }
+    var tglAkhir = "null";
+    if (srcTglAkhir != "") {
+        tglAkhir = srcTglAkhir
+    }
+    window.open(baseUrl + "api_operator/pembelian_valas_trx/xlsverified/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currecny").val());
+}
+
 function dele() {
     $(".dele").on('click', function () {
         $(this).parent().parent().remove();
@@ -183,16 +212,14 @@ function dele() {
 
 function getAllData() {
     $.ajax({
-        url: baseUrl + "api_operator/pembelian_valas_trx/get_pembelian_valas_verified_trx",
+        url: baseUrl + "api_operator/pembelian_valas_trx/get_pembelian_valas_trx_verified",
         dataType: 'JSON',
         type: "GET",
         data: {
             pStatusValas: "0",
             pTglAwal: $("#tanggal_awal").val(),
             pTglAkhir: $("#tanggal_akhir").val(),
-            pCurrency: $("#cmb_currecny").val(),
-            pStatus: "",
-            pStatusTracking: "",
+            pCurrency: $("#cmb_currecny").val()
         },
         success: function (res) {
             allData = res;
@@ -282,7 +309,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                 {
                     "aTargets": [5],
                     "mRender": function (data, type, full) {
-                        return "FISCAL YEAR UNDEFINED";
+                        return full.FISC_YEAR;
                     }
 
                 },
@@ -579,7 +606,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                     "dataSrc":
                         function (res) {
                             hideLoadingCss()
-                            getTotalTagihan();
+//                            getTotalTagihan();
                             return res.data;
                         }
                 }
@@ -640,25 +667,13 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
     });
 
     $('.dataTables_length').each(function () {
-        var html = '<label style="margin-left: 250px; cursor:default;">Total tagihan (Rp): <b id="total_tagihan">0</b></label>';
-        $(this).append(html);
+       // var html = '<label style="margin-left: 250px; cursor:default;">Total tagihan (Rp): <b id="total_tagihan">0</b></label>';
+     //   $(this).append(html);
     });
 
     $('.dataTables_filter').each(function () {
         // var html = '';
-        var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" title="Sembunyikan Kolom" data-toggle="modal" onclick="showColumn()">' +
-            '<i class="fa fa-arrows-alt"></i></button>';
-        /*button reject*/
-        html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="rejectData()">' +
-            '            <i class="fa fa-ban"></i></button>';
-        html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
-        html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
-        if(newRoleUser[0] != "ROLE_OSS" && newRoleUser[0] != "ROLE_DIVKEU"){
-            html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
-
-        }
-        html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
-        $(this).append(html);
+      //LOKASI UNTUK TOMBOL MULTIPLE
     });
 
     tablePembelianValasVerified.columns.adjust();

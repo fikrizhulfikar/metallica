@@ -480,7 +480,7 @@ function generatePDF() {
     var docDefinition = {
         pageOrientation: "landscape",
         content: [{
-            text: "Operasi Khusus",
+            text: "PEMBELIAN VALAS",
             style: "header",
             alignment: "center"
         }, {
@@ -1092,10 +1092,6 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
             || newRoleUser[0] == "ROLE_VP_OPERATION_EXPENDITURE") {
         html = html +'<button class="btn-edit-data btn-sm btn-primary" style="margin-left: 10px" type="button" title="Pelunasan" onclick="multi_upd_lunas()"><i class="fa fa-credit-card-alt"></i></button>';
         }
-        if  (newRoleUser[0] === "ROLE_ADMIN"){
-            html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
-            html = html +'<button class="btn-edit-data btn-sm btn-primary" style="margin-left: 10px" type="button" title="Pelunasan" onclick="multi_upd_lunas()"><i class="fa fa-credit-card-alt"></i></button>';
-        }
         $(this).append(html);
     });
 
@@ -1400,8 +1396,6 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
 
     showLoadingCss();
     pembelianValasDetail = $("#table-main-detail").DataTable({
-        "scrollY": "100%",
-        "scrollX": "100%",
         "ajax" : {
             "url" : baseUrl + "api_operator/pembelian_valas_trx/detail_pembelian_valas_trx",
             "data" : {
@@ -1518,14 +1512,26 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
 }
 
 function back(){
-    showLoadingCss();
-    $(".list-data").show();
-    $(".detail-data").hide();
-    $("#filter").show();
-    $("#btn-add-rekap").show();
-    tablePembelianValas.ajax.reload();
-    pembelianValasDetail.destroy();
-    hideLoadingCss();
+    Swal.fire({
+        title : "Yakin ?",
+        text : "Yakin ingin kembali ke halaman sebelumnya ?",
+        icon : "warning",
+        showCancelButton : true,
+        confirmButtonColor : "#3085d6",
+        cancelButtonColor : "#d33",
+        confirmButtonText : "Ya"
+    }).then(result => {
+        if (result.value){
+            showLoadingCss();
+            $(".list-data").show();
+            $(".detail-data").hide();
+            $("#filter").show();
+            $("#btn-add-rekap").show();
+            tablePembelianValas.ajax.reload();
+            pembelianValasDetail.destroy();
+            hideLoadingCss();
+        }
+    })
 }
 
 function setBalance(bal){

@@ -377,6 +377,27 @@ public class PembelianValasTrxService {
         return result;
     }
 
+    public BigDecimal getTotalTagihanLunas(String tglAwal,
+                                      String tglAkhir,
+                                      String currency,
+                                      String userId,
+                                      String search) {
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", tglAwal, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", tglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_currency", currency, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR)
+                .addValue("p_search", search, OracleTypes.VARCHAR);
+
+        getJdbcTemplate().execute("alter session set NLS_NUMERIC_CHARACTERS = '.,'");
+
+        BigDecimal result = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_corpay")
+                .withFunctionName("get_total_valas_lunas")
+                .executeFunction(BigDecimal.class, in);
+        return result;
+    }
+
     public Map<String, Object> updStatus(String pIdMetallica, String pStatusTracking) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -417,7 +438,51 @@ public class PembelianValasTrxService {
         params.put("p_currency", pCurr);
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
 
+        AppUtils.getLogger(this).info("data get_all_pembayaran_by_status1 : {} and userid {}", resultset, idUser);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getAllpembayaran2(String idUser, String pTglAwal, String pTglAkhir,  String pCurr) throws SQLException {
+
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pCurr : {}", pCurr);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_all_valas_by_status2");
+
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_user_id", idUser);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_currency", pCurr);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
         AppUtils.getLogger(this).info("data get_all_pembayaran_by_status2 : {} and userid {}", resultset, idUser);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getAllpembayaran3(String idUser, String pTglAwal, String pTglAkhir,  String pCurr) throws SQLException {
+
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pCurr : {}", pCurr);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_all_valas_by_status3");
+
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_user_id", idUser);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_currency", pCurr);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_all_pembayaran_by_status3 : {} and userid {}", resultset, idUser);
         return resultset;
     }
 
