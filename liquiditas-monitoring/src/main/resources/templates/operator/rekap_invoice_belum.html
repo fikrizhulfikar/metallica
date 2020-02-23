@@ -33,13 +33,9 @@
         <li class="breadcrumb-item active" style="cursor: default">Rekap Invoice Belum</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
-                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS','ROLE_DM_LIKUIDITAS','ROLE_VICE_PRESIDENT_OPERATION','ROLE_VICE_PRESIDENT_INVESTMENT','ROLE_KASIR_IDR','ROLE_KASIR', 'ROLE_MANAGER_PAYMENT',
-                'ROLE_MANAGER_OPERATION','ROLE_MANAGER_INVESTMENT_APLN','ROLE_MANAGER_INVESTMENT_SLPMN','ROLE_MANAGER_POWER_PURCHASE','ROLE_MANAGER_PRIMARY_ENERGY','EXECUTIVE_VICE_PRESIDENT')">
-                    <i class="icon-pencil"></i> &nbsp;New Data
-                </button>
+
             </div>
         </li>
     </ol>
@@ -109,7 +105,7 @@
                             <div class="form-group">
                                 <label for="pTglJatuhTempo2">Tanggal Jatuh
                                     Tempo:</label>
-                                <input type="text" class="form-control" id="pTglJatuhTempo2" required="required"/>
+                                <input type="text" class="form-control" id="pTglJatuhTempo2" required="required" readonly="readonly"/>
                             </div>
                             <div class="form-group">
                                 <label for="pVendor2"><span style="color: red">*)</span>&nbsp;Vendor/Pengembang/Pemasok/Loan:</label>
@@ -219,11 +215,11 @@
                             <div class="form-group">
                                 <label for="pTglTerimaInvoice"><span style="color: red">*)</span>&nbsp;Tanggal Tagihan
                                     Diterima:</label>
-                                <input type="text" class="form-control" id="pTglTerimaInvoice"/>
+                                <input type="text" class="form-control" id="pTglTerimaInvoice" readonly="readonly"/>
                             </div>
                             <div class="form-group">
                                 <label for="pTglTagihan">Tanggal Tagihan:</label>
-                                <input type="text" class="form-control" id="pTglTagihan"/>
+                                <input type="text" class="form-control" id="pTglTagihan" readonly="readonly"/>
                             </div>
                             <div class="form-group">
                                 <label for="pNoTagihan">No Tagihan:</label>
@@ -237,7 +233,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="pTglNotaDinas">Tanggal Nota Dinas:</label>
-                                <input type="text" class="form-control" id="pTglNotaDinas"/>
+                                <input type="text" class="form-control" id="pTglNotaDinas" readonly="readonly"/>
                             </div>
                             <div class="form-group">
                                 <label for="pKeterangan">Keterangan:</label>
@@ -600,23 +596,20 @@
                     </div>
                     <div class="col-md-3" style="padding-right: 0px;">
                         <select name="cmb_cara_pembayaran" id="cmb_cara_pembayaran" class="form-control">
-                            <option value="">Pilih Data</option>
+                            <option value="ALL">Pilih Data</option>
+                            <option value="INHOUSE">In House</option>
+                            <option value="ONLINETRANSFER">Online Transfer</option>
+                            <option value="RTGS">RTGS</option>
+                            <option value="KLIRING">Kliring</option>
+                            <option value="TT">TT</option>
+                            <option value="VALAS">Valas</option>
+                            <option value="GIRO">Giro</option>
+                            <option value="INTERNETBANKING">Internet Banking</option>
                         </select>
                     </div>
                     <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
                     <div class="col-md-3" style="padding-right: 0px;">
                         <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
-                    </div>
-                </div>
-                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
-
-                    <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Status Tracking</label>
-                    </div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="status_tracking" id="cmb_status_tracking" class="form-control">
-                            <option value="">PILIH STATUS TRACKING</option>
-                        </select>
                     </div>
                 </div>
             </div>
@@ -1551,9 +1544,16 @@
                                 <input type="text" class="form-control" id="pSources"/>
                             </div>
 
+<!--                            <div class="form-group">-->
+<!--                                <label for="pBeneficiarys">&nbsp;Beneficiary :</label>-->
+<!--                                <input type="text" class="form-control" id="pBeneficiarys"/>-->
+<!--                            </div>-->
                             <div class="form-group">
-                                <label for="pBeneficiarys">&nbsp;Beneficiary :</label>
-                                <input type="text" class="form-control" id="pBeneficiarys"/>
+                                <label for="pBeneficiarys"><span style="color: red">*)</span>&nbsp;Bank Pembayar:</label>
+                                <select id="pBeneficiarys" class="form-control"
+                                        onChange="selectBankAccount(this.value);" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
                             </div>
 <!--                            <div class="form-group">-->
 <!--                                <label for="pAccountNames">&nbsp;Account Name :</label>-->

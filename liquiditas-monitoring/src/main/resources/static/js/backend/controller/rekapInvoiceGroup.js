@@ -746,6 +746,7 @@ function getAllData() {
                                 } else {
                                     api.column(8).visible(false);
                                 }
+                                hideLoadingCss()
                             },
                             error: function () {
                                 hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
