@@ -55,6 +55,7 @@ public class PembelianValasTrxController {
     ){
         String sortBy = parseColumn(sortIndex);
         sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+
         if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
             sortDir = "DESC";
         }

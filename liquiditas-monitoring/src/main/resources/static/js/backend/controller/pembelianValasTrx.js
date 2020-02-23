@@ -480,7 +480,7 @@ function generatePDF() {
     var docDefinition = {
         pageOrientation: "landscape",
         content: [{
-            text: "PEMBELIAN VALAS",
+            text: "Operasi Khusus",
             style: "header",
             alignment: "center"
         }, {
@@ -1400,6 +1400,8 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
 
     showLoadingCss();
     pembelianValasDetail = $("#table-main-detail").DataTable({
+        "scrollY": "100%",
+        "scrollX": "100%",
         "ajax" : {
             "url" : baseUrl + "api_operator/pembelian_valas_trx/detail_pembelian_valas_trx",
             "data" : {
