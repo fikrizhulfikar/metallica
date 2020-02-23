@@ -44,15 +44,15 @@ function initDataTableSaldoRek1() {
                         "</tr>";
                     $('#table-rencana-pembayaran tbody').append(total1);
 
-                    var total2 = "<tr style='background-color:#67a2d8;color: white'>" +
-                        "<td>SUB TOTAL</td>" +
-                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H0,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H1,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H2,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_WEEKLY,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_MONTHLY,2,".",",") + "</td>" +
-                        "</tr>";
-                    $('#table-rencana-pembayaran tbody').append(total2);
+//                    var total2 = "<tr style='background-color:#67a2d8;color: white'>" +
+//                        "<td>SUB TOTAL</td>" +
+//                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H0,2,".",",") + "</td>" +
+//                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H1,2,".",",") + "</td>" +
+//                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H2,2,".",",") + "</td>" +
+//                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_WEEKLY,2,".",",") + "</td>" +
+//                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_MONTHLY,2,".",",") + "</td>" +
+//                        "</tr>";
+//                    $('#table-rencana-pembayaran tbody').append(total2);
 
                     var total3 = "<tr style='background-color:#67a2d8;color: white'>" +
                         "<td>TOTAL</td>" +
@@ -83,34 +83,64 @@ function initDataTableSaldoRek1() {
                 var data = res.return;
                 $("#tglcetak").html(data[0].TANGGAL);
                 $('#table-investasi-operasi tbody').empty();
+//                let counter = 0;
+//                let sumTotal = 0;
                 $.each(data, function (key, val) {
                     var html = "<tr>" +
                         "<td>" + val.TGL_RENCANA_BAYAR + "</td>" +
                         "<td>" + val.JENIS + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.IDR,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.USD,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.EUR,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.JPY,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.MYR,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
+                        "<td align='right'> Rp." + accounting.formatNumber(val.IDR,2,".",",") + "</td>" +
+                        "<td align='right'> Rp." + accounting.formatNumber(val.USD,2,".",",") + "</td>" +
+                        "<td align='right'> Rp." + accounting.formatNumber(val.EUR,2,".",",") + "</td>" +
+                        "<td align='right'> Rp." + accounting.formatNumber(val.JPY,2,".",",") + "</td>" +
+                        "<td align='right'> Rp." + accounting.formatNumber(val.MYR,2,".",",") + "</td>" +
+                        "<td align='right'> Rp." + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
                         "</tr>";
                     $('#table-investasi-operasi tbody').append(html);
+
+//                    counter++;
+
+//                    if (val["JENIS"] === "TOTAL"){
+//                        $('#table-investasi-operasi tbody').css({
+//                            "background-color" : "#F4D35E",
+//                            "color" : "black",
+//                            "text-align": "center",
+//                            "font-weight": "bold",
+//                        });
+//                      }else{
+//                        $('#table-investasi-operasi tbody').css({
+//                          "background-color" : "#67a2d8",
+//                          "color" : "black",
+//                        });
+//                      }
                 });
 
                 var total = "<tr style='background-color:#67a2d8;color: white'>" +
                     "<td colspan='2' align='center'>TOTAL</td>" +
-                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_IDR,2,".",",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_USD,2,".",",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_EUR,2,".",",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_JPY,2,".",",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_MYR,2,".",",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_EQ_IDR,2,".",",") + "</td>" +
+                    "<td align='right'> Rp." + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_IDR,2,".",",") + "</td>" +
+                    "<td align='right'> Rp." + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_USD,2,".",",") + "</td>" +
+                    "<td align='right'> Rp." + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_EUR,2,".",",") + "</td>" +
+                    "<td align='right'> Rp." + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_JPY,2,".",",") + "</td>" +
+                    "<td align='right'> Rp." + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_MYR,2,".",",") + "</td>" +
+                    "<td align='right'> Rp." + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_EQ_IDR,2,".",",") + "</td>" +
                     "</tr>";
 
                 $('#table-investasi-operasi tbody').append(total);
-
-            hideLoadingCss()
+             hideLoadingCss()
         },
+
+//            console.log('Tes' + res)
+
+//        createdRow : function (row, res, dataIndex){
+//            var data = res;
+//            console.log('Tes' + data)
+//            if ((data["JENIS"] === "TOTAL")){
+//                $(row).css({
+//                    "background-color": "#F4D35E",
+//                });
+//             };
+//         },
+
         error: function () {
             // hideLoadingCss("Gagal Ambil Data");
             hideLoadingCss();
@@ -121,109 +151,6 @@ function initDataTableSaldoRek1() {
             $('#table-investasi-operasi tbody').append(html);
         }
       });
-     $.ajax({
-              url: baseUrl + "api_dashboard/get_saldo_bank",
-              dataType: 'JSON',
-              type: "GET",
-              success: function (res) {
-                  var data = res.return;
-                  //console.log("response : "+data);
-                  $("#tglcetak").html(data[0].TANGGAL);
-                  $('#table-jenis-bank tbody').empty();
-                  $.each(data, function (key, val) {
-                      var html = "<tr>" +
-                          "<td>" + val.BANK + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(val.SALDO,2,".",",") + "</td>" +
-                          "</tr>";
-                      $('#table-jenis-bank tbody').append(html);
-                  });
-
-                  var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                      "<td>TOTAL</td>" +
-                      "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SALDO,2,".",",") + "</td>" +
-                      "</tr>";
-
-              $('#table-jenis-bank tbody').append(total1);
-
-
-              var dataPieSaldoBank = [];
-              $.each(res.OUT_PIE_BANK, function (index, value) {
-                  var dataPieTemp = {
-                      label: value.BANK,
-                      value: value.PERSENTASE == 0 ? null : value.PERSENTASE
-                  };
-                  dataPieSaldoBank.push(dataPieTemp)
-              });
-
-              console.log("");
-
-              creteChartSaldoBank(dataPieSaldoBank);
-              hideLoadingCss()
-          },
-          error: function () {
-              // hideLoadingCss("Gagal Ambil Data");
-              hideLoadingCss();
-              $('#table-jenis-bank tbody').empty();
-              var html = "<tr>" +
-                  "<td colspan='5' align='center'> No Data </td>" +
-                  "</tr>";
-              $('#table-jenis-bank tbody').append(html);
-          }
-            });
-     $.ajax({
-                  url: baseUrl + "api_dashboard/get_komposisi_saldo",
-                  dataType: 'JSON',
-                  type: "GET",
-                  success: function (res) {
-                      var data = res.return;
-                      //console.log('DIAZ :'+res)
-                      $("#tglcetak").html(data[0].TANGGAL);
-                      $('#table-komposisi-saldo tbody').empty();
-                      $.each(data, function (key, val) {
-                          var html = "<tr>" +
-                              "<td>" + val.JENIS_REKENING + "</td>" +
-                              "<td align='right'>" + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
-                              "</tr>";
-                          $('#table-komposisi-saldo tbody').append(html);
-                      });
-
-                      var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                          "<td>TOTAL</td>" +
-                          "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL,2,".",",") + "</td>" +
-                          "</tr>";
-
-                  $('#table-komposisi-saldo tbody').append(total1);
-
-
-                  var dataPieKompSaldo = [];
-                  $.each(res.OUT_PIE_KOMPOSISI, function (index, value) {
-//                  console.log('PERSENTASE :'+value.PERSENTASE);
-                  //console.log('WARNA :'+value.WARNA);
-                      var dataPieTemp = {
-//                          minvalue: value.JENIS_REKENING,
-//                          maxvalue: value.PERSENTASE == 0 ? null : value.PERSENTASE
-                          minvalue: '0',
-                          maxvalue: value.PERSENTASE,
-                          code: value.WARNA
-                      };
-                      dataPieKompSaldo.push(dataPieTemp)
-                  });
-
-                  //console.log('Diaz Ganteng :'+res.OUT_PIE_KOMPOSISI);
-
-                  creteChartKompSaldo(dataPieKompSaldo);
-                  hideLoadingCss()
-              },
-              error: function () {
-                  // hideLoadingCss("Gagal Ambil Data");
-                  hideLoadingCss();
-                  $('#table-komposisi-saldo tbody').empty();
-                  var html = "<tr>" +
-                      "<td colspan='5' align='center'> No Data </td>" +
-                      "</tr>";
-                  $('#table-komposisi-saldo tbody').append(html);
-              }
-    });
      $.ajax({
           url: baseUrl + "api_dashboard/get_rekening_vs_rencana",
           dataType: 'JSON',
@@ -274,9 +201,9 @@ function initDataTableSaldoRek1() {
            success: function (res) {
              var data = res.return;
              var data2 = res.OUT_BAR_CASHCODE;
- //            var tes = JSON.stringify(res.return);
-             var tes2 = JSON.stringify(data2);
-             console.log('CUKKK :'+tes2)
+//            var tes = JSON.stringify(res.return);
+//             var tes2 = JSON.stringify(data2);
+//             console.log('CUKKK :'+tes2)
              $("#tglcetak").html(data[0].TANGGAL);
 
              var dataChartRenPembayaran = [];
@@ -324,6 +251,9 @@ function initDataTableSaldoRek1() {
 function creteChartRekRencana(data, data2) {
     var maxval1 = data[1].maxvalue + data[0].maxvalue;
     var maxval2 = data[2].maxvalue + data[1].maxvalue;
+    var label1 = (data[0].minvalue + data[0].maxvalue)/2;
+    var label2 = (data[0].maxvalue + data[1].maxvalue)/2;
+    var label3 = (data[1].maxvalue + data[2].maxvalue)/2;
     FusionCharts.ready(function () {
         var fusioncharts = new FusionCharts({
                 type: 'angulargauge',
@@ -333,8 +263,9 @@ function creteChartRekRencana(data, data2) {
                 dataFormat: 'json',
                 dataSource: {
                     "chart": {
+                        "caption" : "Rencana Pembayaran",
+                        "subcaption" : "PT. PLN (Persero) Divisi Treasury",
                         "bgColor": "#BBEAEA",
-                        caption : "Rencana Pembayaran",
                         "numbersuffix": "%",
                         "lowerLimitDisplay": "0%",
                         "upperLimitDisplay": "100%",
@@ -351,6 +282,8 @@ function creteChartRekRencana(data, data2) {
                         showTickMarks: "0",
                         showTickValues: "1",
                         "gaugeFillMix": "{dark-10},{light-10},{dark-10}",
+                        "gaugeOuterRadius": "150",
+                        "gaugeInnerRadius": "90",
                         "theme": "fusion"
                     },
                     "colorrange": {
@@ -373,7 +306,7 @@ function creteChartRekRencana(data, data2) {
                        ]
                      },
                     "dials": {
-                         "dial": [{
+                        "dial": [{
                          "id": "fd_dial",
                          "bgcolor": "#F20F2F",
                          "value": data2[1].dial
@@ -523,7 +456,7 @@ function tableRencanaImpres(_date){
                         if (data.RP_D0 === null) {
                             return 0;
                         }else {
-                            return new Intl.NumberFormat().format(data.RP_D0);
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
                         }
                     }
                 },
@@ -544,7 +477,7 @@ function tableRencanaImpres(_date){
                         if (data.RP_D1 === null) {
                             return 0;
                         }else {
-                            return new Intl.NumberFormat().format(data.RP_D1);
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
                         }
                     }
                 },
@@ -565,7 +498,7 @@ function tableRencanaImpres(_date){
                         if (data.RP_D2 === null) {
                             return 0;
                         }else {
-                            return new Intl.NumberFormat().format(data.RP_D2);
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
                         }
                     }
                 },
@@ -586,7 +519,7 @@ function tableRencanaImpres(_date){
                         if (data.RP_D3 === null) {
                             return 0;
                         }else {
-                            return new Intl.NumberFormat().format(data.RP_D3);
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
                         }
                     }
                 },
@@ -607,7 +540,7 @@ function tableRencanaImpres(_date){
                         if (data.RP_D4 === null) {
                             return 0;
                         }else {
-                            return new Intl.NumberFormat().format(data.RP_D4);
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
                         }
                     }
                 },
@@ -628,7 +561,7 @@ function tableRencanaImpres(_date){
                         if (data.RP_D5 === null) {
                             return 0;
                         }else {
-                            return new Intl.NumberFormat().format(data.RP_D5);
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
                         }
                     }
                 },
@@ -649,7 +582,7 @@ function tableRencanaImpres(_date){
                         if (data.RP_D6 === null) {
                             return 0;
                         }else {
-                            return new Intl.NumberFormat().format(data.RP_D6);
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
                         }
                     }
                 },
@@ -670,7 +603,7 @@ function tableRencanaImpres(_date){
                         if (data.RP_D7 === null) {
                             return 0;
                         }else {
-                            return new Intl.NumberFormat().format(data.RP_D7);
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D7)+'</td>';
                         }
                     }
                 },
@@ -688,7 +621,7 @@ function tableRencanaImpres(_date){
 
             if (data["URAIAN"] === "KETERANGAN"){
                 $(row).css({
-                    "background-color" : "#8688ca",
+                    "background-color" : "#67a2d8",
                     "color" : "white",
                 })
             }
@@ -717,7 +650,7 @@ function tableRencanaImprestValas(_date){
     let current_full_date;
     let groupColumn = 0;
     (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString() : current_full_date = _date;
-
+//    console.log('Tes'+current_full_date)
     $("#header_tgl_imprest_valas").append("<td style='text-align: center; background-color: #67a2d8'>URAIAN</td>");
     for (let i=0; i<8; i++){
         let tgl = date.getDate()+i;
@@ -761,7 +694,7 @@ function tableRencanaImprestValas(_date){
                         if (data.RP_D0 === null) {
                             return 0;
                         }else {
-                            return new Intl.NumberFormat().format(data.RP_D0);
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
                         }
                     }
                 },
@@ -780,7 +713,7 @@ function tableRencanaImprestValas(_date){
                         if (data.RP_D1 === null) {
                             return 0;
                         }else {
-                            return new Intl.NumberFormat().format(data.RP_D1);
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
                         }
                     }
                 },
@@ -799,7 +732,7 @@ function tableRencanaImprestValas(_date){
                         if (data.RP_D2 === null) {
                             return 0;
                         }else {
-                            return new Intl.NumberFormat().format(data.RP_D2);
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
                         }
                     }
                 },
@@ -818,7 +751,7 @@ function tableRencanaImprestValas(_date){
                         if (data.RP_D3 === null) {
                             return 0;
                         }else {
-                            return new Intl.NumberFormat().format(data.RP_D3);
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
                         }
                     }
                 },
@@ -837,7 +770,7 @@ function tableRencanaImprestValas(_date){
                         if (data.RP_D4 === null) {
                             return 0;
                         } else {
-                            return new Intl.NumberFormat().format(data.RP_D4);
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
                         }
                     }
                 },
@@ -856,7 +789,7 @@ function tableRencanaImprestValas(_date){
                         if (data.RP_D5 === null) {
                             return 0;
                         }else {
-                            return new Intl.NumberFormat().format(data.RP_D5);
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
                         }
                     }
                 },
@@ -875,7 +808,7 @@ function tableRencanaImprestValas(_date){
                         if (data.RP_D6 === null) {
                             return 0;
                         }else {
-                            return new Intl.NumberFormat().format(data.RP_D6);
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
                         }
                     }
                 },
@@ -894,7 +827,7 @@ function tableRencanaImprestValas(_date){
                         if (data.RP_D7 === null) {
                             return 0;
                         }else {
-                            return new Intl.NumberFormat().format(data.RP_D7);
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D7)+'</td>';
                         }
                     }
                 },
@@ -910,7 +843,7 @@ function tableRencanaImprestValas(_date){
 
             if (data["URAIAN"] === "KETERANGAN"){
                 $(row).css({
-                    "background-color" : "#8688ca",
+                    "background-color" : "#67a2d8",
                     "color" : "white",
                 })
             }

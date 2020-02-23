@@ -201,7 +201,18 @@ public class Sap {
             param.put("date_from",date_from);
             param.put("date_to", date_to);
 
-            String list = "["+sapmaster.getDataHrPayable(param)+"]";
+            ClassLoader classLoader = Sap.class.getClassLoader();
+            InputStream inputStream = classLoader.getResourceAsStream("files/ApKateLuDeh.json");
+            String result = IOUtils.toString(inputStream);
+
+            System.out.println("Stream Cok! : "+result);
+            try {
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            String list = "["+result+"]";
 
             arr = (JSONArray) parser.parse(list);
             int counter = 0;

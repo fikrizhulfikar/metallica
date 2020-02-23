@@ -24,7 +24,7 @@ public class PageOperatorController {
     }
 
     @RequestMapping("/dashboard")
-    public String dashboard() { return "operator/dashboard";
+    public String dashboard() { return "operator/dashboard2";
     }
 
     @RequestMapping("/dash_rencana")

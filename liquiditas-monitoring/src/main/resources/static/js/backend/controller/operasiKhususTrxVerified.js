@@ -13,7 +13,22 @@ var srcTglAwal = "";
 var srcTglAkhir = "";
 $(document).ready(function () {
     initDataTable();
+    $('#tanggal_awal').datepicker({dateFormat: 'yymmdd'});
+    $('#tanggal_akhir').attr("disabled", "disabled");
+    $('#tanggal_akhir').datepicker({dateFormat: 'yymmdd'});
+    setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
     // getAllData();
+});
+
+$("#tanggal_awal").change(function () {
+    var tglAwalData = $('#tanggal_awal').val();
+    if (tglAwalData == "") {
+        // alert("Tanggal awal belum di tentukan");
+        $('#tanggal_akhir').val("");
+    } else {
+        $('#tanggal_akhir').attr("disabled", false);
+        $('#tanggal_akhir').datepicker({dateFormat: 'dd/mm/yy', minDate: tglAwalData});
+    }
 });
 
 function getbyId(id) {
@@ -285,98 +300,98 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                     }
 
                 },
-                {
-                    "aTargets": [11],
-                    "mRender": function (data, type, full) {
-                        var value = new Object();
-                        var ret_value = ''
-
-                        if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
-                            return "-"
-                        }
-                        else {
-                            if (full.STATUS_TRACKING == "INPUT DATA") {
-                                value = '{"pCompCode":"'+full.COMP_CODE+'","pDocNo" : "'+full.DOC_NO+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'"}';
-
-                            }
-                            else if (full.STATUS_TRACKING == "VERIFIED BY STAFF OPERATION") {
-
-                                if(newRoleUser[0] == "ROLE_MANAGER_PRIMARY_ENERGY" || newRoleUser[0] == "ROLE_MANAGER_OPERATION" || newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "ROLE_MANAGER_PAYMENT"){
-                                    value = '{"3":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
-                                }else {
-                                    value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
-                                }
-                            }
-                            else if (full.STATUS_TRACKING == "VERIFIED BY STAFF INVESTMENT") {
-
-                                if(newRoleUser[0] == "ROLE_MANAGER_INVESTMENT_APLN" || newRoleUser[0] == "ROLE_MANAGER_INVESTMENT_SLPMN" || newRoleUser[0] == "ROLE_ADMIN"){
-                                    value = '{"6":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
-                                }else {
-                                    value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
-                                }
-                            }
-                            else if (full.STATUS_TRACKING == "VERIFIED BY MANAGER IE"){
-
-                                if(newRoleUser[0] == "ROLE_VICE_PRESIDENT_INVESTMENT" || newRoleUser[0] == "ROLE_ADMIN"){
-                                    value = '{"8":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
-                                }else {
-                                    value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
-                                }
-                            }
-
-                            else if (full.STATUS_TRACKING == "VERIFIED BY MANAGER PE"){
-
-                                if(newRoleUser[0] == "ROLE_VICE_PRESIDENT_OPERATION" || newRoleUser[0] == "ROLE_ADMIN"){
-                                    value = '{"5":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
-                                }else {
-                                    value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
-                                }
-                            }
-                            else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY OPERATION" && full.EQ_IDR > "25000000000"){
-                                if(newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT"){
-                                    value = '{"10":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
-                                }else {
-                                    value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
-                                }
-                            }
-                            else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY INVESTMENT" && full.EQ_IDR > "25000000000"){
-                                if(newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT"){
-                                    value = '{"10":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
-                                }else {
-                                    value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
-                                }
-                            }
-                            else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY OPERATION" && full.EQ_IDR <= "25000000000"  || full.STATUS_TRACKING == "VERIFIED BY EVP"){
-                                var role = newRoleUser[0];
-
-                                if(role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN"){
-                                    value = '{"7":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
-                                }else {
-                                    value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
-                                }
-                            }
-                            else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY INVESTMENT" && full.EQ_IDR <= "25000000000"  || full.STATUS_TRACKING == "VERIFIED BY EVP"){
-                                var role = newRoleUser[0];
-
-                                if(role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN"){
-                                    value = '{"7":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
-                                }else {
-                                    value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
-                                }
-                            }
-                            else {
-                                value = '{"pCompCode":"'+full.COMP_CODE+'","pDocNo" : "'+full.DOC_NO+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'"}';
-                            }
-                        }
-
-                        for (x=0; x<checkedArray.length;x++){
-                            if(JSON.stringify(checkedArray[x]) === value){
-                                return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' onchange='checkArray(this)' id='cbcheckbox' checked>";
-                            }
-                        }
-                        return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' onchange='checkArray(this)' id='cbcheckbox'>";
-                    }
-                }
+                // {
+                //     "aTargets": [11],
+                //     "mRender": function (data, type, full) {
+                //         var value = new Object();
+                //         var ret_value = ''
+                //
+                //         if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
+                //             return "-"
+                //         }
+                //         else {
+                //             if (full.STATUS_TRACKING == "INPUT DATA") {
+                //                 value = '{"pCompCode":"'+full.COMP_CODE+'","pDocNo" : "'+full.DOC_NO+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'"}';
+                //
+                //             }
+                //             else if (full.STATUS_TRACKING == "VERIFIED BY STAFF OPERATION") {
+                //
+                //                 if(newRoleUser[0] == "ROLE_MANAGER_PRIMARY_ENERGY" || newRoleUser[0] == "ROLE_MANAGER_OPERATION" || newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "ROLE_MANAGER_PAYMENT"){
+                //                     value = '{"3":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
+                //                 }else {
+                //                     value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
+                //                 }
+                //             }
+                //             else if (full.STATUS_TRACKING == "VERIFIED BY STAFF INVESTMENT") {
+                //
+                //                 if(newRoleUser[0] == "ROLE_MANAGER_INVESTMENT_APLN" || newRoleUser[0] == "ROLE_MANAGER_INVESTMENT_SLPMN" || newRoleUser[0] == "ROLE_ADMIN"){
+                //                     value = '{"6":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
+                //                 }else {
+                //                     value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
+                //                 }
+                //             }
+                //             else if (full.STATUS_TRACKING == "VERIFIED BY MANAGER IE"){
+                //
+                //                 if(newRoleUser[0] == "ROLE_VICE_PRESIDENT_INVESTMENT" || newRoleUser[0] == "ROLE_ADMIN"){
+                //                     value = '{"8":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
+                //                 }else {
+                //                     value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
+                //                 }
+                //             }
+                //
+                //             else if (full.STATUS_TRACKING == "VERIFIED BY MANAGER PE"){
+                //
+                //                 if(newRoleUser[0] == "ROLE_VICE_PRESIDENT_OPERATION" || newRoleUser[0] == "ROLE_ADMIN"){
+                //                     value = '{"5":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
+                //                 }else {
+                //                     value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
+                //                 }
+                //             }
+                //             else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY OPERATION" && full.EQ_IDR > "25000000000"){
+                //                 if(newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT"){
+                //                     value = '{"10":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
+                //                 }else {
+                //                     value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
+                //                 }
+                //             }
+                //             else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY INVESTMENT" && full.EQ_IDR > "25000000000"){
+                //                 if(newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT"){
+                //                     value = '{"10":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
+                //                 }else {
+                //                     value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
+                //                 }
+                //             }
+                //             else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY OPERATION" && full.EQ_IDR <= "25000000000"  || full.STATUS_TRACKING == "VERIFIED BY EVP"){
+                //                 var role = newRoleUser[0];
+                //
+                //                 if(role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN"){
+                //                     value = '{"7":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
+                //                 }else {
+                //                     value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
+                //                 }
+                //             }
+                //             else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY INVESTMENT" && full.EQ_IDR <= "25000000000"  || full.STATUS_TRACKING == "VERIFIED BY EVP"){
+                //                 var role = newRoleUser[0];
+                //
+                //                 if(role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN"){
+                //                     value = '{"7":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
+                //                 }else {
+                //                     value = '{"x":"'+full.ID_VALAS+'","jenisPembayaran" : "'+full.ID_JENIS_PEMBAYARAN+'", "currency":"'+full.CURRENCY+'", "total":"'+full.TOTAL_TAGIHAN+'"}';
+                //                 }
+                //             }
+                //             else {
+                //                 value = '{"pCompCode":"'+full.COMP_CODE+'","pDocNo" : "'+full.DOC_NO+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'"}';
+                //             }
+                //         }
+                //
+                //         for (x=0; x<checkedArray.length;x++){
+                //             if(JSON.stringify(checkedArray[x]) === value){
+                //                 return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' onchange='checkArray(this)' id='cbcheckbox' checked>";
+                //             }
+                //         }
+                //         return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' onchange='checkArray(this)' id='cbcheckbox'>";
+                //     }
+                // }
             ],
             "ajax":
                 {
@@ -398,22 +413,22 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                     "dataSrc":
                         function (res) {
                             hideLoadingCss()
-                            getTotalTagihan();
+                            // getTotalTagihan();
                             return res.data;
                         }
                 }
             ,
-        "columns": [
-            {"data": "ROW_NUMBER", "defaultContent": ""},
-            {"data": "DOCUMENT_DATE", "defaultContent": ""},
-            {"data": "POSTING_DATE", "defaultContent": ""},
-            {"data": "DOCUMENT_NUMBER", "defaultContent": ""},
-            {"data": "REFERENCE", "defaultContent": ""},
-            {"data": "COMPANY_CODE", "defaultContent": ""},
-            {"data": "BUSINESS_AREA", "defaultContent": ""},
-            {"data": "CURRENCY", "defaultContent": ""},
-            {"data": "DOC_HDR_TXT", "defaultContent": ""},
-        ],
+        // "columns": [
+        //     {"data": "ROW_NUMBER", "defaultContent": ""},
+        //     {"data": "DOCUMENT_DATE", "defaultContent": ""},
+        //     {"data": "POSTING_DATE", "defaultContent": ""},
+        //     {"data": "DOCUMENT_NUMBER", "defaultContent": ""},
+        //     {"data": "REFERENCE", "defaultContent": ""},
+        //     {"data": "COMPANY_CODE", "defaultContent": ""},
+        //     {"data": "BUSINESS_AREA", "defaultContent": ""},
+        //     {"data": "CURRENCY", "defaultContent": ""},
+        //     {"data": "DOC_HDR_TXT", "defaultContent": ""},
+        // ],
             "drawCallback":
                 function (settings) {
                     // $(".dataTables_scrollHeadInner").css({"width":"100%"});
@@ -469,10 +484,10 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
         tempTableSearch = value;
     });
 
-    $('.dataTables_length').each(function () {
-        var html = '<label style="margin-left: 250px; cursor:default;">Total tagihan (Rp): <b id="total_tagihan">0</b></label>';
-        $(this).append(html);
-    });
+    // $('.dataTables_length').each(function () {
+    //     var html = '<label style="margin-left: 250px; cursor:default;">Total tagihan (Rp): <b id="total_tagihan">0</b></label>';
+    //     $(this).append(html);
+    // });
     //
     // $('.dataTables_filter').each(function () {
     //     // var html = '';
@@ -558,6 +573,27 @@ function buildTableBody(data, columns) {
     });
 
     return body;
+}
+
+function getAllData() {
+    $.ajax({
+        url: baseUrl + "api_operator/operasi_khusus_trx/get_operasi_khusus_trx_verified",
+        dataType: 'JSON',
+        type: "GET",
+        data: {
+            pStatusValas: "0",
+            pTglAwal: $("#tanggal_awal").val(),
+            pTglAkhir: $("#tanggal_akhir").val(),
+            pCurrency: $("#cmb_currecny").val()
+        },
+        success: function (res) {
+            allData = res;
+        },
+        error: function (res) {
+            console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
+        }
+    });
+
 }
 
 function search(state) {

@@ -4,6 +4,7 @@ import com.iconpln.liquiditas.core.service.ValasMetallicaService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.monitoring.utils.NotificationUtil;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -565,7 +566,7 @@ public class ValasMetallicaController {
     public Map<String, Object> createGroup(
             @RequestParam(value = "pData", defaultValue = "") String pData,
             @RequestParam(value = "pNamaGroup", defaultValue = "") String pNamaGroup
-    ) {
+    ) throws JSONException {
 
         Map<String, Object> out = null;
         //pNamaGroup = (pNamaGroup.toString().equals("null") ? "" : pNamaGroup);

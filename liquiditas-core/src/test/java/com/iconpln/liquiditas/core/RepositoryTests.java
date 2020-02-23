@@ -2,7 +2,7 @@ package com.iconpln.liquiditas.core;
 
 import com.iconpln.liquiditas.core.domain.PembelianValas;
 import com.iconpln.liquiditas.core.domain.SaldoRekening;
-import com.iconpln.liquiditas.core.service.DashboardService;
+//import com.iconpln.liquiditas.core.service.DashboardService;
 import com.iconpln.liquiditas.core.service.MasterService;
 import com.iconpln.liquiditas.core.service.PembelianValasService;
 import com.iconpln.liquiditas.core.service.SaldoService;
@@ -32,8 +32,8 @@ public class RepositoryTests {
     @Autowired
     PembelianValasService pembelianValasService;
 
-    @Autowired
-    DashboardService dashboardService;
+//    @Autowired
+//    DashboardService dashboardService;
 
     @Autowired
     SaldoService saldoService;
@@ -50,14 +50,14 @@ public class RepositoryTests {
     }
 
 
-    @Test
-    public void getInsRencanaBayarUsdJpy() throws SQLException {
-         dashboardService.getRencanaBayarValutaAsingMingguanUsdJpy("");
-    }
-    @Test
-    public void getInsRencanaBayarEur() throws SQLException {
-         dashboardService.getRencanaBayarValutaAsingMingguanEurOthers("");
-    }
+//    @Test
+//    public void getInsRencanaBayarUsdJpy() throws SQLException {
+//         dashboardService.getRencanaBayarValutaAsingMingguanUsdJpy("");
+//    }
+//    @Test
+//    public void getInsRencanaBayarEur() throws SQLException {
+//         dashboardService.getRencanaBayarValutaAsingMingguanEurOthers("");
+//    }
 
     @Test
     public void getTests() {

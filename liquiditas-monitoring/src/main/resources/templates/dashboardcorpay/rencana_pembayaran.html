@@ -16,15 +16,35 @@
             width : 8% !important;
         }
 
-        /* basic positioning */
-        .legend { list-style: none; }
-        .legend li { float: left; margin-right: 10px; }
+        .wrapper {
+            text-align: center;
+        }
+        .wrapper ul {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            /* For IE, the outcast */
+            zoom:1;
+            *display: inline;
+        }
+        .wrapper li {
+            float: left;
+            padding: 2px 5px;
+        }
+      /* basic positioning */
+        .legend { list-style: none; align: center;}
+        .legend li { float: left; margin-right: 10px; font-size: 12px;}
         .legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
         /* your colors */
-        .legend .one { background-color: #ff00ff; }
-        .legend .two { background-color: #00ffff; }
-        .legend .three { background-color: #0000ff; }
-        .legend .four { background-color: #000000; }
+        .legend .one { background-color: #F2726F;}
+        .legend .two { background-color: #62B58F; }
+        .legend .three { background-color: #FFC533; }
+        .legend .four { background-color: #77D5D4; }
+        .legend .five { background-color: #1985A1; }
+        .legend .six { background-color: #FB4D3D; }
+        .legend .seven { background-color: #F26419; }
+        .legend .eight { background-color: #F20F2F; }
+        .legend .nine { background-color: #F4D35E; }
     </style>
 </div>
 <div style="margin-top: -15px;min-height: 400px" class="app-body col-md-12" th:fragment="content" xmlns:th="http://www.w3.org/1999/xhtml">
@@ -34,12 +54,17 @@
             <div align="center" class="title"><h5><b>DASHBOARD L'METALLICA TGL : <span id="tglcetak"></span></b></h5></div>
         </div>
         <div class="col-md-12" style="padding-right: 0px;" align="right">
-            <div id="chart-carousel" style="min-height: 465px;" class="carousel slide" data-ride="carousel">
+            <div id="chart-carousel" style="min-height: 465px; margin-bottom: 30px" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="item active" align="center">
                         <div class="col-md-12" style="padding-top: 15px;">
                             <div align="center" id="chart-rencana-pembayaran1"></div>
-                            <!--                            <div><h6><b>TOTAL SALDO IDR XXX</b></h6></div>-->
+                            <div class="wrapper" style="margin-top: 5px">
+                                <ul class="legend">
+                                    <li><span class="eight"></span> IMPREST</li>
+                                    <li><span class="nine"></span> RECEIPT</li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="col-md-12" style="padding-top: 15px;">
                             <!--                            <div><h6><b>3B</b></h6></div>-->
@@ -102,7 +127,7 @@
                     <div class="item" align="center">
                         <div class="col-md-12" style="margin-top: 30px; padding-right: 30px; padding-left: 30px;">
                             <div class="view-table">
-                                <table class="table table-bordered" id="dash_rencana_imprest" width="100%">
+                                <table class="table table-bordered" id="dash_rencana_imprest" width="100%" style="margin-bottom: 25px">
                                     <thead>
                                     <tr style="background: #F4D35E;">
                                         <th colspan="11" style="text-align: center;">RENCANA PEMBAYARAN - IMPREST OPERASI TERPUSAT/ INVESTASI TERPUSAT/ IMPREST KANTOR PUSAT/ IMPOR</th>
@@ -116,10 +141,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="item" align="center">
+                    <div class="item" align="center" >
                         <div class="col-md-12" style="margin-top: 30px; padding-right: 30px; padding-left: 30px;">
                             <div class="view-table">
-                                <table id="rencana_imprest_valas" class="table table-bordered" width="100%">
+                                <table id="rencana_imprest_valas" class="table table-bordered" width="100%" style="margin-bottom: 25px">
                                     <thead>
                                     <tr style="background: #F4D35E;">
                                         <th colspan="11" style="text-align: center;">RENCANA PEMBAYARAN - IMPREST VALAS USD/EUR/JPY/OTHER</th>
