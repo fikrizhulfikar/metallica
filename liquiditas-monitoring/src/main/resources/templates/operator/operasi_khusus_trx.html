@@ -27,12 +27,13 @@
 </div>
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" style="cursor: default">Transaksi Operasi Khusus </li>
+        <li class="breadcrumb-item active" style="cursor: default">Transaksi Operasi Khusus</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>-->
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
-                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')">
+                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MSB_PAYMENT_EXPENDITURE','ROLE_VP_OPERATION_EXPENDITURE','ROLE_VP_INVESTMENT_EXPENDITURE')">
                     <i class="icon-pencil"></i> &nbsp;New Data
                 </button>
             </div>
@@ -82,6 +83,7 @@
                     </div>
                 </div>
             </div>
+            <!--            start table for pindah buku HEAD-->
             <div class="list-data" style="margin-top:25px;">
                 <div class="panel panel-default">
                     <div class="panel-body">
@@ -111,6 +113,7 @@
                     </div>
                 </div>
             </div>
+            <!--            end of TABLE PINDAH BUKU HEAD-->
         </div>
     </div>
 
@@ -155,16 +158,16 @@
                                 <input type="text" class="form-control" id="pHeadBusArea" style="background-color: white" value="" required="required"/>
                             </div>
                             <div class="form-group">
-                                <label for="pHeadDocHdrTxt">&nbsp;Doc Hdr Text :</label>
-                                <textarea class="form-control" id="pHeadDocHdrTxt" style="background-color: white" value=""></textarea>
-                            </div>
-                            <div class="form-group">
                                 <label for="pHeadCurrency">&nbsp;Currency :</label>
                                 <select class="form-control" id="pHeadCurrency" style="background-color: white" required="required">
                                     <option value="IDR">IDR</option>
                                     <option value="USD">USD</option>
                                     <option value="JPY">JPY</option>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pHeadDocHdrTxt">&nbsp;Doc Hdr Text :</label>
+                                <input type="text" class="form-control" id="pHeadDocHdrTxt" style="background-color: white" value=""/>
                             </div>
                             <div class="form-group pExcRate">
                                 <label for="pHeadExchangeRate">Exchange Rate</label>
@@ -242,8 +245,8 @@
                                 <input type="text" class="form-control" id="pDetailLineNo" />
                             </div>
                             <div class="form-group just-for-input-data">
-                                <label for="pDetailRemarks">&nbsp;Remarks :</label>
-                                <input type="text" class="form-control" id="pDetailRemarks" required="required"/>
+                                <label for="pDetailRemarks">Remarks :</label>
+                                <input type="text" class="form-control" id="pDetailRemarks"/>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -255,20 +258,19 @@
                                 <label for="pDetailCompCode">Company Code:</label>
                                 <input type="text" id="pDetailCompCode" class="form-control" readonly="readonly" />
                             </div>
-
                             <div class="form-group just-for-input-data">
                                 <label for="pDetailAmount"><span style="color: red">*)</span>&nbsp;Amount :</label>
                                 <input type="number" class="form-control" id="pDetailAmount" required="required"/>
                             </div>
                             <div class="form-group just-for-input-data">
                                 <label for="pDetailGlAccount"><span style="color: red">*)</span>&nbsp;GL Account :</label>
-                                <select class="form-control" id="pDetailGlAccount" style="background-color: white" required="required">
+                                <select class="form-control" id="pDetailGlAccount" required="required">
                                     <option value="">Pilih Data</option>
                                 </select>
                             </div>
                             <div class="form-group pExchangeRate">
                                 <label for="pDetailExchangeRate"><span style="color: red">*)</span>&nbsp;Exchange Rate :</label>
-                                <input type="text" class="form-control" id="pDetailExchangeRate" readonly="readonly"/>
+                                <input type="text" class="form-control" id="pDetailExchangeRate"/>
                             </div>
                             <div class="form-group just-for-input-data">
                                 <label for="pSumberDana"><span style="color: red">*)</span>&nbsp;Sumber Dana :</label>
@@ -293,7 +295,7 @@
                                 <input type="text" class="form-control" id="pDetailCurrency" readonly="readonly" />
                             </div>
                             <div class="form-group just-for-input-data">
-                                <label for="pDetailCostCtr">Cost Center : </label>
+                                <label for="pDetailCostCtr"><span style="color: red">*)</span>Cost Center : </label>
                                 <input type="text" id="pDetailCostCtr" class="form-control" maxlength="10" minlength="10" required="required"/>
                             </div>
                             <div class="form-group just-for-input-data">
@@ -304,23 +306,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="just-for-input-data" align="right">
+                    <div align="right" class="just-for-input-data">
                         <button onclick="AddToTable()" class="btn btn-success">Add</button>
                     </div>
                 </div>
             </div>
         </div>
-        <!--        start of detail item-->
-        <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
+        <div class="table-responsive" style="margin-top: 50px;">
             <table id="table-main-detail" class="table table-striped">
                 <thead>
                 <tr>
-                    <th>DOCUMENT NUMBER</th>
-                    <th>PAYMENT PROPOSAL</th>
-                    <th>COMPANY CODE</th>
+                    <th>COMP CODE</th>
                     <th>CASH CODE</th>
                     <th>SUMBER DANA</th>
-                    <th>FISCAL YEAR</th>
                     <th>LINE NUMBER</th>
                     <th>DEBIT CREDIT INDICATOR</th>
                     <th>GL ACCOUNT</th>
@@ -334,6 +332,7 @@
                 </tr>
                 </thead>
                 <tbody>
+
                 </tbody>
                 <tfoot>
                 <tr>
@@ -348,7 +347,6 @@
             <button class="btn btn-danger" onclick="back()"><i class="fa fa-arrow-circle-left"> &nbsp; Back</i></button>
             <button onclick="submitChild()" class="btn btn-success just-for-input-data">Submit</button>
         </div>
-        <!--        end of detail item-->
     </div>
 </main>
 <div th:fragment="scripts-backend">

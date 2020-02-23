@@ -7,7 +7,7 @@ public class OperasiKhusus {
     private String pDocNo;
     private String pPmtProposalId;
 
-    private List<ValasDetail> operasiKhususDetails;
+    private List<OperasiKhususDetail> operasiKhususDetails;
 
     public String getpIdMetallica() {
         return pIdMetallica;
@@ -33,11 +33,11 @@ public class OperasiKhusus {
         this.pPmtProposalId = pPmtProposalId;
     }
 
-    public List<ValasDetail> getoperasiKhususDetails() {
+    public List<OperasiKhususDetail> getoperasiKhususDetails() {
         return operasiKhususDetails;
     }
 
-    public void setoperasiKhususDetails(List<ValasDetail> operasiKhususDetails) {
+    public void setoperasiKhususDetails(List<OperasiKhususDetail> operasiKhususDetails) {
         this.operasiKhususDetails = operasiKhususDetails;
     }
 

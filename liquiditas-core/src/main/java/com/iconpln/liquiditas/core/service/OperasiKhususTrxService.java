@@ -145,7 +145,8 @@ public class OperasiKhususTrxService {
     public Map<String, Object> insDetailOperasiKhususTrx(
             String pIdMetallica, String pPostDate, String pDocNo, String pAmount, String pBusArea, String pReference,
             String pCompCode, String pUserId, String pCurrency, String pDrCrInd, String pExchangeRate,
-            String pFiscYear, String pGlAccount, String pLineNo, String pPmtProposalId, String pRemarks, String pFlag
+            String pFiscYear, String pGlAccount, String pLineNo, String pPmtProposalId, String pRemarks, String pFlag,
+            String pCashCode, String pCostCtr, String pSumberDana
     )throws SQLException{
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -169,7 +170,11 @@ public class OperasiKhususTrxService {
                 .addValue("p_line_no", pLineNo)
                 .addValue("p_pmt_proposal_id", pPmtProposalId)
                 .addValue("p_remarks", pRemarks)
-                .addValue("p_flag", pFlag);
+                .addValue("p_flag", pFlag)
+                .addValue("p_cash_code", pCashCode)
+                .addValue("p_cost_ctr", pCostCtr)
+                .addValue("p_sumber_dana", pSumberDana)
+                .addValue("out_msg", OracleTypes.CURSOR);
 
         out = simpleJdbcCall.execute(inParams);
         AppUtils.getLogger(this).info("get ins_operasi_khusus_trx : {}", out);
@@ -389,6 +394,27 @@ public class OperasiKhususTrxService {
         AppUtils.getLogger(this).info("data get_all_pembayaran_by_status2 : {} and userid {}", resultset, idUser);
         return resultset;
     }
+    public List<Map<String, Object>> getAllpembayaran2(String idUser, String pTglAwal, String pTglAkhir,  String pCurr) throws SQLException {
+
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pCurr : {}", pCurr);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_all_operasi_by_status2");
+
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_user_id", idUser);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_currency", pCurr);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_all_pembayaran_by_status2 : {} and userid {}", resultset, idUser);
+        return resultset;
+    }
 
     public List<Map<String, Object>> getGlAccount(String pCurrency){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -410,4 +436,11 @@ public class OperasiKhususTrxService {
         List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
         return out;
     }
+
+//    public List<Map<String, Object>> getCompCode(){
+//        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+//                .withCatalogName("PKG_CORPAY")
+//                .withFunctionName("");
+//        List<Map<String, Object>>
+//    }
 }

@@ -16,6 +16,33 @@ public class OperasiKhususDetail {
     private String pPmtProposalId ;
     private String pRemarks ;
     private String pFlag ;
+    private String pCostCtr;
+    private String pSumberDana;
+    private String pCashCode ;
+
+    public String getpCostCtr() {
+        return pCostCtr;
+    }
+
+    public void setpCostCtr(String pCostCtr) {
+        this.pCostCtr = pCostCtr;
+    }
+
+    public String getpSumberDana() {
+        return pSumberDana;
+    }
+
+    public void setpSumberDana(String pSumberDana) {
+        this.pSumberDana = pSumberDana;
+    }
+
+    public String getpCashCode() {
+        return pCashCode;
+    }
+
+    public void setpCashCode(String pCashCode) {
+        this.pCashCode = pCashCode;
+    }
 
     public String getpPostDate() {
         return pPostDate;
