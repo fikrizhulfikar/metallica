@@ -23,6 +23,7 @@ import org.springframework.stereotype.Repository;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.SQLException;
@@ -785,7 +786,7 @@ public class CorpayService {
             Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
             SecretKeySpec secret_key = new SecretKeySpec(key.getBytes(), "HmacSHA256");
             sha256_HMAC.init(secret_key);
-            hash = org.apache.commons.codec.binary.Base64.encodeBase64String(sha256_HMAC.doFinal(signature.getBytes()));
+            hash = Base64.encodeBase64String(sha256_HMAC.doFinal(signature.getBytes()));
             System.out.println("signature : " + hash);
         } catch (Exception e) {
             //log.warning(e.getMessage());
@@ -1578,6 +1579,57 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
         List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
         return out;
+    }
+
+    public BigDecimal getTotalTagihan(String tglAwal,
+                                           String tglAkhir,
+                                           String currency,
+                                           String caraBayar,
+                                           String bank,
+                                           String userId,
+                                           String search) {
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", tglAwal, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", tglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_currency", currency, OracleTypes.VARCHAR)
+                .addValue("p_cara_bayar", caraBayar, OracleTypes.VARCHAR)
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR)
+                .addValue("p_search", search, OracleTypes.VARCHAR);
+
+        getJdbcTemplate().execute("alter session set NLS_NUMERIC_CHARACTERS = '.,'");
+
+        BigDecimal result = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_corpay")
+                .withFunctionName("get_total_tagihan_invoice")
+                .executeFunction(BigDecimal.class, in);
+        return result;
+    }
+
+    public List<Map<String, Object>> getAllpembayaran(String idUser, String pTglAwal, String pTglAkhir,  String pCurr, String pCaraBayar, String pBank, String status, String statusTracking) throws SQLException {
+
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pCurr : {}", pCurr);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_all_invoice_by_status");
+
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_user_id", idUser);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_currency", pCurr);
+        params.put("p_cara_bayar", pCaraBayar);
+        params.put("p_bank", pBank);
+        params.put("p_status", status);
+        params.put("p_status_tracking", statusTracking);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_all_pembayaran_by_status1 : {} and userid {}", resultset, idUser);
+        return resultset;
     }
 
 }
