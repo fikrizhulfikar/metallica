@@ -501,6 +501,16 @@ public class OperasiKhususTrxController {
         return formatted;
     }
 
+    @RequestMapping(value = "/get_total_tagihan_lunas", method = RequestMethod.GET)
+    public String getTotalTagihanLunas(@RequestParam(value = "tgl_awal", defaultValue = "") String tglAwal,
+                                  @RequestParam(value = "tgl_akhir", defaultValue = "") String tglAkhir,
+                                  @RequestParam(value = "currency", defaultValue = "ALL") String currency,
+                                  @RequestParam(value = "search", defaultValue = "") String search) {
+        BigDecimal result =  operasiKhususTrxService.getTotalTagihanLunas(tglAwal, tglAkhir, currency, WebUtils.getUsernameLogin(), search);
+        String formatted = AppUtils.getInstance().formatDecimalCurrency(result);
+        return formatted;
+    }
+
     @RequestMapping(value = "/get_glaccount", method = RequestMethod.GET)
     public List<Map<String, Object>> getGlAccount(@RequestParam(value = "pCurrency",defaultValue = "") String pCurrency){
         try{
@@ -615,6 +625,71 @@ public class OperasiKhususTrxController {
             response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
 
             List<Map<String, Object>> listData = operasiKhususTrxService.getAllpembayaran2(WebUtils.getUsernameLogin(), tglAwal, tglAkhir, pCurr);
+
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+
+            param.put("TITLE", title);
+            for (Map data : listData) {
+                Map paramDetail = new HashMap();
+                paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
+                paramDetail.put("DOCUMENT_DATE", data.get("DOCUMENT_DATE"));
+                paramDetail.put("POSTING_DATE", data.get("POSTING_DATE"));
+                paramDetail.put("FISC_YEAR", data.get("FISC_YEAR"));
+                paramDetail.put("DOCUMENT_NUMBER", data.get("DOCUMENT_NUMBER"));
+                paramDetail.put("REFERENCE", data.get("REFERENCE"));
+                paramDetail.put("COMPANY_CODE", data.get("COMPANY_CODE"));
+                paramDetail.put("BUSINESS_AREA", data.get("BUSINESS_AREA"));
+                paramDetail.put("CURRENCY", data.get("CURRENCY"));
+                paramDetail.put("EXCHANGE_RATE", data.get("EXCHANGE_RATE"));
+                paramDetail.put("DOC_HDR_TXT", data.get("DOC_HDR_TXT"));
+                paramDetail.put("PMT_PROPOSAL_ID", data.get("PMT_PROPOSAL_ID"));
+                paramDetail.put("TOTAL_TAGIHAN", data.get("TOTAL_TAGIHAN"));
+                paramDetail.put("STATUS_TRACKING", data.get("STATUS_TRACKING"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+
+
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/pembelian_valas.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Gagal Export Data :" + e.getMessage();
+        }
+    }
+
+    @RequestMapping(value = "/xlslunas/{pTglAwal}/{pTglAkhir}/{pCurr}", method = RequestMethod.GET)
+    public String exportLunas(
+            @PathVariable String pTglAwal,
+            @PathVariable String pTglAkhir,
+            @PathVariable String pCurr,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
+
+            String tglAwal = "";
+            String tglAkhir = "";
+
+            if (!pTglAwal.equals("null")) {
+                tglAwal = pTglAwal;
+            }
+            if (!pTglAkhir.equals("null")) {
+                tglAkhir = pTglAkhir;
+            }
+
+            String title = "OPERASI KHUSUS";
+            String namaFile = "opersi_khusus_lunas.xls";
+
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
+
+            List<Map<String, Object>> listData = operasiKhususTrxService.getAllpembayaran3(WebUtils.getUsernameLogin(), tglAwal, tglAkhir, pCurr);
 
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();

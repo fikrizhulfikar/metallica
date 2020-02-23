@@ -9,9 +9,26 @@ var tempTableSearch = "";
 var checkedArray = new Array();
 var cbParentArray = new Array();
 var OperasiKhusus = "";
+var srcTglAwal = "";
+var srcTglAkhir = "";
 $(document).ready(function () {
     initDataTable();
+    $('#tanggal_awal').datepicker({dateFormat: 'yymmdd'});
+    $('#tanggal_akhir').attr("disabled", "disabled");
+    $('#tanggal_akhir').datepicker({dateFormat: 'yymmdd'});
+    setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
     // getAllData();
+});
+
+$("#tanggal_awal").change(function () {
+    var tglAwalData = $('#tanggal_awal').val();
+    if (tglAwalData == "") {
+        // alert("Tanggal awal belum di tentukan");
+        $('#tanggal_akhir').val("");
+    } else {
+        $('#tanggal_akhir').attr("disabled", false);
+        $('#tanggal_akhir').datepicker({dateFormat: 'dd/mm/yy', minDate: tglAwalData});
+    }
 });
 
 function getbyId(id) {
@@ -1006,6 +1023,38 @@ function openFormNew() {
     // }
     $('#edit-modal').modal({backdrop: 'static', keyboard: false});
 
+}
+
+function getTotalTagihanOperasi() {
+    $.ajax({
+        url: baseUrl + "/api_operator/operasi_khusus_trx/get_total_tagihan_lunas",
+        type: "GET",
+        data: {
+            tgl_awal: $("#tanggal_awal").val(),
+            tgl_akhir: $("#tanggal_akhir").val(),
+            currency: $("#cmb_currecny").val(),
+            search: tempTableSearch
+        },
+        success: function (res) {
+            $("#total_tagihan").html(res);
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+
+}
+
+function exportXlsLunas() {
+    var tglAwal = "null";
+    if (srcTglAwal != "") {
+        tglAwal = srcTglAwal
+    }
+    var tglAkhir = "null";
+    if (srcTglAkhir != "") {
+        tglAkhir = srcTglAkhir
+    }
+    window.open(baseUrl + "api_operator/operasi_khusus_trx/xlslunas/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currecny").val());
 }
 
 

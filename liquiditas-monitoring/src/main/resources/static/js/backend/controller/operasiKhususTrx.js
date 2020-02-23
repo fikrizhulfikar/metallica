@@ -11,12 +11,15 @@ var cbParentArray = new Array();
 var OperasiKhusus = null;
 var srcTglAwal = "";
 var srcTglAkhir = "";
+
 $(document).ready(function () {
     initDataTable();
     $('#tanggal_awal').datepicker({dateFormat: 'yymmdd'});
     $('#tanggal_akhir').attr("disabled", "disabled");
     $('#tanggal_akhir').datepicker({dateFormat: 'yymmdd'});
-    setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+    setSelectCurr("cmb_currency", "FILTER", "", "REKAP");
+
+    // setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
 
 });
 
@@ -1178,14 +1181,16 @@ function openFormNew() {
     setListCurrency("pHeadCurrency");
     $(".pExcRate").hide();
 
-    $("#pPostingDate").val("");
-    $("#pDocDate").val("");
-    $("#pDocNo").val("");
-    $("#pReference").val("");
-    $("#pCompCode").val("");
-    $("#pBusArea").val("");
-    $("#pCurrency").val("");
-    $("#pDocHdrTxt").val("");
+    $("#pHeadPostingDate").val("");
+    $("#pHeadDocDate").val("");
+    $("#pHeadDocNo").val("");
+    $("#pHeadReference").val("");
+    $("#pHeadCompCode").val("");
+    $("#pHeadBusArea").val("");
+    $("#pHeadCurrency").val("");
+    $("#pHeadDocHdrTxt").val("");
+    $("#pHeadFiscYear").val("");
+    $("#pHeadCompCode").val("");
 
     // $("#pUnitAnggaran").select2("val", "");
     // $("#pSpread").val("");
