@@ -2,41 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1bb35cd6-6e1f-4873-bb7b-6e5a0fd705b9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/report/pembelian_valas_lunas.xls" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/report/pembelian_valas_verified.xls" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/report/rekap_invoice_belum.xls" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/verifikatoridr/screensaver.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/PembelianValasTrxService.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/PembelianValasTrxService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/Sap.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/Sap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/SapService.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/SapService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/resources/files/ApKateLuDeh.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/test/java/com/iconpln/liquiditas/core/RepositoryTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/test/java/com/iconpln/liquiditas/core/RepositoryTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/test/java/com/iconpln/liquiditas/core/ValasServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/test/java/com/iconpln/liquiditas/core/ValasServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-fcm/src/main/java/com/iconpln/liquiditas/fcm/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-fcm/src/main/java/com/iconpln/liquiditas/fcm/Application.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-log/core.log" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-log/core.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/ApplicationMonitoring.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/ApplicationMonitoring.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/PageOperatorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/PageOperatorController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/PembelianValasTrxController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/PembelianValasTrxController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/ValasMetallicaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/ValasMetallicaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/operasiKhususTrxVerified.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/operasiKhususTrxVerified.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/operasiKhususTrx.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/operasiKhususTrx.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pembelianValasTrx.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pembelianValasTrx.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pembelianValasTrxLunas.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pembelianValasTrxLunas.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pembelianValasTrxVerified.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pembelianValasTrxVerified.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapInvoiceBelum.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapInvoiceBelum.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapInvoiceGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapInvoiceGroup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/coreapps.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/coreapps.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/frontend/dashboardcorpay/rencana_pembayaran.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/frontend/dashboardcorpay/rencana_pembayaran.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/frontend/dashboardcorpay/saldo_rekening.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/frontend/dashboardcorpay/saldo_rekening.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/dashboardcorpay/realisasi_pembayaran.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/dashboardcorpay/realisasi_pembayaran.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/dashboardcorpay/rencana_pembayaran.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/dashboardcorpay/rencana_pembayaran.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/dashboardcorpay/saldo_rekening3.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/dashboardcorpay/saldo_rekening3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/master/invoice_hr_payable.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/master/invoice_hr_payable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/master_invoice_hr_payable.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/master_invoice_hr_payable.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pembelian_valas_trx.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pembelian_valas_trx.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pembelian_valas_trx_lunas.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pembelian_valas_trx_lunas.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pembelian_valas_trx_verified.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pembelian_valas_trx_verified.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pengelolaan_likuiditas.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pengelolaan_likuiditas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/rekap_invoice_belum.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/rekap_invoice_belum.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/rekap_invoice_group.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/rekap_invoice_group.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -317,7 +301,7 @@
       <workItem from="1581297239248" duration="109366000" />
       <workItem from="1581632965804" duration="113459000" />
       <workItem from="1581921214832" duration="21612000" />
-      <workItem from="1582339082215" duration="52387000" />
+      <workItem from="1582339082215" duration="88313000" />
     </task>
     <task id="LOCAL-00001" summary="perbaikan export xls rekap sudah verifikasi">
       <created>1549257282299</created>
@@ -473,7 +457,28 @@
       <option name="project" value="LOCAL" />
       <updated>1582442072987</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Fixing Pembelian Valas Trx">
+      <created>1582442205638</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1582442205638</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Fixing Transaksi Invoice">
+      <created>1582442326641</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1582442326641</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Updated">
+      <created>1582442507296</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1582442507296</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -512,7 +517,10 @@
     <MESSAGE value="Nambah Exception Doang" />
     <MESSAGE value="Perubahan Dashboard, Perubahan Function dan Penambahan Param" />
     <MESSAGE value="Add Export Excel" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Export Excel" />
+    <MESSAGE value="Fixing Pembelian Valas Trx" />
+    <MESSAGE value="Fixing Transaksi Invoice" />
+    <MESSAGE value="Updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated" />
   </component>
   <component name="WindowStateProjectService">
     <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1574666059564">

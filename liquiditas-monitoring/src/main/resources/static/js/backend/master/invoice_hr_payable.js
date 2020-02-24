@@ -378,7 +378,7 @@ function initDataTable() {
 hideLoadingCss()
 }
 
-function getApInvoice(){
+function getHrPayable(){
     var stateCrf = confirm("Anda Yakin Akan Menarik Data Ap Invoice ? (Pastikan Data Sudah Benar)");
     if (stateCrf == true) {
         showLoadingCss();

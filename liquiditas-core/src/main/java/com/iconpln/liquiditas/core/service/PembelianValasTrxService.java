@@ -179,7 +179,7 @@ public class PembelianValasTrxService {
         return out;
     }
 
-    public Map<String, Object> deletePembelianValasTrx(String pIdMetallica, String pItemId){
+    public Map<String, Object> deletePembelianValasTrx(String pIdMetallica, String pItemId, String pLineNo){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("valas_item_trx_del");
@@ -187,6 +187,7 @@ public class PembelianValasTrxService {
         SqlParameterSource inParam = new MapSqlParameterSource()
                 .addValue("p_id_metallica", pIdMetallica)
                 .addValue("p_id_valas_trx", pItemId)
+                .addValue("p_line_no",pLineNo)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         Map<String, Object> out = simpleJdbcCall.execute(inParam);
         AppUtils.getLogger(this).info("msg delete_pembelian_valas_item : {}", out);

@@ -208,13 +208,14 @@ public class PembelianValasTrxController {
     @RequestMapping(value = "/delete_pembelian_valas_item_trx", method = RequestMethod.POST)
     public Map<String, Object> deletePembelianValasItemTrx(
             @RequestParam(value = "pIdMetallica", defaultValue = "") String pIdMetallica,
-            @RequestParam(value = "pItemId", defaultValue = "") String pItemId
+            @RequestParam(value = "pItemId", defaultValue = "") String pItemId,
+            @RequestParam(value = "pLineNo", defaultValue = "") String pLineNO
     ) {
 
         AppUtils.getLogger(this).debug("pIdMetallica : {} ", pIdMetallica);
         AppUtils.getLogger(this).debug("pItemId : {}", pItemId);
         try {
-            Map<String, Object> res = pembelianValasTrxService.deletePembelianValasTrx(pIdMetallica, pItemId);
+            Map<String, Object> res = pembelianValasTrxService.deletePembelianValasTrx(pIdMetallica, pItemId, pLineNO);
 //
             if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 //                notificationUtil.notifyMessage(notification);

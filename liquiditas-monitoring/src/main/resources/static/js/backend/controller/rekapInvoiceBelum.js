@@ -1593,24 +1593,39 @@ function exportXls() {
             $('.dataTables_filter').each(function () {
                  var html = '';
                  if(newRoleUser[0] == "ROLE_VERIFIKATOR"){
-                html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
-                html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
+                    html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
+                    html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
                 }
                  if(newRoleUser[0] == "ROLE_ADMIN"){
-                var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" title="Sembunyikan Kolom" data-toggle="modal" onclick="showColumn()">' +
-                    '<i class="fa fa-arrows-alt"></i></button>';
-                /*button reject*/
-                html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="rejectData()">' +
-                    '            <i class="fa fa-ban"></i></button>';
-                html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
-                html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fa fa-pencil"></i></button>';
-                html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
-                html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
-                html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
-                html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
+                    var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" title="Sembunyikan Kolom" data-toggle="modal" onclick="showColumn()">' +
+                        '<i class="fa fa-arrows-alt"></i></button>';
+                    /*button reject*/
+                    html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="rejectData()">' +
+                        '            <i class="fa fa-ban"></i></button>';
+                    html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
+                    html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fa fa-pencil"></i></button>';
+                    html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
+                    html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
+                    html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
+                    html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
                 }
+                 else if(newRoleUser[0] == "ROLE_JA_IE"){
+
+                     /*button reject*/
+                     // html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="rejectData()">' +
+                     //     '            <i class="fa fa-ban"></i></button>';
+                     // html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
+                     var html = '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fa fa-pencil"></i></button>';
+                     html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
+                     html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
+                     // html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
+                     html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
+                 }
                 else {
-                html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
+                    if (newRoleUser[0] !== "ROLE_OSS"){
+                        html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
+                    }
+
                 html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
                 html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
                 }
@@ -1708,7 +1723,7 @@ function edit_data(pCompCode, pNoDoc, pFiscYear, pLineItem,pSource, pBank,  pBen
             $("#pReverseYear").val(res[0].REV_YEAR);
             $("#pDocHdr").val(res[0].DOC_HDR_TXT);
             $("#pCurrency").val(res[0].CURRENCY);
-            $("#pExchRate").val(res[0].EXCH_RATE);
+            $("#pExchRate").val(new Intl.NumberFormat().format(res[0].EXCH_RATE));
             $("#pRefKey").val(res[0].REFERENCE_KEY);
             $("#pPaymentIndicator").val(res[0].PMT_IND);
             $("#pTransactionType").val(res[0].TRANS_TYPE);
@@ -1716,11 +1731,11 @@ function edit_data(pCompCode, pNoDoc, pFiscYear, pLineItem,pSource, pBank,  pBen
             $("#pAccountType").val(res[0].ACCT_TYPE);
             $("#pBusinessArea").val(res[0].BUS_AREA);
             $("#pTradingPartner").val(res[0].TPBA);
-            $("#pAmountLc").val(res[0].AMT_LC);
-            $("#pAmountTc").val(res[0].AMT_TC);
-            $("#pAmountWhtBase").val(res[0].AMT_WITH_BASE_TC);
-            $("#pAmountWht").val(res[0].AMT_WITH_TC);
-            $("#pTotalTagihan").val(res[0].AMOUNT);
+            $("#pAmountLc").val(new Intl.NumberFormat().format(res[0].AMT_LC));
+            $("#pAmountTc").val(new Intl.NumberFormat().format(res[0].AMT_TC));
+            $("#pAmountWhtBase").val(new Intl.NumberFormat().format(res[0].AMT_WITH_BASE_TC));
+            $("#pAmountWht").val(new Intl.NumberFormat().format(res[0].AMT_WITH_TC));
+            $("#pTotalTagihan").val(new Intl.NumberFormat().format(res[0].AMOUNT));
             $("#pAssignment").val(res[0].ASSIGNMENT);
             $("#pItemText").val(res[0].ITEM_TEXT);
             $("#pCostCtr").val(res[0].COST_CTR);
@@ -1743,8 +1758,8 @@ function edit_data(pCompCode, pNoDoc, pFiscYear, pLineItem,pSource, pBank,  pBen
             //$("#pCashCode").val(res[0].CASH_CODE);
             setSelectCashCode("pCashCode",res[0].CASH_CODE);
             $("#pDebitCredit").val(res[0].DR_CR_IND);
-            $("#pAmountWthBaseLc").val(res[0].AMT_WITH_BASE_LC);
-            $("#pAmountWthLc").val(res[0].AMT_WITH_LC);
+            $("#pAmountWthBaseLc").val(new Intl.NumberFormat().format(res[0].AMT_WITH_BASE_LC));
+            $("#pAmountWthLc").val(new Intl.NumberFormat().format(res[0].AMT_WITH_LC));
             $("#pBankPenerima").val(res[0].BANK_KEY);
             $("#pKodeBankPenerima").val(res[0].KODE_BANK_PENERIMA);
             $("#pNoRekVendor").val(res[0].BANK_ACCOUNT);
@@ -2954,8 +2969,8 @@ function reject_data(pCompCode, pDocNo, pFiscYear, pLineItem, pKet){
 }
 
 function create_group() {
-    console.log("invoiceCheckedArray", invoiceCheckedArray);
-    console.log("Full Array Group :", fullArray);
+    // console.log("invoiceCheckedArray", invoiceCheckedArray);
+    // console.log("Full Array Group :", fullArray);
     // var stateCrf = confirm("Anda Yakin Akan Melakukan Grouping Tagihan Ini ?");
     Swal.fire({
         title: 'Anda Yakin ?',

@@ -1511,14 +1511,43 @@ function submitChild() {
 }
 
 function back(){
-    showLoadingCss();
-    $(".list-data").show();
-    $(".detail-data").hide();
-    $("#filter").show();
-    $("#btn-add-rekap").show();
-    tableOperasiKhusus.ajax.reload();
-    tblOperasiKhususDetail.destroy();
-    hideLoadingCss();
+    var ada = 0;
+    tblOperasiKhususDetail.rows().every(function(rowId, tableLoop, rowLoop) {
+        let data = this.data();
+        if (data.FLAG === 0 ){
+            ada++;
+        }
+    });
+
+    if (ada > 0){
+        Swal.fire({
+            title : "Yakin ?",
+            text : "Data baru belum Anda simpan, yakin ingin kembali?",
+            icon : "warning",
+            showCancelButton : true,
+            confirmButtonColor : "#3085d6",
+            cancelButtonColor : "#d33",
+            confirmButtonText : "Ya"
+        }).then(result => {
+            if (result.value){
+                showLoadingCss();
+                $(".list-data").show();
+                $(".detail-data").hide();
+                $("#filter").show();
+                $("#btn-add-rekap").show();
+                tablePembelianValas.ajax.reload();
+                pembelianValasDetail.destroy();
+            }
+        });
+    }
+    // showLoadingCss();
+    // $(".list-data").show();
+    // $(".detail-data").hide();
+    // $("#filter").show();
+    // $("#btn-add-rekap").show();
+    // tableOperasiKhusus.ajax.reload();
+    // tblOperasiKhususDetail.destroy();
+    // hideLoadingCss();
 }
 
 function setBalance(bal){
@@ -1527,6 +1556,15 @@ function setBalance(bal){
 
 function getBalance(){
     return balance;
+}
+
+function isExistDataBaru(){
+    tblOperasiKhususDetail.rows().every(function(rowId, tableLoop, rowLoop) {
+        let data = this.data();
+        if (data.FLAG === 0 ){
+            return true;
+        }else return false;
+    });
 }
 
 $("#pHeadCurrency").change(function () {

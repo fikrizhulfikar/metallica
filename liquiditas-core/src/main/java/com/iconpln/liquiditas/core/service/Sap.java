@@ -202,7 +202,7 @@ public class Sap {
             param.put("date_to", date_to);
 
             ClassLoader classLoader = Sap.class.getClassLoader();
-            InputStream inputStream = classLoader.getResourceAsStream("files/ApKateLuDeh.json");
+            InputStream inputStream = classLoader.getResourceAsStream("files/JSONHrPayable.json");
             String result = IOUtils.toString(inputStream);
 
             System.out.println("Stream Cok! : "+result);
