@@ -741,6 +741,28 @@ public class CorpayService {
         return out;
     }
 
+    public Map<String, Object> insertMultipleEdit(
+            String CompCode, String DocNo, String fisYear, String lineItem, String keterangan,
+            String cashCode, String metodePembayaran, String jamBayar
+            ){
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_comp_code", CompCode)
+                .addValue("p_doc_no", DocNo)
+                .addValue("p_fisc_year", fisYear)
+                .addValue("p_line_item", lineItem)
+                .addValue("p_ket", keterangan)
+                .addValue("p_cash_code", cashCode)
+                .addValue("p_metode_pembayaran", metodePembayaran)
+                .addValue("p_jam_bayar", jamBayar)
+                .addValue("out_msg ", OracleTypes.VARCHAR);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("invoice_edit_all_data");
+        Map<String, Object> result = simpleJdbcCall.execute(params);
+        return result;
+    }
+
     public String getBallance(String in_bank, String in_source, String in_beneficiary) {
 
         SqlParameterSource params = new MapSqlParameterSource()

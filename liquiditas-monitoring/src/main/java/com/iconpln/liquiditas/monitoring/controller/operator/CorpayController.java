@@ -196,6 +196,29 @@ public class CorpayController {
 
     }
 
+    @RequestMapping(path = "/insert_multiple_edit")
+    public Map<String, Object> insertMultipleEditData(
+            @RequestParam(value = "pData", defaultValue = "") String pData,
+            @RequestParam(value = "pCashCode", defaultValue = "") String pCashCode,
+            @RequestParam(value = "pMetodePembayaran", defaultValue = "") String pMetodePembayaran,
+            @RequestParam(value = "pJamBayar", defaultValue = "") String pJamBayar
+    ) throws JSONException {
+        Map<String,Object> out = new HashMap<>();
+
+        JSONArray jsonArray = new JSONArray(pData);
+        try {
+            for (int index = 0; index < jsonArray.length(); index++){
+                JSONObject object = jsonArray.getJSONObject(index);
+                System.out.println("Jancok! : "+object);
+                out = corpayService.insertMultipleEdit(object.getString("pCompCode"),object.getString("pDocNo"),object.getString("pFiscYear"),object.getString("pLineItem"),object.getString("pKet"),pCashCode, pMetodePembayaran, pJamBayar);
+                System.out.println("BigDecimal : "+out);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return out;
+    }
+
     private String parseColumn(int index) {
         switch (index) {
             case 1:
