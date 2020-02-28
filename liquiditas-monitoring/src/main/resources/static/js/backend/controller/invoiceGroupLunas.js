@@ -398,268 +398,263 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                     }
 
                 },
-                {
-                    "aTargets": [9],
-                    "mRender": function (data, type, full) {
-                        var jenis = "AP INVOICE";
-                        console.log("Ini Full : ", full);
-                        var ret_value;
-                        /*alert('BOOOMB2'+full.STATUS_TRACKING);*/
-                        /*    if(newRoleUser[0].includes("DIVKEU")){
-                                ret_value =
-                                    '<div class="btn-group">' +
-                                    '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
-                                    '</div>'
-                            } */
-                        if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
-                            return "-"
-                        }
-                        else if(newRoleUser[0] == "ROLE_OSS" ){
-                            ret_value =
-                                '<div class="btn-group">' +
-                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
-
-                            ret_value = ret_value +
-                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
-                                '</div>';
-                        }else {
-
-                            if (full.STATUS_TRACKING == "INPUT DATA") {
-                                var role = newRoleUser[0];
-                                ret_value =
-                                    '<div class="btn-group">';
-                                if(newRoleUser[0] == "ROLE_ADMIN"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="fa fa-pencil"></i></button>'+
-                                        // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        // '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_METALLICA + '\')"><i class="fa fa-close"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_JA_CASH"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="fa fa-pencil"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_GROUP + '\')"><i class="fa fa-close"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_JA_IE"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="fa fa-pencil"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_GROUP + '\')"><i class="fa fa-close"></i></button>'+
-                                        '</div>';
-                                }
-                            }
-                            else   if (full.STATUS_TRACKING == "VERIFIED BY MAKER") {
-                                var role = newRoleUser[0];
-                                ret_value =
-                                    '<div class="btn-group">';
-                                if(newRoleUser[0] == "ROLE_ADMIN"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_MSB_CENTRALIZED_RECEIPT"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+'</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_MSB_PAYMENT_EXPENDITURE"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+'</div>';
-                                }
-                            }
-                            else if (full.STATUS_TRACKING == "VERIFIED BY CHECKER") {
-                                var role = newRoleUser[0];
-                                ret_value =
-                                    '<div class="btn-group">';
-                                if(newRoleUser[0] == "ROLE_ADMIN"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_MSB_PAYMENT_EXPENDITURE"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_MSB_FOREIGN_CURRENCY_LIQUIDITY"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_VP_LIQUIDITY_AND_RECEIPT"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_VP_BUSINESS_MANAGEMENT"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_MSB_INVESTMENT_EXPENDITURE_2"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_VP_INVESTMENT_EXPENDITURE"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_MSB_PRIMARY_ENERGY_EXPENDITURE"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_VP_OPERATION_EXPENDITURE"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_MSB_OPERATION_EXPENDITURE"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_MSB_INVESTMENT_EXPENDITURE"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '</div>';
-                                }
-                            }
-
-                            else if (full.STATUS_TRACKING == "VERIFIED BY APPROVER") {
-                                var role = newRoleUser[0];
-                                ret_value =
-                                    '<div class="btn-group">';
-                                if(newRoleUser[0] == "ROLE_VP_LIQUIDITY_AND_RECEIPT"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_ADMIN"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_VP_BUSINESS_MANAGEMENT"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_VP_INVESTMENT_EXPENDITURE"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_PLH_EXECUTIVE_VICE_PRESIDENT"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_MSB_PAYMENT_EXPENDITURE"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
-                                        '</div>';
-                                }
-                                if(newRoleUser[0] == "ROLE_VP_OPERATION_EXPENDITURE"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
-                                        '</div>';
-                                }
-                            }
-                            else {
-                                ret_value =
-                                    '<div class="btn-group">' +
-                                    // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Do Payment" onclick="updateLunas(\'' +full.ID_METALLICA+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
-                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                    // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DIAZ" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                    // '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_METALLICA + '\')"><i class="fa fa-close"></i></button>'+
-                                    '</div>';
-                            }
-                        }
-                        return ret_value;
-                    }
-
-                }
+                // {
+                //     "aTargets": [9],
+                //     "mRender": function (data, type, full) {
+                //         var jenis = "AP INVOICE";
+                //         console.log("Ini Full : ", full);
+                //         var ret_value;
+                //         /*alert('BOOOMB2'+full.STATUS_TRACKING);*/
+                //         /*    if(newRoleUser[0].includes("DIVKEU")){
+                //                 ret_value =
+                //                     '<div class="btn-group">' +
+                //                     '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>' +
+                //                     '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
+                //                     '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
+                //                     '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                //                     '</div>'
+                //             } */
+                //         if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
+                //             return "-"
+                //         }
+                //         else if(newRoleUser[0] == "ROLE_OSS" ){
+                //             ret_value =
+                //                 '<div class="btn-group">' +
+                //                 '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
+                //
+                //             ret_value = ret_value +
+                //                 '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
+                //                 '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                //                 '</div>';
+                //         }else {
+                //
+                //             if (full.STATUS_TRACKING !== "INPUT DATA") {
+                //                 var role = newRoleUser[0];
+                //                 ret_value =
+                //                     '<div class="btn-group">';
+                //                 if(newRoleUser[0] == "ROLE_ADMIN"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="fa fa-pencil"></i></button>'+
+                //                         // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                //                         // '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_METALLICA + '\')"><i class="fa fa-close"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_JA_CASH"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_JA_IE"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //             }
+                //             else   if (full.STATUS_TRACKING == "VERIFIED BY MAKER") {
+                //                 var role = newRoleUser[0];
+                //                 ret_value =
+                //                     '<div class="btn-group">';
+                //                 if(newRoleUser[0] == "ROLE_ADMIN"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_MSB_CENTRALIZED_RECEIPT"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+'</div>';
+                //                 }
+                //             }
+                //             else if (full.STATUS_TRACKING == "VERIFIED BY CHECKER") {
+                //                 var role = newRoleUser[0];
+                //                 ret_value =
+                //                     '<div class="btn-group">';
+                //                 if(newRoleUser[0] == "ROLE_ADMIN"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                //                         '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_MSB_PAYMENT_EXPENDITURE"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                //                         '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_MSB_FOREIGN_CURRENCY_LIQUIDITY"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                //                         '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_VP_LIQUIDITY_AND_RECEIPT"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_VP_BUSINESS_MANAGEMENT"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_MSB_INVESTMENT_EXPENDITURE_2"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_VP_INVESTMENT_EXPENDITURE"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_MSB_PRIMARY_ENERGY_EXPENDITURE"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_VP_OPERATION_EXPENDITURE"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_MSB_OPERATION_EXPENDITURE"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_MSB_INVESTMENT_EXPENDITURE"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //             }
+                //
+                //             else if (full.STATUS_TRACKING == "VERIFIED BY APPROVER") {
+                //                 var role = newRoleUser[0];
+                //                 ret_value =
+                //                     '<div class="btn-group">';
+                //                 if(newRoleUser[0] == "ROLE_VP_LIQUIDITY_AND_RECEIPT"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_ADMIN"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_VP_INVESTMENT_EXPENDITURE"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_VP_BUSINESS_MANAGEMENT"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_VP_INVESTMENT_EXPENDITURE"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_PLH_EXECUTIVE_VICE_PRESIDENT"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_MSB_PAYMENT_EXPENDITURE"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //                 if(newRoleUser[0] == "ROLE_VP_OPERATION_EXPENDITURE"){
+                //                     ret_value = ret_value +
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                         '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                //                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
+                //                         '</div>';
+                //                 }
+                //             }
+                //             else {
+                //                 ret_value =
+                //                     '<div class="btn-group">' +
+                //                     // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Do Payment" onclick="updateLunas(\'' +full.ID_METALLICA+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
+                //                     '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                //                     // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DIAZ" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                //                     // '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_METALLICA + '\')"><i class="fa fa-close"></i></button>'+
+                //                     '</div>';
+                //             }
+                //         }
+                //         return ret_value;
+                //     }
+                //
+                // }
 
             ],
             "ajax":
                 {
                     "url":
-                        baseUrl + "api_operator/invoice_group/get_invoice_group_head",
+                        baseUrl + "api_operator/invoice_group/get_invoice_group_lunas_head",
                     "type":
                         "GET",
                     "dataType":
@@ -797,34 +792,36 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
 
     $('.dataTables_filter').each(function () {
         // var html = '';
-        var html =  '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
-        if (newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "ROLE_JA_CASH" || newRoleUser[0] == "ROLE_JA_IE"){
-            html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
-        }
-        if (newRoleUser[0] === "ROLE_VP_LIQUIDITY_AND_RECEIPT" || newRoleUser[0] === "ROLE_VP_OPERATION_EXPENDITURE"
-            || newRoleUser[0] === "ROLE_MSB_PAYMENT_EXPENDITURE" || newRoleUser[0] === "ROLE_PLH_EXECUTIVE_VICE_PRESIDENT"
-            || newRoleUser[0] === "ROLE_VP_INVESTMENT_EXPENDITURE" || newRoleUser[0] === "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY"
-            || newRoleUser[0] === "ROLE_EXECUTIVE_VICE_PRESIDENT" || newRoleUser[0] === "ROLE_VP_BUSINESS_MANAGEMENT"){
-
-        }
-        $(this).append(html);
+        // var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" title="Sembunyikan Kolom" data-toggle="modal" onclick="showColumn()">' +
+        //     '<i class="fa fa-arrows-alt"></i></button>';
+        // /*button reject*/
+        // html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="rejectData()">' +
+        //     '            <i class="fa fa-ban"></i></button>';
+        // html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
+        // html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
+        // if(newRoleUser[0] != "ROLE_OSS" && newRoleUser[0] != "ROLE_DIVKEU"){
+        //     html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
+        //
+        // }
+        // html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
+        // $(this).append(html);
     });
 
     tableInvoiceGroup.columns.adjust();
     initCbparent();
 }
 
-function updateLunas(idGroup){
+function updateLunas(idMetallica, jenis){
     var stsConf = confirm("Anda Yakin Akan Melunasi Tagihan Ini ?");
     if(stsConf == true){
         showLoadingCss();
         $.ajax({
-            url : baseUrl + "api_operator/invoice_group/update_lunas",
+            url : baseUrl + "api_operator/pembelian_valas_trx/update_lunas",
             dataType : "JSON",
             type : "POST",
             data : {
-                pIdGroup : idGroup,
-                // pJenis : jenis
+                pIdMetallica : idMetallica,
+                pJenis : jenis
             },
             success : (res) => {
                 hideLoadingCss("");
@@ -1481,7 +1478,7 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
                 {
                     "aTargets": [61],
                     "mRender": function (data, type, full) {
-                        return full.ID_GROUP;
+                        return full.GROUP_ID;
                     }
                 },
                 {
@@ -1929,111 +1926,26 @@ function openFormNew() {
 
 }
 
-function edit_data(pCompCode, pNoDoc, pFiscYear, pLineItem,pSource, pBank,  pBeneficiaryAccount) {
+function edit_data (idMetallica, docNo){
     showLoadingCss();
     $.ajax({
-        url: baseUrl+"api_operator/invoice_group/edit_data",
-        dataType: 'JSON',
-        type: "GET",
+        url : baseUrl + "api_operator/operasi_khusus_trx/edit_data_operasi_khusus_trx_head",
+        dataType : "JSON",
+        type : "GET",
         data : {
-            pCompCode : pCompCode,
-            pNoDoc : pNoDoc,
-            pFiscYear : pFiscYear,
-            pLineItem : pLineItem
+            pIdMetallica : idMetallica,
         },
-        success: function (res) {
-            hideLoadingCss("")
-            //getInquiry(pSource, pBank,  pBeneficiaryAccount);
-            console.log("data edit_data :",res);
-
-            $("#pBankBayar").val(res[0].BANK_BYR2);
-            $("#pKet").val(res[0].KET);
-            $("#pCompanyCode").val(res[0].COMP_CODE);
-            $("#pNoDoc").val(res[0].DOC_NO);
-            $("#pFiscYear").val(res[0].FISC_YEAR);
-            $("#pDocumentType").val(res[0].DOC_TYPE);
-            $("#pDocumentDate").val(res[0].DOC_DATE2);
-            $("#pPostDate").val(res[0].POST_DATE2);
-            $("#pEntryDate").val(res[0].ENTRY_DATE2);
-            $("#pReference").val(res[0].REFERENCE);
-            $("#pReverseWith").val(res[0].REV_WITH);
-            $("#pReverseYear").val(res[0].REV_YEAR);
-            $("#pDocHdr").val(res[0].DOC_HDR_TXT);
-            $("#pCurrency").val(res[0].CURRENCY);
-            $("#pExchRate").val(new Intl.NumberFormat().format(res[0].EXCH_RATE));
-            $("#pRefKey").val(res[0].REFERENCE_KEY);
-            $("#pPaymentIndicator").val(res[0].PMT_IND);
-            $("#pTransactionType").val(res[0].TRANS_TYPE);
-            $("#pSpreadValue").val(res[0].SPREAD_VAL);
-            $("#pAccountType").val(res[0].ACCT_TYPE);
-            $("#pBusinessArea").val(res[0].BUS_AREA);
-            $("#pTradingPartner").val(res[0].TPBA);
-            $("#pAmountLc").val(new Intl.NumberFormat().format(res[0].AMT_LC));
-            $("#pAmountTc").val(new Intl.NumberFormat().format(res[0].AMT_TC));
-            $("#pAmountWhtBase").val(new Intl.NumberFormat().format(res[0].AMT_WITH_BASE_TC));
-            $("#pAmountWht").val(new Intl.NumberFormat().format(res[0].AMT_WITH_TC));
-            $("#pTotalTagihan").val(new Intl.NumberFormat().format(res[0].AMOUNT));
-            $("#pAssignment").val(res[0].ASSIGNMENT);
-            $("#pItemText").val(res[0].ITEM_TEXT);
-            $("#pCostCtr").val(res[0].COST_CTR);
-            $("#pGlAccount").val(res[0].GL_ACCT);
-            $("#pNamaVendor").val(res[0].VENDOR);
-            $("#pNamaCustomer").val(res[0].CUSTOMER);
-            $("#pLineItem").val(res[0].LINE_ITEM);
-            $("#pBaseline").val(res[0].BASE_DATE);
-            $("#pTermOfPayment").val(res[0].TERM_PMT);
-            $("#pTglDueOn").val(res[0].DUE_ON);
-            $("#pPaymentBlock").val(res[0].PMT_BLOCK);
-            $("#pHouseBank").val(res[0].HOUSE_BANK);
-            $("#pPartnerBank").val(res[0].PRTNR_BANK_TYPE);
-            $("#pPoNum").val(res[0].PO_NUM);
-            $("#pRefKey1").val(res[0].REF_KEY1);
-            $("#pRefKey2").val(res[0].REF_KEY2);
-            $("#pRefKey3").val(res[0].REF_KEY3);
-            $("#pIntOrder").val(res[0].INT_ORDER);
-            $("#pWbsNum").val(res[0].WBS_NUM);
-            //$("#pCashCode").val(res[0].CASH_CODE);
-            setSelectCashCode("pCashCode",res[0].CASH_CODE);
-            $("#pDebitCredit").val(res[0].DR_CR_IND);
-            $("#pAmountWthBaseLc").val(new Intl.NumberFormat().format(res[0].AMT_WITH_BASE_LC));
-            $("#pAmountWthLc").val(new Intl.NumberFormat().format(res[0].AMT_WITH_LC));
-            $("#pBankPenerima").val(res[0].BANK_BENEF);
-            $("#pKodeBankPenerima").val(res[0].KODE_BANK_PENERIMA);
-            $("#pNoRekVendor").val(res[0].NO_REK_BENEF);
-            $("#pAccountHolder").val(res[0].NAMA_BENEF);
-            setSelectBankPembayar("pHouseBank",res[0].HOUSE_BANK);
-            setSelectKodeBankPembayar("pHouseBankxx",'');
-            setSelectNoRekening("pNoRekxx",'');
-            $("#pNoRekPln").val(res[0].NO_REK_HOUSE_BANK);
-            $("#pMetodePembayaran").val(res[0].METODE_PEMBAYARAN);
-            $("#pSumberDana").val(res[0].SUMBER_DANA);
-            $("#pTglRencanaBayar").val(res[0].TGL_RENCANA_BAYAR);
-            $("#pNewKeterangan").val(res[0].KETERANGAN);
-            $("#pCustomerName").val(res[0].INQ_CUSTOMER_NAME);
-            $("#pAccountNumber").val(res[0].INQ_ACCOUNT_NUMBER);
-            $("#pAccountStatus").val(res[0].INQ_ACCOUNT_STATUS);
-            $("#pRetrieval").val(res[0].RETRIEVAL_REF_NUMBER);
-            $("#pCusRefNum").val(res[0].CUSTOMER_REF_NUMBER);
-            $("#pJamBayar").val(res[0].JAM_BAYAR);
-            $("#pConfirmationCode").val(res[0].CONFIRMATION_CODE);
-            setSelectBankAccount("pNoRekPln","", res[0].CURRENCY, res[0].BANK_BYR);
-            $('#pDocumentDate').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
-            $('#pEntryDate').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
-            $('#pTglRencanaBayar').datepicker({ dateFormat: 'dd/mm/yy'});
-            $('#pTglDueOn').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
-            $('#pPostDate').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
-            $('#pBaseline').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
-
-            if(res[0].METODE_PEMBAYARAN == "GIRO" || res[0].METODE_PEMBAYARAN == "INTERNETBANKING"){
-                $("#btn-inquiry").hide();
-            }else{
-                $("#btn-inquiry").show();
-            }
-
-            setTimeout(function(){ $('#edit-modal').modal({backdrop: 'static', keyboard: false}); }, timeSowFormEdit);
-        },
-        error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        success : (res) => {
+            console.log("data edit data : ",res);
+            hideLoadingCss("");
+            $("#pPostingDate").val("");
+            $("#pDocDate").val("");
+            $("#pDocNo").val("");
+            $("#pReference").val("");
+            $("#pCompCode").val("");
+            $("#pBusArea").val("");
+            $("#pCurrency").val("");
+            $("#pDocHdrTxt").val("");
         }
     });
 }
