@@ -28,10 +28,10 @@
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
         <li class="breadcrumb-item active" style="cursor: default">Pembelian Valas Lunas</li>
-        <li class="breadcrumb-menu d-md-down-none">
+        <li class="breadcrumb-menu d-md-down-none fungsional-button">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary export-button" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary export-button" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
                 <!--                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')">-->
                 <!--                    <i class="icon-pencil"></i> &nbsp;New Data-->
                 <!--                </button>-->
@@ -58,7 +58,7 @@
                         <label class="lbl-src">Currency </label>
                     </div>
                     <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="bacurrecnynk" id="cmb_currecny" class="form-control">
+                        <select name="bacurrecnynk" id="cmb_currency" class="form-control">
                             <option value="">Pilih Data</option>
                         </select>
                     </div>
@@ -218,43 +218,43 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="pDetailDocumentNumber"><span style="color: red">*)</span>&nbsp;Document Number :</label>
+                                <label for="pDetailDocumentNumber"><span style="color: red"></span>&nbsp;Document Number :</label>
                                 <input type="text" class="form-control" id="pDetailDocumentNumber" readonly="readonly"/>
                             </div>
                             <div class="form-group">
-                                <label for="pDetailPmtProposalId"><span style="color: red">*)</span>&nbsp;Proposal Payment Id :</label>
+                                <label for="pDetailPmtProposalId"><span style="color: red"></span>&nbsp;Proposal Payment Id :</label>
                                 <input type="text" class="form-control" id="pDetailPmtProposalId" readonly="readonly"/>
                             </div>
                             <div class="form-group">
-                                <label for="pDetailCompCode"><span style="color: red">*)</span>&nbsp;Company Code:</label>
+                                <label for="pDetailCompCode"><span style="color: red"></span>&nbsp;Company Code:</label>
                                 <input type="text" id="pDetailCompCode" class="form-control" readonly="readonly" />
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="pDetailFiscYear"><span style="color: red">*)</span>&nbsp;Fiscal Year :</label>
+                                <label for="pDetailFiscYear"><span style="color: red"></span>&nbsp;Fiscal Year :</label>
                                 <input type="text" class="form-control" id="pDetailFiscYear" readonly="readonly"/>
                             </div>
                             <div class="form-group">
-                                <label for="pDetailReference"><span style="color: red">*)</span>&nbsp;Reference :</label>
+                                <label for="pDetailReference"><span style="color: red"></span>&nbsp;Reference :</label>
                                 <input type="text" class="form-control" id="pDetailReference" readonly="readonly"/>
                             </div>
                             <div class="form-group pExchangeRate">
-                                <label for="pDetailExchangeRate"><span style="color: red">*)</span>&nbsp;Exchange Rate :</label>
+                                <label for="pDetailExchangeRate"><span style="color: red"></span>&nbsp;Exchange Rate :</label>
                                 <input type="text" class="form-control" id="pDetailExchangeRate" readonly="readonly"/>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="pDetailBusArea"><span style="color: red">*)</span>&nbsp;Business Area :</label>
+                                <label for="pDetailBusArea"><span style="color: red"></span>&nbsp;Business Area :</label>
                                 <input type="text" class="form-control" id="pDetailBusArea" readonly="readonly"/>
                             </div>
                             <div class="form-group">
-                                <label for="pDetailPostDate"><span style="color: red">*)</span>&nbsp;Posting Date :</label>
+                                <label for="pDetailPostDate"><span style="color: red"></span>&nbsp;Posting Date :</label>
                                 <input type="text" class="form-control" id="pDetailPostDate" readonly="readonly"/>
                             </div>
                             <div class="form-group">
-                                <label for="pDetailCurrency"><span style="color: red">*)</span>&nbsp;Currency :</label>
+                                <label for="pDetailCurrency"><span style="color: red"></span>&nbsp;Currency :</label>
                                 <input type="text" class="form-control" id="pDetailCurrency" readonly="readonly" />
                             </div>
                         </div>
@@ -263,7 +263,7 @@
             </div>
         </div>
         <!--        start of detail item-->
-        <div class="table-responsive" style="margin-top: 50px;">
+        <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
             <table id="table-main-detail" class="table table-striped">
                 <thead>
                 <tr>
@@ -275,6 +275,7 @@
                     <th>LINE NUMBER</th>
                     <th>DEBIT CREDIT INDICATOR</th>
                     <th>GL ACCOUNT</th>
+                    <th>REAL AMOUNT</th>
                     <th>AMOUNT</th>
                     <th>CURRENCY</th>
                     <th>COST CENTER</th>
