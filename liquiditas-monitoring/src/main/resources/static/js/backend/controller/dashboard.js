@@ -13,12 +13,18 @@ function tableMainDashboard(_date){
         $("#tgl4a").html(incDate(date, 3));
         $("#tgl5a").html(incDate(date, 4));
 
+        $("#tgl1b").html(incDate(date, -5));
+        $("#tgl2b").html(incDate(date, -4));
+        $("#tgl3b").html(incDate(date, -3));
+        $("#tgl4b").html(incDate(date, -2));
+        $("#tgl5b").html(incDate(date, -1));
+
         for (let i=0; i<5; i++){
             let tgl = date.getDate()+i;
             let tgl2 = date.getDate()-5+i;
             let month = date.getMonth()+1;
 //            $("#header-tanggal").append("<th style='vertical-align: middle;text-align: center'>"+tgl+"/"+0+month+"/"+date.getFullYear()+"</th>");
-            $("#header_tanggal_realisasi").append("<th style='vertical-align: middle; text-align: center'>"+tgl2+"/"+0+month+"/"+date.getFullYear()+"</th>");
+//            $("#header_tanggal_realisasi").append("<th style='vertical-align: middle; text-align: center'>"+tgl2+"/"+0+month+"/"+date.getFullYear()+"</th>");
         }
 
     let main_rencana = $("#main-rencana").DataTable({
@@ -36,7 +42,11 @@ function tableMainDashboard(_date){
         "bInfo" : false,
         "bLengthChange" : false,
         "columns" : [
-            {"data": null,"render": (data, type, row) => {return '<td >'+data.URAIAN+'</td>';}},
+            {"data": null,"render": (data, type, row) => { if (data.URAIAN === "Bank"){
+                                                            return '<td >'+data.URAIAN+'<img src="/static/images/add.svg" height="12.5" width="12.5" onclick="showModal(location.href="http://google.com")"/></td>';
+                                                            } else
+                                                            return '<td >'+data.URAIAN+'</td>';
+                }},
             {"data": "ISANAK","visible":false},
             {
                 "data":null,
@@ -111,11 +121,11 @@ function tableMainDashboard(_date){
 
         }
 
-        if(data["URAIAN"] === "Bank"){
-            $("#main-rencana", row).on('click', function () {
-                $('#myModal').modal('show');
-            });
-        }
+//        if(data["URAIAN"] === "Bank"){
+//            $(".clickable-row").click(function() {
+//                window.location = $(this).data("href");
+//            });
+//        }
 
         if (data["ISANAK"] === 0 && regexChild1.test(data["KODE"])){
             $(row).css({
@@ -763,6 +773,9 @@ $(document).ready(function () {
     tableRencanaImprestValas();
     tableRencanaImpres();
     tableRealisasiBankCurrency();
+    var date = new Date();
+    var newDate = date.toJSON().slice(0, 10).replace(new RegExp("-", 'g'), "/").split("/").reverse().join("/")
+    $("#tglcetak").html(newDate);
 
     $("#dashboard-carousel").carousel({
         interval : 1000*5,
@@ -1302,8 +1315,8 @@ function creteChartKompSaldo(data) {
                 dataFormat: 'json',
                 dataSource: {
                     "chart": {
-                        "caption" : "Komposisi Saldo",
-                        "subcaption" : "PT. PLN (Persero) Divisi Treasury",
+                        "caption" : "\n\nKomposisi Saldo",
+                        "subcaption" : "\n\n\nPT. PLN (Persero) Divisi Treasury",
                         "bgColor": "#FFFFFF",
                         "numbersuffix": "%",
                         "lowerLimitDisplay": "0%",
