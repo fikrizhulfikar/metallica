@@ -196,7 +196,7 @@ public class PembelianValasTrxController {
             //String pSessionId = WebUtils.getUsernameLogin() + AppUtils.getDateTillSecondTrim();
             Map<String, Object> res = new HashedMap();
             for (ValasDetail v : valas.getValasDetails()){
-                res = pembelianValasTrxService.insDetailPembelianValasTrx(valas.getpIdMetallica(),v.getpPostDate(), v.getpDocNo(), v.getpAmount(), v.getpBusArea(), v.getpReference(), v.getpCompCode(), v.getpCashCode() , v.getpSumberDana(), WebUtils.getUsernameLogin(), v.getpCurrency(), v.getpCostCtr(),v.getpDrCrInd(), v.getpExchangeRate(), v.getpFiscYear(), v.getpGlAccount(), v.getpLineNo(), v.getpPmtProposalId(), v.getpRemarks(), v.getpFlag());
+                res = pembelianValasTrxService.insDetailPembelianValasTrx(valas.getpIdMetallica(),v.getpPostDate(), v.getpDocNo(), v.getpAmount(), v.getpBusArea(), v.getpReference(), v.getpCompCode(), v.getpCashCode() , v.getpSumberDana(), WebUtils.getUsernameLogin(), v.getpCurrency(), v.getpCostCtr(),v.getpDrCrInd(), v.getpExchangeRate(), v.getpFiscYear(), v.getpGlAccount(), v.getpLineNo(), v.getpPmtProposalId(), v.getpRemarks(), v.getpFlag(), v.getpRealAmount());
             }
             return res;
         }catch (Exception e){
@@ -209,13 +209,13 @@ public class PembelianValasTrxController {
     public Map<String, Object> deletePembelianValasItemTrx(
             @RequestParam(value = "pIdMetallica", defaultValue = "") String pIdMetallica,
             @RequestParam(value = "pItemId", defaultValue = "") String pItemId,
-            @RequestParam(value = "pLineNo", defaultValue = "") String pLineNO
+            @RequestParam(value = "pLineNo", defaultValue = "") String pLineNo
     ) {
 
         AppUtils.getLogger(this).debug("pIdMetallica : {} ", pIdMetallica);
         AppUtils.getLogger(this).debug("pItemId : {}", pItemId);
         try {
-            Map<String, Object> res = pembelianValasTrxService.deletePembelianValasTrx(pIdMetallica, pItemId, pLineNO);
+            Map<String, Object> res = pembelianValasTrxService.deletePembelianValasTrx(pIdMetallica, pItemId, pLineNo);
 //
             if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 //                notificationUtil.notifyMessage(notification);
@@ -697,6 +697,28 @@ public class PembelianValasTrxController {
         } catch (Exception e) {
             e.printStackTrace();
             return "Gagal Export Data :" + e.getMessage();
+        }
+    }
+
+    @RequestMapping(value = "/get_compcode", method = RequestMethod.GET)
+    public List<Map<String, Object>> getCompCode() {
+        try {
+            List<Map<String, Object>> result = pembelianValasTrxService.getCompanyCode();
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_business_area", method = RequestMethod.GET)
+    public List<Map<String, Object>> getBusinessArea(@RequestParam(value = "pCompCode") String pCompCode) {
+        try {
+            List<Map<String, Object>> result = pembelianValasTrxService.getBusinessArea(pCompCode);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

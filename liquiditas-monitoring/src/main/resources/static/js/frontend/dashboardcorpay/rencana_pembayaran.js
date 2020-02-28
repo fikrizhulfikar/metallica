@@ -25,22 +25,22 @@ function initDataTableSaldoRek1() {
                 $.each(data, function (key, val) {
                     var html = "<tr>" +
                         "<td>" + val.CASH_CODE + " " + val.CASH_DESCRIPTION + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.H0,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.H1,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.H2,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.WEEKLY,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.MONTHLY,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.H0,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.H1,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.H2,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.WEEKLY,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.MONTHLY,2,".",",") + "</td>" +
                         "</tr>";
                     $('#table-rencana-pembayaran tbody').append(html);
                 });
 
                     var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
                         "<td>SUB TOTAL</td>" +
-                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H0,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H1,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H2,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_WEEKLY,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_MONTHLY,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H0,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H1,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H2,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_WEEKLY,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_MONTHLY,2,".",",") + "</td>" +
                         "</tr>";
                     $('#table-rencana-pembayaran tbody').append(total1);
 
@@ -56,11 +56,11 @@ function initDataTableSaldoRek1() {
 
                     var total3 = "<tr style='background-color:#67a2d8;color: white'>" +
                         "<td>TOTAL</td>" +
-                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H0,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H1,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H2,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_WEEKLY,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_MONTHLY,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H0,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H1,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H2,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_WEEKLY,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_MONTHLY,2,".",",") + "</td>" +
                         "</tr>";
                     $('#table-rencana-pembayaran tbody').append(total3);
 
@@ -89,39 +89,37 @@ function initDataTableSaldoRek1() {
                     var html = "<tr>" +
                         "<td>" + val.TGL_RENCANA_BAYAR + "</td>" +
                         "<td>" + val.JENIS + "</td>" +
-                        "<td align='right'> Rp." + accounting.formatNumber(val.IDR,2,".",",") + "</td>" +
-                        "<td align='right'> Rp." + accounting.formatNumber(val.USD,2,".",",") + "</td>" +
-                        "<td align='right'> Rp." + accounting.formatNumber(val.EUR,2,".",",") + "</td>" +
-                        "<td align='right'> Rp." + accounting.formatNumber(val.JPY,2,".",",") + "</td>" +
-                        "<td align='right'> Rp." + accounting.formatNumber(val.MYR,2,".",",") + "</td>" +
-                        "<td align='right'> Rp." + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.IDR,2,".",",") + "</td>" +
+                        "<td align='right'> $ " + accounting.formatNumber(val.USD,2,".",",") + "</td>" +
+                        "<td align='right'> € " + accounting.formatNumber(val.EUR,2,".",",") + "</td>" +
+                        "<td align='right'> ¥ " + accounting.formatNumber(val.JPY,2,".",",") + "</td>" +
+                        "<td align='right'> RM " + accounting.formatNumber(val.MYR,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
                         "</tr>";
-                    $('#table-investasi-operasi tbody').append(html);
 
-//                    counter++;
+                       if(val["JENIS"] === "TOTAL"){
+                            var html = "<tr style='background-color:#67a2d8; color: white'>" +
+                                "<td colspan='2' align='center'>" + val.JENIS + "</td>" +
+                                "<td align='right'> Rp. " + accounting.formatNumber(val.IDR,2,".",",") + "</td>" +
+                                "<td align='right'> $ " + accounting.formatNumber(val.USD,2,".",",") + "</td>" +
+                                "<td align='right'> € " + accounting.formatNumber(val.EUR,2,".",",") + "</td>" +
+                                "<td align='right'> ¥ " + accounting.formatNumber(val.JPY,2,".",",") + "</td>" +
+                                "<td align='right'> RM " + accounting.formatNumber(val.MYR,2,".",",") + "</td>" +
+                                "<td align='right'> Rp. " + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
+                                "</tr>";
+                        }
 
-//                    if (val["JENIS"] === "TOTAL"){
-//                        $('#table-investasi-operasi tbody').css({
-//                            "background-color" : "#F4D35E",
-//                            "color" : "black",
-//                            "text-align": "center",
-//                            "font-weight": "bold",
-//                        });
-//                      }else{
-//                        $('#table-investasi-operasi tbody').css({
-//                          "background-color" : "#67a2d8",
-//                          "color" : "black",
-//                        });
-//                      }
+                    $('#table-investasi-operasi tbody').append(html)
+
                 });
 
                 var total = "<tr style='background-color:#67a2d8;color: white'>" +
                     "<td colspan='2' align='center'>TOTAL</td>" +
-                    "<td align='right'> Rp." + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_IDR,2,".",",") + "</td>" +
-                    "<td align='right'> Rp." + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_USD,2,".",",") + "</td>" +
-                    "<td align='right'> Rp." + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_EUR,2,".",",") + "</td>" +
-                    "<td align='right'> Rp." + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_JPY,2,".",",") + "</td>" +
-                    "<td align='right'> Rp." + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_MYR,2,".",",") + "</td>" +
+                    "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_IDR,2,".",",") + "</td>" +
+                    "<td align='right'> $ " + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_USD,2,".",",") + "</td>" +
+                    "<td align='right'> € " + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_EUR,2,".",",") + "</td>" +
+                    "<td align='right'> ¥ " + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_JPY,2,".",",") + "</td>" +
+                    "<td align='right'> RM " + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_MYR,2,".",",") + "</td>" +
                     "<td align='right'> Rp." + accounting.formatNumber(res.OUT_TOTAL_SELURUH[0].TOTAL_SELURUH_EQ_IDR,2,".",",") + "</td>" +
                     "</tr>";
 
@@ -279,7 +277,11 @@ function creteChartRekRencana(data, data2) {
                         "pivotFillColor": "#000000",
                         "pivotFillAlpha": "100",
                         "valueBelowPivot": "0",
-                        showTickMarks: "0",
+                        "majorTMNumber": "9",
+                        "minorTMNumber": "4",
+                        "majorTMHeight": "10",
+                        "minorTMHeight": "5",
+                        showTickMarks: "1",
                         showTickValues: "1",
                         "gaugeFillMix": "{dark-10},{light-10},{dark-10}",
                         "gaugeOuterRadius": "150",
@@ -291,17 +293,17 @@ function creteChartRekRencana(data, data2) {
                            {
                               minvalue: "0",
                               maxvalue: data[0].maxvalue,
-                              code: data[0].code
+                              code: "#998650"
                            },
                           {
                               minvalue: data[0].maxvalue,
                               maxvalue: maxval1,
-                              code: data[1].code
+                              code: "#7AC74F"
                           },
                           {
                               minvalue: maxval1,
                               maxvalue: "100",
-                              code: data[2].code
+                              code: "#5ADBFF"
                           },
                        ]
                      },
@@ -414,12 +416,22 @@ function tableRencanaImpres(_date){
     let groupColumn = 0;
     (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString() : current_full_date = _date;
 
-    $("#header_tgl_rencana_imprest").append("<td style='text-align: center; background-color: #67a2d8'>URAIAN</td>");
-    for (let i=0; i<8; i++){
-        let tgl = date.getDate()+i;
-        let month = date.getMonth()+1;
-        $("#header_tgl_rencana_imprest").append("<td style='background-color: #67a2d8; vertical-align: middle'>"+tgl+"/"+0+month+"/"+date.getFullYear()+"</td>");
-    }
+    var datestring = dateToString(date);
+    $("#tgl1b").html(datestring);
+    $("#tgl2b").html(incDate(date, 1));
+    $("#tgl3b").html(incDate(date, 2));
+    $("#tgl4b").html(incDate(date, 3));
+    $("#tgl5b").html(incDate(date, 4));
+    $("#tgl6b").html(incDate(date, 5));
+    $("#tgl7b").html(incDate(date, 6));
+    $("#tgl8b").html(incDate(date, 7));
+
+//    $("#header_tgl_rencana_imprest").append("<td style='text-align: center; background-color: #67a2d8'>URAIAN</td>");
+//    for (let i=0; i<8; i++){
+//        let tgl = date.getDate()+i;
+//        let month = date.getMonth()+1;
+//        $("#header_tgl_rencana_imprest").append("<td style='background-color: #67a2d8; vertical-align: middle'>"+tgl+"/"+month+"/"+date.getFullYear()+"</td>");
+//    }
 
     let tb_rencana_imprest_valas = $("#dash_rencana_imprest").DataTable({
         "ajax" : {
@@ -650,13 +662,24 @@ function tableRencanaImprestValas(_date){
     let current_full_date;
     let groupColumn = 0;
     (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString() : current_full_date = _date;
+
+    var datestring = dateToString(date);
+        $("#tgl1a").html(datestring);
+        $("#tgl2a").html(incDate(date, 1));
+        $("#tgl3a").html(incDate(date, 2));
+        $("#tgl4a").html(incDate(date, 3));
+        $("#tgl5a").html(incDate(date, 4));
+        $("#tgl6a").html(incDate(date, 5));
+        $("#tgl7a").html(incDate(date, 6));
+        $("#tgl8a").html(incDate(date, 7));
+
 //    console.log('Tes'+current_full_date)
-    $("#header_tgl_imprest_valas").append("<td style='text-align: center; background-color: #67a2d8'>URAIAN</td>");
-    for (let i=0; i<8; i++){
-        let tgl = date.getDate()+i;
-        let month = date.getMonth()+1;
-        $("#header_tgl_imprest_valas").append("<td style='background-color: #67a2d8; vertical-align: middle'>"+tgl+"/"+0+month+"/"+date.getFullYear()+"</td>");
-    }
+//    $("#header_tgl_imprest_valas").append("<td style='text-align: center; background-color: #67a2d8'>URAIAN</td>");
+//    for (let i=0; i<8; i++){
+//        let tgl = date.getDate()+i;
+//        let month = date.getMonth()+1;
+//        $("#header_tgl_imprest_valas").append("<td style='background-color: #67a2d8; vertical-align: middle'>"+tgl+"/"+0+month+"/"+date.getFullYear()+"</td>");
+//    }
 
     let tb_rencana_imprest_valas = $("#rencana_imprest_valas").DataTable({
         "ajax" : {
@@ -863,4 +886,26 @@ function tableRencanaImprestValas(_date){
             } );
         }
     })
+}
+
+function dateToString(date) {
+    return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+}
+
+function incDate(date, days) {
+    date = new Date(date.getTime() + (86400000 * days));
+    return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+}
+
+function stringToDate(_date) {
+    var formatLowerCase = 'dd/mm/yyyy';
+    var formatItems = formatLowerCase.split('/');
+    var dateItems = _date.split('/');
+    var monthIndex = formatItems.indexOf("mm");
+    var dayIndex = formatItems.indexOf("dd");
+    var yearIndex = formatItems.indexOf("yyyy");
+    var month = parseInt(dateItems[monthIndex]);
+    month -= 1;
+    var formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
+    return formatedDate;
 }

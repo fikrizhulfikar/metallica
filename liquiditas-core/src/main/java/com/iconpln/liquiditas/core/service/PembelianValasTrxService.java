@@ -141,10 +141,10 @@ public class PembelianValasTrxService {
         return resultset;
     }
 
-    public Map<String, Object> insDetailPembelianValasTrx(
+        public Map<String, Object> insDetailPembelianValasTrx(
             String pIdMetallica, String pPostDate, String pDocNo, String pAmount, String pBusArea, String pReference,
             String pCompCode, String pCashCode, String pSumberDana, String pUserId, String pCurrency, String pCostCtr, String pDrCrInd, String pExchangeRate,
-            String pFiscYear, String pGlAccount, String pLineNo, String pPmtProposalId, String pRemarks, String pFlag
+            String pFiscYear, String pGlAccount, String pLineNo, String pPmtProposalId, String pRemarks, String pFlag, String pRealAmount
     )throws SQLException{
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -172,6 +172,7 @@ public class PembelianValasTrxService {
                 .addValue("p_pmt_proposal_id", pPmtProposalId)
                 .addValue("p_remarks", pRemarks)
                 .addValue("p_flag", pFlag)
+                .addValue("p_real_amount", pRealAmount)
                 .addValue("out_msg", OracleTypes.VARCHAR);
 
         out = simpleJdbcCall.execute(inParams);
@@ -179,7 +180,8 @@ public class PembelianValasTrxService {
         return out;
     }
 
-    public Map<String, Object> deletePembelianValasTrx(String pIdMetallica, String pItemId, String pLineNo){
+    public Map<String, Object> deletePembelianValasTrx(String pIdMetallica, String pItemId,
+                                                       String pLineNo){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("valas_item_trx_del");
@@ -187,7 +189,7 @@ public class PembelianValasTrxService {
         SqlParameterSource inParam = new MapSqlParameterSource()
                 .addValue("p_id_metallica", pIdMetallica)
                 .addValue("p_id_valas_trx", pItemId)
-                .addValue("p_line_no",pLineNo)
+                .addValue("p_line_no", pLineNo)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         Map<String, Object> out = simpleJdbcCall.execute(inParam);
         AppUtils.getLogger(this).info("msg delete_pembelian_valas_item : {}", out);
@@ -485,6 +487,26 @@ public class PembelianValasTrxService {
 
         AppUtils.getLogger(this).info("data get_all_pembayaran_by_status3 : {} and userid {}", resultset, idUser);
         return resultset;
+    }
+
+    public List<Map<String, Object>> getCompanyCode(){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_company_code");
+        AppUtils.getLogger(this).info("pCurrency data : {}");
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+        return out;
+    }
+
+    public List<Map<String, Object>> getBusinessArea(String pCompCode){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_business_area");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_comp_code",pCompCode);
+        AppUtils.getLogger(this).info("pCurrency data : {}");
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class,param);
+        return out;
     }
 
 }

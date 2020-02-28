@@ -1,5 +1,6 @@
 /**
  * Created by israjhaliri on 8/23/17.
+ * Updated By Asheefa Anastasia on 27/6/2020
  */
 var tableOperasiKhusus ;
 var tblOperasiKhususDetail ;
@@ -79,19 +80,16 @@ function AddToTable() {
     var cash_code = $("#pDetailCashCode").val();
     var cost_ctr = $("#pDetailCostCtr").val();
     var sumber_dana = $("#pSumberDana").val();
+    var real_amount = $("#pDetailAmount").val().toString();
+    let very_real_amount = parseInt(real_amount.replace(/,/g,""))
+
+    console.log("Real Amount : ",very_real_amount);
     var flag = 0;
     let amount = 0;
 
-    if (cost_ctr.length < 10 || cost_ctr.length > 10){
-        Swal.fire("Maaf", "Cost Center harus 10 digit angka valid", "info");
-        return;
-    }
+    (exrate !== "-") ? amount = very_real_amount * exrate : amount = very_real_amount;
 
-    (exrate === "undefined" || exrate === "-") ? amount = amount : amount = amt * exrate;
-    console.log("Amt :",amt);
-    console.log("Exrate :",exrate);
-    console.log("Amount :",amount);
-    if (drcrind === "" || glaccount === "" || amt === "" ||  cash_code === "") {
+    if (drcrind === "" || glaccount === "" || amt === "" ||  cash_code === "" || remarks === "") {
         Swal.fire("Maaf!","Mohon Lengkapi Data", "warning");
         return;
     } else {
@@ -112,6 +110,7 @@ function AddToTable() {
                 "BUSINESS_AREA" : busarea,
                 "REMARKS" : remarks,
                 "FLAG" : flag,
+                "REAL_AMOUNT" : very_real_amount
             })
             .draw(false)
             .node();
@@ -119,14 +118,12 @@ function AddToTable() {
             .css( 'color', 'black' )
             .animate( { color: '#ff590a' } );
     }
-    $("#pDetailDrCrInd").val("");
-    $("#pDetailGlAccount").val("");
+
     $("#pDetailAmount").val("");
     $("#pDetailRemarks").val("");
-    $("#pSumberDana").val("");
 }
 
-function deletedb(idMetallica,idItem){
+function deletedb(idMetallica,idItem,lineNo){
     Swal.fire({
         title : "Anda Yakin ?",
         text : "Anda yakin ingin menghapus data?",
@@ -143,7 +140,8 @@ function deletedb(idMetallica,idItem){
                 type : "POST",
                 data : {
                     pIdMetallica : idMetallica,
-                    pItemId : idItem
+                    pItemId : idItem,
+                    pLineNo : lineNo
                 },
                 success : (res) => {
                     console.log("get detail : ", res);
@@ -153,7 +151,7 @@ function deletedb(idMetallica,idItem){
                         tblOperasiKhususDetail.ajax.reload();
                     }else {
                         hideLoadingCss();
-                        Swal.fire("Gagal!","Gagal Menghapus Data","danger");
+                        Swal.fire("Gagal!","Gagal Menghapus Data","error");
                     }
                 },
                 error: function () {
@@ -238,29 +236,47 @@ function checkArray(e) {
 function update_datas() {
     var stateCrf = confirm("Anda Yakin Akan Merverifikasi Tagihan Ini ?");
     if (stateCrf == true) {
-        showLoadingCss();
-        $.ajax({
-            url: baseUrl + "/api_operator/operasi_khusus_trx/multi_upd_status",
-            dataType: 'JSON',
-            type: "POST",
-            data: {
-                pData: JSON.stringify(checkedArray),
-            },
-            success: function (res) {
-                hideLoadingCss("")
-                if (res.return == 1) {
-                    alert(res.OUT_MSG)
-                    tableOperasiKhusus.ajax.reload();
-                    checkedArray = new Array();
-                } else {
-                    alert(res.OUT_MSG);
+        if(checkedArray.length <= 0){
+            Swal.fire("Maaf!", "Silahkan pilih data terlebih dahulu","error");
+        }else if (checkedArray.every(checkTrackingVerifikasi) === false){
+            Swal.fire("Maaf!", "Tidak dapat melakukan verifikasi tagihan", "error");
+        }else if (!checkedArray.every(isBalance)){
+            Swal.fire("Maaf","Balance tidak sama dengan 0", "error");
+        }else{
+            showLoadingCss();
+            $.ajax({
+                url: baseUrl + "/api_operator/operasi_khusus_trx/multi_upd_status",
+                dataType: 'JSON',
+                type: "POST",
+                data: {
+                    pData: JSON.stringify(checkedArray),
+                },
+                success: function (res) {
+                    hideLoadingCss("")
+                    if (res.return == 1) {
+                        alert(res.OUT_MSG)
+                        tableOperasiKhusus.ajax.reload();
+                        checkedArray = new Array();
+                    } else {
+                        alert(res.OUT_MSG);
+                    }
+                },
+                error: function () {
+                    hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
                 }
-            },
-            error: function () {
-                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-            }
-        });
+            });
+        }
     }
+}
+
+function checkTrackingVerifikasi(val){
+    return val.statustracking < 4;
+}
+
+function isBalance(val){
+    if(val.debit == 0 && val.kredit == 0){
+        return false;
+    }else return val.debit - val.kredit === 0;
 }
 
 function exportXls() {
@@ -272,62 +288,84 @@ function exportXls() {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/pembelian_valas_trx/xls/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currecny").val());
+    window.open(baseUrl + "api_operator/operasi_khusus_trx/xls/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currecny").val());
 }
 
 function multi_upd_lunas() {
     var stateCrf = confirm("Anda Yakin Akan Merverifikasi Tagihan Ini ?");
     if (stateCrf == true) {
-        showLoadingCss();
-        $.ajax({
-            url: baseUrl + "/api_operator/operasi_khusus_trx/multi_upd_lunas",
-            dataType: 'JSON',
-            type: "POST",
-            data: {
-                pData: JSON.stringify(checkedArray),
-            },
-            success: function (res) {
-                hideLoadingCss("")
-                if (res.return == 1) {
-                    alert(res.OUT_MSG)
-                    tableOperasiKhusus.ajax.reload();
-                    checkedArray = new Array();
-                } else {
-                    alert(res.OUT_MSG);
+        if(checkedArray.length <=0){
+            Swal.fire("Maaf!", "Silahkan pilih data terlebih dahulu","error")
+        }
+        if(checkedArray.every(checkTracking)){
+            Swal.fire("Maaf!", "Maaf tidak bisa melakukan pelunasan","error")
+        }else{
+            // alert("Good To Go!");
+            showLoadingCss();
+            $.ajax({
+                url: baseUrl + "/api_operator/operasi_khusus_trx/multi_upd_lunas",
+                dataType: 'JSON',
+                type: "POST",
+                data: {
+                    pData: JSON.stringify(checkedArray),
+                },
+                success: function (res) {
+                    hideLoadingCss("")
+                    if (res.return == 1) {
+                        alert(res.OUT_MSG)
+                        tableOperasiKhusus.ajax.reload();
+                        checkedArray = new Array();
+                    } else {
+                        alert(res.OUT_MSG);
+                    }
+                },
+                error: function () {
+                    hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
                 }
-            },
-            error: function () {
-                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-            }
-        });
+            });
+        }
     }
+}
+
+function checkTracking(val){
+    return val.statustracking != 4;
+}
+
+function isBalance(val){
+    if(val.debit == 0 && val.kredit == 0){
+        return false;
+    }else return val.debit - val.kredit === 0;
 }
 
 function multipleDelete() {
     var stateCrf = confirm("Anda Yakin Akan Menghapus Data Ini ?");
     if (stateCrf == true) {
-        showLoadingCss()
-        $.ajax({
-            url: baseUrl + "api_operator/operasi_khusus_trx/multiple_delete_head",
-            dataType: 'JSON',
-            type: "POST",
-            data: {
-                pData: JSON.stringify(checkedArray)
-            },
-            success: function (res) {
-                hideLoadingCss("")
-                if (res.return == 1) {
-                    alert(res.OUT_MSG);
-                    tableOperasiKhusus.ajax.reload();
-                    checkedArray.length = 0;
-                } else {
-                    alert(res.OUT_MSG);
+        if(checkedArray.length <= 0){
+            Swal.fire("Maaf!", "Silahkan pilih data terlebih dahulu","error");
+        }else {
+            showLoadingCss()
+            $.ajax({
+                url: baseUrl + "api_operator/operasi_khusus_trx/multiple_delete_head",
+                dataType: 'JSON',
+                type: "POST",
+                data: {
+                    pData: JSON.stringify(checkedArray)
+                },
+                success: function (res) {
+                    hideLoadingCss("")
+                    if (res.return == 1) {
+                        alert(res.OUT_MSG);
+                        tableOperasiKhusus.ajax.reload();
+                        checkedArray.length = 0;
+                    } else {
+                        alert(res.OUT_MSG);
+                    }
+                },
+                error: function () {
+                    hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
                 }
-            },
-            error: function () {
-                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-            }
-        });
+            });
+        }
     }
 }
 
@@ -423,7 +461,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
             },
             {
                 "sortable": false,
-                "aTargets": [0,11,12,13]
+                "aTargets": [0,11,12,13,14]
             },
             {
                 "aTargets": [0],
@@ -802,7 +840,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                         }
                         else {
                             if (full.STATUS_TRACKING === "INPUT DATA") {
-                                value = '{"pIdMetallica":"'+full.ID_METALLICA+'","statustracking" : "'+1+'"}';
+                                value = '{"pIdMetallica":"'+full.ID_METALLICA+'","statustracking" : "'+1+'", "debit":"'+full.AMOUNT_DEBIT+'","kredit":"'+full.AMOUNT_CREDIT+'"}';
                                 data_full = '{"full" : "'+JSON.stringify(full)+'"}';
                             }
                             else if (full.STATUS_TRACKING === "VERIFIED BY MAKER") {
@@ -814,7 +852,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                                 data_full = '{"full" : "'+JSON.stringify(full)+'"}';
                             }
                             else if (full.STATUS_TRACKING === "VERIFIED BY APPROVER") {
-                                value = '{"pIdMetallica":"'+full.ID_METALLICA+'","jenis" : "'+"OPERASI_KHUSUS"+'"}';
+                                value = '{"pIdMetallica":"'+full.ID_METALLICA+'","jenis" : "'+"OPERASI_KHUSUS"+'","statustracking" : "'+4+'"}';
                                 data_full = '{"full" : "'+JSON.stringify(full)+'"}';
                             }
                             else {
@@ -921,32 +959,21 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
 //         var html = '';
 //         console.log("ROLE : ",newRoleUser[0]);
         var html = '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
-        if(newRoleUser[0] === "ROLE_JA_CASH") {
-            html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
-        }
-        if(newRoleUser[0] === "ROLE_VP_LIQUIDITY_AND_RECEIPT" || newRoleUser[0] === "ROLE_VP_INVESTMENT_EXPENDITURE"
-            || newRoleUser[0] === "ROLE_VP_BUSINESS_MANAGEMENT" || newRoleUser[0] === "ROLE_EXECUTIVE_VICE_PRESIDENT"
-            || newRoleUser[0] === "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY" || newRoleUser[0] === "ROLE_VP_INVESTMENT_EXPENDITURE"
-            || newRoleUser[0] === "ROLE_PLH_EXECUTIVE_VICE_PRESIDENT" || newRoleUser[0] === "ROLE_MSB_PAYMENT_EXPENDITURE"
-            || newRoleUser[0] === "ROLE_VP_OPERATION_EXPENDITURE") {
-            html = html +'<button class="btn-edit-data btn-sm btn-primary" style="margin-left: 10px" type="button" title="Pelunasan" onclick="multi_upd_lunas()"><i class="fa fa-credit-card-alt"></i></button>';
-        }
-        if  (newRoleUser[0] === "ROLE_ADMIN"){
-            html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
-            html = html +'<button class="btn-edit-data btn-sm btn-primary" style="margin-left: 10px" type="button" title="Pelunasan" onclick="multi_upd_lunas()"><i class="fa fa-credit-card-alt"></i></button>';
-        }
-        $(this).append(html);
+              if(newRoleUser[0] == "ROLE_JA_CASH" || newRoleUser[0] == "ROLE_JA_IE" ) {
+              html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
+              }
+              if(newRoleUser[0] == "ROLE_VP_LIQUIDITY_AND_RECEIPT" || newRoleUser[0] == "ROLE_VP_INVESTMENT_EXPENDITURE"
+                  || newRoleUser[0] == "ROLE_VP_BUSINESS_MANAGEMENT" || newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT"
+                  || newRoleUser[0] == "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY" || newRoleUser[0] == "ROLE_VP_INVESTMENT_EXPENDITURE"
+                  || newRoleUser[0] == "ROLE_PLH_EXECUTIVE_VICE_PRESIDENT" || newRoleUser[0] == "ROLE_MSB_PAYMENT_EXPENDITURE"
+                  || newRoleUser[0] == "ROLE_VP_OPERATION_EXPENDITURE") {
+              html = html +'<button class="btn-edit-data btn-sm btn-primary" style="margin-left: 10px" type="button" title="Pelunasan" onclick="multi_upd_lunas()"><i class="fa fa-credit-card-alt"></i></button>';
+              }
+              $(this).append(html);
     });
 
     tableOperasiKhusus.columns.adjust();
     initCbparent();
-}
-
-function clearForm() {
-    isUpdate = "0"
-    $("#pKodeBank").val("");
-    $("#pKodeBank").prop('disabled', false);
-    $("#pNamaBank").val("");
 }
 
 function exportXls() {
@@ -958,7 +985,7 @@ function exportXls() {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/operasi_khusus_trx/xls/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currecny").val());
+    window.open(baseUrl + "api_operator/operasi_khusus_trx/xls/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currency").val());
 }
 
 function upload_server_xls() {
@@ -1026,6 +1053,7 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
     $(".detail-data").show();
     $("#filter").hide();
     $("#btn-add-rekap").hide();
+    $(".fungsional-button").hide();
 
     tracking = track;
     (track === "INPUT DATA" || newRoleUser[0] === "ROLE_ADMIN") ? $(".just-for-input-data").show() : $(".just-for-input-data").hide();
@@ -1040,46 +1068,53 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
             "type": "GET",
             "dataType": "json",
         },
+        "scrollX": "100%",
         "columns" : [
-            // {"data" : "DOC_NO"},
-            // {"data" : "PMT_PROPOSAL_ID"},
-            {"data" : "COMP_CODE"},
-            {"data" : "CASH_CODE"},
-            {"data" : "SUMBER_DANA"},
-            // {"data" : "FISC_YEAR"},
-            {"data" : "LINE_NO"},
-            {"data" : "DEBIT_CREDIT_IND"},
-            {"data" : "GL_ACCOUNT"},
+            {"data" : "DOC_NO"},
+             {"data" : "PMT_PROPOSAL_ID"},
+             {"data" : "COMP_CODE"},
+             {"data" : "CASH_CODE"},
+             {"data" : "SUMBER_DANA"},
+             {"data" : "FISC_YEAR"},
+             {"data" : "LINE_NO"},
+             {"data" : "DEBIT_CREDIT_IND"},
+             {"data" : "GL_ACCOUNT"},
             {
                 "data" : null,
-                "render" : function (data, type, row ) {
-                    let number = parseInt(data.AMOUNT);
-                    return Intl.NumberFormat().format(number);
+                "render" : function (data2, type, row ) {
+                    let number2 = parseInt(data2.REAL_AMOUNT);
+                    return Intl.NumberFormat().format(number2);
                 }
             },
-            {"data" : "CURRENCY"},
-            {"data" : "COST_CTR"},
-            {"data" : "BUSINESS_AREA"},
-            {"data" : "REMARKS"},
-            {
-                "data" : "FLAG",
-                "visible" : false
-            },
-            {
-                "data" : null,
-                "render" : (data) => {
-                    // console.log("Status Tracking : ", tracking);
-                    // console.log("Flag : ", data.FLAG);
-                    //
-                    if(data.FLAG == 1 && newRoleUser[0] === "ROLE_JA_CASH"){
-                        return '<td align="center"> <button class="btn btn-sm btn-danger" onclick="deletedb(\'' +data.ID_METALLICA+'\',\'' +data.ID_OPERASI_ITEM_TRX+ '\')"><i class="fa fa-trash"></i></button></td>';
-                    }else if(data.FLAG === 0){
+             {
+                 "data" : null,
+                 "render" : function (data, type, row ) {
+                     let number = parseInt(data.AMOUNT);
+                     return Intl.NumberFormat().format(number);
+                 }
+             },
+             {"data" : "CURRENCY"},
+             {"data" : "COST_CTR"},
+             {"data" : "BUSINESS_AREA"},
+             {"data" : "REMARKS"},
+             {
+                 "data" : "FLAG",
+                 "visible" : false
+             },
+             {
+                 "data" : null,
+                 "render" : (data) => {
+                    if(data.FLAG == 1 || track == "INPUT_DATA"){
+                        return '<td align="center"> <button class="btn btn-sm btn-danger" onclick="deletedb(\'' +data.ID_METALLICA+'\',\'' +data.ID_OPERASI_ITEM_TRX+ '\',\'' +data.LINE_NO+'\')"><i class="fa fa-trash"></i></button></td>';
+                    }else if(data.FLAG == 0){
                         return '<td align="center"> <button class="btn btn-sm btn-warning" onclick="dele()"><i class="trash fa fa-trash"></i></button></td>';
-                    }else return "=="
-
-                }
-            }
-        ],
+                    }
+                     else {
+                     return '-'
+                     }
+                 }
+             }
+           ],
         "drawCallback" : function (settings) {
             let api = this.api();
             let rows = parseInt(api.rows().count())+1;
@@ -1121,6 +1156,7 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
         operasiKhususDetails : null,
     }
 
+    $("#pDetailAmount").mask('000,000,000,000,000',{reverse : true});
     $("#pDetailExchangeRate").val((exc_rate === undefined || exc_rate === '-') ? 1 : exc_rate);
     $("#pDetailDocumentNumber").val(doc_no);
     $("#pDetailPmtProposalId").val(prop_pmt_id);
@@ -1185,7 +1221,6 @@ function openFormNew() {
     $("#pHeadDocDate").val("");
     $("#pHeadDocNo").val("");
     $("#pHeadReference").val("");
-    $("#pHeadCompCode").val("");
     $("#pHeadBusArea").val("");
     $("#pHeadCurrency").val("");
     $("#pHeadDocHdrTxt").val("");
@@ -1216,17 +1251,19 @@ function edit_data (idMetallica){
         success : (res) => {
             console.log("data edit data : ",res);
             hideLoadingCss("");
-            $("#pHeadDocDate").val(res.data[0].DOCUMENT_DATE);
-            $("#pHeadPostingDate").val(res.data[0].POSTING_DATE);
-            $("#pHeadDocNo").val(res.data[0].DOCUMENT_NUMBER);
+            $("#pHeadDocDate").val(res.data[0].DOCUMENT_DATE).attr("readonly", "readonly");
+            $("#pHeadPostingDate").val(res.data[0].POSTING_DATE).attr("readonly", "readonly");
+            $("#pHeadDocNo").val(res.data[0].DOCUMENT_NUMBER).attr("readonly", "readonly");
             $("#pHeadReference").val(res.data[0].REFERENCE);
-            $("#pHeadFiscYear").val(res.data[0].FISC_YEAR);
-            $("#pHeadCompCode").val(res.data[0].COMPANY_CODE);
-            $("#pHeadBusArea").val(res.data[0].BUSINESS_AREA);
-            $("#pHeadCurrency").val(res.data[0].CURRENCY);
-            $("#pHeadExchangeRate").val(res.data[0].EXCHANGE_RATE);
+            $("#pHeadFiscYear").val(res.data[0].FISC_YEAR).attr("readonly", "readonly");
+            $("#pHeadCompCode").val(res.data[0].COMPANY_CODE).attr("readonly", "readonly");
+            $("#pHeadBusArea").val(res.data[0].BUSINESS_AREA).attr("readonly", "readonly");
+            $("#pHeadCurrency").val(res.data[0].CURRENCY).attr("disabled",true);
+            $("#pHeadExchangeRate").val(res.data[0].EXCHANGE_RATE).attr("readonly", "readonly");
             $("#pHeadDocHdrTxt").val(res.data[0].DOC_HDR_TXT);
             $("#pIdMetallica").val(res.data[0].ID_METALLICA);
+            $("#pHeadCurrencyHidden").val(res.data[0].CURRENCY);
+
             if (res.data[0].CURRENCY === "IDR") {
                 $("#pHeadExchangeRate").val(1);
                 $(".pExcRate").hide();
@@ -1244,42 +1281,42 @@ function ins_data() {
     let idOperasiKhusus = $("#pIdMetallica").val();
     showLoadingCss("");
     (idOperasiKhusus === undefined || idOperasiKhusus === "") ? idOperasiKhusus = null : idOperasiKhusus=idOperasiKhusus;
-    // console.log("id valas : ", idValas)
     $.ajax({
-        url: baseUrl + "api_operator/operasi_khusus_trx/ins_operasi_khusus_trx",
-        dataType: 'JSON',
-        type: "POST",
-        data: {
-            pIdMetallica: idOperasiKhusus,
-            pDocNo: $("#pHeadDocNo").val(),
-            pDocDate: $("#pHeadDocDate").val(),
-            pCompCode: $("#pHeadCompCode").val(),
-            pReference: $("#pHeadReference").val(),
-            pCurrency: $("#pHeadCurrency").val(),
-            pPostDate: $("#pHeadPostingDate").val(),
-            pBusArea: $("#pHeadBusArea").val(),
-            pDocHdrTxt: $("#pHeadDocHdrTxt").val(),
-            pExchangeRate: $("#pHeadExchangeRate").val(),
-            pFiscYear: $("#pHeadFiscYear").val(),
-        },
-        success: function (res) {
-            hideLoadingCss("");
-            // var result = res.return.split(";")[0];
-            console.log("Result : "+res);
-            if (res == 1 ) {
-                alert(res.OUT_MSG);
+            url: baseUrl + "api_operator/operasi_khusus_trx/ins_operasi_khusus_trx",
+            dataType: 'JSON',
+            type: "POST",
+            data: {
+                pIdMetallica: idOperasiKhusus,
+                pDocNo: $("#pHeadDocNo").val(),
+                pDocDate: $("#pHeadDocDate").val(),
+                pCompCode: $("#pHeadCompCode").val(),
+                pReference: $("#pHeadReference").val(),
+                pCurrency: $("#pHeadCurrency").val(),
+                pPostDate: $("#pHeadPostingDate").val(),
+                pBusArea: $("#pHeadBusArea").val(),
+                pDocHdrTxt: $("#pHeadDocHdrTxt").val(),
+                pExchangeRate: $("#pHeadExchangeRate").val(),
+                pFiscYear: $("#pHeadFiscYear").val(),
+            },
+            success: function (res) {
+                hideLoadingCss("");
+                // var result = res.return.split(";")[0];
+                console.log("Result : "+res);
+                if (res == 1 ) {
+                    alert(res.OUT_MSG);
+                    $('#edit-modal').modal('hide');
+                    tableOperasiKhusus.ajax.reload();
+                } else {
+                    alert(res.OUT_MSG);
+                }
                 $('#edit-modal').modal('hide');
                 tableOperasiKhusus.ajax.reload();
-            } else {
-                alert(res.OUT_MSG);
+            },
+            error: function () {
+                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
             }
-            $('#edit-modal').modal('hide');
-            tableOperasiKhusus.ajax.reload();
-        },
-        error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
-        }
-    });
+        });
+    // console.log("id valas : ", idValas)
 }
 
 function update_status(idMetallica, statusTracking){
@@ -1369,7 +1406,7 @@ function reverse_status(idMetallica, statusTracking){
 
 function setListCurrency(htmlid){
     $.ajax({
-        url : baseUrl + "api_operator/pindah_buku_trx/get_currency",
+        url : baseUrl + "api_operator/operasi_khusus_trx/get_currency",
         type : "GET",
         dataType : "JSON",
         success : response => {
@@ -1439,6 +1476,11 @@ function submitChild() {
         return;
     }
 
+    table_data.each(data => {if(data.FLAG !== 0){
+        Swal.fire("Maaf!", "Tidak ada data baru yang ditambahkan", "error");
+        return;
+    }})
+
     if (getBalance() != 0 || getBalance() < 0){
         Swal.fire("Maaf!", "Balance tidak seimbang", "error");
         return;
@@ -1465,6 +1507,7 @@ function submitChild() {
             pBusArea : data.BUSINESS_AREA,
             pRemarks : data.REMARKS,
             pFlag : data.FLAG,
+            pRealAmount : data.REAL_AMOUNT
         };
         dataList.push(prm);
     });
@@ -1511,43 +1554,25 @@ function submitChild() {
 }
 
 function back(){
-    var ada = 0;
-    tblOperasiKhususDetail.rows().every(function(rowId, tableLoop, rowLoop) {
-        let data = this.data();
-        if (data.FLAG === 0 ){
-            ada++;
+    Swal.fire({
+        title : "Yakin ?",
+        text : "Apakah anda yakin ingin kembali?",
+        icon : "error",
+        showCancelButton : true,
+        confirmButtonColor : "#3085d6",
+        cancelButtonColor : "#d33",
+        confirmButtonText : "Ya"
+    }).then(result => {
+        if (result.value){
+            $(".list-data").show();
+            $(".detail-data").hide();
+            $("#filter").show();
+            $("#btn-add-rekap").show();
+            $(".fungsional-button").show();
+            tableOperasiKhusus.ajax.reload();
+            tblOperasiKhususDetail.destroy();
         }
     });
-
-    if (ada > 0){
-        Swal.fire({
-            title : "Yakin ?",
-            text : "Data baru belum Anda simpan, yakin ingin kembali?",
-            icon : "warning",
-            showCancelButton : true,
-            confirmButtonColor : "#3085d6",
-            cancelButtonColor : "#d33",
-            confirmButtonText : "Ya"
-        }).then(result => {
-            if (result.value){
-                showLoadingCss();
-                $(".list-data").show();
-                $(".detail-data").hide();
-                $("#filter").show();
-                $("#btn-add-rekap").show();
-                tablePembelianValas.ajax.reload();
-                pembelianValasDetail.destroy();
-            }
-        });
-    }
-    // showLoadingCss();
-    // $(".list-data").show();
-    // $(".detail-data").hide();
-    // $("#filter").show();
-    // $("#btn-add-rekap").show();
-    // tableOperasiKhusus.ajax.reload();
-    // tblOperasiKhususDetail.destroy();
-    // hideLoadingCss();
 }
 
 function setBalance(bal){
@@ -1558,19 +1583,18 @@ function getBalance(){
     return balance;
 }
 
-function isExistDataBaru(){
-    tblOperasiKhususDetail.rows().every(function(rowId, tableLoop, rowLoop) {
-        let data = this.data();
-        if (data.FLAG === 0 ){
-            return true;
-        }else return false;
-    });
-}
-
 $("#pHeadCurrency").change(function () {
     if ($("#pHeadCurrency").val() != "IDR"){
         $(".pExcRate").show();
     } else {
         $(".pExcRate").hide();
+    }
+});
+
+$("#pDetailCurrency").change(function () {
+    if ($("#pDetailCurrency").val() != "IDR"){
+        $(".pExchangeRate").show();
+    } else {
+        $(".pExchangeRate").hide();
     }
 });

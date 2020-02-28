@@ -217,7 +217,7 @@ public class PindahBukuTrxController {
             Map<String, Object> res = new HashedMap();
             for (PindahBukuDetail p : pindahBuku.getPindahBukuDetails()){
 
-                res = pindahBukuTrxService.insDetailPindahBukuTrx(pindahBuku.getpIdMetallica(),p.getpPostDate(), p.getpDocNo(), p.getpAmount(), p.getpBusArea(), p.getpReference(), p.getpCompCode(), WebUtils.getUsernameLogin(), p.getpCurrency(), p.getpDrCrInd(), p.getpExchangeRate(), p.getpFiscYear(), p.getpGlAccount(), p.getpLineNo(), p.getpPmtProposalId(), p.getpRemarks(), p.getpFlag(), p.getpCashCode(), p.getpCostCtr(), p.getpSumberDana());
+                res = pindahBukuTrxService.insDetailPindahBukuTrx(pindahBuku.getpIdMetallica(),p.getpPostDate(), p.getpDocNo(), p.getpAmount(), p.getpBusArea(), p.getpReference(), p.getpCompCode(), WebUtils.getUsernameLogin(), p.getpCurrency(), p.getpDrCrInd(), p.getpExchangeRate(), p.getpFiscYear(), p.getpGlAccount(), p.getpLineNo(), p.getpPmtProposalId(), p.getpRemarks(), p.getpFlag(), p.getpCashCode(), p.getpCostCtr(), p.getpSumberDana(), p.getpRealAmount());
             }
             return res;
         }catch (Exception e){
@@ -246,7 +246,8 @@ public class PindahBukuTrxController {
     @RequestMapping(value = "/delete_pindah_buku_item_trx", method = RequestMethod.POST)
     public Map<String, Object> deletePindaBukuItemTrx(
             @RequestParam(value = "pIdMetallica", defaultValue = "") String pIdMetallica,
-            @RequestParam(value = "pItemId", defaultValue = "") String pItemId
+            @RequestParam(value = "pItemId", defaultValue = "") String pItemId,
+            @RequestParam(value = "pLineNo", defaultValue = "") String pLineNo
     ) {
 
         AppUtils.getLogger(this).debug("pIdMetallica : {} ", pIdMetallica);
@@ -258,7 +259,7 @@ public class PindahBukuTrxController {
 //            message += WebUtils.getUsernameLogin() + " telah melakukan penghapusan Data pada aplikasi. ";
 //            message += data.get("NAMA_JENIS_PEMBAYARAN") + "-" + data.get("NAMA_VENDOR") + ".";
 //            WebUtils.deleteFile(pIdValas);
-            Map<String, Object> res = pindahBukuTrxService.deletePindahBukuItemTrx(pIdMetallica, pItemId);
+            Map<String, Object> res = pindahBukuTrxService.deletePindahBukuItemTrx(pIdMetallica, pItemId, pLineNo);
 //            Notification notification =
 //                    Notification.builder()
 //                            .topic(idJenisPembayaran)
@@ -286,9 +287,9 @@ public class PindahBukuTrxController {
 
         try {
             Map<String, Object> resutl = pindahBukuTrxService.updateStatus(pIdMetallica,pStatusTracking);
-            if(((BigDecimal) resutl.get("return")).equals(BigDecimal.ONE)){
-
-            }
+//            if(((BigDecimal) resutl.get("return")).equals(BigDecimal.ONE)){
+//
+//            }
 
             return resutl;
         }catch (Exception e){
@@ -444,6 +445,17 @@ public class PindahBukuTrxController {
         return formatted;
     }
 
+    @RequestMapping(value = "/get_total_tagihan_lunas", method = RequestMethod.GET)
+    public String getTotalTagihanLunas(@RequestParam(value = "tgl_awal", defaultValue = "") String tglAwal,
+                                       @RequestParam(value = "tgl_akhir", defaultValue = "") String tglAkhir,
+                                       @RequestParam(value = "currency", defaultValue = "ALL") String currency,
+
+                                       @RequestParam(value = "search", defaultValue = "") String search) {
+        BigDecimal result =  pindahBukuTrxService.getTotalTagihanLunas(tglAwal, tglAkhir, currency, WebUtils.getUsernameLogin(), search);
+        String formatted = AppUtils.getInstance().formatDecimalCurrency(result);
+        return formatted;
+    }
+
     @PostMapping(path = "/multiple_delete_head")
     public Map<String,Object> multipleDeleteHead(@RequestParam(value = "pData") String data) throws SQLException, JSONException {
         Map<String, Object> out = new HashMap<>();
@@ -492,7 +504,7 @@ public class PindahBukuTrxController {
             for (int index = 0; index < jsonArray.length(); index++){
                 JSONObject object = jsonArray.getJSONObject(index);
                 String id = object.getString("pIdMetallica");
-                String jenis = object.getString("jenis");
+                String jenis = object.getString("statustracking");
                 out = pindahBukuTrxService.updateLunas(id, jenis);
             }
         }catch (Exception e){
@@ -556,6 +568,136 @@ public class PindahBukuTrxController {
 
             XLSTransformer transformer = new XLSTransformer();
             InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/pindah_buku.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Gagal Export Data :" + e.getMessage();
+        }
+    }
+
+    @RequestMapping(value = "/xlsverified/{pTglAwal}/{pTglAkhir}/{pCurr}", method = RequestMethod.GET)
+    public String export2(
+            @PathVariable String pTglAwal,
+            @PathVariable String pTglAkhir,
+            @PathVariable String pCurr,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
+
+            String tglAwal = "";
+            String tglAkhir = "";
+
+            if (!pTglAwal.equals("null")) {
+                tglAwal = pTglAwal;
+            }
+            if (!pTglAkhir.equals("null")) {
+                tglAkhir = pTglAkhir;
+            }
+
+            String title = "PINDAH BUKU VERIFIED";
+            String namaFile = "pindah_buku_verified.xls";
+
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
+
+            List<Map<String, Object>> listData = pindahBukuTrxService.getAllpembayaran2(WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pCurr);
+
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+
+            param.put("TITLE", title);
+            for (Map data : listData) {
+                Map paramDetail = new HashMap();
+                paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
+                paramDetail.put("DOCUMENT_DATE", data.get("DOCUMENT_DATE"));
+                paramDetail.put("POSTING_DATE", data.get("POSTING_DATE"));
+                paramDetail.put("FISC_YEAR", data.get("FISC_YEAR"));
+                paramDetail.put("DOCUMENT_NUMBER", data.get("DOCUMENT_NUMBER"));
+                paramDetail.put("REFERENCE", data.get("REFERENCE"));
+                paramDetail.put("COMPANY_CODE", data.get("COMPANY_CODE"));
+                paramDetail.put("BUSINESS_AREA", data.get("BUSINESS_AREA"));
+                paramDetail.put("CURRENCY", data.get("CURRENCY"));
+                paramDetail.put("EXCHANGE_RATE", data.get("EXCHANGE_RATE"));
+                paramDetail.put("DOC_HDR_TXT", data.get("DOC_HDR_TXT"));
+                paramDetail.put("PMT_PROPOSAL_ID", data.get("PMT_PROPOSAL_ID"));
+                paramDetail.put("TOTAL_TAGIHAN", data.get("TOTAL_TAGIHAN"));
+                paramDetail.put("STATUS_TRACKING", data.get("STATUS_TRACKING"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+
+
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/pindah_buku_verified.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Gagal Export Data :" + e.getMessage();
+        }
+    }
+
+    @RequestMapping(value = "/xlslunas/{pTglAwal}/{pTglAkhir}/{pCurr}", method = RequestMethod.GET)
+    public String export3(
+            @PathVariable String pTglAwal,
+            @PathVariable String pTglAkhir,
+            @PathVariable String pCurr,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
+
+            String tglAwal = "";
+            String tglAkhir = "";
+
+            if (!pTglAwal.equals("null")) {
+                tglAwal = pTglAwal;
+            }
+            if (!pTglAkhir.equals("null")) {
+                tglAkhir = pTglAkhir;
+            }
+
+            String title = "PINDAH BUKU LUNAS";
+            String namaFile = "pindah_buku_lunas.xls";
+
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
+
+            List<Map<String, Object>> listData = pindahBukuTrxService.getAllpembayaran3(WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pCurr);
+
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+
+            param.put("TITLE", title);
+            for (Map data : listData) {
+                Map paramDetail = new HashMap();
+                paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
+                paramDetail.put("DOCUMENT_DATE", data.get("DOCUMENT_DATE"));
+                paramDetail.put("POSTING_DATE", data.get("POSTING_DATE"));
+                paramDetail.put("FISC_YEAR", data.get("FISC_YEAR"));
+                paramDetail.put("DOCUMENT_NUMBER", data.get("DOCUMENT_NUMBER"));
+                paramDetail.put("REFERENCE", data.get("REFERENCE"));
+                paramDetail.put("COMPANY_CODE", data.get("COMPANY_CODE"));
+                paramDetail.put("BUSINESS_AREA", data.get("BUSINESS_AREA"));
+                paramDetail.put("CURRENCY", data.get("CURRENCY"));
+                paramDetail.put("EXCHANGE_RATE", data.get("EXCHANGE_RATE"));
+                paramDetail.put("DOC_HDR_TXT", data.get("DOC_HDR_TXT"));
+                paramDetail.put("PMT_PROPOSAL_ID", data.get("PMT_PROPOSAL_ID"));
+                paramDetail.put("TOTAL_TAGIHAN", data.get("TOTAL_TAGIHAN"));
+                paramDetail.put("STATUS_TRACKING", data.get("STATUS_TRACKING"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+
+
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/pindah_buku_lunas.xls").getInputStream();
             Workbook workbook = transformer.transformXLS(streamTemplate, param);
             workbook.write(os);
             os.flush();

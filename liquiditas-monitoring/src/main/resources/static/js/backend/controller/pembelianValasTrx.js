@@ -22,7 +22,6 @@ $(document).ready(function () {
     $('#tanggal_akhir').attr("disabled", "disabled");
     $('#tanggal_akhir').datepicker({dateFormat: 'yymmdd'});
     setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
-    // getAllData();
 });
 
 $("#tanggal_awal").change(function () {
@@ -32,7 +31,7 @@ $("#tanggal_awal").change(function () {
         $('#tanggal_akhir').val("");
     } else {
         $('#tanggal_akhir').attr("disabled", false);
-        $('#tanggal_akhir').datepicker({dateFormat: 'dd/mm/yy', minDate: tglAwalData});
+        $('#tanggal_akhir').datepicker({dateFormat: 'yymmddy', minDate: tglAwalData});
     }
 });
 
@@ -125,22 +124,19 @@ function AddToTable() {
     var ref = $("#pDetailReference").val();
     var remarks = $("#pDetailRemarks").val();
     var lineno = $("#pDetailLineNo").val();
-    var exrate = $("#pDetailExchangeRate").val();
+    var exrate = $("#pDetailExchangeRate").val().toString();
+    let real_exrate = parseInt(exrate.replace(/,/g,""));
     var cash_code = $("#pDetailCashCode").val();
     var cost_ctr = $("#pDetailCostCtr").val();
     var sumber_dana = $("#pSumberDana").val();
+    var real_amount = $("#pDetailAmount").val().toString();
+    let very_real_amount = parseInt(real_amount.replace(/,/g,""))
     var flag = 0;
     let amount = 0;
 
-//    if (cost_ctr.length < 10 || cost_ctr.length > 10){
-//        Swal.fire("Maaf", "Cost Center harus 10 digit angka valid", "info");
-//        return;
-//    }
 
-    (exrate !== "-") ? amount = amt * exrate : amount = amt;
-    console.log("Amt :",amt);
-    console.log("Exrate :",exrate);
-    console.log("Amount :",amount);
+    (exrate !== "-") ? amount = very_real_amount * real_exrate : amount = very_real_amount;
+
     if (drcrind == "" || glaccount == "" || amt == "" || remarks == "" || cash_code == "") {
         Swal.fire("Maaf!","Mohon Lengkapi Data", "warning");
         return;
@@ -162,6 +158,7 @@ function AddToTable() {
                 "BUSINESS_AREA" : busarea,
                 "REMARKS" : remarks,
                 "FLAG" : flag,
+                "REAL_AMOUNT" : very_real_amount
             })
             .draw(false)
             .node();
@@ -191,14 +188,19 @@ function deletedb(idMetallica,idItem,lineNo){
                 data : {
                     pIdMetallica : idMetallica,
                     pItemId : idItem,
-                    pLineNo : lineNo,
-
+                    pLineNo : lineNo
                 },
                 success : (res) => {
-                    console.log("get detail : ", res.data);
-                    Swal.fire("Berhasil!","Data Berhasil Dihapus","success");
-                    hideLoadingCss();
-                    pembelianValasDetail.ajax.reload();
+                    // console.log("get detail : ", res.data);
+                    if (res.OUT_MSG === "DATA BERHASIL DI HAPUS" || res.return === 1){
+                        hideLoadingCss();
+                        Swal.fire("Berhasil!","Data Berhasil Dihapus","success");
+                        pembelianValasDetail.ajax.reload();
+                    }else {
+                        hideLoadingCss();
+                        Swal.fire("Gagal!","Gagal Menghapus Data","error");
+                    }
+
                 },
                 error: function () {
                     hideLoadingCss("Gagal Melakukan Proses, Harap Hubungi Administrator")
@@ -251,28 +253,6 @@ function dele() {
     });
 }
 
-function getAllData() {
-    $.ajax({
-        url: baseUrl + "api_operator/pembelian_valas_trx/get_pembelian_valas_trx",
-        dataType: 'JSON',
-        type: "GET",
-        data: {
-            pStatusValas: "0",
-            pTglAwal: $("#tanggal_awal").val(),
-            pTglAkhir: $("#tanggal_akhir").val(),
-            pCurrency: $("#cmb_currecny").val(),
-            pStatus: "",
-            pStatusTracking: "",
-        },
-        success: function (res) {
-            allData = res;
-        },
-        error: function (res) {
-            console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
-        }
-    });
-}
-
 function checkArray(e) {
     var isNew= true;
     if($(e).is(":checked")) {
@@ -314,10 +294,13 @@ function update_datas() {
     var stateCrf = confirm("Anda Yakin Akan Merverifikasi Tagihan Ini ?");
     if (stateCrf == true) {
         if(checkedArray.length === 0){
-            Swal.fire("Maaf!", "Silahkan pilih data terlebih dahulu.","warning");
-        }else if (checkedArray.every(checkTagihan) === false){
-           Swal.fire("Maaf!", "Total Tagihan harus terisi untuk bisa diverifikasi","error");
+            Swal.fire("Maaf", "Silahkan Pilih Data Terlebih Dahulu", "info");
+        }else if (checkedArray.every(checkTrackingVerifikasi) === false){
+            Swal.fire("Maaf!", "Tidak dapat melakukan verifikasi tagihan", "error");
+        }else if (!checkedArray.every(isBalance)){
+            Swal.fire("Maaf","Balance tidak sama dengan 0", "error");
         }else{
+            showLoadingCss();
             $.ajax({
                 url: baseUrl + "/api_operator/pembelian_valas_trx/multi_upd_status",
                 dataType: 'JSON',
@@ -327,7 +310,7 @@ function update_datas() {
                 },
                 success: function (res) {
                     hideLoadingCss("")
-                    if (res.return == 1) {
+                    if (res.return === 1) {
                         alert(res.OUT_MSG)
                         tablePembelianValas.ajax.reload();
                         checkedArray = new Array();
@@ -343,8 +326,14 @@ function update_datas() {
     }
 }
 
-function checkTagihan(val, index, array){
-    return val.totalTagihan > 0;
+function checkTrackingVerifikasi(val){
+    return val.statustracking < 4;
+}
+
+function isBalance(val){
+    if(val.debit == 0 && val.kredit == 0){
+        return false;
+    }else return val.debit - val.kredit === 0;
 }
 
 function exportXls() {
@@ -358,96 +347,6 @@ function exportXls() {
     }
     window.open(baseUrl + "api_operator/pembelian_valas_trx/xls/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currecny").val());
 }
-
-function generatePDF() {
-    var column = [];
-    column.push({
-        text: "NO.",
-        style: "tableHeader",
-        alignment: "center"
-    });
-    column.push({
-        text: "DOCUMENT DATE",
-        style: "tableHeader",
-        alignment: "center"
-    });
-    column.push({
-        text: "POSTING DATE",
-        style: "tableHeader",
-        alignment: "center"
-    });
-    column.push({
-        text: "DOCUMENT NUMBER",
-        style: "tableHeader",
-        alignment: "center"
-    });
-    column.push({
-        text: "REFERENCE",
-        style: "tableHeader",
-        alignment: "center"
-    });
-    column.push({
-        text: "FISCAL YEAR",
-        style: "tableHeader",
-        alignment: "center"
-    });
-    column.push({
-        text: "COMPANY CODE",
-        style: "tableHeader",
-        alignment: "center"
-    });
-    column.push({
-        text: "BUSINESS AREA",
-        style: "tableHeader",
-        alignment: "center"
-    });
-    column.push({
-        text: "CURRENCY",
-        style: "tableHeader",
-        alignment: "center"
-    });
-    column.push({
-        text: "EXCHANGE RATE",
-        style: "tableHeader",
-        alignment: "center"
-    });
-    column.push({
-        text: "TOTAL TAGIHAN",
-        style: "tableHeader",
-        alignment: "center"
-    });
-    column.push({
-        text: "DOC HDR TEXT",
-        style: "tableHeader",
-        alignment: "center"
-    });
-    column.push({
-        text: "STATUS TRACKING",
-        style: "tableHeader",
-        alignment: "center"
-    });
-
-    var externalDataRetrievedFromServer = []
-    console.log("allData : "+allData)
-    $.each(allData, function (index, v) {
-
-        var helloooow = {
-            NO: v.ROW_NUMBER,
-            DOCUMENT_DATE: v.DOCUMENT_DATE,
-            POSTING_DATE: v.POSTING_DATE,
-            DOCUMENT_NUMBER: v.DOCUMENT_NUMBER,
-            REFERENCE: v.REFERENCE,
-            FISC_YEAR: v.FISC_YEAR,
-            COMPANY_CODE: v.COMPANY_CODE,
-            BUSINESS_AREA: v.BUSINESS_AREA,
-            CURRENCY: v.CURRENCY,
-            EXCHANGE_RATE: v.EXCHANGE_RATE,
-            TOTAL_TAGIHAN: accounting.formatNumber(v.TOTAL_TAGIHAN, 2, ".", ","),
-            DOC_HDR_TXT: v.DOC_HDR_TXT,
-            STATUS_TRACKING: v.STATUS_TRACKING
-        }
-        externalDataRetrievedFromServer.push(helloooow)
-    });
 
 
     function buildTableBody(data, columns) {
@@ -477,82 +376,50 @@ function generatePDF() {
         return body;
     }
 
-    function table(data, columns) {
-        return {
-            style: "tableExample",
-            color: "#444",
-            table: {
-                headerRows: 1,
-                body: buildTableBody(data, columns)
-            }
-        };
-    }
-
-    var docDefinition = {
-        pageOrientation: "landscape",
-        content: [{
-            text: "PEMBELIAN VALAS",
-            style: "header",
-            alignment: "center"
-        }, {
-            text: "Tanggal Cetak : " + getDataNow(),
-            style: "subheader"
-        },
-            table(externalDataRetrievedFromServer, column)
-        ],
-        styles: {
-            header: {
-                fontSize: 5.5,
-                bold: true,
-                margin: [0, 0, 0, 10]
-            },
-            subheader: {
-                fontSize: 4.5,
-                margin: [0, 10, 0, 5]
-            },
-            tableExample: {
-                fontSize: 5
-            },
-            tableHeader: {
-                bold: true,
-                fontSize: 5.5,
-                color: "black"
-            }
-        },
-        defaultStyle: {
-            alignment: "left",
-            margin: [0, 0, 0, 0]
-        }
-    };
-    pdfMake.createPdf(docDefinition).open();
-}
-
 function multi_upd_lunas() {
     var stateCrf = confirm("Anda Yakin Akan Merverifikasi Tagihan Ini ?");
     if (stateCrf == true) {
-        showLoadingCss();
-        $.ajax({
-            url: baseUrl + "/api_operator/pembelian_valas_trx/multi_upd_lunas",
-            dataType: 'JSON',
-            type: "POST",
-            data: {
-                pData: JSON.stringify(checkedArray),
-            },
-            success: function (res) {
-                hideLoadingCss("")
-                if (res.return == 1) {
-                    alert(res.OUT_MSG)
-                    tablePembelianValas.ajax.reload();
-                    checkedArray = new Array();
-                } else {
-                    alert(res.OUT_MSG);
+        if(checkedArray.length <=0){
+            Swal.fire("Maaf!", "Silahkan pilih data terlebih dahulu","error")
+        }
+        if(checkedArray.every(checkTracking)){
+            Swal.fire("Maaf!", "Maaf tidak bisa melakukan pelunasan","error")
+        }else{
+            // alert("Good To Go!");
+            showLoadingCss();
+            $.ajax({
+                url: baseUrl + "/api_operator/pembelian_valas_trx/multi_upd_lunas",
+                dataType: 'JSON',
+                type: "POST",
+                data: {
+                    pData: JSON.stringify(checkedArray),
+                },
+                success: function (res) {
+                    hideLoadingCss("")
+                    if (res.return == 1) {
+                        alert(res.OUT_MSG)
+                        tablePembelianValas.ajax.reload()
+                        checkedArray = new Array();
+                    } else {
+                        alert(res.OUT_MSG);
+                    }
+                },
+                error: function () {
+                    hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
                 }
-            },
-            error: function () {
-                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-            }
-        });
+            });
+        }
     }
+}
+
+function checkTracking(val){
+    return val.statustracking != 4;
+}
+
+function isBalance(val){
+    if(val.debit == 0 && val.kredit == 0){
+        return false;
+    }else return val.debit - val.kredit === 0;
 }
 
 function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
@@ -663,18 +530,14 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                 {
                     "aTargets": [9],
                     "mRender": function (data, type, full) {
-                        if (full.EXCHANGE_RATE === "-"){
-                            return 1;
-                        }else return Intl.NumberFormat().format(full.EXCHANGE_RATE);
+                        return accounting.formatNumber(full.EXCHANGE_RATE,2,".",",");
                     }
 
                 },
                 {
                     "aTargets": [10],
                     "mRender": function (data, type, full) {
-                        if (full.TOTAL_TAGIHAN === "-"){
-                            return "-";
-                        }else return Intl.NumberFormat().format(full.TOTAL_TAGIHAN);
+                    return accounting.formatNumber(full.TOTAL_TAGIHAN,2,".",",");
                     }
 
                 },
@@ -697,7 +560,6 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                     "mRender": function (data, type, full) {
                         var jenis = "PEMBELIAN_VALAS";
                         console.log("Ini Full : ", full);
-                        status_tracking = full.STATUS_TRACKING;
                         var ret_value;
                         /*alert('BOOOMB2'+full.STATUS_TRACKING);*/
                         /*    if(newRoleUser[0].includes("DIVKEU")){
@@ -727,40 +589,40 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                                 var role = newRoleUser[0];
                                 ret_value =
                                     '<div class="btn-group">';
-                                if(newRoleUser[0] == "ROLE_ADMIN" && full.KODE_TRACKING === 1){
+                                if(newRoleUser[0] == "ROLE_ADMIN" && full.TOTAL_TAGIHAN !== "-"){
                                     var full_value = full;
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' +full.ID_METALLICA+'\')"><i class="fa fa-pencil"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\',\'' +full.AMOUNT_DEBIT+'\',\'' +full.AMOUNT_CREDIT+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_METALLICA + '\')"><i class="fa fa-close"></i></button>'+
                                         '</div>';
                                 }
-                                if(newRoleUser[0] == "ROLE_JA_CASH" && full.KODE_TRACKING === 1){
+                                if(newRoleUser[0] == "ROLE_JA_CASH" && full.TOTAL_TAGIHAN !== "-"){
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' +full.ID_METALLICA+'\')"><i class="fa fa-pencil"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\',\'' +full.AMOUNT_DEBIT+'\',\'' +full.AMOUNT_CREDIT+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_METALLICA + '\')"><i class="fa fa-close"></i></button>'+
                                         '</div>';
                                 }
-                                if(newRoleUser[0] == "ROLE_JA_IE" && full.KODE_TRACKING === 1){
+                                if(newRoleUser[0] == "ROLE_JA_IE" && full.TOTAL_TAGIHAN !== "-"){
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' +full.ID_METALLICA+'\')"><i class="fa fa-pencil"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\',\'' +full.AMOUNT_DEBIT+'\',\'' +full.AMOUNT_CREDIT+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_METALLICA + '\')"><i class="fa fa-close"></i></button>'+
                                         '</div>';
                                 }
-                                if(newRoleUser[0] == "ROLE_FCL_SETTLEMENT" && full.KODE_TRACKING === 1){
+                                if(newRoleUser[0] == "ROLE_FCL_SETTLEMENT" && full.TOTAL_TAGIHAN !== "-"){
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' +full.ID_METALLICA+'\')"><i class="fa fa-pencil"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\',\'' +full.AMOUNT_DEBIT+'\',\'' +full.AMOUNT_CREDIT+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_METALLICA + '\')"><i class="fa fa-close"></i></button>'+
                                         '</div>';
                                 }
-                                if (full.KODE_TRACKING === 0){
+                                if (full.TOTAL_TAGIHAN === "-"){
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' +full.ID_METALLICA+'\')"><i class="fa fa-pencil"></i></button>'+
@@ -775,14 +637,14 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                                 if(newRoleUser[0] == "ROLE_ADMIN"){
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+2+'\',\'' +full.AMOUNT_DEBIT+'\',\'' +full.AMOUNT_CREDIT+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_CENTRALIZED_RECEIPT"){
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+2+'\',\'' +full.AMOUNT_DEBIT+'\',\'' +full.AMOUNT_CREDIT+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
@@ -794,84 +656,84 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                                 if(newRoleUser[0] == "ROLE_ADMIN"){
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\',\'' +full.AMOUNT_DEBIT+'\',\'' +full.AMOUNT_CREDIT+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_METALLICA+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_PAYMENT_EXPENDITURE"){
                                     ret_value = ret_value +
                                     '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\',\'' +full.AMOUNT_DEBIT+'\',\'' +full.AMOUNT_CREDIT+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_METALLICA+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_FOREIGN_CURRENCY_LIQUIDITY"){
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\',\'' +full.AMOUNT_DEBIT+'\',\'' +full.AMOUNT_CREDIT+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_METALLICA+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_VP_LIQUIDITY_AND_RECEIPT"){
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\',\'' +full.AMOUNT_DEBIT+'\',\'' +full.AMOUNT_CREDIT+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY"){
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\',\'' +full.AMOUNT_DEBIT+'\',\'' +full.AMOUNT_CREDIT+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_VP_BUSINESS_MANAGEMENT"){
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\',\'' +full.AMOUNT_DEBIT+'\',\'' +full.AMOUNT_CREDIT+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_INVESTMENT_EXPENDITURE_2"){
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\',\'' +full.AMOUNT_DEBIT+'\',\'' +full.AMOUNT_CREDIT+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_VP_INVESTMENT_EXPENDITURE"){
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\',\'' +full.AMOUNT_DEBIT+'\',\'' +full.AMOUNT_KREDIT+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_PRIMARY_ENERGY_EXPENDITURE"){
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\',\'' +full.AMOUNT_DEBIT+'\',\'' +full.AMOUNT_CREDIT+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_VP_OPERATION_EXPENDITURE"){
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\',\'' +full.AMOUNT_DEBIT+'\',\'' +full.AMOUNT_KREDIT+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_OPERATION_EXPENDITURE"){
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\',\'' +full.AMOUNT_DEBIT+'\',\'' +full.AMOUNT_CREDIT+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_INVESTMENT_EXPENDITURE"){
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+3+'\',\'' +full.AMOUNT_DEBIT+'\',\'' +full.AMOUNT_CREDIT+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
@@ -957,7 +819,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                                     '<div class="btn-group">' +
                                     '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Do Payment" onclick="updateLunas(\'' +full.ID_METALLICA+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
                                     '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DIAZ" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DIAZ" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\',\'' +full.AMOUNT_DEBIT+'\',\'' +full.AMOUNT_CREDIT+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                     '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_METALLICA + '\')"><i class="fa fa-close"></i></button>'+
                                     '</div>';
                             }
@@ -979,7 +841,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                         }
                         else {
                             if (full.STATUS_TRACKING == "INPUT DATA") {
-                                value = '{"pIdMetallica":"'+full.ID_METALLICA+'","statustracking" : "'+1+'","totalTagihan" : "'+full.TOTAL_TAGIHAN+'"}';
+                                value = '{"pIdMetallica":"'+full.ID_METALLICA+'","statustracking" : "'+1+'", "debit":"'+full.AMOUNT_DEBIT+'","kredit":"'+full.AMOUNT_CREDIT+'"}';
                                 data_full = '{"full" : "'+JSON.stringify(full)+'"}';
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY MAKER") {
@@ -991,7 +853,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                                 data_full = '{"full" : "'+JSON.stringify(full)+'"}';
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY APPROVER") {
-                                value = '{"pIdMetallica":"'+full.ID_METALLICA+'","jenis" : "'+"PEMBELIAN_VALAS"+'"}';
+                                value = '{"pIdMetallica":"'+full.ID_METALLICA+'","jenis" : "'+"PEMBELIAN_VALAS"+'","statustracking" : "'+4+'"}';
                                 data_full = '{"full" : "'+JSON.stringify(full)+'"}';
                             }
                             else {
@@ -1098,10 +960,9 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
     $('.dataTables_filter').each(function () {
 //         var html = '';
         var html = '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
-        if(newRoleUser[0] == "ROLE_FCL_SETTLEMENT" || newRoleUser[0] === "ROLE_ADMIN") {
-            html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
+        if(newRoleUser[0] == "ROLE_FCL_SETTLEMENT") {
+        html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
         }
-
         if(newRoleUser[0] == "ROLE_VP_LIQUIDITY_AND_RECEIPT" || newRoleUser[0] == "ROLE_VP_INVESTMENT_EXPENDITURE"
             || newRoleUser[0] == "ROLE_VP_BUSINESS_MANAGEMENT" || newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT"
             || newRoleUser[0] == "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY" || newRoleUser[0] == "ROLE_VP_INVESTMENT_EXPENDITURE"
@@ -1116,7 +977,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
     initCbparent();
 }
 
-function update_status(idMetallica, statusTracking){
+function update_status(idMetallica, statusTracking, debit, kredit){
     Swal.fire({
         title : "Verifikasi?",
         text : "Apakah Anda yakin akan membverifikasi tagihan ini?",
@@ -1127,31 +988,37 @@ function update_status(idMetallica, statusTracking){
         confirmButtonText : "Ya",
     }).then(result => {
         if (result.value == true){
-            showLoadingCss();
-            $.ajax({
-                url: baseUrl + "api_operator/pembelian_valas_trx/update_status",
-                dataType: 'JSON',
-                type: "POST",
-                data: {
-                    pIdMetallica: idMetallica,
-                    pStatusTracking: statusTracking,
-                },
-                success: (res) => {
-                    hideLoadingCss("")
-                    if (res.return == 1) {
-                        Swal.fire("Berhasil!", "Tagihan Berhasil Diverifikasi", "success");
-                        // alert(res.OUT_MSG);
-                        tablePembelianValas.ajax.reload();
-                    } else {
-                        Swal.fire("Gagal", "Tagihan gagal diverifikasi","error");
-                        // alert(res.OUT_MSG);
-                    }
-                },
-                error: () => {
-                    hideLoadingCss();
-                    Swal.fire("Error","Gagal Melakukan Proses, Harap Hubungi Administrator","error");
-                }
-            });
+            if (kredit !== debit){
+                Swal.fire("Maaf!", debit, "error")
+            }else{
+                alert("Ok To Be Verified");
+                // showLoadingCss();
+                // $.ajax({
+                //     url: baseUrl + "api_operator/pembelian_valas_trx/update_status",
+                //     dataType: 'JSON',
+                //     type: "POST",
+                //     data: {
+                //         pIdMetallica: idMetallica,
+                //         pStatusTracking: statusTracking,
+                //
+                //     },
+                //     success: (res) => {
+                //         hideLoadingCss("")
+                //         if (res.return == 1) {
+                //             Swal.fire("Berhasil!", "Tagihan Berhasil Diverifikasi", "success");
+                //             // alert(res.OUT_MSG);
+                //             tablePembelianValas.ajax.reload();
+                //         } else {
+                //             Swal.fire("Gagal", "Tagihan gagal diverifikasi","error");
+                //             // alert(res.OUT_MSG);
+                //         }
+                //     },
+                //     error: () => {
+                //         hideLoadingCss();
+                //         Swal.fire("Error","Gagal Melakukan Proses, Harap Hubungi Administrator","error");
+                //     }
+                // });
+            }
         }
     });
 }
@@ -1194,6 +1061,8 @@ function updateLunas(idMetallica, jenis){
             });
         }
     })
+
+
 }
 
 function reverse_status(idMetallica, statusTracking){
@@ -1248,6 +1117,7 @@ function submitChild() {
                     pReference : $("#pDetailReference").val(),
                     pDrCrInd : data.DEBIT_CREDIT_IND,
                     pGlAccount : data.GL_ACCOUNT,
+                    pRealAmount : data.REAL_AMOUNT,
                     pAmount : data.AMOUNT,
                     pExchangeRate : $("#pDetailExchangeRate").val(),
                     pCurrency : data.CURRENCY,
@@ -1256,6 +1126,7 @@ function submitChild() {
                     pBusArea : data.BUSINESS_AREA,
                     pRemarks : data.REMARKS,
                     pFlag : data.FLAG,
+
                 };
         dataList.push(prm);
     });
@@ -1406,7 +1277,8 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
     $(".detail-data").show();
     $("#filter").hide();
     $("#btn-add-rekap").hide();
-    let cok = track;
+    $(".fungsional-button").hide();
+
     (track === "INPUT DATA" || newRoleUser[0] === "ROLE_ADMIN") ? $(".just-for-input-data").show() : $(".just-for-input-data").hide();
 
     showLoadingCss();
@@ -1429,6 +1301,13 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
             {"data" : "LINE_NO"},
             {"data" : "DEBIT_CREDIT_IND"},
             {"data" : "GL_ACCOUNT"},
+           {
+               "data" : null,
+               "render" : function (data2, type, row ) {
+                   let number2 = parseInt(data2.REAL_AMOUNT);
+                   return Intl.NumberFormat().format(number2);
+               }
+           },
             {
                 "data" : null,
                 "render" : function (data, type, row ) {
@@ -1447,7 +1326,7 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
             {
                 "data" : null,
                 "render" : (data) => {
-                    if(data.FLAG == 1){
+                    if(data.FLAG == 1 || track == "INPUT_DATA"){
                         return '<td align="center"> <button class="btn btn-sm btn-danger" onclick="deletedb(\'' +data.ID_METALLICA+'\',\'' +data.ID_VALAS_ITEM_TRX+ '\',\'' +data.LINE_NO+ '\')"><i class="fa fa-trash"></i></button></td>';
                     }else if(data.FLAG == 0){
                         return '<td align="center"> <button class="btn btn-sm btn-warning" onclick="dele()"><i class="trash fa fa-trash"></i></button></td>';
@@ -1455,10 +1334,7 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
                     else {
                     return '-'
                     }
-                },
-
-
-
+                }
             }
         ],
         "drawCallback" : function (settings) {
@@ -1488,15 +1364,12 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
             setBalance(balance);
         },
         "initComplete" : (data) => {
-            showToast('Successfully Load Table');
+            hideLoadingCss();
         }
     });
-
-    $(".list-data").hide();
-    $(".detail-data").show();
-    $("#filter").hide();
-    $("#btn-add-rekap").hide();
-    hideLoadingCss();
+    $("#pDetailGlAccount, #pSumberDana, #pDetailDrCrInd, #pDetailCashCode").select2({
+        width : "100%"
+    });
 
     Valas = {
         pIdMetallica: id,
@@ -1504,10 +1377,13 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
         valasDetails: null //ini harus sama dengan nama variable di class nya
     }
 
-    $("#pDetailGlAccount, #pSumberDana, #pDetailDrCrInd, #pDetailCashCode").select2({
-        width : "100%"
-    });
+    $(".list-data").hide();
+    $(".detail-data").show();
+    $("#filter").hide();
+    $("#btn-add-rekap").hide();
+    hideLoadingCss();
 
+    $("#pDetailAmount").mask('000,000,000,000,000',{reverse : true});
     $("#pDetailExchangeRate").val(exc_rate)
     $("#pDetailDocumentNumber").val(doc_no);
     $("#pDetailPmtProposalId").val(prop_pmt_id);
@@ -1532,24 +1408,23 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
 function back(){
     Swal.fire({
         title : "Yakin ?",
-        text : "Yakin ingin kembali ke halaman sebelumnya ?",
-        icon : "warning",
+        text : "Apakah anda yakin ingin kembali?",
+        icon : "error",
         showCancelButton : true,
         confirmButtonColor : "#3085d6",
         cancelButtonColor : "#d33",
         confirmButtonText : "Ya"
     }).then(result => {
         if (result.value){
-            showLoadingCss();
             $(".list-data").show();
             $(".detail-data").hide();
             $("#filter").show();
             $("#btn-add-rekap").show();
+            $(".fungsional-button").show();
             tablePembelianValas.ajax.reload();
             pembelianValasDetail.destroy();
-            hideLoadingCss();
         }
-    })
+    });
 }
 
 function setBalance(bal){
@@ -1592,7 +1467,8 @@ function initCbparent() {
 }
 
 function openFormNew() {
-    idValas = "";
+    setListCurrency("pHeadCurrency");
+    setListCompCode("pHeadCompCode");
     $(".pExcRate").hide();
 
     $("#pHeadPostingDate").val("");
@@ -1603,6 +1479,8 @@ function openFormNew() {
     $("#pHeadBusArea").val("");
     $("#pHeadCurrency").val("");
     $("#pHeadDocHdrTxt").val("");
+    $("#pHeadFiscYear").val("");
+    $("#pHeadCompCode").val("");
 
     // $("#pUnitAnggaran").select2("val", "");
     // $("#pSpread").val("");
@@ -1612,12 +1490,7 @@ function openFormNew() {
     // }
     $('#pHeadPostingDate').datepicker({dateFormat: 'yymmdd', minDate: date});
     $('#pHeadDocDate').datepicker({dateFormat: 'yymmdd'});
-
-
-    // $('#pTglJatuhTempo').prop('disabled', false);
-    // if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
-    //     $('#pTglJatuhTempo').prop('disabled', true);
-    // }
+    $("#pHeadExchangeRate").mask('000,000,000,000,000',{reverse : true});
     $('#edit-modal').modal({backdrop: 'static', keyboard: false});
 
 }
@@ -1634,20 +1507,23 @@ function edit_data (idMetallica){
         success : (res) => {
             console.log("data edit data : ",res);
             hideLoadingCss("");
-            $("#pHeadDocDate").val(res.data[0].DOCUMENT_DATE)
-            $("#pHeadPostingDate").val(res.data[0].POSTING_DATE);
-            $("#pHeadDocNo").val(res.data[0].DOCUMENT_NUMBER);
+            $("#pHeadDocDate").val(res.data[0].DOCUMENT_DATE).attr("readonly", "readonly");
+            $("#pHeadPostingDate").val(res.data[0].POSTING_DATE).attr("readonly", "readonly");
+            $("#pHeadDocNo").val(res.data[0].DOCUMENT_NUMBER).attr("readonly", "readonly");
             $("#pHeadReference").val(res.data[0].REFERENCE);
-            $("#pHeadFiscYear").val(res.data[0].FISC_YEAR);
-            $("#pHeadCompCode").val(res.data[0].COMPANY_CODE);
-            $("#pHeadBusArea").val(res.data[0].BUSINESS_AREA);
-            $("#pHeadCurrency").val(res.data[0].CURRENCY);
-            $("#pHeadExchangeRate").val(res.data[0].EXCHANGE_RATE);
+            $("#pHeadFiscYear").val(res.data[0].FISC_YEAR).attr("readonly", "readonly");
+            $("#pHeadCompCode").val(res.data[0].COMPANY_CODE).attr("readonly", "readonly");
+            $("#pHeadBusArea").val(res.data[0].BUSINESS_AREA).attr("readonly", "readonly");
+            $("#pHeadCurrency").val(res.data[0].CURRENCY).attr("disabled",true);
+            $("#pHeadExchangeRate").val(res.data[0].EXCHANGE_RATE).attr("readonly", "readonly");
             $("#pHeadDocHdrTxt").val(res.data[0].DOC_HDR_TXT);
             $("#pIdMetallica").val(res.data[0].ID_METALLICA);
+            $("#pHeadCurrencyHidden").val(res.data[0].CURRENCY);
 
-            $("#pHeadDocDate, #pHeadPostingDate, #pHeadDocNo, #pHeadFiscYear, #pHeadCompCode, #pHeadBusArea, #pHeadCurrency,#pHeadExchangeRate")
-                .attr("readonly","readonly");
+            if (res.data[0].CURRENCY === "IDR") {
+                $("#pHeadExchangeRate").val(1);
+                $(".pExcRate").hide();
+            }
 
             setTimeout(function(){ $('#edit-modal').modal({backdrop: 'static', keyboard: false}); }, 1000);
         },
@@ -1659,7 +1535,7 @@ function edit_data (idMetallica){
 
 function ins_data() {
     let idValas = $("#pIdMetallica").val();
-    showLoadingCss("");
+    showLoadingCss();
     (idValas === undefined || idValas === "") ? idValas = null : idValas=idValas;
     // console.log("id valas : ", idValas)
     $.ajax({
@@ -1668,7 +1544,7 @@ function ins_data() {
         type: "POST",
         data: {
             pIdMetallica: idValas,
-            pDocNo: "0",                                 //$("#pHeadDocNo").val()
+            pDocNo: $("#pHeadDocNo").val(),
             pDocDate: $("#pHeadDocDate").val(),
             pCompCode: $("#pHeadCompCode").val(),
             pReference: $("#pHeadReference").val(),
@@ -1680,6 +1556,7 @@ function ins_data() {
             pFiscYear: $("#pHeadFiscYear").val(),
         },
         success: function (res) {
+            hideLoadingCss("");
             // var result = res.return.split(";")[0];
             console.log("Result : "+res);
             if (res == 1 ) {
@@ -1691,12 +1568,30 @@ function ins_data() {
             }
             $('#edit-modal').modal('hide');
             tablePembelianValas.ajax.reload();
-            hideLoadingCss("");
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
         }
     });
+}
+
+function setListCurrency(htmlid){
+    $.ajax({
+        url : baseUrl + "api_operator/pindah_buku_trx/get_currency",
+        type : "GET",
+        dataType : "JSON",
+        success : response => {
+            $("#"+htmlid+"").html();
+            $.each(response.data, (key,val) => {
+                console.log(val);
+                $("#"+htmlid+"").append('<option value="' + val.CURRENCY + '">'+val.CURRENCY+'</option>')
+            });
+        },
+        error : () => {
+            $("#" + htmlid + "").html('<option value="">Pilih Data</option>');
+            console.log("Error");
+        }
+    })
 }
 
 function setListGlAccount(htmlid, currency){
@@ -1710,7 +1605,7 @@ function setListGlAccount(htmlid, currency){
         success : response => {
             $("#"+htmlid+"").html();
             $.each(response, (key,val) => {
-                $("#"+htmlid+"").append('<option value="' + val.GL_ACCOUNT + '">'+val.GL_ACCOUNT+' - '+val.BANK_NAME+'</option>')
+                $("#"+htmlid+"").append('<option value="' + val.GL_ACCOUNT + '">'+val.GL_ACCOUNT+'-'+val.BANK_NAME+'</option>')
             });
             if (currency != "") {
                 $("#" + htmlid + "").val(currency).trigger('change');
@@ -1743,21 +1638,45 @@ function setListCashcode(htmlid){
     })
 }
 
-function checkDataBaru(){
-    pembelianValasDetail.rows().every((rowId, tableLoop, rowLoop) => {
-        let data = this.data();
-        console.log("Data Loop : ",data);
+function setListBusinessArea(value){
+    $.ajax({
+        url : baseUrl + "api_operator/pembelian_valas_trx/get_business_area",
+        type : "GET",
+        dataType : "JSON",
+        data : {
+            pCompCode : value,
+        },
+        success : response => {
+            console.log("Company Code : ",response);
+            $("#pHeadBusArea").html();
+            $.each(response, (key,val) => {
+                $("#pHeadBusArea").append('<option value="' + val.BUSINESS_AREA_CODE + '">'+val.BUSINESS_AREA_CODE+' - '+val.BUSINESS_AREA_DESC+'</option>')
+            });
+        },
+        error : () => {
+            $("#pHeadBusArea").html('<option value="">Pilih Data</option>');
+            console.log("Error");
+        }
     })
 }
 
-function showToast(text){
-    var myToast = $.toast({
-        heading: 'Information',
-        text: text,
-        icon: 'info',
-        hideAfter: 3000,
-        allowToastClose : true
-    });
+function setListCompCode(idhtml){
+    $.ajax({
+        url : baseUrl + "api_operator/pembelian_valas_trx/get_compcode",
+        type : "GET",
+        dataType : "JSON",
+        success : response => {
+            console.log("Company Code : ",response);
+            $("#"+idhtml+"").html();
+            $.each(response, (key,val) => {
+                $("#"+idhtml+"").append('<option value="' + val.COMPANY_CODE + '">'+val.COMPANY_CODE+' - '+val.COMPANY_NAME+'</option>')
+            });
+        },
+        error : () => {
+            $("#" + idhtml + "").html('<option value="">Pilih Data</option>');
+            console.log("Error");
+        }
+    })
 }
 
 $("#pHeadCurrency").change(function () {

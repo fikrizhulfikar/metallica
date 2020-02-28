@@ -63,6 +63,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
     $('#table-rekapitulasi tbody').empty();
     $('#table-rekapitulasi').dataTable().fnDestroy();
 
+    console.log("Role For This Session : ",newRoleUser[0]);
     tableOperasiKhususVerified = $('#table-rekapitulasi').DataTable({
             "serverSide": true,
             "oSearch": {"sSearch": tempTableSearch},
@@ -222,7 +223,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                                 }
 
                             }
-                            else   if (full.STATUS_TRACKING == "VERIFIED BY MAKER") {
+                            else   if (full.STATUS_TRACKING !== "VERIFIED BY MAKER") {
                                 var role = newRoleUser[0];
                                 ret_value =
                                     '<div class="btn-group">';
@@ -239,7 +240,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                                         '</div>';
                                 }
                             }
-                            else if (full.STATUS_TRACKING == "VERIFIED BY CHECKER") {
+                            else if (full.STATUS_TRACKING !== "VERIFIED BY CHECKER") {
                                 var role = newRoleUser[0];
                                 ret_value =
                                     '<div class="btn-group">';
@@ -252,14 +253,14 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_PAYMENT_EXPENDITURE"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+ +full.ID_METALLICA+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         // '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_METALLICA+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         '</div>';
                                 }
                             }
 
-                            else if (full.STATUS_TRACKING == "VERIFIED BY APPROVER") {
+                            else if (full.STATUS_TRACKING !== "VERIFIED BY APPROVER") {
                                 var role = newRoleUser[0];
                                 ret_value =
                                     '<div class="btn-group">';
@@ -298,7 +299,6 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                         }
                         return ret_value;
                     }
-
                 },
                 // {
                 //     "aTargets": [11],
@@ -667,6 +667,7 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
     $(".detail-data").show();
     $("#filter").hide();
     $("#btn-add-rekap").hide();
+    $(".fungsional-button").hide();
 
     tracking = track;
     (track === "INPUT DATA" || newRoleUser[0] === "ROLE_ADMIN") ? $(".just-for-input-data").show() : $(".just-for-input-data").hide();
@@ -840,6 +841,7 @@ function back(){
     $(".detail-data").hide();
     $("#filter").show();
     $("#btn-add-rekap").show();
+    $(".fungsional-button").show();
     tableOperasiKhususVerified.ajax.reload();
     tblOperasiKhususVerifiedDetail.destroy();
     hideLoadingCss();

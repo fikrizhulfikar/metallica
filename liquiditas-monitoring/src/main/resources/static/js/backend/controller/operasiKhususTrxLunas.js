@@ -339,16 +339,6 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                         var jenis = "OPERASI_KHUSUS";
                         console.log("Ini Full : "+full);
                         var ret_value;
-                        /*alert('BOOOMB2'+full.STATUS_TRACKING);*/
-                        /*    if(newRoleUser[0].includes("DIVKEU")){
-                                ret_value =
-                                    '<div class="btn-group">' +
-                                    '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
-                                    '</div>'
-                            } */
                         if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
                             return "-"
                         }
@@ -363,7 +353,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                                 '</div>';
                         }else {
 
-                            if (full.STATUS_TRACKING !== "INPUT DATA") {
+                            if (full.STATUS_TRACKING == "INPUT DATA") {
                                 var role = newRoleUser[0];
                                 ret_value =
                                     '<div class="btn-group">';
@@ -742,6 +732,7 @@ function back(){
     $(".detail-data").hide();
     $("#filter").show();
     $("#btn-add-rekap").show();
+    $(".fungsional-button").show();
     tableOperasiKhususLunas.ajax.reload();
     tblOperasiKhususLunasDetail.destroy();
     hideLoadingCss();
@@ -853,6 +844,7 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
     $(".detail-data").show();
     $("#filter").hide();
     $("#btn-add-rekap").hide();
+    $(".fungsional-button").hide();
 
     tracking = track;
     (track === "INPUT DATA" || newRoleUser[0] === "ROLE_ADMIN") ? $(".just-for-input-data").show() : $(".just-for-input-data").hide();

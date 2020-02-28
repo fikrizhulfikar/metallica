@@ -146,7 +146,7 @@ public class OperasiKhususTrxService {
             String pIdMetallica, String pPostDate, String pDocNo, String pAmount, String pBusArea, String pReference,
             String pCompCode, String pUserId, String pCurrency, String pDrCrInd, String pExchangeRate,
             String pFiscYear, String pGlAccount, String pLineNo, String pPmtProposalId, String pRemarks, String pFlag,
-            String pCashCode, String pCostCtr, String pSumberDana
+            String pCashCode, String pCostCtr, String pSumberDana, String pRealAmount
     )throws SQLException{
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -174,6 +174,7 @@ public class OperasiKhususTrxService {
                 .addValue("p_cash_code", pCashCode)
                 .addValue("p_cost_ctr", pCostCtr)
                 .addValue("p_sumber_dana", pSumberDana)
+                .addValue("p_real_amount", pRealAmount)
                 .addValue("out_msg", OracleTypes.CURSOR);
 
         out = simpleJdbcCall.execute(inParams);
@@ -181,7 +182,7 @@ public class OperasiKhususTrxService {
         return out;
     }
 
-    public Map<String, Object> deleteOperasiKhususItemTrx(String pIdMetallica, String pItemId){
+    public Map<String, Object> deleteOperasiKhususItemTrx(String pIdMetallica, String pItemId, String pLineNo){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("operasi_item_trx_del");
@@ -189,6 +190,7 @@ public class OperasiKhususTrxService {
         SqlParameterSource inParam = new MapSqlParameterSource()
                 .addValue("p_id_metallica", pIdMetallica)
                 .addValue("p_id_operasi_item_trx", pItemId)
+                .addValue("p_line_no", pLineNo)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         Map<String, Object> out = simpleJdbcCall.execute(inParam);
         AppUtils.getLogger(this).info("msg delete_operasi_item : {}", out);

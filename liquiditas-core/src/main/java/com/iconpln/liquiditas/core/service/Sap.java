@@ -52,7 +52,7 @@ public class Sap {
             Sapmaster sapmaster = new Sapmaster();
 
 //            ClassLoader classLoader = Sap.class.getClassLoader();
-//            InputStream inputStream = classLoader.getResourceAsStream("files/ApKateLuDeh.json");
+//            InputStream inputStream = classLoader.getResourceAsStream("files/JSONApInvoice.json");
 //            String result = IOUtils.toString(inputStream);
 //
 //            System.out.println("Stream Cok! : "+result);
@@ -61,9 +61,9 @@ public class Sap {
 //            }catch (Exception e){
 //                e.printStackTrace();
 //            }
-//            sapmaster.getDataApInvoice(param);
+            //sapmaster.getDataApInvoice(param);
             String list = "["+sapmaster.getDataApInvoice(param)+"]";
-            System.out.println("LIST :"+list);
+            System.out.println("DIAZ GANTENG :"+list);
             arr = (org.apache.chemistry.opencmis.commons.impl.json.JSONArray) parser.parse(list);
 
             System.out.println("ARR:"+arr);
@@ -201,18 +201,18 @@ public class Sap {
             param.put("date_from",date_from);
             param.put("date_to", date_to);
 
-            ClassLoader classLoader = Sap.class.getClassLoader();
-            InputStream inputStream = classLoader.getResourceAsStream("files/JSONHrPayable.json");
-            String result = IOUtils.toString(inputStream);
-
-            System.out.println("Stream Cok! : "+result);
-            try {
-
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-
-            String list = "["+result+"]";
+//            ClassLoader classLoader = Sap.class.getClassLoader();
+//            InputStream inputStream = classLoader.getResourceAsStream("files/JSONHrPayable.json");
+//            String result = IOUtils.toString(inputStream);
+//
+//            System.out.println("Stream Cok! : "+result);
+//            try {
+//
+//            }catch (Exception e){
+//                e.printStackTrace();
+//            }
+//            sapmaster.getDataHrPayable(param);
+            String list = "["+sapmaster.getDataHrPayable(param)+"]";
 
             arr = (JSONArray) parser.parse(list);
             int counter = 0;
@@ -247,7 +247,7 @@ public class Sap {
                     condition.put("bank_byr",String.valueOf(jsonObjectLines.get("BANK_BYR")));
                     condition.put("curr_bayar",String.valueOf(jsonObjectLines.get("CURR_BAYAR")));
                     condition.put("partial_ind",String.valueOf(jsonObjectLines.get("PARTIAL_IND")));
-                    condition.put("amount_bayar",String.valueOf(jsonObjectLines.get("AMOUNT_BAYAR")));
+                    condition.put("amount_bayar",String.valueOf(jsonObjectLines.get("AMOUNT_BAYAR")).trim());
                     condition.put("bank_benef",String.valueOf(jsonObjectLines.get("BANK_BENEF")));
                     condition.put("no_rek_benef",String.valueOf(jsonObjectLines.get("NO_REK_BENEF")));
                     condition.put("nama_benef",String.valueOf(jsonObjectLines.get("NAMA_BENEF")));
@@ -263,6 +263,7 @@ public class Sap {
                 }
                 System.out.println("Loop Header: "+counter);
                 counter = 0;
+
                 if (jsonObject.get("ITEM_DATA") != null) {
                     arrLines2 = (JSONArray) parser.parse(String.valueOf(jsonObject.get("ITEM_DATA")));
                     for (int j = 0; j < arrLines2.size(); j++) {
@@ -305,6 +306,7 @@ public class Sap {
                         condition.put("tpba", String.valueOf(jsonObjectLines2.get("TPBA")));
                         condition.put("vendor", String.valueOf(jsonObjectLines2.get("VENDOR")));
                         condition.put("wbs_num", String.valueOf(jsonObjectLines2.get("WBS_NUM")));
+                        condition.put("m_date_date",param.get("date_from").toString());
 
                         try {
                             sapService.insertHrPayableItem(condition);

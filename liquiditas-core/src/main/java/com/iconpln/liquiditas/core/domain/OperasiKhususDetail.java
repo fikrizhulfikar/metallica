@@ -20,6 +20,16 @@ public class OperasiKhususDetail {
     private String pSumberDana;
     private String pCashCode ;
 
+    public String getpRealAmount() {
+        return pRealAmount;
+    }
+
+    public void setpRealAmount(String pRealAmount) {
+        this.pRealAmount = pRealAmount;
+    }
+
+    private String pRealAmount ;
+
     public String getpCostCtr() {
         return pCostCtr;
     }

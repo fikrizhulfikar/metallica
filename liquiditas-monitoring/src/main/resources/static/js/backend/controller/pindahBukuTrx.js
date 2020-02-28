@@ -34,7 +34,7 @@ $("#tanggal_awal").change(function () {
         $('#tanggal_akhir').val("");
     } else {
         $('#tanggal_akhir').attr("disabled", false);
-        $('#tanggal_akhir').datepicker({dateFormat: 'dd/mm/yy', minDate: tglAwalData});
+        $('#tanggal_akhir').datepicker({dateFormat: 'yymmdd', minDate: tglAwalData});
     }
 });
 
@@ -66,104 +66,59 @@ function getbyId(id) {
 }
 
 function getTotalTagihanPindahBuku() {
-    $.ajax({
-        url: baseUrl + "/api_operator/pindah_buku_trx/get_total_tagihan",
-        type: "GET",
-        data: {
-            tgl_awal: $("#tanggal_awal").val(),
-            tgl_akhir: $("#tanggal_akhir").val(),
-            currency: $("#cmb_currecny").val(),
-            search: tempTableSearch
-        },
-        success: function (res) {
-            $("#total_tagihan").html(res);
-        },
-        error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-        }
-    });
+     $.ajax({
+         url: baseUrl + "/api_operator/pindah_buku_trx/get_total_tagihan",
+         type: "GET",
+         data: {
+             tgl_awal: $("#tanggal_awal").val(),
+             tgl_akhir: $("#tanggal_akhir").val(),
+             currency: $("#cmb_currecny").val(),
+             search: tempTableSearch
+         },
+         success: function (res) {
+             $("#total_tagihan").html(res);
+         },
+         error: function () {
+             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+         }
+     });
 
-}
+ }
 
 function multipleDelete() {
     var stateCrf = confirm("Anda Yakin Akan Menghapus Data Ini ?");
     if (stateCrf == true) {
-        showLoadingCss()
-        $.ajax({
-            url: baseUrl + "api_operator/pindah_buku_trx/multiple_delete_head",
-            dataType: 'JSON',
-            type: "POST",
-            data: {
-                pData: JSON.stringify(checkedArray)
-            },
-            success: function (res) {
-                hideLoadingCss("")
-                if (res.return == 1) {
-                    alert(res.OUT_MSG);
-                    tablePindahBuku.ajax.reload();
-                    checkedArray.length = 0;
-                } else {
-                    alert(res.OUT_MSG);
+        if(checkedArray.length <= 0){
+            Swal.fire("Maaf!", "Silahkan pilih data terlebih dahulu","error");
+        }else {
+            showLoadingCss()
+            $.ajax({
+                url: baseUrl + "api_operator/pindah_buku_trx/multiple_delete_head",
+                dataType: 'JSON',
+                type: "POST",
+                data: {
+                    pData: JSON.stringify(checkedArray)
+                },
+                success: function (res) {
+                    hideLoadingCss("")
+                    if (res.return == 1) {
+                        alert(res.OUT_MSG);
+                        tablePindahBuku.ajax.reload();
+                        checkedArray.length = 0;
+                    } else {
+                        alert(res.OUT_MSG);
+                    }
+                },
+                error: function () {
+                    hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
                 }
-            },
-            error: function () {
-                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-            }
-        });
+            });
+        }
     }
 }
 
-function AddToTable() {
-    var docno = $("#pDocumentNumber").val();
-    var drcrind = $("#pDrCrInd").val();
-    var busarea = $("#pDetailBusArea").val();
-    var pmtpropid = $("#pPmtProposalId").val();
-    var glaccount = $("#pGlAccount").val();
-    var postdate = $("#pPostDate").val();
-    var compcode = $("#pDetailCompCode").val();
-    var amt = $("#pAmount").val();
-    var curr = $("#pDetailCurrency").val();
-    var fiscyear = $("#pFiscYear").val();
-    var ref = $("#pDetailReference").val();
-    var remarks = $("#pRemarks").val();
-    var lineno = $("#pLineNo").val();
-    var exrate = $("#pExchangeRate").val();
-    var flag = 0;
-    let amount = 0;
-    (exrate !== "-") ? amount = amt * exrate : amount = amt;
-        if (drcrind == "" || glaccount == "" || amt == "" || remarks == "" || cash_code == "") {
-            Swal.fire("Maaf!","Mohon Lengkapi Data", "warning");
-            return;
-        } else {
-            let rowNode = pindahBukuDetails.row
-                .add({
-                    "DOC_NO": docno,
-                    "PMT_PROPOSAL_ID" : pmtpropid,
-                    "COMP_CODE" : compcode,
-                    "CASH_CODE" : cash_code,
-                    "SUMBER_DANA" : sumber_dana,
-                    "FISC_YEAR" : fiscyear,
-                    "LINE_NO" : lineno,
-                    "DEBIT_CREDIT_IND" : drcrind,
-                    "GL_ACCOUNT" : glaccount,
-                    "AMOUNT" : amount,
-                    "CURRENCY" : curr,
-                    "COST_CTR" : cost_ctr,
-                    "BUSINESS_AREA" : busarea,
-                    "REMARKS" : remarks,
-                    "FLAG" : flag,
-                })
-                .draw(false)
-                .node();
-            $(rowNode)
-                .css( 'color', 'black' )
-                .animate( { color: '#ff590a' } );
-        }
-        $("#pDetailAmount").val("");
-        $("#pDetailRemarks").val("");
-}
 
-function deletedb(idMetallica,idItem){
+function deletedb(idMetallica,idItem,lineNo){
     Swal.fire({
         title : "Anda Yakin ?",
         text : "Anda yakin ingin menghapus data?",
@@ -180,13 +135,14 @@ function deletedb(idMetallica,idItem){
                 type : "POST",
                 data : {
                     pIdMetallica : idMetallica,
-                    pItemId : idItem
+                    pItemId : idItem,
+                    pLineNo : lineNo
                 },
                 success : (res) => {
                     console.log("get detail : ", res.data);
                     Swal.fire("Berhasil!","Data Berhasil Dihapus","success");
                     hideLoadingCss();
-                    pembelianValasDetail.ajax.reload();
+                    pindahBukuDetails.ajax.reload();
                 },
                 error: function () {
                     hideLoadingCss("Gagal Melakukan Proses, Harap Hubungi Administrator")
@@ -302,30 +258,50 @@ function checkArray(e) {
 function update_datas() {
     var stateCrf = confirm("Anda Yakin Akan Merverifikasi Tagihan Ini ?");
     if (stateCrf == true) {
-        showLoadingCss();
-        $.ajax({
-            url: baseUrl + "/api_operator/pembelian_valas_trx/multi_upd_status",
-            dataType: 'JSON',
-            type: "POST",
-            data: {
-                pData: JSON.stringify(checkedArray),
-            },
-            success: function (res) {
-                hideLoadingCss("")
-                if (res.return == 1) {
-                    alert(res.OUT_MSG)
-                    tablePindahBuku.ajax.reload();
-                    checkedArray = new Array();
-                } else {
-                    alert(res.OUT_MSG);
+        if(checkedArray.length <= 0){
+            Swal.fire("Maaf!", "Silahkan pilih data terlebih dahulu","error");
+        }else if (checkedArray.every(checkTrackingVerifikasi) === false){
+            Swal.fire("Maaf!", "Tidak dapat melakukan verifikasi tagihan", "error");
+        }else if (!checkedArray.every(isBalance)){
+            Swal.fire("Maaf","Balance tidak sama dengan 0", "error");
+        }else{
+            alert("Sip Cok!");
+            showLoadingCss();
+            $.ajax({
+                url: baseUrl + "/api_operator/pindah_buku_trx/multi_upd_status",
+                dataType: 'JSON',
+                type: "POST",
+                data: {
+                    pData: JSON.stringify(checkedArray),
+                },
+                success: function (res) {
+                    hideLoadingCss("")
+                    if (res.return == 1) {
+                        alert(res.OUT_MSG)
+                        tablePindahBuku.ajax.reload();
+                        tblpindahBukuDetail = new Array();
+                    } else {
+                        alert(res.OUT_MSG);
+                    }
+                },
+                error: function () {
+                    hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
                 }
-            },
-            error: function () {
-                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-            }
-        });
+            });
+        }
     }
 }
+
+function checkTrackingVerifikasi(val){
+    return val.statustracking < 4;
+}
+
+function isBalance(val){
+    if(val.debit == 0 && val.kredit == 0){
+        return false;
+    }else return val.debit - val.kredit === 0;
+}
+
 
 function exportXls() {
     var tglAwal = "null";
@@ -957,7 +933,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                        }
                        else {
                            if (full.STATUS_TRACKING == "INPUT DATA") {
-                               value = '{"pIdMetallica":"'+full.ID_METALLICA+'","statustracking" : "'+1+'"}';
+                               value = '{"pIdMetallica":"'+full.ID_METALLICA+'","statustracking" : "'+1+'", "debit":"'+full.AMOUNT_DEBIT+'","kredit":"'+full.AMOUNT_CREDIT+'"}';
                                data_full = '{"full" : "'+JSON.stringify(full)+'"}';
                            }
                            else if (full.STATUS_TRACKING == "VERIFIED BY MAKER") {
@@ -969,7 +945,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                                data_full = '{"full" : "'+JSON.stringify(full)+'"}';
                            }
                            else if (full.STATUS_TRACKING == "VERIFIED BY APPROVER") {
-                               value = '{"pIdMetallica":"'+full.ID_METALLICA+'","jenis" : "'+"PEMBELIAN_VALAS"+'"}';
+                               value = '{"pIdMetallica":"'+full.ID_METALLICA+'","jenis" : "'+"PEMBELIAN_VALAS"+'","statustracking" : "'+4+'"}';
                                data_full = '{"full" : "'+JSON.stringify(full)+'"}';
                            }
                            else {
@@ -1075,7 +1051,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
     $('.dataTables_filter').each(function () {
         // var html = '';
        var html = '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
-       if(newRoleUser[0] == "ROLE_FCL_SETTLEMENT") {
+       if(newRoleUser[0] == "ROLE_JA_CASH" || newRoleUser[0] == "ROLE_JA_IE" ) {
        html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
        }
        if(newRoleUser[0] == "ROLE_VP_LIQUIDITY_AND_RECEIPT" || newRoleUser[0] == "ROLE_VP_INVESTMENT_EXPENDITURE"
@@ -1085,10 +1061,6 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
            || newRoleUser[0] == "ROLE_VP_OPERATION_EXPENDITURE") {
        html = html +'<button class="btn-edit-data btn-sm btn-primary" style="margin-left: 10px" type="button" title="Pelunasan" onclick="multi_upd_lunas()"><i class="fa fa-credit-card-alt"></i></button>';
        }
-        if  (newRoleUser[0] === "ROLE_ADMIN"){
-            html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
-            html = html +'<button class="btn-edit-data btn-sm btn-primary" style="margin-left: 10px" type="button" title="Pelunasan" onclick="multi_upd_lunas()"><i class="fa fa-credit-card-alt"></i></button>';
-        }
        $(this).append(html);
     });
 
@@ -1202,11 +1174,11 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
     $(".detail-data").show();
     $("#filter").hide();
     $("#btn-add-rekap").hide();
-
+    $(".fungsional-button").hide();
     (track === "INPUT DATA" || newRoleUser[0] === "ROLE_ADMIN") ? $(".just-for-input-data").show() : $(".just-for-input-data").hide();
 
     showLoadingCss();
-    tblpindahBukuDetail = $("#table-main-detail").DataTable({
+    pindahBukuDetails = $("#table-main-detail").DataTable({
         "ajax" : {
             "url" : baseUrl + "api_operator/pindah_buku_trx/detail_pindah_buku_trx",
             "data" : {
@@ -1217,42 +1189,49 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
         },
         "columns" : [
            {"data" : "DOC_NO"},
-           {"data" : "PMT_PROPOSAL_ID"},
-           {"data" : "COMP_CODE"},
-           {"data" : "CASH_CODE"},
-           {"data" : "SUMBER_DANA"},
-           {"data" : "FISC_YEAR"},
-           {"data" : "LINE_NO"},
-           {"data" : "DEBIT_CREDIT_IND"},
-           {"data" : "GL_ACCOUNT"},
-            {
-                "data" : null,
-                "render" : function (data, type, row ) {
-                    let number = parseInt(data.AMOUNT);
-                    return Intl.NumberFormat().format(number);
-                }
-            },
-            {"data" : "CURRENCY"},
-            {"data" : "COST_CTR"},
-            {"data" : "BUSINESS_AREA"},
-            {"data" : "REMARKS"},
-            {
-                "data" : "FLAG",
-                "visible" : false
-            },
-            {
-                "data" : null,
-                "render" : (data) => {
-                if(data.FLAG == 1 || track == "INPUT_DATA"){
-                    return '<td align="center"> <button class="btn btn-sm btn-danger" onclick="deletedb(\'' +data.ID_METALLICA+'\',\'' +data.ID_VALAS_ITEM_TRX+ '\')"><i class="fa fa-trash"></i></button></td>';
-                }else if(data.FLAG == 0){
-                    return '<td align="center"> <button class="btn btn-sm btn-warning" onclick="dele()"><i class="trash fa fa-trash"></i></button></td>';
-                }
-                else {
-                return '-'
-                }
-                }
-            }
+          {"data" : "PMT_PROPOSAL_ID"},
+          {"data" : "COMP_CODE"},
+          {"data" : "CASH_CODE"},
+          {"data" : "SUMBER_DANA"},
+          {"data" : "FISC_YEAR"},
+          {"data" : "LINE_NO"},
+          {"data" : "DEBIT_CREDIT_IND"},
+          {"data" : "GL_ACCOUNT"},
+         {
+             "data" : null,
+             "render" : function (data2, type, row ) {
+                 let number2 = parseInt(data2.REAL_AMOUNT);
+                 return Intl.NumberFormat().format(number2);
+             }
+         },
+          {
+              "data" : null,
+              "render" : function (data, type, row ) {
+                  let number = parseInt(data.AMOUNT);
+                  return Intl.NumberFormat().format(number);
+              }
+          },
+          {"data" : "CURRENCY"},
+          {"data" : "COST_CTR"},
+          {"data" : "BUSINESS_AREA"},
+          {"data" : "REMARKS"},
+          {
+              "data" : "FLAG",
+              "visible" : false
+          },
+          {
+              "data" : null,
+              "render" : (data) => {
+                 if(data.FLAG == 1 || track == "INPUT_DATA"){
+                     return '<td align="center"> <button class="btn btn-sm btn-danger" onclick="deletedb(\'' +data.ID_METALLICA+'\',\'' +data.ID_PINDAHBUKU_ITEM_TRX+ '\',\'' +data.LINE_NO+'\')"><i class="fa fa-trash"></i></button></td>';
+                 }else if(data.FLAG == 0){
+                     return '<td align="center"> <button class="btn btn-sm btn-warning" onclick="dele()"><i class="trash fa fa-trash"></i></button></td>';
+                 }
+                  else {
+                  return '-'
+                  }
+              }
+          }
         ],
         "drawCallback" : function (settings) {
             let api = this.api();
@@ -1297,6 +1276,8 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
     $("#pDetailGlAccount, #pSumberDana, #pDetailDrCrInd, #pDetailCashCode").select2({
         width : "100%"
     });
+
+    $("#pDetailAmount").mask('000,000,000,000,000',{reverse : true});
     $("#pDetailExchangeRate").val(exc_rate);
     $("#pDetailDocumentNumber").val(doc_no);
     $("#pDetailPmtProposalId").val(prop_pmt_id);
@@ -1309,9 +1290,9 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
     //$("#pDetailLineNo").val(comp_code);
 
     if(curr !== "IDR"){
-        $("#excRate").show();
+        $(".pExchangeRate").show();
     }else{
-        $("#excRate").hide();
+        $(".pExchangeRate").hide();
     }
     dele();
     setListGlAccount("pDetailGlAccount",curr);
@@ -1319,16 +1300,16 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
 }
 
 function AddToTable() {
-     var docno = $("#pDetailDocumentNumber").val();
+    var docno = $("#pDetailDocumentNumber").val();
     var drcrind = $("#pDetailDrCrInd").val();
     var busarea = $("#pDetailBusArea").val();
-     var pmtpropid = $("#pDetailPmtProposalId").val();
+    var pmtpropid = $("#pDetailPmtProposalId").val();
     var glaccount = $("#pDetailGlAccount").val();
     var postdate = $("#pDetailPostDate").val();
     var compcode = $("#pDetailCompCode").val();
     var amt = $("#pDetailAmount").val();
     var curr = $("#pDetailCurrency").val();
-     var fiscyear = $("#pDetailFiscYear").val();
+    var fiscyear = $("#pDetailFiscYear").val();
     var ref = $("#pDetailReference").val();
     var remarks = $("#pDetailRemarks").val();
     var lineno = $("#pDetailLineNo").val();
@@ -1336,39 +1317,36 @@ function AddToTable() {
     var cash_code = $("#pDetailCashCode").val();
     var cost_ctr = $("#pDetailCostCtr").val();
     var sumber_dana = $("#pSumberDana").val();
+    var real_amount = $("#pDetailAmount").val().toString();
+    let very_real_amount = parseInt(real_amount.replace(/,/g,""))
     var flag = 0;
     let amount = 0;
 
-//    if (cost_ctr.length < 10 || cost_ctr.length > 10){
-//        Swal.fire("Maaf", "Cost Center harus 10 digit angka valid", "info");
-//        return;
-//    }
 
-    (exrate !== "-") ? amount = amt * exrate : amount = amt;
-    console.log("Amt :",amt);
-    console.log("Exrate :",exrate);
-    console.log("Amount :",amount);
-    if (drcrind === "" || glaccount === "" || amt === "" || cash_code === "") {
+    (exrate !== "-") ? amount = very_real_amount * exrate : amount = very_real_amount;
+
+    if (drcrind == "" || glaccount == "" || amt == "" || remarks == "" || cash_code == "") {
         Swal.fire("Maaf!","Mohon Lengkapi Data", "warning");
         return;
     } else {
-        let rowNode = tblpindahBukuDetail.row
+        let rowNode = pindahBukuDetails.row
             .add({
-                 "DOC_NO": docno,
-                 "PMT_PROPOSAL_ID" : pmtpropid,
+                "DOC_NO": docno,
+                "PMT_PROPOSAL_ID" : pmtpropid,
                 "COMP_CODE" : compcode,
                 "CASH_CODE" : cash_code,
-                 "SUMBER_DANA" : sumber_dana,
-                 "FISC_YEAR" : fiscyear,
+                "SUMBER_DANA" : sumber_dana,
+                "FISC_YEAR" : fiscyear,
                 "LINE_NO" : lineno,
                 "DEBIT_CREDIT_IND" : drcrind,
                 "GL_ACCOUNT" : glaccount,
                 "AMOUNT" : amount,
                 "CURRENCY" : curr,
-                 "COST_CTR" : cost_ctr,
+                "COST_CTR" : cost_ctr,
                 "BUSINESS_AREA" : busarea,
                 "REMARKS" : remarks,
                 "FLAG" : flag,
+                "REAL_AMOUNT" : very_real_amount
             })
             .draw(false)
             .node();
@@ -1412,9 +1390,8 @@ function initCbparent() {
 }
 
 function openFormNew() {
-    idPinbuk = "";
+    setListCurrency("pHeadCurrency");
     $(".pExcRate").hide();
-
     $("#pHeadPostingDate").val("");
     $("#pHeadDocDate").val("");
     $("#pHeadDocNo").val("");
@@ -1423,6 +1400,7 @@ function openFormNew() {
     $("#pHeadBusArea").val("");
     $("#pHeadCurrency").val("");
     $("#pHeadDocHdrTxt").val("");
+    $("#pHeadFiscalYear").val("");
 
     // $("#pUnitAnggaran").select2("val", "");
     // $("#pSpread").val("");
@@ -1430,6 +1408,7 @@ function openFormNew() {
 //    if(newRoleUser[0].replace(" ", "")!= "ROLE_ADMIN"){
 //        date = new Date(date.setDate(date.getDate()));
 //    }
+    $("#pHeadExchangeRate").mask('000,000,000,000,000',{reverse : true});
     $('#pHeadPostingDate').datepicker({dateFormat: 'yymmdd', minDate: date});
     $('#pHeadDocDate').datepicker({dateFormat: 'yymmdd'});
     $('#edit-modal').modal({backdrop: 'static', keyboard: false});
@@ -1448,19 +1427,24 @@ function edit_data (idMetallica){
         },
         success : (res) => {
             console.log("data edit data : ",res);
-
             hideLoadingCss("");
-            $("#pHeadDocDate").val(res.data[0].DOCUMENT_DATE);
-            $("#pHeadPostingDate").val(res.data[0].POSTING_DATE);
-            $("#pHeadDocNo").val(res.data[0].DOCUMENT_NUMBER);
+            $("#pHeadDocDate").val(res.data[0].DOCUMENT_DATE).attr("readonly", "readonly");
+            $("#pHeadPostingDate").val(res.data[0].POSTING_DATE).attr("readonly", "readonly");
+            $("#pHeadDocNo").val(res.data[0].DOCUMENT_NUMBER).attr("readonly", "readonly");
             $("#pHeadReference").val(res.data[0].REFERENCE);
-            $("#pHeadFiscYear").val(res.data[0].FISC_YEAR);
-            $("#pHeadCompCode").val(res.data[0].COMPANY_CODE);
-            $("#pHeadBusArea").val(res.data[0].BUSINESS_AREA);
-            $("#pHeadCurrency").val(res.data[0].CURRENCY);
-            $("#pHeadExchangeRate").val(res.data[0].EXCHANGE_RATE);
+            $("#pHeadFiscYear").val(res.data[0].FISC_YEAR).attr("readonly", "readonly");
+            $("#pHeadCompCode").val(res.data[0].COMPANY_CODE).attr("readonly", "readonly");
+            $("#pHeadBusArea").val(res.data[0].BUSINESS_AREA).attr("readonly", "readonly");
+            $("#pHeadCurrency").val(res.data[0].CURRENCY).attr("disabled", true);
+            $("#pHeadExchangeRate").val(res.data[0].EXCHANGE_RATE).attr("readonly","readonly");
             $("#pHeadDocHdrTxt").val(res.data[0].DOC_HDR_TXT);
             $("#pIdMetallica").val(res.data[0].ID_METALLICA);
+            $("#pHeadCurrencyHidden").val(res.data[0].CURRENCY);
+
+            if (res.data[0].CURRENCY === "IDR") {
+                $("#pHeadExchangeRate").val(1);
+                $(".pExcRate").hide();
+            }
 
             setTimeout(function(){ $('#edit-modal').modal({backdrop: 'static', keyboard: false}); }, 1000);
         },
@@ -1476,6 +1460,7 @@ function ins_data() {
     let idPinbuk = $("#pIdMetallica").val();
     (idPinbuk === undefined || idPinbuk === "") ? idPinbuk = null : idPinbuk = idPinbuk;
     console.log("id pinbuk : ", idPinbuk)
+    let exch_rate = $("#pHeadExchangeRate").val().toString();
     $.ajax({
         url: baseUrl + "api_operator/pindah_buku_trx/ins_pindah_buku_trx",
         dataType: 'JSON',
@@ -1490,7 +1475,7 @@ function ins_data() {
             pPostDate: $("#pHeadPostingDate").val(),
             pBusArea: $("#pHeadBusArea").val(),
             pDocHdrTxt: $("#pHeadDocHdrTxt").val(),
-            pExchangeRate: $("#pHeadExchangeRate").val(),
+            pExchangeRate: parseInt(exch_rate.replace(/,/g,"")),
             pFiscYear: $("#pHeadFiscYear").val(),
         },
         success: function (res) {
@@ -1628,7 +1613,7 @@ function setListGlAccount(htmlid, currency){
         success : response => {
             $("#"+htmlid+"").html();
             $.each(response, (key,val) => {
-                $("#"+htmlid+"").append('<option value="' + val.GL_ACCOUNT + '">'+val.GL_ACCOUNT+'</option>')
+                $("#"+htmlid+"").append('<option value="' + val.GL_ACCOUNT + '">'+val.GL_ACCOUNT+'-'+val.BANK_NAME+'</option>')
             });
             if (currency != "") {
                 $("#" + htmlid + "").val(currency).trigger('change');
@@ -1662,7 +1647,7 @@ function setListCashcode(htmlid){
 }
 
 function submitChild() {
-    let table_data = tblpindahBukuDetail.data();
+    let table_data = pindahBukuDetails.data();
     dataList = [];
 
     if (table_data.length <= 0){
@@ -1688,6 +1673,7 @@ function submitChild() {
             pReference : $("#pDetailReference").val(),
             pDrCrInd : data.DEBIT_CREDIT_IND,
             pGlAccount : data.GL_ACCOUNT,
+            pRealAmount : data.REAL_AMOUNT,
             pAmount : data.AMOUNT,
             pExchangeRate : $("#pDetailExchangeRate").val(),
             pCurrency : data.CURRENCY,
@@ -1727,10 +1713,10 @@ function submitChild() {
                     if (res.return == 1) {
                         Swal.fire("Sukses!", "Data berhasil ditambahkan!", "success")
                         // alert(res.OUT_MESSAGE);
-                        tblpindahBukuDetail.ajax.reload();
+                        pindahBukuDetails.ajax.reload();
                     } else {
                         Swal.fire("Gagal!", "Data gagal ditambahkan!", "error")
-                        tblpindahBukuDetail.ajax.reload();
+                        pindahBukuDetails.ajax.reload();
                     }
                 },
                 error: function () {
@@ -1742,14 +1728,25 @@ function submitChild() {
 }
 
 function back(){
-    showLoadingCss();
-    $(".list-data").show();
-    $(".detail-data").hide();
-    $("#filter").show();
-    $("#btn-add-rekap").show();
-    tablePindahBuku.ajax.reload();
-    tblpindahBukuDetail.destroy();
-    hideLoadingCss();
+    Swal.fire({
+        title : "Yakin ?",
+        text : "Apakah anda yakin ingin kembali?",
+        icon : "error",
+        showCancelButton : true,
+        confirmButtonColor : "#3085d6",
+        cancelButtonColor : "#d33",
+        confirmButtonText : "Ya"
+    }).then(result => {
+        if (result.value){
+            $(".list-data").show();
+            $(".detail-data").hide();
+            $("#filter").show();
+            $("#btn-add-rekap").show();
+            $(".fungsional-button").show();
+            tablePindahBuku.ajax.reload();
+            tblpindahBukuDetail.destroy();
+        }
+    });
 }
 
 function setBalance(bal){

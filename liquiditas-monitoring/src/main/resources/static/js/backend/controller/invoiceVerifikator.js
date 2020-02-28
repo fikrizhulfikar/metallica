@@ -737,8 +737,14 @@ function getAllData() {
                                 return full.KETERANGAN;
                               }
                           },
+                        {
+                            "aTargets": [70],
+                            "mRender": function (data, type, full) {
+                                return full.TGL_TAGIHAN_DITERIMA;
+                            }
+                        },
                          {
-                              "aTargets": [70],
+                              "aTargets": [71],
                               "mRender": function (data, type, full) {
                               return full.STATUS_TRACKING;
                                     }

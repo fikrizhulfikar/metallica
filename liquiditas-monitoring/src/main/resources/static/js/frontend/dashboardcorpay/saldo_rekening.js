@@ -335,7 +335,7 @@ function initDataTableSaldoRek1() {
               $.each(data, function (key, val) {
                   var html = "<tr>" +
                       "<td>" + val.NAMA_BANK + "</td>" +
-                      "<td align='right'>" + "Rp " + accounting.formatNumber(val.VALAS,2,".",",") + "</td>" +
+                      "<td align='right'>" + "$ " + accounting.formatNumber(val.VALAS,2,".",",") + "</td>" +
                       "<td align='right'>" + "Rp " + accounting.formatNumber(val.RUPIAH,2,".",",") + "</td>" +
                       "</tr>";
                   $('#table-total-deposito tbody').append(html);
@@ -343,7 +343,7 @@ function initDataTableSaldoRek1() {
 
               var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
                   "<td>TOTAL EQ IDR</td>" +
-                  "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_VALAS,2,".",",") + "</td>" +
+                  "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_VALAS,2,".",",") + "</td>" +
                   "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_RUPIAH,2,".",",") + "</td>" +
                   "</tr>";
           $('#table-total-deposito tbody').append(total1);
@@ -537,9 +537,10 @@ function creteChartKompSaldo(data) {
                 dataSource: {
                     "chart": {
                         "bgColor": "#77D5D4",
-                        "caption": "Komposisi Saldo",
-                        "lowerLimitDisplay": " ",
-                        "upperLimitDisplay": " ",
+                        "caption": "\n\nKomposisi Saldo",
+                        "numbersuffix": "%",
+                        "lowerLimitDisplay": "0%",
+                        "upperLimitDisplay": "100%",
                         "lowerLimit": "0",
                         "upperLimit": "100",
                         "showValue": "0",
@@ -550,10 +551,13 @@ function creteChartKompSaldo(data) {
                         "pivotFillMix": "#77D5D4",
                         "valueBelowPivot": "0",
                         pivotFillAlpha:"0",
-                        showTickMarks:"0",
-                        showTickValues:"0",
+                        "majorTMNumber": "9",
+                        "majorTMHeight": "10",
+                        "minorTMHeight": "5",
+                        showTickMarks: "1",
+                        showTickValues: "1",
                         "gaugeFillMix": "{dark-10},{light-10},{dark-10}",
-                        "gaugeOuterRadius": "180",
+                        "gaugeOuterRadius": "160",
                         "gaugeInnerRadius": "90",
                         "theme": "fint"
                     },

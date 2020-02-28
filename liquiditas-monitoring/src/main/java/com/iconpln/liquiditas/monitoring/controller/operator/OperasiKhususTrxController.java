@@ -220,7 +220,7 @@ public class OperasiKhususTrxController {
             Map<String, Object> res = new HashedMap();
             for (OperasiKhususDetail v : operasiKhusus.getoperasiKhususDetails()){
 
-                res = operasiKhususTrxService.insDetailOperasiKhususTrx(operasiKhusus.getpIdMetallica(),v.getpPostDate(), v.getpDocNo(), v.getpAmount(), v.getpBusArea(), v.getpReference(), v.getpCompCode(), WebUtils.getUsernameLogin(), v.getpCurrency(), v.getpDrCrInd(), v.getpExchangeRate(), v.getpFiscYear(), v.getpGlAccount(), v.getpLineNo(), v.getpPmtProposalId(), v.getpRemarks(), v.getpFlag(),v.getpCashCode(),v.getpCostCtr(),v.getpSumberDana());
+                res = operasiKhususTrxService.insDetailOperasiKhususTrx(operasiKhusus.getpIdMetallica(),v.getpPostDate(), v.getpDocNo(), v.getpAmount(), v.getpBusArea(), v.getpReference(), v.getpCompCode(), WebUtils.getUsernameLogin(), v.getpCurrency(), v.getpDrCrInd(), v.getpExchangeRate(), v.getpFiscYear(), v.getpGlAccount(), v.getpLineNo(), v.getpPmtProposalId(), v.getpRemarks(), v.getpFlag(),v.getpCashCode(),v.getpCostCtr(),v.getpSumberDana(), v.getpRealAmount());
             }
             return res;
         }catch (Exception e){
@@ -232,7 +232,8 @@ public class OperasiKhususTrxController {
     @RequestMapping(value = "/delete_operasi_khusus_trx", method = RequestMethod.POST)
     public Map<String, Object> deleteOperasiKhususItemTrx(
             @RequestParam(value = "pIdMetallica", defaultValue = "") String pIdMetallica,
-            @RequestParam(value = "pItemId", defaultValue = "") String pItemId
+            @RequestParam(value = "pItemId", defaultValue = "") String pItemId,
+            @RequestParam(value = "pLineNo", defaultValue = "") String pLineNo
     ) {
 
         AppUtils.getLogger(this).debug("pIdMetallica : {} ", pIdMetallica);
@@ -244,7 +245,7 @@ public class OperasiKhususTrxController {
 //            message += WebUtils.getUsernameLogin() + " telah melakukan penghapusan Data pada aplikasi. ";
 //            message += data.get("NAMA_JENIS_PEMBAYARAN") + "-" + data.get("NAMA_VENDOR") + ".";
 //            WebUtils.deleteFile(pIdValas);
-            Map<String, Object> res = operasiKhususTrxService.deleteOperasiKhususItemTrx(pIdMetallica, pItemId);
+            Map<String, Object> res = operasiKhususTrxService.deleteOperasiKhususItemTrx(pIdMetallica, pItemId, pLineNo);
 //            Notification notification =
 //                    Notification.builder()
 //                            .topic(idJenisPembayaran)
@@ -553,7 +554,7 @@ public class OperasiKhususTrxController {
             }
 
             String title = "OPERASI KHUSUS";
-            String namaFile = "opersi_khusus.xls";
+            String namaFile = "operasi_khusus.xls";
 
             ServletOutputStream os = response.getOutputStream();
             response.setContentType("application/vnd.ms-excel");
@@ -587,7 +588,7 @@ public class OperasiKhususTrxController {
 
 
             XLSTransformer transformer = new XLSTransformer();
-            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/pembelian_valas.xls").getInputStream();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/operasi_khusus.xls").getInputStream();
             Workbook workbook = transformer.transformXLS(streamTemplate, param);
             workbook.write(os);
             os.flush();
