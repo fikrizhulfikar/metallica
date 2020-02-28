@@ -28,12 +28,12 @@
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
         <li class="breadcrumb-item active" style="cursor: default">Transaksi Operasi Khusus</li>
-        <li class="breadcrumb-menu d-md-down-none">
+        <li class="breadcrumb-menu d-md-down-none fungsional-button">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>-->
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
-                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MSB_PAYMENT_EXPENDITURE','ROLE_VP_OPERATION_EXPENDITURE','ROLE_VP_INVESTMENT_EXPENDITURE')">
+                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew()" sec:authorize="hasAnyAuthority('ROLE_JA_CASH','ROLE_JA_IE','ROLE_CENTRALIZED_RECEIPT')">
                     <i class="icon-pencil"></i> &nbsp;New Data
                 </button>
             </div>
@@ -135,17 +135,17 @@
                                 <label for="pHeadPostingDate">&nbsp;Posting Date :</label>
                                 <input type="text" class="form-control" id="pHeadPostingDate" style="background-color: white" value="" required="required" readonly="readonly"/>
                             </div>
-                            <div class="form-group">
-                                <label for="pHeadDocNo">&nbsp;Document Number :</label>
-                                <input type="number" class="form-control" id="pHeadDocNo" style="background-color: white" value="" required="required"/>
-                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label for="pHeadDocNo">&nbsp;Document Number :</label>-->
+<!--                                <input type="number" class="form-control" id="pHeadDocNo" style="background-color: white" value="" required="required"/>-->
+<!--                            </div>-->
                             <div class="form-group">
                                 <label for="pHeadReference">&nbsp;Reference :</label>
                                 <input type="text" class="form-control" id="pHeadReference" style="background-color: white" value=""/>
                             </div>
                             <div class="form-group">
                                 <label for="pHeadFiscYear">Fiscal Year :</label>
-                                <input type="number" class="form-control" id="pHeadFiscYear" style="background-color: white" value="" required="required"/>
+                                <input type="number" class="form-control" id="pHeadFiscYear" style="background-color: white" value="" pattern="[0-9]" required="required"/>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -158,16 +158,17 @@
                                 <input type="text" class="form-control" id="pHeadBusArea" style="background-color: white" value="" required="required"/>
                             </div>
                             <div class="form-group">
+                                <label for="pHeadDocHdrTxt">&nbsp;Doc Hdr Text :</label>
+                                <textarea class="form-control" id="pHeadDocHdrTxt" style="background-color: white" value=""></textarea>
+                            </div>
+                            <div class="form-group">
                                 <label for="pHeadCurrency">&nbsp;Currency :</label>
                                 <select class="form-control" id="pHeadCurrency" style="background-color: white" required="required">
                                     <option value="IDR">IDR</option>
                                     <option value="USD">USD</option>
                                     <option value="JPY">JPY</option>
                                 </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="pHeadDocHdrTxt">&nbsp;Doc Hdr Text :</label>
-                                <input type="text" class="form-control" id="pHeadDocHdrTxt" style="background-color: white" value=""/>
+                                <input type="hidden" value="" id="pHeadCurrencyHidden"/>
                             </div>
                             <div class="form-group pExcRate">
                                 <label for="pHeadExchangeRate">Exchange Rate</label>
@@ -242,7 +243,7 @@
                             </div>
                             <div class="form-group just-for-input-data">
                                 <label for="pDetailLineNo"><span style="color: red">*)</span>&nbsp;Line Number :</label>
-                                <input type="text" class="form-control" id="pDetailLineNo" />
+                                <input type="text" class="form-control" id="pDetailLineNo" readonly="readonly"/>
                             </div>
                             <div class="form-group just-for-input-data">
                                 <label for="pDetailRemarks">Remarks :</label>
@@ -260,7 +261,7 @@
                             </div>
                             <div class="form-group just-for-input-data">
                                 <label for="pDetailAmount"><span style="color: red">*)</span>&nbsp;Amount :</label>
-                                <input type="number" class="form-control" id="pDetailAmount" required="required"/>
+                                <input type="text" class="form-control" id="pDetailAmount" data-mask="000,000,000,000,000,000,000" required="required"/>
                             </div>
                             <div class="form-group just-for-input-data">
                                 <label for="pDetailGlAccount"><span style="color: red">*)</span>&nbsp;GL Account :</label>
@@ -316,12 +317,16 @@
             <table id="table-main-detail" class="table table-striped">
                 <thead>
                 <tr>
-                    <th>COMP CODE</th>
+                    <th>DOCUMENT NUMBER</th>
+                    <th>PAYMENT PROPOSAL</th>
+                    <th>COMPANY CODE</th>
                     <th>CASH CODE</th>
                     <th>SUMBER DANA</th>
+                    <th>FISCAL YEAR</th>
                     <th>LINE NUMBER</th>
                     <th>DEBIT CREDIT INDICATOR</th>
                     <th>GL ACCOUNT</th>
+                    <th>REAL AMOUNT</th>
                     <th>AMOUNT</th>
                     <th>CURRENCY</th>
                     <th>COST CENTER</th>
