@@ -1,456 +1,368 @@
 $(document).ready(function () {
     initDataTableSaldoRek1();
+    tableRencanaImprestValas();
+    tableRencanaImpres();
+    var date = new Date();
+    var newDate = date.toJSON().slice(0, 10).replace(new RegExp("-", 'g'), "/").split("/").reverse().join("/")
+    $("#tglcetak").html(newDate);
 
     setInterval(function () {
         initDataTableSaldoRek1();
     }, 60000);
+$("#dash_date").datepicker({dateFormat : "dd/mm/yy"});
 });
 
 function initDataTableSaldoRek1() {
     showLoadingCss()
      $.ajax({
-            url: baseUrl + "api_dashboard/get_saldo_curr",
+            url: baseUrl + "api_dashboard/get_rencana_pembayaran",
             dataType: 'JSON',
             type: "GET",
             success: function (res) {
                 var data = res.return;
-                //console.log("response : "+data);
-                $("#tglcetak").html(data[0].TANGGAL);
-                $('#table-jenis-mata-uang tbody').empty();
+                var tes = JSON.stringify(res);
+                $('#table-rencana-pembayaran tbody').empty();
                 $.each(data, function (key, val) {
                     var html = "<tr>" +
-                        "<td>" + val.CURRENCY + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.SALDO_REAL,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
+                        "<td>" + val.CASH_CODE + " " + val.CASH_DESCRIPTION + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.H0,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.H1,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.H2,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.WEEKLY,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.MONTHLY,2,".",",") + "</td>" +
                         "</tr>";
-                    $('#table-jenis-mata-uang tbody').append(html);
+                    $('#table-rencana-pembayaran tbody').append(html);
                 });
 
-                var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                    "<td>TOTAL</td>" +
-                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_REAL,2,".",",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_EQ_IDR,2,".",",") + "</td>" +
-                    "</tr>";
+                    var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
+                        "<td>SUB TOTAL</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H0,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H1,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H2,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_WEEKLY,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_MONTHLY,2,".",",") + "</td>" +
+                        "</tr>";
+                    $('#table-rencana-pembayaran tbody').append(total1);
 
-            $('#table-jenis-mata-uang tbody').append(total1);
+//                    var total2 = "<tr style='background-color:#67a2d8;color: white'>" +
+//                        "<td>SUB TOTAL</td>" +
+//                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H0,2,".",",") + "</td>" +
+//                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H1,2,".",",") + "</td>" +
+//                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H2,2,".",",") + "</td>" +
+//                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_WEEKLY,2,".",",") + "</td>" +
+//                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_MONTHLY,2,".",",") + "</td>" +
+//                        "</tr>";
+//                    $('#table-rencana-pembayaran tbody').append(total2);
 
+                    var total3 = "<tr style='background-color:#67a2d8;color: white'>" +
+                        "<td>TOTAL</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H0,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H1,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H2,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_WEEKLY,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_MONTHLY,2,".",",") + "</td>" +
+                        "</tr>";
+                    $('#table-rencana-pembayaran tbody').append(total3);
 
-            var dataPieSaldoCurr = [];
-            $.each(res.OUT_PIE_CURR, function (index, value) {
-                var dataPieTemp = {
-                    label: value.CURRENCY,
-                    value: value.PERSENTASE == 0 ? null : value.PERSENTASE
-                };
-                dataPieSaldoCurr.push(dataPieTemp)
-            });
-
-            console.log("");
-
-            creteChartSaldoCurr(dataPieSaldoCurr);
-            hideLoadingCss()
         },
         error: function () {
             // hideLoadingCss("Gagal Ambil Data");
             hideLoadingCss();
-            $('#table-jenis-mata-uang tbody').empty();
+            $('#table-rencana-pembayaran tbody').empty();
             var html = "<tr>" +
-                "<td colspan='5' align='center'> No Data </td>" +
+                "<td colspan='6' align='center'> No Data </td>" +
                 "</tr>";
-            $('#table-jenis-mata-uang tbody').append(html);
+            $('#table-rencana-pembayaran tbody').append(html);
         }
     });
      $.ajax({
-            url: baseUrl + "api_dashboard/get_saldo_rek",
+            url: baseUrl + "api_dashboard/get_rencana_investasi_operasi",
             dataType: 'JSON',
             type: "GET",
             success: function (res) {
                 var data = res.return;
-                //console.log("response : "+data);
+                var data2 = res.OUT_TOTAL_SELURUH;
+//                var tes = JSON.stringify(data2);
+//                console.log('Diaz djancuk :'+tes);
                 $("#tglcetak").html(data[0].TANGGAL);
-                $('#table-jenis-rekening tbody').empty();
+                $('#table-investasi-operasi tbody').empty();
                 $.each(data, function (key, val) {
-                    var html = "<tr>" +
-                        "<td>" + val.JENIS_REKENING + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.VALAS,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
-                        "</tr>";
-                    $('#table-jenis-rekening tbody').append(html);
+                    if(accounting.formatNumber(val.IDR) === "0" || accounting.formatNumber(val.USD) === "0" || accounting.formatNumber(val.EUR) === "0" || accounting.formatNumber(val.JPY) === "0" || accounting.formatNumber(val.MYR) === "0" || accounting.formatNumber(val.EQ_IDR) === "0"){
+                        var html = "<tr>" +
+                            "<td>" + val.TGL_RENCANA_BAYAR + "</td>" +
+                            "<td>" + val.JENIS + "</td>" +
+                            "<td align='right'> </td>" +
+                            "<td align='right'> </td>" +
+                            "<td align='right'> </td>" +
+                            "<td align='right'> </td>" +
+                            "<td align='right'> </td>" +
+                            "<td align='right'> </td>" +
+                            "</tr>";
+
+                            if(val["JENIS"] === "TOTAL"){
+                              var html = "<tr style='background-color:#67a2d8; color: white'>" +
+                                 "<td colspan='2' align='center'> SUB " + val.JENIS + "</td>" +
+                                 "<td align='right'> Rp. " + accounting.formatNumber(val.IDR,".",",") + "</td>" +
+                                 "<td align='right'> $ " + accounting.formatNumber(val.USD,".",",") + "</td>" +
+                                 "<td align='right'> € " + accounting.formatNumber(val.EUR,".",",") + "</td>" +
+                                 "<td align='right'> ¥ " + accounting.formatNumber(val.JPY,".",",") + "</td>" +
+                                 "<td align='right'> RM " + accounting.formatNumber(val.MYR,".",",") + "</td>" +
+                                 "<td align='right'> Rp. " + accounting.formatNumber(val.EQ_IDR,".",",") + "</td>" +
+                                 "</tr>";
+                             }
+                    } else
+                        var html = "<tr>" +
+                           "<td>" + val.TGL_RENCANA_BAYAR + "</td>" +
+                           "<td>" + val.JENIS + "</td>" +
+                           "<td align='right'> Rp. " + accounting.formatNumber(val.IDR,".",",") + "</td>" +
+                           "<td align='right'> $ " + accounting.formatNumber(val.USD,".",",") + "</td>" +
+                           "<td align='right'> € " + accounting.formatNumber(val.EUR,".",",") + "</td>" +
+                           "<td align='right'> ¥ " + accounting.formatNumber(val.JPY,".",",") + "</td>" +
+                           "<td align='right'> RM " + accounting.formatNumber(val.MYR,".",",") + "</td>" +
+                           "<td align='right'> Rp. " + accounting.formatNumber(val.EQ_IDR,".",",") + "</td>" +
+                           "</tr>";
+
+                           if (val["JENIS"] === "DEBT SERVICE"){
+                                 var html = "<tr>" +
+                                     "<td style='border-bottom: 1px solid transparent !important;color:#d1e1ea;'>" + val.TGL_RENCANA_BAYAR + "</td>" +
+                                     "<td>" + val.JENIS + "</td>" +
+                                     "<td align='right'> Rp. " + accounting.formatNumber(val.IDR,".",",") + "</td>" +
+                                     "<td align='right'> $ " + accounting.formatNumber(val.USD,".",",") + "</td>" +
+                                     "<td align='right'> € " + accounting.formatNumber(val.EUR,".",",") + "</td>" +
+                                     "<td align='right'> ¥ " + accounting.formatNumber(val.JPY,".",",") + "</td>" +
+                                     "<td align='right'> RM " + accounting.formatNumber(val.MYR,".",",") + "</td>" +
+                                     "<td align='right'> Rp. " + accounting.formatNumber(val.EQ_IDR,".",",") + "</td>" +
+                                     "</tr>";
+                           } else if (val["JENIS"] === "INVESTASI"){
+                                 var html = "<tr>" +
+                                     "<td align='center' style='border-bottom: 1px solid transparent !important; font-weight: bold'>" + val.TGL_RENCANA_BAYAR + "</td>" +
+                                     "<td>" + val.JENIS + "</td>" +
+                                     "<td align='right'> Rp. " + accounting.formatNumber(val.IDR,".",",") + "</td>" +
+                                     "<td align='right'> $ " + accounting.formatNumber(val.USD,".",",") + "</td>" +
+                                     "<td align='right'> € " + accounting.formatNumber(val.EUR,".",",") + "</td>" +
+                                     "<td align='right'> ¥ " + accounting.formatNumber(val.JPY,".",",") + "</td>" +
+                                     "<td align='right'> RM " + accounting.formatNumber(val.MYR,".",",") + "</td>" +
+                                     "<td align='right'> Rp. " + accounting.formatNumber(val.EQ_IDR,".",",") + "</td>" +
+                                     "</tr>";
+                           } else if (val["JENIS"] === "OPERASI"){
+                                 var html = "<tr>" +
+                                    "<td style='border-top: 1px solid transparent !important;color:#d1e1ea;'>" + val.TGL_RENCANA_BAYAR + "</td>" +
+                                    "<td>" + val.JENIS + "</td>" +
+                                    "<td align='right'> Rp. " + accounting.formatNumber(val.IDR,".",",") + "</td>" +
+                                    "<td align='right'> $ " + accounting.formatNumber(val.USD,".",",") + "</td>" +
+                                    "<td align='right'> € " + accounting.formatNumber(val.EUR,".",",") + "</td>" +
+                                    "<td align='right'> ¥ " + accounting.formatNumber(val.JPY,".",",") + "</td>" +
+                                    "<td align='right'> RM " + accounting.formatNumber(val.MYR,".",",") + "</td>" +
+                                    "<td align='right'> Rp. " + accounting.formatNumber(val.EQ_IDR,".",",") + "</td>" +
+                                    "</tr>";
+                           }
+
+                    $('#table-investasi-operasi tbody').append(html)
+
                 });
 
-                var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                    "<td>TOTAL</td>" +
-                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_VALAS,2,".",",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_IDR,2,".",",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SALDO,2,".",",") + "</td>" +
+//                var tes = JSON.stringify(data2);
+//                console.log('Diaz djancuk 2 :'+val.TOTAL_SELURUH_EQ_IDR);
+                $.each(data2, function (key, val) {
+                var total = "<tr style='background-color:#67a2d8;color: white'>" +
+                    "<td colspan='2' align='center'>TOTAL</td>" +
+                    "<td align='right'> Rp. " + accounting.formatNumber(val.TOTAL_SELURUH_IDR,".",",") + "</td>" +
+                    "<td align='right'> $ " + accounting.formatNumber(val.TOTAL_SELURUH_USD,".",",") + "</td>" +
+                    "<td align='right'> € " + accounting.formatNumber(val.TOTAL_SELURUH_EUR,".",",") + "</td>" +
+                    "<td align='right'> ¥ " + accounting.formatNumber(val.TOTAL_SELURUH_JPY,".",",") + "</td>" +
+                    "<td align='right'> RM " + accounting.formatNumber(val.TOTAL_SELURUH_MYR,".",",") + "</td>" +
+                    "<td align='right'> Rp." + accounting.formatNumber(val.TOTAL_SELURUH_EQ_IDR,".",",") + "</td>" +
                     "</tr>";
 
-            $('#table-jenis-rekening tbody').append(total1);
+                $('#table-investasi-operasi tbody').append(total);
 
-
-            var dataPieSaldoRek = [];
-            $.each(res.OUT_PIE_JENIS, function (index, value) {
-                var dataPieTemp = {
-                    label: value.JENIS_REKENING,
-                    value: value.PERSENTASE == 0 ? null : value.PERSENTASE
-                };
-                dataPieSaldoRek.push(dataPieTemp)
-            });
-
-            console.log("");
-
-            creteChartSaldoRek(dataPieSaldoRek);
-            hideLoadingCss()
+                console.log('Diaz djancuk 2 : '+val.TOTAL_SELURUH_IDR);
+                });
+             hideLoadingCss()
         },
+
+//            console.log('Tes' + res)
+
         error: function () {
             // hideLoadingCss("Gagal Ambil Data");
             hideLoadingCss();
-            $('#table-jenis-rekening tbody').empty();
+            $('#table-investasi-operasi tbody').empty();
             var html = "<tr>" +
-                "<td colspan='5' align='center'> No Data </td>" +
+                "<td colspan='8' align='center'> No Data </td>" +
                 "</tr>";
-            $('#table-jenis-rekening tbody').append(html);
+            $('#table-investasi-operasi tbody').append(html);
         }
       });
      $.ajax({
-              url: baseUrl + "api_dashboard/get_saldo_bank",
-              dataType: 'JSON',
-              type: "GET",
-              success: function (res) {
-                  var data = res.return;
-                  //console.log("response : "+data);
-                  $("#tglcetak").html(data[0].TANGGAL);
-                  $('#table-jenis-bank tbody').empty();
-                  $.each(data, function (key, val) {
-                      var html = "<tr>" +
-                          "<td>" + val.BANK + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(val.SALDO,2,".",",") + "</td>" +
-                          "</tr>";
-                      $('#table-jenis-bank tbody').append(html);
-                  });
-
-                  var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                      "<td>TOTAL</td>" +
-                      "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SALDO,2,".",",") + "</td>" +
-                      "</tr>";
-
-              $('#table-jenis-bank tbody').append(total1);
-
-
-              var dataPieSaldoBank = [];
-              $.each(res.OUT_PIE_BANK, function (index, value) {
-                  var dataPieTemp = {
-                      label: value.BANK,
-                      value: value.PERSENTASE == 0 ? null : value.PERSENTASE
-                  };
-                  dataPieSaldoBank.push(dataPieTemp)
-              });
-
-              console.log("");
-
-              creteChartSaldoBank(dataPieSaldoBank);
-              hideLoadingCss()
-          },
-          error: function () {
-              // hideLoadingCss("Gagal Ambil Data");
-              hideLoadingCss();
-              $('#table-jenis-bank tbody').empty();
-              var html = "<tr>" +
-                  "<td colspan='5' align='center'> No Data </td>" +
-                  "</tr>";
-              $('#table-jenis-bank tbody').append(html);
-          }
-            });
-     $.ajax({
-                  url: baseUrl + "api_dashboard/get_komposisi_saldo",
-                  dataType: 'JSON',
-                  type: "GET",
-                  success: function (res) {
-                      var data = res.return;
-                      //console.log('DIAZ :'+res)
-                      $("#tglcetak").html(data[0].TANGGAL);
-                      $('#table-komposisi-saldo tbody').empty();
-                      $.each(data, function (key, val) {
-                          var html = "<tr>" +
-                              "<td>" + val.JENIS_REKENING + "</td>" +
-                              "<td align='right'>" + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
-                              "</tr>";
-                          $('#table-komposisi-saldo tbody').append(html);
-                      });
-
-                      var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                          "<td>TOTAL</td>" +
-                          "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL,2,".",",") + "</td>" +
-                          "</tr>";
-
-                  $('#table-komposisi-saldo tbody').append(total1);
-
-
-                  var dataPieKompSaldo = [];
-                  $.each(res.OUT_PIE_KOMPOSISI, function (index, value) {
-                  console.log('PERSENTASE :'+value.PERSENTASE);
-                  console.log('WARNA :'+value.WARNA);
-                      var dataPieTemp = {
-//                          minvalue: value.JENIS_REKENING,
-//                          maxvalue: value.PERSENTASE == 0 ? null : value.PERSENTASE
-                          minvalue: '0',
-                          maxvalue: value.PERSENTASE,
-                          code: value.WARNA
-                      };
-                      dataPieKompSaldo.push(dataPieTemp)
-                  });
-
-                  //console.log('Diaz Ganteng :'+res.OUT_PIE_KOMPOSISI);
-
-                  creteChartKompSaldo(dataPieKompSaldo);
-                  hideLoadingCss()
-              },
-              error: function () {
-                  // hideLoadingCss("Gagal Ambil Data");
-                  hideLoadingCss();
-                  $('#table-komposisi-saldo tbody').empty();
-                  var html = "<tr>" +
-                      "<td colspan='5' align='center'> No Data </td>" +
-                      "</tr>";
-                  $('#table-komposisi-saldo tbody').append(html);
-              }
-    });
-     $.ajax({
-              url: baseUrl + "api_dashboard/get_rekening_operasi",
-              dataType: 'JSON',
-              type: "GET",
-              success: function (res) {
-                  var data = res.return;
-                  //console.log("response : "+data);
-                  $("#tglcetak").html(data[0].TANGGAL);
-                  $('#table-rekening-operasi tbody').empty();
-                  $.each(data, function (key, val) {
-                      var html = "<tr>" +
-                          "<td>" + val.TIPE + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(val.VALAS,2,".",",") + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(val.RUPIAH,2,".",",") + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
-                          "</tr>";
-                      $('#table-rekening-operasi tbody').append(html);
-                  });
-
-                  var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                      "<td>TOTAL EQ IDR</td>" +
-                      "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_RUPIAH,2,".",",") + "</td>" +
-                      "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_VALAS,2,".",",") + "</td>" +
-                      "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_SELURUH,2,".",",") + "</td>" +
-                      "</tr>";
-
-              $('#table-rekening-operasi tbody').append(total1);
-
-
-              var dataPieRekOperasi = [];
-              $.each(res.OUT_PIE_OPERASI, function (index, value) {
-                  var dataPieTemp = {
-                      label: value.TIPE,
-                      value: value.PERSENTASE == 0 ? null : value.PERSENTASE
-                  };
-                  dataPieRekOperasi.push(dataPieTemp)
-              });
-
-              console.log("");
-
-              creteChartRekOperasi(dataPieRekOperasi);
-              hideLoadingCss()
-          },
-          error: function () {
-              // hideLoadingCss("Gagal Ambil Data");
-              hideLoadingCss();
-              $('#table-rekening-operasi tbody').empty();
-              var html = "<tr>" +
-                  "<td colspan='5' align='center'> No Data </td>" +
-                  "</tr>";
-              $('#table-rekening-operasi tbody').append(html);
-          }
-        });
-     $.ajax({
-                  url: baseUrl + "api_dashboard/get_rekening_investasi",
-                  dataType: 'JSON',
-                  type: "GET",
-                  success: function (res) {
-                      var data = res.return;
-                     // console.log("response : "+data);
-                      $("#tglcetak").html(data[0].TANGGAL);
-                      $('#table-rekening-investasi tbody').empty();
-                      $.each(data, function (key, val) {
-                          var html = "<tr>" +
-                              "<td>" + val.TIPE + "</td>" +
-                              "<td align='right'>" + accounting.formatNumber(val.VALAS,2,".",",") + "</td>" +
-                              "<td align='right'>" + accounting.formatNumber(val.RUPIAH,2,".",",") + "</td>" +
-                              "<td align='right'>" + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
-                              "</tr>";
-                          $('#table-rekening-investasi tbody').append(html);
-                      });
-
-                      var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                          "<td>TOTAL EQ IDR</td>" +
-                          "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_VALAS,2,".",",") + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_SELURUH,2,".",",") + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_SELURUH,2,".",",") + "</td>" +
-                          "</tr>";
-                  $('#table-rekening-investasi tbody').append(total1);
-
-
-                  var dataPieRekInvestasi = [];
-                  $.each(res.OUT_PIE_INVESTASI, function (index, value) {
-                      var dataPieTemp = {
-                          label: value.TIPE,
-                          value: value.PERSENTASE == 0 ? null : value.PERSENTASE
-                      };
-                      dataPieRekInvestasi.push(dataPieTemp)
-                  });
-
-                  console.log("");
-
-                  creteChartRekInvestasi(dataPieRekInvestasi);
-                  hideLoadingCss()
-              },
-              error: function () {
-                  // hideLoadingCss("Gagal Ambil Data");
-                  hideLoadingCss();
-                  $('#table-rekening-investasi tbody').empty();
-                  var html = "<tr>" +
-                      "<td colspan='5' align='center'> No Data </td>" +
-                      "</tr>";
-                  $('#table-rekening-investasi tbody').append(html);
-              }
-            });
-     $.ajax({
-          url: baseUrl + "api_dashboard/get_total_deposito",
+          url: baseUrl + "api_dashboard/get_rekening_vs_rencana",
           dataType: 'JSON',
           type: "GET",
           success: function (res) {
-              var data = res.return;
-             // console.log("response : "+data);
-              $("#tglcetak").html(data[0].TANGGAL);
-              $('#table-total-deposito tbody').empty();
-              $.each(data, function (key, val) {
-                  var html = "<tr>" +
-                      "<td>" + val.NAMA_BANK + "</td>" +
-                      "<td align='right'>" + accounting.formatNumber(val.VALAS,2,".",",") + "</td>" +
-                      "<td align='right'>" + accounting.formatNumber(val.RUPIAH,2,".",",") + "</td>" +
-                      "</tr>";
-                  $('#table-total-deposito tbody').append(html);
-              });
+            var data = res.return;
+            var data2 = res.OUT_SALDO;
+            var tes = JSON.stringify(data);
+            //console.log('Diaz djancuk :'+tes);
+            $("#tglcetak").html(data[0].TANGGAL);
 
-              var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                  "<td>TOTAL EQ IDR</td>" +
-                  "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_VALAS,2,".",",") + "</td>" +
-                  "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_RUPIAH,2,".",",") + "</td>" +
-                  "</tr>";
-          $('#table-total-deposito tbody').append(total1);
+            var dataPieRekRencana = [];
+            $.each(data, function (index, value) {
+                var dataPieTemp = {
+                    minvalue: '0',
+                    maxvalue: value.PERSENTASE,
+                    code: value.WARNA,
+                    dial: value.NILAI_PERSENTASE
+                };
+                dataPieRekRencana.push(dataPieTemp)
+            });
 
+            var dataPieRekRencana2 = [];
+            $.each(data2, function (index, value) {
+                var dataPieTemp2 = {
+                    dial: value.NILAI_PERSENTASE
+                };
+                dataPieRekRencana2.push(dataPieTemp2)
+            });
 
-          var dataPieTotDeposito = [];
-          $.each(res.OUT_PIE_DEPOSITO, function (index, value) {
-              var dataPieTemp = {
-                  label: value.NAMA_BANK,
-                  value: value.PERSENTASE == 0 ? null : value.PERSENTASE
-              };
-              dataPieTotDeposito.push(dataPieTemp)
-          });
-
-          console.log("");
-
-          creteChartTotDeposito(dataPieTotDeposito);
-          hideLoadingCss()
+            creteChartRekRencana(dataPieRekRencana, dataPieRekRencana2);
+            hideLoadingCss()
       },
       error: function () {
           // hideLoadingCss("Gagal Ambil Data");
           hideLoadingCss();
-          $('#table-total-deposito tbody').empty();
+          $('#table-jenis-bank tbody').empty();
           var html = "<tr>" +
               "<td colspan='5' align='center'> No Data </td>" +
               "</tr>";
-          $('#table-total-deposito tbody').append(html);
+          $('#table-jenis-bank tbody').append(html);
       }
-    });
+     });
      $.ajax({
-              url: baseUrl + "api_dashboard/get_lindung_nilai",
-              dataType: 'JSON',
-              type: "GET",
-              success: function (res) {
-                  var data = res.return;
-                 // console.log("response : "+data);
-                  $("#tglcetak").html(data[0].TANGGAL);
-                  $('#table-lindung-nilai tbody').empty();
-                  $.each(data, function (key, val) {
-                      var str = val.NAMA_BANK;
-                      var html = "<tr>" +
-                          "<td>" + str + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(val.FORWARD, 2, ".", ",") + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(val.SWAP, 2, ".", ",") + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(val.DNDF, 2, ".", ",") + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(val.CALL_SPREAD_OPTION, 2, ".", ",") + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(val.TOTAL_SAMPING, 2, ".", ",") + "</td>" +
-                          "</tr>";
-                          $('#table-lindung-nilai tbody').append(html);
-                  });
+           url: baseUrl + "api_dashboard/get_rencana_pembayaran",
+           dataType: 'JSON',
+           type: "GET",
+           success: function (res) {
+             var data = res.return;
+             var data2 = res.OUT_BAR_CASHCODE;
+//            var tes = JSON.stringify(res.return);
+//             var tes2 = JSON.stringify(data2);
+//             console.log('CUKKK :'+tes2)
+             $("#tglcetak").html(data[0].TANGGAL);
 
-                  var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                      "<td>TOTAL EQ IDR</td>" +
-                      "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_FORWARD,2,".",",") + "</td>" +
-                      "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SWAP,2,".",",") + "</td>" +
-                      "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_DNDF,2,".",",") + "</td>" +
-                      "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_CALL_SPREAD_OPTION,2,".",",") + "</td>" +
-                      "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SELURUH,2,".",",") + "</td>" +
-                      "</tr>";
-              $('#table-lindung-nilai tbody').append(total1);
+             var dataChartRenPembayaran = [];
+             $.each(data2, function (index, value) {
+                 var dataPieTemp = {
+                     seriesname : value.CASH_DESCRIPTION,
+                     data : [
+                     {
+                         value: value.HS
+                     },
+                     {
+                         value: value.H1
+                     },
+                     {
+                         value: value.H2
+                     },
+                     {
+                         value: value.WEEKLY
+                     },
+                     {
+                         value: value.MONTHLY
+                     }
+                     ]
+                 };
+                 dataChartRenPembayaran.push(dataPieTemp)
+             });
 
-
-              var dataPieLinNilai= [];
-              $.each(res.OUT_PIE_LINDUNG, function (index, value) {
-                  var dataPieTemp = {
-                      label: value.NAMA_BANK,
-                      value: value.PERSENTASE == 0 ? null : value.PERSENTASE
-                  };
-                  dataPieLinNilai.push(dataPieTemp)
-              });
-
-              console.log("");
-
-              creteChartLinNilai(dataPieLinNilai);
-              hideLoadingCss()
-          },
-          error: function () {
-              // hideLoadingCss("Gagal Ambil Data");
-              hideLoadingCss();
-              $('#table-lindung-nilai tbody').empty();
-              var html = "<tr>" +
-                  "<td colspan='5' align='center'> No Data </td>" +
-                  "</tr>";
-              $('#table-lindung-nilai tbody').append(html);
-          }
-        });
+             rencanaPembayaranBarLine(dataChartRenPembayaran);
+             hideLoadingCss()
+       },
+       error: function () {
+           // hideLoadingCss("Gagal Ambil Data");
+           hideLoadingCss();
+           $('#table-jenis-bank tbody').empty();
+           var html = "<tr>" +
+               "<td colspan='5' align='center'> No Data </td>" +
+               "</tr>";
+           $('#table-jenis-bank tbody').append(html);
+       }
+      });
 }
 
-function creteChartSaldoCurr(data) {
-    //console.log(data);
+//Update Senin 17/2/2020
+
+function creteChartRekRencana(data, data2) {
+    var maxval1 = data[1].maxvalue + data[0].maxvalue;
+    var maxval2 = data[2].maxvalue + data[1].maxvalue;
+    var label1 = (data[0].minvalue + data[0].maxvalue)/2;
+    var label2 = (data[0].maxvalue + data[1].maxvalue)/2;
+    var label3 = (data[1].maxvalue + data[2].maxvalue)/2;
     FusionCharts.ready(function () {
         var fusioncharts = new FusionCharts({
-                type: 'pie2d',
-                renderAt: 'chart-saldo-curr',
-                width: '450',
-                height: '400',
+                type: 'angulargauge',
+                renderAt: 'chart-rencana-pembayaran1',
+                width: '400',
+                height: '300',
                 dataFormat: 'json',
                 dataSource: {
                     "chart": {
-                        "caption": "Saldo Currency",
-                        "numbersuffix": " %",
-                        "exportEnabled": "1",
-                        "bgColor": "#77D5D4",
-                        "showLabels": "0",
-                        "isSmartLineSlanted": "0",
-                        "showBorder": "0",
-                        "showLegend": "1",
-                        "baseFontSize": "12"
+                        "caption" : "Rencana Pembayaran",
+                        "subcaption" : "PT. PLN (Persero) Divisi Treasury",
+                        "bgColor": "#BBEAEA",
+                        "numbersuffix": "%",
+                        "lowerLimitDisplay": "0%",
+                        "upperLimitDisplay": "100%",
+                        "lowerLimit": "0",
+                        "upperLimit": "100",
+                        "showValue": "0",
+                        "showBorder":"0",
+                        "pivotRadius": "5",
+                        "pivotBorderColor": "#000000",
+                        "pivotBorderAlpha": "100",
+                        "pivotFillColor": "#000000",
+                        "pivotFillAlpha": "100",
+                        "valueBelowPivot": "0",
+                        "majorTMNumber": "9",
+                        "minorTMNumber": "4",
+                        "majorTMHeight": "10",
+                        "minorTMHeight": "5",
+                        showTickMarks: "1",
+                        showTickValues: "1",
+                        "gaugeFillMix": "{dark-10},{light-10},{dark-10}",
+                        "gaugeOuterRadius": "150",
+                        "gaugeInnerRadius": "90",
+                        "theme": "fusion"
                     },
-                    "data": data
+                    "colorrange": {
+                         "color": [
+                           {
+                              minvalue: "0",
+                              maxvalue: data[0].maxvalue,
+                              code: "#998650"
+                           },
+                          {
+                              minvalue: data[0].maxvalue,
+                              maxvalue: maxval1,
+                              code: "#7AC74F"
+                          },
+                          {
+                              minvalue: maxval1,
+                              maxvalue: "100",
+                              code: "#5ADBFF"
+                          },
+                       ]
+                     },
+                    "dials": {
+                        "dial": [{
+                         "id": "fd_dial",
+                         "bgcolor": "#F20F2F",
+                         "value": data2[1].dial
+                       }, {
+                         "id": "clth_dial",
+                         "bgcolor": "#F4D35E",
+                         "value": data2[0].dial
+                       }
+                      ]
+                    }
                 }
             }
         );
@@ -462,7 +374,7 @@ function creteChartSaldoRek(data) {
     //console.log(data);
     FusionCharts.ready(function () {
         var fusioncharts = new FusionCharts({
-                type: 'pie2d',
+                type: 'stackedcolumn2d',
                 renderAt: 'chart-saldo-rekening',
                 width: '450',
                 height: '400',
@@ -472,7 +384,7 @@ function creteChartSaldoRek(data) {
                         "caption": "Saldo Rekening",
                         "numbersuffix": " %",
                         "exportEnabled": "1",
-                        "bgColor": "#77D5D4",
+                        "bgColor": "#BBEAEA",
                         "showLabels": "0",
                         "isSmartLineSlanted": "0",
                         "showBorder": "0",
@@ -487,217 +399,561 @@ function creteChartSaldoRek(data) {
     });
 }
 
-function creteChartSaldoBank(data) {
-    //console.log(data);
-    FusionCharts.ready(function () {
-        var fusioncharts = new FusionCharts({
-                type: 'pie2d',
-                renderAt: 'chart-saldo-bank',
-                width: '450',
-                height: '400',
-                dataFormat: 'json',
-                dataSource: {
-                    "chart": {
-                        "caption": "Saldo Bank",
-                        "numbersuffix": " %",
-                        "exportEnabled": "1",
-                        "bgColor": "#77D5D4",
-                        "showLabels": "0",
-                        "isSmartLineSlanted": "0",
-                        "showBorder": "0",
-                        "showLegend": "1",
-                        "baseFontSize": "12"
-                    },
-                    "data": data
-                }
-            }
-        );
-        fusioncharts.render();
-    });
-}
+function rencanaPembayaranBarLine(data){
 
-function creteChartKompSaldo(data) {
-    //console.log('DZ :'+data);
-    var tes = JSON.stringify(data);
-    console.log('DIAZZ :'+tes);
-    FusionCharts.ready(function () {
-        var fusioncharts = new FusionCharts({
-                type: 'angulargauge',
-                renderAt: 'chart-komposisi-saldo',
-                width: '400',
-                height: '300',
-                dataFormat: 'json',
-                dataSource: {
-                    "chart": {
-                        "bgColor": "#77D5D4",
-                        "lowerLimitDisplay": " ",
-                        "upperLimitDisplay": " ",
-                        "lowerLimit": "0",
-                        "upperLimit": "100",
-                        "showValue": "0",
-                        "showBorder":"0",
-                        "pivotRadius": "10",
-                        "pivotFillColor": "#77D5D4",
-                        "pivotFillAlpha": "#77D5D4",
-                        "pivotFillMix": "#77D5D4",
-                        "valueBelowPivot": "0",
-                        pivotFillAlpha:"0",
-                        showTickMarks:"0",
-                        showTickValues:"1",
-                        "gaugeFillMix": "{dark-10},{light-10},{dark-10}",
-                        "theme": "fusion"
+//var tes = JSON.stringify(data);
+//console.log('DZ :' +tes);
+    const dataSource = {
+        chart : {
+            caption : "Rencana Pembayaran",
+            showSum : "1",
+            numberprefix : "Rp ",
+            theme : "fusion",
+            numDivLines : "5",
+            divLineColor: "#6699cc",
+            divLineAlpha: "60",
+            divLineDashed: "0",
+            bgColor: "#BBEAEA",
+            showLegend: "0",
+            crosslinecolor: "#ABD6D6",
+            numberScaleValue: "1000, 1000, 1000, 1000",
+            numberScaleUnit: "Rb, Jt, M, T"
+        },
+        categories : [
+            {
+                category : [
+                    {
+                        label : "Hari H"
                     },
-                    "colorrange": {
-                         "color": [
-                           {
-                              minvalue: data[0].minvalue,
-                              maxvalue: data[0].maxvalue,
-                              code: data[0].code
-                           },
-                          {
-                              minvalue: data[0].maxvalue,
-                              maxvalue: data[1].maxvalue,
-                              code: data[1].code
-                          },
-                          {
-                              minvalue: data[1].maxvalue,
-                              maxvalue: data[2].maxvalue,
-                              code: data[2].code
-                          },
-                          {
-                              minvalue: data[2].maxvalue,
-                              maxvalue: data[3].maxvalue,
-                              code: data[3].code
-                          }
-                       ]
-                     },
-                    "dials": {
-                          "dial": [
-                          {
-                              alpha:"0"
-                          }
-                      ]
+                    {
+                        label : "Hari 1"
+                    },
+                    {
+                        label : "Hari 2"
+                    },
+                    {
+                        label : "Weekly"
+                    },
+                    {
+                        label : "Monthly"
                     }
-                    //"data": data
-                }
+                ]
             }
-        );
-        fusioncharts.render();
+        ],
+        dataset : data
+    };
+
+    FusionCharts.ready(function () {
+        let chart = new FusionCharts({
+            type: "stackedcolumn2dline",
+            renderAt: "column-rencana-pembayaran",
+            width: "100%",
+            height: "100%",
+            dataFormat: "json",
+            dataSource
+        }).render();
     });
 }
 
-function creteChartRekOperasi(data) {
-   // console.log(data);
-    FusionCharts.ready(function () {
-        var fusioncharts = new FusionCharts({
-                type: 'column2d',
-                renderAt: 'chart-rekening-operasi',
-                width: '450',
-                height: '400',
-                dataFormat: 'json',
-                dataSource: {
-                    "chart": {
-                        "caption": "Rekening Operasi",
-                        "numbersuffix": " %",
-                        "exportEnabled": "1",
-                        "bgColor": "#77D5D4",
-                        "showLabels": "0",
-                        "isSmartLineSlanted": "0",
-                        "showBorder": "0",
-                        "showLegend": "1",
-                        "baseFontSize": "12"
-                    },
-                    "data": data
+function tableRencanaImpres(_date){
+let date = new Date();
+    let current_month = date.getMonth()+1;
+    let current_full_date;
+    let current_date = (date.getDate() < 10) ? "0"+ date.getDate().toString() : date.getDate();
+    let curr_month = (date.getMonth() < 10) ? "0"+current_month.toString() : current_month;
+    (_date === undefined) ? current_full_date = date.getFullYear().toString()+curr_month.toString()+current_date : current_full_date = _date;
+
+    var datestring = dateToString(date);
+    $("#tgl1b").html(datestring);
+    $("#tgl2b").html(incDate(date, 1));
+    $("#tgl3b").html(incDate(date, 2));
+    $("#tgl4b").html(incDate(date, 3));
+    $("#tgl5b").html(incDate(date, 4));
+    $("#tgl6b").html(incDate(date, 5));
+    $("#tgl7b").html(incDate(date, 6));
+    $("#tgl8b").html(incDate(date, 7));
+
+//    $("#header_tgl_rencana_imprest").append("<td style='text-align: center; background-color: #67a2d8'>URAIAN</td>");
+//    for (let i=0; i<8; i++){
+//        let tgl = date.getDate()+i;
+//        let month = date.getMonth()+1;
+//        $("#header_tgl_rencana_imprest").append("<td style='background-color: #67a2d8; vertical-align: middle'>"+tgl+"/"+month+"/"+date.getFullYear()+"</td>");
+//    }
+
+    let tb_rencana_imprest_valas = $("#dash_rencana_imprest").DataTable({
+        "ajax" : {
+            "url" : baseUrl + "api_operator/api_report/get_dashboard_rencana_imprest",
+            "data" : {
+                "ptanggal" : current_full_date
+            },
+            "type" : "GET",
+            "dataType" : "JSON",
+        },
+        "sorting": false,
+        "searching" : false,
+        "paging": false,
+        "bInfo" : false,
+        "bLengthChange" : false,
+        "columns" : [
+            {
+                "visible" : false,
+                "data" : "BANK",
+                "createdCell" : (cell) => {$(cell).css("background-color","white")},
+            },
+            {"data" : "URAIAN"},
+            {
+                "width" : "12%",
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D0 === null){
+                            return "";}
+                        else if (data.RP_D0 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D0 === null) {
+                            return 0;
+                        }else {
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+                        }
+                    }
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css("text-align","right");
                 }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D1 === null){
+                            return "";}
+                        else if (data.RP_D1 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D1 === null) {
+                            return 0;
+                        }else {
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
+                        }
+                    }
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css("text-align","right");
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D2 === null){
+                            return "";
+                        }else if (data.RP_D2 == -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D2 === null) {
+                            return 0;
+                        }else {
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
+                        }
+                    }
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css("text-align","right");
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D3 === null){
+                            return "";
+                        }else if (data.RP_D3 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D3 === null) {
+                            return 0;
+                        }else {
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
+                        }
+                    }
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css("text-align","right");
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D4 === null){
+                            return "";
+                        }else if (data.RP_D4 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D4 === null) {
+                            return 0;
+                        }else {
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
+                        }
+                    }
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css("text-align","right");
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D5 === null){
+                            return "";
+                        }else if (data.RP_D5 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D5 === null) {
+                            return 0;
+                        }else {
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
+                        }
+                    }
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css("text-align","right");
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D6 === null){
+                            return "";
+                        }else if (data.RP_D6 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D6 === null) {
+                            return 0;
+                        }else {
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
+                        }
+                    }
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css("text-align","right");
+                }
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D7 === null){
+                            return "";
+                        }else if (data.RP_D7 == -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D7 === null) {
+                            return 0;
+                        }else {
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D7)+'</td>';
+                        }
+                    }
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css("text-align","right");
+                }
+            },
+        ],
+        "createdRow" : (row, data, dataIndex) => {
+            if (data["ISANAK"] === 0){
+                $(row).css({
+                    "background-color" : "#ebfffa",
+                })
             }
-        );
-        fusioncharts.render();
-    });
+
+            if (data["URAIAN"] === "KETERANGAN"){
+                $(row).css({
+                    "background-color" : "#67a2d8",
+                    "color" : "white",
+                })
+            }
+        },
+        "drawCallback" : function (settings){
+            var api = this.api();
+            var rows = api.rows( {page:'current'} ).nodes();
+            var last=null;
+
+            api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
+                if ( last !== group ) {
+                    $(rows).eq( i ).before(
+                        '<tr class="group"><td rowspan="6" style="vertical-align: middle;text-align: center; font-weight: bold">'+group+'</td></tr>'
+                    );
+
+                    last = group;
+                }
+            } );
+        }
+    })
 }
 
-function creteChartRekInvestasi(data) {
-    //console.log(data);
-    FusionCharts.ready(function () {
-        var fusioncharts = new FusionCharts({
-                type: 'column2d',
-                renderAt: 'chart-rekening-investasi',
-                width: '450',
-                height: '400',
-                dataFormat: 'json',
-                dataSource: {
-                    "chart": {
-                        "caption": "Rekening Investasi",
-                        "numbersuffix": " %",
-                        "exportEnabled": "1",
-                        "bgColor": "#77D5D4",
-                        "showLabels": "0",
-                        "isSmartLineSlanted": "0",
-                        "showBorder": "0",
-                        "showLegend": "1",
-                        "baseFontSize": "12"
-                    },
-                    "data": data
-                }
+function tableRencanaImprestValas(_date){
+    let date = new Date();
+    let current_month = date.getMonth()+1;
+    let current_full_date;
+    let current_date = (date.getDate() < 10) ? "0"+ date.getDate().toString() : date.getDate();
+    let curr_month = (date.getMonth() < 10) ? "0"+current_month.toString() : current_month;
+    (_date === undefined) ? current_full_date = date.getFullYear().toString()+curr_month.toString()+current_date : current_full_date = _date;
+
+    var datestring = dateToString(date);
+        $("#tgl1a").html(datestring);
+        $("#tgl2a").html(incDate(date, 1));
+        $("#tgl3a").html(incDate(date, 2));
+        $("#tgl4a").html(incDate(date, 3));
+        $("#tgl5a").html(incDate(date, 4));
+        $("#tgl6a").html(incDate(date, 5));
+        $("#tgl7a").html(incDate(date, 6));
+        $("#tgl8a").html(incDate(date, 7));
+
+//    console.log('Tes'+current_full_date)
+//    $("#header_tgl_imprest_valas").append("<td style='text-align: center; background-color: #67a2d8'>URAIAN</td>");
+//    for (let i=0; i<8; i++){
+//        let tgl = date.getDate()+i;
+//        let month = date.getMonth()+1;
+//        $("#header_tgl_imprest_valas").append("<td style='background-color: #67a2d8; vertical-align: middle'>"+tgl+"/"+0+month+"/"+date.getFullYear()+"</td>");
+//    }
+
+    let tb_rencana_imprest_valas = $("#rencana_imprest_valas").DataTable({
+        "ajax" : {
+            "url" : baseUrl + "api_operator/api_report/get_dashboard_recana_valas",
+            "data" : {
+                "ptanggal" : current_full_date
+            },
+            "type" : "GET",
+            "dataType" : "JSON",
+        },
+        "sorting": false,
+        "searching" : false,
+        "paging": false,
+        "bInfo" : false,
+        "bLengthChange" : false,
+        "columns" : [
+            {
+                "visible" : false,
+                "data" : "BANK",
+                "createdCell" : (cell) => {$(cell).css("background-color","white")}
+            },
+            {"data" : "URAIAN", "width" : "9%"},
+            {
+                "width" : "15%",
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D0 === null){
+                            return "";
+                        }
+                        else if (data.RP_D0 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D0 === null) {
+                            return 0;
+                        }else {
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+                        }
+                    }
+                },
+                "createdCell" : (cell) => {$(cell).css("text-align","right")}
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D1 === null){
+                            return "";}
+                        else if (data.RP_D1 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D1 === null) {
+                            return 0;
+                        }else {
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
+                        }
+                    }
+                },
+                "createdCell" : (cell) => {$(cell).css("text-align","right")}
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D2 === null){
+                            return "";
+                        }else if (data.RP_D2 == -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D2 === null) {
+                            return 0;
+                        }else {
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
+                        }
+                    }
+                },
+                "createdCell" : (cell) => {$(cell).css("text-align","right")}
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D3 === null){
+                            return "";
+                        }else if (data.RP_D3 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D3 === null) {
+                            return 0;
+                        }else {
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
+                        }
+                    }
+                },
+                "createdCell" : (cell) => {$(cell).css("text-align","right")}
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D4 === null) {
+                            return "";
+                        } else if (data.RP_D4 === -1) {
+                            return "KURANG";
+                        }
+                    } else {
+                        if (data.RP_D4 === null) {
+                            return 0;
+                        } else {
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
+                        }
+                    }
+                },
+                "createdCell" : (cell) => {$(cell).css("text-align","right")}
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D5 === null){
+                            return "";
+                        }else if (data.RP_D5 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D5 === null) {
+                            return 0;
+                        }else {
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
+                        }
+                    }
+                },
+                "createdCell" : (cell) => {$(cell).css("text-align","right")}
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D6 === null){
+                            return "";
+                        }else if (data.RP_D6 === -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D6 === null) {
+                            return 0;
+                        }else {
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
+                        }
+                    }
+                },
+                "createdCell" : (cell) => {$(cell).css("text-align","right")}
+            },
+            {
+                "data" : null,
+                "render" : (data) => {
+                    if (data.URAIAN === "KETERANGAN") {
+                        if (data.RP_D7 === null){
+                            return "";
+                        }else if (data.RP_D7 == -1){
+                            return "KURANG";
+                        }
+                    }else {
+                        if (data.RP_D7 === null) {
+                            return 0;
+                        }else {
+                            return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D7)+'</td>';
+                        }
+                    }
+                },
+                "createdCell" : (cell) => {$(cell).css("text-align","right")}
+            },
+        ],
+        "createdRow" : (row, data, dataIndex) => {
+            if (data["ISANAK"] === 0){
+                $(row).css({
+                    "background-color" : "#bed0cb",
+                })
             }
-        );
-        fusioncharts.render();
-    });
+
+            if (data["URAIAN"] === "KETERANGAN"){
+                $(row).css({
+                    "background-color" : "#67a2d8",
+                    "color" : "white",
+                })
+            }
+        },
+        "drawCallback" : function (settings){
+            var api = this.api();
+            var rows = api.rows({page:'current'}).nodes();
+            var last = null;
+
+            api.column(groupColumn, {page:'current'}).data().each( function ( group, i ) {
+                if ( last !== group ) {
+                    $(rows).eq( i ).before(
+                        '<tr class="group"><td rowspan="12" style="vertical-align: middle;text-align: center; font-weight: bold">'+group+'</td></tr>'
+                    );
+                    last = group;
+                }
+            } );
+        }
+    })
 }
 
-function creteChartTotDeposito(data) {
-    //console.log(data);
-    FusionCharts.ready(function () {
-        var fusioncharts = new FusionCharts({
-                type: 'column2d',
-                renderAt: 'chart-total-deposito',
-                width: '450',
-                height: '400',
-                dataFormat: 'json',
-                dataSource: {
-                    "chart": {
-                        "caption": "Total Deposito",
-                        "numbersuffix": " %",
-                        "exportEnabled": "1",
-                        "bgColor": "#77D5D4",
-                        "showLabels": "0",
-                        "isSmartLineSlanted": "0",
-                        "showBorder": "0",
-                        "showLegend": "1",
-                        "baseFontSize": "12"
-                    },
-                    "data": data
-                }
-            }
-        );
-        fusioncharts.render();
-    });
+function dateToString(date) {
+    return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 }
 
-function creteChartLinNilai(data) {
-    //console.log(data);
-    FusionCharts.ready(function () {
-        var fusioncharts = new FusionCharts({
-                type: 'column2d',
-                renderAt: 'chart-lindung-nilai',
-                width: '450',
-                height: '400',
-                dataFormat: 'json',
-                dataSource: {
-                    "chart": {
-                        "caption": "Lindung Nilai",
-                        "numbersuffix": " %",
-                        "exportEnabled": "1",
-                        "bgColor": "#77D5D4",
-                        "showLabels": "0",
-                        "isSmartLineSlanted": "0",
-                        "showBorder": "0",
-                        "showLegend": "1",
-                        "baseFontSize": "12"
-                    },
-                    "data": data
-                }
-            }
-        );
-        fusioncharts.render();
-    });
+function incDate(date, days) {
+    date = new Date(date.getTime() + (86400000 * days));
+    return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+}
+
+function stringToDate(_date) {
+    var formatLowerCase = 'dd/mm/yyyy';
+    var formatItems = formatLowerCase.split('/');
+    var dateItems = _date.split('/');
+    var monthIndex = formatItems.indexOf("mm");
+    var dayIndex = formatItems.indexOf("dd");
+    var yearIndex = formatItems.indexOf("yyyy");
+    var month = parseInt(dateItems[monthIndex]);
+    month -= 1;
+    var formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
+    return formatedDate;
 }

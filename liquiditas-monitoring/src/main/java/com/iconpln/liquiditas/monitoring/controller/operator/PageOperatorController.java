@@ -8,15 +8,31 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Created by israj on 10/4/2016.
- * Updated by Mr.Diaz on 31/10/2019
+ * Updated by Mr.Diaz on 31/10/2019.
+ * Updated by adikoesoemah on 31/10/2019
  */
 @Controller
 @RequestMapping("/page_operator")
 public class PageOperatorController {
 
     @RequestMapping("/home")
-    public String home() {
-        return "operator/home";
+    public String home() { return "operator/home";
+    }
+
+    @RequestMapping("/pengelolaan_likuiditas")
+    public String pengelolaan_likuiditas() { return "operator/pengelolaan_likuiditas";
+    }
+
+    @RequestMapping("/dashboard")
+    public String dashboard() { return "operator/dashboard2";
+    }
+
+    @RequestMapping("/dash_rencana")
+    public String dash_rencana() { return "operator/dash_rencana";
+    }
+
+    @RequestMapping("/dash_realisasi")
+    public String dash_realisasi() { return "operator/dash_realisasi";
     }
 
     @RequestMapping("/rekapitulasi_data")

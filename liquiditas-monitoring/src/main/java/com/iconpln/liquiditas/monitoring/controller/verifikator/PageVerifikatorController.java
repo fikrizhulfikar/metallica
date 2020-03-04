@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by israj on 10/4/2016.
  * modified by fputra on 28/08/2017
  * modified by elvan on 04/06/2018
+ * modified by adikoesoemah on 24/01/2020
  */
 @Controller
 public class PageVerifikatorController {
@@ -99,6 +100,18 @@ public class PageVerifikatorController {
     @RequestMapping("/page_idrverifikator/cash_flow")
     public String cashFlow(){
         return "verifikatoridr/cash_flow";
+    }
+
+    @RequestMapping("/dash_corpay/saldo_rekening")
+    public String saldoRekening(){ return "dashboardcorpay/saldo_rekening3";
+    }
+
+    @RequestMapping("/dash_corpay/rencana_pembayaran")
+    public String rencanaPembayaran(){ return "dashboardcorpay/rencana_pembayaran";
+    }
+
+    @RequestMapping("/dash_corpay/realisasi_pembayaran")
+    public String realisasiPembayaran(){ return "dashboardcorpay/realisasi_pembayaran";
     }
 
 }

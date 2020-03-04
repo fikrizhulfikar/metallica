@@ -2,11 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Login</title>
+    <title>Screen Saver</title>
     <link href="/static/css/bootstrap.css" rel="stylesheet"/>
     <link href="/static/css/font-awesome.css" rel="stylesheet"/>
     <link href="/static/css/frontend/login.css" rel="stylesheet"/>
-    <link rel="icon" href="/static/images/tab-icon.png"/>
+<!--    <link href="/static/css/frontend/animation.css" rel="stylesheet"/>-->
+    <link rel="icon" href="/static/new-backend/img/icon.png"/>
     <style>
         body{
             background: rgba(187, 234, 234, 1) !important;
@@ -17,14 +18,24 @@
 <body>
 <div style="display: none" class="col-md-12" id="loader-div" align="center"><div id="loader"></div></div>
 <div class="app-body">
-    <div id="screen-saver" align="center">
-        <div><img style="width: 35%;margin-top: 100px; margin-bottom: 20px;" src="/static/images/lg-login.png" alt=""/></div>
-        <i style="font-family: Consolas, monospace"><H4>Liquidity Monitoring And Transcation Application</H4></i>
+    <div id="screen-saver" align="center" style="z-index:2">
+        <div><img style="width: 35%;margin-top: 40px; margin-bottom: 20px;" src="/static/images/lg-login.png" alt=""/></div>
+        <i style="font-family: Consolas, monospace"><H4><b>Liquidity Monitoring And Transaction Application</b></H4></i>
         <div>
-            <button class="btn btn-success" onclick="back()" style="margin-top: 35px">Back</button>
+            <button class="btn btn-success" onclick="back()" style="margin-top: 25px; z-index:3; z-index: 1;">Back</button>
         </div>
     </div>
 </div>
+<ul class="animation-area" style="z-index:2;" >
+    <ul class="box-area">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</ul>
 <script src="/static/js/jquery-2.2.0.min.js"></script>
 <script src="/static/js/bootstrap.js"></script>
 <script src="/static/js/backend/coreapps.js"></script>

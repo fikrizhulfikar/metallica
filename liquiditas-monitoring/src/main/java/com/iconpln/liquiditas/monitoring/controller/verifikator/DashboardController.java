@@ -1,6 +1,7 @@
 package com.iconpln.liquiditas.monitoring.controller.verifikator;
 
 import com.iconpln.liquiditas.core.domain.CashFlow;
+import com.iconpln.liquiditas.core.service.DashboardCorpay;
 import com.iconpln.liquiditas.core.service.DashboardService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import javax.print.attribute.standard.Media;
@@ -9,12 +10,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -31,6 +27,9 @@ public class DashboardController {
 
     @Autowired
     DashboardService dashboardService;
+
+    @Autowired
+    DashboardCorpay dashboardCorpay;
 
     @Autowired
     private ResourceLoader resourceLoader;
@@ -516,5 +515,175 @@ public class DashboardController {
         }
         return map;
     }
+
+    @RequestMapping(value = "/get_rekening_vs_rencana", method = RequestMethod.GET)
+    public Map getRekRencana() {
+        try {
+            return dashboardService.getRekRencana();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_komposisi_saldo", method = RequestMethod.GET)
+    public Map getKompSaldo() {
+        try {
+            return dashboardService.getKompSaldo();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_rencana_pembayaran", method = RequestMethod.GET)
+    public Map getRenPembayaran() {
+        try {
+            return dashboardService.getRenPembayaran();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_realisasi_pembayaran", method = RequestMethod.GET)
+    public Map getRealPembayaran() {
+        try {
+            return dashboardService.getRealPembayaran();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_ana_realisasi_pembayaran", method = RequestMethod.GET)
+    public Map getAnaRealPembayaran() {
+        try {
+            return dashboardService.getAnaRealPembayaran();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_saldo_curr", method = RequestMethod.GET)
+    public Map getSaldoJenisMataUang() {
+        try {
+            return dashboardCorpay.getSaldoJenisMataUang();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    @RequestMapping(value = "/get_saldo_rek", method = RequestMethod.GET)
+    public Map getSaldoRekening() {
+        try {
+            return dashboardCorpay.getSaldoRekening();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    @RequestMapping(value = "/get_saldo_bank", method = RequestMethod.GET)
+    public Map getSaldoBank() {
+        try {
+            return dashboardCorpay.getSaldoBank();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    @RequestMapping(value = "/get_rekening_operasi", method = RequestMethod.GET)
+    public Map getRekOperasi() {
+        try {
+            return dashboardCorpay.getRekOperasi();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    @RequestMapping(value = "/get_rekening_investasi", method = RequestMethod.GET)
+    public Map getRekInves() {
+        try {
+            return dashboardCorpay.getRekInves();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    @RequestMapping(value = "/get_total_deposito", method = RequestMethod.GET)
+    public Map getTotDeposito() {
+        try {
+            return dashboardCorpay.getTotDeposito();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    @RequestMapping(value = "/get_lindung_nilai", method = RequestMethod.GET)
+    public Map getLinNilai() {
+        try {
+            return dashboardCorpay.getLinNilai();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_rencana_investasi_operasi", method = RequestMethod.GET)
+    public Map getRenInvops() {
+        try {
+            return dashboardCorpay.getRenInvops();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_rencana_pembayaran2", method = RequestMethod.GET)
+    public Map getRenPembayaran2() {
+        try {
+            return dashboardCorpay.getRenPembayaran2();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_realisasi_pembayaran2", method = RequestMethod.GET)
+    public Map getRealPembayaran2() {
+        try {
+            return dashboardCorpay.getRealPembayaran2();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+//    @GetMapping(path = "/get_rencana_investasi_operasi")
+//    public Map getListRencanaPembayaranPerVendor(@RequestParam(value = "ptanggal") String tanggal){
+//        List<Map<String, Object>> list = new ArrayList<>();
+//        try{
+//            list = dashboardCorpay.getDashboardInvestasiOp(tanggal);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//
+//        Map mapData = new HashMap();
+//        mapData.put("data", list);
+//        return mapData;
+//    }
 
 }

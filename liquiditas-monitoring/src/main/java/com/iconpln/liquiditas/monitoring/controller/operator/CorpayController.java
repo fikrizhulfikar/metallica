@@ -890,51 +890,6 @@ public class CorpayController {
         return corpayService.getBallance(in_bank, in_source, in_beneficiary);
     }
 
-//    @RequestMapping(value = "/create_group", method = RequestMethod.POST)
-//    public Map<String, Object> createGroup(
-//            @RequestParam(value = "pData", defaultValue = "") String pData,
-//            @RequestParam(value = "pNamaGroup", defaultValue = "") String pNamaGroup
-//    ) {
-//
-//        Map<String, Object> out = null;
-//        //pNamaGroup = (pNamaGroup.toString().equals("null") ? "" : pNamaGroup);
-//        String jsonString = corpayService.getPerfectJsonString(pData);
-//        String[] listData = jsonString.split(";");
-//        JSONObject json ;
-//
-//        for (String item : listData) {
-//            json = new JSONObject(item);
-//            Iterator<?> keys = json.keys();
-//            while (keys.hasNext()) {
-//                String key = (String) keys.next();
-//                String value = json.getString(key);
-//
-//               // if (!key.equals("pCompCode") && !key.equals("pDocNo") && !key.equals("pFiscYear") && !key.equals("pLineItem") && !key.equals("pKet")) {
-//                    try {
-//                        System.out.println("DIAZZZZZ:"+json.getString("pCompCode"));
-//                        out = corpayService.createGroup(json.getString("pCompCode"), json.getString("pDocNo"), json.getString("pFiscYear"), json.getString("pLineItem"),json.getString("pKet"), pNamaGroup, WebUtils.getUsernameLogin());
-//                        if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
-//
-//                        }
-//                        return out;
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                        out = null;
-//                        break;
-//                    }
-//               // }
-//                /*else {
-//                    out.put("OUT_MSG", "DATA BERHASIL DIUBAH");
-//                    out.put("return", "1");
-//                }*/
-//            }
-//        }
-//
-//        AppUtils.getLogger(this).debug("statusInvoice : {} ", out);
-//        return out;
-//
-//    }
-
     @RequestMapping(value = "/get_Ballance2", method = RequestMethod.POST)
     public String getBallance2(
             @RequestParam(value = "pBank", defaultValue = "") String pBank,
@@ -1060,6 +1015,47 @@ public class CorpayController {
             e.printStackTrace();
             return null;
         }
+    }
+
+//    @GetMapping(path = "/laporan_komposisi_saldo")
+//    public Map listDashboardPengelolaan(@RequestParam(value = "tanggal") String tanggal){
+//        List<Map<String, Object>> list = new ArrayList<>();
+//
+//        try {
+//            list = corpayService.getDashboardPengelolaan(tanggal);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//
+//        Map mapData = new HashMap();
+//        mapData.put("data", list);
+//
+//        return mapData;
+//    }
+    @RequestMapping(value = "/laporan_komposisi_saldo", method = RequestMethod.GET)
+    public Map getDashboardPengelolaan() {
+        try {
+            return corpayService.getDashboardPengelolaan();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping(path = "/rincian_saldo")
+    public Map listDashboardPengelolaan2(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = corpayService.getDashboardPengelolaan2(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
     }
 
 }

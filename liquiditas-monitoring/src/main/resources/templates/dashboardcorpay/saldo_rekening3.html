@@ -1,171 +1,204 @@
 <div th:fragment="stylesheets-frontend" xmlns:th="http://www.w3.org/1999/xhtml">
     <style>
         th {
-            font-size: 11px;
-            vertical-align: middle
+            font-size: 13px;
+            vertical-align: middle;
         }
 
         td {
-            font-size: 10px;
+            font-size: 11px;
         }
 
         td, th {
-            padding: 2px !important;
+            padding: 5px !important;
         }
         .carousel-control{
             width : 8% !important;
         }
+
+        .wrapper {
+            text-align: center;
+        }
+        .wrapper ul {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            /* For IE, the outcast */
+            zoom:1;
+            *display: inline;
+        }
+        .wrapper li {
+            float: left;
+            padding: 2px 5px;
+        }
+      /* basic positioning */
+        .legend { list-style: none; align: center;}
+        .legend li { float: left; margin-right: 10px; font-size: 12px;}
+        .legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+        /* your colors */
+        .legend .one { background-color: #F2726F;}
+        .legend .two { background-color: #62B58F; }
+        .legend .three { background-color: #FFC533; }
+        .legend .four { background-color: #77D5D4; }
+        .legend .five { background-color: #1985A1; }
+        .legend .six { background-color: #FB4D3D; }
+        .legend .seven { background-color: #F26419; }
+        .legend .eight { background-color: #F20F2F; }
+        .legend .nine { background-color: #F4D35E; }
+
     </style>
 </div>
 <div style="margin-top: -15px;min-height: 400px" class="app-body col-md-12" th:fragment="content" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="col-md-12">
         <div class="col-md-12">
-            <div align="center" class="title"><h5><b>DASHBOARD CORPORATE PAYMENT TGL : <span id="tglcetak">-</span></b></h5></div>
+            <div align="center" class="title"><h5><b>PT. PLN (Persero) Divisi Treasury</b></h5></div>
+            <div align="center" class="title"><h5><b>DASHBOARD L'METALLICA TGL : <span id="tglcetak"></span></b></h5></div>
         </div>
         <div class="col-md-12" style="padding-right: 0px;" align="right">
-            <div id="chart-carousel" style="min-height: 465px;" class="carousel slide" data-ride="carousel">
+            <div id="chart-carousel" style="min-height: 430px;" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="item active" align="center">
-                        <div class="col-md-6" style="padding-top: 15px;">
-                            <div align="left" class="title"><h6><b>REKAP SALDO PER JENIS MATA UANG</b></h6></div>
-                            <div class="view-table" >
-                                <table id="table-jenis-mata-uang" class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th style="background-color: #67a2d8" width="16.666%">MATA UANG</th>
-                                        <th style="background: #91e491" width="16.666%">NOMINAL</th>
-                                        <th style="background: #f5926d" width="16.666%">NOMINAL (EQ IDR)</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                        <div class="col-md-12" style="padding-top: 15px;">
+                            <div class="col-md-12" style="padding-top: 15px;">
+                                <div align="center" id="chart-komposisi-saldo" style="margin-top: -50px"></div>
                             </div>
-                            <div align="center" id="chart-saldo-curr"></div>
-                        </div>
-                        <div class="col-md-6" style="padding-top: 15px;">
-                            <div align="left" class="title"><h6><b>REKAP SALDO PER JENIS REKENING</b></h6></div>
-                            <div class="view-table">
-                                <table id="table-jenis-rekening" class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th style="background-color: #67a2d8" width="16.666%">MATA UANG (EQ IDR)</th>
-                                        <th style="background: #91e491" width="16.666%">VALAS</th>
-                                        <th style="background: #f5926d" width="16.666%">RUPIAH</th>
-                                        <th style="background: #c0a4fd" width="16.666%">TOTAL</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                            <div class="wrapper" style="margin-top: 5px">
+                                <ul align="center" class="legend">
+                                    <li><span class="one"></span> REKENING IMPREST</li>
+                                    <li><span class="two"></span> REKENING RESTRICTED</li>
+                                    <li><span class="three"></span> REKENING OPERASIONAL LAINNYA</li>
+                                    <li><span class="four"></span> DEPOSITO</li>
+                                </ul>
                             </div>
-                            <div align="center" id="chart-saldo-rekening"></div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6" style="padding-top: 15px;">
+                                <div class="view-table">
+                                    <table id="table-komposisi-saldo" class="table table-bordered" style="margin-bottom: 50px">
+                                        <thead>
+                                        <tr>
+                                            <th style="background-color: #F4D35E" width="100%" colspan="2">REKAP KOMPOSISI SALDO</th>
+                                        <tr>
+                                            <th style="background-color: #67a2d8" width="16.666%">JENIS REKENING</th>
+                                            <th style="background: #67a2d8" width="16.666%">TOTAL</th>
+                                        </tr>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-3"></div>
                         </div>
                     </div>
                     <div class="item" align="center">
-                        <div class="col-md-6" style="padding-top: 15px;">
-                            <div align="left" class="title"><h6><b>REKAP SALDO PER JENIS BANK</b></h6></div>
-                            <div class="view-table">
-                                <table id="table-jenis-bank" class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th style="background-color: #67a2d8" width="16.666%">BANK</th>
-                                        <th style="background: #c0a4fd" width="16.666%">TOTAL</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                        <div class="col-md-12" style="padding-top: 15px;">
+                            <div class="col-md-6" style="padding-top: 15px;">
+                                <div class="view-table" >
+                                    <table id="table-jenis-mata-uang" class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th style="background-color: #F4D35E" width="100%" colspan="3">REKAP SALDO PER JENIS MATA UANG</th>
+                                        <tr>
+                                            <th style="background-color: #67a2d8" width="16.666%">MATA UANG</th>
+                                            <th style="background: #67a2d8" width="16.666%">NOMINAL</th>
+                                            <th style="background: #67a2d8" width="16.666%">NOMINAL (EQ IDR)</th>
+                                        </tr>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="view-table">
+                                    <table id="table-jenis-rekening" class="table table-bordered" style="margin-top:0px">
+                                        <thead>
+                                        <tr>
+                                            <th style="background-color: #F4D35E" width="100%" colspan="4">REKAP SALDO PER JENIS REKENING</th>
+                                        <tr>
+                                            <th style="background-color: #67a2d8" width="27%">MATA UANG (EQ IDR)</th>
+                                            <th style="background: #67a2d8" width="24%">VALAS</th>
+                                            <th style="background: #67a2d8" width="24%">RUPIAH</th>
+                                            <th style="background: #67a2d8" width="24%">TOTAL</th>
+                                        </tr>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="view-table">
+                                    <table id="table-jenis-bank" class="table table-bordered" style="margin-top:0px">
+                                        <thead>
+                                        <tr>
+                                            <th style="background-color: #F4D35E" width="100%" colspan="2">REKAP SALDO PER JENIS BANK</th>
+                                        <tr>
+                                            <th style="background-color: #67a2d8" width="16.666%">BANK</th>
+                                            <th style="background: #67a2d8" width="16.666%">TOTAL</th>
+                                        </tr>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                            <div align="center" id="chart-saldo-bank"></div>
-                        </div>
-                        <div class="col-md-6" style="padding-top: 15px;">
-                            <div align="left" class="title"><h6><b>REKAP KOMPOSISI SALDO</b></h6></div>
-                            <div class="view-table">
-                                <table id="table-komposisi-saldo" class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th style="background-color: #67a2d8" width="16.666%">JENIS REKENING</th>
-                                        <th style="background: #c0a4fd" width="16.666%">TOTAL</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                            <div class="col-md-6" style="padding-top: 15px;">
+                                <div class="view-table">
+                                    <table id="table-rekening-operasi" class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th style="background-color: #F4D35E" width="100%" colspan="4">REKAP SALDO REKENING OPERASI</th>
+                                        <tr>
+                                            <th style="background-color: #67a2d8" width="16.666%">JENIS REKENING</th>
+                                            <th style="background: #67a2d8" width="16.666%">VALAS</th>
+                                            <th style="background: #67a2d8" width="16.666%">RUPIAH</th>
+                                            <th style="background: #67a2d8" width="16.666%">TOTAL EQ IDR</th>
+                                        </tr>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="view-table">
+                                    <table id="table-rekening-investasi" class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th style="background-color: #F4D35E" width="100%" colspan="4">REKAP SALDO REKENING INVESTASI</th>
+                                        <tr>
+                                            <th style="background-color: #67a2d8" width="16.666%">JENIS REKENING</th>
+                                            <th style="background: #67a2d8" width="16.666%">VALAS</th>
+                                            <th style="background: #67a2d8" width="16.666%">RUPIAH</th>
+                                            <th style="background: #67a2d8" width="16.666%">TOTAL EQ IDR</th>
+                                        </tr>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                            <div align="center" id="chart-komposisi-saldo"></div>
                         </div>
                     </div>
                     <div class="item" align="center">
-                        <div class="col-md-6" style="padding-top: 15px;">
-                            <div align="left" class="title"><h6><b>REKAP SALDO REKENING OPERASI</b></h6></div>
-                            <div class="view-table">
-                                <table id="table-rekening-operasi" class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th style="background-color: #67a2d8" width="16.666%">JENIS REKENING</th>
-                                        <th style="background: #91e491" width="16.666%">VALAS</th>
-                                        <th style="background: #f5926d" width="16.666%">RUPIAH</th>
-                                        <th style="background: #c0a4fd" width="16.666%">TOTAL EQ IDR</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div align="center" id="chart-rekening-operasi"></div>
-                        </div>
-                        <div class="col-md-6" style="padding-top: 15px;">
-                            <div align="left" class="title"><h6><b>REKAP SALDO REKENING INVESTASI</b></h6></div>
-                            <div class="view-table">
-                                <table id="table-rekening-investasi" class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th style="background-color: #67a2d8" width="16.666%">JENIS REKENING</th>
-                                        <th style="background: #91e491" width="16.666%">VALAS</th>
-                                        <th style="background: #f5926d" width="16.666%">RUPIAH</th>
-                                        <th style="background: #c0a4fd" width="16.666%">TOTAL EQ IDR</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div align="center" id="chart-rekening-investasi"></div>
-                        </div>
-                    </div>
-                    <div class="item" align="center">
-                        <div class="col-md-6" style="padding-top: 15px;">
-                            <div align="left" class="title"><h6><b>TOTAL DEPOSITO</b></h6></div>
-                            <div class="view-table">
-                                <table id="table-total-deposito" class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th style="background-color: #67a2d8" width="16.666%">BANK</th>
-                                        <th style="background: #91e491" width="16.666%">USD</th>
-                                        <th style="background: #f5926d" width="16.666%">IDR</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div align="center" id="chart-total-deposito"></div>
-                        </div>
-                        <div class="col-md-6" style="padding-top: 15px;">
-                            <div align="left" class="title"><h6><b>TOTAL LINDUNG NILAI - OUTSTANDING</b></h6></div>
+                        <div class="col-md-12" style="padding-top: 15px;">
+                            <!--                            <div align="left" class="title"><h6><b>TOTAL LINDUNG NILAI - OUTSTANDING</b></h6></div>-->
                             <div class="view-table">
                                 <table id="table-lindung-nilai" class="table table-bordered">
                                     <thead>
                                     <tr>
-                                        <th width="15%" style="vertical-align: middle; background-color: #67a2d8" rowspan="2">BANK</th>
-                                        <th style="background: #91e491" width="40%" colspan="4">PRODUK</th>
-                                        <th width="15%" style="vertical-align: middle; background-color: #f5926d" rowspan="2">TOTAL</th>
+                                        <th style="background-color: #F4D35E" width="100%" colspan="6">TOTAL LINDUNG NILAI - OUTSTANDING</th>
                                     <tr>
-                                        <th style="background: #91e491" width="15%">FORWARD</th>
-                                        <th style="background: #91e491" width="15%">SWAP</th>
-                                        <th style="background: #91e491" width="15%">DNDF</th>
-                                        <th style="background: #91e491" width="15%">CALL SPREAD OPTION</th>
+                                        <th width="15%" style="vertical-align: middle; background-color: #67a2d8" rowspan="2">BANK</th>
+                                        <th style="background: #67a2d8" width="40%" colspan="4">PRODUK</th>
+                                        <th width="15%" style="vertical-align: middle; background-color: #67a2d8" rowspan="2">TOTAL</th>
+                                    <tr>
+                                        <th style="background: #67a2d8" width="15%">FORWARD</th>
+                                        <th style="background: #67a2d8" width="15%">SWAP</th>
+                                        <th style="background: #67a2d8" width="15%">DNDF</th>
+                                        <th style="background: #67a2d8" width="15%">CALL SPREAD OPTION</th>
+                                    </tr>
                                     </tr>
                                     </tr>
                                     </thead>
@@ -173,7 +206,62 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div align="center" id="chart-lindung-nilai"></div>
+                            <!--                            <div align="center" id="chart-lindung-nilai"></div>-->
+                        </div>
+                        <div class="col-md-12" style="padding-top: 15px;">
+                            <!--                            <div align="left" class="title"><h6><b>TOTAL LINDUNG NILAI - OUTSTANDING</b></h6></div>-->
+                            <div class="view-table">
+                                <table id="table-total-optima" class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th style="background-color: #F4D35E" width="100%" colspan="4">TOTAL OPTIMA</th>
+                                    <tr>
+                                        <th style="background-color: #67a2d8" width="16.666%">BANK</th>
+                                        <th style="background: #67a2d8" width="16.666%">USD</th>
+                                        <th style="background: #67a2d8" width="16.666%">IDR</th>
+                                        <th style="background: #67a2d8" width="16.666%">TOTAL</th>
+                                    </tr>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="padding-top: 15px;">
+                            <!--                            <div align="left" class="title"><h6><b>TOTAL DEPOSITO</b></h6></div>-->
+                            <div class="view-table">
+                                <table id="table-total-deposito" class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th style="background-color: #F4D35E" width="100%" colspan="3">TOTAL DEPOSITO</th>
+                                    <tr>
+                                        <th style="background-color: #67a2d8" width="16.666%">BANK</th>
+                                        <th style="background: #67a2d8" width="16.666%">USD</th>
+                                        <th style="background: #67a2d8" width="16.666%">IDR</th>
+                                    </tr>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--                            <div align="center" id="chart-total-deposito"></div>-->
+                        </div>
+                        <div class="col-md-6" style="padding-top: 15px;">
+                            <div class="view-table">
+                                <table id="table-total-scf" class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th style="background-color: #F4D35E" width="100%" colspan="2">TOTAL SCF</th>
+                                    <tr>
+                                        <th style="background-color: #67a2d8" width="16.666%">BANK</th>
+                                        <th style="background: #67a2d8" width="16.666%">EQ IDR</th>
+                                    </tr>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -189,5 +277,15 @@
 </div>
 <div th:fragment="scripts-frontend" xmlns:th="http://www.w3.org/1999/xhtml">
     <script src="/static/js/frontend/dashboardcorpay/saldo_rekening.js"></script>
+    <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
+    <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
 </div>
+
+<script>
+n =  new Date();
+y = n.getFullYear();
+m = n.getMonth() + 1;
+d = n.getDate();
+document.getElementById("datetime").innerHTML = m + "/" + d + "/" + y;
+</script>
 

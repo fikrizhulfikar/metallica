@@ -4,170 +4,312 @@
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
         }
         table th {
-            font-size: 12px;
+            font-size: 13px;
             vertical-align: middle;
+            text-align: center;
+            font-weight: bold;
         }
         table td {
-            font-size: 11px;
+            font-size: 12px;
+            font-weight: bold;
         }
-<!--        tbody:hover td {-->
-<!--            color: transparent;-->
-<!--            text-shadow: 0 0 3px #aaa;-->
-<!--        }-->
+        .btn {
+            background-color: #ddd;
+            border: none;
+            color: black;
+            padding: 10px 26px;
+            text-align: center;
+            font-size: 15px;
+            cursor: pointer;
+            margin: 2px 2px;
+            transition: 0.3s;
+            border-radius: 10px;
+          }
 
-<!--        tbody:hover tr:hover td {-->
-<!--            color: #444;-->
-<!--            text-shadow: 0 1px 0 #fff;-->
-<!--        }-->
+          .btn:hover {
+            background-color: #3e8e41;
+            color: white;
+          }
+
+          div.a{
+            visibility: visible;
+          }
+
+          div.b{
+            visibility: hidden;
+          }
+          .wrapper {
+                text-align: center;
+            }
+            .wrapper ul {
+                display: inline-block;
+                margin: 0;
+                padding: 0;
+                /* For IE, the outcast */
+                zoom:1;
+                *display: inline;
+            }
+            .wrapper li {
+                float: left;
+                padding: 2px 5px;
+            }
+          /* basic positioning */
+            .legend { list-style: none; align: center;}
+            .legend li { float: left; margin-right: 10px; font-size: 12px;}
+            .legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+            /* your colors */
+            .legend .one { background-color: #ED6A5A;}
+            .legend .two { background-color: #62B58F; }
+            .legend .three { background-color: #FFC533; }
+            .legend .four { background-color: #77D5D4; }
+            .legend .five { background-color: #998650; }
+            .legend .six { background-color: #7AC74F; }
+            .legend .seven { background-color: #5ADBFF; }
+            .legend .eight { background-color: #F20F2F; }
+            .legend .nine { background-color: #F4D35E; }
     </style>
 </div>
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
         <li class="breadcrumb-item active" style="cursor: default">Dashboard Management</li>
+        <div align="right" style="color:#778899" class="title"><h7>Tanggal : <span id="tglcetak"></span></h7></div>
     </ol>
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-block">
-                        <div><h6><b>1A.Rencana</b></h6></div>
-                        <table id="main-rencana" class="table table-rencana-realisasi table-condensed table-bordered"  style="margin-bottom: 20px;" width="100%">
-                            <thead>
-                            <tr>
-                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
-                                <th rowspan="2">KODE</th>
-                                <th colspan="5" style="text-align: center; vertical-align: middle;">TANGGAL</th>
-                            </tr>
-                            <tr id="header-tanggal">
+            <div class="col-md-12" style="margin-top: -25px; margin-bottom: 25px; min-height: 555px;">
+                <div class="carousel">
+                    <div class="carousel-inner">
+                        <input class="carousel-open" type="radio" id="carousel-1" name="carousel" aria-hidden="true" hidden="" checked="checked"/>
+                        <div class="carousel-item">
+                            <div class="col-md-12" align="center" style="margin-top: 20px">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div class="col-md-12" style="padding-top: 0px;">
+                                            <!--                                            <div><h6><b>2A</b></h6></div>-->
+                                            <div align="center" id="chart-komposisi-saldo" style="margin-top: -19px"></div>
+                                            <div class="wrapper" style="margin-top: 5px">
+                                                <ul align="center" class="legend">
+                                                    <li><span class="one"></span> REKENING IMPREST</li>
+                                                    <li><span class="three"></span> REKENING OPERASIONAL LAINNYA</li>
+                                                    <li><span class="two"></span> REKENING RESTRICTED</li>
+                                                    <li><span class="four"></span> DEPOSITO</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-8" style="padding-top: 15px;">
+                                            <div class="view-table">
+                                                <table id="table-komposisi-saldo" class="table table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th style="background-color: #67a2d8; text-align: center;" width="16.666%">JENIS REKENING</th>
+                                                        <th style="background: #67a2d8; text-align: center;" width="16.666%">TOTAL</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input class="carousel-open" type="radio" id="carousel-2" name="carousel" aria-hidden="true" hidden=""/>
+                        <div class="carousel-item">
+                            <div class="col-md-12" style="margin-top: 20px">
+                                <div class="card">
+                                    <div class="card-block" >
+                                        <div align="center"><h6><b>Rencana Pembayaran</b></h6></div>
+                                        <table id="main-rencana" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-bottom: 5px">
+                                            <thead>
+                                            <tr>
+                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
+                                                <th rowspan="2">KODE</th>
+                                                <th colspan="5" style="text-align: center; vertical-align: middle;">TANGGAL</th>
+                                            </tr>
+                                            <tr id="header-tanggal" style="vertical-align: middle !important;text-align: center">
+                                                <th id="tgl1a" ></th>
+                                                <th id="tgl2a" ></th>
+                                                <th id="tgl3a" ></th>
+                                                <th id="tgl4a" ></th>
+                                                <th id="tgl5a" ></th>
 
-                            </tr>
-                            </thead>
-                            <tbody>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
 
-                            </tbody>
-                        </table>
-                        <div><h6><b>1A.Realisasi</b></h6></div>
-                        <table id="main-realisasi" class="table table-rencana-realisasi table-condensed table-bordered" width="100%">
-                            <thead>
-                            <tr>
-                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
-                                <th rowspan="2">KODE</th>
-                                <th colspan="5" style="text-align: center; vertical-align: middle;">TANGGAL</th>
-                            </tr>
-                            <tr id="header_tanggal_realisasi">
+                                            </tbody>
+                                        </table>
+                                        <div align="center"><h6><b>Realisasi Pembayaran</b></h6></div>
+                                        <table id="main-realisasi" class="table table-rencana-realisasi table-condensed table-bordered" width="100%">
+                                            <thead>
+                                            <tr>
+                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
+                                                <th rowspan="2">KODE</th>
+                                                <th colspan="5" style="text-align: center; vertical-align: middle;">TANGGAL</th>
+                                            </tr>
+                                            <tr id="header_tanggal_realisasi">
+                                                <th id="tgl1b" ></th>
+                                                <th id="tgl2b" ></th>
+                                                <th id="tgl3b" ></th>
+                                                <th id="tgl4b" ></th>
+                                                <th id="tgl5b" ></th>
 
-                            </tr>
-                            </thead>
-                            <tbody>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
 
-                            </tbody>
-                        </table>
+                                            </tbody>
+                                        </table>
+                                        <!--                                        <a class="btn" id="myBtn">Detail Bank</a>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input class="carousel-open" type="radio" id="carousel-3" name="carousel" aria-hidden="true" hidden=""/>
+                        <div class="carousel-item">
+                            <div class="col-md-12" style="margin-top: 20px">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div class="col-md-12" style="padding-top: 0px;">
+                                            <!--                                            <div><h6><b>4A</b></h6></div>-->
+                                            <div id="chart-container" style="height: 35rem; width: 100%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input class="carousel-open" type="radio" id="carousel-4" name="carousel" aria-hidden="true" hidden=""/>
+                        <div class="carousel-item">
+                            <div class="col-md-12" style="margin-top: 20px">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div class="col-md-12" style="padding-top: 0px;">
+<!--                                            <div><h6><b>3B</b></h6></div>-->
+                                            <div id="column-rencana-pembayaran"  class="a" style="height: 35rem; width: 100%;"></div>
+                                            <div id="column-rencana-pembayaran2" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                            <div id="column-rencana-pembayaran3" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                        </div>
+                                        <div class="col-md-12" align="center">
+                                            <button class="btn" onclick="renHari()">
+                                                Hari
+                                            </button>
+
+                                            <button class="btn" onclick="renMinggu()">
+                                                Minggu
+                                            </button>
+
+                                            <button class="btn" onclick="renBulan()">
+                                                Bulan
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input class="carousel-open" type="radio" id="carousel-5" name="carousel" aria-hidden="true" hidden=""/>
+                        <div class="carousel-item">
+                            <div class="col-md-12" align="center" style="margin-top: 20px">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div class="col-md-12" style="margin-top: 30px; margin-bottom: 30px">
+                                            <!--                                            <div><h6><b>3A</b></h6></div>-->
+                                            <div align="center" id="chart-rencana-pembayaran1"></div>
+                                            <div class="wrapper" style="margin-top: 10px">
+                                                <ul class="legend">
+                                                    <li><span class="five"></span> RENCANA PEMBAYARAN PRIMER (0-2 HARI)</li>
+                                                    <li><span class="six"></span> RENCANA PEMBAYARAN SEKUNDER (3-10 HARI)</li>
+                                                    <li><span class="seven"></span> RENCANA PEMBAYARAN TERSIER (11-30 HARI)</li>
+                                                </ul>
+                                            </div>
+                                            <div class="wrapper" style="margin-top: 10px">
+                                                <ul class="legend">
+                                                    <li><span class="eight"></span> IMPREST</li>
+                                                    <li><span class="nine"></span> RECEIPT</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input class="carousel-open" type="radio" id="carousel-6" name="carousel" aria-hidden="true" hidden=""/>
+                        <div class="carousel-item">
+                            <div class="col-md-12" style="margin-top: 20px">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div class="col-md-12" style="padding-top: 0px;">
+<!--                                            <div><h6><b>4B</b></h6></div>-->
+                                            <div id="column-realisasi-pembayaran" class="a" style="height: 35rem; width: 100%;"></div>
+                                            <div id="column-realisasi-pembayaran2" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                            <div id="column-realisasi-pembayaran3" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                            <div id="column-realisasi-pembayaran4" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                        </div>
+                                        <div class="col-md-12" align="center">
+                                            <button class="btn" onclick="hari()">
+                                                Hari
+                                            </button>
+
+                                            <button class="btn" onclick="minggu()">
+                                                Minggu
+                                            </button>
+
+                                            <button class="btn" onclick="bulan()">
+                                                Bulan
+                                            </button>
+                                            <button class="btn" onclick="tahun()">
+                                                Tahun
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <label for="carousel-6" class="carousel-control prev control-1">‹</label>
+                        <label for="carousel-2" class="carousel-control next control-1">›</label>
+                        <label for="carousel-1" class="carousel-control prev control-2">‹</label>
+                        <label for="carousel-3" class="carousel-control next control-2">›</label>
+                        <label for="carousel-2" class="carousel-control prev control-3">‹</label>
+                        <label for="carousel-4" class="carousel-control next control-3">›</label>
+                        <label for="carousel-3" class="carousel-control prev control-4">‹</label>
+                        <label for="carousel-5" class="carousel-control next control-4">›</label>
+                        <label for="carousel-4" class="carousel-control prev control-5">‹</label>
+                        <label for="carousel-6" class="carousel-control next control-5">›</label>
+                        <label for="carousel-5" class="carousel-control prev control-6">‹</label>
+                        <label for="carousel-1" class="carousel-control next control-6">›</label>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-block">
-                        <div class="col-md-12" style="padding-top: 0px;">
-                            <div><h6><b>2A</b></h6></div>
-                            <div align="center" id="chart-komposisi-saldo"></div>
-                            <div style="padding-bottom: 5px;"><h6><b> </b></h6></div>
-                        </div>
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-md-6">-->
-<!--                <div class="card">-->
-<!--                    <div class="card-block">-->
-                        <div class="col-md-12" style="padding-top: 0px;">
-                            <!--                            <div><h6><b>2A</b></h6></div>-->
-                            <table id="table-komposisi-saldo" class="table table-bordered" style="margin-top: 20px; margin-bottom: 23px">
-                                <thead>
-                                <tr>
-                                    <th style="background-color: #F4D35E; text-align: center" width="100%" colspan="2">REKAP KOMPOSISI SALDO</th>
-                                <tr>
-                                    <th style="background-color: #67a2d8; text-align: center" width="16.666%">JENIS REKENING</th>
-                                    <th style="background: #67a2d8; text-align: center" width="16.666%">TOTAL</th>
-                                </tr>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2"></div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-block">
-                        <div class="col-md-12" style="padding-top: 0px;">
-                            <div><h6><b>3A</b></h6></div>
-                            <div align="center" id="chart-rencana-pembayaran1"></div>
-                            <!--                            <ul align="center" class="legend">-->
-                            <!--                                <li><span class="one"></span> RENCANA PEMBAYARAN PREMIER</li>-->
-                            <!--                                <li><span class="two"></span> RENCANA PEMBAYARAN SEKUNDER</li>-->
-                            <!--                                <li><span class="three"></span> RENCANA PEMBAYARAN TERSIER</li>-->
-                            <!--                            </ul>-->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-block">
-                        <div class="col-md-12" style="padding-top: 0px;">
-                            <div><h6><b>3B</b></h6></div>
-                            <div id="column-rencana-pembayaran" style="height: 35rem; width: 100%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-block">
-                        <div class="col-md-12" style="padding-top: 0px;">
-                            <div><h6><b>4A</b></h6></div>
-                            <div id="chart-container" style="height: 35rem; width: 100%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-block">
-                        <div class="col-md-12" style="padding-top: 0px;">
-                            <div><h6><b>4B</b></h6></div>
-                            <div id="column-realisasi-pembayaran" style="height: 35rem; width: 100%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
+        </div>
+        <div class="row">
+
+        </div>
+        <div class="row">
+
+        </div>
+        <div class="row">
+
+        </div>
+        <div class="row">
+
+        </div>
     </div>
-    <div class="modal">
+    <div class="modal2" id="myModal">
         <div class="modal-content">
-            <span class="close-button">×</span>
-            <div class="col-md-6" style="padding-top: 15px;">
+            <span class="close" align="right">&times;</span>
+            <div class="col-md-12" style="padding-top: 15px">
                 <div class="view-table">
                     <table id="table-jenis-bank" class="table table-bordered">
                         <thead>
                         <tr>
-                            <th style="background-color: #F4D35E" width="100%" colspan="2">REKAP SALDO PER JENIS BANK</th>
-                        <tr>
-                            <th style="background-color: #67a2d8" width="16.666%">BANK</th>
-                            <th style="background: #67a2d8" width="16.666%">TOTAL</th>
-                        </tr>
+                            <th style="background-color: #67a2d8; text-align: center" width="16.666%">BANK</th>
+                            <th style="background: #67a2d8; text-align: center" width="16.666%">TOTAL</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -177,30 +319,102 @@
             </div>
         </div>
     </div>
-
-    <!--    modal detail -->
-    <div class="modal fade" id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </main>
 <div th:fragment="scripts-backend">
     <script src="/static/js/backend/controller/dashboard.js"></script>
     <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
     <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
+    <script type="text/javascript">
+
+		function hari() {
+			element = document.querySelector('#column-realisasi-pembayaran');
+			element.style.visibility = 'visible';
+            element = document.querySelector('#column-realisasi-pembayaran2');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#column-realisasi-pembayaran3');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#column-realisasi-pembayaran4');
+			element.style.visibility = 'hidden';
+		}
+
+		function minggu() {
+			element = document.querySelector('#column-realisasi-pembayaran2');
+			element.style.visibility = 'visible';
+            element = document.querySelector('#column-realisasi-pembayaran');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#column-realisasi-pembayaran3');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#column-realisasi-pembayaran4');
+			element.style.visibility = 'hidden';
+		}
+
+		function bulan() {
+			element = document.querySelector('#column-realisasi-pembayaran3');
+			element.style.visibility = 'visible';
+            element = document.querySelector('#column-realisasi-pembayaran2');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#column-realisasi-pembayaran');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#column-realisasi-pembayaran4');
+			element.style.visibility = 'hidden';
+		}
+
+		function tahun() {
+			element = document.querySelector('#column-realisasi-pembayaran4');
+			element.style.visibility = 'visible';
+            element = document.querySelector('#column-realisasi-pembayaran2');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#column-realisasi-pembayaran3');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#column-realisasi-pembayaran');
+			element.style.visibility = 'hidden';
+		}
+
+		function renHari() {
+			element = document.querySelector('#column-rencana-pembayaran');
+			element.style.visibility = 'visible';
+            element = document.querySelector('#column-rencana-pembayaran2');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#column-rencana-pembayaran3');
+			element.style.visibility = 'hidden';
+		}
+
+		function renMinggu() {
+			element = document.querySelector('#column-rencana-pembayaran2');
+			element.style.visibility = 'visible';
+            element = document.querySelector('#column-rencana-pembayaran');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#column-rencana-pembayaran3');
+			element.style.visibility = 'hidden';
+		}
+
+		function renBulan() {
+			element = document.querySelector('#column-rencana-pembayaran3');
+			element.style.visibility = 'visible';
+            element = document.querySelector('#column-rencana-pembayaran2');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#column-rencana-pembayaran');
+			element.style.visibility = 'hidden';
+		}
+
+        var modal = document.getElementById("myModal");
+
+        var btn = document.getElementById("myBtn");
+
+        var span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function() {
+          modal.style.display = "block";
+        }
+
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+          }
+	</script>
 </div>

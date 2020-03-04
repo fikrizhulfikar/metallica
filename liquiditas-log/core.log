@@ -1,1 +1,54 @@
-2019-12-19 09:48:45,835 DEBUG c.i.l.monitoring.task.EmailTask - Send email. 
+2020-03-04 08:46:28,180 INFO  c.i.l.m.ApplicationMonitoring - Starting ApplicationMonitoring on DESKTOP-DLGIT9S with PID 6976 (E:\Kerjaan\Icon+\Metallica\metallica\liquiditas-monitoring\target\classes started by acer in E:\Kerjaan\Icon+\Metallica\metallica) 
+2020-03-04 08:46:28,214 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
+2020-03-04 08:46:28,216 INFO  c.i.l.m.ApplicationMonitoring - The following profiles are active: development 
+2020-03-04 08:47:07,616 INFO  c.i.l.m.ApplicationMonitoring - Started ApplicationMonitoring in 41.837 seconds (JVM running for 46.83) 
+2020-03-04 08:47:37,340 INFO  c.i.l.m.config.UserDetailsConfig - user get roles : [Role{id=USER_BESAR, role='ROLE_ADMIN'}] 
+2020-03-04 08:47:39,238 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /page_operator/home 
+2020-03-04 08:47:41,004 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/css/carousel.css 
+2020-03-04 08:47:41,062 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/css/jquery-ui.css 
+2020-03-04 08:47:41,370 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/new-backend/css/font-awesome.min.css 
+2020-03-04 08:47:41,432 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/new-backend/css/simple-line-icons.css 
+2020-03-04 08:47:41,444 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/new-backend/css/style.css 
+2020-03-04 08:47:41,461 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/css/backend/jquery.dataTables.min.css 
+2020-03-04 08:47:41,560 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/css/select2.css 
+2020-03-04 08:47:41,783 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/jquery-toast-plugin-1.3.2/dist/jquery.toast.min.css 
+2020-03-04 08:47:42,026 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/new-backend/bower_components/jquery/dist/jquery.min.js 
+2020-03-04 08:47:42,097 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/select2.min.js 
+2020-03-04 08:47:42,514 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/new-backend/bower_components/bootstrap/dist/js/bootstrap.min.js 
+2020-03-04 08:47:42,542 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/new-backend/bower_components/tether/dist/js/tether.min.js 
+2020-03-04 08:47:42,573 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/backend/jquery.dataTables.min.js 
+2020-03-04 08:47:42,610 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/backend/dataTables.bootstrap4.min.js 
+2020-03-04 08:47:43,066 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/new-backend/bower_components/pace/pace.min.js 
+2020-03-04 08:47:43,078 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/sockjs.min.js 
+2020-03-04 08:47:43,367 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/stomp.min.js 
+2020-03-04 08:47:43,397 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/new-backend/js/app.js 
+2020-03-04 08:47:43,739 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/show-dialog.js 
+2020-03-04 08:47:43,866 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/jquery-ui.js 
+2020-03-04 08:47:43,880 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/maskedinput/jquery.mask.min.js 
+2020-03-04 08:47:43,977 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/maskedinput/FormatMoney.js 
+2020-03-04 08:47:44,632 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/maskedinput/jquery.maskmoney.js 
+2020-03-04 08:47:44,712 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/backend/coreapps.js 
+2020-03-04 08:47:44,712 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/pdfmake/pdfmake.min.js 
+2020-03-04 08:47:44,715 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/pdfmake/vfs_fonts.js 
+2020-03-04 08:47:44,743 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/accounting.min.js 
+2020-03-04 08:47:45,449 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/jquery-toast-plugin-1.3.2/dist/jquery.toast.min.js 
+2020-03-04 08:47:45,474 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/wsock.js 
+2020-03-04 08:47:45,483 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/new-backend/fonts/Simple-Line-Icons.woff2?v=2.4.0 
+2020-03-04 08:47:45,483 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/new-backend/img/avatars/7.jpg 
+2020-03-04 08:47:45,640 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/new-backend/fonts/fontawesome-webfont.woff2?v=4.6.3 
+2020-03-04 08:47:45,835 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/new-backend/img/lg_background.png 
+2020-03-04 08:47:45,930 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/images/lg-login.png 
+2020-03-04 08:47:46,001 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/new-backend/fonts/Simple-Line-Icons.ttf?v=2.4.0 
+2020-03-04 08:47:46,174 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/new-backend/fonts/fontawesome-webfont.woff?v=4.6.3 
+2020-03-04 08:47:46,394 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/new-backend/fonts/fontawesome-webfont.ttf?v=4.6.3 
+2020-03-04 08:47:47,974 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/sockjs.min.js 
+2020-03-04 08:47:48,011 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/stomp.min.js 
+2020-03-04 08:47:48,052 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/js/jquery-toast-plugin-1.3.2/dist/jquery.toast.min.js 
+2020-03-04 08:47:48,248 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /notification/get_notifications?start=1&length10 
+2020-03-04 08:47:48,252 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /static/new-backend/img/icon.png 
+2020-03-04 08:47:48,257 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /liquiditas/info 
+2020-03-04 08:47:48,613 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /liquiditas/184/rjtn8pwd/websocket 
+2020-03-04 08:47:49,275 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /liquiditas/184/z4hsngj0/xhr_streaming 
+2020-03-04 08:47:49,398 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /liquiditas/184/z4hsngj0/xhr_send 
+2020-03-04 08:47:49,649 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /liquiditas/184/z4hsngj0/xhr_send 
+2020-03-04 08:47:49,738 INFO  c.i.l.m.c.ValasAccessDecisionVoter - Access granted for /liquiditas/184/z4hsngj0/xhr_send 

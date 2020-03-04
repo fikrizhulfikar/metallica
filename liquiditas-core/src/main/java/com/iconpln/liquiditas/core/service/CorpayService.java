@@ -801,7 +801,7 @@ public class CorpayService {
         BufferedReader httpResponseReader = null;
         try {
             // Connect to the web server endpoint
-            URL serverUrl = new URL("http://10.14.204.15:8181/gettoken");
+            URL serverUrl = new URL("http://10.228.2.165:8181/gettoken");
             HttpURLConnection urlConnection = (HttpURLConnection) serverUrl.openConnection();
 
             // Set HTTP method as GET
@@ -832,7 +832,7 @@ public class CorpayService {
     public String getBallance2(String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = "";
         BufferedReader httpResponseReader = null;
-        HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doGetBalance");
+        HttpPost request = new HttpPost("http://10.228.2.165:8181/corpay/doGetBalance");
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
@@ -878,12 +878,12 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
                    pAmount, pRemark, pBenefEmail, pBenefName,
                    pBenefAddr1, pBenefAddr2, pDestinationBankCode, pFeeType);
        }
-    if (pMetodeBayar.equals("ONLINETRANSFER")) {
-        res = doInterbankPayment ( pBank,  refnum,  pAmount,  pBeneficiaryAccount,
-                pBenefName,  pDestinationBankCode,  pDestinationBank,
-                 pRetrievalReff,  pSource,  pCurrency,  pCurrency2,
-                 pRemark);
-    }
+        if (pMetodeBayar.equals("ONLINETRANSFER")) {
+            res = doInterbankPayment ( pBank,  refnum,  pAmount,  pBeneficiaryAccount,
+                    pBenefName,  pDestinationBankCode,  pDestinationBank,
+                     pRetrievalReff,  pSource,  pCurrency,  pCurrency2,
+                     pRemark);
+        }
     return res;
 }
 
@@ -965,7 +965,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String inqueryInHouse(String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doInquiry");
+        HttpPost request = new HttpPost("http://10.228.2.165:8181/corpay/doInquiry");
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
@@ -988,7 +988,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String inqueryInterbank(String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doInquiryInterBank");
+        HttpPost request = new HttpPost("http://10.228.2.165:8181/corpay/doInquiryInterBank");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp", timestamp);
         request.addHeader("signature", signature);
@@ -1144,7 +1144,8 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String inhousePayment (String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doPayment");
+        HttpPost request = new HttpPost("http://10.228.2.165:8181/corpay/doPayment");
+//        10.14.204.15:8181
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
@@ -1165,7 +1166,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String inhousePaymentRtgs (String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doPaymentRtgs");
+        HttpPost request = new HttpPost("http://10.228.2.165:8181/corpay/doPaymentRtgs");
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
@@ -1186,7 +1187,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String inhousePaymentKliring (String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doPaymentKliring");
+        HttpPost request = new HttpPost("http://10.228.2.165:8181/corpay/doPaymentKliring");
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
@@ -1207,7 +1208,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String interbankPayment (String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doPaymentInterBank");
+        HttpPost request = new HttpPost("http://10.228.2.165:8181/corpay/doPaymentInterBank");
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
@@ -1359,5 +1360,40 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         return out;
     }
 
+//    public List<Map<String, Object>> getDashboardPengelolaan(String tanggal){
+//        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+//                .withCatalogName("PKG_DASHBOARD_CORPAY")
+//                .withFunctionName("get_dashboard_komp_saldo");
+//
+//        SqlParameterSource in = new MapSqlParameterSource()
+//                .addValue("out_data", OracleTypes.VARCHAR)
+//                .addValue("out_rekap", OracleTypes.VARCHAR);
+//
+//        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+//        return out;
+//    }
+    public Map<String, Object> getDashboardPengelolaan()throws SQLException {
 
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_dashboard_komp_saldo");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_data", OracleTypes.CURSOR)
+                .addValue("out_rekap", OracleTypes.CURSOR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data get_dashboard_komp_saldo : {}", out);
+        return out;
+    }
+
+    public List<Map<String, Object>> getDashboardPengelolaan2(String tanggal){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_dashboard_rincian_saldo");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("ptanggal", tanggal, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
 }
