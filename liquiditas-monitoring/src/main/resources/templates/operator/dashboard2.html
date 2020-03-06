@@ -192,18 +192,20 @@
                                             <div id="column-rencana-pembayaran"  class="a" style="height: 35rem; width: 100%;"></div>
                                             <div id="column-rencana-pembayaran2" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
                                             <div id="column-rencana-pembayaran3" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                            <div id="column-rencana-pembayaran4" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
                                         </div>
                                         <div class="col-md-12" align="center">
                                             <button class="btn" onclick="renHari()">
                                                 Hari
                                             </button>
-
                                             <button class="btn" onclick="renMinggu()">
                                                 Minggu
                                             </button>
-
                                             <button class="btn" onclick="renBulan()">
                                                 Bulan
+                                            </button>
+                                            <button class="btn" onclick="renTahun()">
+                                                Tahun
                                             </button>
                                         </div>
                                     </div>
@@ -236,39 +238,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input class="carousel-open" type="radio" id="carousel-6" name="carousel" aria-hidden="true" hidden=""/>
-                        <div class="carousel-item">
-                            <div class="col-md-12" style="margin-top: 20px">
-                                <div class="card">
-                                    <div class="card-block">
-                                        <div class="col-md-12" style="padding-top: 0px;">
-<!--                                            <div><h6><b>4B</b></h6></div>-->
-                                            <div id="column-realisasi-pembayaran" class="a" style="height: 35rem; width: 100%;"></div>
-                                            <div id="column-realisasi-pembayaran2" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
-                                            <div id="column-realisasi-pembayaran3" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
-                                            <div id="column-realisasi-pembayaran4" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
-                                        </div>
-                                        <div class="col-md-12" align="center">
-                                            <button class="btn" onclick="hari()">
-                                                Hari
-                                            </button>
-
-                                            <button class="btn" onclick="minggu()">
-                                                Minggu
-                                            </button>
-
-                                            <button class="btn" onclick="bulan()">
-                                                Bulan
-                                            </button>
-                                            <button class="btn" onclick="tahun()">
-                                                Tahun
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <label for="carousel-6" class="carousel-control prev control-1">‹</label>
+                        <label for="carousel-5" class="carousel-control prev control-1">‹</label>
                         <label for="carousel-2" class="carousel-control next control-1">›</label>
                         <label for="carousel-1" class="carousel-control prev control-2">‹</label>
                         <label for="carousel-3" class="carousel-control next control-2">›</label>
@@ -277,9 +247,7 @@
                         <label for="carousel-3" class="carousel-control prev control-4">‹</label>
                         <label for="carousel-5" class="carousel-control next control-4">›</label>
                         <label for="carousel-4" class="carousel-control prev control-5">‹</label>
-                        <label for="carousel-6" class="carousel-control next control-5">›</label>
-                        <label for="carousel-5" class="carousel-control prev control-6">‹</label>
-                        <label for="carousel-1" class="carousel-control next control-6">›</label>
+                        <label for="carousel-1" class="carousel-control next control-5">›</label>
                     </div>
                 </div>
             </div>
@@ -326,56 +294,14 @@
     <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
     <script type="text/javascript">
 
-		function hari() {
-			element = document.querySelector('#column-realisasi-pembayaran');
-			element.style.visibility = 'visible';
-            element = document.querySelector('#column-realisasi-pembayaran2');
-			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-realisasi-pembayaran3');
-			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-realisasi-pembayaran4');
-			element.style.visibility = 'hidden';
-		}
-
-		function minggu() {
-			element = document.querySelector('#column-realisasi-pembayaran2');
-			element.style.visibility = 'visible';
-            element = document.querySelector('#column-realisasi-pembayaran');
-			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-realisasi-pembayaran3');
-			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-realisasi-pembayaran4');
-			element.style.visibility = 'hidden';
-		}
-
-		function bulan() {
-			element = document.querySelector('#column-realisasi-pembayaran3');
-			element.style.visibility = 'visible';
-            element = document.querySelector('#column-realisasi-pembayaran2');
-			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-realisasi-pembayaran');
-			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-realisasi-pembayaran4');
-			element.style.visibility = 'hidden';
-		}
-
-		function tahun() {
-			element = document.querySelector('#column-realisasi-pembayaran4');
-			element.style.visibility = 'visible';
-            element = document.querySelector('#column-realisasi-pembayaran2');
-			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-realisasi-pembayaran3');
-			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-realisasi-pembayaran');
-			element.style.visibility = 'hidden';
-		}
-
 		function renHari() {
 			element = document.querySelector('#column-rencana-pembayaran');
 			element.style.visibility = 'visible';
             element = document.querySelector('#column-rencana-pembayaran2');
 			element.style.visibility = 'hidden';
             element = document.querySelector('#column-rencana-pembayaran3');
+			element.style.visibility = 'hidden';
+			element = document.querySelector('#column-rencana-pembayaran4');
 			element.style.visibility = 'hidden';
 		}
 
@@ -386,6 +312,8 @@
 			element.style.visibility = 'hidden';
             element = document.querySelector('#column-rencana-pembayaran3');
 			element.style.visibility = 'hidden';
+			element = document.querySelector('#column-rencana-pembayaran4');
+			element.style.visibility = 'hidden';
 		}
 
 		function renBulan() {
@@ -395,26 +323,19 @@
 			element.style.visibility = 'hidden';
             element = document.querySelector('#column-rencana-pembayaran');
 			element.style.visibility = 'hidden';
+			element = document.querySelector('#column-rencana-pembayaran4');
+			element.style.visibility = 'hidden';
 		}
 
-        var modal = document.getElementById("myModal");
-
-        var btn = document.getElementById("myBtn");
-
-        var span = document.getElementsByClassName("close")[0];
-
-        btn.onclick = function() {
-          modal.style.display = "block";
-        }
-
-        span.onclick = function() {
-          modal.style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-          }
+        function renTahun() {
+            element = document.querySelector('#column-rencana-pembayaran4');
+			element.style.visibility = 'visible';
+			element = document.querySelector('#column-rencana-pembayaran3');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#column-rencana-pembayaran2');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#column-rencana-pembayaran');
+			element.style.visibility = 'hidden';
+		}
 	</script>
 </div>
