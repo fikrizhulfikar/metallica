@@ -29,6 +29,16 @@ public class ValasDetail {
     private String pCostCtr;
     private String pFlag ;
 
+    public String getpRealAmount() {
+        return pRealAmount;
+    }
+
+    public void setpRealAmount(String pRealAmount) {
+        this.pRealAmount = pRealAmount;
+    }
+
+    private String pRealAmount ;
+
     public String getpCostCtr() {
         return pCostCtr;
     }

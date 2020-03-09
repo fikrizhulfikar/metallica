@@ -737,14 +737,20 @@ function getAllData() {
                                 return full.KETERANGAN;
                               }
                           },
+                        {
+                            "aTargets": [70],
+                            "mRender": function (data, type, full) {
+                                return full.TGL_TAGIHAN_DITERIMA;
+                            }
+                        },
                          {
-                              "aTargets": [70],
+                              "aTargets": [71],
                               "mRender": function (data, type, full) {
                               return full.STATUS_TRACKING;
                                     }
                          },
                         {
-                            "aTargets": [71],
+                            "aTargets": [72],
                             "mRender": function (data, type, full) {
                                 var ret_value;
                                 var role = newRoleUser[0];
@@ -760,7 +766,7 @@ function getAllData() {
 
                         },
                         {
-                            "aTargets": [72],
+                            "aTargets": [73],
                             "mRender": function (data, type, full) {
                                 var value = new Object();
                                 var full_value = new Object();

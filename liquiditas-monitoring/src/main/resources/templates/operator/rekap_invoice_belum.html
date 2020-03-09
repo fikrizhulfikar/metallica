@@ -30,16 +30,12 @@
 </div>
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" style="cursor: default">Rekap Invoice Belum</li>
+        <li class="breadcrumb-item active" style="cursor: default">Invoice Belum Verifikasi</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
-                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS','ROLE_DM_LIKUIDITAS','ROLE_VICE_PRESIDENT_OPERATION','ROLE_VICE_PRESIDENT_INVESTMENT','ROLE_KASIR_IDR','ROLE_KASIR', 'ROLE_MANAGER_PAYMENT',
-                'ROLE_MANAGER_OPERATION','ROLE_MANAGER_INVESTMENT_APLN','ROLE_MANAGER_INVESTMENT_SLPMN','ROLE_MANAGER_POWER_PURCHASE','ROLE_MANAGER_PRIMARY_ENERGY','EXECUTIVE_VICE_PRESIDENT')">
-                    <i class="icon-pencil"></i> &nbsp;New Data
-                </button>
+
             </div>
         </li>
     </ol>
@@ -109,7 +105,7 @@
                             <div class="form-group">
                                 <label for="pTglJatuhTempo2">Tanggal Jatuh
                                     Tempo:</label>
-                                <input type="text" class="form-control" id="pTglJatuhTempo2" required="required"/>
+                                <input type="text" class="form-control" id="pTglJatuhTempo2" required="required" readonly="readonly"/>
                             </div>
                             <div class="form-group">
                                 <label for="pVendor2"><span style="color: red">*)</span>&nbsp;Vendor/Pengembang/Pemasok/Loan:</label>
@@ -219,11 +215,11 @@
                             <div class="form-group">
                                 <label for="pTglTerimaInvoice"><span style="color: red">*)</span>&nbsp;Tanggal Tagihan
                                     Diterima:</label>
-                                <input type="text" class="form-control" id="pTglTerimaInvoice"/>
+                                <input type="text" class="form-control" id="pTglTerimaInvoice" readonly="readonly"/>
                             </div>
                             <div class="form-group">
                                 <label for="pTglTagihan">Tanggal Tagihan:</label>
-                                <input type="text" class="form-control" id="pTglTagihan"/>
+                                <input type="text" class="form-control" id="pTglTagihan" readonly="readonly"/>
                             </div>
                             <div class="form-group">
                                 <label for="pNoTagihan">No Tagihan:</label>
@@ -237,7 +233,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="pTglNotaDinas">Tanggal Nota Dinas:</label>
-                                <input type="text" class="form-control" id="pTglNotaDinas"/>
+                                <input type="text" class="form-control" id="pTglNotaDinas" readonly="readonly"/>
                             </div>
                             <div class="form-group">
                                 <label for="pKeterangan">Keterangan:</label>
@@ -600,23 +596,20 @@
                     </div>
                     <div class="col-md-3" style="padding-right: 0px;">
                         <select name="cmb_cara_pembayaran" id="cmb_cara_pembayaran" class="form-control">
-                            <option value="">Pilih Data</option>
+                            <option value="ALL">Pilih Data</option>
+                            <option value="INHOUSE">In House</option>
+                            <option value="ONLINETRANSFER">Online Transfer</option>
+                            <option value="RTGS">RTGS</option>
+                            <option value="KLIRING">Kliring</option>
+                            <option value="TT">TT</option>
+                            <option value="VALAS">Valas</option>
+                            <option value="GIRO">Giro</option>
+                            <option value="INTERNETBANKING">Internet Banking</option>
                         </select>
                     </div>
                     <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
                     <div class="col-md-3" style="padding-right: 0px;">
                         <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
-                    </div>
-                </div>
-                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
-
-                    <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Status Tracking</label>
-                    </div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="status_tracking" id="cmb_status_tracking" class="form-control">
-                            <option value="">PILIH STATUS TRACKING</option>
-                        </select>
                     </div>
                 </div>
             </div>
@@ -636,9 +629,10 @@
                                 <th>BASE DATE</th>
                                 <th>ENTRY DATE</th>
                                 <th>DOCUMENT TYPE</th>
-                                <th>FISICAL YEAR</th>
+                                <th>FISCAL YEAR</th>
                                 <th>DOCUMENT HDR TXT</th>
                                 <th>REFERENCE</th>
+                                <th>TGL TERIMA TAGIHAN</th>
                                 <th>COMPANY CODE</th>
                                 <th>BUSINESS AREA</th><!--10-->
                                 <th>CURRENCY</th>
@@ -736,7 +730,6 @@
                             <a href="" id="btn-download-tanda-terima-invoice">-</a></label>
                         <input type="file" class="form-control" id="file-tanda-terima-invoice"
                                accept="application/pdf,application/zip" onchange="upload_server('1')"/>
-
                     </div>
                     <div class="form-group">
                         <label class="form-control-label" for="file-lembar-verifikasi">UPLOAD LEMBAR VERIFIKASI | <a
@@ -857,6 +850,10 @@
                                 <input type="text" class="form-control" id="pCurrency" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
                             </div>
                             <div class="form-group">
+                                <label for="pCurrBayar">&nbsp;Currency Bayar :</label>
+                                <input type="text" class="form-control" id="pCurrBayar" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
+                            </div>
+                            <div class="form-group">
                                 <label for="pExchRate">&nbsp;Exchange Rate :</label>
                                 <input type="text" class="form-control" id="pExchRate" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
                             </div>
@@ -904,34 +901,18 @@
                                 <label for="pAmountWht">&nbsp;Amount WithHolding :</label>
                                 <input type="text" class="form-control" id="pAmountWht" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="pTotalTagihan">&nbsp;Total Tagihan :</label>-->
-<!--                                <input type="text" class="form-control" id="pTotalTagihan" disabled="disabled"  style="background-color: #CFD8DC" value=""/>-->
-<!--                            </div>-->
                             <div class="form-group">
                                 <label for="pBankPenerima">&nbsp;Bank Penerima :</label>
                                 <input type="text" class="form-control" id="pBankPenerima" disabled="disabled" style="background-color: #CFD8DC" value=""/>
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="pAssignment">&nbsp;Jenis Transaksi :</label>-->
-<!--                                <input type="text" class="form-control" id="pAssignment" disabled="disabled"  style="background-color: #CFD8DC" value=""/>-->
-<!--                            </div>-->
                             <div class="form-group">
                                 <label for="pAccountHolder"> Account Holder :</label>
                                 <input type="text" class="form-control" id="pAccountHolder" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="pItemText"> Item Text :</label>-->
-<!--                                <input type="text" class="form-control" id="pItemText" disabled="disabled"  style="background-color: #CFD8DC" value=""/>-->
-<!--                            </div>-->
                             <div class="form-group">
                                 <label for="pNoRekVendor">&nbsp;No Rekening Vendor/Customer :</label>
-                                <input type="text" class="form-control" id="pNoRekVendor"   style="background-color: white" value=""/>
+                                <input type="text" class="form-control" id="pNoRekVendor"   style="background-color: white" value="" disabled="disabled"/>
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="pCostCtr"> Cost Center Code :</label>-->
-<!--                                <input type="text" class="form-control" id="pCostCtr" disabled="disabled"  style="background-color: #CFD8DC" value=""/>-->
-<!--                            </div>-->
                             <div class="form-group">
                                 <label for="pKodeBankPenerima">&nbsp;Kode Bank Penerima :</label>
                                 <input type="text" class="form-control" id="pKodeBankPenerima" style="background-color: white" value=""/>
@@ -947,6 +928,17 @@
                             <div class="form-group">
                                 <label for="pNamaCustomer"> Nama Customer :</label>
                                 <input type="text" class="form-control" id="pNamaCustomer" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
+                            </div>
+                            <div class="from-group">
+                                <p><b>Waktu Pembayaran :</b></p>
+                                <p>Inhouse / Online Transfer : 24 jam</p>
+                                <p>RTGS / Kliring : 08.00 s/d 15.00 (WIB)</p>
+                                <p><b>Batasan Nominal :</b></p>
+                                <p>Inhouse : Tidak ada limitasi</p>
+                                <p>Online Transfer : BNI : 25 Jt | Mandiri : 50 Jt | BRI : 25 Jt</p>
+                                <p>Bukopin 25 Jt </p>
+                                <p>Kliring : Semua Bank Maks 100 Jt</p>
+                                <p>RTGS : Semua Bank > 100 Jt</p>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -970,10 +962,6 @@
                                 <label for="pPaymentBlock"> Payment Block Indikator :</label>
                                 <input type="text" class="form-control" id="pPaymentBlock" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="pHouseBank"> House Bank :</label>-->
-<!--                                <input type="text" class="form-control" id="pHouseBank" disabled="disabled"  style="background-color: white" value=""/>-->
-<!--                            </div>-->
                             <div class="form-group">
                                 <label for="pPartnerBank"> Partner Bank Type :</label>
                                 <input type="text" class="form-control" id="pPartnerBank" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
@@ -1009,10 +997,6 @@
                                     <option value="">Pilih Data</option>
                                 </select>
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="pCashCode"> Cash Code :</label>-->
-<!--                                <input type="text" class="form-control" id="pCashCode"   style="background-color: white" value=""/>-->
-<!--                            </div>-->
                             <div class="form-group">
                                 <label for="pDebitCredit"> Debit/Credit Indikator :</label>
                                 <input type="text" class="form-control" id="pDebitCredit" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
@@ -1025,26 +1009,18 @@
                                 <label for="pAmountWthLc"> Amount Withholding LC :</label>
                                 <input type="text" class="form-control" id="pAmountWthLc" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="pBankPenerima">&nbsp;Bank Penerima :</label>-->
-<!--                                <input type="text" class="form-control" id="pBankPenerima" disabled="disabled" style="background-color: #CFD8DC" value=""/>-->
-<!--                            </div>-->
                             <div class="form-group">
                                 <label for="pTotalTagihan">&nbsp;Total Tagihan :</label>
                                 <input type="text" class="form-control" id="pTotalTagihan" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="pKodeBankPenerima">&nbsp;Kode Bank Penerima :</label>-->
-<!--                                <input type="text" class="form-control" id="pKodeBankPenerima" style="background-color: white" value=""/>-->
-<!--                            </div>-->
+                            <div class="form-group">
+                                <label for="pAmountBayar">&nbsp;Amount Bayar :</label>
+                                <input type="text" class="form-control" id="pAmountBayar" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
+                            </div>
                             <div class="form-group">
                                 <label for="pCostCtr"> Cost Center Code :</label>
                                 <input type="text" class="form-control" id="pCostCtr" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="pNoRekVendor">&nbsp;No Rekening Vendor/Customer :</label>-->
-<!--                                <input type="text" class="form-control" id="pNoRekVendor"   style="background-color: white" value=""/>-->
-<!--                            </div>-->
                             <div class="form-group">
                                 <label for="pItemText"> Item Text :</label>
                                 <input type="text" class="form-control" id="pItemText" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
@@ -1053,56 +1029,13 @@
                                 <label for="pAssignment">&nbsp;Jenis Transaksi :</label>
                                 <input type="text" class="form-control" id="pAssignment" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="pAccountHolder"> Account Holder :</label>-->
-<!--                                <input type="text" class="form-control" id="pAccountHolder" disabled="disabled"  style="background-color: #CFD8DC" value=""/>-->
-<!--                            </div>-->
-<!--                            <div class="form-group">-->
-<!--                                <label for="pBankPembayaran"> Bank Pembayar :</label>-->
-<!--                                <input type="text" class="form-control" id="pBankPembayaran" disabled="disabled"  style="background-color: white" value=""/>-->
-<!--                            </div>-->
                             <div class="form-group">
-                                <label for="pHouseBank"><span style="color: red">*)</span>&nbsp;Bank Pembayar:</label>
-                                <select id="pHouseBank" class="form-control"
-                                        onChange="selectBankPembayar(this.value);" required="required">
-                                    <option value="">Pilih Data</option>
-                                </select>
+                                <label for="pBankBayar"><span style="color: red">*)</span>&nbsp;Bank Pembayar:</label>
+                                <input type="text" id="pBankBayar" class="form-control" value="" readonly="readonly"/>
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="pHouseBankxx"><span style="color: red">*)</span>Kode Bank Pembayar:</label>-->
-<!--                                <select id="pHouseBankxx" class="form-control"-->
-<!--                                        onChange="selectKodeBankPembayar(this.value);" required="required">-->
-<!--                                    <option value="">Pilih Data</option>-->
-<!--                                </select>-->
-<!--                            </div>-->
-<!--                            <div class="form-group">-->
-<!--                                <label for="pNoRekxx"> No Rekening PLNxx :</label>-->
-<!--                                <input type="text" class="form-control" id="pNoRekxx"  style="background-color: white" value=""/>-->
-<!--                            </div>-->
-<!--                            <div class="form-group">-->
-<!--                                <label for="pNoRek"><span style="color: red">*)</span>&nbsp;No Rekening PLN:</label>-->
-<!--                                <select id="pNoRek" class="form-control"-->
-<!--                                    onChange="selectBankAccount(this.value);" required="required">-->
-<!--                                    <option value="">Pilih Data</option>-->
-<!--                                </select>-->
-<!--                            </div>-->
-<!--                            <div class="form-group">-->
-<!--                                <label for="pKodeBank"><span style="color: red">*)</span>&nbsp;Kode Bank:</label>-->
-<!--                                <select id="pKodeBank" class="form-control"-->
-<!--                                        onChange="selectHouseBank(this.value);" required="required">-->
-<!--                                    <option value="">Pilih Data</option>-->
-<!--                                </select>-->
-<!--                            </div>-->
-<!--                            <div class="form-group">-->
-<!--                                <label for="pNoRekPln"><span style="color: red">*)</span>&nbsp;No Rekening PLN:</label>-->
-<!--                                <select id="pNoRekPln" class="form-control"-->
-<!--                                        onChange="selectBankAccount(this.value);" required="required">-->
-<!--                                    <option value="">Pilih Data</option>-->
-<!--                                </select>-->
-<!--                            </div>-->
                             <div class="form-group">
                                 <label for="pNoRekPln"> No Rekening PLN :</label>
-                                <input type="text" class="form-control" id="pNoRekPln"  style="background-color: white" value=""/>
+                                <input type="text" id="pNoRekPln" class="form-control" value="" readonly="readonly"/>
                             </div>
                             <div class="form-group">
                                 <label for="pMetodePembayaran"><span style="color: red">*)</span>&nbsp;Metode Pembayaran:</label>
@@ -1112,28 +1045,40 @@
                                     <option value="ONLINETRANSFER">Online Transfer</option>
                                     <option value="RTGS">RTGS</option>
                                     <option value="KLIRING">Kliring</option>
-<!--                                    <option value="TT">TT</option>-->
-<!--                                    <option value="VALAS">Valas</option>-->
                                     <option value="GIRO">Giro</option>
                                     <option value="INTERNETBANKING">Internet Banking</option>
                                 </select>
                             </div>
+                            <div class="form-group pNoGiro">
+                                <label for="pNoGiro"> Nomor Giro :</label>
+                                <input type="text" id="pNoGiro" class="form-control" value=""/>
+                            </div>
                             <div class="form-group">
-                                <label for="pWaktuPembayaran"><span style="color: red">*)</span>&nbsp;Waktu Pembayaran:</label>
-                                <select id="pWaktuPembayaran" class="form-control">
-                                    <option value="">Pilih Data</option>
-                                    <option value="IMMEDIATELY">IMMEDIATELY</option>
-                                    <option value="ONDUEDATE">ON DUE DATE</option>
-                                    <option value="ONSCHEDULE">ON SCHEDULE</option>
+                                <label for="pJamBayar"><span style="color: red;">*</span>&nbsp;Jam Bayar :</label>
+                                <select class="form-control" id="pJamBayar" required="required">
+                                    <option value="07:00-07:30">07:00-07:30</option>
+                                    <option value="07:30-08:00">07:30-08:00</option>
+                                    <option value="08:00-08:30">08:00-08:30</option>
+                                    <option value="08:30-09:00">08:30-09:00</option>
+                                    <option value="09:00-09:30">09:00-09:30</option>
+                                    <option value="09:30-10:00">09:30-10:00</option>
+                                    <option value="10:00-10:30">10:00-10:30</option>
+                                    <option value="10:30-11:00">10:30-11:00</option>
+                                    <option value="11:00-11:30">11:00-11:30</option>
+                                    <option value="11:30-12:00">11:30-12:00</option>
+                                    <option value="12:00-12:30">12:00-12:30</option>
+                                    <option value="12:30-13:00">12:30-13:00</option>
+                                    <option value="13:00-13:30">13:00-13:30</option>
+                                    <option value="13:30-14:00">13:30-14:00</option>
+                                    <option value="14:00-14:30">14:00-14:30</option>
+                                    <option value="14:30-15:00">14:30-15:00</option>
+                                    <option value="15:00-15:30">15:00-15:30</option>
+                                    <option value="15:30-16:00">15:30-16:00</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="pJamBayar">&nbsp;Jam Bayar :</label>
-                                <input type="text" class="form-control" id="pJamBayar" value=""/>
-                            </div>
-                            <div class="form-group">
                                 <label for="pSumberDana"><span style="color: red">*)</span>&nbsp;Sumber Dana:</label>
-                                <select id="pSumberDana" class="form-control">
+                                <select id="pSumberDana" class="form-control" disabled="disabled">
                                     <option value="">Pilih Data</option>
                                     <option value="PMN">PMN</option>
                                     <option value="NON PMN">NON PMN</option>
@@ -1144,11 +1089,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="pTglRencanaBayar"><span style="color: red">*)</span>&nbsp;Tanggal Rencana Bayar:</label>
-                                <input type="text" class="form-control" id="pTglRencanaBayar" required="required"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pNewKeterangan">&nbsp;Keterangan :</label>
-                                <input type="text" class="form-control" id="pNewKeterangan" value=""/>
+                                <input type="text" class="form-control" id="pTglRencanaBayar" required="required" disabled="disabled"/>
                             </div>
                             <div class="form-group">
                                 <label for="pCustomerName">&nbsp;Customer Name :</label>
@@ -1194,7 +1135,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title">Form Edit Invoice</h5>
+                    <h5 class="modal-title">Form Payment Invoice</h5>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -1252,6 +1193,10 @@
                                 <input type="text" class="form-control" id="pCurrency2" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
                             </div>
                             <div class="form-group">
+                                <label for="pCurrBayar2">&nbsp;Currency Bayar :</label>
+                                <input type="text" class="form-control" id="pCurrBayar2" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
+                            </div>
+                            <div class="form-group">
                                 <label for="pExchRate2">&nbsp;Exchange Rate :</label>
                                 <input type="text" class="form-control" id="pExchRate2" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
                             </div>
@@ -1302,6 +1247,10 @@
                             <div class="form-group">
                                 <label for="pTotalTagihan2">&nbsp;Total Tagihan :</label>
                                 <input type="text" class="form-control" id="pTotalTagihan2" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAmountBayar2">&nbsp;Amount Bayar :</label>
+                                <input type="text" class="form-control" id="pAmountBayar2" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
                             </div>
                             <div class="form-group">
                                 <label for="pAssignment2">&nbsp;Jenis Transaksi :</label>
@@ -1371,7 +1320,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="pRefKey7"> Reference Key 6 :</label>
-                                <input type="text" class="form-control" id="pRefKey7" disabled="disabled"  style="background-color: white" value=""/>
+                                <input type="text" class="form-control" id="pRefKey7" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
                             </div>
                             <div class="form-group">
                                 <label for="pIntOrder2"> Internal Order :</label>
@@ -1426,8 +1375,8 @@
                                 <input type="text" class="form-control" id="pAccountHolder2" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
                             </div>
                             <div class="form-group">
-                                <label for="pHouseBank2"> Bank Pembayar :</label>
-                                <input type="text" class="form-control" id="pHouseBank2" disabled="disabled"  style="background-color: #CFD8DC"  value=""/>
+                                <label for="pBankPembayarans2"> Bank Pembayar :</label>
+                                <input type="text" class="form-control" id="pBankPembayarans2" disabled="disabled"  style="background-color: #CFD8DC"  value=""/>
                             </div>
                             <div class="form-group">
                                 <label for="pNoRekPLN2"> No Rek Bank Pembayar :</label>
@@ -1529,7 +1478,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title">Get Ballance</h5>
+                    <h5 class="modal-title">Get Balance</h5>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -1537,7 +1486,7 @@
                             <div class="form-group">
 <!--                                <label for="pBank">&nbsp;Bank :</label>-->
 <!--                                <input type="text" class="form-control" id="pBank"  />-->
-                            <label for="pBanks"><span style="color: red">*)</span>&nbsp;Sumber Dana:</label>
+                            <label for="pBanks"><span style="color: red">*)</span>&nbsp;Nama Bank:</label>
                             <select id="pBanks" class="form-control">
                                 <option value="">Pilih Data</option>
                                 <option value="BNI">BNI</option>
@@ -1547,13 +1496,8 @@
                             </select>
                             </div>
                             <div class="form-group">
-                                <label for="pSources">&nbsp;Source :</label>
+                                <label for="pSources">&nbsp;Nomor Rekening :</label>
                                 <input type="text" class="form-control" id="pSources"/>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="pBeneficiarys">&nbsp;Beneficiary :</label>
-                                <input type="text" class="form-control" id="pBeneficiarys"/>
                             </div>
 <!--                            <div class="form-group">-->
 <!--                                <label for="pAccountNames">&nbsp;Account Name :</label>-->
@@ -1592,15 +1536,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title">Get Ballance</h5>
+                    <h5 class="modal-title">Cek Payment Status</h5>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <!--                                <label for="pBank">&nbsp;Bank :</label>-->
-                                <!--                                <input type="text" class="form-control" id="pBank"  />-->
-                                <label for="pBankPayment"><span style="color: red">*)</span>&nbsp;Sumber Dana:</label>
+                                <label for="pBankPayment"><span style="color: red">*)</span> Bank Pembayar:</label>
                                 <select id="pBankPayment" class="form-control">
                                     <option value="">Pilih Data</option>
                                     <option value="BNI">BNI</option>
@@ -1610,13 +1552,17 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="pRefNum">&nbsp;Reference Number :</label>
+                                <label for="pRefNum"><span style="color: red">*)</span> Reference Number :</label>
                                 <input type="text" class="form-control" id="pRefNum"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pStatusPembayaran">&nbsp;Status Pembayaran :</label>
+                                <input type="text" class="form-control" id="pStatusPembayaran"/>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="pResponPaymentStatus">&nbsp;Saldo :</label>
+                                <label for="pResponPaymentStatus">&nbsp;Respon :</label>
                                 <input type="text" class="form-control" id="pResponPaymentStatus"/>
                             </div>
                         </div>
@@ -1963,14 +1909,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title">Get Ballance</h5>
+                    <h5 class="modal-title">Get Balance</h5>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <!--                                <label for="pBank">&nbsp;Bank :</label>-->
-                                <!--                                <input type="text" class="form-control" id="pBank"  />-->
                                 <label for="pBank"><span style="color: red">*)</span>&nbsp;Nama Bank:</label>
                                 <select id="pBank" class="form-control">
                                     <option value="">Pilih Data</option>
@@ -2043,20 +1987,56 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title">Buat Group Invoice</h5>
+                    <h5 class="modal-title">Multiple Edit</h5>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="pNamaGroup">Nama Group :</label>
-                                <input type="text" class="form-control" id="pNamaGroup" required="required"/>
+                                <label for="pCashCodeMultiple"><span style="color: red;">*</span>&nbsp;Cash Code :</label>
+                                <select class="form-control" id="pCashCodeMultiple" required="required">
+
+                                </select>>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pMetodeBayarMultiple"><span style="color: red;">*</span>&nbsp; Metode Pembayaran :</label>
+                                <select class="form-control" id="pMetodeBayarMultiple" required="required">
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pJamBayarMultiple"><span style="color: red;">*</span>&nbsp;Jam Bayar :</label>
+                                <select class="form-control" id="pJamBayarMultiple" required="required">
+                                    <option value="07:00-07:30">07:00-07:30</option>
+                                    <option value="07:30-08:00">07:30-08:00</option>
+                                    <option value="08:00-08:30">08:00-08:30</option>
+                                    <option value="08:30-09:00">08:30-09:00</option>
+                                    <option value="09:00-09:30">09:00-09:30</option>
+                                    <option value="09:30-10:00">09:30-10:00</option>
+                                    <option value="10:00-10:30">10:00-10:30</option>
+                                    <option value="10:30-11:00">10:30-11:00</option>
+                                    <option value="11:00-11:30">11:00-11:30</option>
+                                    <option value="11:30-12:00">11:30-12:00</option>
+                                    <option value="12:00-12:30">12:00-12:30</option>
+                                    <option value="12:30-13:00">12:30-13:00</option>
+                                    <option value="13:00-13:30">13:00-13:30</option>
+                                    <option value="13:30-14:00">13:30-14:00</option>
+                                    <option value="14:00-14:30">14:00-14:30</option>
+                                    <option value="14:30-15:00">14:30-15:00</option>
+                                    <option value="15:00-15:30">15:00-15:30</option>
+                                    <option value="15:30-16:00">15:30-16:00</option>
+
+                                </select>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="create_group()">Submit</button>
+                    <button type="button" class="btn btn-primary" onclick="insertMultipleEdit()">Submit</button>
                 </div>
             </div>
 

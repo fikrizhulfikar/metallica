@@ -127,8 +127,20 @@ function tableMainDashboard(_date){
             {"data": null,"render": (data, type, row) => {return '<td>'+data.CURRENCY+'</td>';}},
             {"data": null,"render": (data, type, row) => {return '<td>'+data.JENIS_REKENING+'</td>';}},
             {"data": null,"render": (data, type, row) => {return '<td>'+data.TIPE_REKENING+'</td>';}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.ORIGINAL_CURRENCY)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.EQ_CURRENCY)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR"){
+                                                              return '<td> Rp '+ new Intl.NumberFormat().format(data.ORIGINAL_CURRENCY)+'</td>';
+                                                              } else if (data.CURRENCY === "USD"){
+                                                              return '<td> $ '+ new Intl.NumberFormat().format(data.ORIGINAL_CURRENCY)+'</td>';
+                                                              } else if (data.CURRENCY === "EUR"){
+                                                              return '<td> € '+ new Intl.NumberFormat().format(data.ORIGINAL_CURRENCY)+'</td>';
+                                                              } else if (data.CURRENCY === "JPY"){
+                                                              return '<td> ¥ '+ new Intl.NumberFormat().format(data.ORIGINAL_CURRENCY)+'</td>';
+                                                              } else
+                                                              return '<td> RM '+ new Intl.NumberFormat().format(data.ORIGINAL_CURRENCY)+'</td>';
+                                                           },
+                                                           "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                           }},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp.'+ new Intl.NumberFormat().format(data.EQ_CURRENCY)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,"render" : (data, tyoe, row) => {return '<td> '+ new Intl.NumberFormat().format(data.PERSEN)+' % </td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
         ],
         "createdRow" : function (row, data, dataIndex){
@@ -165,21 +177,42 @@ $.ajax({
        $.each(data, function (key, val) {
          var html = "<tr>" +
              "<td>" + val.BANK + "</td>" +
-             "<td align='right'>" + accounting.formatNumber(val.RECEIPT,2,".",",") + "</td>" +
-             "<td align='right'>" + accounting.formatNumber(val.OBLIGASI,2,".",",") + "</td>" +
-             "<td align='right'>" + accounting.formatNumber(val.DEPRESIASI,2,".",",") + "</td>" +
-             "<td align='right'>" + accounting.formatNumber(val.BENCANA,2,".",",") + "</td>" +
-             "<td align='right'>" + accounting.formatNumber(val.GLOBAL_BOND,2,".",",") + "</td>" +
-             "<td align='right'>" + accounting.formatNumber(val.DOKUMEN_LELANG,2,".",",") + "</td>" +
-             "<td align='right'>" + accounting.formatNumber(val.IMPREST,2,".",",") + "</td>" +
-             "<td align='right'>" + accounting.formatNumber(val.IMPREST_OPERASI_TERPUSAT,2,".",",") + "</td>" +
-             "<td align='right'>" + accounting.formatNumber(val.IMPREST_VALAS,2,".",",") + "</td>" +
-             "<td align='right'>" + accounting.formatNumber(val.IMPOR,2,".",",") + "</td>" +
-             "<td align='right'>" + accounting.formatNumber(val.SUBSIDI,2,".",",") + "</td>" +
-             "<td align='right'>" + accounting.formatNumber(val.KMK,2,".",",") + "</td>" +
-             "<td align='right'>" + accounting.formatNumber(val.JML_INVESTASI_IDR,2,".",",") + "</td>" +
-             "<td align='right'>" + accounting.formatNumber(val.JML_INVESTASI_VALAS,2,".",",") + "</td>" +
+             "<td align='right'> Rp. " + accounting.formatNumber(val.RECEIPT,2,".",",") + "</td>" +
+             "<td align='right'> Rp. " + accounting.formatNumber(val.OBLIGASI,2,".",",") + "</td>" +
+             "<td align='right'> Rp. " + accounting.formatNumber(val.DEPRESIASI,2,".",",") + "</td>" +
+             "<td align='right'> Rp. " + accounting.formatNumber(val.BENCANA,2,".",",") + "</td>" +
+             "<td align='right'> Rp. " + accounting.formatNumber(val.GLOBAL_BOND,2,".",",") + "</td>" +
+             "<td align='right'> Rp. " + accounting.formatNumber(val.DOKUMEN_LELANG,2,".",",") + "</td>" +
+             "<td align='right'> Rp. " + accounting.formatNumber(val.IMPREST,2,".",",") + "</td>" +
+             "<td align='right'> Rp. " + accounting.formatNumber(val.IMPREST_OPERASI_TERPUSAT,2,".",",") + "</td>" +
+             "<td align='right'> Rp. " + accounting.formatNumber(val.IMPREST_VALAS,2,".",",") + "</td>" +
+             "<td align='right'> Rp. " + accounting.formatNumber(val.IMPOR,2,".",",") + "</td>" +
+             "<td align='right'> Rp. " + accounting.formatNumber(val.SUBSIDI,2,".",",") + "</td>" +
+             "<td align='right'> Rp. " + accounting.formatNumber(val.KMK,2,".",",") + "</td>" +
+             "<td align='right'> Rp. " + accounting.formatNumber(val.JML_OPERASI_IDR,2,".",",") + "</td>" +
+             "<td align='right'> Rp. " + accounting.formatNumber(val.JML_OPERASI_VALAS,2,".",",") + "</td>" +
              "</tr>";
+
+             if(val["BANK"] === "TOTAL"){
+                   var html = "<tr style='background-color: #FF773D; font-weight: bold'>" +
+                        "<td>" + val.BANK + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.RECEIPT,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.OBLIGASI,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.DEPRESIASI,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.BENCANA,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.GLOBAL_BOND,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.DOKUMEN_LELANG,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.IMPREST,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.IMPREST_OPERASI_TERPUSAT,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.IMPREST_VALAS,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.IMPOR,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.SUBSIDI,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.KMK,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.JML_OPERASI_IDR,2,".",",") + "</td>" +
+                        "<td align='right'> Rp. " + accounting.formatNumber(val.JML_OPERASI_VALAS,2,".",",") + "</td>" +
+                        "</tr>";
+
+               }
          $('#saldo-operasi tbody').append(html);
 
 //           $('#saldo-operasi').dataTable( {
@@ -217,17 +250,34 @@ $.ajax({
        $.each(data, function (key, val) {
          var html = "<tr>" +
               "<td>" + val.BANK + "</td>" +
-              "<td align='right'>" + accounting.formatNumber(val.IMPREST_INVESTASI_TERPUSAT,2,".",",") + "</td>" +
-              "<td align='right'>" + accounting.formatNumber(val.SUKUK,2,".",",") + "</td>" +
-              "<td align='right'>" + accounting.formatNumber(val.DEPOSITO,2,".",",") + "</td>" +
-              "<td align='right'>" + accounting.formatNumber(val.PMN,2,".",",") + "</td>" +
-              "<td align='right'>" + accounting.formatNumber(val.ESCROW_IDR,2,".",",") + "</td>" +
-              "<td align='right'>" + accounting.formatNumber(val.ESCROW_VALAS,2,".",",") + "</td>" +
-              "<td align='right'>" + accounting.formatNumber(val.ADB_RBL,2,".",",") + "</td>" +
-              "<td align='right'>" + accounting.formatNumber(val.JML_INVESTASI_IDR,2,".",",") + "</td>" +
-              "<td align='right'>" + accounting.formatNumber(val.JML_INVESTASI_VALAS,2,".",",") + "</td>" +
-              "<td align='right'>" + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
+              "<td align='right'> Rp. " + accounting.formatNumber(val.IMPREST_INVESTASI_TERPUSAT,2,".",",") + "</td>" +
+              "<td align='right'> Rp. " + accounting.formatNumber(val.SUKUK,2,".",",") + "</td>" +
+              "<td align='right'> Rp. " + accounting.formatNumber(val.DEPOSITO,2,".",",") + "</td>" +
+              "<td align='right'> Rp. " + accounting.formatNumber(val.PMN,2,".",",") + "</td>" +
+              "<td align='right'> Rp. " + accounting.formatNumber(val.ESCROW_IDR,2,".",",") + "</td>" +
+              "<td align='right'> Rp. " + accounting.formatNumber(val.ESCROW_VALAS,2,".",",") + "</td>" +
+              "<td align='right'> Rp. " + accounting.formatNumber(val.ADB_RBL,2,".",",") + "</td>" +
+              "<td align='right'> Rp. " + accounting.formatNumber(val.JML_INVESTASI_IDR,2,".",",") + "</td>" +
+              "<td align='right'> Rp. " + accounting.formatNumber(val.JML_INVESTASI_VALAS,2,".",",") + "</td>" +
+              "<td align='right'> Rp. " + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
               "</tr>";
+
+              if(val["BANK"] === "TOTAL"){
+                  var html = "<tr style='background-color: #FF773D; font-weight: bold'>" +
+                    "<td>" + val.BANK + "</td>" +
+                    "<td align='right'> Rp. " + accounting.formatNumber(val.IMPREST_INVESTASI_TERPUSAT,2,".",",") + "</td>" +
+                    "<td align='right'> Rp. " + accounting.formatNumber(val.SUKUK,2,".",",") + "</td>" +
+                    "<td align='right'> Rp. " + accounting.formatNumber(val.DEPOSITO,2,".",",") + "</td>" +
+                    "<td align='right'> Rp. " + accounting.formatNumber(val.PMN,2,".",",") + "</td>" +
+                    "<td align='right'> Rp. " + accounting.formatNumber(val.ESCROW_IDR,2,".",",") + "</td>" +
+                    "<td align='right'> Rp. " + accounting.formatNumber(val.ESCROW_VALAS,2,".",",") + "</td>" +
+                    "<td align='right'> Rp. " + accounting.formatNumber(val.ADB_RBL,2,".",",") + "</td>" +
+                    "<td align='right'> Rp. " + accounting.formatNumber(val.JML_INVESTASI_IDR,2,".",",") + "</td>" +
+                    "<td align='right'> Rp. " + accounting.formatNumber(val.JML_INVESTASI_VALAS,2,".",",") + "</td>" +
+                    "<td align='right'> Rp. " + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
+                    "</tr>";
+
+              }
           $('#saldo-investasi tbody').append(html);
        });
 
@@ -253,8 +303,8 @@ $.ajax({
 //       $("#tglcetak").html(data[0].TANGGAL);
        $.each(data, function (key, val) {
          var html = "<tr>" +
-             "<td>" + val.URAIAN + "</td>" +
-             "<td align='right'>" + accounting.formatNumber(val.RP,2,".",",") + "</td>" +
+             "<td style='background-color: #FF773D; font-weight: bold;'>" + val.URAIAN + "</td>" +
+             "<td align='right' style='background-color: #FF773D; font-weight: bold;'> Rp. " + accounting.formatNumber(val.RP,2,".",",") + "</td>" +
              "</tr>";
          $('#keterangan tbody').append(html);
        });

@@ -434,6 +434,7 @@ function getApInvoice(){
             },
             success: function (res) {
                 showLoadingCss();
+                console.log('TEST DIAZ : '+res)
                 if (res.ERROR_CODE == 'undefined' || res.ERROR_CODE == null) {
                     alert('DATA BERHASIL DI TARIK');
                     // search("load");

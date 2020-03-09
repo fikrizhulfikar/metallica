@@ -23,16 +23,16 @@ function initDataTableSaldoRek1() {
                 $.each(data, function (key, val) {
                     var html = "<tr>" +
                         "<td>" + val.CURRENCY + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.SALDO_REAL,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
+                        "<td align='right'>" + "Rp " + accounting.formatNumber(val.SALDO_REAL,2,".",",") + "</td>" +
+                        "<td align='right'>" + "Rp " + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
                         "</tr>";
                     $('#table-jenis-mata-uang tbody').append(html);
                 });
 
                 var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
                     "<td>TOTAL</td>" +
-                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_REAL,2,".",",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_EQ_IDR,2,".",",") + "</td>" +
+                    "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_REAL,2,".",",") + "</td>" +
+                    "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_EQ_IDR,2,".",",") + "</td>" +
                     "</tr>";
 
             $('#table-jenis-mata-uang tbody').append(total1);
@@ -74,18 +74,18 @@ function initDataTableSaldoRek1() {
                 $.each(data, function (key, val) {
                     var html = "<tr>" +
                         "<td>" + val.JENIS_REKENING + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.VALAS,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
-                        "<td align='right'>" + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
+                        "<td align='right'>" + "Rp " + accounting.formatNumber(val.VALAS,2,".",",") + "</td>" +
+                        "<td align='right'>" + "Rp " + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
+                        "<td align='right'>" + "Rp " + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
                         "</tr>";
                     $('#table-jenis-rekening tbody').append(html);
                 });
 
                 var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
                     "<td>TOTAL</td>" +
-                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_VALAS,2,".",",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_IDR,2,".",",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SALDO,2,".",",") + "</td>" +
+                    "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_VALAS,2,".",",") + "</td>" +
+                    "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_IDR,2,".",",") + "</td>" +
+                    "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SALDO,2,".",",") + "</td>" +
                     "</tr>";
 
             $('#table-jenis-rekening tbody').append(total1);
@@ -127,14 +127,14 @@ function initDataTableSaldoRek1() {
                   $.each(data, function (key, val) {
                       var html = "<tr>" +
                           "<td>" + val.BANK + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(val.SALDO,2,".",",") + "</td>" +
+                          "<td align='right'>" + "Rp " + accounting.formatNumber(val.SALDO,2,".",",") + "</td>" +
                           "</tr>";
                       $('#table-jenis-bank tbody').append(html);
                   });
 
                   var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
                       "<td>TOTAL</td>" +
-                      "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SALDO,2,".",",") + "</td>" +
+                      "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SALDO,2,".",",") + "</td>" +
                       "</tr>";
 
               $('#table-jenis-bank tbody').append(total1);
@@ -176,14 +176,14 @@ function initDataTableSaldoRek1() {
                       $.each(data, function (key, val) {
                           var html = "<tr>" +
                               "<td>" + val.JENIS_REKENING + "</td>" +
-                              "<td align='right'>" + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
+                              "<td align='right'>" + "Rp " + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
                               "</tr>";
                           $('#table-komposisi-saldo tbody').append(html);
                       });
 
                       var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
                           "<td>TOTAL</td>" +
-                          "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL,2,".",",") + "</td>" +
+                          "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL,2,".",",") + "</td>" +
                           "</tr>";
 
                   $('#table-komposisi-saldo tbody').append(total1);
@@ -230,18 +230,18 @@ function initDataTableSaldoRek1() {
                   $.each(data, function (key, val) {
                       var html = "<tr>" +
                           "<td>" + val.TIPE + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(val.VALAS,2,".",",") + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(val.RUPIAH,2,".",",") + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
+                          "<td align='right'>" + "Rp " + accounting.formatNumber(val.VALAS,2,".",",") + "</td>" +
+                          "<td align='right'>" + "Rp " + accounting.formatNumber(val.RUPIAH,2,".",",") + "</td>" +
+                          "<td align='right'>" + "Rp " + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
                           "</tr>";
                       $('#table-rekening-operasi tbody').append(html);
                   });
 
                   var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
                       "<td>TOTAL EQ IDR</td>" +
-                      "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_RUPIAH,2,".",",") + "</td>" +
-                      "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_VALAS,2,".",",") + "</td>" +
-                      "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_SELURUH,2,".",",") + "</td>" +
+                      "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_VALAS,2,".",",") + "</td>" +
+                      "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_RUPIAH,2,".",",") + "</td>" +
+                      "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_SELURUH,2,".",",") + "</td>" +
                       "</tr>";
 
               $('#table-rekening-operasi tbody').append(total1);
@@ -283,18 +283,18 @@ function initDataTableSaldoRek1() {
                       $.each(data, function (key, val) {
                           var html = "<tr>" +
                               "<td>" + val.TIPE + "</td>" +
-                              "<td align='right'>" + accounting.formatNumber(val.VALAS,2,".",",") + "</td>" +
-                              "<td align='right'>" + accounting.formatNumber(val.RUPIAH,2,".",",") + "</td>" +
-                              "<td align='right'>" + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
+                              "<td align='right'>" + "Rp " + accounting.formatNumber(val.VALAS,2,".",",") + "</td>" +
+                              "<td align='right'>" + "Rp " + accounting.formatNumber(val.RUPIAH,2,".",",") + "</td>" +
+                              "<td align='right'>" + "Rp " + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
                               "</tr>";
                           $('#table-rekening-investasi tbody').append(html);
                       });
 
                       var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
                           "<td>TOTAL EQ IDR</td>" +
-                          "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_VALAS,2,".",",") + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_SELURUH,2,".",",") + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_SELURUH,2,".",",") + "</td>" +
+                          "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_VALAS,2,".",",") + "</td>" +
+                          "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_SELURUH,2,".",",") + "</td>" +
+                          "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_SELURUH,2,".",",") + "</td>" +
                           "</tr>";
                   $('#table-rekening-investasi tbody').append(total1);
 
@@ -335,16 +335,16 @@ function initDataTableSaldoRek1() {
               $.each(data, function (key, val) {
                   var html = "<tr>" +
                       "<td>" + val.NAMA_BANK + "</td>" +
-                      "<td align='right'>" + accounting.formatNumber(val.VALAS,2,".",",") + "</td>" +
-                      "<td align='right'>" + accounting.formatNumber(val.RUPIAH,2,".",",") + "</td>" +
+                      "<td align='right'>" + "$ " + accounting.formatNumber(val.VALAS,2,".",",") + "</td>" +
+                      "<td align='right'>" + "Rp " + accounting.formatNumber(val.RUPIAH,2,".",",") + "</td>" +
                       "</tr>";
                   $('#table-total-deposito tbody').append(html);
               });
 
               var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                  "<td>TOTAL EQ IDR</td>" +
-                  "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_VALAS,2,".",",") + "</td>" +
-                  "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_RUPIAH,2,".",",") + "</td>" +
+                  "<td>TOTAL</td>" +
+                  "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_VALAS,2,".",",") + "</td>" +
+                  "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_RUPIAH,2,".",",") + "</td>" +
                   "</tr>";
           $('#table-total-deposito tbody').append(total1);
 
@@ -386,22 +386,22 @@ function initDataTableSaldoRek1() {
                       var str = val.NAMA_BANK;
                       var html = "<tr>" +
                           "<td>" + str + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(val.FORWARD, 2, ".", ",") + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(val.SWAP, 2, ".", ",") + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(val.DNDF, 2, ".", ",") + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(val.CALL_SPREAD_OPTION, 2, ".", ",") + "</td>" +
-                          "<td align='right'>" + accounting.formatNumber(val.TOTAL_SAMPING, 2, ".", ",") + "</td>" +
+                          "<td align='right'>" + "$ " + accounting.formatNumber(val.FORWARD, 2, ".", ",") + "</td>" +
+                          "<td align='right'>" + "$ " + accounting.formatNumber(val.SWAP, 2, ".", ",") + "</td>" +
+                          "<td align='right'>" + "$ " + accounting.formatNumber(val.DNDF, 2, ".", ",") + "</td>" +
+                          "<td align='right'>" + "$ " + accounting.formatNumber(val.CALL_SPREAD_OPTION, 2, ".", ",") + "</td>" +
+                          "<td align='right'>" + "$ " + accounting.formatNumber(val.TOTAL_SAMPING, 2, ".", ",") + "</td>" +
                           "</tr>";
                           $('#table-lindung-nilai tbody').append(html);
                   });
 
                   var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                      "<td>TOTAL EQ IDR</td>" +
-                      "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_FORWARD,2,".",",") + "</td>" +
-                      "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SWAP,2,".",",") + "</td>" +
-                      "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_DNDF,2,".",",") + "</td>" +
-                      "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_CALL_SPREAD_OPTION,2,".",",") + "</td>" +
-                      "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SELURUH,2,".",",") + "</td>" +
+                      "<td>TOTAL</td>" +
+                      "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_FORWARD,2,".",",") + "</td>" +
+                      "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SWAP,2,".",",") + "</td>" +
+                      "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_DNDF,2,".",",") + "</td>" +
+                      "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_CALL_SPREAD_OPTION,2,".",",") + "</td>" +
+                      "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SELURUH,2,".",",") + "</td>" +
                       "</tr>";
               $('#table-lindung-nilai tbody').append(total1);
 
@@ -522,6 +522,10 @@ function creteChartKompSaldo(data) {
     var tes = JSON.stringify(data);
     var maxval1 = data[1].maxvalue + data[0].maxvalue;
     var maxval2 = data[2].maxvalue + data[1].maxvalue;
+    var label1 = (data[0].minvalue + data[0].maxvalue)/2;
+    var label2 = (data[0].maxvalue + data[1].maxvalue)/2;
+    var label3 = (data[1].maxvalue + data[2].maxvalue)/2;
+    var label4 = (data[2].maxvalue + data[3].maxvalue)/2;
     //console.log('DIAZZ GANTENG :'+maxval1);
     FusionCharts.ready(function () {
         var fusioncharts = new FusionCharts({
@@ -533,9 +537,10 @@ function creteChartKompSaldo(data) {
                 dataSource: {
                     "chart": {
                         "bgColor": "#77D5D4",
-                        "caption": "Komposisi Saldo",
-                        "lowerLimitDisplay": " ",
-                        "upperLimitDisplay": " ",
+                        "caption": "\n\n\n\nKOMPOSISI SALDO",
+                        "numbersuffix": "%",
+                        "lowerLimitDisplay": "0%",
+                        "upperLimitDisplay": "100%",
                         "lowerLimit": "0",
                         "upperLimit": "100",
                         "showValue": "0",
@@ -546,9 +551,14 @@ function creteChartKompSaldo(data) {
                         "pivotFillMix": "#77D5D4",
                         "valueBelowPivot": "0",
                         pivotFillAlpha:"0",
-                        showTickMarks:"0",
-                        showTickValues:"0",
+                        "majorTMNumber": "9",
+                        "majorTMHeight": "10",
+                        "minorTMHeight": "5",
+                        showTickMarks: "1",
+                        showTickValues: "1",
                         "gaugeFillMix": "{dark-10},{light-10},{dark-10}",
+                        "gaugeOuterRadius": "160",
+                        "gaugeInnerRadius": "90",
                         "theme": "fint"
                     },
                     "colorrange": {
@@ -574,16 +584,7 @@ function creteChartKompSaldo(data) {
                               code: data[3].code
                           }
                        ]
-                     },
-                    "dials": {
-                          "dial": [
-                          {
-                              alpha:"0",
-                              value:maxval2
-                          }
-                      ]
-                    }
-                    //"data": data
+                     }
                 }
             }
         );

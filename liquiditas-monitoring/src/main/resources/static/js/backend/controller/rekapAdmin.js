@@ -894,96 +894,103 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {
                     "aTargets": [2],
                     "mRender": function (data, type, full) {
-                        return full.ID_JENIS_PEMBAYARAN;
+                        return full.ID_VALAS;
                     }
 
                 },
                 {
                     "aTargets": [3],
                     "mRender": function (data, type, full) {
-                        return full.TGL_JATUH_TEMPO;
+                        return full.ID_JENIS_PEMBAYARAN;
                     }
 
                 },
                 {
                     "aTargets": [4],
                     "mRender": function (data, type, full) {
-                        return full.ID_VENDOR;
+                        return full.TGL_JATUH_TEMPO;
                     }
 
                 },
                 {
                     "aTargets": [5],
                     "mRender": function (data, type, full) {
-                        return full.CURRENCY;
+                        return full.ID_VENDOR;
                     }
 
                 },
                 {
                     "aTargets": [6],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.TOTAL_TAGIHAN,2,".",",");
+                        return full.CURRENCY;
                     }
 
                 },
                 {
                     "aTargets": [7],
                     "mRender": function (data, type, full) {
-                        return full.ID_UNIT;
+                        return accounting.formatNumber(full.TOTAL_TAGIHAN,2,".",",");
                     }
 
                 },
                 {
                     "aTargets": [8],
                     "mRender": function (data, type, full) {
-                        return full.KODE_BANK_TUJUAN;
+                        return full.ID_UNIT;
                     }
 
                 },
                 {
                     "aTargets": [9],
                     "mRender": function (data, type, full) {
-                        return full.KODE_BANK_PEMBAYAR;
+                        return full.KODE_BANK_TUJUAN;
                     }
 
                 },
                 {
                     "aTargets": [10],
                     "mRender": function (data, type, full) {
-                        return full.TGL_TERIMA_INVOICE;
+                        return full.KODE_BANK_PEMBAYAR;
                     }
 
                 },
                 {
                     "aTargets": [11],
                     "mRender": function (data, type, full) {
-                        return full.TGL_TAGIHAN;
+                        return full.TGL_TERIMA_INVOICE;
                     }
 
                 },
                 {
                     "aTargets": [12],
                     "mRender": function (data, type, full) {
-                        return full.NO_TAGIHAN;
+                        return full.TGL_TAGIHAN;
                     }
 
                 },
                 {
                     "aTargets": [13],
                     "mRender": function (data, type, full) {
-                        return full.TGL_NOTDIN;
+                        return full.NO_TAGIHAN;
                     }
 
                 },
                 {
                     "aTargets": [14],
                     "mRender": function (data, type, full) {
-                        return full.NO_NOTDIN;
+                        return full.TGL_NOTDIN;
                     }
 
                 },
                 {
                     "aTargets": [15],
+                    "mRender": function (data, type, full) {
+                        return full.NO_NOTDIN;
+                    }
+
+                },
+                {
+                    "aTargets": [16],
                     "visible": false,
                     "mRender": function (data, type, full) {
                         //return full.TGL_LUNAS;
@@ -991,106 +998,106 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                     }
                 },
                 {
-                    "aTargets": [16],
+                    "aTargets": [17],
                     "mRender": function (data, type, full) {
                         return full.COUNT_DOWN;
                     }
                 },
                 {
-                    "aTargets": [17],
+                    "aTargets": [18],
                     "mRender": function (data, type, full) {
                         return full.STATUS_VALAS;
                     }
                 },
                 {
-                    "aTargets": [18],
+                    "aTargets": [19],
                     "mRender": function (data, type, full) {
                         return full.TIPE_TRANSAKSI;
                     }
                 },
                 {
-                    "aTargets": [19],
+                    "aTargets": [20],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.NOMINAL_SBLM_PAJAK,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [20],
+                    "aTargets": [21],
                     "mRender": function (data, type, full) {
                         return full.PAJAK + "%";
                     }
                 },
                 {
-                    "aTargets": [21],
+                    "aTargets": [22],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.NOMINAL_STLH_PAJAK,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [22],
+                    "aTargets": [23],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.NOMINAL_UNDERLYING,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [23],
+                    "aTargets": [24],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.NOMINAL_TANPA_UNDERLYING,2,".",",");
 
                     }
                 },
                 {
-                    "aTargets": [24],
+                    "aTargets": [25],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.KURS_JISDOR,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [25],
+                    "aTargets": [26],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.SPREAD,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [26],
+                    "aTargets": [27],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.KURS_TRANSAKSI,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [27],
+                    "aTargets": [28],
                     "mRender": function (data, type, full) {
                         return accounting.formatNumber(full.NOMINAL_PEMBAYARAN_IDR,2,".",",");
                     }
                 },
                 {
-                    "aTargets": [28],
+                    "aTargets": [29],
                     "mRender": function (data, type, full) {
                         return full.CREATE_DATE;
                     }
                 },
                 {
-                    "aTargets": [29],
+                    "aTargets": [30],
                     "mRender": function (data, type, full) {
                         return full.UPDATE_DATE;
                     }
                 },
 
                 {
-                    "aTargets": [30],
+                    "aTargets": [31],
                     "mRender": function (data, type, full) {
                         return full.STATUS_TRACKING;
                     }
 
                 },
                 {
-                    "aTargets": [31],
+                    "aTargets": [32],
                     "mRender": function (data, type, full) {
                         return full.DESKRIPSI;
                     }
                 },
                 {
-                    "aTargets": [32],
+                    "aTargets": [33],
                     "mRender": function (data, type, full) {
                         var ret_value;
                         /*alert('BOOOMB2'+full.STATUS_TRACKING);*/
@@ -1420,7 +1427,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 
                 },
                 {
-                    "aTargets": [33],
+                    "aTargets": [34],
                     "mRender": function (data, type, full) {
                         var value = new Object();
                         var ret_value = ''

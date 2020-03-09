@@ -126,7 +126,8 @@ public class PembelianValasTrxController {
             @RequestParam(value = "pDocHdrTxt", defaultValue = "") String pDocHdrTxt,
             @RequestParam(value = "pUserId", defaultValue = "") String pUserId,
             @RequestParam(value = "pExchangeRate", defaultValue = "") String pExchangeRate,
-            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscalYear
+            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscalYear,
+            @RequestParam(value = "pSumberDana", defaultValue = "") String pSumberDana
     ){
         AppUtils.getLogger(this).debug("pDocNo : {} ", pDocNo);
         AppUtils.getLogger(this).debug("pDocDate : {} ", pDocDate);
@@ -142,7 +143,7 @@ public class PembelianValasTrxController {
             String messege = "";
             boolean isUpdate = false;
 
-            Map<String, Object> res  = pembelianValasTrxService.insPembelian(pIdMetallica, pDocDate, pPostDate, pDocNo, pReference, pCompCode, pBusArea, pCurrency, pDocHdrTxt, WebUtils.getUsernameLogin(), pExchangeRate, pFiscalYear);
+            Map<String, Object> res  = pembelianValasTrxService.insPembelian(pIdMetallica, pDocDate, pPostDate, pDocNo, pReference, pCompCode, pBusArea, pCurrency, pDocHdrTxt, WebUtils.getUsernameLogin(), pExchangeRate, pFiscalYear, pSumberDana);
 
             return res;
         }catch (Exception e){
@@ -196,7 +197,7 @@ public class PembelianValasTrxController {
             //String pSessionId = WebUtils.getUsernameLogin() + AppUtils.getDateTillSecondTrim();
             Map<String, Object> res = new HashedMap();
             for (ValasDetail v : valas.getValasDetails()){
-                res = pembelianValasTrxService.insDetailPembelianValasTrx(valas.getpIdMetallica(),v.getpPostDate(), v.getpDocNo(), v.getpAmount(), v.getpBusArea(), v.getpReference(), v.getpCompCode(), v.getpCashCode() , v.getpSumberDana(), WebUtils.getUsernameLogin(), v.getpCurrency(), v.getpCostCtr(),v.getpDrCrInd(), v.getpExchangeRate(), v.getpFiscYear(), v.getpGlAccount(), v.getpLineNo(), v.getpPmtProposalId(), v.getpRemarks(), v.getpFlag());
+                res = pembelianValasTrxService.insDetailPembelianValasTrx(valas.getpIdMetallica(),v.getpPostDate(), v.getpDocNo(), v.getpAmount(), v.getpBusArea(), v.getpReference(), v.getpCompCode(), v.getpCashCode() , v.getpSumberDana(), WebUtils.getUsernameLogin(), v.getpCurrency(), v.getpCostCtr(),v.getpDrCrInd(), v.getpExchangeRate(), v.getpFiscYear(), v.getpGlAccount(), v.getpLineNo(), v.getpPmtProposalId(), v.getpRemarks(), v.getpFlag(), v.getpRealAmount());
             }
             return res;
         }catch (Exception e){
@@ -208,13 +209,14 @@ public class PembelianValasTrxController {
     @RequestMapping(value = "/delete_pembelian_valas_item_trx", method = RequestMethod.POST)
     public Map<String, Object> deletePembelianValasItemTrx(
             @RequestParam(value = "pIdMetallica", defaultValue = "") String pIdMetallica,
-            @RequestParam(value = "pItemId", defaultValue = "") String pItemId
+            @RequestParam(value = "pItemId", defaultValue = "") String pItemId,
+            @RequestParam(value = "pLineNo", defaultValue = "") String pLineNo
     ) {
 
         AppUtils.getLogger(this).debug("pIdMetallica : {} ", pIdMetallica);
         AppUtils.getLogger(this).debug("pItemId : {}", pItemId);
         try {
-            Map<String, Object> res = pembelianValasTrxService.deletePembelianValasTrx(pIdMetallica, pItemId);
+            Map<String, Object> res = pembelianValasTrxService.deletePembelianValasTrx(pIdMetallica, pItemId, pLineNo);
 //
             if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 //                notificationUtil.notifyMessage(notification);
@@ -436,6 +438,17 @@ public class PembelianValasTrxController {
         return formatted;
     }
 
+    @RequestMapping(value = "/get_total_tagihan_lunas", method = RequestMethod.GET)
+    public String getTotalTagihanLunas(@RequestParam(value = "tgl_awal", defaultValue = "") String tglAwal,
+                                  @RequestParam(value = "tgl_akhir", defaultValue = "") String tglAkhir,
+                                  @RequestParam(value = "currency", defaultValue = "ALL") String currency,
+
+                                  @RequestParam(value = "search", defaultValue = "") String search) {
+        BigDecimal result =  pembelianValasTrxService.getTotalTagihanLunas(tglAwal, tglAkhir, currency, WebUtils.getUsernameLogin(), search);
+        String formatted = AppUtils.getInstance().formatDecimalCurrency(result);
+        return formatted;
+    }
+
     @PostMapping(path = "/multiple_delete_head")
     public Map<String,Object> multipleDeleteHead(@RequestParam(value = "pData") String data) throws SQLException,  JSONException {
         Map<String, Object> out = new HashMap<>();
@@ -556,6 +569,173 @@ public class PembelianValasTrxController {
             e.printStackTrace();
             return "Gagal Export Data :" + e.getMessage();
         }
+    }
+
+    @RequestMapping(value = "/xlsverified/{pTglAwal}/{pTglAkhir}/{pCurr}", method = RequestMethod.GET)
+    public String export2(
+            @PathVariable String pTglAwal,
+            @PathVariable String pTglAkhir,
+            @PathVariable String pCurr,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
+
+            String tglAwal = "";
+            String tglAkhir = "";
+
+            if (!pTglAwal.equals("null")) {
+                tglAwal = pTglAwal;
+            }
+            if (!pTglAkhir.equals("null")) {
+                tglAkhir = pTglAkhir;
+            }
+
+            String title = "PEMBELIAN VALAS VERIFIED";
+            String namaFile = "pembelian_valas_verified.xls";
+
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
+
+            List<Map<String, Object>> listData = pembelianValasTrxService.getAllpembayaran2(WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pCurr);
+
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+
+            param.put("TITLE", title);
+            for (Map data : listData) {
+                Map paramDetail = new HashMap();
+                paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
+                paramDetail.put("DOCUMENT_DATE", data.get("DOCUMENT_DATE"));
+                paramDetail.put("POSTING_DATE", data.get("POSTING_DATE"));
+                paramDetail.put("FISC_YEAR", data.get("FISC_YEAR"));
+                paramDetail.put("DOCUMENT_NUMBER", data.get("DOCUMENT_NUMBER"));
+                paramDetail.put("REFERENCE", data.get("REFERENCE"));
+                paramDetail.put("COMPANY_CODE", data.get("COMPANY_CODE"));
+                paramDetail.put("BUSINESS_AREA", data.get("BUSINESS_AREA"));
+                paramDetail.put("CURRENCY", data.get("CURRENCY"));
+                paramDetail.put("EXCHANGE_RATE", data.get("EXCHANGE_RATE"));
+                paramDetail.put("DOC_HDR_TXT", data.get("DOC_HDR_TXT"));
+                paramDetail.put("PMT_PROPOSAL_ID", data.get("PMT_PROPOSAL_ID"));
+                paramDetail.put("TOTAL_TAGIHAN", data.get("TOTAL_TAGIHAN"));
+                paramDetail.put("STATUS_TRACKING", data.get("STATUS_TRACKING"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+
+
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/pembelian_valas_verified.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Gagal Export Data :" + e.getMessage();
+        }
+    }
+
+    @RequestMapping(value = "/xlslunas/{pTglAwal}/{pTglAkhir}/{pCurr}", method = RequestMethod.GET)
+    public String export3(
+            @PathVariable String pTglAwal,
+            @PathVariable String pTglAkhir,
+            @PathVariable String pCurr,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
+
+            String tglAwal = "";
+            String tglAkhir = "";
+
+            if (!pTglAwal.equals("null")) {
+                tglAwal = pTglAwal;
+            }
+            if (!pTglAkhir.equals("null")) {
+                tglAkhir = pTglAkhir;
+            }
+
+            String title = "PEMBELIAN VALAS LUNAS";
+            String namaFile = "pembelian_valas_lunas.xls";
+
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
+
+            List<Map<String, Object>> listData = pembelianValasTrxService.getAllpembayaran3(WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pCurr);
+
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+
+            param.put("TITLE", title);
+            for (Map data : listData) {
+                Map paramDetail = new HashMap();
+                paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
+                paramDetail.put("DOCUMENT_DATE", data.get("DOCUMENT_DATE"));
+                paramDetail.put("POSTING_DATE", data.get("POSTING_DATE"));
+                paramDetail.put("FISC_YEAR", data.get("FISC_YEAR"));
+                paramDetail.put("DOCUMENT_NUMBER", data.get("DOCUMENT_NUMBER"));
+                paramDetail.put("REFERENCE", data.get("REFERENCE"));
+                paramDetail.put("COMPANY_CODE", data.get("COMPANY_CODE"));
+                paramDetail.put("BUSINESS_AREA", data.get("BUSINESS_AREA"));
+                paramDetail.put("CURRENCY", data.get("CURRENCY"));
+                paramDetail.put("EXCHANGE_RATE", data.get("EXCHANGE_RATE"));
+                paramDetail.put("DOC_HDR_TXT", data.get("DOC_HDR_TXT"));
+                paramDetail.put("PMT_PROPOSAL_ID", data.get("PMT_PROPOSAL_ID"));
+                paramDetail.put("TOTAL_TAGIHAN", data.get("TOTAL_TAGIHAN"));
+                paramDetail.put("STATUS_TRACKING", data.get("STATUS_TRACKING"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+
+
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/pembelian_valas_lunas.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Gagal Export Data :" + e.getMessage();
+        }
+    }
+
+    @RequestMapping(value = "/get_compcode", method = RequestMethod.GET)
+    public List<Map<String, Object>> getCompCode() {
+        try {
+            List<Map<String, Object>> result = pembelianValasTrxService.getCompanyCode();
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_business_area", method = RequestMethod.GET)
+    public List<Map<String, Object>> getBusinessArea(@RequestParam(value = "pCompCode") String pCompCode) {
+        try {
+            List<Map<String, Object>> result = pembelianValasTrxService.getBusinessArea(pCompCode);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping(path = "/get_currency")
+    public Map getCurrency (){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = pembelianValasTrxService.getCurrency();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+        return mapData;
     }
 
 }

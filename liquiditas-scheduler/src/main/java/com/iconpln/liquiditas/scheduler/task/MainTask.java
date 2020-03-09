@@ -61,6 +61,5 @@ public class MainTask extends Thread {
         } else {
             AppUtils.getLogger(this).info("NO DATA TR VALAS TO PROCESS FOR");
         }
-
     }
 }

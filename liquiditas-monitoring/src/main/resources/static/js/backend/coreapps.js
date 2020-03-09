@@ -87,8 +87,6 @@ function setSelectBank(idHtml, jenis, jenisBank, idForSelected, form) {
     });
 }
 
-
-
 function setSelectStatus(idHtml) {
     $("#" + idHtml + "").append('<option value="0">PENDING</option>');
     $("#" + idHtml + "").append('<option value="2">WAITING</option>');

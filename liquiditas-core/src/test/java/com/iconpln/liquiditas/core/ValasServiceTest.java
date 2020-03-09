@@ -1,7 +1,6 @@
 package com.iconpln.liquiditas.core;
 
 import com.iconpln.liquiditas.core.domain.RekapPembayaran;
-import com.iconpln.liquiditas.core.service.DashboardService;
 import com.iconpln.liquiditas.core.service.ValasService;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -22,9 +21,6 @@ public class ValasServiceTest {
 
     @Autowired
     private ValasService service;
-
-    @Autowired
-    private DashboardService dashboardService;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

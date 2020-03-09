@@ -4,6 +4,7 @@ import com.iconpln.liquiditas.core.alt.AltException;
 
 import org.apache.chemistry.opencmis.commons.impl.json.JSONArray;
 import org.apache.chemistry.opencmis.commons.impl.json.JSONObject;
+import org.apache.chemistry.opencmis.commons.impl.json.parser.JSONParseException;
 import org.apache.chemistry.opencmis.commons.impl.json.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -38,8 +39,81 @@ public class Sap {
     @Autowired
     private SapService sapService;
 
+    //
+    public Map<String, Object> getCustomer(String date, String customer, String comp_code) throws Exception {
 
-    // CLEAR, DELETE CLEAR
+        Sapmaster sapmaster = new Sapmaster();
+        if (customer == null || comp_code == null){
+            throw new NullPointerException("Parameter can not be NULL");
+        }
+        param.clear();
+        param.put("date", date);
+        param.put("customer",customer);
+        param.put("comp_code", comp_code);
+
+        String list = '[' + sapmaster.getdatasap(param) + ']';
+        System.out.println(list);
+
+        Map<String, Object> out = new HashMap<>();
+
+        try {
+            arr = (JSONArray) parser.parse(list);
+            for (int i = 0; i < arr.size(); i++) {
+                org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObj = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arr.get(i);
+                arrLines = (JSONArray) parser.parse(String.valueOf(jsonObj.get("CUSTOMER")));
+                for (int j = 0; j < arrLines.size(); j++) {
+                    condition.clear();
+                    org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObjLines = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arrLines.get(j);
+                    condition.put("customer_no", String.valueOf(jsonObjLines.get("CUSTOMER_NO")));
+                    condition.put("comp_code", String.valueOf(jsonObjLines.get("COMP_CODE")));
+                    condition.put("cust_acc_grp", String.valueOf(jsonObjLines.get("CUST_ACC_GRP")));
+                    condition.put("customer_name", String.valueOf(jsonObjLines.get("CUSTOMER_NAME")));
+                    condition.put("street_no", String.valueOf(jsonObjLines.get("STREET_NO")));
+                    condition.put("postal_code", String.valueOf(jsonObjLines.get("POSTAL_CODE")));
+                    condition.put("city", String.valueOf(jsonObjLines.get("CITY")));
+                    condition.put("country", String.valueOf(jsonObjLines.get("COUNTRY")));
+                    condition.put("customer_tax_no", String.valueOf(jsonObjLines.get("CUSTOMER_TAX_NO")));
+                    condition.put("customer_vat_no", String.valueOf(jsonObjLines.get("CUSTOMER_VAT_NO")));
+                    condition.put("customer_recon_acct", String.valueOf(jsonObjLines.get("CUSTOMER_RECON_ACCT")));
+                    condition.put("customer_mgmt_grp", String.valueOf(jsonObjLines.get("CUSTOMER_MGMT_GRP")));
+                    condition.put("customer_pmt_term", String.valueOf(jsonObjLines.get("CUSTOMER_PMT_TERM")));
+                    condition.put("customer_pmt_method", String.valueOf(jsonObjLines.get("CUSTOMER_PMT_METHOD")));
+                    condition.put("customer_email", String.valueOf(jsonObjLines.get("CUSTOMER_EMAIL")));
+
+                }
+                if (jsonObj.get("WHT") != null) {
+                    arrLines2 = (JSONArray) parser.parse(String.valueOf(jsonObj.get("WHT")));
+                    for (int j = 0; j < arrLines2.size(); j++) {
+                        condition.clear();
+                        org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObjLines2 = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arrLines2.get(j);
+                        condition.put("customer_no", String.valueOf(jsonObjLines2.get("CUSTOMER_NO")));
+                        condition.put("comp_code", String.valueOf(jsonObjLines2.get("COMP_CODE")));
+                        condition.put("with_tax_type", String.valueOf(jsonObjLines2.get("WITH_TAX_TYPE")));
+                        condition.put("with_tax_code", String.valueOf(jsonObjLines2.get("WITH_TAX_CODE")));
+                        condition.put("with_tax_type_desc", String.valueOf(jsonObjLines2.get("WITH_TAX_TYPE_DESC")));
+                    }
+                }
+
+                if (jsonObj.get("BANK") != null) {
+                    arrLines3 = (JSONArray) parser.parse(String.valueOf(jsonObj.get("BANK")));
+                    for (int j = 0; j < arrLines3.size(); j++) {
+                        condition.clear();
+                        org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObjLines3 = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arrLines3.get(j);
+                        condition.put("customer_no", String.valueOf(jsonObjLines3.get("CUSTOMER_NO")));
+                        condition.put("bank_country", String.valueOf(jsonObjLines3.get("BANK_COUNTRY")));
+                        condition.put("bank_key", String.valueOf(jsonObjLines3.get("BANK_KEY")));
+                        condition.put("bank_account", String.valueOf(jsonObjLines3.get("BANK_ACCOUNT")));
+                        condition.put("partner_bank_type", String.valueOf(jsonObjLines3.get("PARTNER_BANK_TYPE")));
+                        condition.put("account_holder", String.valueOf(jsonObjLines3.get("ACCOUNT_HOLDER")));
+                    }
+                }
+            }
+        } catch (JSONParseException e) {
+            e.printStackTrace();
+        }
+        return out;
+    }
+    // Tinggal nangkep return dan count jumlah row yang ke looping yang belum bener.
     public Object getApInvoice (String pCompanyCode,String pBusArea,String pDocNo,String pFiscYear, String pDatefrom, String pDateTo) throws IOException, URISyntaxException, AltException {
         try {
             param.put("comp_code",pCompanyCode);
@@ -50,20 +124,20 @@ public class Sap {
             param.put("date_to",pDateTo);
 
             Sapmaster sapmaster = new Sapmaster();
+//
+            ClassLoader classLoader = Sap.class.getClassLoader();
+            InputStream inputStream = classLoader.getResourceAsStream("files/JSONApInvoice.json");
+            String result = IOUtils.toString(inputStream);
 
-//            ClassLoader classLoader = Sap.class.getClassLoader();
-//            InputStream inputStream = classLoader.getResourceAsStream("files/ApKateLuDeh.json");
-//            String result = IOUtils.toString(inputStream);
-//
-//            System.out.println("Stream Cok! : "+result);
-//            try {
-//
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//            sapmaster.getDataApInvoice(param);
-            String list = "["+sapmaster.getDataApInvoice(param)+"]";
-            System.out.println("LIST :"+list);
+            System.out.println("Stream Cok! : "+result);
+            try {
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            //sapmaster.getDataApInvoice(param);
+            String list = "["+result+"]";
+            System.out.println("DIAZ GANTENG :"+list);
             arr = (org.apache.chemistry.opencmis.commons.impl.json.JSONArray) parser.parse(list);
 
             System.out.println("ARR:"+arr);
@@ -188,7 +262,7 @@ public class Sap {
         }
     }
 
-    //
+    // Tinggal nangkep return dan count jumlah row yang ke looping yang belum bener.
     public Map<String, Object> getHrPayable (String comp_code, String bus_area, String doc_no, String fiscal_year, String date_from, String date_to) throws IOException, URISyntaxException, AltException {
         Map<String, Object> final_result = new HashMap<>();
         try {
@@ -201,6 +275,17 @@ public class Sap {
             param.put("date_from",date_from);
             param.put("date_to", date_to);
 
+//            ClassLoader classLoader = Sap.class.getClassLoader();
+//            InputStream inputStream = classLoader.getResourceAsStream("files/JSONHrPayable.json");
+//            String result = IOUtils.toString(inputStream);
+//
+//            System.out.println("Stream Cok! : "+result);
+//            try {
+//
+//            }catch (Exception e){
+//                e.printStackTrace();
+//            }
+//            sapmaster.getDataHrPayable(param);
             String list = "["+sapmaster.getDataHrPayable(param)+"]";
 
             arr = (JSONArray) parser.parse(list);
@@ -236,7 +321,7 @@ public class Sap {
                     condition.put("bank_byr",String.valueOf(jsonObjectLines.get("BANK_BYR")));
                     condition.put("curr_bayar",String.valueOf(jsonObjectLines.get("CURR_BAYAR")));
                     condition.put("partial_ind",String.valueOf(jsonObjectLines.get("PARTIAL_IND")));
-                    condition.put("amount_bayar",String.valueOf(jsonObjectLines.get("AMOUNT_BAYAR")));
+                    condition.put("amount_bayar",String.valueOf(jsonObjectLines.get("AMOUNT_BAYAR")).trim());
                     condition.put("bank_benef",String.valueOf(jsonObjectLines.get("BANK_BENEF")));
                     condition.put("no_rek_benef",String.valueOf(jsonObjectLines.get("NO_REK_BENEF")));
                     condition.put("nama_benef",String.valueOf(jsonObjectLines.get("NAMA_BENEF")));
@@ -252,6 +337,7 @@ public class Sap {
                 }
                 System.out.println("Loop Header: "+counter);
                 counter = 0;
+
                 if (jsonObject.get("ITEM_DATA") != null) {
                     arrLines2 = (JSONArray) parser.parse(String.valueOf(jsonObject.get("ITEM_DATA")));
                     for (int j = 0; j < arrLines2.size(); j++) {
@@ -294,6 +380,7 @@ public class Sap {
                         condition.put("tpba", String.valueOf(jsonObjectLines2.get("TPBA")));
                         condition.put("vendor", String.valueOf(jsonObjectLines2.get("VENDOR")));
                         condition.put("wbs_num", String.valueOf(jsonObjectLines2.get("WBS_NUM")));
+                        condition.put("m_date_date",param.get("date_from").toString());
 
                         try {
                             sapService.insertHrPayableItem(condition);

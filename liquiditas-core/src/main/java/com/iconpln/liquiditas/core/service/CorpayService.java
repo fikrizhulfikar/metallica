@@ -23,6 +23,7 @@ import org.springframework.stereotype.Repository;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.SQLException;
@@ -740,6 +741,28 @@ public class CorpayService {
         return out;
     }
 
+    public Map<String, Object> insertMultipleEdit(
+            String CompCode, String DocNo, String fisYear, String lineItem, String keterangan,
+            String cashCode, String metodePembayaran, String jamBayar
+            ){
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_comp_code", CompCode)
+                .addValue("p_doc_no", DocNo)
+                .addValue("p_fisc_year", fisYear)
+                .addValue("p_line_item", lineItem)
+                .addValue("p_ket", keterangan)
+                .addValue("p_cash_code", cashCode)
+                .addValue("p_metode_pembayaran", metodePembayaran)
+                .addValue("p_jam_bayar", jamBayar)
+                .addValue("out_msg ", OracleTypes.VARCHAR);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("invoice_edit_all_data");
+        Map<String, Object> result = simpleJdbcCall.execute(params);
+        return result;
+    }
+
     public String getBallance(String in_bank, String in_source, String in_beneficiary) {
 
         SqlParameterSource params = new MapSqlParameterSource()
@@ -785,7 +808,7 @@ public class CorpayService {
             Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
             SecretKeySpec secret_key = new SecretKeySpec(key.getBytes(), "HmacSHA256");
             sha256_HMAC.init(secret_key);
-            hash = org.apache.commons.codec.binary.Base64.encodeBase64String(sha256_HMAC.doFinal(signature.getBytes()));
+            hash = Base64.encodeBase64String(sha256_HMAC.doFinal(signature.getBytes()));
             System.out.println("signature : " + hash);
         } catch (Exception e) {
             //log.warning(e.getMessage());
@@ -855,7 +878,7 @@ public class CorpayService {
     }
 //===BATAS AKHIR GET BALLANCE===//
 public String payment(String pMetodeBayar, String pBank, String pRefNum, String pSource, String pBeneficiaryAccount,
-                      String pCurrency, String pAmount, String pRemark, String pBenefEmail,
+                      String pCurrency, String pAmount, String pAmountBayar, String pRemark, String pBenefEmail,
                       String pBenefName, String pBenefAddr1, String pBenefAddr2, String pDestinationBank,
                       String pFeeType, String pCurrency2, String pRetrievalReff, String pDestinationBankCode, String pConfirmationCode ) throws IOException {
         String res = null;
@@ -864,25 +887,54 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
     String refnum = format.format(date.getTime())+"00";
 
        if (pMetodeBayar.equals("INHOUSE")){
-           res = doPayment( pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
-                    pAmount, pRemark, pFeeType, pConfirmationCode);
+           if(!pAmountBayar.isEmpty()){
+               res = doPayment( pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
+                       pAmountBayar, pRemark, pFeeType, pConfirmationCode);
+           }
+           if(pAmountBayar.isEmpty()) {
+               res = doPayment(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
+                       pAmount, pRemark, pFeeType, pConfirmationCode);
+           }
        }
        if (pMetodeBayar.equals("RTGS")){
-            res = doPaymentRtgs (pBank, refnum, pSource, pBeneficiaryAccount,
-                    pCurrency, pAmount, pRemark, pBenefEmail,
-                    pBenefName, pBenefAddr1, pBenefAddr2, pDestinationBankCode,
-                    pFeeType);
+           if(!pAmountBayar.isEmpty()) {
+               res = doPaymentRtgs(pBank, refnum, pSource, pBeneficiaryAccount,
+                       pCurrency, pAmountBayar, pRemark, pBenefEmail,
+                       pBenefName, pBenefAddr1, pBenefAddr2, pDestinationBankCode,
+                       pFeeType);
+           }
+           if(pAmountBayar.isEmpty()) {
+               res = doPaymentRtgs(pBank, refnum, pSource, pBeneficiaryAccount,
+                       pCurrency, pAmount, pRemark, pBenefEmail,
+                       pBenefName, pBenefAddr1, pBenefAddr2, pDestinationBankCode,
+                       pFeeType);
+           }
        }
        if (pMetodeBayar.equals("KLIRING")) {
-           res = doPaymentKliring(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
-                   pAmount, pRemark, pBenefEmail, pBenefName,
-                   pBenefAddr1, pBenefAddr2, pDestinationBankCode, pFeeType);
+           if(!pAmountBayar.isEmpty()) {
+               res = doPaymentKliring(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
+                       pAmountBayar, pRemark, pBenefEmail, pBenefName,
+                       pBenefAddr1, pBenefAddr2, pDestinationBankCode, pFeeType);
+           }
+           if(pAmountBayar.isEmpty()) {
+               res = doPaymentKliring(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
+                       pAmount, pRemark, pBenefEmail, pBenefName,
+                       pBenefAddr1, pBenefAddr2, pDestinationBankCode, pFeeType);
+           }
        }
     if (pMetodeBayar.equals("ONLINETRANSFER")) {
-        res = doInterbankPayment ( pBank,  refnum,  pAmount,  pBeneficiaryAccount,
-                pBenefName,  pDestinationBankCode,  pDestinationBank,
-                 pRetrievalReff,  pSource,  pCurrency,  pCurrency2,
-                 pRemark);
+        if(!pAmountBayar.isEmpty()) {
+            res = doInterbankPayment(pBank, refnum, pAmountBayar, pBeneficiaryAccount,
+                    pBenefName, pDestinationBankCode, pDestinationBank,
+                    pRetrievalReff, pSource, pCurrency, pCurrency2,
+                    pRemark);
+        }
+        if(pAmountBayar.isEmpty()) {
+            res = doInterbankPayment(pBank, refnum, pAmount, pBeneficiaryAccount,
+                    pBenefName, pDestinationBankCode, pDestinationBank,
+                    pRetrievalReff, pSource, pCurrency, pCurrency2,
+                    pRemark);
+        }
     }
     return res;
 }
@@ -1578,6 +1630,57 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
         List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
         return out;
+    }
+
+    public BigDecimal getTotalTagihan(String tglAwal,
+                                           String tglAkhir,
+                                           String currency,
+                                           String caraBayar,
+                                           String bank,
+                                           String userId,
+                                           String search) {
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", tglAwal, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", tglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_currency", currency, OracleTypes.VARCHAR)
+                .addValue("p_cara_bayar", caraBayar, OracleTypes.VARCHAR)
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR)
+                .addValue("p_search", search, OracleTypes.VARCHAR);
+
+        getJdbcTemplate().execute("alter session set NLS_NUMERIC_CHARACTERS = '.,'");
+
+        BigDecimal result = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_corpay")
+                .withFunctionName("get_total_tagihan_invoice")
+                .executeFunction(BigDecimal.class, in);
+        return result;
+    }
+
+    public List<Map<String, Object>> getAllpembayaran(String idUser, String pTglAwal, String pTglAkhir,  String pCurr, String pCaraBayar, String pBank, String status, String statusTracking) throws SQLException {
+
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pCurr : {}", pCurr);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_all_invoice_by_status");
+
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_user_id", idUser);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_currency", pCurr);
+        params.put("p_cara_bayar", pCaraBayar);
+        params.put("p_bank", pBank);
+        params.put("p_status", status);
+        params.put("p_status_tracking", statusTracking);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_all_pembayaran_by_status1 : {} and userid {}", resultset, idUser);
+        return resultset;
     }
 
 }

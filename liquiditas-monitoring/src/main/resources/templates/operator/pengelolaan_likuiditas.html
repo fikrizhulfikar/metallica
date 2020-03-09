@@ -3,22 +3,16 @@
         table {
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
         }
+
         table th {
             font-size: 12px;
             vertical-align: middle;
+            font-weight: bold;
         }
+
         table td {
             font-size: 12px;
         }
-<!--        tbody:hover td {-->
-<!--            color: transparent;-->
-<!--            text-shadow: 0 0 3px #aaa;-->
-<!--        }-->
-
-<!--        tbody:hover tr:hover td {-->
-<!--            color: #444;-->
-<!--            text-shadow: 0 1px 0 #fff;-->
-<!--        }-->
     </style>
 </div>
 <main class="main" th:fragment="content">
@@ -35,45 +29,45 @@
                             <table id="saldo-operasi" class="table table-rencana-realisasi table-condensed table-bordered">
                                 <thead>
                                 <tr>
-                                    <td rowspan="4" style="background-color: #3185FC" align="center"><b>NAMA BANK</b></td>
-                                    <td colspan="12" rowspan="2" style="background-color: #F4D35E" align="center"><b>OPERASI</b></td>
-                                    <td colspan="2" style="background-color: #FF773D" align="center"><b>JUMLAH OPERASI</b></td>
+                                    <td rowspan="4" style="background-color: #3185FC; vertical-align: middle;" align="center"><b>NAMA BANK</b></td>
+                                    <td colspan="12" rowspan="2" style="background-color: #F4D35E; vertical-align: middle;" align="center"><b>OPERASI</b></td>
+                                    <td colspan="2" style="background-color: #FF773D; vertical-align: middle;" align="center"><b>JUMLAH OPERASI</b></td>
                                 </tr>
-                                <tr>
-                                    <td style="background-color: #FF773D" align="center">IDR</td>
-                                    <td style="background-color: #FF773D" align="center">VALAS</td>
+                                <tr style="background-color: #FF773D; vertical-align: middle;" align="center">
+                                    <td >IDR</td>
+                                    <td style="background-color: #FF773D; vertical-align: middle;" align="center">VALAS</td>
                                 </tr>
-                                <tr>
-                                    <td style="background-color: #F4D35E" align="center">A</td>
-                                    <td style="background-color: #F4D35E" align="center">B</td>
-                                    <td style="background-color: #F4D35E" align="center">C</td>
-                                    <td style="background-color: #F4D35E" align="center">D</td>
-                                    <td style="background-color: #F4D35E" align="center">E</td>
-                                    <td style="background-color: #F4D35E" align="center">F</td>
-                                    <td style="background-color: #F4D35E" align="center">G</td>
-                                    <td style="background-color: #F4D35E" align="center">H</td>
-                                    <td style="background-color: #F4D35E" align="center">I</td>
-                                    <td style="background-color: #F4D35E" align="center">J</td>
-                                    <td style="background-color: #F4D35E" align="center">K</td>
-                                    <td style="background-color: #F4D35E" align="center">L</td>
-                                    <td style="background-color: #FF773D" align="center">M</td>
-                                    <td style="background-color: #FF773D" align="center">N</td>
+                                <tr style="background-color: #F4D35E; vertical-align: middle;" align="center">
+                                    <td >A</td>
+                                    <td >B</td>
+                                    <td >C</td>
+                                    <td >D</td>
+                                    <td >E</td>
+                                    <td >F</td>
+                                    <td >G</td>
+                                    <td >H</td>
+                                    <td >I</td>
+                                    <td >J</td>
+                                    <td >K</td>
+                                    <td >L</td>
+                                    <td >M</td>
+                                    <td >N</td>
                                 </tr>
-                                <tr>
-                                    <td style="background-color: #3185FC" align="center">RECEIPT</td>
-                                    <td style="background-color: #3185FC" align="center">OBLIGASI</td>
-                                    <td style="background-color: #3185FC" align="center">DEPRESIASI</td>
-                                    <td style="background-color: #3185FC" align="center">BENCANA</td>
-                                    <td style="background-color: #3185FC" align="center">GLOBAL BOND</td>
-                                    <td style="background-color: #3185FC" align="center">DOKUMEN LELANG</td>
-                                    <td style="background-color: #3185FC" align="center">IMPREST</td>
-                                    <td style="background-color: #3185FC" align="center">IMPREST OPERASI TERPUSAT</td>
-                                    <td style="background-color: #3185FC" align="center">IMPREST VALAS</td>
-                                    <td style="background-color: #3185FC" align="center">IMPOR</td>
-                                    <td style="background-color: #3185FC" align="center">SUBSIDI</td>
-                                    <td style="background-color: #3185FC" align="center">KMK</td>
-                                    <td style="background-color: #3185FC" align="center">M = A+B+C+D+F +G+H+J+K+L</td>
-                                    <td style="background-color: #3185FC" align="center">N = E+I</td>
+                                <tr style="background-color: #3185FC; vertical-align: middle;" align="center">
+                                    <td >RECEIPT</td>
+                                    <td >OBLIGASI</td>
+                                    <td >DEPRESIASI</td>
+                                    <td >BENCANA</td>
+                                    <td >GLOBAL BOND</td>
+                                    <td >DOKUMEN LELANG</td>
+                                    <td >IMPREST</td>
+                                    <td >IMPREST OPERASI TERPUSAT</td>
+                                    <td >IMPREST VALAS</td>
+                                    <td >IMPOR</td>
+                                    <td >SUBSIDI</td>
+                                    <td >KMK</td>
+                                    <td >M = A+B+C+D+F +G+H+J+K+L</td>
+                                    <td >N = E+I</td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -86,61 +80,69 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12" align="center">
                 <div class="card">
                     <div class="card-block">
-                        <table id="saldo-investasi" class="table table-rencana-realisasi table-condensed table-bordered">
-                            <thead>
-                            <tr>
-                                <td rowspan="4" style="background-color: #3185FC" align="center"><b>NAMA BANK</b></td>
-                                <td colspan="7" rowspan="2" style="background-color: #F4D35E" align="center"><b>INVESTASI</b></td>
-                                <td colspan="2" style="background-color: #FF773D" align="center"><b>JUMLAH INVESTASI</b></td>
-                                <td rowspan="2" style="background-color: #FF773D" align="center"><b>TOTAL</b></td>
-                            </tr>
-                            <tr>
-                                <td style="background-color: #FF773D" align="center">IDR</td>
-                                <td style="background-color: #FF773D" align="center">VALAS</td>
-                            </tr>
-                            <tr>
-                                <td style="background-color: #F4D35E" align="center">O</td>
-                                <td style="background-color: #F4D35E" align="center">P</td>
-                                <td style="background-color: #F4D35E" align="center">Q</td>
-                                <td style="background-color: #F4D35E" align="center">R</td>
-                                <td style="background-color: #F4D35E" align="center">S</td>
-                                <td style="background-color: #F4D35E" align="center">T</td>
-                                <td style="background-color: #F4D35E" align="center">U</td>
-                                <td style="background-color: #FF773D" align="center">V</td>
-                                <td style="background-color: #FF773D" align="center">W</td>
-                                <td style="background-color: #FF773D" align="center">X</td>
-                            </tr>
-                            <tr>
-                                <td style="background-color: #3185FC" align="center">IMPREST INVESTASI TERPUSAT</td>
-                                <td style="background-color: #3185FC" align="center">SUKUK</td>
-                                <td style="background-color: #3185FC" align="center">DEPOSITO</td>
-                                <td style="background-color: #3185FC" align="center">PMN</td>
-                                <td style="background-color: #3185FC" align="center">ESCROW (IDR)</td>
-                                <td style="background-color: #3185FC" align="center">EXCROW (VALAS)</td>
-                                <td style="background-color: #3185FC" align="center">ADB RBL</td>
-                                <td style="background-color: #3185FC" align="center">V=O+P+Q+R+S</td>
-                                <td style="background-color: #3185FC" align="center">W=T+U+N</td>
-                                <td style="background-color: #3185FC" align="center">X=M+N+V+W</td>
-                            </tr>
-                            </thead>
-                            <tbody>
+                        <div style="overflow-y:auto;">
+                            <table id="saldo-investasi" class="table table-rencana-realisasi table-condensed table-bordered" width="100%">
+                                <thead>
+                                <tr>
+                                    <td rowspan="4" style="background-color: #3185FC; vertical-align: middle;" align="center"><b>NAMA BANK</b></td>
+                                    <td colspan="7" rowspan="2" style="background-color: #F4D35E; vertical-align: middle;" align="center"><b>INVESTASI</b></td>
+                                    <td colspan="2" style="background-color: #FF773D; vertical-align: middle;" align="center"><b>JUMLAH INVESTASI</b></td>
+                                    <td rowspan="2" style="background-color: #FF773D; vertical-align: middle;" align="center"><b>TOTAL</b></td>
+                                </tr>
+                                <tr style="background-color: #FF773D; vertical-align: middle;" align="center">
+                                    <td >IDR</td>
+                                    <td >VALAS</td>
+                                </tr>
+                                <tr style="background-color: #F4D35E; vertical-align: middle;" align="center">
+                                    <td >O</td>
+                                    <td >P</td>
+                                    <td >Q</td>
+                                    <td >R</td>
+                                    <td >S</td>
+                                    <td >T</td>
+                                    <td >U</td>
+                                    <td style="background-color: #FF773D; vertical-align: middle;" align="center">V</td>
+                                    <td style="background-color: #FF773D; vertical-align: middle;" align="center">W</td>
+                                    <td style="background-color: #FF773D; vertical-align: middle;" align="center">X</td>
+                                </tr>
+                                <tr style="background-color: #3185FC; vertical-align: middle;" align="center">
+                                    <td >IMPREST INVESTASI TERPUSAT</td>
+                                    <td >SUKUK</td>
+                                    <td >DEPOSITO</td>
+                                    <td >PMN</td>
+                                    <td >ESCROW (IDR)</td>
+                                    <td >EXCROW (VALAS)</td>
+                                    <td >ADB RBL</td>
+                                    <td >V=O+P+Q+R+S</td>
+                                    <td >W=T+U+N</td>
+                                    <td >X=M+N+V+W</td>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                            </tbody>
-                        </table>
-                        <table id="keterangan" align="right" class="table table-rencana-realisasi table-condensed table-bordered" style="margin-top: 0px;">
-                            <thead>
-                            <tr>
-                                <td style="background-color: #F4D35E" width="30%" align="center">KETERANGAN</td>
-                                <td style="background-color: #F4D35E" width="20%" align="center">TOTAL</td>
-                            </tr>
-                            </thead>
-                            <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <div class="view-table">
+                                <table id="keterangan" class="table table-bordered" width="50%" style="margin-top: 10   px;">
+                                    <thead>
+                                    <tr>
+                                        <th style="background-color: #FF773D; text-align: center" align="center">KETERANGAN</th>
+                                        <th style="background-color: #FF773D; text-align: center" align="center">TOTAL</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
-                            </tbody>
-                        </table>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
                     </div>
                 </div>
             </div>
@@ -152,14 +154,14 @@
                         <table id="rincian-saldo" class="table table-rencana-realisasi table-condensed table-bordered">
                             <thead>
                             <tr>
-                                <td style="background-color: #F4D35E" width="13.3%" align="center">NO REKENING</td>
-                                <td style="background: #F4D35E" width="13.3%" align="center">BANK</td>
-                                <td style="background: #F4D35E" width="7.5%" align="center">CURRENCY</td>
-                                <td style="background-color: #F4D35E" width="13.3%" align="center">JENIS REKENING</td>
-                                <td style="background-color: #F4D35E" width="13.3%" align="center">TIPE REKENING</td>
-                                <td style="background-color: #F4D35E" width="13.3%" align="center">ORIGINAL CURRENCY</td>
-                                <td style="background-color: #F4D35E" width="13.3%" align="center">EQ CURRENCY</td>
-                                <td style="background-color: #F4D35E" width="7.5%">%</td>
+                                <th style="background-color: #F4D35E; vertical-align: middle; align-text=center" width="13.3%" align="center">NO REKENING</th>
+                                <th style="background: #F4D35E; vertical-align: middle; align-text=center" width="13.3%" align="center">BANK</th>
+                                <th style="background: #F4D35E; vertical-align: middle; align-text=center" width="7.5%" align="center">CURRENCY</th>
+                                <th style="background-color: #F4D35E; vertical-align: middle; align-text=center" width="13.3%" align="center">JENIS REKENING</th>
+                                <th style="background-color: #F4D35E; vertical-align: middle; align-text=center" width="13.3%" align="center">TIPE REKENING</th>
+                                <th style="background-color: #F4D35E; vertical-align: middle; align-text=center" width="13.3%" align="center">ORIGINAL CURRENCY</th>
+                                <th style="background-color: #F4D35E; vertical-align: middle; align-text=center" width="13.3%" align="center">EQ CURRENCY</th>
+                                <th style="background-color: #F4D35E; vertical-align: middle; align-text=center" width="7.5%" align="center">%</th>
                             </tr>
                             </thead>
                             <tbody>
