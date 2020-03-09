@@ -165,7 +165,7 @@ public class SapService {
 
     public List<Map<String, Object>> insertHrPayableItem(Map<String, String> insData){
         List<Map<String, Object>> result = new ArrayList<>();
-        System.out.println("Jancok kon cok! : "+insData);
+//        System.out.println("Jancok kon cok! : "+insData);
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")

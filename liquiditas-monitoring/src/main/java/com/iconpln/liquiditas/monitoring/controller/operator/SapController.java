@@ -74,14 +74,26 @@ public class SapController {
             @RequestParam(value = "pDateTo", defaultValue = "") String pDateTo
     ){
         try {
-//
-
             Map<String, Object> res = sap.getHrPayable(pCompanyCode, pBusArea, pDocNo, pFiscYear, pDatefrom, pDateTo);
              if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
               }
             return res;
         } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Map<String, Object> getMasterCustomer(
+            @RequestParam(value = "pDate") String date,
+            @RequestParam(value = "pCustomer") String customer,
+            @RequestParam(value = "pcompCode") String comp_code
+    ){
+        try {
+            Map<String, Object> result = sap.getCustomer(date, customer, comp_code);
+            return result;
+        }catch (Exception e){
             e.printStackTrace();
             return null;
         }

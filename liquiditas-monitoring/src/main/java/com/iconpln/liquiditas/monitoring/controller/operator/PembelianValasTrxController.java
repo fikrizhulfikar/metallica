@@ -126,7 +126,8 @@ public class PembelianValasTrxController {
             @RequestParam(value = "pDocHdrTxt", defaultValue = "") String pDocHdrTxt,
             @RequestParam(value = "pUserId", defaultValue = "") String pUserId,
             @RequestParam(value = "pExchangeRate", defaultValue = "") String pExchangeRate,
-            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscalYear
+            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscalYear,
+            @RequestParam(value = "pSumberDana", defaultValue = "") String pSumberDana
     ){
         AppUtils.getLogger(this).debug("pDocNo : {} ", pDocNo);
         AppUtils.getLogger(this).debug("pDocDate : {} ", pDocDate);
@@ -142,7 +143,7 @@ public class PembelianValasTrxController {
             String messege = "";
             boolean isUpdate = false;
 
-            Map<String, Object> res  = pembelianValasTrxService.insPembelian(pIdMetallica, pDocDate, pPostDate, pDocNo, pReference, pCompCode, pBusArea, pCurrency, pDocHdrTxt, WebUtils.getUsernameLogin(), pExchangeRate, pFiscalYear);
+            Map<String, Object> res  = pembelianValasTrxService.insPembelian(pIdMetallica, pDocDate, pPostDate, pDocNo, pReference, pCompCode, pBusArea, pCurrency, pDocHdrTxt, WebUtils.getUsernameLogin(), pExchangeRate, pFiscalYear, pSumberDana);
 
             return res;
         }catch (Exception e){
@@ -720,6 +721,21 @@ public class PembelianValasTrxController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @GetMapping(path = "/get_currency")
+    public Map getCurrency (){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = pembelianValasTrxService.getCurrency();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+        return mapData;
     }
 
 }

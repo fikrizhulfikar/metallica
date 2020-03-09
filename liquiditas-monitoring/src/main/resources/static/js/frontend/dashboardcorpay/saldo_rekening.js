@@ -342,7 +342,7 @@ function initDataTableSaldoRek1() {
               });
 
               var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                  "<td>TOTAL EQ IDR</td>" +
+                  "<td>TOTAL</td>" +
                   "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_VALAS,2,".",",") + "</td>" +
                   "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_RUPIAH,2,".",",") + "</td>" +
                   "</tr>";
@@ -386,22 +386,22 @@ function initDataTableSaldoRek1() {
                       var str = val.NAMA_BANK;
                       var html = "<tr>" +
                           "<td>" + str + "</td>" +
-                          "<td align='right'>" + "Rp " + accounting.formatNumber(val.FORWARD, 2, ".", ",") + "</td>" +
-                          "<td align='right'>" + "Rp " + accounting.formatNumber(val.SWAP, 2, ".", ",") + "</td>" +
-                          "<td align='right'>" + "Rp " + accounting.formatNumber(val.DNDF, 2, ".", ",") + "</td>" +
-                          "<td align='right'>" + "Rp " + accounting.formatNumber(val.CALL_SPREAD_OPTION, 2, ".", ",") + "</td>" +
-                          "<td align='right'>" + "Rp " + accounting.formatNumber(val.TOTAL_SAMPING, 2, ".", ",") + "</td>" +
+                          "<td align='right'>" + "$ " + accounting.formatNumber(val.FORWARD, 2, ".", ",") + "</td>" +
+                          "<td align='right'>" + "$ " + accounting.formatNumber(val.SWAP, 2, ".", ",") + "</td>" +
+                          "<td align='right'>" + "$ " + accounting.formatNumber(val.DNDF, 2, ".", ",") + "</td>" +
+                          "<td align='right'>" + "$ " + accounting.formatNumber(val.CALL_SPREAD_OPTION, 2, ".", ",") + "</td>" +
+                          "<td align='right'>" + "$ " + accounting.formatNumber(val.TOTAL_SAMPING, 2, ".", ",") + "</td>" +
                           "</tr>";
                           $('#table-lindung-nilai tbody').append(html);
                   });
 
                   var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                      "<td>TOTAL EQ IDR</td>" +
-                      "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_FORWARD,2,".",",") + "</td>" +
-                      "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SWAP,2,".",",") + "</td>" +
-                      "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_DNDF,2,".",",") + "</td>" +
-                      "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_CALL_SPREAD_OPTION,2,".",",") + "</td>" +
-                      "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SELURUH,2,".",",") + "</td>" +
+                      "<td>TOTAL</td>" +
+                      "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_FORWARD,2,".",",") + "</td>" +
+                      "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SWAP,2,".",",") + "</td>" +
+                      "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_DNDF,2,".",",") + "</td>" +
+                      "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_CALL_SPREAD_OPTION,2,".",",") + "</td>" +
+                      "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SELURUH,2,".",",") + "</td>" +
                       "</tr>";
               $('#table-lindung-nilai tbody').append(total1);
 
@@ -537,7 +537,7 @@ function creteChartKompSaldo(data) {
                 dataSource: {
                     "chart": {
                         "bgColor": "#77D5D4",
-                        "caption": "\n\nKomposisi Saldo",
+                        "caption": "\n\n\n\nKOMPOSISI SALDO",
                         "numbersuffix": "%",
                         "lowerLimitDisplay": "0%",
                         "upperLimitDisplay": "100%",

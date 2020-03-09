@@ -4,7 +4,9 @@ function tableMainDashboard(_date){
     let date = new Date();
     let current_month = date.getMonth()+1;
     let current_full_date;
-    (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString() : current_full_date = _date;
+    let current_date = (date.getDate() < 10) ? "0"+ date.getDate().toString() : date.getDate();
+    let curr_month = (date.getMonth() < 10) ? "0"+current_month.toString() : current_month;
+    (_date === undefined) ? current_full_date = date.getFullYear().toString()+curr_month.toString()+current_date : current_full_date = _date;
 //    console.log("Date : " + current_full_date);
     var datestring = dateToString(date);
     $("#tgl1").html(datestring);
@@ -29,26 +31,6 @@ function tableMainDashboard(_date){
     $("#tgl6c").html(incDate(date, 5));
     $("#tgl7c").html(incDate(date, 6));
 
-//    for (let i=0; i<7; i++){
-//        let tgl = date.getDate(incDate(date))+i;
-//        let month = date.getMonth()+1;
-//        $("#header-tanggal1").append("<td style='background-color: #F4D35E; width: 10.7%;'>"+tgl+"/"+0+month+"/"+date.getFullYear()+"</td>");
-//        $("#header-tanggal2").append("<td style='background-color: #F4D35E; width: 13%;'>"+tgl+"/"+0+month+"/"+date.getFullYear()+"</td>");
-//        $("#header-tanggal3").append("<td style='background-color: #F4D35E; width: 12%;'>"+tgl+"/"+0+month+"/"+date.getFullYear()+"</td>");
-//    }
-
-//    var row = document.getElementById("header-tanggal1");
-//    var x = row.insertCell(-1);
-//    x.innerHTML = "TOTAL";
-//
-//    var row = document.getElementById("header-tanggal2");
-//    var x = row.insertCell(-1);
-//    x.innerHTML = "TOTAL";
-//
-//    var row = document.getElementById("header-tanggal3");
-//    var x = row.insertCell(-1);
-//    x.innerHTML = "TOTAL";
-
     let per_bank = $("#pembayaran-bank").DataTable({
         "ajax" : {
             "url": baseUrl + "api_operator/api_report/per_bank",
@@ -65,8 +47,12 @@ function tableMainDashboard(_date){
         "bLengthChange" : false,
         "columns" : [
 //            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
-            {"data": null,"visible": true,"render": (data, type, row) => {return data.BANK;}},
-            {"data": null,"render": (data, type, row) => {return '<td>'+data.CURRENCY+'</td>';}},
+            {"data": null,"visible": false,"render": (data, type, row) => {return data.BANK;}},
+            {"data": null,"render": (data, type, row) => {if (data.BANK === "TOTAL"){
+                                                            return '<td> TOTAL '+data.CURRENCY+'</td>';
+                                                            }else
+                                                            return '<td>'+data.CURRENCY+'</td>';
+                                                            }},
             {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR"){
                                                             return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
                                                             } else if (data.CURRENCY === "USD"){
@@ -175,72 +161,42 @@ function tableMainDashboard(_date){
 
          "createdRow" : function (row, data, dataIndex){
 
-            if ((data["BANK"] === "TOTAL EUR")){
+            if ((data["BANK"] === "TOTAL")){
                 $(row).css({
                     "background-color": "#F4D35E",
                     "text-align": "center",
                     "font-weight": "bold",
                 });
-//                $('td', row).eq(0).attr("colspan","2");
+                $('td', row).eq(0).attr("colspan","2");
              };
-            if ((data["BANK"] === "TOTAL IDR")){
-                 $(row).css({
-                     "background-color": "#F4D35E",
-                     "text-align": "center",
-                     "font-weight": "bold",
-                 });
- //                $('td', row).eq(0).attr("colspan","2");
-              };
-             if ((data["BANK"] === "TOTAL JPY")){
-                  $(row).css({
-                      "background-color": "#F4D35E",
-                      "text-align": "center",
-                      "font-weight": "bold",
-                  });
-  //                $('td', row).eq(0).attr("colspan","2");
-               };
-              if ((data["BANK"] === "TOTAL MYR")){
-                   $(row).css({
-                       "background-color": "#F4D35E",
-                       "text-align": "center",
-                       "font-weight": "bold",
-                   });
-   //                $('td', row).eq(0).attr("colspan","2");
-                };
-               if ((data["BANK"] === "TOTAL USD")){
-                    $(row).css({
-                        "background-color": "#F4D35E",
-                        "text-align": "center",
-                        "font-weight": "bold",
-                    });
-//                    $('td', row).eq(0).attr("colspan","2");
-                 };
          },
 
-//         "drawCallback" : function (settings){
-//            let groupColumn = 0;
-//            var api = this.api();
-//            var rows = api.rows({page:'current'}).nodes();
-//            var last = null;
-//            let array = api.column(groupColumn, {page:'current'}).data();
-//
-//            api.column(groupColumn, {page:'current'}).data().each(function (group, i){
-//            if (last !== group.BANK){
-//                let count = 1;
-//
-//                for (let j=i; i<array.length; j++){
-//                    let first = array[i].BANK;
-//                    if (first !== array[j].BANK) break;
-//                    count+= 1;
-//                }
-//                $(rows).eq(i).before(
-//                    '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold">'+group.BANK+'</td></tr>'
-//                );
+         "drawCallback" : function (settings){
+            let groupColumn = 0;
+            var api = this.api();
+            var rows = api.rows({page:'current'}).nodes();
+            var last = null;
+            let array = api.column(groupColumn, {page:'current'}).data();
+//            console.log(array[20])
+
+            api.column(groupColumn, {page:'current'}).data().each(function (group, i){
+            if (last !== group.BANK){
+                let count = 1;
+
+                for (let j=i; i<array.length; j++){
+                    let first = array[i].BANK;
+                    if (first !== array[j].BANK) break;
+                    count+= 1;
+                }
+                $(rows).eq(i).before(
+                    '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold">'+group.BANK+'</td></tr>'
+                );
+
 //                console.log(array)
-//                last = group.BANK;
-//                }
-//            });
-//         }
+                last = group.BANK;
+                }
+            });
+         }
     });
 
     let j_pembayaran = $("#jenis-pembayaran").DataTable({
@@ -294,14 +250,12 @@ function tableMainDashboard(_date){
         "bInfo" : false,
         "bLengthChange" : false,
         "columns" : [
-            {
-                "data": null,
-                "visible" : true,
-                "render": (data, type, row) => {
-                    return data.JENIS;
-                }
-            },
-            {"data": null,"render": (data, type, row) => {return '<td>'+data.CURRENCY+'</td>';}},
+            {"data": null,"visible" : false,"render": (data, type, row) => {return data.JENIS;}},
+            {"data": null,"render": (data, type, row) => {if (data.JENIS === "TOTAL"){
+                                                             return '<td> TOTAL '+data.CURRENCY+'</td>';
+                                                             }else
+                                                             return '<td>'+data.CURRENCY+'</td>';
+                                                             }},
             {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR" || data.CURRENCY === "TOTAL IDR"){
                                                             return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
                                                             } else if (data.CURRENCY === "USD"|| data.CURRENCY === "TOTAL USD"){
@@ -410,73 +364,41 @@ function tableMainDashboard(_date){
 //        console.log(data)
         "createdRow" : function (row, data, dataIndex){
 
-            if ((data["JENIS"] === "TOTAL EUR")){
+            if ((data["JENIS"] === "TOTAL")){
                 $(row).css({
                     "background-color": "#F4D35E",
                     "text-align": "center",
                     "font-weight": "bold",
                 });
-//                $('td', row).eq(0).attr("colspan","2");
+                $('td', row).eq(0).attr("colspan","2");
              };
-            if ((data["JENIS"] === "TOTAL IDR")){
-                 $(row).css({
-                     "background-color": "#F4D35E",
-                     "text-align": "center",
-                     "font-weight": "bold",
-                 });
- //                $('td', row).eq(0).attr("colspan","2");
-              };
-             if ((data["JENIS"] === "TOTAL JPY")){
-                  $(row).css({
-                      "background-color": "#F4D35E",
-                      "text-align": "center",
-                      "font-weight": "bold",
-                  });
-  //                $('td', row).eq(0).attr("colspan","2");
-               };
-              if ((data["JENIS"] === "TOTAL MYR")){
-                   $(row).css({
-                       "background-color": "#F4D35E",
-                       "text-align": "center",
-                       "font-weight": "bold",
-                   });
-   //                $('td', row).eq(0).attr("colspan","2");
-                };
-               if ((data["JENIS"] === "TOTAL USD")){
-                    $(row).css({
-                        "background-color": "#F4D35E",
-                        "text-align": "center",
-                        "font-weight": "bold",
-                    });
-//                    $('td', row).eq(0).attr("colspan","2");
-                 };
          },
 
-//         "drawCallback" : function (settings){
-//            let groupColumn = 0;
-//            var api = this.api();
-//            var rows = api.rows({page:'current'}).nodes();
-//            var last = null;
-//            let array = api.column(groupColumn, {page:'current'}).data();
-//
-//            api.column(groupColumn, {page:'current'}).data().each(function (group, i){
-//            if (last == group.JENIS){
-//                let count = 1;
-//
-//                for (let j=i; i<array.length; j++){
-//                    let first = array[i].JENIS;
-//                    if (first !== array[j].JENIS) break;
-//                    count+= 1;
-//                }
-//                $(rows).eq(i).before(
-//                    '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold">'+group.JENIS+'</td></tr>'
-//                );
-//                console.log(array)
-//                last = group.JENIS;
-//            }
-//            });
-//
-//         }
+         "drawCallback" : function (settings){
+            let groupColumn = 0;
+            var api = this.api();
+            var rows = api.rows({page:'current'}).nodes();
+            var last = null;
+            let array = api.column(groupColumn, {page:'current'}).data();
+
+            api.column(groupColumn, {page:'current'}).data().each(function (group, i){
+            if (last !== group.JENIS){
+                let count = 1;
+
+                for (let j=i; i<array.length; j++){
+                    let first = array[i].JENIS;
+                    if (first !== array[j].JENIS) break;
+                    count+= 1;
+                }
+                $(rows).eq(i).before(
+                    '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold">'+group.JENIS+'</td></tr>'
+                );
+                console.log(array)
+                last = group.JENIS;
+            }
+            });
+
+         }
     });
 }
 
@@ -615,6 +537,9 @@ function tableRencanaPerVendor(_date){
 $(document).ready(function () {
     tableMainDashboard();
     tableRencanaPerVendor();
+//    var table = $('#pembayaran-bank').DataTable({
+//       'rowsGroup': [0]
+//    });
 
     $("#dashboard-carousel").carousel({
         interval : 1000*5,

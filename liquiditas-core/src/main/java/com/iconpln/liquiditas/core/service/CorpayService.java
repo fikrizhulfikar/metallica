@@ -878,7 +878,7 @@ public class CorpayService {
     }
 //===BATAS AKHIR GET BALLANCE===//
 public String payment(String pMetodeBayar, String pBank, String pRefNum, String pSource, String pBeneficiaryAccount,
-                      String pCurrency, String pAmount, String pRemark, String pBenefEmail,
+                      String pCurrency, String pAmount, String pAmountBayar, String pRemark, String pBenefEmail,
                       String pBenefName, String pBenefAddr1, String pBenefAddr2, String pDestinationBank,
                       String pFeeType, String pCurrency2, String pRetrievalReff, String pDestinationBankCode, String pConfirmationCode ) throws IOException {
         String res = null;
@@ -887,25 +887,54 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
     String refnum = format.format(date.getTime())+"00";
 
        if (pMetodeBayar.equals("INHOUSE")){
-           res = doPayment( pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
-                    pAmount, pRemark, pFeeType, pConfirmationCode);
+           if(!pAmountBayar.isEmpty()){
+               res = doPayment( pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
+                       pAmountBayar, pRemark, pFeeType, pConfirmationCode);
+           }
+           if(pAmountBayar.isEmpty()) {
+               res = doPayment(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
+                       pAmount, pRemark, pFeeType, pConfirmationCode);
+           }
        }
        if (pMetodeBayar.equals("RTGS")){
-            res = doPaymentRtgs (pBank, refnum, pSource, pBeneficiaryAccount,
-                    pCurrency, pAmount, pRemark, pBenefEmail,
-                    pBenefName, pBenefAddr1, pBenefAddr2, pDestinationBankCode,
-                    pFeeType);
+           if(!pAmountBayar.isEmpty()) {
+               res = doPaymentRtgs(pBank, refnum, pSource, pBeneficiaryAccount,
+                       pCurrency, pAmountBayar, pRemark, pBenefEmail,
+                       pBenefName, pBenefAddr1, pBenefAddr2, pDestinationBankCode,
+                       pFeeType);
+           }
+           if(pAmountBayar.isEmpty()) {
+               res = doPaymentRtgs(pBank, refnum, pSource, pBeneficiaryAccount,
+                       pCurrency, pAmount, pRemark, pBenefEmail,
+                       pBenefName, pBenefAddr1, pBenefAddr2, pDestinationBankCode,
+                       pFeeType);
+           }
        }
        if (pMetodeBayar.equals("KLIRING")) {
-           res = doPaymentKliring(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
-                   pAmount, pRemark, pBenefEmail, pBenefName,
-                   pBenefAddr1, pBenefAddr2, pDestinationBankCode, pFeeType);
+           if(!pAmountBayar.isEmpty()) {
+               res = doPaymentKliring(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
+                       pAmountBayar, pRemark, pBenefEmail, pBenefName,
+                       pBenefAddr1, pBenefAddr2, pDestinationBankCode, pFeeType);
+           }
+           if(pAmountBayar.isEmpty()) {
+               res = doPaymentKliring(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
+                       pAmount, pRemark, pBenefEmail, pBenefName,
+                       pBenefAddr1, pBenefAddr2, pDestinationBankCode, pFeeType);
+           }
        }
     if (pMetodeBayar.equals("ONLINETRANSFER")) {
-        res = doInterbankPayment ( pBank,  refnum,  pAmount,  pBeneficiaryAccount,
-                pBenefName,  pDestinationBankCode,  pDestinationBank,
-                 pRetrievalReff,  pSource,  pCurrency,  pCurrency2,
-                 pRemark);
+        if(!pAmountBayar.isEmpty()) {
+            res = doInterbankPayment(pBank, refnum, pAmountBayar, pBeneficiaryAccount,
+                    pBenefName, pDestinationBankCode, pDestinationBank,
+                    pRetrievalReff, pSource, pCurrency, pCurrency2,
+                    pRemark);
+        }
+        if(pAmountBayar.isEmpty()) {
+            res = doInterbankPayment(pBank, refnum, pAmount, pBeneficiaryAccount,
+                    pBenefName, pDestinationBankCode, pDestinationBank,
+                    pRetrievalReff, pSource, pCurrency, pCurrency2,
+                    pRemark);
+        }
     }
     return res;
 }

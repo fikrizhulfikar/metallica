@@ -1,10 +1,15 @@
 function tableMainDashboard(_date){
 
     let date = new Date();
-        let current_month = date.getMonth()+1;
-        let current_full_date;
-        (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString() : current_full_date = _date;
-        // let current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString();
+    let current_month = date.getMonth()+1;
+    let current_full_date;
+    let current_date = (date.getDate() < 10) ? "0"+ date.getDate().toString() : date.getDate();
+    let curr_month = (date.getMonth() < 10) ? "0"+current_month.toString() : current_month;
+    (_date === undefined) ? current_full_date = date.getFullYear().toString()+curr_month.toString()+current_date : current_full_date = _date;
+//        let current_month = date.getMonth()+1;
+//        let current_full_date;
+//        (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+"0"+date.getDate().toString() : current_full_date = _date;
+//         let current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString();
 //        console.log("Current Date : ",current_full_date);
     var datestring = dateToString(date);
         $("#tgl1a").html(datestring);
@@ -51,7 +56,7 @@ function tableMainDashboard(_date){
             {
                 "data":null,
                 "render" : (data, tyoe, row) => {
-                    if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang"){
+                    if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"){
                         return "";
                     } else if (Intl.NumberFormat().format(data.RP_D0) === "0" ){
                         return "";
@@ -66,7 +71,7 @@ function tableMainDashboard(_date){
                 }},
             {"data":null,
                 "render" : (data, tyoe, row) => {
-                    if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang"){
+                    if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"){
                         return "";
                     }else if (Intl.NumberFormat().format(data.RP_D1) === "0" ){
                         return "";
@@ -76,7 +81,7 @@ function tableMainDashboard(_date){
                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
                 "render" : (data, tyoe, row) => {
-                    if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang"){
+                    if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"){
                         return "";
                     }else if (Intl.NumberFormat().format(data.RP_D2) === "0" ){
                         return "";
@@ -86,7 +91,7 @@ function tableMainDashboard(_date){
                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
                 "render" : (data, tyoe, row) => {
-                    if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang"){
+                    if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"){
                         return "";
                     }else if (Intl.NumberFormat().format(data.RP_D3) === "0" ){
                         return "";
@@ -95,7 +100,7 @@ function tableMainDashboard(_date){
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
                 "render" : (data, tyoe, row) => {
-                    if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang"){
+                    if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"){
                         return "";
                     }else if (Intl.NumberFormat().format(data.RP_D4) === "0" ){
                                                  return "";
@@ -168,7 +173,7 @@ function tableMainDashboard(_date){
                 {"data": "KODE","visible":false},
                 {
                     "data":null,"render" : (data, tyoe, row) => {
-                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang"){
+                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"){
                             return "";
                         }else if (data.URAIAN.trim() === "BANK"){
                             return '<td class="trigger">' + data.URAIAN + '</td>'
@@ -180,7 +185,7 @@ function tableMainDashboard(_date){
                 {
                     "data":null,
                     "render" : (data, tyoe, row) => {
-                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang"){
+                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"){
                             return "";
                         }else if (Intl.NumberFormat().format(data.RP_DMIN4) === "0" ){
                                                      return "";
@@ -189,7 +194,7 @@ function tableMainDashboard(_date){
                     },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
                 {"data":null,
                     "render" : (data, tyoe, row) => {
-                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang"){
+                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"){
                             return "";
                         }else if (Intl.NumberFormat().format(data.RP_DMIN3) === "0" ){
                                                      return "";
@@ -198,7 +203,7 @@ function tableMainDashboard(_date){
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
                 {"data":null,
                     "render" : (data, tyoe, row) => {
-                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang"){
+                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"){
                             return "";
                         }else if (Intl.NumberFormat().format(data.RP_DMIN2) === "0" ){
                                                      return "";
@@ -207,7 +212,7 @@ function tableMainDashboard(_date){
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
                 {"data":null,
                     "render" : (data, tyoe, row) => {
-                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang"){
+                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"  ){
                             return "";
                         }else if (Intl.NumberFormat().format(data.RP_DMIN1) === "0" ){
                                                      return "";
@@ -840,14 +845,14 @@ $.ajax({
        $.each(data, function (key, val) {
          var html = "<tr>" +
              "<td>" + val.JENIS_REKENING + "</td>" +
-             "<td align='right'> Rp. " + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
+             "<td align='right'> Rp. " + accounting.formatNumber(val.TOTAL,".",",") + "</td>" +
              "</tr>";
          $('#table-komposisi-saldo tbody').append(html);
        });
 
          var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
              "<td>TOTAL</td>" +
-             "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL,2,".",",") + "</td>" +
+             "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL,".",",") + "</td>" +
              "</tr>";
 
        $('#table-komposisi-saldo tbody').append(total1);
@@ -1349,7 +1354,7 @@ function creteChartKompSaldo(data) {
                           {
                               minvalue: data[0].maxvalue,
                               maxvalue: maxval1,
-                              code: data[1].code
+                              code: data[3].code
                           },
                           {
                               minvalue: maxval1,
@@ -1359,7 +1364,7 @@ function creteChartKompSaldo(data) {
                           {
                               minvalue: maxval2,
                               maxvalue: '100',
-                              code: "#ED6A5A"
+                              code: data[1].code
                           }
                        ]
                      }

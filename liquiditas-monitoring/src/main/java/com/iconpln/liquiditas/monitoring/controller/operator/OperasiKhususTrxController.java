@@ -130,7 +130,8 @@ public class OperasiKhususTrxController {
             @RequestParam(value = "pDocHdrTxt", defaultValue = "") String pDocHdrTxt,
             @RequestParam(value = "pUserId", defaultValue = "") String pUserId,
             @RequestParam(value = "pExchangeRate", defaultValue = "") String pExchangeRate,
-            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear
+            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
+            @RequestParam(value = "pSumberDana", defaultValue = "") String pSumberDana
     ){
         AppUtils.getLogger(this).debug("pDocNo : {} ", pDocNo);
         AppUtils.getLogger(this).debug("pDocDate : {} ", pDocDate);
@@ -147,7 +148,7 @@ public class OperasiKhususTrxController {
         try {
             String messege = "";
             boolean isUpdate = false;
-            Map<String, Object> res  = operasiKhususTrxService.insOperasiKhusus(pIdMetallica, pDocDate, pPostDate, pDocNo, pReference, pCompCode, pBusArea, pCurrency, pDocHdrTxt, WebUtils.getUsernameLogin(), pExchangeRate, pFiscYear);
+            Map<String, Object> res  = operasiKhususTrxService.insOperasiKhusus(pIdMetallica, pDocDate, pPostDate, pDocNo, pReference, pCompCode, pBusArea, pCurrency, pDocHdrTxt, WebUtils.getUsernameLogin(), pExchangeRate, pFiscYear, pSumberDana);
 
             return res;
         }catch (Exception e){
@@ -532,6 +533,21 @@ public class OperasiKhususTrxController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @GetMapping(path = "/get_currency")
+    public Map getCurrency (){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = operasiKhususTrxService.getCurrency();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+        return mapData;
     }
 
     @RequestMapping(value = "/xls/{pTglAwal}/{pTglAkhir}/{pCurr}", method = RequestMethod.GET)

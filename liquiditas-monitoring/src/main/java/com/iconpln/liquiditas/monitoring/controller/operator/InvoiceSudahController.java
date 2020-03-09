@@ -1,7 +1,6 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
 
-import com.iconpln.liquiditas.core.service.CorpayService;
 import com.iconpln.liquiditas.core.service.InvoiceSudahService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.monitoring.utils.NotificationUtil;

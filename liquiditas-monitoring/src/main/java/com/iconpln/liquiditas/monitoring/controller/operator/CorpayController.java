@@ -1077,6 +1077,7 @@ public class CorpayController {
             @RequestParam(value ="pBeneficiaryAccount", defaultValue = "") String pBeneficiaryAccount,
             @RequestParam(value = "pCurrency", defaultValue = "") String pCurrency,
             @RequestParam(value = "pAmount", defaultValue = "") String pAmount,
+            @RequestParam(value = "pAmountBayar", defaultValue = "") String pAmountBayar,
             @RequestParam(value = "pRemark", defaultValue = "") String pRemark,
             @RequestParam(value = "pBenefEmail", defaultValue = "") String pBenefEmail,
             @RequestParam(value = "pBenefName", defaultValue = "") String pBenefName,
@@ -1091,7 +1092,7 @@ public class CorpayController {
             ){
         try {
             String res = corpayService.payment(pMetodeBayar,pBank,pRefNum, pSource, pBeneficiaryAccount,pCurrency,
-                    pAmount,pRemark,pBenefEmail,pBenefName,pBenefAddr1,pBenefAddr2,pDestinationBank,pFeeType,
+                    pAmount, pAmountBayar, pRemark,pBenefEmail,pBenefName,pBenefAddr1,pBenefAddr2,pDestinationBank,pFeeType,
                     pCurrency2,pRetrievalReff,pDestinationBankCode, pConfirmationCode);
             // if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
@@ -1101,6 +1102,32 @@ public class CorpayController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @RequestMapping(value = "/multi_upd_status", method = RequestMethod.POST)
+    public Map<String, Object> multiUpdStatus(
+            @RequestParam(value = "pData", defaultValue = "") String pData
+    ) throws JSONException {
+        Map<String, Object> out = new HashMap<>();
+
+        JSONArray jsonArray = new JSONArray(pData);
+        try {
+            for (int index = 0; index < jsonArray.length(); index++){
+                JSONObject object = jsonArray.getJSONObject(index);
+                String comp_code = object.getString("comp_code");
+                String doc_no = object.getString("doc_no");
+                String fisc_year = object.getString("fisc_year");
+                String line_item = object.getString("line_item");
+                String ket = object.getString("ket");
+                String statustracking = object.getString("statustracking");
+                String customer_name = object.getString("customer_name");
+                String account_number = object.getString("account_number");
+                out = corpayService.updateStatus(comp_code, doc_no, fisc_year, line_item, ket, statustracking, customer_name, account_number );
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return out;
     }
 
 

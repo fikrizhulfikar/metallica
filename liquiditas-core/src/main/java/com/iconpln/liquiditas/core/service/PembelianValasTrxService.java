@@ -76,7 +76,8 @@ public class PembelianValasTrxService {
 
     public Map<String, Object> insPembelian(
             String pIdMetallica, String pDocDate, String pPostDate, String pDocNo, String pReference,
-            String pCompCode, String pBusArea, String pCurrency, String pDocHdrTxt, String pUserId, String pExchangeRate, String pFiscYear
+            String pCompCode, String pBusArea, String pCurrency, String pDocHdrTxt, String pUserId,
+            String pExchangeRate, String pFiscYear, String pSumberDana
     ) throws SQLException{
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -95,7 +96,9 @@ public class PembelianValasTrxService {
                 .addValue("p_doc_hdr_txt",pDocHdrTxt)
                 .addValue("p_fisc_year", pFiscYear)
                 .addValue("p_exchange_rate", pExchangeRate)
-                .addValue("p_user_id",pUserId);
+                .addValue("p_user_id",pUserId)
+                .addValue("p_sumber_dana", pSumberDana);
+
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data ins pembelian_valas_head_trx :{}",out);
         return out;
@@ -506,6 +509,17 @@ public class PembelianValasTrxService {
                 .addValue("p_comp_code",pCompCode);
         AppUtils.getLogger(this).info("pCurrency data : {}");
         List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class,param);
+        return out;
+    }
+
+    public List<Map<String, Object>> getCurrency(){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_currency");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("out", OracleTypes.CURSOR);
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+
         return out;
     }
 

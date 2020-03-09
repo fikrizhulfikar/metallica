@@ -146,7 +146,8 @@ public class PindahBukuTrxController {
             @RequestParam(value = "pDocHdrTxt", defaultValue = "") String pDocHdrTxt,
             @RequestParam(value = "pUserId", defaultValue = "") String pUserId,
             @RequestParam(value = "pExchangeRate", defaultValue = "") String pExchangeRate,
-            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear
+            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
+            @RequestParam(value = "pSumberDana", defaultValue = "") String pSumberDana
     ){
         AppUtils.getLogger(this).debug("pDocNo : {} ", pDocNo);
         AppUtils.getLogger(this).debug("pDocDate : {} ", pDocDate);
@@ -162,7 +163,7 @@ public class PindahBukuTrxController {
             String messege = "";
             boolean isUpdate = false;
 
-            Map<String, Object> res  = pindahBukuTrxService.insPindahBuku(pIdMetallica, pDocDate, pPostDate, pDocNo, pReference, pCompCode, pBusArea, pCurrency, pDocHdrTxt, WebUtils.getUsernameLogin(), pExchangeRate, pFiscYear);
+            Map<String, Object> res  = pindahBukuTrxService.insPindahBuku(pIdMetallica, pDocDate, pPostDate, pDocNo, pReference, pCompCode, pBusArea, pCurrency, pDocHdrTxt, WebUtils.getUsernameLogin(), pExchangeRate, pFiscYear, pSumberDana);
 
             return res;
         }catch (Exception e){

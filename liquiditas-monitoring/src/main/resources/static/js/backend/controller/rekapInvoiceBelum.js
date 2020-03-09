@@ -11,10 +11,11 @@ var tempBankAccount = "";
 var tempKodeBank = "";
 var tempUnit = "";
 var tempTableSearch = "";
-var fullArrayGroup = new Array();
+
 var checkedArray = new Array();
 var Invoice = "";
-var invoiceFullArray = new Array();
+var fullArray = new Array();
+var fullArrayGroup = new Array();
 var invoiceCheckedArray = new Array();
 var cbParentArray = new Array();
 var srcTglAwal = null;
@@ -1019,102 +1020,18 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                                 var value = new Object();
                                 var full_value = new Object();
                                 var ret_value = ''
-
-                                if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
-                                    return "-"
-                                }
-                                else {
                                     if (full.STATUS_TRACKING == "INPUT DATA") {
-                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'"}';
+                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+1+'"}';
                                         full_value = '{"full":'+JSON.stringify(full)+'}';
 
                                     }
-                                    else if (full.STATUS_TRACKING == "VERIFIED BY STAFF OPERATION") {
-
-                                        if(newRoleUser[0] == "ROLE_MANAGER_PRIMARY_ENERGY" || newRoleUser[0] == "ROLE_MANAGER_OPERATION" || newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "ROLE_MANAGER_PAYMENT"){
-                                            value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.BANK_BYR+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
-                                            full_value = '{"full":'+JSON.stringify(full)+'}';
-                                        }else {
-                                            value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
-                                            full_value = '{"full":'+JSON.stringify(full)+'}';
-                                        }
+                                    else if (full.STATUS_TRACKING == "VERIFIED BY MAKER") {
+                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+2+'"}';
                                     }
-                                    else if (full.STATUS_TRACKING == "VERIFIED BY STAFF INVESTMENT") {
-
-                                        if(newRoleUser[0] == "ROLE_MANAGER_INVESTMENT_APLN" || newRoleUser[0] == "ROLE_MANAGER_INVESTMENT_SLPMN" || newRoleUser[0] == "ROLE_ADMIN"){
-                                            value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
-                                            full_value = '{"full":'+JSON.stringify(full)+'}';
-                                        }else {
-                                            value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
-                                            full_value = '{"full":'+JSON.stringify(full)+'}';
-                                        }
-                                    }
-                                    else if (full.STATUS_TRACKING == "VERIFIED BY MANAGER IE"){
-
-                                        if(newRoleUser[0] == "ROLE_VICE_PRESIDENT_INVESTMENT" || newRoleUser[0] == "ROLE_ADMIN"){
-                                            value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
-                                            full_value = '{"full":'+JSON.stringify(full)+'}';
-                                        }else {
-                                            value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
-                                            full_value = '{"full":'+JSON.stringify(full)+'}';
-                                        }
+                                    else if (full.STATUS_TRACKING == "VERIFIED BY CHECKER") {
+                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+3+'"}';
                                     }
 
-                                    else if (full.STATUS_TRACKING == "VERIFIED BY MANAGER PE"){
-
-                                        if(newRoleUser[0] == "ROLE_VICE_PRESIDENT_OPERATION" || newRoleUser[0] == "ROLE_ADMIN"){
-                                            value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
-                                            full_value = '{"full":'+JSON.stringify(full)+'}';
-                                        }else {
-                                            value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
-                                            full_value = '{"full":'+JSON.stringify(full)+'}';
-                                        }
-                                    }
-                                    else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY OPERATION" && full.EQ_IDR > "25000000000"){
-                                        if(newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT"){
-                                            value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
-                                            full_value = '{"full":'+JSON.stringify(full)+'}';
-                                        }else {
-                                            value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
-                                            full_value = '{"full":'+JSON.stringify(full)+'}';
-                                        }
-                                    }
-                                    else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY INVESTMENT" && full.EQ_IDR > "25000000000"){
-                                        if(newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT"){
-                                            value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
-                                            full_value = '{"full":'+JSON.stringify(full)+'}';
-                                        }else {
-                                            value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
-                                            full_value = '{"full":'+JSON.stringify(full)+'}';
-                                        }
-                                    }
-                                    else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY OPERATION" && full.EQ_IDR <= "25000000000"  || full.STATUS_TRACKING == "VERIFIED BY EVP"){
-                                        var role = newRoleUser[0];
-
-                                        if(role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN"){
-                                            value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
-                                            full_value = '{"full":'+JSON.stringify(full)+'}';
-                                        }else {
-                                            value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
-                                            full_value = '{"full":'+JSON.stringify(full)+'}';
-                                        }
-                                    }
-                                    else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY INVESTMENT" && full.EQ_IDR <= "25000000000"  || full.STATUS_TRACKING == "VERIFIED BY EVP"){
-                                        var role = newRoleUser[0];
-
-                                        if(role.includes("KASIR") || newRoleUser[0] == "ROLE_ADMIN"){
-                                            value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
-                                            full_value = '{"full":'+JSON.stringify(full)+'}';
-                                        }else {
-                                            value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
-                                            full_value = '{"full":'+JSON.stringify(full)+'}';
-                                        }
-                                    }
-                                    else {
-                                        value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
-                                        full_value = '{"full":'+JSON.stringify(full)+'}';
-                                    }
-                                }
 
                                 for (x=0; x<invoiceCheckedArray.length;x++){
                                     if(JSON.stringify(invoiceCheckedArray[x]) === value){
@@ -1235,7 +1152,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                  var html = '';
                  if(newRoleUser[0] == "ROLE_VERIFIKATOR"){
                     html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
-                    html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
+//                    html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
                 }
                  if(newRoleUser[0] == "ROLE_ADMIN"){
                     var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" title="Sembunyikan Kolom" data-toggle="modal" onclick="showColumn()">' +
@@ -1245,23 +1162,23 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         '            <i class="fa fa-ban"></i></button>';
                     html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
                     html = html + '<button class="btn-edit-data btn-sm btn-primary" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fa fa-pencil"></i></button>';
-                    html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
-                    html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
+                    html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
+//                    html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
                     html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
                     html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
                 }
                  else if(newRoleUser[0] == "ROLE_JA_IE"){
 
                      var html = '<button class="btn-edit-data btn-sm btn-primary" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fa fa-pencil"></i></button>';
-                     html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
-                     html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
+                     html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
+//                     html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
                      html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
                      html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
                  }else if(newRoleUser[0] == "ROLE_JA_CASH"){
 
                      var html = '<button class="btn-edit-data btn-sm btn-primary" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fa fa-folder-o"></i></button>';
-                     html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
-                     html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-money"></i></button>';
+                     html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
+//                     html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-money"></i></button>';
                      html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
                      html = html + '<button class="btn-verified btn-sm btn-warning" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
                  }
@@ -1270,7 +1187,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
                     }
 
-                html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
+
                 html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
                 }
 //                if(newRoleUser[0] != "ROLE_OSS" && newRoleUser[0] != "ROLE_DIVKEU"){
@@ -1339,7 +1256,6 @@ function selectBankAccount(value) {
 
 function edit_data(pCompCode, pNoDoc, pFiscYear, pLineItem,pSource, pBank,  pBeneficiaryAccount) {
     showLoadingCss();
-
     $.ajax({
         url: baseUrl+"api_operator/rekap_invoice_belum/edit_data",
         dataType: 'JSON',
@@ -1369,6 +1285,7 @@ function edit_data(pCompCode, pNoDoc, pFiscYear, pLineItem,pSource, pBank,  pBen
             $("#pReverseYear").val(res[0].REV_YEAR);
             $("#pDocHdr").val(res[0].DOC_HDR_TXT);
             $("#pCurrency").val(res[0].CURRENCY);
+            $("#pCurrBayar").val(res[0].CURR_BAYAR);
             $("#pExchRate").val(new Intl.NumberFormat().format(res[0].EXCH_RATE));
             $("#pRefKey").val(res[0].REFERENCE_KEY);
             $("#pPaymentIndicator").val(res[0].PMT_IND);
@@ -1383,6 +1300,7 @@ function edit_data(pCompCode, pNoDoc, pFiscYear, pLineItem,pSource, pBank,  pBen
             $("#pAmountWht").val(new Intl.NumberFormat().format(res[0].AMT_WITH_TC));
             $("#pTotalTagihan").val(new Intl.NumberFormat().format(res[0].AMOUNT));
             $("#pAssignment").val(res[0].ASSIGNMENT);
+            $("#pAmountBayar").val(res[0].AMOUNT_BAYAR);
             $("#pItemText").val(res[0].ITEM_TEXT);
             $("#pCostCtr").val(res[0].COST_CTR);
             $("#pGlAccount").val(res[0].GL_ACCT);
@@ -1413,7 +1331,7 @@ function edit_data(pCompCode, pNoDoc, pFiscYear, pLineItem,pSource, pBank,  pBen
             setSelectBankPembayar("pHouseBank",res[0].HOUSE_BANK);
             setSelectKodeBankPembayar("pHouseBankxx",'');
             setSelectNoRekening("pNoRekxx",'');
-            $("#pNoRekPln").val(res[0].NO_REK_HOUSE_BANK);
+            $("#pNoRekPln").val(res[0].NO_REK_HOUSE_BANK2);
             $("#pMetodePembayaran").val(res[0].METODE_PEMBAYARAN);
             $("#pSumberDana").val(res[0].SUMBER_DANA);
             $("#pTglRencanaBayar").val(res[0].TGL_RENCANA_BAYAR);
@@ -1438,7 +1356,11 @@ function edit_data(pCompCode, pNoDoc, pFiscYear, pLineItem,pSource, pBank,  pBen
                 }else{
                     $("#btn-inquiry").show();
                 }
-
+            if(res[0].METODE_PEMBAYARAN == "GIRO"){
+                    $(".pNoGiro").show();
+                }else{
+                    $(".pNoGiro").hide();
+                }
         setTimeout(function(){ $('#edit-modal').modal({backdrop: 'static', keyboard: false}); }, timeSowFormEdit);
         },
         error: function () {
@@ -1593,6 +1515,7 @@ function cek_data(pCompCode, pNoDoc, pFiscYear, pLineItem, pSource, pBank,  pBen
             $("#pAmountWhtBase2").val(res[0].AMT_WITH_BASE_TC);
             $("#pAmountWht2").val(res[0].AMT_WITH_TC);
             $("#pTotalTagihan2").val(res[0].AMOUNT);
+            $("#pAmountBayar2").val(res[0].AMOUNT_BAYAR);
             $("#pAssignment2").val(res[0].ASSIGNMENT);
             $("#pItemText2").val(res[0].ITEM_TEXT);
             $("#pCostCtr2").val(res[0].COST_CTR);
@@ -1682,6 +1605,7 @@ function detail_data(pCompCode, pNoDoc, pFiscYear, pLineItem) {
             $("#pReverseYear2").val(res[0].REV_YEAR);
             $("#pDocHdr2").val(res[0].DOC_HDR_TXT);
             $("#pCurrency2").val(res[0].CURRENCY);
+            $("#pCurrBayar2").val(res[0].CURR_BAYAR);
             $("#pExchRate2").val(res[0].EXCH_RATE);
             $("#pRefKey4").val(res[0].REFERENCE_KEY);
             $("#pPaymentIndicator2").val(res[0].PMT_IND);
@@ -2229,7 +2153,7 @@ function getBallance2(pBank, pSource, pBeneficiary){
             data: {
                  pBank: $("#pBanks").val(),
                  pSource: $("#pSources").val(),
-                 pBeneficiary: $("#pBeneficiarys").val(),
+                 pBeneficiary: $("#pSources").val(),
             },
             success: function (res) {
                 showLoadingCss();
@@ -2482,8 +2406,9 @@ function doPayment(pMetodeBayar, pBank, pRefNum, pSource, pBeneficiaryAccount, p
                  pRefNum: $("#pRefKey4").val(),
                  pSource: $("#pNoRekPLN2").val(),
                  pBeneficiaryAccount: $("#pNoRekVendor2").val(),
-                 pCurrency: $("#pCurrency2").val(),
+                 pCurrency: $("#pCurrBayar2").val(),
                  pAmount: $("#pTotalTagihan2").val(),
+                 pAmountBayar: $("#pAmountBayar2").val(),
                  pRemark: 'UAT',
                  pBenefEmail: "",
                  pBenefName: $("#pCustomerName2").val(),
@@ -2673,7 +2598,7 @@ function create_group() {
                 dataType: 'JSON',
                 type: "POST",
                 data: {
-                    pData: JSON.stringify(fullArrayGroup),
+                    pData: JSON.stringify(fullArray),
                     pNamaGroup: "COBA BIKIN GROUP NIH"//$("#pNamaGroup").val()
                 },
                 success: function (res) {
@@ -2711,9 +2636,43 @@ function openMultipleEditForm(){
 
 function openGetBallance(){
      //$("#pNamaGroup").val("")
+     $("#pBanks").val("")
+     $("#pSources").val("")
+     $("#pRespons").val("")
+     $("#pAccountNames").val("")
+     $("#pAccountBalances").val("")
      //$('#multiple-edit-modal').modal({backdrop: 'static', keyboard: false});
      $('#edit-modal3').modal({backdrop: 'static', keyboard: false});
+
  }
+
+function multi_upd_lunas() {
+    var stateCrf = confirm("Anda Yakin Akan Merverifikasi Tagihan Ini ?");
+    if (stateCrf == true) {
+        showLoadingCss();
+        $.ajax({
+            url: baseUrl + "/api_operator/rekap_invoice_belum/multi_upd_lunas",
+            dataType: 'JSON',
+            type: "POST",
+            data: {
+                pData: JSON.stringify(checkedArray),
+            },
+            success: function (res) {
+                hideLoadingCss("")
+                if (res.return == 1) {
+                    alert(res.OUT_MSG)
+                    tablePembelianValas.ajax.reload();
+                    checkedArray = new Array();
+                } else {
+                    alert(res.OUT_MSG);
+                }
+            },
+            error: function () {
+                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+            }
+        });
+    }
+}
 
 function openGetPaymentStatus(){
     //$("#pNamaGroup").val("")
@@ -2802,6 +2761,15 @@ $("#pMetodePembayaran").change( function(){
         $("#btn-inquiry").hide();
     }else{
         $("#btn-inquiry").show();
+    }
+});
+
+$("#pMetodePembayaran").change( function(){
+    // console.log($("#pMetodePembayaran").val());
+    if($("#pMetodePembayaran").val() == "GIRO"){
+        $(".pNoGiro").show();
+    }else{
+        $(".pNoGiro").hide();
     }
 });
 

@@ -77,7 +77,7 @@ public class OperasiKhususTrxService {
     public Map<String, Object> insOperasiKhusus(
             String pIdMetallica, String pDocDate, String pPostDate, String pDocNo, String pReference,
             String pCompCode, String pBusArea, String pCurrency, String pDocHdrTxt, String pUserId, String pExchangeRate,
-            String pFiscalYear
+            String pFiscalYear, String pSumberDana
     ) throws SQLException{
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -96,7 +96,9 @@ public class OperasiKhususTrxService {
                 .addValue("p_doc_hdr_txt",pDocHdrTxt)
                 .addValue("p_user_id",pUserId)
                 .addValue("p_exchange_rate", pExchangeRate)
-                .addValue("p_fisc_year", pFiscalYear);
+                .addValue("p_fisc_year", pFiscalYear)
+                .addValue("p_sumber_dana", pSumberDana);
+
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data ins operasi_khusus_trx :{}",out);
         return out;
@@ -487,5 +489,16 @@ public class OperasiKhususTrxService {
                 .withFunctionName("get_total_operasi_lunas")
                 .executeFunction(BigDecimal.class, in);
         return result;
+    }
+
+    public List<Map<String, Object>> getCurrency(){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_currency");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("out", OracleTypes.CURSOR);
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+
+        return out;
     }
 }

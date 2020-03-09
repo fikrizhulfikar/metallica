@@ -2,7 +2,7 @@
   "HEADER_DATA": [
     {
       "COMP_CODE": "1000",
-      "DOC_NO": "0100049220",
+      "DOC_NO": "0100049099",
       "FISC_YEAR": "2019",
       "DOC_TYPE": "TT",
       "DOC_DATE": "20191108",
@@ -18,10 +18,10 @@
       "PMT_IND": "1-Payment at Pusat",
       "TRANS_TYPE": "JISDOR",
       "SPREAD_VAL": "000",
-      "OSS_ID": "TRE20200226024",
+      "OSS_ID": "TRE20200304001",
       "GROUP_ID": "100001000492202019",
       "SUMBER_DANA": "NON PMN",
-      "TGL_RENCANA_BYR": "20200229",
+      "TGL_RENCANA_BYR": "20200306",
       "BANK_BYR": "BNI15",
       "CURR_BYR": "IDR",
       "PARTIAL_IND": "",
@@ -31,13 +31,12 @@
       "NAMA_BNF": "Ibu ERNAWATI",
       "VERIFIED_BY": "PS_FEDYNM",
       "VERIFIED_ON": "20200218"
-    },
-
+    }
   ],
   "ITEM_DATA": [
     {
       "COMP_CODE": "1000",
-      "DOC_NO": "0100049220",
+      "DOC_NO": "0100049099",
       "FISC_YEAR": "2019",
       "LINE_ITEM": "001",
       "CORP_PMT": "X",
@@ -46,7 +45,7 @@
       "SPEC_GL": "",
       "BUS_AREA": "1001",
       "TPBA": "PAR-",
-      "DR_CR_IND": "H",
+      "DR_CR_IND": "S",
       "AMT_LC": "                                                                                                                                                                                                                                                 1188873860.00",
       "AMT_TC": "                                                                                                                                                                                                                                                      65948.16",
       "AMT_WITH_BASE_TC": "                                                                                                                                                                                                                                                          0.00",
@@ -76,7 +75,7 @@
     },
     {
       "COMP_CODE": "1000",
-      "DOC_NO": "0100049220",
+      "DOC_NO": "0100049099",
       "FISC_YEAR": "2019",
       "LINE_ITEM": "002",
       "CORP_PMT": "",
