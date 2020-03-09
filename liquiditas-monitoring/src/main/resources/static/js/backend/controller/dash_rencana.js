@@ -1,13 +1,11 @@
 function tableMainDashboard(_date){
-
-//    let groupColumn = 0;
     let date = new Date();
     let current_month = date.getMonth()+1;
     let current_full_date;
     let current_date = (date.getDate() < 10) ? "0"+ date.getDate().toString() : date.getDate();
     let curr_month = (date.getMonth() < 10) ? "0"+current_month.toString() : current_month;
     (_date === undefined) ? current_full_date = date.getFullYear().toString()+curr_month.toString()+current_date : current_full_date = _date;
-//    console.log("Date : " + current_full_date);
+
     var datestring = dateToString(date);
     $("#tgl1").html(datestring);
     $("#tgl2").html(incDate(date, 1));
@@ -30,6 +28,8 @@ function tableMainDashboard(_date){
     $("#tgl5c").html(incDate(date, 4));
     $("#tgl6c").html(incDate(date, 5));
     $("#tgl7c").html(incDate(date, 6));
+
+    console.log('Tes ' +datestring)
 
     let per_bank = $("#pembayaran-bank").DataTable({
         "ajax" : {

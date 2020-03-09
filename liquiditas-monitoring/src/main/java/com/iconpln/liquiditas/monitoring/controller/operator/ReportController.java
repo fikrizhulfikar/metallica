@@ -227,7 +227,7 @@ public class ReportController {
         return mapData;
     }
 
-    @GetMapping(path = "/get_dashboard_rencana_imprest")
+    @GetMapping(path = "/dashboard_rencana_imprest")
     public Map getListRencanaImprest(@RequestParam(value = "ptanggal") String tanggal){
         List<Map<String, Object>> list = new ArrayList<>();
 
@@ -241,7 +241,7 @@ public class ReportController {
         return mapData;
     }
 
-    @GetMapping(path = "/get_dashboard_recana_valas")
+    @GetMapping(path = "/dashboard_recana_valas")
     public Map getListTagihanCahscode(@RequestParam(value = "ptanggal") String tanggal){
         List<Map<String, Object>> list = new ArrayList<>();
 

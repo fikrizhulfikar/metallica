@@ -1,15 +1,14 @@
 $(document).ready(function () {
     initDataTableSaldoRek1();
-    tableRencanaImprestValas();
-    tableRencanaImpres();
     var date = new Date();
     var newDate = date.toJSON().slice(0, 10).replace(new RegExp("-", 'g'), "/").split("/").reverse().join("/")
     $("#tglcetak").html(newDate);
+    tableRencanaImpres();
+    tableRencanaImprestValas();
 
     setInterval(function () {
         initDataTableSaldoRek1();
     }, 60000);
-$("#dash_date").datepicker({dateFormat : "dd/mm/yy"});
 });
 
 function initDataTableSaldoRek1() {
@@ -35,7 +34,7 @@ function initDataTableSaldoRek1() {
                 });
 
                     var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                        "<td>SUB TOTAL</td>" +
+                        "<td align='center'>SUB TOTAL</td>" +
                         "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H0,2,".",",") + "</td>" +
                         "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H1,2,".",",") + "</td>" +
                         "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H2,2,".",",") + "</td>" +
@@ -55,7 +54,7 @@ function initDataTableSaldoRek1() {
 //                    $('#table-rencana-pembayaran tbody').append(total2);
 
                     var total3 = "<tr style='background-color:#67a2d8;color: white'>" +
-                        "<td>TOTAL</td>" +
+                        "<td align='center'>TOTAL</td>" +
                         "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H0,2,".",",") + "</td>" +
                         "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H1,2,".",",") + "</td>" +
                         "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H2,2,".",",") + "</td>" +
@@ -175,13 +174,9 @@ function initDataTableSaldoRek1() {
                     "</tr>";
 
                 $('#table-investasi-operasi tbody').append(total);
-
-                console.log('Diaz djancuk 2 : '+val.TOTAL_SELURUH_IDR);
                 });
              hideLoadingCss()
         },
-
-//            console.log('Tes' + res)
 
         error: function () {
             // hideLoadingCss("Gagal Ambil Data");
@@ -455,8 +450,30 @@ function rencanaPembayaranBarLine(data){
     });
 }
 
+function dateToString(date) {
+    return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+}
+
+function incDate(date, days) {
+    date = new Date(date.getTime() + (86400000 * days));
+    return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+}
+
+function stringToDate(_date) {
+    var formatLowerCase = 'dd/mm/yyyy';
+    var formatItems = formatLowerCase.split('/');
+    var dateItems = _date.split('/');
+    var monthIndex = formatItems.indexOf("mm");
+    var dayIndex = formatItems.indexOf("dd");
+    var yearIndex = formatItems.indexOf("yyyy");
+    var month = parseInt(dateItems[monthIndex]);
+    month -= 1;
+    var formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
+    return formatedDate;
+}
+
 function tableRencanaImpres(_date){
-let date = new Date();
+    let date = new Date();
     let current_month = date.getMonth()+1;
     let current_full_date;
     let current_date = (date.getDate() < 10) ? "0"+ date.getDate().toString() : date.getDate();
@@ -473,21 +490,17 @@ let date = new Date();
     $("#tgl7b").html(incDate(date, 6));
     $("#tgl8b").html(incDate(date, 7));
 
-//    $("#header_tgl_rencana_imprest").append("<td style='text-align: center; background-color: #67a2d8'>URAIAN</td>");
-//    for (let i=0; i<8; i++){
-//        let tgl = date.getDate()+i;
-//        let month = date.getMonth()+1;
-//        $("#header_tgl_rencana_imprest").append("<td style='background-color: #67a2d8; vertical-align: middle'>"+tgl+"/"+month+"/"+date.getFullYear()+"</td>");
-//    }
+//    console.log('Tes ' + datestring)
+//    console.log('Tes 2 ' + current_full_date)
 
     let tb_rencana_imprest_valas = $("#dash_rencana_imprest").DataTable({
         "ajax" : {
-            "url" : baseUrl + "api_operator/api_report/get_dashboard_rencana_imprest",
+            "url" : baseUrl + "api_operator/api_report/dashboard_rencana_imprest",
             "data" : {
-                "ptanggal" : current_full_date
+                "ptanggal" : current_full_date,
             },
             "type" : "GET",
-            "dataType" : "JSON",
+            "dataType" : "json",
         },
         "sorting": false,
         "searching" : false,
@@ -686,6 +699,7 @@ let date = new Date();
             }
         },
         "drawCallback" : function (settings){
+            let groupColumn = 0;
             var api = this.api();
             var rows = api.rows( {page:'current'} ).nodes();
             var last=null;
@@ -721,7 +735,7 @@ function tableRencanaImprestValas(_date){
         $("#tgl7a").html(incDate(date, 6));
         $("#tgl8a").html(incDate(date, 7));
 
-//    console.log('Tes'+current_full_date)
+//    console.log('Tes ' + datestring)
 //    $("#header_tgl_imprest_valas").append("<td style='text-align: center; background-color: #67a2d8'>URAIAN</td>");
 //    for (let i=0; i<8; i++){
 //        let tgl = date.getDate()+i;
@@ -731,9 +745,9 @@ function tableRencanaImprestValas(_date){
 
     let tb_rencana_imprest_valas = $("#rencana_imprest_valas").DataTable({
         "ajax" : {
-            "url" : baseUrl + "api_operator/api_report/get_dashboard_recana_valas",
+            "url" : baseUrl + "api_operator/api_report/dashboard_recana_valas",
             "data" : {
-                "ptanggal" : current_full_date
+                "ptanggal" : current_full_date,
             },
             "type" : "GET",
             "dataType" : "JSON",
@@ -920,6 +934,7 @@ function tableRencanaImprestValas(_date){
             }
         },
         "drawCallback" : function (settings){
+            let groupColumn = 0;
             var api = this.api();
             var rows = api.rows({page:'current'}).nodes();
             var last = null;
@@ -936,24 +951,3 @@ function tableRencanaImprestValas(_date){
     })
 }
 
-function dateToString(date) {
-    return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-}
-
-function incDate(date, days) {
-    date = new Date(date.getTime() + (86400000 * days));
-    return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
-}
-
-function stringToDate(_date) {
-    var formatLowerCase = 'dd/mm/yyyy';
-    var formatItems = formatLowerCase.split('/');
-    var dateItems = _date.split('/');
-    var monthIndex = formatItems.indexOf("mm");
-    var dayIndex = formatItems.indexOf("dd");
-    var yearIndex = formatItems.indexOf("yyyy");
-    var month = parseInt(dateItems[monthIndex]);
-    month -= 1;
-    var formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
-    return formatedDate;
-}

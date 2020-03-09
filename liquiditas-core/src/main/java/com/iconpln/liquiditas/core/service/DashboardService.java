@@ -671,7 +671,6 @@ public class DashboardService {
                 .withFunctionName("get_dashboard_rencana_valas");
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("ptanggal", tanggal);
-
         List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
         return out;
     }

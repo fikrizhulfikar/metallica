@@ -1,3 +1,20 @@
+$(document).ready(function () {
+    tableMainDashboard();
+    dataTable();
+    tableRencanaImprestValas();
+    tableRencanaImpres();
+    tableRealisasiBankCurrency();
+    var date = new Date();
+    var newDate = date.toJSON().slice(0, 10).replace(new RegExp("-", 'g'), "/").split("/").reverse().join("/")
+    $("#tglcetak").html(newDate);
+
+    $("#dashboard-carousel").carousel({
+        interval : 1000*5,
+        pause : "hover",
+    });
+$("#dash_date").datepicker({dateFormat : "dd/mm/yy"});
+});
+
 function tableMainDashboard(_date){
 
     let date = new Date();
@@ -125,12 +142,6 @@ function tableMainDashboard(_date){
             $(row).attr("onclick", "showParents(this)");
 
         }
-
-//        if(data["URAIAN"] === "Bank"){
-//            $(".clickable-row").click(function() {
-//                window.location = $(this).data("href");
-//            });
-//        }
 
         if (data["ISANAK"] === 0 && regexChild1.test(data["KODE"])){
             $(row).css({
@@ -497,7 +508,7 @@ function tableRencanaImpres(_date){
 
     let tb_rencana_imprest_valas = $("#dash_rencana_imprest").DataTable({
         "ajax" : {
-            "url" : baseUrl + "api_operator/api_report/get_dashboard_rencana_imprest",
+            "url" : baseUrl + "api_operator/api_report/dashboard_rencana_imprest",
             "data" : {
                 "ptanggal" : current_full_date
             },
@@ -767,27 +778,6 @@ function showParents(el){
 function showModal(){
 
 }
-
-$(document).ready(function () {
-//    popupModal();
-//    toggleModal();
-//    windowOnClick();
-//    rencanaBayarBarLine();
-    tableMainDashboard();
-    dataTable();
-    tableRencanaImprestValas();
-    tableRencanaImpres();
-    tableRealisasiBankCurrency();
-    var date = new Date();
-    var newDate = date.toJSON().slice(0, 10).replace(new RegExp("-", 'g'), "/").split("/").reverse().join("/")
-    $("#tglcetak").html(newDate);
-
-    $("#dashboard-carousel").carousel({
-        interval : 1000*5,
-        pause : "hover",
-    });
-$("#dash_date").datepicker({dateFormat : "dd/mm/yy"});
-});
 
 function dataTable(){
 $.ajax({
