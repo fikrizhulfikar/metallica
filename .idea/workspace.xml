@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1bb35cd6-6e1f-4873-bb7b-6e5a0fd705b9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-log/core.log" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-log/core.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pembelianValasTrx.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pembelianValasTrx.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pembelianValasTrxLunas.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pembelianValasTrxLunas.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pembelianValasTrxVerified.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pembelianValasTrxVerified.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pindahBukuTrx.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pindahBukuTrx.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pindahBukuTrxVerified.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pindahBukuTrxVerified.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/master_customer.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/master_customer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/operasi_khusus_trx.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/operasi_khusus_trx.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pembelian_valas_trx.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pembelian_valas_trx.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pembelian_valas_trx_lunas.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pembelian_valas_trx_lunas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pembelian_valas_trx_verified.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pembelian_valas_trx_verified.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pindah_buku_trx.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pindah_buku_trx.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -302,7 +289,7 @@
       <workItem from="1582773261842" duration="82244000" />
       <workItem from="1583111087560" duration="109507000" />
       <workItem from="1583565454513" duration="587000" />
-      <workItem from="1583729148972" duration="24724000" />
+      <workItem from="1583729148972" duration="25539000" />
     </task>
     <task id="LOCAL-00005" summary="Add Dashboard Table">
       <created>1581563804297</created>
