@@ -43,16 +43,6 @@ function initDataTableSaldoRek1() {
                         "</tr>";
                     $('#table-rencana-pembayaran tbody').append(total1);
 
-//                    var total2 = "<tr style='background-color:#67a2d8;color: white'>" +
-//                        "<td>SUB TOTAL</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H0,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H1,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H2,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_WEEKLY,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_MONTHLY,2,".",",") + "</td>" +
-//                        "</tr>";
-//                    $('#table-rencana-pembayaran tbody').append(total2);
-
                     var total3 = "<tr style='background-color:#67a2d8;color: white'>" +
                         "<td align='center'>TOTAL</td>" +
                         "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H0,2,".",",") + "</td>" +
@@ -81,8 +71,6 @@ function initDataTableSaldoRek1() {
             success: function (res) {
                 var data = res.return;
                 var data2 = res.OUT_TOTAL_SELURUH;
-//                var tes = JSON.stringify(data2);
-//                console.log('Diaz djancuk :'+tes);
                 $("#tglcetak").html(data[0].TANGGAL);
                 $('#table-investasi-operasi tbody').empty();
                 $.each(data, function (key, val) {
@@ -160,8 +148,6 @@ function initDataTableSaldoRek1() {
 
                 });
 
-//                var tes = JSON.stringify(data2);
-//                console.log('Diaz djancuk 2 :'+val.TOTAL_SELURUH_EQ_IDR);
                 $.each(data2, function (key, val) {
                 var total = "<tr style='background-color:#67a2d8;color: white'>" +
                     "<td colspan='2' align='center'>TOTAL</td>" +
@@ -195,9 +181,6 @@ function initDataTableSaldoRek1() {
           success: function (res) {
             var data = res.return;
             var data2 = res.OUT_SALDO;
-            var tes = JSON.stringify(data);
-            //console.log('Diaz djancuk :'+tes);
-            $("#tglcetak").html(data[0].TANGGAL);
 
             var dataPieRekRencana = [];
             $.each(data, function (index, value) {
@@ -490,9 +473,6 @@ function tableRencanaImpres(_date){
     $("#tgl7b").html(incDate(date, 6));
     $("#tgl8b").html(incDate(date, 7));
 
-//    console.log('Tes ' + datestring)
-//    console.log('Tes 2 ' + current_full_date)
-
     let tb_rencana_imprest_valas = $("#dash_rencana_imprest").DataTable({
         "ajax" : {
             "url" : baseUrl + "api_operator/api_report/dashboard_rencana_imprest",
@@ -734,14 +714,6 @@ function tableRencanaImprestValas(_date){
         $("#tgl6a").html(incDate(date, 5));
         $("#tgl7a").html(incDate(date, 6));
         $("#tgl8a").html(incDate(date, 7));
-
-//    console.log('Tes ' + datestring)
-//    $("#header_tgl_imprest_valas").append("<td style='text-align: center; background-color: #67a2d8'>URAIAN</td>");
-//    for (let i=0; i<8; i++){
-//        let tgl = date.getDate()+i;
-//        let month = date.getMonth()+1;
-//        $("#header_tgl_imprest_valas").append("<td style='background-color: #67a2d8; vertical-align: middle'>"+tgl+"/"+0+month+"/"+date.getFullYear()+"</td>");
-//    }
 
     let tb_rencana_imprest_valas = $("#rencana_imprest_valas").DataTable({
         "ajax" : {
