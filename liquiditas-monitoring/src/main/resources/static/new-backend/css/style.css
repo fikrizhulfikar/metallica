@@ -1582,7 +1582,7 @@ pre {
     color: #b0bec5;
     opacity: 1; }
   .form-control:disabled, .form-control[readonly] {
-    background-color: #cfd8dc;
+    background-color: #ececec;
     opacity: 1; }
 
 select.form-control:not([size]):not([multiple]) {

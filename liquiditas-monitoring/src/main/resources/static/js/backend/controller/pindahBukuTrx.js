@@ -151,8 +151,7 @@ function AddToTable() {
     var flag = 0;
     let amount = 0;
 
-
-    (exrate !== "-") ? amount = very_real_amount * real_exrate : amount = very_real_amount;
+    (!isNaN(exrate)) ? amount = very_real_amount * real_exrate : amount = very_real_amount;
 
     if (drcrind == "" || glaccount == "" || amt == "" || remarks == "" || cash_code == "") {
         Swal.fire("Maaf!","Mohon Lengkapi Data", "warning");
@@ -376,33 +375,33 @@ function exportXls() {
     window.open(baseUrl + "api_operator/pindah_buku_trx/xls/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currecny").val());
 }
 
-
-    function buildTableBody(data, columns) {
-        var body = [];
-        console.log("DIAZ GANTENG :"+data)
-        body.push(columns);
-
-        data.forEach(function (row) {
-            var dataRow = [];
-            dataRow.push(row["NO"]);
-            dataRow.push(row["DOCUMENT_DATE"]);
-            dataRow.push(row["POSTING_DATE"]);
-            dataRow.push(row["DOCUMENT_NUMBER"]);
-            dataRow.push(row["REFERENCE"]);
-            //dataRow.push({text: row["NILAI_TAGIHAN"], alignment: "right"});
-            dataRow.push(row["FISC_YEAR"]);
-            dataRow.push(row["COMPANY_CODE"]);
-            dataRow.push(row["BUSINESS_AREA"]);
-            dataRow.push(row["CURRENCY"]);
-            dataRow.push(row["EXCHANGE_RATE"]);
-            dataRow.push({text: row["TOTAL_TAGIHAN"], alignment: "right"});
-            dataRow.push(row["DOC_HDR_TXT"]);
-            dataRow.push(row["STATUS_TRACKING"]);
-            body.push(dataRow);
-        });
-
-        return body;
-    }
+    //
+    // function buildTableBody(data, columns) {
+    //     var body = [];
+    //     console.log("DIAZ GANTENG :"+data)
+    //     body.push(columns);
+    //
+    //     data.forEach(function (row) {
+    //         var dataRow = [];
+    //         dataRow.push(row["NO"]);
+    //         dataRow.push(row["DOCUMENT_DATE"]);
+    //         dataRow.push(row["POSTING_DATE"]);
+    //         dataRow.push(row["DOCUMENT_NUMBER"]);
+    //         dataRow.push(row["REFERENCE"]);
+    //         //dataRow.push({text: row["NILAI_TAGIHAN"], alignment: "right"});
+    //         dataRow.push(row["FISC_YEAR"]);
+    //         dataRow.push(row["COMPANY_CODE"]);
+    //         dataRow.push(row["BUSINESS_AREA"]);
+    //         dataRow.push(row["CURRENCY"]);
+    //         dataRow.push(row["EXCHANGE_RATE"]);
+    //         dataRow.push({text: row["TOTAL_TAGIHAN"], alignment: "right"});
+    //         dataRow.push(row["DOC_HDR_TXT"]);
+    //         dataRow.push(row["STATUS_TRACKING"]);
+    //         body.push(dataRow);
+    //     });
+    //
+    //     return body;
+    // }
 
 function multi_upd_lunas() {
     Swal.fire({
@@ -481,7 +480,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
             {width: 20, targets: 0},
             {width: 120, targets: 1},
             {width: 120, targets: 2},
-            {width: 110, targets: 3},
+            {width: 130, targets: 3},
             {width: 150, targets: 4},
             {width: 150, targets: 5},
             {width: 110, targets: 6},
@@ -490,10 +489,11 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
             {width: 100, targets: 9},
             {width: 130, targets: 10},
             {width: 130, targets: 11},
-            {width: 100, targets: 12},
+            {width: 140, targets: 12},
+            {width: 130, targets: 13},
             // {width: 100, targets: 36},
             {width: "80%", "targets": 0},
-            { className: "datatables_action", "targets": [9,2,10] },
+            { className: "datatables_action", "targets": [] },
             {
                 "bSortable": true,
                 "aTargets": [1, 2, 3, 4, 5, 7, 8, 9, 10,11]
@@ -501,6 +501,14 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
             {
                 "sortable": false,
                 "aTargets": [0,14]
+            },
+            {
+                 "targets": [0,1,2,3,4,6,7,8,9,13],
+                 "className": "dt-body-center",
+            },
+            {
+                 "targets": [10,11],
+                 "className": "dt-body-right",
             },
             {
                 "aTargets": [0],
@@ -526,23 +534,22 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                 {
                     "aTargets": [3],
                     "mRender": function (data, type, full) {
-                        return full.SUMBER_DANA;
+                        return full.DOCUMENT_NUMBER;
                     }
 
                 },
             {
-                "aTargets": [4],
-                "mRender": function (data, type, full) {
-                    return full.DOCUMENT_NUMBER;
-                }
-
+                 "aTargets": [4],
+                 "mRender": function (data, type, full) {
+                    return full.SUMBER_DANA;
+                 }
             },
+
             {
                 "aTargets": [5],
                 "mRender": function (data, type, full) {
                     return full.REFERENCE;
                 }
-
             },
             {
                 "aTargets": [6],
@@ -1140,6 +1147,11 @@ function submitChild() {
         return;
     }
 
+    table_data.each(data => {if(data.FLAG !== 0){
+        Swal.fire("Maaf!", "Tidak ada data baru yang ditambahkan", "error");
+        return;
+    }});
+
     if (getBalance() != 0 || getBalance() < 0){
         Swal.fire("Maaf!", "Balance tidak seimbang", "error");
         return;
@@ -1212,85 +1224,6 @@ function submitChild() {
     });
 }
 
-function submit() {
-    showLoadingCss()
-    $.ajax({
-        url: baseUrl + "api_master/bank/ins_bank",
-        dataType: 'JSON',
-        type: "GET",
-        data: {
-            pKodeBank: $("#pKodeBank").val(),
-            pNamaBank: $("#pNamaBank").val(),
-            pJenis: $("#pJenis").val(),
-            pFlag: $("#pFlag").val(),
-            pIsUpdate: isUpdate
-        },
-        success: function (res) {
-            console.log("response : ", res);
-            hideLoadingCss()
-            if (res.return == 1) {
-                alert(res.OUT_MESSAGE);
-                location.reload();
-            } else {
-                alert(res.OUT_MESSAGE);
-            }
-        },
-        error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-        }
-    });
-}
-
-function clearForm() {
-    isUpdate = "0"
-    $("#pKodeBank").val("");
-    $("#pKodeBank").prop('disabled', false);
-    $("#pNamaBank").val("");
-}
-
-function upload_xls(){
-    $("#modal-upload-xls").modal("show");
-
-    //getFilesRekap(pIdValas);
-}
-
-function upload_server_xls() {
-    $("#modal-upload-xls").modal("hide");
-    showLoadingCss();
-    var form = $('form')[0];
-    var formData = new FormData(form);
-
-    formData.append('file', $('input[type=file]#file-xls')[0].files[0]);
-    formData.append('pIdJenisFile', "2");
-    console.log(formData);
-    $.ajax({
-        crossOrigin: true,
-        type: "POST",
-        url: baseUrl + "api_master/upload_xls",
-        data: formData,
-        enctype: 'multipart/form-data',
-        cache: false,
-//        for jquery 1.6
-        contentType: false,
-        processData: false,
-        success: function (res) {
-            hideLoadingCss("");
-            console.log("res",res);
-            if (res.V_RETURN == 0) {
-                alert("sukses");
-            } else {
-                var obj = res.return[0];
-                alert("Terdapat kesalahan pada data. Download excel?");
-                window.location = "../api_master/download/2/"+obj["ID_UPLOAD"];
-            }
-            initDataTable();
-        },
-        error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
-        }
-    });
-}
-
 function buildTableBody(data, columns) {
     var body = [];
 
@@ -1320,7 +1253,6 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
     $("#btn-add-rekap").hide();
     $(".fungsional-button").hide();
 
-    console.log("Sumber Dana : ", sumber_dana);
     (track === "INPUT DATA" || newRoleUser[0] === "ROLE_ADMIN") ? $(".just-for-input-data").show() : $(".just-for-input-data").hide();
 
     showLoadingCss();
@@ -1395,6 +1327,9 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
                 if (d.DEBIT_CREDIT_IND === "D") debit = debit + parseInt(d.AMOUNT);
             });
             balance = debit-credit;
+            // console.log("Debit : ",debit);
+            // console.log("Credit : ", credit);
+            // console.log("Ballance : ",balance);
 
             $("#table-main-detail tfoot").find('td').eq(0).html("Debit : "+ new Intl.NumberFormat().format(debit));
             $("#table-main-detail tfoot").find('td').eq(1).html("Credit : "+ new Intl.NumberFormat().format(credit));
@@ -1403,11 +1338,9 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
             setBalance(balance);
         },
         "initComplete" : (data) => {
-            // showToast('Successfully Load Table');
             hideLoadingCss();
         }
     });
-
     $("#pDetailGlAccount, #pDetailDrCrInd, #pDetailCashCode").select2({
         width : "100%",
         theme : "bootstrap",
@@ -1510,7 +1443,6 @@ function initCbparent() {
 
 function openFormNew() {
     setListCurrency("pHeadCurrency");
-    setListCompCode("pHeadCompCode");
     $(".pExcRate").hide();
     $("#pHeadPostingDate").val("");
     $("#pHeadDocDate").val("");
@@ -1521,12 +1453,20 @@ function openFormNew() {
     $("#pHeadDocHdrTxt").val("");
     $("#pHeadFiscalYear")
         .val("")
-        .removeAttr("readonly");
-    $("#pHeadCompCode").val("");
+        .removeAttr("readonly")
+        .mask("0000");
+    $("#pHeadCompCode")
+        .children().remove();
+    setListCompCode("pHeadCompCode");
     $("#pHeadSumberDana").val("");
 
-    $("#pHeadPostingDate, #pHeadDocDate,#pHeadCompCode, " +
-        "#pHeadSumberDana, #pHeadBusArea, #pHeadCurrency").removeAttr("disabled")
+    $("#pHeadExchangeRate, #pHeadPostingDate, #pHeadDocDate,#pHeadCompCode, " +
+        "#pHeadSumberDana, #pHeadCurrency, #pHeadBusArea").removeAttr("disabled");
+
+    $("#pHeadPostingDate, #pHeadDocDate, #pHeadExchangeRate,#pHeadDocNo, #pHeadBusArea, " +
+        "#pHeadFiscYear, #pHeadCompCode, #pHeadCurrency, #pHeadSumberDana ").css({
+        "background-color" : "white",
+    });
 
     var date = new Date();
     $("#pHeadExchangeRate")
@@ -1541,7 +1481,6 @@ function openFormNew() {
 
 function edit_data (idMetallica){
     showLoadingCss();
-    setListCurrency("pHeadCurrency");
     $.ajax({
         url : baseUrl + "api_operator/pindah_buku_trx/get_pindah_buku_head_byid",
         dataType : "JSON",
@@ -1588,6 +1527,10 @@ function edit_data (idMetallica){
             }else{
                 $(".pExcRate").show();
             }
+            $("#pHeadDocDate, #pHeadPostingDate, #pHeadDocNo, #pHeadExchangeRate, #pHeadBusArea, " +
+                "#pHeadFiscYear, #pHeadCompCode, #pHeadCurrency, #pHeadSumberDana ").css({
+                "background-color" : "#ececec",
+            });
 
             setTimeout(function(){ $('#edit-modal').modal({backdrop: 'static', keyboard: false}); }, 1000);
         },
@@ -1598,8 +1541,8 @@ function edit_data (idMetallica){
 }
 
 function ins_data() {
-    showLoadingCss("");
     let idPinbuk = $("#pIdMetallica").val();
+    showLoadingCss("");
     (idPinbuk === undefined || idPinbuk === "") ? idPinbuk = null : idPinbuk = idPinbuk;
     console.log("id pinbuk : ", idPinbuk)
     let exch_rate = $("#pHeadExchangeRate").val().toString();
@@ -1622,6 +1565,7 @@ function ins_data() {
             pSumberDana : $("#pHeadSumberDana").val(),
         },
         success: function (res) {
+            hideLoadingCss("");
             // console.log("Result : "+res);
             if (res.RETURN == 1 || res.OUT_MSG === "DATA BERHASIL DISIMPAN") {
                 Swal.fire("Sukses!", "Data berhasil disimpan", "success");

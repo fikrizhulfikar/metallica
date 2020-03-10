@@ -110,19 +110,19 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
             "scrollCollapse": true,
             "aoColumnDefs": [
                 {width: 20, targets: 0},
-                {width: 150, targets: 1},
-                {width: 150, targets: 2},
+                {width: 120, targets: 1},
+                {width: 120, targets: 2},
                 {width: 150, targets: 3},
                 {width: 150, targets: 4},
-                {width: 150, targets: 5},
-                {width: 150, targets: 6},
-                {width: 150, targets: 7},
-                {width: 150, targets: 8},
+                {width: 110, targets: 5},
+                {width: 120, targets: 6},
+                {width: 110, targets: 7},
+                {width: 90, targets: 8},
                 {width: 130, targets: 9},
                 {width: 130, targets: 10},
                 {width: 130, targets: 11},
                 {width: "80%", "targets": 0},
-                { className: "datatables_action", "targets": [9,2,10] },
+                { className: "datatables_action", "targets": [] },
                 {
                     "bSortable": true,
                     "aTargets": [1, 2, 3, 4, 5, 7, 8, 9, 10]
@@ -130,6 +130,14 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                 {
                     "sortable": false,
                     "aTargets": [0,10]
+                },
+                {
+                    "targets": [0,1,2,3,5,6,7,8,11],
+                    "className": "dt-body-center",
+                },
+                {
+                    "targets": [9],
+                    "className": "dt-body-right",
                 },
                 {
                     "aTargets": [0],
@@ -141,14 +149,14 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                 {
                     "aTargets": [1],
                     "mRender": function (data, type, full) {
-                        return full.DOCUMENT_DATE;
+                        return moment(full.DOCUMENT_DATE).format("DD/MM/YYYY");
                     }
 
                 },
                 {
                     "aTargets": [2],
                     "mRender": function (data, type, full) {
-                        return full.POSTING_DATE;
+                        return moment(full.POSTING_DATE).format("DD/MM/YYYY");
                     }
 
                 },
@@ -198,7 +206,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                 {
                     "aTargets": [9],
                     "mRender": function (data, type, full) {
-                        return 0;
+                        return Intl.NumberFormat().format(full.TOTAL_TAGIHAN);
                     }
 
                 },
@@ -866,4 +874,38 @@ function ins_data() {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
         }
     });
+}
+
+function deleteHead (idMetallica){
+    showLoadingCss();
+    var del_confirm = confirm("Anda yakin ingin menghapus data ?");
+    if(del_confirm){
+        $.ajax({
+            url : baseUrl + "api_operator/pembelian_valas_trx/delete_pembelian_valas_trx_head",
+            dataType : "JSON",
+            type : "POST",
+            data : {
+                pIdMetallica : idMetallica,
+            },
+            success : (result) => {
+                console.log("Delete Result : ",result);
+                hideLoadingCss("");
+                // var result = res.return.split(";")[0];
+                console.log("Result : "+result);
+                if (result == 1 ) {
+                    alert(result.OUT_MSG);
+                    search("load");
+                    $('#edit-modal').modal('hide');
+                } else {
+                    alert(result.OUT_MSG);
+                }
+            },
+            error : () => {
+                hideLoadingCss("Gagal Menghapus Data, Silahkan Hubungi Administrator");
+            }
+        });
+    }else{
+        hideLoadingCss("");
+    }
+    tablePembelianValas.ajax.reload();
 }

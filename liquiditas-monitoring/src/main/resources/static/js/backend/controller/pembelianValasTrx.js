@@ -151,7 +151,7 @@ function AddToTable() {
     var flag = 0;
     let amount = 0;
 
-    (exrate !== "-") ? amount = very_real_amount * real_exrate : amount = very_real_amount;
+    (!isNaN(exrate)) ? amount = very_real_amount * real_exrate : amount = very_real_amount;
 
     if (drcrind == "" || glaccount == "" || amt == "" || remarks == "" || cash_code == "") {
         Swal.fire("Maaf!","Mohon Lengkapi Data", "warning");
@@ -375,31 +375,31 @@ function exportXls() {
     window.open(baseUrl + "api_operator/pembelian_valas_trx/xls/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currecny").val());
 }
 
-function buildTableBody(data, columns) {
-    var body = [];
-    console.log("DIAZ GANTENG :"+data)
-    body.push(columns);
-
-    data.forEach(function (row) {
-        var dataRow = [];
-        dataRow.push(row["NO"]);
-        dataRow.push(row["DOCUMENT_DATE"]);
-        dataRow.push(row["POSTING_DATE"]);
-        dataRow.push(row["DOCUMENT_NUMBER"]);
-        dataRow.push(row["REFERENCE"]);
-            //dataRow.push({text: row["NILAI_TAGIHAN"], alignment: "right"});
-        dataRow.push(row["FISC_YEAR"]);
-        dataRow.push(row["COMPANY_CODE"]);
-        dataRow.push(row["BUSINESS_AREA"]);
-        dataRow.push(row["CURRENCY"]);
-        dataRow.push(row["EXCHANGE_RATE"]);
-        dataRow.push({text: row["TOTAL_TAGIHAN"], alignment: "right"});
-        dataRow.push(row["DOC_HDR_TXT"]);
-        dataRow.push(row["STATUS_TRACKING"]);
-        body.push(dataRow);
-    });
-    return body;
-}
+// function buildTableBody(data, columns) {
+//     var body = [];
+//     console.log("DIAZ GANTENG :"+data)
+//     body.push(columns);
+//
+//     data.forEach(function (row) {
+//         var dataRow = [];
+//         dataRow.push(row["NO"]);
+//         dataRow.push(row["DOCUMENT_DATE"]);
+//         dataRow.push(row["POSTING_DATE"]);
+//         dataRow.push(row["DOCUMENT_NUMBER"]);
+//         dataRow.push(row["REFERENCE"]);
+//             //dataRow.push({text: row["NILAI_TAGIHAN"], alignment: "right"});
+//         dataRow.push(row["FISC_YEAR"]);
+//         dataRow.push(row["COMPANY_CODE"]);
+//         dataRow.push(row["BUSINESS_AREA"]);
+//         dataRow.push(row["CURRENCY"]);
+//         dataRow.push(row["EXCHANGE_RATE"]);
+//         dataRow.push({text: row["TOTAL_TAGIHAN"], alignment: "right"});
+//         dataRow.push(row["DOC_HDR_TXT"]);
+//         dataRow.push(row["STATUS_TRACKING"]);
+//         body.push(dataRow);
+//     });
+//     return body;
+// }
 
 function multi_upd_lunas() {
     Swal.fire({
@@ -476,13 +476,13 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
             "scrollCollapse": true,
             "aoColumnDefs": [
                 {width: 20, targets: 0},
-                {width: 150, targets: 1},
-                {width: 150, targets: 2},
-                {width: 150, targets: 3},
+                {width: 120, targets: 1},
+                {width: 120, targets: 2},
+                {width: 110, targets: 3},
                 {width: 150, targets: 4},
                 {width: 150, targets: 5},
-                {width: 150, targets: 6},
-                {width: 150, targets: 7},
+                {width: 110, targets: 6},
+                {width: 110, targets: 7},
                 {width: 150, targets: 8},
                 {width: 130, targets: 9},
                 {width: 130, targets: 10},
@@ -1161,6 +1161,7 @@ function submitChild() {
             pReference : $("#pDetailReference").val(),
             pDrCrInd : data.DEBIT_CREDIT_IND,
             pGlAccount : data.GL_ACCOUNT,
+            pRealAmount : data.REAL_AMOUNT,
             pAmount : data.AMOUNT,
             pExchangeRate : $("#pDetailExchangeRate").val(),
             pCurrency : data.CURRENCY,
@@ -1169,7 +1170,6 @@ function submitChild() {
             pBusArea : data.BUSINESS_AREA,
             pRemarks : data.REMARKS,
             pFlag : data.FLAG,
-            pRealAmount : data.REAL_AMOUNT,
         };
         dataList.push(prm);
     });
@@ -1432,7 +1432,6 @@ function initCbparent() {
 
 function openFormNew() {
     setListCurrency("pHeadCurrency");
-    setListCompCode("pHeadCompCode");
     $(".pExcRate").hide();
     $("#pHeadPostingDate").val("");
     $("#pHeadDocDate").val("");
@@ -1441,17 +1440,28 @@ function openFormNew() {
     $("#pHeadBusArea").val("");
     $("#pHeadCurrency").val("");
     $("#pHeadDocHdrTxt").val("");
-    $("#pHeadFiscYear").val("").mask("0000");
-    $("#pHeadCompCode").val("");
+    $("#pHeadFiscYear")
+        .val("")
+        .removeAttr("readonly")
+        .mask("0000");
+    $("#pHeadCompCode")
+        .children().remove();
+    setListCompCode("pHeadCompCode");
     $("#pHeadSumberDana").val("");
 
-    $("#pHeadPostingDate, #pHeadDocDate,#pHeadCompCode, " +
-        "#pHeadSumberDana, #pHeadFiscalYear, #pHeadBusArea, #pHeadCurrency").removeAttr("disabled")
+    $("#pHeadExchangeRate, #pHeadPostingDate, #pHeadDocDate,#pHeadCompCode, " +
+        "#pHeadSumberDana, #pHeadCurrency, #pHeadBusArea").removeAttr("disabled");
+
+    $("#pHeadPostingDate, #pHeadDocDate, #pHeadExchangeRate,#pHeadDocNo, #pHeadBusArea, " +
+        "#pHeadFiscYear, #pHeadCompCode, #pHeadCurrency, #pHeadSumberDana ").css({
+        "background-color" : "white",
+    });
 
     var date = new Date();
     $("#pHeadExchangeRate")
         .val("")
-        .mask("000,000,000,000,000,000,000,000",{reverse:true});
+        .mask("000,000,000,000,000,000,000,000",{reverse:true})
+        .removeAttr("disabled");
     $('#pHeadPostingDate').datepicker({dateFormat: 'yymmdd', minDate: date});
     $('#pHeadDocDate').datepicker({dateFormat: 'yymmdd'});
     $('#edit-modal').modal({backdrop: 'static', keyboard: false});
@@ -1468,7 +1478,7 @@ function edit_data (idMetallica){
             pIdMetallica : idMetallica,
         },
         success : (res) => {
-            console.log("data edit data : ",res);
+            // console.log("data edit data : ",res);
             hideLoadingCss("");
             $("#pHeadDocDate").val(res.data[0].DOCUMENT_DATE).attr("disabled", true);
             $("#pHeadPostingDate").val(res.data[0].POSTING_DATE).attr("disabled", true);
@@ -1506,6 +1516,10 @@ function edit_data (idMetallica){
             }else{
                 $(".pExcRate").show();
             }
+            $("#pHeadDocDate, #pHeadPostingDate, #pHeadDocNo, #pHeadExchangeRate, #pHeadBusArea, " +
+                "#pHeadFiscYear, #pHeadCompCode, #pHeadCurrency, #pHeadSumberDana ").css({
+                "background-color" : "#ececec",
+            });
 
             setTimeout(function(){ $('#edit-modal').modal({backdrop: 'static', keyboard: false}); }, 1000);
         },
@@ -1552,6 +1566,7 @@ function ins_data() {
                 Swal.fire("Gagal!", "Gagal menambahkan data", "error");
                 console.warn(res.RETURN);
             }
+            hideLoadingCss("");
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
@@ -1565,7 +1580,7 @@ function setListCurrency(htmlid){
         type : "GET",
         dataType : "JSON",
         success : response => {
-            $("#"+htmlid+"").html();
+            $("#"+htmlid+"").html('<option value="">Pilih Data</option>');
             $.each(response.data, (key,val) => {
                 console.log(val);
                 $("#"+htmlid+"").append('<option value="' + val.CURRENCY + '">'+val.CURRENCY+'</option>')
@@ -1652,6 +1667,7 @@ function setListCompCode(idhtml){
         success : response => {
             console.log("Company Code : ",response);
             $("#"+idhtml+"").html();
+            $("#"+idhtml+"").append('<option value="">Pilih Data</option>')
             $.each(response, (key,val) => {
                 $("#"+idhtml+"").append('<option value="' + val.COMPANY_CODE + '">'+val.COMPANY_CODE+' - '+val.COMPANY_NAME+'</option>')
             });
