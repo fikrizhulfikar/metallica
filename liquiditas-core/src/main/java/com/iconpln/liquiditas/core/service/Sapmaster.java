@@ -32,9 +32,9 @@ public class Sapmaster {
 //    }
 public String getdatasap(Map<String, Object> param) throws URISyntaxException,IOException {
 //        String url = AltConfig.get("sap.url_customer");
-    String url = AltConfig.get("sap.url")+"?sap-client="+xsap_client+"&interface=IFM079&customer="+param.get("customer")+"&comp_code="+param.get("comp_code")+"&date="+param.get("date");
+        String url = AltConfig.get("sap.url")+"?sap-client="+xsap_client+"&interface=IFM079&customer="+param.get("customer")+"&comp_code="+param.get("comp_code")+"&date="+param.get("date");
 //        String url = "http://10.1.6.103:8000/sap/bc/zmetallica_rest?sap_client=400&interface=IFM079&customer=ALL&comp_code=1000&date=20190930";
-    String response = SapHttp.executeGet(url);
+        String response = SapHttp.executeGet(url);
     return response;
 }
 

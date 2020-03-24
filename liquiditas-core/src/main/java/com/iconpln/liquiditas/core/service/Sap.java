@@ -50,17 +50,26 @@ public class Sap {
         param.put("date", date);
         param.put("customer",customer);
         param.put("comp_code", comp_code);
+//        System.out.println(sapmaster.getDataCustomer(param));
+//        JSONObject object = new JSONObject();
+//        ClassLoader classLoader = Sap.class.getClassLoader();
+//        InputStream inputStream = classLoader.getResourceAsStream("files/Customer.json");
+//        String result = IOUtils.toString(inputStream);
 
-        String list = '[' + sapmaster.getdatasap(param) + ']';
+//        sapmaster.getDataCustomer(param)
+        String list = '[' + sapmaster.getDataCustomer(param) + ']';
         System.out.println(list);
+        arr = (org.apache.chemistry.opencmis.commons.impl.json.JSONArray) parser.parse(list);
+        System.out.println("ARR:"+arr);
 
         Map<String, Object> out = new HashMap<>();
-
         try {
-            arr = (JSONArray) parser.parse(list);
+            int count;
             for (int i = 0; i < arr.size(); i++) {
                 org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObj = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arr.get(i);
-                arrLines = (JSONArray) parser.parse(String.valueOf(jsonObj.get("CUSTOMER")));
+                arrLines = (org.apache.chemistry.opencmis.commons.impl.json.JSONArray) parser.parse(String.valueOf(jsonObj.get("CUSTOMER")));
+                System.out.println("Customer Array"+arrLines);
+                count = 0;
                 for (int j = 0; j < arrLines.size(); j++) {
                     condition.clear();
                     org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObjLines = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arrLines.get(j);
@@ -79,10 +88,19 @@ public class Sap {
                     condition.put("customer_pmt_term", String.valueOf(jsonObjLines.get("CUSTOMER_PMT_TERM")));
                     condition.put("customer_pmt_method", String.valueOf(jsonObjLines.get("CUSTOMER_PMT_METHOD")));
                     condition.put("customer_email", String.valueOf(jsonObjLines.get("CUSTOMER_EMAIL")));
-
+//                    System.out.println("Cucstomer"+condition);
+                    try{
+                        out = sapService.insertCustomer(condition);
+                        count += 1;
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        count += 1;
+                    }
                 }
+                System.out.println("Customer Data Count : "+count);
                 if (jsonObj.get("WHT") != null) {
                     arrLines2 = (JSONArray) parser.parse(String.valueOf(jsonObj.get("WHT")));
+                    count = 0;
                     for (int j = 0; j < arrLines2.size(); j++) {
                         condition.clear();
                         org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObjLines2 = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arrLines2.get(j);
@@ -91,11 +109,19 @@ public class Sap {
                         condition.put("with_tax_type", String.valueOf(jsonObjLines2.get("WITH_TAX_TYPE")));
                         condition.put("with_tax_code", String.valueOf(jsonObjLines2.get("WITH_TAX_CODE")));
                         condition.put("with_tax_type_desc", String.valueOf(jsonObjLines2.get("WITH_TAX_TYPE_DESC")));
+//                        System.out.println("WHT"+condition);
+                        try{
+                          out =  sapService.insertCustomerWht(condition);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        count += 1;
                     }
                 }
-
+                System.out.println("Customer Wht Count : "+count);
                 if (jsonObj.get("BANK") != null) {
                     arrLines3 = (JSONArray) parser.parse(String.valueOf(jsonObj.get("BANK")));
+                    count = 0;
                     for (int j = 0; j < arrLines3.size(); j++) {
                         condition.clear();
                         org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObjLines3 = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arrLines3.get(j);
@@ -105,8 +131,15 @@ public class Sap {
                         condition.put("bank_account", String.valueOf(jsonObjLines3.get("BANK_ACCOUNT")));
                         condition.put("partner_bank_type", String.valueOf(jsonObjLines3.get("PARTNER_BANK_TYPE")));
                         condition.put("account_holder", String.valueOf(jsonObjLines3.get("ACCOUNT_HOLDER")));
+//                        System.out.println("BANK"+condition);
+                        try{
+                            out = sapService.insertCustomerBank(condition);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
                 }
+                System.out.println("Customer Wht Count : "+count);
             }
         } catch (JSONParseException e) {
             e.printStackTrace();
@@ -114,7 +147,8 @@ public class Sap {
         return out;
     }
     // Tinggal nangkep return dan count jumlah row yang ke looping yang belum bener.
-    public Object getApInvoice (String pCompanyCode,String pBusArea,String pDocNo,String pFiscYear, String pDatefrom, String pDateTo) throws IOException, URISyntaxException, AltException {
+    public Map<String, Object> getApInvoice (String pCompanyCode,String pBusArea,String pDocNo,String pFiscYear, String pDatefrom, String pDateTo) throws IOException, URISyntaxException, AltException {
+        Map<String, Object> out = new HashMap<>();
         try {
             param.put("comp_code",pCompanyCode);
             param.put("bus_area",pBusArea);
@@ -125,28 +159,26 @@ public class Sap {
 
             Sapmaster sapmaster = new Sapmaster();
 //
-            ClassLoader classLoader = Sap.class.getClassLoader();
-            InputStream inputStream = classLoader.getResourceAsStream("files/JSONApInvoice.json");
-            String result = IOUtils.toString(inputStream);
-
-            System.out.println("Stream Cok! : "+result);
-            try {
-
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+//            ClassLoader classLoader = Sap.class.getClassLoader();
+//            InputStream inputStream = classLoader.getResourceAsStream("files/JSONApInvoice.json");
+//            String result = IOUtils.toString(inputStream);
+//
+//            System.out.println("Stream : "+result);
+//            try {
+//
+//            }catch (Exception e){
+//                e.printStackTrace();
+//            }
             //sapmaster.getDataApInvoice(param);
-            String list = "["+result+"]";
-            System.out.println("DIAZ GANTENG :"+list);
+            String list = "["+sapmaster.getDataApInvoice(param)+"]";
             arr = (org.apache.chemistry.opencmis.commons.impl.json.JSONArray) parser.parse(list);
 
             System.out.println("ARR:"+arr);
-            List<Map<String, Object>> out = new ArrayList<>();
+
             int countter = 0 ;
 
             System.out.println("ARR SIZE :"+arr.size());
             for(int i=0; i<arr.size(); i++){
-
                 org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObject = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arr.get(i);
                 arrLines = (org.apache.chemistry.opencmis.commons.impl.json.JSONArray) parser.parse(String.valueOf(jsonObject.get("HEADER_DATA")));
                 System.out.println("Arrlines Siza:"+arrLines.size());
@@ -187,7 +219,6 @@ public class Sap {
 
                     System.out.println("Exch Rate : "+exch_rate);
                     System.out.println("Amount Bayar : "+amount_bayar);
-
 
                     try {
                         out = sapService.insertApInvoiceHead(comp_code, doc_no, fisc_year, doc_type, doc_date, post_date, entry_date, reference, rev_with, rev_year,
@@ -246,7 +277,7 @@ public class Sap {
                     condition.put("amt_with_base_lc",String.valueOf(jsonObjectLines2.get("AMT_WITH_BASE_LC")).trim());
                     condition.put("amt_with_lc", String.valueOf(jsonObjectLines2.get("AMT_WITH_LC")).trim());
                     condition.put("m_date_date",param.get("date_from").toString());
-                    System.out.println("Ini Condition : "+condition);
+//                    System.out.println("Ini Condition : "+condition);
                     try{
                         sapService.insertApInvoiceItem(condition);
                         countter++;
@@ -258,10 +289,10 @@ public class Sap {
             }
             return out;
         }catch (Exception e){
-            return e;
+            e.printStackTrace();
         }
+        return out;
     }
-
     // Tinggal nangkep return dan count jumlah row yang ke looping yang belum bener.
     public Map<String, Object> getHrPayable (String comp_code, String bus_area, String doc_no, String fiscal_year, String date_from, String date_to) throws IOException, URISyntaxException, AltException {
         Map<String, Object> final_result = new HashMap<>();
@@ -397,5 +428,197 @@ public class Sap {
             e.printStackTrace();
         }
         return final_result;
+    }
+
+    public Map<String, Object> getVendor(String date, String vendor_no, String comp_code) throws IOException,URISyntaxException,AltException {
+        Map<String, Object> out = new HashMap<>();
+        try {
+            Sapmaster sapmaster = new Sapmaster();
+            param.put("comp_code",comp_code);
+            param.put("date",date);
+            param.put("vendor",vendor_no);
+// to fetch data from file ==
+//            ClassLoader classLoader = Sap.class.getClassLoader();
+//            InputStream inputStream = classLoader.getResourceAsStream("files/Vendor.json");
+//            String result = IOUtils.toString(inputStream);
+// end of fetch data from file
+
+//            sapmaster.getDataVendor(param)
+            String list = "["+ sapmaster.getDataVendor(param) + "]";
+            arr = (JSONArray) parser.parse(list);
+
+            for (int i = 0;i < arr.size(); i++){
+                org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObject = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arr.get(i);
+                arrLines = (JSONArray) parser.parse(String.valueOf(jsonObject.get("VENDOR")));
+                for(int j=0; j < arrLines.size();j++){
+                    condition.clear();
+                    org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObjectLines = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arrLines.get(j);
+                    condition.put("vendor_no",String.valueOf(jsonObjectLines.get("VENDOR_NO")));
+                    condition.put("vendor_name",String.valueOf(jsonObjectLines.get("VENDOR_NAME")));
+                    condition.put("vendor_pmt_term",String.valueOf(jsonObjectLines.get("VENDOR_PMT_TERM")));
+                    condition.put("vendor_cash_mgmt_grp",String.valueOf(jsonObjectLines.get("VENDOR_CASH_MGMT_GRP")));
+                    condition.put("vendor_pmt_method",String.valueOf(jsonObjectLines.get("VENDOR_PMT_METHOD")));
+                    condition.put("vendor_vat_no",String.valueOf(jsonObjectLines.get("VENDOR_VAT_NO")));
+                    condition.put("vendor_mail",String.valueOf(jsonObjectLines.get("VENDOR_MAIL")));
+                    condition.put("city",String.valueOf(jsonObjectLines.get("CITY")));
+                    condition.put("country",String.valueOf(jsonObjectLines.get("COUNTRY")));
+                    condition.put("postal_code",String.valueOf(jsonObjectLines.get("POSTAL_CODE")));
+                    condition.put("vendor_tax_no",String.valueOf(jsonObjectLines.get("VENDOR_TAX_NO")));
+                    condition.put("vendor_recon_acct",String.valueOf(jsonObjectLines.get("VENDOR_RECON_ACCT")));
+                    condition.put("vend_acc_grp",String.valueOf(jsonObjectLines.get("VEND_ACC_GRP")));
+                    condition.put("street_no",String.valueOf(jsonObjectLines.get("STREET_NO")));
+                    condition.put("comp_code",String.valueOf(jsonObjectLines.get("COMP_CODE")));
+                    try{
+                        out = sapService.insertVendor(condition);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+
+                if (jsonObject.get("BANK") != null) {
+                    arrLines2 = (JSONArray) parser.parse(String.valueOf(jsonObject.get("BANK")));
+                    for(int j=0; j < arrLines2.size();j++){
+                        condition.clear();
+                        org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObjectLines2 = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arrLines2.get(j);
+                        condition.put("vendor_no",String.valueOf(jsonObjectLines2.get("VENDOR_NO")));
+                        condition.put("bank_country",String.valueOf(jsonObjectLines2.get("BANK_COUNTRY")));
+                        condition.put("bank_key",String.valueOf(jsonObjectLines2.get("BANK_KEY")));
+                        condition.put("bank_account",String.valueOf(jsonObjectLines2.get("BANK_ACCOUNT")));
+                        condition.put("partner_bank_type",String.valueOf(jsonObjectLines2.get("PARTNER_BANK_TYPE")));
+                        condition.put("account_holder",String.valueOf(jsonObjectLines2.get("ACCOUNT_HOLDER")));
+                        try{
+                            out = sapService.insertVendorBank(condition);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                if (jsonObject.get("WHT") != null) {
+                    arrLines3 = (JSONArray) parser.parse(String.valueOf(jsonObject.get("WHT")));
+                    for (int j = 0; j < arrLines3.size(); j++) {
+                        condition.clear();
+                        org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObjectLines3 = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arrLines3.get(j);
+                        condition.put("vendor_no", String.valueOf(jsonObjectLines3.get("VENDOR_NO")));
+                        condition.put("comp_code", String.valueOf(jsonObjectLines3.get("COMP_CODE")));
+                        condition.put("with_tax_type", String.valueOf(jsonObjectLines3.get("WITH_TAX_TYPE")));
+                        condition.put("with_tax_code", String.valueOf(jsonObjectLines3.get("WITH_TAX_CODE")));
+                        condition.put("with_tax_type_desc", String.valueOf(jsonObjectLines3.get("WITH_TAX_TYPE_DESC")));
+                        try{
+                            out = sapService.insertVendorWht(condition);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return out;
+    }
+
+    public Map<String, Object> getPaymentHouaseBank(String comp_code, String house_bank, String bank_country,String bank_key) throws IOException, URISyntaxException, AltException {
+        Map<String, Object> out = new HashMap<>();
+        try {
+            Sapmaster sapmaster = new Sapmaster();
+
+            param.put("comp_code",comp_code);
+            param.put("house_bank", house_bank);
+            param.put("bank_country", bank_country);
+            param.put("bank_key", bank_key);
+
+            // to fetch data from file ==
+            ClassLoader classLoader = Sap.class.getClassLoader();
+            InputStream inputStream = classLoader.getResourceAsStream("files/Bank.json");
+            String result = IOUtils.toString(inputStream);
+            // end of fetch data from file
+
+
+            String list = "["+result+"]";
+//            String list = "["+sapmaster.getDataBank(param)+"]";
+            arr = (JSONArray) parser.parse(list);
+
+            for (int i=0; i<arr.size(); i++){
+                org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObject = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arr.get(i);
+                arrLines = (JSONArray) parser.parse(String.valueOf(jsonObject.get("PAYMENT HOUSE BANK")));
+
+                for (int j = 0; j < arrLines.size(); j++){
+                    condition.clear();
+                    org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObjectLines = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arrLines.get(j);
+                    condition.put("account_id",String.valueOf(jsonObjectLines.get("ACCOUNT_ID")));
+                    condition.put("bank_account",String.valueOf(jsonObjectLines.get("BANK_ACCOUNT")));
+                    condition.put("bank_control_key",String.valueOf(jsonObjectLines.get("BANK_CONTROL_KEY")));
+                    condition.put("bank_country",String.valueOf(jsonObjectLines.get("BANK_COUNTRY")));
+                    condition.put("bank_key",String.valueOf(jsonObjectLines.get("BANK_KEY")));
+                    condition.put("comp_code",String.valueOf(jsonObjectLines.get("COMP_CODE")));
+                    condition.put("contact_person",String.valueOf(jsonObjectLines.get("CONTACT_PERSON")));
+                    condition.put("currency",String.valueOf(jsonObjectLines.get("CURRENCY")));
+                    condition.put("description",String.valueOf(jsonObjectLines.get("DESCRIPTION")));
+                    condition.put("gl_account",String.valueOf(jsonObjectLines.get("GL_ACCOUNT")));
+                    condition.put("house_bank",String.valueOf(jsonObjectLines.get("HOUSE_BANK")));
+                    condition.put("telephone1",String.valueOf(jsonObjectLines.get("TELEPHONE1")));
+                    try{
+                        out = sapService.insertPaymentHouseBank(condition);
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return out;
+    }
+
+    public Map<String, Object> getGeneralHouseBank(String comp_code, String house_bank, String bank_country,String bank_key) throws IOException, URISyntaxException, AltException {
+        Map<String, Object> out = new HashMap<>();
+        Map result = new HashMap<>();
+        try {
+            Sapmaster sapmaster = new Sapmaster();
+
+            param.put("comp_code",comp_code);
+            param.put("house_bank", house_bank);
+            param.put("bank_country", bank_country);
+            param.put("bank_key", bank_key);
+
+            // to fetch data from file ==
+//            ClassLoader classLoader = Sap.class.getClassLoader();
+//            InputStream inputStream = classLoader.getResourceAsStream("files/Bank.json");
+//            String result = IOUtils.toString(inputStream);
+            // end of fetch data from file
+
+
+//            String list = "["+result+"]";
+//            JSONObject object = new JSONObject(sapmaster.getDataBank(param));
+            String list = "["+sapmaster.getDataBank(param)+"]";
+            System.out.println("Ini List : "+list);
+            arr = (JSONArray) parser.parse(list);
+
+            for (int i=0; i<arr.size(); i++){
+                org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObject = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arr.get(i);
+                arrLines = (JSONArray) parser.parse(String.valueOf(jsonObject.get("GENERAL BANK DATA")));
+                result.put("length", arrLines.size());
+                for(int j=0;j<arrLines.size();j++){
+                    condition.clear();
+                    org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObjectLines2 = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arrLines.get(j);
+                    condition.put("bank_country",String.valueOf(jsonObjectLines2.get("BANK_COUNTRY")));
+                    condition.put("bank_key",String.valueOf(jsonObjectLines2.get("BANK_KEY")));
+                    condition.put("bank_name",String.valueOf(jsonObjectLines2.get("BANK_NAME")));
+                    condition.put("bank_no",String.valueOf(jsonObjectLines2.get("BANK_NO")));
+                    condition.put("city",String.valueOf(jsonObjectLines2.get("CITY")));
+                    condition.put("street",String.valueOf(jsonObjectLines2.get("STREET")));
+                    condition.put("swift_code",String.valueOf(jsonObjectLines2.get("SWIFT_CODE")));
+                    try{
+                        out = sapService.insertGeneralBank(condition);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return out;
     }
 }
