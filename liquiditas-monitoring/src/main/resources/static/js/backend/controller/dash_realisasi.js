@@ -4,7 +4,7 @@ function tableMainDashboard(_date){
     let date = new Date();
     let current_month = date.getMonth()+1;
     let current_full_date;
-    (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString() : current_full_date = _date;
+    (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+"0"+date.getDate().toString() : current_full_date = _date;
     console.log("Current Date : ",current_full_date);
 
     for (let i=0; i<5; i++){

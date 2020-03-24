@@ -462,8 +462,8 @@ public class DashboardService {
                 .withCatalogName("PKG_DASHBOARD_CORPAY")
                 .withFunctionName("get_dashboard_rencana_bank");
         SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("ptanggal", tanggal, OracleTypes.VARCHAR);
-
+                .addValue("ptanggal", tanggal, OracleTypes.VARCHAR)
+                .addValue("out_tanggal", OracleTypes.CURSOR);
         List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
         return out;
     }
@@ -560,7 +560,12 @@ public class DashboardService {
                 .addValue("out_bar_cashcode", OracleTypes.CURSOR)
                 .addValue("out_hari", OracleTypes.CURSOR)
                 .addValue("out_minggu", OracleTypes.CURSOR)
-                .addValue("out_bulan", OracleTypes.CURSOR);
+                .addValue("out_bulan", OracleTypes.CURSOR)
+                .addValue("out_bar_cashcode_real", OracleTypes.CURSOR)
+                .addValue("out_hari_real", OracleTypes.CURSOR)
+                .addValue("out_minggu_real", OracleTypes.CURSOR)
+                .addValue("out_bulan_real", OracleTypes.CURSOR)
+                .addValue("out_tahun_real", OracleTypes.CURSOR);
         Map<String, Object> out = simpleJdbcCall.execute(in);
         AppUtils.getLogger(this).info("data get_tagihan_cashcode : {}", out);
         return out;
@@ -666,7 +671,6 @@ public class DashboardService {
                 .withFunctionName("get_dashboard_rencana_valas");
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("ptanggal", tanggal);
-
         List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
         return out;
     }
