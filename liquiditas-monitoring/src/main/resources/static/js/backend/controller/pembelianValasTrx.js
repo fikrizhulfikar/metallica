@@ -30,7 +30,7 @@ $("#tanggal_awal").change(function () {
         // alert("Tanggal awal belum di tentukan");
         $('#tanggal_akhir').val("");
     } else {
-        $('#tanggal_akhir').attr("disabled", false);
+        $('#tanggal_akhir').attr('disabled', false);
         $('#tanggal_akhir').datepicker({dateFormat: 'yymmdd', minDate: tglAwalData});
     }
 });
@@ -216,7 +216,6 @@ function deletedb(idMetallica,idItem,lineNo){
                         hideLoadingCss();
                         Swal.fire("Gagal!","Gagal Menghapus Data","error");
                     }
-
                 },
                 error: function () {
                     hideLoadingCss("Gagal Melakukan Proses, Harap Hubungi Administrator")
@@ -375,31 +374,7 @@ function exportXls() {
     window.open(baseUrl + "api_operator/pembelian_valas_trx/xls/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currecny").val());
 }
 
-// function buildTableBody(data, columns) {
-//     var body = [];
-//     console.log("DIAZ GANTENG :"+data)
-//     body.push(columns);
-//
-//     data.forEach(function (row) {
-//         var dataRow = [];
-//         dataRow.push(row["NO"]);
-//         dataRow.push(row["DOCUMENT_DATE"]);
-//         dataRow.push(row["POSTING_DATE"]);
-//         dataRow.push(row["DOCUMENT_NUMBER"]);
-//         dataRow.push(row["REFERENCE"]);
-//             //dataRow.push({text: row["NILAI_TAGIHAN"], alignment: "right"});
-//         dataRow.push(row["FISC_YEAR"]);
-//         dataRow.push(row["COMPANY_CODE"]);
-//         dataRow.push(row["BUSINESS_AREA"]);
-//         dataRow.push(row["CURRENCY"]);
-//         dataRow.push(row["EXCHANGE_RATE"]);
-//         dataRow.push({text: row["TOTAL_TAGIHAN"], alignment: "right"});
-//         dataRow.push(row["DOC_HDR_TXT"]);
-//         dataRow.push(row["STATUS_TRACKING"]);
-//         body.push(dataRow);
-//     });
-//     return body;
-// }
+
 
 function multi_upd_lunas() {
     Swal.fire({
@@ -989,15 +964,19 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
     $('.dataTables_filter').each(function () {
 //         var html = '';
         var html = '<button class="btn btn-warning btn-sm" id="btn-verified" style="margin-left: 10px !important; width: 32px !important;" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
-        if(newRoleUser[0] == "ROLE_FCL_SETTLEMENT" || newRoleUser[0] === "ROLE_ADMIN") {
-        html = html + '<button class="btn btn-danger btn-sm" id="btn-verified" style="margin-left: 10px !important; width: 32px !important;" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
+        if(newRoleUser[0] == "ROLE_FCL_SETTLEMENT") {
+            html = html + '<button class="btn btn-danger btn-sm" id="btn-verified" style="margin-left: 10px !important; width: 32px !important;" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
         }
         if(newRoleUser[0] == "ROLE_VP_LIQUIDITY_AND_RECEIPT" || newRoleUser[0] == "ROLE_VP_INVESTMENT_EXPENDITURE"
             || newRoleUser[0] == "ROLE_VP_BUSINESS_MANAGEMENT" || newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT"
             || newRoleUser[0] == "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY" || newRoleUser[0] == "ROLE_VP_INVESTMENT_EXPENDITURE"
             || newRoleUser[0] == "ROLE_PLH_EXECUTIVE_VICE_PRESIDENT" || newRoleUser[0] == "ROLE_MSB_PAYMENT_EXPENDITURE"
             || newRoleUser[0] == "ROLE_VP_OPERATION_EXPENDITURE") {
-        html = html +'<button class="btn btn-sm btn-primary" style="margin-left: 10px !important; width: 32px !important;" type="button" title="Pelunasan" onclick="multi_upd_lunas()"><i class="fa fa-credit-card-alt"></i></button>';
+            html = html +'<button class="btn btn-sm btn-primary" style="margin-left: 10px !important; width: 32px !important;" type="button" title="Pelunasan" onclick="multi_upd_lunas()"><i class="fa fa-credit-card-alt"></i></button>';
+        }
+        if(newRoleUser[0] === "ROLE_ADMIN"){
+            html = html + '<button class="btn btn-danger btn-sm" id="btn-verified" style="margin-left: 10px !important; width: 32px !important;" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>'+
+            '<button class="btn btn-sm btn-primary" style="margin-left: 10px !important; width: 32px !important;" type="button" title="Pelunasan" onclick="multi_upd_lunas()"><i class="fa fa-credit-card-alt"></i></button>';
         }
         $(this).append(html);
     });
