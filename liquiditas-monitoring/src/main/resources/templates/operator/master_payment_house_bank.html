@@ -27,7 +27,7 @@
 </div>
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" style="cursor: default">Master Bank</li>
+        <li class="breadcrumb-item active" style="cursor: default">Master Payment House Bank</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
@@ -41,32 +41,23 @@
                     <div class="panel-body">
                         <div id="form">
                             <div class="form-group">
-                                <label for="pKodeBank"><span style="color: red">*)</span>&nbsp;Kode Bank:</label>
-                                <input type="text" class="form-control" id="pKodeBank" required="required"/>
+                                <label for="pCompCode"><span style="color: red">*</span>&nbsp;Comp Code:</label>
+                                <input type="text" class="form-control" id="pCompCode" required="required"/>
                             </div>
                             <div class="form-group">
-                                <label for="pNamaBank"><span style="color: red">*)</span>&nbsp;Nama Bank:</label>
-                                <input type="text" class="form-control" id="pNamaBank" required="required"/>
+                                <label for="pHouseBank"><span style="color: red">*</span>&nbsp;House Bank:</label>
+                                <input type="text" class="form-control" id="pHouseBank" required="required"/>
                             </div>
                             <div class="form-group">
-                                <label for="pJenis"><span style="color: red">*)</span>&nbsp;Jenis:</label>
-                                <select id="pJenis" class="form-control" required="required">
-                                    <option value="TUJUAN">TUJUAN</option>
-                                    <option value="PENERIMA">PENERIMA</option>
-                                    <option value="PENGIRIM">PENGIRIM</option>
-                                    <option value="PEMBAYAR">PEMBAYAR</option>
-                                </select>
+                                <label for="pBankCountry"><span style="color: red">*</span>&nbsp;Bank Country:</label>
+                                <input type="text" class="form-control" id="pBankCountry" required="required"/>
                             </div>
                             <div class="form-group">
-                                <label for="pFlag"><span style="color: red">*)</span>&nbsp;Status:</label>
-                                <select id="pFlag" class="form-control" required="required">
-                                    <option value="1">TAMPIL</option>
-                                    <option value="0">TIDAK TAMPIL</option>
-                                </select>
+                                <label for="pBankKey"><span style="color: red">*</span>&nbsp;Bank Key:</label>
+                                <input type="text" class="form-control" id="pBankKey" required="required"/>
                             </div>
                             <div align="right">
-                                <button onclick="clearForm()" class="btn btn-warning">Clear Form</button>
-                                <button onclick="submit()" class="btn btn-success">Submit</button>
+                                <button onclick="getPaymentHouseBank()" class="btn btn-success"><i class="fa fa-cloud-download"></i>&nbsp; Data</button>
                             </div>
                         </div>
                     </div>
@@ -179,4 +170,5 @@
 </main>
 <div th:fragment="scripts-backend">
     <script src="/static/js/backend/master/paymenthouseBank.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </div>

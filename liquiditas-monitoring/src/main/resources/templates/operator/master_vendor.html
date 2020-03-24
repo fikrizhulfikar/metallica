@@ -41,19 +41,19 @@
                     <div class="panel-body">
                         <div id="form">
                             <div class="form-group">
-                                <label for="pCustomerNumber"><span style="color: red">*</span>&nbsp;Customer Number :</label>
-                                <input type="text" class="form-control" id="pCustomerNumber" required="required"/>
+                                <label for="pVendorNumber"><span style="color: red">*</span>&nbsp;Vendor Number :</label>
+                                <input type="text" class="form-control" id="pVendorNumber" required="required"/>
                             </div>
                             <div class="form-group">
                                 <label for="pCompCode"><span style="color: red">*)</span>&nbsp;Company Code :</label>
                                 <input type="text" class="form-control" id="pCompCode" required="required"/>
                             </div>
                             <div class="form-group">
-                                <label for="pCustomerDate"><span style="color: red"></span>&nbsp;Tanggal :</label>
-                                <input id="pCustomerDate" class="form-control" type="number">
+                                <label for="pVendorDate"><span style="color: red"></span>&nbsp;Tanggal :</label>
+                                <input id="pVendorDate" class="form-control" type="number"/>
                             </div>
                             <div align="right">
-                                <button onclick="getCustomer()" class="btn btn-success">Add</button>
+                                <button onclick="getVendor()" class="btn btn-success">Addhoc</button>
                             </div>
                         </div>
                     </div>
@@ -168,5 +168,5 @@
     </div>
 </main>
 <div th:fragment="scripts-backend">
-    <script src="/static/js/backend/master/customer.js"></script>
+    <script src="/static/js/backend/master/vendor.js"></script>
 </div>
