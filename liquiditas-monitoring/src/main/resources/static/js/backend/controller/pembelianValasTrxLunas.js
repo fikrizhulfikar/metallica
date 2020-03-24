@@ -619,35 +619,45 @@ function back(){
 }
 
 function deleteHead (idMetallica){
-    showLoadingCss();
-    var del_confirm = confirm("Anda yakin ingin menghapus data ?");
-    if(del_confirm){
-        $.ajax({
-            url : baseUrl + "api_operator/pembelian_valas_trx/delete_pembelian_valas_trx_head",
-            dataType : "JSON",
-            type : "POST",
-            data : {
-                pIdMetallica : idMetallica,
-            },
-            success : (result) => {
-                console.log("Delete Result : ",result);
-                hideLoadingCss("");
-                // var result = res.return.split(";")[0];
-                console.log("Result : "+result);
-                if (result == 1 ) {
-                    alert(result.OUT_MSG);
-                    search("load");
-                    $('#edit-modal').modal('hide');
-                } else {
-                    alert(result.OUT_MSG);
+    Swal.fire({
+        title : "Hapus",
+        html : "<p>Anda yakin akan <b>menghapus</b> tagihan ini ?</p>",
+        icon : "question",
+        showCancelButton : true,
+        confirmButtonColor : "#3085d6",
+        cancelButtonColor : "#d33",
+        confirmButtonText : "Ya"
+    }).then(response => {
+        if(response.value){
+            showLoadingCss();
+            $.ajax({
+                url : baseUrl + "api_operator/pembelian_valas_trx/delete_pembelian_valas_trx_head",
+                dataType : "JSON",
+                type : "POST",
+                data : {
+                    pIdMetallica : idMetallica,
+                },
+                success : (result) => {
+                    // console.log("Delete Result : ",result);
+                    hideLoadingCss("");
+                    // var result = res.return.split(";")[0];
+                    // console.log("Result : "+result);
+                    if (result.return == 1 ) {
+                        Swal.fire("Berhasil", result.OUT_MSG.charAt(0).toUpperCase() + result.OUT_MSG.slice(1),"success");
+                        // alert(result.OUT_MSG);
+                        search("load");
+                        $('#edit-modal').modal('hide');
+                        tablePembelianValasLunas.ajax.reload();
+                    } else {
+                        alert(result.OUT_MSG);
+                    }
+                },
+                error : () => {
+                    hideLoadingCss("Gagal Menghapus Data, Silahkan Hubungi Administrator");
                 }
-            },
-            error : () => {
-                hideLoadingCss("Gagal Menghapus Data, Silahkan Hubungi Administrator");
-            }
-        });
-    }else{
-        hideLoadingCss("");
-    }
-    tablePembelianValasLunas.ajax.reload();
+            });
+        }else{
+            hideLoadingCss("");
+        }
+    });
 }

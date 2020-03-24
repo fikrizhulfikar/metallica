@@ -68,6 +68,45 @@ public class InvoiceGroupService {
         return result;
     }
 
+    public List<Map<String, Object>> getDataInvoiceBy(String pCompCode, String pDocNo, String pFiscYear, String pLineItem) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("invoice_group_get_data_by");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_comp_code", pCompCode);
+        params.put("p_doc_no", pDocNo);
+        params.put("p_fisc_year", pFiscYear);
+        params.put("p_line_item", pLineItem);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_group_data_invoice_by : {}", resultset);
+        return resultset;
+    }
+
+    public Map<String, Object> updateLunas(
+            String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pJenisTransaksi,
+            String pUserId, String pStatus
+    ) throws SQLException {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("group_upd_lunas2");
+        Map<String, Object> out;
+        SqlParameterSource inParent = new MapSqlParameterSource()
+                .addValue("p_comp_code", pCompCode)
+                .addValue("p_doc_no", pDocNo)
+                .addValue("p_fisc_year", pFiscYear)
+                .addValue("p_line_item", pLineItem)
+                .addValue("p_jenis_transaksi", pJenisTransaksi)
+                .addValue("p_user_id", pUserId)
+                .addValue("p_status", pStatus)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        out = simpleJdbcCall.execute(inParent);
+        AppUtils.getLogger(this).info("update data lunas : {}", out);
+        return out;
+    }
+
     public List<Map<String, Object>> getListInvoiceGroupVerifiedHead(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pUserId, String sortBy, String sortDir, String pSearch) throws SQLException {
         AppUtils.getLogger(this).debug("data rekap search info = " +
                         "pStart : {}, " +
@@ -605,24 +644,6 @@ public class InvoiceGroupService {
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("update data lunas : {}", out);
         return out;
-    }
-
-    //this function used to edit before inquiry
-    public List<Map<String, Object>> getDataInvoiceBy(String pCompCode, String pDocNo, String pFiscYear, String pLineItem) throws SQLException {
-
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_CORPAY")
-                .withFunctionName("invoice_get_data_by");
-
-        Map<String, Object> params = new HashMap<>();
-        params.put("p_comp_code", pCompCode);
-        params.put("p_doc_no", pDocNo);
-        params.put("p_fisc_year", pFiscYear);
-        params.put("p_line_item", pLineItem);
-        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
-
-        AppUtils.getLogger(this).info("data get_data_invoice_by : {}", resultset);
-        return resultset;
     }
 
 }

@@ -89,7 +89,7 @@ function duplicate_data(id) {
         },
         success: function (res) {
             hideLoadingCss("")
-            console.log("data duplicate :", res);
+            // console.log("data duplicate :", res);
             idValas = "";
             $("#pTglJatuhTempo").val("");
             $("#pNilaiTagihan").val("");
@@ -195,7 +195,7 @@ function delete_data(id) {
             },
             success: function (res) {
                 hideLoadingCss("")
-                console.log("delete log : ", res)
+                // console.log("delete log : ", res)
                 if (res.return == 1) {
                     alert(res.OUT_MSG);
                     table_rekapitulasi.ajax.reload();
@@ -221,7 +221,7 @@ function siap() {
         for (var i = 0; i < c.length; i++) {
             pilihan += '<option value="' + c[i] + '" />';
         }
-        console.log(c[i]);
+        // console.log(c[i]);
 
         if (c[0] == "null") {
             localStorage.removeItem("real_no_tagihan_RD");
@@ -371,7 +371,7 @@ function edit_data(id) {
         success: function (res) {
             hideLoadingCss("")
             idValas = id
-            console.log("data cmb edit_data :", res);
+            // console.log("data cmb edit_data :", res);
 
             $("#pTglJatuhTempo").val("");
             $("#pNilaiTagihan").val("");
@@ -477,7 +477,7 @@ function getAllData() {
             allData = res;
         },
         error: function (res) {
-            console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
+            // console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
         }
     });
 }
@@ -1535,7 +1535,7 @@ function upload_file(pIdValas) {
 
 function upd_status_tracking(idValas , pStatusinvoice){
     showLoadingCss();
-    console.log("satusinvoice :",pStatusinvoice);
+    // console.log("satusinvoice :",pStatusinvoice);
     $.ajax({
         url: baseUrl + "api_operator/pembayaran/upd_status",
         dataType: 'JSON',
@@ -1546,7 +1546,7 @@ function upd_status_tracking(idValas , pStatusinvoice){
         },
         success: function (res) {
             hideLoadingCss("")
-            console.log("data upd_status :", res);
+            // console.log("data upd_status :", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
                 table_rekapitulasi.ajax.reload();

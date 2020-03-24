@@ -29,7 +29,7 @@ function initDataTable(pYear) {
             pYear: pYear
         },
         success: function (res) {
-            console.log("response : ", res);
+            // console.log("response : ", res);
             if (res.return.length > 0) {
                 $('#table-pembayaran-harian tbody').empty();
                 $.each(res.return, function (key, val) {

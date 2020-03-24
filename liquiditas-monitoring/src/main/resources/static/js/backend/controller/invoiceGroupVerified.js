@@ -248,7 +248,7 @@ function deleteHead (idMetallica){
     }else{
         hideLoadingCss("");
     }
-    tableInvoiceGroup.ajax.reload();
+    tableInvoiceGroupVerified.ajax.reload();
 }
 
 function dele() {
@@ -684,7 +684,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                 function (settings) {
                     // $(".dataTables_scrollHeadInner").css({"width":"100%"});
                     // $(".table ").css({"width":"100%"});
-                    tableInvoiceGroup.columns.adjust();
+                    tableInvoiceGroupVerified.columns.adjust();
                     var currentPageNumber = this.api().page.info().page;
                     for (x=0;x<cbParentArray.length;x++){
                         if(cbParentArray[x] == currentPageNumber){
@@ -786,7 +786,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
 
     );
 
-    tableInvoiceGroup.on('search.dt', function () {
+    tableInvoiceGroupVerified.on('search.dt', function () {
         var value = $('.dataTables_filter input').val();
         tempTableSearch = value;
     });
@@ -810,7 +810,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
         $(this).append(html);
     });
 
-    tableInvoiceGroup.columns.adjust();
+    tableInvoiceGroupVerified.columns.adjust();
     initCbparent();
 }
 
@@ -833,7 +833,7 @@ function updateLunas(idMetallica, jenis){
                     alert(res.OUT_MSG);
                     search("load");
                     $("#detail-modal").modal("hide");
-                    tableInvoiceGroup.ajax.reload();
+                    tableInvoiceGroupVerified.ajax.reload();
                 }else{
                     alert(res.OUT_MSG);
                 }
@@ -859,7 +859,7 @@ function reverse_status(idMetallica, statusTracking){
             hideLoadingCss("");
             if (response.return == 1){
                 alert(response.OUT_MSG);
-                tableInvoiceGroup.ajax.reload();
+                tableInvoiceGroupVerified.ajax.reload();
             } else {
                 alert(response.OUT_MSG);
             }
@@ -1878,7 +1878,7 @@ function initCbparent() {
     $('#forcbparent').empty();
     $('#forcbparent').append("<input type=\"checkbox\" id='cbparent'> ");
     $("#cbparent").click(function(){
-        var pageNumber = tableInvoiceGroup.page.info().page;
+        var pageNumber = tableInvoiceGroupVerified.page.info().page;
         if($(this).is(":checked")) {
             $('input:checkbox').not(this).prop('checked', this.checked).change();
             cbParentArray.push(pageNumber);
@@ -1982,7 +1982,7 @@ function ins_data() {
             } else {
                 alert(res.OUT_MSG);
             }
-            tableInvoiceGroup.ajax.reload();
+            tableInvoiceGroupVerified.ajax.reload();
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");

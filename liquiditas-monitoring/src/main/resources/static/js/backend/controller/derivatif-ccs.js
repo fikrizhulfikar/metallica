@@ -86,7 +86,7 @@ function delete_data(id) {
             },
             success: function (res) {
                 hideLoadingCss("")
-                console.log("delete log : ", res)
+                // console.log("delete log : ", res)
                 if (res.return == 1) {
                     alert(res.OUT_MSG);
                     location.reload();
@@ -114,8 +114,8 @@ function edit_data(id) {
         success: function (res) {
             hideLoadingCss("");
             idDeviratif = id;
-            console.log("data Id", idDeviratif);
-            console.log("data edit_data :", res);
+            // console.log("data Id", idDeviratif);
+            // console.log("data edit_data :", res);
 
             $("#pBankCounterParty").val(),
             $("#pTenor").val(),
@@ -174,7 +174,7 @@ function ins_data() {
         },
         success: function (res) {
             hideLoadingCss("");
-            console.log("ins log : ", res);
+            // console.log("ins log : ", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
                 search("load");
@@ -213,10 +213,10 @@ function getAllData() {
         },
         success: function (res) {
             allData = res;
-            console.log("res get_all_derivatif_ccs ", allData);
+            // console.log("res get_all_derivatif_ccs ", allData);
         },
         error: function () {
-            console.log("Gagal Melakukan Proses,Harap Hubungi Administrator")
+            // console.log("Gagal Melakukan Proses,Harap Hubungi Administrator")
         }
     });
 }
@@ -234,7 +234,7 @@ function exportXls() {
 }
 
 function generatePDF() {
-    console.log("all data for pdf  : ", allData);
+    // console.log("all data for pdf  : ", allData);
     var column = [];
     column.push({
         text: "NO.",
@@ -360,7 +360,7 @@ function generatePDF() {
     var externalDataRetrievedFromServer = []
 
     $.each(allData, function (index, v) {
-        console.log("v", v);
+        // console.log("v", v);
         var helloooow = {
             NO: v.ROW_NUMBER,
             BANK_COUNTERPARTY: v.BANK_CONTERPARTY,
@@ -402,7 +402,7 @@ function generatePDF() {
         }
         externalDataRetrievedFromServer.push(helloooow)
     });
-    console.log("hasil push hellow", externalDataRetrievedFromServer)
+    // console.log("hasil push hellow", externalDataRetrievedFromServer)
 
     function buildTableBody(data, columns) {
         var body = [];
@@ -411,7 +411,7 @@ function generatePDF() {
 
         data.forEach(function (row) {
             var dataRow = [];
-            console.log(row);
+            // console.log(row);
             dataRow.push(row["NO"]);
             dataRow.push(row["BANK_COUNTERPARTY"]);
             dataRow.push(row["TENOR"]);
@@ -523,7 +523,7 @@ function upload_server_xls() {
 
 
     formData.append('pIdDerivatif', "5");
-    console.log(formData);
+    // console.log(formData);
     $.ajax({
         crossOrigin: true,
         type: "POST",
@@ -696,7 +696,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pTenor) {
             },
             "dataSrc": function (res) {
                 hideLoadingCss("")
-                console.log("get log dataSrc : ", res);
+                // console.log("get log dataSrc : ", res);
                 return res.data;
             }
         },
@@ -735,9 +735,9 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pTenor) {
 
     table_derivatif_ccs.on('search.dt', function () {
         var value = $('.dataTables_filter input').val();
-        console.log("VALUE SEARCH", value); // <-- the value
+        // console.log("VALUE SEARCH", value); // <-- the value
         tempTableSearch = value;
     });
-    console.log("tblDCcs", table_derivatif_ccs)
+    // console.log("tblDCcs", table_derivatif_ccs)
 
 }

@@ -288,6 +288,13 @@ function initDataTable() {
             "type": "GET",
             "dataType": "json",
         },
+        "scrollX" : "100%",
+        "bLengthChange": true,
+        "scrollY": "100%",
+        "scrollX": "100%",
+        "searching": true,
+        bSortable: true,
+        "scrollCollapse": true,
         "columns": [
 
             {"data": "ACCOUNT_ID"},
@@ -309,4 +316,32 @@ function initDataTable() {
         }
     })
 hideLoadingCss()
+}
+
+function getPaymentHouseBank(){
+    Swal.fire({
+        title : "Mengambil Data",
+        text : "Apakah Anda yakin akan mengambil data dari SAP ?",
+        icon : "question",
+        showCancelButton : true,
+        confirmButtonColor : "#3085d6",
+        cancelButtonColor : "#d33",
+        confirmButtonText : "Ya"
+    }).then(response => {
+        if(response.value){
+            $.ajax({
+                url : baseUrl + "api_master/integrasi_sap/get_payment_house_bank",
+                data : {
+                    pCompCode : $("#pCompCode").val(),
+                    pHouseBank : $("#pHouseBank").val(),
+                    pBankCountry : $("#pBankCountry").val() ,
+                    pBankKey : $("#pBankKey").val(),
+                },
+                dataType : "JSON",
+                success : (response => {
+
+                })
+            })
+        }
+    })
 }

@@ -264,17 +264,19 @@ function getAllData() {
                         {width: 100, targets: 68},
                         {width: 100, targets: 69},
                         {width: 100, targets: 70},
+                        {width: 100, targets: 71},
+                        {width: 100, targets: 72},
                         // {width: 100, targets: 35},
                         // {width: 100, targets: 36},
                         {width: "20%", "targets": 0},
                         { className: "datatables_action", "targets": [9,23,24,25,26,27,28,29] },
                         {
                             "bSortable": true,
-                            "aTargets": [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69]
+                            "aTargets": [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71]
                         },
                         {
                             "sortable": false,
-                            "aTargets": [0,35, 36]
+                            "aTargets": [0]
                         },
                         {
                             "aTargets": [0],
@@ -737,20 +739,26 @@ function getAllData() {
                                 return full.KETERANGAN;
                               }
                           },
-                        {
+                         {
                             "aTargets": [70],
                             "mRender": function (data, type, full) {
-                                return full.TGL_TAGIHAN_DITERIMA;
+                              return full.TGL_TAGIHAN_DITERIMA;
                             }
                         },
+                        {
+                          "aTargets": [71],
+                          "mRender": function (data, type, full) {
+                          return full.PARTIAL_IND;
+                                }
+                         },
                          {
-                              "aTargets": [71],
+                              "aTargets": [72],
                               "mRender": function (data, type, full) {
                               return full.STATUS_TRACKING;
                                     }
                          },
                         {
-                            "aTargets": [72],
+                            "aTargets": [73],
                             "mRender": function (data, type, full) {
                                 var ret_value;
                                 var role = newRoleUser[0];
@@ -758,7 +766,7 @@ function getAllData() {
                                 ret_value =
                                 '<div class="btn-group">'+
                                 '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title="Approve Tanggal" onclick="verifikasi_tanggal(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-check"></i></button>'+
-                                '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-danger" title="Reject" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-times"></i></button>'+
+                                '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-danger" title="Reject" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                 '</div>';
                                 }
                                 return ret_value;
@@ -766,7 +774,7 @@ function getAllData() {
 
                         },
                         {
-                            "aTargets": [73],
+                            "aTargets": [74],
                             "mRender": function (data, type, full) {
                                 var value = new Object();
                                 var full_value = new Object();
@@ -814,7 +822,7 @@ function getAllData() {
 
                                 function (res) {
                                     hideLoadingCss()
-                                    getTotalTagihan();
+                                   // getTotalTagihan();
                                     return res.data;
                                 }
                         }
@@ -1220,10 +1228,20 @@ function getAllData() {
                                  } else {
                                     api.column(69).visible(false);
                                 }
-                                if (response.STATUS_TRACKING == 1) {
-                                     api.column(70).visible(true);
+                                if (response.TGL_TAGIHAN_DITERIMA == 1) {
+                                    api.column(70).visible(true);
                                  } else {
-                                     api.column(70).visible(false);
+                                    api.column(70).visible(false);
+                                }
+                                if (response.PARTIAL_IND == 1) {
+                                     api.column(71).visible(true);
+                                 } else {
+                                     api.column(71).visible(false);
+                                }
+                                if (response.STATUS_TRACKING == 1) {
+                                     api.column(72).visible(true);
+                                 } else {
+                                     api.column(72).visible(false);
                                 }
                             },
                             error: function () {
@@ -1239,8 +1257,8 @@ function getAllData() {
             });
 
             $('.dataTables_length').each(function () {
-                var html = '<label style="margin-left: 250px; cursor:default;">Total tagihan (Rp): <b id="total_tagihan">0</b></label>';
-                $(this).append(html);
+//                var html = '<label style="margin-left: 250px; cursor:default;">Total tagihan (Rp): <b id="total_tagihan">0</b></label>';
+//                $(this).append(html);
             });
 
             $('.dataTables_filter').each(function () {

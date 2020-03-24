@@ -571,7 +571,7 @@ function creteChartKompSaldo(data) {
                           {
                               minvalue: data[0].maxvalue,
                               maxvalue: maxval1,
-                              code: data[1].code
+                              code: data[3].code
                           },
                           {
                               minvalue: maxval1,
@@ -581,7 +581,7 @@ function creteChartKompSaldo(data) {
                           {
                               minvalue: maxval2,
                               maxvalue: '100',
-                              code: data[3].code
+                              code: data[1].code
                           }
                        ]
                      }

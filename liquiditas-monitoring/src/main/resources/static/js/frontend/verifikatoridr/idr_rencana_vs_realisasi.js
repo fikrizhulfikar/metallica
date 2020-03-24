@@ -106,9 +106,9 @@ function search() {
             } else {
                 $.each(res.return, function (key, val) {
                     var jatuh_tempo = new Date(val.JATUH_TEMPO);
-                    console.log(jatuh_tempo);
+                    // console.log(jatuh_tempo);
                     var jatuh_tempo_date = jatuh_tempo.getDate()  + "/" + (jatuh_tempo.getMonth()+1) + "/" + jatuh_tempo.getFullYear();
-                    console.log(jatuh_tempo_date);
+                    // console.log(jatuh_tempo_date);
                     var html = '';
                     if (val.JENIS_PEMBAYARAN == 'total') {
                         html = '<tr>' +

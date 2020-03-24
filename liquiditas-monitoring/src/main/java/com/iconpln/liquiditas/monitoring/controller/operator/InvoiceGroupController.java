@@ -76,6 +76,28 @@ public class InvoiceGroupController {
         return mapData;
     }
 
+    @RequestMapping(value = "/edit_data", method = RequestMethod.GET)
+    public List getDataInvoiceBy(
+            @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
+            @RequestParam(value = "pNoDoc", defaultValue = "") String pNoDoc,
+            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
+            @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem
+
+    ) {
+        AppUtils.getLogger(this).info("pId edit data: {}", pCompCode);
+        AppUtils.getLogger(this).info("pId edit data: {}", pNoDoc);
+        AppUtils.getLogger(this).info("pId edit data: {}", pFiscYear);
+        AppUtils.getLogger(this).info("pId edit data: {}", pLineItem);
+
+        try {
+            return invoiceGroupService.getDataInvoiceBy(pCompCode, pNoDoc, pFiscYear, pLineItem );
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
     @RequestMapping(value = "/get_invoice_group_verified_head", method = RequestMethod.GET)
     public Map ListInvoiceGroupVerifiedHead(
             @RequestParam(value = "draw", defaultValue = "0") int draw,
@@ -114,6 +136,37 @@ public class InvoiceGroupController {
             mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
         }
         return mapData;
+    }
+
+    @RequestMapping(value = "/update_lunas", method = RequestMethod.POST)
+    public Map<String, Object> updateLunas(
+            @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
+            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
+            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
+            @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem,
+            @RequestParam(value = "pJenisTransaksi", defaultValue = "") String pJenisTransaksi,
+            @RequestParam(value = "pStatus", defaultValue = "Sukses") String pStatus
+    ) {
+        AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
+//        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
+//        AppUtils.getLogger(this).info("pFiscYear edit data: {}", pFiscYear);
+//        AppUtils.getLogger(this).info("pLineItem edit data: {}", pLineItem);
+//        AppUtils.getLogger(this).info("pKet edit data: {}", pKet);
+//        AppUtils.getLogger(this).info("pBankPembayar edit data: {}", pBankPembayar);
+//        AppUtils.getLogger(this).info("pKeterangan edit data: {}", pKeterangan);
+//        AppUtils.getLogger(this).info("pTglRencanaBayar edit data: {}", pTglRencanaBayar);
+//        AppUtils.getLogger(this).info("pSumberDana edit data: {}", pSumberDana);
+//        AppUtils.getLogger(this).info("pMetodePembayaran edit data: {}", pMetodePembayaran);
+        try {
+            Map<String, Object> res = invoiceGroupService.updateLunas(pCompCode, pDocNo, pFiscYear, pLineItem, pJenisTransaksi, WebUtils.getUsernameLogin(), pStatus);
+            if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
+
+            }
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @RequestMapping(value = "/get_invoice_group_lunas_head", method = RequestMethod.GET)
@@ -766,48 +819,26 @@ public class InvoiceGroupController {
         }
     }
 
-    @RequestMapping(value = "/update_lunas", method = RequestMethod.POST)
-    public Map<String, Object> updateLunas(
-//            @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
-//            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
-//            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
-//            @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem,
-//            @RequestParam(value = "pJenisTransaksi", defaultValue = "") String pJenisTransaksi,
-            @RequestParam(value = "pIdGroup", defaultValue = "") String pIdGroup
-    ) {
-
-        try {
-            Map<String, Object> res = invoiceGroupService.updateLunas(pIdGroup);
-            if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
-
-            }
-            return res;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @RequestMapping(value = "/edit_data", method = RequestMethod.GET)
-    public List getDataInvoiceBy(
-            @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
-            @RequestParam(value = "pNoDoc", defaultValue = "") String pNoDoc,
-            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
-            @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem
-
-    ) {
-        AppUtils.getLogger(this).info("pId edit data: {}", pCompCode);
-        AppUtils.getLogger(this).info("pId edit data: {}", pNoDoc);
-        AppUtils.getLogger(this).info("pId edit data: {}", pFiscYear);
-        AppUtils.getLogger(this).info("pId edit data: {}", pLineItem);
-
-        try {
-            return invoiceGroupService.getDataInvoiceBy(pCompCode, pNoDoc, pFiscYear, pLineItem );
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
+//    @RequestMapping(value = "/update_lunas", method = RequestMethod.POST)
+//    public Map<String, Object> updateLunas(
+////            @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
+////            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
+////            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
+////            @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem,
+////            @RequestParam(value = "pJenisTransaksi", defaultValue = "") String pJenisTransaksi,
+//            @RequestParam(value = "pIdGroup", defaultValue = "") String pIdGroup
+//    ) {
+//
+//        try {
+//            Map<String, Object> res = invoiceGroupService.updateLunas(pIdGroup);
+//            if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
+//
+//            }
+//            return res;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
 }
