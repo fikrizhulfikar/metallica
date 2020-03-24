@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by israj on 10/4/2016.
+ * Updated by Diaz on 2018 s/d 2020.
  */
 @RestController
 @RequestMapping("/api_operator/rekap_invoice_belum")
@@ -210,7 +211,7 @@ public class CorpayController {
             for (int index = 0; index < jsonArray.length(); index++){
                 JSONObject object = jsonArray.getJSONObject(index);
                 System.out.println("Jancok! : "+object);
-                out = corpayService.insertMultipleEdit(object.getString("pCompCode"),object.getString("pDocNo"),object.getString("pFiscYear"),object.getString("pLineItem"),object.getString("pKet"),pCashCode, pMetodePembayaran, pJamBayar);
+                out = corpayService.insertMultipleEdit(object.getString("pCompCode"),object.getString("pDocNo"),object.getString("pFiscYear"),object.getString("pLineItem"),object.getString("pKet"),pCashCode, pMetodePembayaran, pJamBayar, WebUtils.getUsernameLogin());
                 System.out.println("BigDecimal : "+out);
             }
         }catch (Exception e){
@@ -358,108 +359,155 @@ public class CorpayController {
 
     @RequestMapping(value = "/save_column", method = RequestMethod.POST)
     public Map saveColumn(@RequestParam("nomor") Integer nomor,
-                          @RequestParam("comp_code") Integer compCode,
-                          @RequestParam("doc_no") Integer docNo,
-                          @RequestParam("fisc_year") Integer fiscYear,
-                          @RequestParam("doc_type") Integer docType,
-                          @RequestParam("doc_date") Integer docDate,
-                          @RequestParam("post_date") Integer postDate,
-                          @RequestParam("entry_date") Integer entryDate,
+                          @RequestParam("ket") Integer ket,
+                          @RequestParam("doc_no") Integer doc_no,
+                          @RequestParam("doc_date2") Integer doc_date2,
+                          @RequestParam("rev_with") Integer rev_with,
+                          @RequestParam("rev_year") Integer rev_year,
+                          @RequestParam("post_date2") Integer post_date2,
+                          @RequestParam("base_date") Integer base_date,
+                          @RequestParam("entry_date2") Integer entry_date2,
+                          @RequestParam("doc_type") Integer doc_type,
+                          @RequestParam("fisc_year") Integer fisc_year,
+                          @RequestParam("doc_hdr_txt") Integer doc_hdr_txt,
                           @RequestParam("reference") Integer reference,
-                          @RequestParam("rev_with") Integer revWith,
-//                          @RequestParam("unit") Integer unit,
-                          @RequestParam("rev_year") Integer revYear,
-                          @RequestParam("doc_hdr_txt") Integer docHdrTxt,
+                          @RequestParam("tgl_tagihan_diterima") Integer tgl_tagihan_diterima,
+                          @RequestParam("comp_code") Integer comp_code,
+                          @RequestParam("bus_area") Integer bus_area,
                           @RequestParam("currency") Integer currency,
-                          @RequestParam("exch_rate") Integer exchRate,
-                          @RequestParam("reference_key") Integer referenceKey,
-                          @RequestParam("pmt_ind") Integer pmtInd,
-                          @RequestParam("trans_type") Integer transType,
-                          @RequestParam("spread_val") Integer spreadVal,
-                          @RequestParam("line_item") Integer lineItem,
-                          @RequestParam("oi_ind") Integer oiInd,
-                          @RequestParam("acct_type") Integer acctType,
-                          @RequestParam("spec_gl") Integer specGl,
-                          @RequestParam("bus_area") Integer busArea,
-                          @RequestParam("tpba") Integer tpba,
-                          @RequestParam("amt_lc") Integer amtLc,
-                          @RequestParam("amt_tc") Integer amtTc,
-                          @RequestParam("amt_with_base_tc") Integer amtWithBaseTc,
-                          @RequestParam("amt_with_tc") Integer amtWithTc,
+                          @RequestParam("exch_rate") Integer exch_rate,
+                          @RequestParam("line_item") Integer line_item,
+                          @RequestParam("dr_cr_ind") Integer dr_cr_ind,
+                          @RequestParam("spec_gl") Integer spec_gl,
+                          @RequestParam("gl_acct") Integer gl_acct,
+                          @RequestParam("amt_tc") Integer amt_tc,
+                          @RequestParam("amt_lc") Integer amt_lc,
+                          @RequestParam("amt_with_base_tc") Integer amt_with_base_tc,
+                          @RequestParam("amt_with_tc") Integer amt_with_tc,
+                          @RequestParam("amt_with_base_lc") Integer amt_with_base_lc,
+                          @RequestParam("amt_with_lc") Integer amt_with_lc,
+                          @RequestParam("amount") Integer amount,
+                          @RequestParam("acct_type") Integer acct_type,
                           @RequestParam("assignment") Integer assignment,
-                          @RequestParam("item_text") Integer itemText,
-                          @RequestParam("cost_ctr") Integer costCtr,
-                          @RequestParam("gl_acct") Integer glAcct,
+                          @RequestParam("item_text") Integer item_text,
                           @RequestParam("customer") Integer customer,
                           @RequestParam("vendor") Integer vendor,
-                          @RequestParam("base_date") Integer baseDate,
-                          @RequestParam("term_pmt") Integer termPmt,
-                          @RequestParam("due_on") Integer dueOn,
-                          @RequestParam("pmt_block") Integer pmtBlock,
-                          @RequestParam("house_bank") Integer houseBank,
-                          @RequestParam("prtnr_bank_type") Integer prtnrBankType,
-                          @RequestParam("po_num") Integer poNum,
-                          @RequestParam("po_item") Integer poItem,
-                          @RequestParam("ref_key1") Integer refKey1,
-                          @RequestParam("ref_key2") Integer refKey2,
-                          @RequestParam("ref_key3") Integer refKey3,
-                          @RequestParam("int_order") Integer intOrder,
-                          @RequestParam("wbs_num") Integer wbsNum,
-                          @RequestParam("cash_code") Integer cashCode,
-                          @RequestParam("corp_pmt") Integer corpPmt
+                          @RequestParam("term_pmt") Integer term_pmt,
+                          @RequestParam("due_on") Integer due_on,
+                          @RequestParam("reference_key") Integer reference_key,
+                          @RequestParam("pmt_ind") Integer pmt_ind,
+                          @RequestParam("trans_type") Integer trans_type,
+                          @RequestParam("spread_val") Integer spread_val,
+                          @RequestParam("pmt_block") Integer pmt_block,
+                          @RequestParam("house_bank") Integer house_bank,
+                          @RequestParam("no_rek_house_bank") Integer no_rek_house_bank,
+                          @RequestParam("prtnr_bank_type") Integer prtnr_bank_type,
+                          @RequestParam("bank_key") Integer bank_key,
+                          @RequestParam("bank_account") Integer bank_account,
+                          @RequestParam("account_holder") Integer account_holder,
+                          @RequestParam("cost_ctr") Integer cost_ctr,
+                          @RequestParam("int_order") Integer int_order,
+                          @RequestParam("wbs_num") Integer wbs_num,
+                          @RequestParam("cash_code") Integer cash_code,
+                          @RequestParam("po_num") Integer po_num,
+                          @RequestParam("po_item") Integer po_item,
+                          @RequestParam("ref_key1") Integer ref_key1,
+                          @RequestParam("ref_key2") Integer ref_key2,
+                          @RequestParam("ref_key3") Integer ref_key3,
+                          @RequestParam("oi_ind") Integer oi_ind,
+                          @RequestParam("tpba") Integer tpba,
+                          @RequestParam("metode_pembayaran") Integer metode_pembayaran,
+                          @RequestParam("tgl_rencana_bayar") Integer tgl_rencana_bayar,
+                          @RequestParam("oss_id") Integer oss_id,
+                          @RequestParam("group_id") Integer group_id,
+                          @RequestParam("bank_byr") Integer bank_byr,
+                          @RequestParam("curr_bayar") Integer curr_bayar,
+                          @RequestParam("amount_bayar") Integer amount_bayar,
+                          @RequestParam("bank_benef") Integer bank_benef,
+                          @RequestParam("no_rek_benef") Integer no_rek_benef,
+                          @RequestParam("nama_benef") Integer nama_benef,
+                          @RequestParam("tgl_act_bayar") Integer tgl_act_bayar,
+                          @RequestParam("sumber_dana") Integer sumber_dana,
+                          @RequestParam("partial_ind") Integer partial_ind,
+                          @RequestParam("keterangan") Integer keterangan,
+                          @RequestParam("status_tracking") Integer status_tracking
     ) {
         Map data = new HashMap();
         try {
             String result = corpayService.saveColumn(WebUtils.getUsernameLogin(),
                     nomor,
-                    compCode,
-                    docNo,
-                    fiscYear,
-                    docType,
-                    docDate,
-                    postDate,
-                    entryDate,
+                    ket,
+                    doc_no,
+                    doc_date2,
+                    rev_with,
+                    rev_year,
+                    post_date2,
+                    base_date,
+                    entry_date2,
+                    doc_type,
+                    fisc_year,
+                    doc_hdr_txt,
                     reference,
-                    revWith,
-                    revYear,
-                    docHdrTxt,
+                    tgl_tagihan_diterima,
+                    comp_code,
+                    bus_area,
                     currency,
-                    exchRate,
-                    referenceKey,
-                    pmtInd,
-                    transType,
-                    spreadVal,
-                    lineItem,
-                    oiInd,
-                    acctType,
-                    specGl,
-                    busArea,
-                    tpba,
-                    amtLc,
-                    amtTc,
-                    amtWithBaseTc,
-                    amtWithTc,
+                    exch_rate,
+                    line_item,
+                    dr_cr_ind,
+                    spec_gl,
+                    gl_acct,
+                    amt_tc,
+                    amt_lc,
+                    amt_with_base_tc,
+                    amt_with_tc,
+                    amt_with_base_lc,
+                    amt_with_lc,
+                    amount,
+                    acct_type,
                     assignment,
-                    itemText,
-                    costCtr,
-                    glAcct,
+                    item_text,
                     customer,
                     vendor,
-                    baseDate,
-                    termPmt,
-                    dueOn,
-                    pmtBlock,
-                    houseBank,
-                    prtnrBankType,
-                    poNum,
-                    poItem,
-                    refKey1,
-                    refKey2,
-                    refKey3,
-                    intOrder,
-                    wbsNum,
-                    cashCode,
-                    corpPmt
+                    term_pmt,
+                    due_on,
+                    reference_key,
+                    pmt_ind,
+                    trans_type,
+                    spread_val,
+                    pmt_block,
+                    house_bank,
+                    no_rek_house_bank,
+                    prtnr_bank_type,
+                    bank_key,
+                    bank_account,
+                    account_holder,
+                    cost_ctr,
+                    int_order,
+                    wbs_num,
+                    cash_code,
+                    po_num,
+                    po_item,
+                    ref_key1,
+                    ref_key2,
+                    ref_key3,
+                    oi_ind,
+                    tpba,
+                    metode_pembayaran,
+                    tgl_rencana_bayar,
+                    oss_id,
+                    group_id,
+                    bank_byr,
+                    curr_bayar,
+                    amount_bayar,
+                    bank_benef,
+                    no_rek_benef,
+                    nama_benef,
+                    tgl_act_bayar,
+                    sumber_dana,
+                    partial_ind,
+                    keterangan,
+                    status_tracking
             );
             data.put("data", result);
         } catch (Exception e) {
@@ -489,7 +537,10 @@ public class CorpayController {
             @RequestParam(value = "pRetrievalRefNumber", defaultValue = "") String pRetrievalRefNumber,
             @RequestParam(value = "pCustomerRefNumber", defaultValue = "") String pCustomerRefNumber,
             @RequestParam(value = "pConfirmationCode", defaultValue = "") String pConfirmationCode,
-            @RequestParam(value = "pTglActBayar", defaultValue = "") String pTglActBayar
+            @RequestParam(value = "pTglActBayar", defaultValue = "") String pTglActBayar,
+            @RequestParam(value = "pJamBayar", defaultValue = "") String pJamBayar,
+            @RequestParam(value = "pOssId", defaultValue = "") String pOssId,
+            @RequestParam(value = "pGroupId", defaultValue = "") String pGroupId
     ) {
         AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
 //        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
@@ -504,7 +555,7 @@ public class CorpayController {
         try {
             Map<String, Object> res = corpayService.updatePembayaran(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pBankPembayar, pKeterangan, pTglRencanaBayar,pSumberDana,
                     pMetodePembayaran,pNoRekHouseBank,pInqCustomerName,pInqAccountNumber,pInqAccountStatus, pKodeBankPenerima, pRetrievalRefNumber,
-                    pCustomerRefNumber, pConfirmationCode, pTglActBayar);
+                    pCustomerRefNumber, pConfirmationCode, pTglActBayar, pJamBayar, WebUtils.getUsernameLogin(), pOssId, pGroupId);
             if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
             }
@@ -555,7 +606,9 @@ public class CorpayController {
             @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
             @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem,
             @RequestParam(value = "pJenisTransaksi", defaultValue = "") String pJenisTransaksi,
-            @RequestParam(value = "pStatus", defaultValue = "Sukses") String pStatus
+            @RequestParam(value = "pStatus", defaultValue = "Sukses") String pStatus,
+            @RequestParam(value = "pOssId", defaultValue = "") String pOssId,
+            @RequestParam(value = "pGroupId", defaultValue = "Sukses") String pGroupId
     ) {
         AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
 //        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
@@ -568,7 +621,7 @@ public class CorpayController {
 //        AppUtils.getLogger(this).info("pSumberDana edit data: {}", pSumberDana);
 //        AppUtils.getLogger(this).info("pMetodePembayaran edit data: {}", pMetodePembayaran);
         try {
-            Map<String, Object> res = corpayService.updateLunas(pCompCode, pDocNo, pFiscYear, pLineItem, pJenisTransaksi, WebUtils.getUsernameLogin(), pStatus);
+            Map<String, Object> res = corpayService.updateLunas(pCompCode, pDocNo, pFiscYear, pLineItem, pJenisTransaksi, WebUtils.getUsernameLogin(), pStatus, pOssId, pGroupId);
             if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
             }
@@ -669,7 +722,9 @@ public class CorpayController {
             @RequestParam(value = "pKet", defaultValue = "") String pKet,
             @RequestParam(value = "pStatusTracking", defaultValue = "") String pStatusTracking,
             @RequestParam(value = "pCustomerName", defaultValue = "") String pCustomerName,
-            @RequestParam(value = "pAccountNumber", defaultValue = "") String pAccountNumber
+            @RequestParam(value = "pAccountNumber", defaultValue = "") String pAccountNumber,
+            @RequestParam(value = "pOssId", defaultValue = "") String pOssId,
+            @RequestParam(value = "pGroupId", defaultValue = "") String pGroupId
     ) {
         AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
 //        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
@@ -683,7 +738,7 @@ public class CorpayController {
 //        AppUtils.getLogger(this).info("pMetodePembayaran edit data: {}", pMetodePembayaran);
         try {
             Map<String, Object> res = corpayService.updateStatus(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pStatusTracking,
-                    pCustomerName,pAccountNumber);
+                    pCustomerName,pAccountNumber,WebUtils.getUsernameLogin(),pOssId,pGroupId);
             if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
             }
@@ -701,7 +756,9 @@ public class CorpayController {
             @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
             @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem,
             @RequestParam(value = "pKet", defaultValue = "") String pKet,
-            @RequestParam(value = "pStatusTracking", defaultValue = "") String pStatusTracking
+            @RequestParam(value = "pStatusTracking", defaultValue = "") String pStatusTracking,
+            @RequestParam(value = "pOssId", defaultValue = "") String pOssId,
+            @RequestParam(value = "pGroupId", defaultValue = "") String pGroupId
     ) {
         AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
 //        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
@@ -714,7 +771,7 @@ public class CorpayController {
 //        AppUtils.getLogger(this).info("pSumberDana edit data: {}", pSumberDana);
 //        AppUtils.getLogger(this).info("pMetodePembayaran edit data: {}", pMetodePembayaran);
         try {
-            Map<String, Object> res = corpayService.updateStatusGiro(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pStatusTracking
+            Map<String, Object> res = corpayService.updateStatusGiro(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pStatusTracking, pOssId, pGroupId
                     );
 
             return res;
@@ -731,7 +788,9 @@ public class CorpayController {
             @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
             @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem,
             @RequestParam(value = "pKet", defaultValue = "") String pKet,
-            @RequestParam(value = "pStatusTracking", defaultValue = "") String pStatusTracking
+            @RequestParam(value = "pStatusTracking", defaultValue = "") String pStatusTracking,
+            @RequestParam(value = "pOssId", defaultValue = "") String pOssId,
+            @RequestParam(value = "pGroupId", defaultValue = "") String pGroupId
     ) {
         AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
 //        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
@@ -744,7 +803,7 @@ public class CorpayController {
 //        AppUtils.getLogger(this).info("pSumberDana edit data: {}", pSumberDana);
 //        AppUtils.getLogger(this).info("pMetodePembayaran edit data: {}", pMetodePembayaran);
         try {
-            Map<String, Object> res = corpayService.reverseStatus(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pStatusTracking);
+            Map<String, Object> res = corpayService.reverseStatus(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pStatusTracking, WebUtils.getUsernameLogin(), pOssId, pGroupId);
             if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
             }
@@ -761,7 +820,10 @@ public class CorpayController {
             @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
             @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
             @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem,
-            @RequestParam(value = "pKet", defaultValue = "") String pKet
+            @RequestParam(value = "pKet", defaultValue = "") String pKet,
+            @RequestParam(value = "pOssId", defaultValue = "") String pOssId,
+            @RequestParam(value = "pGroupId", defaultValue = "") String pGroupId
+
     ) {
         AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
 //        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
@@ -774,7 +836,7 @@ public class CorpayController {
 //        AppUtils.getLogger(this).info("pSumberDana edit data: {}", pSumberDana);
 //        AppUtils.getLogger(this).info("pMetodePembayaran edit data: {}", pMetodePembayaran);
         try {
-            Map<String, Object> res = corpayService.reverseSap(pCompCode, pDocNo, pFiscYear, pLineItem, pKet);
+            Map<String, Object> res = corpayService.reverseSap(pCompCode, pDocNo, pFiscYear, pLineItem, pKet,WebUtils.getUsernameLogin(), pOssId, pGroupId);
 
             return res;
         } catch (Exception e) {
@@ -821,6 +883,18 @@ public class CorpayController {
     ) {
         try {
             return corpayService.getKodeBankPembayar(pCurrency);
+        } catch (Exception e) {
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_kode_bank_penerima", method = RequestMethod.GET)
+    public List<Map<String,Object>> getKodeBankPenerima(
+            @RequestParam(value = "pSingkatan", defaultValue = "") String pSingkatan
+    ) {
+        try {
+            return corpayService.getKodeBankPenerima(pSingkatan);
         } catch (Exception e) {
             AppUtils.getLogger(this).debug(e.getMessage());
             return null;
@@ -924,7 +998,7 @@ public class CorpayController {
 //    public Map<String, Object> createGroup(
 //            @RequestParam(value = "pData", defaultValue = "") String pData,
 //            @RequestParam(value = "pNamaGroup", defaultValue = "") String pNamaGroup
-//    ) {
+//    ) throws JSONException {
 //
 //        Map<String, Object> out = null;
 //        //pNamaGroup = (pNamaGroup.toString().equals("null") ? "" : pNamaGroup);
@@ -943,9 +1017,7 @@ public class CorpayController {
 //                    try {
 //                        System.out.println("DIAZZZZZ:"+json.getString("pCompCode"));
 //                        out = corpayService.createGroup(json.getString("pCompCode"), json.getString("pDocNo"), json.getString("pFiscYear"), json.getString("pLineItem"),json.getString("pKet"), pNamaGroup, WebUtils.getUsernameLogin());
-//                        if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
 //
-//                        }
 //                        return out;
 //                    } catch (Exception e) {
 //                        e.printStackTrace();
@@ -1114,15 +1186,17 @@ public class CorpayController {
         try {
             for (int index = 0; index < jsonArray.length(); index++){
                 JSONObject object = jsonArray.getJSONObject(index);
-                String comp_code = object.getString("comp_code");
-                String doc_no = object.getString("doc_no");
-                String fisc_year = object.getString("fisc_year");
-                String line_item = object.getString("line_item");
-                String ket = object.getString("ket");
+                String comp_code = object.getString("pCompCode");
+                String doc_no = object.getString("pDocNo");
+                String fisc_year = object.getString("pFiscYear");
+                String line_item = object.getString("pLineItem");
+                String ket = object.getString("pKet");
                 String statustracking = object.getString("statustracking");
                 String customer_name = object.getString("customer_name");
                 String account_number = object.getString("account_number");
-                out = corpayService.updateStatus(comp_code, doc_no, fisc_year, line_item, ket, statustracking, customer_name, account_number );
+                String oss_id = object.getString("oss_id");
+                String group_id = object.getString("group_id");
+                out = corpayService.updateStatus(comp_code, doc_no, fisc_year, line_item, ket, statustracking, customer_name, account_number, WebUtils.getUsernameLogin(), oss_id, group_id);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -1137,11 +1211,13 @@ public class CorpayController {
             @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
             @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
             @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem,
-            @RequestParam(value = "pKet", defaultValue = "") String pKet
+            @RequestParam(value = "pKet", defaultValue = "") String pKet,
+            @RequestParam(value = "p_oss_id", defaultValue = "") String pOssId,
+            @RequestParam(value = "p_group_id", defaultValue = "") String pGroupId
     ) {
         AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
         try {
-            Map<String, Object> res = corpayService.verifikasiTgl(pCompCode, pDocNo, pFiscYear, pLineItem, pKet);
+            Map<String, Object> res = corpayService.verifikasiTgl(pCompCode, pDocNo, pFiscYear, pLineItem, pKet,WebUtils.getUsernameLogin(), pOssId, pGroupId);
             return res;
         } catch (Exception e) {
             e.printStackTrace();
