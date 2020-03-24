@@ -251,12 +251,12 @@
                 pTglRencana : pTgl_Rencana
             },
             success: function (res) {
-                console.log("all data  :  ",res);
+                // console.log("all data  :  ",res);
                 allData = res;
                 createUIPdf(res);
             },
             error: function (res) {
-                console.log("error cannot get data pdf");
+                // console.log("error cannot get data pdf");
                 waitingDialog.hide();
             }
         });
