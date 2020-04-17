@@ -1215,4 +1215,21 @@ public class MasterService {
         AppUtils.getLogger(this).info("data get_list_keterangan : {}",resultset);
         return resultset;
     }
+
+    public Map<String, Object> updateStatus(
+            String p_id_group, String p_status
+    ) throws SQLException {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_MASTER")
+                .withFunctionName("upd_user_status");
+        Map<String, Object> out;
+        SqlParameterSource inParent = new MapSqlParameterSource()
+                .addValue("p_id_group", p_id_group)
+                .addValue("p_status", p_status)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        out = simpleJdbcCall.execute(inParent);
+        AppUtils.getLogger(this).info("update status user : {}", out);
+        return out;
+    }
+
 }

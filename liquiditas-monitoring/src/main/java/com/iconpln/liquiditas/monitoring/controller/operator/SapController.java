@@ -39,7 +39,7 @@ public class SapController {
     private ResourceLoader resourceLoader;
 
     @RequestMapping(value = "/get_apinvoice", method = RequestMethod.POST)
-    public String getApInvoice(
+    public Map<String, Object> getApInvoice(
             @RequestParam(value = "pCompanyCode", defaultValue = "") String pCompanyCode,
             @RequestParam(value = "pBusArea", defaultValue = "") String pBusArea,
             @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
@@ -50,11 +50,11 @@ public class SapController {
         try {
 //            Map<String, String> param = new HashMap<>();
 
-            Object res = sap.getApInvoice(pCompanyCode, pBusArea, pDocNo, pFiscYear, pDatefrom, pDateTo);
+            Map<String, Object> res = sap.getApInvoice(pCompanyCode, pBusArea, pDocNo, pFiscYear, pDatefrom, pDateTo);
             // if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
             //  }
-            return res.toString();
+            return res;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

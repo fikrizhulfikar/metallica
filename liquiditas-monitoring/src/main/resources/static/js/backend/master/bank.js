@@ -304,7 +304,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pketeranga
 
                     var ret_value =
                         '<div class="btn-group">' +
-                        '<button style="width: 15px !important;" class="btn btn-primary" title="Edit Data" onclick="getbyId(\'' + full.KODE_BANK + '\')"><i class="fa fa-pencil"></i></button>' +
+                        '<button style="width: 15px !important;" class="btn btn-primary" title="Edit Data" onclick="getbyId(\'' + full.KODE_BANK + '\')"><i class="fas fa-edit"></i></button>' +
                         btnDet +
                         '</div>'
                     return ret_value;

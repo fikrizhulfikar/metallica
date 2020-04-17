@@ -2,6 +2,9 @@ var tableMain;
 var isUpdate = "0";
 $(document).ready(function () {
     initDataTable();
+    $('#pDateFrom').datepicker({dateFormat : 'yymmdd'});
+    $('#pDateTo').datepicker({dateFormat : 'yymmdd'});
+    // $('#pFiscYear').datepicker({dateFormat : 'yy'});
 });
 
 function getbyId(id) {
@@ -432,24 +435,23 @@ function getApInvoice(){
                  pDateFrom: $("#pDateFrom").val(),
                  pDateTo: $("#pDateTo").val()
             },
-            success: function (res) {
-                showLoadingCss();
-                console.log('TEST DIAZ : '+res)
-                if (res.ERROR_CODE == 'undefined' || res.ERROR_CODE == null) {
-                    alert('DATA BERHASIL DI TARIK');
-                    // search("load");
-                    // $('#edit-modal').modal('hide');
-                    hideLoadingCss();
+            success: function (response) {
+                // showLoadingCss();
+                // console.log('TEST DIAZ : '+response)
+                if (response.status === 404) {
+                    Swal.fire('Oops!',response.status_message,'info');
+                } else if(response.status === 200 && response.description.return === 1){
+                    Swal.fire('Berhasil!','Data berhasil ditarik dari SAP','success');
+                    // hideLoadingCss();
                     tableMain.ajax.reload();
-                } else {
-                    alert('DATA GAGAL DI TARIK');
-                    hideLoadingCss()
                 }
+                hideLoadingCss();
             },
-            error: function () {
-                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+            error: function (response) {
+                // console.log('TEST DIAZ : '+JSON.parse(response))
+                Swal.fire("Gagal!","Terjadi kesalahan","error");
+                hideLoadingCss()
             }
         });
-
     }
 }

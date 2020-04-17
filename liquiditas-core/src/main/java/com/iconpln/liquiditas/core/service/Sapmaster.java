@@ -14,8 +14,9 @@ import java.util.Map;
 public class Sapmaster {
     private static final String TAG = Sapmaster.class.getName();
     private String intf = "";
-//    private int xsap_client = 400;
-    private int xsap_client = 100;
+//    private int xsap_client = 400; // dev
+//    private int xsap_client = 100; // uat/sit
+    private int xsap_client = 890; // training
 
     public String ai(HashMap<String, Object> param) throws URISyntaxException,IOException {
         String url = AltConfig.get("http://10.1.80.123/sipat/public/api/prk-ao-nonpemeliharaan/2019/ujt1");

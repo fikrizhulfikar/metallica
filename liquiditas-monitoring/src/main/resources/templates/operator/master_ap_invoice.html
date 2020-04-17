@@ -27,7 +27,7 @@
 </div>
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" style="cursor: default">Master Bank</li>
+        <li class="breadcrumb-item active" style="cursor: default">Master AP Invoice</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
@@ -65,8 +65,8 @@
                                 <input type="number" class="form-control" id="pDateTo"/>
                             </div>
                             <div align="right">
-                                <button onclick="clearForm()" class="btn btn-warning">Clear Form</button>
-                                <button onclick="getApInvoice()" class="btn btn-success">Add Hoc</button>
+<!--                                <button onclick="clearForm()" class="btn btn-warning">Clear Form</button>-->
+                                <button onclick="getApInvoice()" class="btn btn-success"><i class="fas fa-cloud-download-alt"></i>&nbsp; Get Data</button>
                             </div>
                         </div>
                     </div>
@@ -200,4 +200,5 @@
 </main>
 <div th:fragment="scripts-backend">
     <script src="/static/js/backend/master/ap_invoice.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </div>

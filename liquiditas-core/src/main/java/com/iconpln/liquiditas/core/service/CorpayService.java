@@ -550,7 +550,7 @@ public class CorpayService {
 
     public Map<String, Object> updateLunasGiro(
             String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pJenisTransaksi,
-            String pUserId
+            String pUserId, String pOssId, String pGroupId
     ) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -562,6 +562,31 @@ public class CorpayService {
                 .addValue("p_fisc_year", pFiscYear)
                 .addValue("p_line_item", pLineItem)
                 .addValue("p_jenis_transaksi", pJenisTransaksi)
+                .addValue("p_oss_id",pOssId)
+                .addValue("p_group_id", pGroupId)
+                .addValue("p_user_id", pUserId)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        out = simpleJdbcCall.execute(inParent);
+        AppUtils.getLogger(this).info("update data lunas Giro : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> updateSiapBayarGiro(
+            String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pJenisTransaksi,
+            String pUserId, String pOssId, String pGroupId
+    ) throws SQLException {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("invoice_upd_siap_bayar");
+        Map<String, Object> out;
+        SqlParameterSource inParent = new MapSqlParameterSource()
+                .addValue("p_comp_code", pCompCode)
+                .addValue("p_doc_no", pDocNo)
+                .addValue("p_fisc_year", pFiscYear)
+                .addValue("p_line_item", pLineItem)
+                .addValue("p_jenis_transaksi", pJenisTransaksi)
+                .addValue("p_oss_id",pOssId)
+                .addValue("p_group_id", pGroupId)
                 .addValue("p_user_id", pUserId)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
@@ -597,7 +622,7 @@ public class CorpayService {
 
     public Map<String, Object> updateStatusGiro(
             String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet, String pStatusTracking,
-            String pOssId, String pGroupId
+            String pOssId, String pGroupId, String pUserId
     ) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -612,6 +637,7 @@ public class CorpayService {
                 .addValue("p_status_tracking", pStatusTracking)
                 .addValue("p_oss_id", pOssId)
                 .addValue("p_group_id", pGroupId)
+                .addValue("p_user_id",pUserId)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data update status Giro : {}", out);
@@ -1777,8 +1803,6 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("get_all_invoice_by_status");
-
-
         Map<String, Object> params = new HashMap<>();
         params.put("p_user_id", idUser);
         params.put("p_tgl_awal", pTglAwal);
@@ -1793,5 +1817,31 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         AppUtils.getLogger(this).info("data get_all_pembayaran_by_status1 : {} and userid {}", resultset, idUser);
         return resultset;
     }
+
+//    public List<Map<String, Object>> getAllpembayaran(String idUser, String pTglAwal, String pTglAkhir,  String pCurr, String pCaraBayar, String pBank, String status, String statusTracking) throws SQLException {
+//
+//        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
+//        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
+//        AppUtils.getLogger(this).debug("PARAM SEARCH pCurr : {}", pCurr);
+//
+//        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+//                .withCatalogName("PKG_CORPAY")
+//                .withFunctionName("get_all_invoice_by_status");
+//
+//
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("p_user_id", idUser);
+//        params.put("p_tgl_awal", pTglAwal);
+//        params.put("p_tgl_akhir", pTglAkhir);
+//        params.put("p_currency", pCurr);
+//        params.put("p_cara_bayar", pCaraBayar);
+//        params.put("p_bank", pBank);
+//        params.put("p_status", status);
+//        params.put("p_status_tracking", statusTracking);
+//        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+//
+//        AppUtils.getLogger(this).info("data get_all_pembayaran_by_status1 : {} and userid {}", resultset, idUser);
+//        return resultset;
+//    }
 
 }

@@ -127,7 +127,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pketeranga
                 "mRender": function (data, type, full) {
 
                     var ret_value =
-                        '<button style="width: 15px !important;" class="btn btn-info" title="Edit Data" onclick="getbyId(\'' + full.ID_SUMBER_DANA + '\')"><i class="fa fa-pencil"></i></button>'
+                        '<button style="width: 15px !important;" class="btn btn-info" title="Edit Data" onclick="getbyId(\'' + full.ID_SUMBER_DANA + '\')"><i class="fas fa-edit"></i></button>'
                     return ret_value;
 
                 }

@@ -5,7 +5,7 @@ var tableMain;
 var isUpdate = "0";
 $(document).ready(function () {
     // initDataTable();
-    $("#pCustomerDate").datepicker();
+    $("#pCustomerDate").datepicker({dateFormat : 'yymmdd'});
 });
 
 function getCustomer(){
@@ -23,16 +23,19 @@ function getCustomer(){
             pCompCode : comp_code,
         },
         success : (response => {
-            hideLoadingCss();
-            if (response.ERROR_CODE === 'undefined' || response.ERROR_CODE === null){
-                Swal.fire("Berhasil!","Data berasil ditarik dari SAP","success");
-            }else if(response.ERROR_CODE === 404){
-                Swal.fire("Gagal!","Data tidak ditemukan","error");
+            if (response.status === 404) {
+                Swal.fire('Oops!',response.status_message,'info');
+                // hideLoadingCss();
+            } else if(response.status === 200 && response.description.return === 1){
+                Swal.fire('Berhasil!',response.data_length + ' data berhasil ditarik dari SAP','success');
+
+                tableMain.ajax.reload();
             }
+            hideLoadingCss();
         }),
         error : (response => {
             Swal.fire("Gagal!","Terjadi kesalahan","error");
-            // hideLoadingCss();
+            hideLoadingCss();
         })
     });
 }

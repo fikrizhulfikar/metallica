@@ -336,7 +336,8 @@ public class PembayaranController {
             @RequestParam(value = "pJenisTagihan", defaultValue = "") String pJenisTagihan,
             @RequestParam(value = "pPosAnggaran", defaultValue = "") String pPosAnggaran,
             @RequestParam(value = "pSubPosAnggaran", defaultValue = "") String pSubPosAnggaran,
-            @RequestParam(value = "pUnitAnggaran", defaultValue = "") String pUnitAnggaran
+            @RequestParam(value = "pUnitAnggaran", defaultValue = "") String pUnitAnggaran,
+            @RequestParam(value = "pJenisDokumen", defaultValue = "") String pJenisDokumen
     ) {
 
         AppUtils.getLogger(this).debug("idValas : {} ", pIdValas);
@@ -365,6 +366,7 @@ public class PembayaranController {
         AppUtils.getLogger(this).debug("pPosAnggaran : {} ", pPosAnggaran);
         AppUtils.getLogger(this).debug("pSubPosAnggaran : {} ", pSubPosAnggaran);
         AppUtils.getLogger(this).debug("pUnitAnggaran : {} ", pUnitAnggaran);
+        AppUtils.getLogger(this).debug("pJenisTransaksi : {}",pJenisDokumen);
 
         try {
             String message = "";
@@ -385,7 +387,7 @@ public class PembayaranController {
             Map<String, Object> res = valasService.insPembayaran(pIdValas, pJenisPembayaran, pTglJatuhTempo, pVendor, pCurr, pNilaiTagihan,
                     pBankTujuan, pBankPembayar, pUnitPenerima, pNoTagihan, pTglTagihan, pNoNotdin, pTglNotdin, pStatusValas,
                     WebUtils.getUsernameLogin(), pKeterangan, pTipeTransaksi, pTglTerimaInvoice, pNominalSblmPajak, pNominalUnderlying,
-                    pPajak, pNominalTanpaUnderlying, pKursJisdor, pSpread, pJenisTagihan, pPosAnggaran,pSubPosAnggaran,pUnitAnggaran);
+                    pPajak, pNominalTanpaUnderlying, pKursJisdor, pSpread, pJenisTagihan, pPosAnggaran,pSubPosAnggaran,pUnitAnggaran,pJenisDokumen);
             if (isUpdate) {
                 Map<String, String> sesudah = notificationUtil.getNotificationDetailByIdValas(pIdValas);
                 message += "Perubahan: " + sesudah.get("NAMA_JENIS_PEMBAYARAN") + "-" + sesudah.get("NAMA_VENDOR") + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + ".";

@@ -55,7 +55,7 @@ public class ValasService {
             String pTipeTransaksi, String pTglTerimaInvoice, String nominalSblmPajak,
             String nominalUnderlying, String pajak, String nominalTanpaUnderlying,
             String kursJisdor, String spread, String jenisTagihan, String pPosAnggaran,
-            String pSubPosAnggaran, String pUnitAnggaran
+            String pSubPosAnggaran, String pUnitAnggaran, String pJenisDokumen
     ) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -91,6 +91,7 @@ public class ValasService {
                 .addValue("p_pos_anggaran", pPosAnggaran)
                 .addValue("p_sub_pos_anggaran", pSubPosAnggaran)
                 .addValue("p_unit_anggaran", pUnitAnggaran)
+                .addValue("p_jenis_transaksi",pJenisDokumen)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data ins_rekap_data : {}", out);

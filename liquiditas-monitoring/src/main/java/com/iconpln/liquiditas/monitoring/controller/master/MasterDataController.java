@@ -1196,8 +1196,21 @@ public class MasterDataController {
         }
     }
 
+    @RequestMapping(value = "user/update_status", method = RequestMethod.POST)
+    public Map<String, Object> updateStatus(
+            @RequestParam(value = "p_id_group", defaultValue = "") String p_id_group,
+            @RequestParam(value = "p_status", defaultValue = "") String p_status
+    ) {
+        AppUtils.getLogger(this).info("p_id_group update data: {}", p_id_group);
+        try {
+            Map<String, Object> res = masterService.updateStatus(p_id_group, p_status);
+            if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
-
-
-
+            }
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

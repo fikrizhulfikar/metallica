@@ -33,7 +33,7 @@
         <li class="breadcrumb-item active" style="cursor: default">Invoice Belum Verifikasi</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
 
             </div>
@@ -605,12 +605,12 @@
                     <div class="col-md-3" style="padding-right: 0px;">
                         <select name="cmb_cara_pembayaran" id="cmb_cara_pembayaran" class="form-control">
                             <option value="ALL">Pilih Data</option>
-                            <option value="INHOUSE">In House</option>
-                            <option value="ONLINETRANSFER">Online Transfer</option>
-                            <option value="RTGS">RTGS</option>
-                            <option value="KLIRING">Kliring</option>
-                            <option value="TT">TT</option>
-                            <option value="VALAS">Valas</option>
+<!--                            <option value="INHOUSE">In House</option>-->
+<!--                            <option value="ONLINETRANSFER">Online Transfer</option>-->
+<!--                            <option value="RTGS">RTGS</option>-->
+<!--                            <option value="KLIRING">Kliring</option>-->
+<!--                            <option value="TT">TT</option>-->
+<!--                            <option value="VALAS">Valas</option>-->
                             <option value="GIRO">Giro</option>
                             <option value="INTERNETBANKING">Internet Banking</option>
                         </select>
@@ -1067,7 +1067,7 @@
                                 <label for="pNoGiro"> Nomor Giro :</label>
                                 <input type="text" id="pNoGiro" class="form-control" value=""/>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="jamBayar">
                                 <label for="pJamBayar"><span style="color: red;">*</span>&nbsp;Jam Bayar :</label>
                                 <select class="form-control" id="pJamBayar" required="required">
                                     <option value="07:00-07:30">07:00-07:30</option>
@@ -1100,8 +1100,8 @@
                                     <option value="">Pilih Data</option>
                                     <option value="PMN">PMN</option>
                                     <option value="NON PMN">NON PMN</option>
-                                    <option value="Rekening Imprest Valas">Rekening Imprest Valas</option>
-                                    <option value="Rekening Non Imprest Valas">Rekening Non Imprest Valas</option>
+                                    <option value="REKENING IMPREST VALAS">REKENING IMPREST VALAS</option>
+                                    <option value="REKENING NON-IMPREST VALAS">REKENING NON-IMPREST VALAS</option>
 
                                 </select>
                             </div>

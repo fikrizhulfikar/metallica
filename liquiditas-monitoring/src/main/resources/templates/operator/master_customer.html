@@ -50,10 +50,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="pCustomerDate"><span style="color: red"></span>&nbsp;Tanggal :</label>
-                                <input id="pCustomerDate" class="form-control" type="number">
+                                <input id="pCustomerDate" class="form-control" type="number"/>
                             </div>
                             <div align="right">
-                                <button onclick="getCustomer()" class="btn btn-success">Add</button>
+                                <button onclick="getCustomer()" class="btn btn-success"><i class="fas fa-cloud-download-alt"></i>&nbsp;Get Data</button>
                             </div>
                         </div>
                     </div>
@@ -169,4 +169,5 @@
 </main>
 <div th:fragment="scripts-backend">
     <script src="/static/js/backend/master/customer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </div>

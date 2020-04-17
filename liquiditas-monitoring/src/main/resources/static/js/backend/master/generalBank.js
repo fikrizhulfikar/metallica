@@ -315,6 +315,7 @@ function getGeneralBank(){
         confirmButtonText : "Ya"
     }).then(response => {
         if(response.value){
+            showLoadingCss();
             $.ajax({
                 url : baseUrl + "api_master/integrasi_sap/get_general_bank",
                 data : {
@@ -325,17 +326,22 @@ function getGeneralBank(){
                 },
                 dataType : "JSON",
                 success : (response => {
-                    showLoadingCss();
+
                     // console.log('TEST DIAZ : '+res)
-                    if (response.ERROR_CODE == 'undefined' || response.ERROR_CODE == null) {
-                        alert('DATA BERHASIL DI TARIK');
-                        hideLoadingCss();
+                    if (response.status === 404) {
+                        Swal.fire('Oops!',response.status_message,'info');
+                        // hideLoadingCss();
+                    } else if(response.status === 200 && response.description.return === 1){
+                        Swal.fire('Berhasil!',response.data_length + ' data berhasil ditarik dari SAP','success');
+                        // hideLoadingCss();
                         tableMain.ajax.reload();
-                    } else {
-                        alert('DATA GAGAL DI TARIK');
-                        hideLoadingCss()
                     }
-                })
+                    hideLoadingCss();
+                }),
+                error : response => {
+                    Swal.fire("Error", "Terjadi kesalahan, silahkan hubungi Admin","error");
+                    hideLoadingCss();
+                }
             })
         }
     })

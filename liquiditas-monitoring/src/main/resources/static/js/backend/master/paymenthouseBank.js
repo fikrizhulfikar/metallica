@@ -329,6 +329,7 @@ function getPaymentHouseBank(){
         confirmButtonText : "Ya"
     }).then(response => {
         if(response.value){
+            showLoadingCss();
             $.ajax({
                 url : baseUrl + "api_master/integrasi_sap/get_payment_house_bank",
                 data : {
@@ -340,7 +341,21 @@ function getPaymentHouseBank(){
                 dataType : "JSON",
                 success : (response => {
 
-                })
+                    // console.log('TEST DIAZ : '+res)
+                    if (response.status === 404) {
+                        Swal.fire('Oops!',response.status_message,'info');
+                        // hideLoadingCss();
+                    } else if(response.status === 200 && response.description.return === 1){
+                        Swal.fire('Berhasil!',response.data_length + ' data berhasil ditarik dari SAP','success');
+                        // hideLoadingCss();
+                        tableMain.ajax.reload();
+                    }
+                    hideLoadingCss();
+                }),
+                error : () => {
+                    Swal.fire("Error", "Terjadi kesalahan, silahkan hubungi Admin","error");
+                    hideLoadingCss();
+                }
             })
         }
     })

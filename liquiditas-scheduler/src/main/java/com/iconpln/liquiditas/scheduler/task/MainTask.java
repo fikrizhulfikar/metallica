@@ -62,4 +62,10 @@ public class MainTask extends Thread {
             AppUtils.getLogger(this).info("NO DATA TR VALAS TO PROCESS FOR");
         }
     }
+
+    @Scheduled(fixedRate = 60000)
+    public void testScheduler(){
+        System.out.println("Fikri Aulia Zhulfikar");
+        AppUtils.getLogger(this).info("FIKRI AULIA ZHULFIKAR");
+    }
 }

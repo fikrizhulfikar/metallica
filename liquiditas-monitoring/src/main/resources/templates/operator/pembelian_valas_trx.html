@@ -31,9 +31,9 @@
         <li class="breadcrumb-item active" style="cursor: default">Transaksi Pembelian Valas </li>
         <li class="breadcrumb-menu d-md-down-none fungsional-button">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
                 <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="hasAnyAuthority('ROLE_FCL_SETTLEMENT','ROLE_ADMIN')">
-                    <i class="icon-pencil"></i> &nbsp;New Data
+                    <i class="fas fa-plus-square"></i> &nbsp;New Data
                 </button>
             </div>
         </li>
@@ -351,8 +351,8 @@
             </table>
         </div>
         <div align="right">
-            <button class="btn btn-danger" onclick="back()"><i class="fa fa-arrow-circle-left">&nbsp;Back</i></button>
-            <button onclick="submitChild()" class="btn btn-success just-for-input-data"><i class="fa fa-save"></i>&nbsp;Submit</button>
+            <button class="btn btn-danger" onclick="back()"><i class="fas fa-arrow-circle-left"></i>&nbsp;Back</button>
+            <button onclick="submitChild()" class="btn btn-success just-for-input-data"><i class="fas fa-save"></i>&nbsp;Submit</button>
         </div>
     </div>
 </main>

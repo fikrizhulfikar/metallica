@@ -53,108 +53,60 @@ function tableMainDashboard(_date){
                                                             }else
                                                             return '<td>'+data.CURRENCY+'</td>';
                                                             }},
-            {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR"){
-                                                            return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
-                                                            } else if (data.CURRENCY === "USD"){
-                                                            return '<td> $ '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
-                                                            } else if (data.CURRENCY === "EUR"){
-                                                            return '<td> € '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
-                                                            } else if (data.CURRENCY === "JPY"){
-                                                            return '<td> ¥ '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
-                                                            } else
-                                                            return '<td> RM '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
-                                                         },
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D0 == "0" || data.RP_D0 == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+                                                           },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
-            {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR"){
-                                                            return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
-                                                            } else if (data.CURRENCY === "USD"){
-                                                            return '<td> $ '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
-                                                            } else if (data.CURRENCY === "EUR"){
-                                                            return '<td> € '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
-                                                            } else if (data.CURRENCY === "JPY"){
-                                                            return '<td> ¥ '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
-                                                            } else
-                                                            return '<td> RM '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
-                                                         },
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D1 == "0" || data.RP_D1 == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
+                                                           },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
-            {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR"){
-                                                            return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
-                                                            } else if (data.CURRENCY === "USD"){
-                                                            return '<td> $ '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
-                                                            } else if (data.CURRENCY === "EUR"){
-                                                            return '<td> € '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
-                                                            } else if (data.CURRENCY === "JPY"){
-                                                            return '<td> ¥ '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
-                                                            } else
-                                                            return '<td> RM '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
-                                                         },
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D2 == "0" || data.RP_D2 == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
+                                                           },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
-            {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR"){
-                                                            return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
-                                                            } else if (data.CURRENCY === "USD"){
-                                                            return '<td> $ '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
-                                                            } else if (data.CURRENCY === "EUR"){
-                                                            return '<td> € '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
-                                                            } else if (data.CURRENCY === "JPY"){
-                                                            return '<td> ¥ '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
-                                                            } else
-                                                            return '<td> RM '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
-                                                         },
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D3 == "0" || data.RP_D3 == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
+                                                           },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
-            {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR"){
-                                                            return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
-                                                            } else if (data.CURRENCY === "USD"){
-                                                            return '<td> $ '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
-                                                            } else if (data.CURRENCY === "EUR"){
-                                                            return '<td> € '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
-                                                            } else if (data.CURRENCY === "JPY"){
-                                                            return '<td> ¥ '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
-                                                            } else
-                                                            return '<td> RM '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
-                                                         },
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D4 == "0" || data.RP_D4 == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
+                                                           },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
-            {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR"){
-                                                            return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
-                                                            } else if (data.CURRENCY === "USD"){
-                                                            return '<td> $ '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
-                                                            } else if (data.CURRENCY === "EUR"){
-                                                            return '<td> € '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
-                                                            } else if (data.CURRENCY === "JPY"){
-                                                            return '<td> ¥ '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
-                                                            } else
-                                                            return '<td> RM '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
-                                                         },
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D5 == "0" || data.RP_D5 == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
+                                                           },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
-            {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR"){
-                                                            return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
-                                                            } else if (data.CURRENCY === "USD"){
-                                                            return '<td> $ '+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
-                                                            } else if (data.CURRENCY === "EUR"){
-                                                            return '<td> € '+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
-                                                            } else if (data.CURRENCY === "JPY"){
-                                                            return '<td> ¥ '+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
-                                                            } else
-                                                            return '<td> RM '+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
-                                                         },
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D6 == "0" || data.RP_D6 == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
+                                                           },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
-            {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR"){
-                                                            return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                            } else if (data.CURRENCY === "USD"){
-                                                            return '<td> $ '+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                            } else if (data.CURRENCY === "EUR"){
-                                                            return '<td> € '+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                            } else if (data.CURRENCY === "JPY"){
-                                                            return '<td> ¥ '+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                            } else
-                                                            return '<td> RM '+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                         },
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D0 == "0" || data.RP_TOTAL == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
+                                                           },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
         ],
@@ -215,7 +167,7 @@ function tableMainDashboard(_date){
         "bLengthChange" : false,
         "columns" : [
 //            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
-            {"data": null,"render": (data, type, row) => {return '<td>'+data.URAIAN+'</td>';}},
+            {"data": null,"render": (data, type, row) => {return '<td>'+data.URAIAN+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","left");}},
             {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
@@ -256,108 +208,60 @@ function tableMainDashboard(_date){
                                                              }else
                                                              return '<td>'+data.CURRENCY+'</td>';
                                                              }},
-            {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR" || data.CURRENCY === "TOTAL IDR"){
-                                                            return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
-                                                            } else if (data.CURRENCY === "USD"|| data.CURRENCY === "TOTAL USD"){
-                                                            return '<td> $ '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
-                                                            } else if (data.CURRENCY === "EUR" || data.CURRENCY === "TOTAL EUR"){
-                                                            return '<td> € '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
-                                                            } else if (data.CURRENCY === "JPY" || data.CURRENCY === "TOTAL JPY"){
-                                                            return '<td> ¥ '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D0 == "0" || data.RP_D0 == null){
+                                                             return '<td> - </td>';
+                                                             } else
+                                                             return '<td>'+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+                                                          },
+                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                         }},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D1 == "0" || data.RP_D1 == null){
+                                                            return '<td> - </td>';
                                                             } else
-                                                            return '<td> RM '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+                                                            return '<td>'+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
                                                          },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
-            {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR" || data.CURRENCY === "TOTAL IDR"){
-                                                            return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
-                                                            } else if (data.CURRENCY === "USD" || data.CURRENCY === "TOTAL USD"){
-                                                            return '<td> $ '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
-                                                            } else if (data.CURRENCY === "EUR" || data.CURRENCY === "TOTAL EUR"){
-                                                            return '<td> € '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
-                                                            } else if (data.CURRENCY === "JPY" || data.CURRENCY === "TOTAL JPY"){
-                                                            return '<td> ¥ '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
-                                                            } else
-                                                            return '<td> RM '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
-                                                         },
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D2 == "0" || data.RP_D2 == null){
+                                                             return '<td> - </td>';
+                                                             } else
+                                                             return '<td>'+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
+                                                          },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
-            {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR" || data.CURRENCY === "TOTAL IDR"){
-                                                            return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
-                                                            } else if (data.CURRENCY === "USD" || data.CURRENCY === "TOTAL USD"){
-                                                            return '<td> $ '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
-                                                            } else if (data.CURRENCY === "EUR" || data.CURRENCY === "TOTAL EUR"){
-                                                            return '<td> € '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
-                                                            } else if (data.CURRENCY === "JPY" || data.CURRENCY === "TOTAL JPY"){
-                                                            return '<td> ¥ '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
-                                                            } else
-                                                            return '<td> RM '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
-                                                         },
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D3 == "0" || data.RP_D3 == null){
+                                                             return '<td> - </td>';
+                                                             } else
+                                                             return '<td>'+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
+                                                          },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
-            {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR" || data.CURRENCY === "TOTAL IDR"){
-                                                            return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
-                                                            } else if (data.CURRENCY === "USD" || data.CURRENCY === "TOTAL USD"){
-                                                            return '<td> $ '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
-                                                            } else if (data.CURRENCY === "EUR" || data.CURRENCY === "TOTAL EUR"){
-                                                            return '<td> € '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
-                                                            } else if (data.CURRENCY === "JPY" || data.CURRENCY === "TOTAL JPY"){
-                                                            return '<td> ¥ '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
-                                                            } else
-                                                            return '<td> RM '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
-                                                         },
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D4 == "0" || data.RP_D4 == null){
+                                                             return '<td> - </td>';
+                                                             } else
+                                                             return '<td>'+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
+                                                          },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
-            {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR" || data.CURRENCY === "TOTAL IDR"){
-                                                            return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
-                                                            } else if (data.CURRENCY === "USD" || data.CURRENCY === "TOTAL USD"){
-                                                            return '<td> $ '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
-                                                            } else if (data.CURRENCY === "EUR" || data.CURRENCY === "TOTAL EUR"){
-                                                            return '<td> € '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
-                                                            } else if (data.CURRENCY === "JPY" || data.CURRENCY === "TOTAL JPY"){
-                                                            return '<td> ¥ '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
-                                                            } else
-                                                            return '<td> RM '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
-                                                         },
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D5 == "0" || data.RP_D5 == null){
+                                                             return '<td> - </td>';
+                                                             } else
+                                                             return '<td>'+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
+                                                          },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
-            {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR" || data.CURRENCY === "TOTAL IDR"){
-                                                            return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
-                                                            } else if (data.CURRENCY === "USD" || data.CURRENCY === "TOTAL USD"){
-                                                            return '<td> $ '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
-                                                            } else if (data.CURRENCY === "EUR" || data.CURRENCY === "TOTAL EUR"){
-                                                            return '<td> € '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
-                                                            } else if (data.CURRENCY === "JPY" || data.CURRENCY === "TOTAL JPY"){
-                                                            return '<td> ¥ '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
-                                                            } else
-                                                            return '<td> RM '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
-                                                         },
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D6 == "0" || data.RP_D6 == null){
+                                                             return '<td> - </td>';
+                                                             } else
+                                                             return '<td>'+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
+                                                          },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
-            {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR" || data.CURRENCY === "TOTAL IDR"){
-                                                            return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
-                                                            } else if (data.CURRENCY === "USD" || data.CURRENCY === "TOTAL USD"){
-                                                            return '<td> $ '+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
-                                                            } else if (data.CURRENCY === "EUR" || data.CURRENCY === "TOTAL EUR"){
-                                                            return '<td> € '+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
-                                                            } else if (data.CURRENCY === "JPY" || data.CURRENCY === "TOTAL JPY"){
-                                                            return '<td> ¥ '+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
-                                                            } else
-                                                            return '<td> RM '+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
-                                                         },
-                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                         }},
-            {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR" || data.CURRENCY === "TOTAL IDR"){
-                                                            return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                            } else if (data.CURRENCY === "USD" || data.CURRENCY === "TOTAL USD"){
-                                                            return '<td> $ '+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                            } else if (data.CURRENCY === "EUR" || data.CURRENCY === "TOTAL EUR"){
-                                                            return '<td> € '+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                            } else if (data.CURRENCY === "JPY" || data.CURRENCY === "TOTAL JPY"){
-                                                            return '<td> ¥ '+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                            } else
-                                                            return '<td> RM '+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                         },
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_TOTAL == "0" || data.RP_TOTAL == null){
+                                                             return '<td> - </td>';
+                                                             } else
+                                                             return '<td>'+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
+                                                          },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
         ],
@@ -453,6 +357,11 @@ function tableRencanaPerVendor(_date){
                 "render" : (data) => {
                     return data;
                 },
+                "createdCell" : (cell)=>{
+                    $(cell).css({
+                        "text-align" : "left"
+                    })
+                }
             },
             {
                 "width" : "26%",
