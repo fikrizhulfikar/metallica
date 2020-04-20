@@ -1,14 +1,12 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
 import com.iconpln.liquiditas.core.service.InvoiceSiapBayarService;
+import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.monitoring.utils.NotificationUtil;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -196,6 +194,29 @@ public class InvoiceSiapBayarController {
                 return "STATUS_TRACKING";
             default:
                 return "UPDATE_DATE";
+        }
+    }
+
+    @RequestMapping(value = "/get_saldo", method = RequestMethod.GET)
+    public List<Map<String,Object>> getSaldo(@RequestParam(value = "pBankAccount", defaultValue = "") String pBankAccount) {
+
+        try {
+            return invoiceSiapBayarService.getSaldo(pBankAccount);
+        } catch (Exception e) {
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_column", method = RequestMethod.GET)
+    public Map getColumn() {
+        Map data = new HashMap();
+        try {
+            data.put("data", invoiceSiapBayarService.getColumn(WebUtils.getUsernameLogin()));
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
