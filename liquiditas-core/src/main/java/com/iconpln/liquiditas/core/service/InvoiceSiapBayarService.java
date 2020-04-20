@@ -80,4 +80,29 @@ public class InvoiceSiapBayarService {
         AppUtils.getLogger(this).info("data get_data_invoice_siap_bayar_by : {}", result);
         return result;
     }
+
+    public List<Map<String,Object>> getSaldo(String pBankAccount) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_saldo");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_bank_account", pBankAccount);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_saldo : {}",resultset);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getColumn(String userId) throws SQLException {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("invoice_get_column");
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_user_id", userId);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+        AppUtils.getLogger(this).info("data get_derivatif_ccs_pss : {}", resultset);
+        return resultset;
+    }
 }
