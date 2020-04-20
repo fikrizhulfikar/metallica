@@ -49,7 +49,7 @@ $("#tanggal_awal").change(function () {
 
 function getAllData() {
     $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_realisasi/get_rekap_lunas",
+        url: baseUrl + "api_operator/invoice_siap_bayar/get_invoice_siap_bayar",
         dataType: 'JSON',
         type: "GET",
         data: {
@@ -962,7 +962,7 @@ function getAllData() {
                     "initComplete": function(settings, json) {
                         var api = this.api();
                         $.ajax({
-                            url: baseUrl + "api_operator/rekap_invoice_realisasi/get_column",
+                            url: baseUrl + "api_operator/invoice_siap_bayar/get_column",
                             dataType: 'JSON',
                             type: "GET",
                             success: function (res) {
@@ -1749,13 +1749,12 @@ function setSelectBankAccount(idHtml, bankPembayar, idForSelected) {
 function setSelectSaldo(idHtml, bankAccount, idForSelected) {
     if(bankAccount!=""){
         $.ajax({
-            url: baseUrl + "api_operator/rekap_invoice_realisasi/get_saldo",
+            url: baseUrl + "api_operator/invoice_siap_bayar/get_saldo",
             dataType: 'JSON',
             type: "GET",
             async : false,
             data: {
                 pBankAccount: bankAccount
-
             },
             success: function (res) {
                 $("#" + idHtml + "").html('');
