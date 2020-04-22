@@ -737,12 +737,30 @@ public class CorpayController {
 //        AppUtils.getLogger(this).info("pMetodePembayaran edit data: {}", pMetodePembayaran);
         try {
             Map<String, Object> res = corpayService.updateSiapBayarGiro(pCompCode, pDocNo, pFiscYear, pLineItem, pJenisTransaksi,WebUtils.getUsernameLogin(), pOssId, pGroupId);
-
             return res;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @PostMapping(path = "/update_siap_bayar_multiple")
+    public Map<String, Object> updateSiapBayarMultiple(@RequestParam(value = "pData") String pData) throws JSONException, SQLException {
+        JSONArray jsonArray = new JSONArray(pData);
+        Map<String, Object> out = new HashMap<>();
+
+        for (int index = 0; index < jsonArray.length(); index++){
+            JSONObject jsonObject = jsonArray.getJSONObject(index);
+            String pCompCode = jsonObject.getString("pCompCode");
+            String pDocNo = jsonObject.getString("pDocNo");
+            String pFiscYear = jsonObject.getString("pFiscYear");
+            String pLineItem = jsonObject.getString("pLineItem");
+            String pJenisTransaksi = jsonObject.getString("pKet");
+            String pOssId = jsonObject.getString("oss_id");
+            String pGroupId = jsonObject.getString("group_id");
+            out = corpayService.updateSiapBayarGiro(pCompCode,pDocNo,pFiscYear,pLineItem,pJenisTransaksi, WebUtils.getUsernameLogin(),pOssId,pGroupId);
+        }
+        return out;
     }
 
     @RequestMapping(value = "/update_status", method = RequestMethod.POST)
@@ -1228,14 +1246,17 @@ public class CorpayController {
                 String account_number = object.getString("account_number");
                 String oss_id = object.getString("oss_id");
                 String group_id = object.getString("group_id");
-                out = corpayService.updateStatus(comp_code, doc_no, fisc_year, line_item, ket, statustracking, customer_name, account_number, WebUtils.getUsernameLogin(), oss_id, group_id);
+                if (object.getString("metode_pembayaran").equals("INTERNETBANKING") || object.getString("metode_pembayaran").equals("GIRO")){
+                    out = corpayService.updateStatusGiro(comp_code, doc_no, fisc_year, line_item, ket, statustracking, oss_id, group_id, WebUtils.getUsernameLogin());
+                }else {
+                    out = corpayService.updateStatus(comp_code, doc_no, fisc_year, line_item, ket, statustracking, customer_name, account_number, WebUtils.getUsernameLogin(), oss_id, group_id);
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
         }
         return out;
     }
-
 
     @RequestMapping(value = "/verifikasi_tanggal", method = RequestMethod.POST)
     public Map<String, Object> verifikasiTgl(
@@ -1568,7 +1589,6 @@ public class CorpayController {
             }
             param.put("DETAILS", listDetail);
 
-
             XLSTransformer transformer = new XLSTransformer();
             InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/rekap_invoice_belum.xls").getInputStream();
             Workbook workbook = transformer.transformXLS(streamTemplate, param);
@@ -1579,6 +1599,28 @@ public class CorpayController {
             e.printStackTrace();
             return "Gagal Export Data :" + e.getMessage();
         }
+    }
+
+    @PostMapping(path = "/verifikasi_tanggal_multiple")
+    public Map<String, Object> verifikasiTanggalMultiple(
+            @RequestParam("pData") String pData
+    ) throws JSONException, SQLException {
+        Map<String, Object> out = new HashMap<>();
+
+        JSONArray jsonArray = new JSONArray(pData);
+
+        for(int index = 0; index < jsonArray.length(); index++){
+            JSONObject object = jsonArray.getJSONObject(index);
+            String comp_code = object.getString("pCompCode");
+            String doc_no = object.getString("pDocNo");
+            String fiscal_year = object.getString("pFiscYear");
+            String line_item = object.getString("pLineItem");
+            String ket = object.getString("pKet");
+            String oss_id = object.getString("pOssId");
+            String group_id = object.getString("pGroupId");
+            out = corpayService.verifikasiTgl(comp_code, doc_no, fiscal_year, line_item, ket, WebUtils.getUsernameLogin(), oss_id, group_id);
+        }
+        return out;
     }
 //    @RequestMapping(value = "/xls/{pTglAwal}/{pTglAkhir}/{pCurr}/{pCaraBayar}/{pBank}/{pStatus}/{pStatusTracking}", method = RequestMethod.GET)
 //    public String export(
