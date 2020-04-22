@@ -1,6 +1,7 @@
 package com.iconpln.liquiditas.core.service;
 
 import com.iconpln.liquiditas.core.utils.AppUtils;
+import oracle.jdbc.OracleTypes;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,6 +11,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.jdbc.core.simple.SimpleJdbcCallOperations;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -104,5 +106,50 @@ public class InvoiceSiapBayarService {
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
         AppUtils.getLogger(this).info("data get_derivatif_ccs_pss : {}", resultset);
         return resultset;
+    }
+
+    public List<Map<String, Object>> getAllPembayaran(String idUser, String pTglAwal, String pTglAkhir,  String pCurr, String pStatusTracking, String pBank, String pCaraBayar, String pStatus){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_all_invoice_by_status4");
+        Map<String, Object> param = new HashMap<>();
+        param.put("p_tgl_awal", pTglAwal);
+        param.put("p_tgl_akhir", pTglAkhir);
+        param.put("p_bank", pBank);
+        param.put("p_currency", pCurr);
+        param.put("p_cara_bayar", pCaraBayar);
+        param.put("p_user_id", idUser);
+        param.put("p_status", pStatus);
+        param.put("p_status_tracking", pStatusTracking);
+
+        List<Map<String, Object>> result = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+        AppUtils.getLogger(this).debug("get all pembayaran debug : {}", result);
+
+        return result;
+    }
+
+    public BigDecimal getTotalTagihan(String tglAwal,
+                                      String tglAkhir,
+                                      String currency,
+                                      String caraBayar,
+                                      String bank,
+                                      String userId,
+                                      String search) {
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", tglAwal, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", tglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_currency", currency, OracleTypes.VARCHAR)
+                .addValue("p_cara_bayar", caraBayar, OracleTypes.VARCHAR)
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR)
+                .addValue("p_search", search, OracleTypes.VARCHAR);
+
+        getJdbcTemplate().execute("alter session set NLS_NUMERIC_CHARACTERS = '.,'");
+
+        BigDecimal result = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_corpay")
+                .withFunctionName("get_total_tagihan_invoice4")
+                .executeFunction(BigDecimal.class, in);
+        return result;
     }
 }
