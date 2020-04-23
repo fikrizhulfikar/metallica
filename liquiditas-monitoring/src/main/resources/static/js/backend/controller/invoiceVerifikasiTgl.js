@@ -276,7 +276,7 @@ function getAllData() {
                         },
                         {
                             "sortable": false,
-                            "aTargets": [0]
+                            "aTargets": [0,74]
                         },
                         {
                             "aTargets": [0],
@@ -771,7 +771,6 @@ function getAllData() {
                                 }
                                 return ret_value;
                             }
-
                         },
                         {
                             "aTargets": [74],
@@ -780,18 +779,17 @@ function getAllData() {
                                 var full_value = new Object();
                                 var ret_value = ''
                                 if (newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT") {
-                                    value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
-                                    full_value = '{"full":'+JSON.stringify(full)+'}';
+                                    value = '{"pCompCode":"'+full.COMP_CODE+'", "pBusArea":"'+full.BUS_AREA+'","pLineItem":"'+full.LINE_ITEM+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pOssId":"'+full.OSS_ID+'","pGroupId":"'+full.GROUP_ID+'","pFiscYear":"'+full.FISC_YEAR+'","pKet":"'+full.KET+'"}';
                                 }
 //                                value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
 //                                full_value = '{"full":'+JSON.stringify(full)+'}';
 
                                 for (x=0; x<invoiceCheckedArray.length;x++){
                                     if(JSON.stringify(invoiceCheckedArray[x]) === value){
-                                        return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' data-full='"+full_value+"' onchange='checkArray(this)' id='cbcheckbox' checked>";
+                                        return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' onchange='checkArray(this)' id='cbcheckbox' checked>";
                                     }
                                 }
-                                return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' data-full='"+full_value+"' onchange='checkArray(this)' id='cbcheckbox'>";
+                                return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' onchange='checkArray(this)' id='cbcheckbox'>";
                             }
                         }
                     ],
@@ -806,14 +804,10 @@ function getAllData() {
                             "data":
                                 {
                                     pTglAwal: pTglAwal,
-                                    pTglAkhir:
-                                    pTglAkhir,
-                                    pBank:
-                                    pBank,
-                                    pCurrency:
-                                    pCurrency,
-                                    pCaraBayar:
-                                    pCaraBayar,
+                                    pTglAkhir: pTglAkhir,
+                                    pBank: pBank,
+                                    pCurrency: pCurrency,
+                                    pCaraBayar: pCaraBayar,
                                     status: $("#cmb_status").val(),
                                     statusTracking: statusTracking
                                 }
@@ -821,7 +815,7 @@ function getAllData() {
                             "dataSrc":
 
                                 function (res) {
-                                    hideLoadingCss()
+                                    hideLoadingCss();
                                    // getTotalTagihan();
                                     return res.data;
                                 }
@@ -834,7 +828,7 @@ function getAllData() {
                             table_rekapitulasi.columns.adjust();
                             var currentPageNumber = this.api().page.info().page;
                             for (x=0;x<cbParentArray.length;x++){
-                                if(cbParentArray[x] == currentPageNumber){
+                                if(cbParentArray[x] === currentPageNumber){
                                     $("#cbparent").prop('checked', true);
                                     break;
                                 }
@@ -1264,8 +1258,8 @@ function getAllData() {
             $('.dataTables_filter').each(function () {
                  var html = '';
                  if(newRoleUser[0] == "ROLE_VERIFIKATOR"){
-                html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
-                html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
+                    html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
+                    html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
                 }
                  if(newRoleUser[0] == "ROLE_ADMIN"){
                 var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" title="Sembunyikan Kolom" data-toggle="modal" onclick="showColumn()">' +
@@ -1280,10 +1274,9 @@ function getAllData() {
                 html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
                 html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
                 }
-//                if(newRoleUser[0] != "ROLE_OSS" && newRoleUser[0] != "ROLE_DIVKEU"){
-//
-//
-//                }
+               if(newRoleUser[0] === "ROLE_EXECUTIVE_VICE_PRESIDENT"){
+                   html = html + '<button class="btn btn-sm btn-success" id="btn-verified" title="Verifikasi Tanggal" style="margin-left: 10px" type="button" onclick="verifikasi_tanggal_multiple()"><i class="fas fa-check-double"></i></button>';
+               }
                 $(this).append(html);
             });
 
@@ -1473,6 +1466,38 @@ function reverse_sap(pCompCode, pDocNo, pFiscYear, pLineItem, pKet){
     }
 }
 
+function verifikasi_tanggal_multiple(){
+    if (invoiceCheckedArray.length <= 0){
+        alert("Maaf, Silahkan pilih data terlebih dahulu!");
+    }else if(invoiceCheckedArray.length > 0){
+        var stateCrf = confirm("Anda Yakin Akan Memverifikasi Tagihan - tagihan Ini ?");
+        if (stateCrf){
+            showLoadingCss();
+            $.ajax({
+                url : baseUrl + "api_operator/rekap_invoice_belum/verifikasi_tanggal_multiple",
+                dataType : "JSON",
+                type : "POST",
+                data : {
+                    pData : JSON.stringify(invoiceCheckedArray)
+                },
+                success : response => {
+                    hideLoadingCss();
+                    if (response.return === 1){
+                        alert(response.OUT_MSG);
+                        table_rekapitulasi.ajax.reload();
+                    }else{
+                        alert(response.OUT_MSG);
+                    }
+                },
+                error : error => {
+                    alert(error);
+                    hideLoadingCss();
+                }
+            })
+        }
+    }else{alert("Maaf terjadi kesalahan");}
+}
+
 function verifikasi_tanggal(pCompCode, pDocNo, pFiscYear, pLineItem, pKet){
     var stateCrf = confirm("Anda Yakin Akan Memverifikasi Tagihan Ini ?");
     if (stateCrf == true) {
@@ -1524,7 +1549,7 @@ function checkArray(e) {
     if($(e).is(":checked")) {
         if(invoiceCheckedArray.length == 0) {
             invoiceCheckedArray.push($(e).data("value"));
-            fullArray.push($(e).data("full").full);
+            // fullArray.push($(e).data("full").full);
         }else {
             for (x = 0; x < invoiceCheckedArray.length; x++){
                 var valArr = JSON.stringify(invoiceCheckedArray[x]);
@@ -1535,17 +1560,17 @@ function checkArray(e) {
                 }
             }
             // test fikri
-            for(let i = 0; i < fullArray.length; i++){
-                var fullVal = JSON.stringify(fullArray[i]);
-                var valCb2 = JSON.stringify($(e).data("full").full);
-                if (fullVal == valCb2){
-                    isNew = false;
-                    break;
-                }
-            }
+            // for(let i = 0; i < fullArray.length; i++){
+            //     var fullVal = JSON.stringify(fullArray[i]);
+            //     var valCb2 = JSON.stringify($(e).data("full").full);
+            //     if (fullVal == valCb2){
+            //         isNew = false;
+            //         break;
+            //     }
+            // }
             if(isNew == true){
                 invoiceCheckedArray.push($(e).data("value"));
-                fullArray.push($(e).data("full").full);
+                // fullArray.push($(e).data("full").full);
             }
         }
     }
@@ -1557,6 +1582,7 @@ function checkArray(e) {
         var total2 = $("#table-rekapitulasi input[type=checkbox]:checked").map(function () {
             return $(this).data("full");
         }).get().length;
+
         if(total == 0 || total2 == 0){
             $("#cbparent").prop('checked', false);
         }
@@ -1568,16 +1594,16 @@ function checkArray(e) {
             }
         }
 
-        for (x = 0; x < fullArray.length; x++){
-            let fullVal = JSON.stringify(fullArray[x]);
-            let valCb2 = JSON.stringify($(e).data("full").full);
-            if(fullVal == valCb2){
-                fullArray.splice(x, 1);
-            }
-        }
+        // for (x = 0; x < fullArray.length; x++){
+        //     let fullVal = JSON.stringify(fullArray[x]);
+        //     let valCb2 = JSON.stringify($(e).data("full").full);
+        //     if(fullVal == valCb2){
+        //         fullArray.splice(x, 1);
+        //     }
+        // }
     }
-    console.log("Checked : ", invoiceCheckedArray);
-    console.log("Full Array : ", fullArray);
+    // console.log("Checked : ", invoiceCheckedArray);
+    // console.log("Full Array : ", fullArray);
 }
 
 function checkGroup(){
