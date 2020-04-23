@@ -56,6 +56,7 @@ function tableMainDashboard(_date){
 $(document).ready(function () {
     tableMainDashboard();
     tableMainDashboard2();
+    myFunction();
 
 
     $("#dashboard-carousel").carousel({
@@ -220,6 +221,12 @@ $.ajax({
          $('#keterangan tbody').append(html);
      }
     });
+}
+
+function myFunction() {
+  const filter = document.querySelector('#myInput').value.toUpperCase();
+  const trs = document.querySelectorAll('#rincian-saldo tr:not(.header)');
+  trs.forEach(tr => tr.style.display = [...tr.children].find(tbody => tbody.innerHTML.toUpperCase().includes(filter)) ? '' : 'none');
 }
 
 
