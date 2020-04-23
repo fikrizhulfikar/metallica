@@ -992,7 +992,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
 function update_status(idMetallica, statusTracking, debit, kredit){
     Swal.fire({
         title : "Verifikasi?",
-        text : "Apakah Anda yakin akan membverifikasi tagihan ini?",
+        text : "Apakah Anda yakin akan memverifikasi tagihan ini?",
         icon : "question",
         showCancelButton : true,
         confirmButtonColor : "#3085d6",
