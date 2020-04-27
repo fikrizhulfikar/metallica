@@ -222,7 +222,7 @@ function delete_data(id) {
             dataType: 'JSON',
             type: "POST",
             data: {
-                pIdValas: id
+                pIdValas: id,
             },
             success: function (res) {
                 hideLoadingCss("")
@@ -439,9 +439,11 @@ function edit_data(id) {
                 $('#pTglJatuhTempo').prop('disabled', true);
             }
             if(res[0].JENIS_TRANSAKSI === 'AP INVOICE'){
+                $("#hrpayableradio").prop('checked',false)
                 $("#apinvoiceradio").prop('checked',true)
             }else{
                 $("#hrpayableradio").prop('checked',true)
+                $("#apinvoiceradio").prop('checked',false)
             }
             setTimeout(function () {
                 $("#pVendor").select2({
@@ -1106,6 +1108,12 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 {
                     "aTargets": [33],
                     "mRender": function (data, type, full) {
+                        return full.JENIS_TRANSAKSI;
+                    }
+                },
+                {
+                    "aTargets": [34],
+                    "mRender": function (data, type, full) {
                         var ret_value;
                         /*alert('BOOOMB2'+full.STATUS_TRACKING);*/
                         /*    if(newRoleUser[0].includes("DIVKEU")){
@@ -1434,7 +1442,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 
                 },
                 {
-                    "aTargets": [34],
+                    "aTargets": [35],
                     "mRender": function (data, type, full) {
                         var value = new Object();
                         var ret_value = ''
