@@ -75,36 +75,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     salt = getSaltSource().getSalt(userDetails);
                 }
 // ================================================================================================================== start of LDAP LOGIN
-//                String username = userDetails.getUsername();
-//                List<String> Users = new ArrayList<String>(Arrays.asList(username.split("\\\\")));
-//                String xuser = "pusat\\"+username;
-//                String xpassword = authentication.getCredentials().toString();
-//                username = ad.getLDAP(xuser,xpassword);
-//                if(username.equals("0")){
-//                    AppUtils.getLogger(this).info("User / Password tidak sesuai!", username);
+                String username = userDetails.getUsername();
+                List<String> Users = new ArrayList<String>(Arrays.asList(username.split("\\\\")));
+                String xuser = "pusat\\"+username;
+                String xpassword = authentication.getCredentials().toString();
+                username = ad.getLDAP(xuser,xpassword);
+                if(username.equals("0")){
+                    AppUtils.getLogger(this).info("User / Password tidak sesuai!", username);
+                    throw new BadCredentialsException(messages.getMessage(
+                            "AbstractUserDetailsAuthenticationProvider.badCredentials",
+                            "Bad credentials"));
+                }
+// ================================================================================================================== end of LDAP LOGIN
+
+// ================================================================================================================== login FROM DATABASE
+//                if (authentication.getCredentials() == null) {
+//                    logger.debug("Authentication failed: no credentials provided");
+//
 //                    throw new BadCredentialsException(messages.getMessage(
 //                            "AbstractUserDetailsAuthenticationProvider.badCredentials",
 //                            "Bad credentials"));
 //                }
-// ================================================================================================================== end of LDAP LOGIN
-
-// ================================================================================================================== login FROM DATABASE
-                if (authentication.getCredentials() == null) {
-                    logger.debug("Authentication failed: no credentials provided");
-
-                    throw new BadCredentialsException(messages.getMessage(
-                            "AbstractUserDetailsAuthenticationProvider.badCredentials",
-                            "Bad credentials"));
-                }
-                String presentedPassword = authentication.getCredentials().toString();
-                if (!getPasswordEncoder().isPasswordValid(userDetails.getPassword(),
-                        presentedPassword, salt)) {
-                    logger.debug("Authentication failed: password does not match stored value");
-
-                    throw new BadCredentialsException(messages.getMessage(
-                            "AbstractUserDetailsAuthenticationProvider.badCredentials",
-                            "Bad credentials"));
-                }
+//                String presentedPassword = authentication.getCredentials().toString();
+//                if (!getPasswordEncoder().isPasswordValid(userDetails.getPassword(),
+//                        presentedPassword, salt)) {
+//                    logger.debug("Authentication failed: password does not match stored value");
+//
+//                    throw new BadCredentialsException(messages.getMessage(
+//                            "AbstractUserDetailsAuthenticationProvider.badCredentials",
+//                            "Bad credentials"));
+//                }
 //=================================================================================================================== end of LOGIN FROM DATABASE
             }
         };
@@ -136,25 +136,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new AuthenticationSuccessHandler() {
             @Override
             public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-//                AppUtils.getLogger(this).info("Google Response : {}",httpServletRequest.getParameter("g-recaptcha-response"));
-//                String response = httpServletRequest.getParameter("g-recaptcha-response");
-//                String ip = httpServletRequest.getRemoteAddr();
-////                System.out.println("Google : "+httpServletRequest.getParameter("g-recaptcha-response"));
-//                String result_recaptcha = recaptchaService.verifyRecaptcha(ip,response);
-////                System.out.println("Google 2 : "+result_recaptcha);
-//                if (result_recaptcha != "OK"){
-//                    HttpSession session = httpServletRequest.getSession(false);
-//                    System.out.println("Session Jan! : "+session);
-//
-//                    httpServletResponse.sendRedirect("/");
-//                    session.invalidate();
-//                }else if (result_recaptcha == "OK"){
-////                    System.out.println("User Details : "+ authentication.getPrincipal());
-////                    System.out.println("User Details : "+ sessionRegistry.getAllPrincipals());
-//                    HttpSession session = httpServletRequest.getSession(false);
-//                    System.out.println("Session Cok!: "+session);
+                AppUtils.getLogger(this).info("Google Response : {}",httpServletRequest.getParameter("g-recaptcha-response"));
+                String response = httpServletRequest.getParameter("g-recaptcha-response");
+                String ip = httpServletRequest.getRemoteAddr();
+//                System.out.println("Google : "+httpServletRequest.getParameter("g-recaptcha-response"));
+                String result_recaptcha = recaptchaService.verifyRecaptcha(ip,response);
+//                System.out.println("Google 2 : "+result_recaptcha);
+                if (result_recaptcha != "OK"){
+                    HttpSession session = httpServletRequest.getSession(false);
+                    System.out.println("Session Jan! : "+session);
+
+                    httpServletResponse.sendRedirect("/");
+                    session.invalidate();
+                }else if (result_recaptcha == "OK"){
+//                    System.out.println("User Details : "+ authentication.getPrincipal());
+//                    System.out.println("User Details : "+ sessionRegistry.getAllPrincipals());
+                    HttpSession session = httpServletRequest.getSession(false);
+                    System.out.println("Session Cok!: "+session);
                     httpServletResponse.sendRedirect("/page_operator/home");
-//                }
+                }
             }
         };
     }
