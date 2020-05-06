@@ -101,4 +101,16 @@ public class PageVerifikatorController {
         return "verifikatoridr/cash_flow";
     }
 
+    @RequestMapping("/dash_corpay/saldo_rekening")
+    public String saldoRekening() { return "dashboardcorpay/saldo_rekening3";
+    }
+
+    @RequestMapping("/dash_corpay/rencana_pembayaran")
+    public String rencanaPembayaran() { return "dashboardcorpay/rencana_pembayaran";
+    }
+
+    @RequestMapping("/dash_corpay/realisasi_pembayaran")
+    public String realisasiPembayaran() { return "dashboardcorpay/realisasi_pembayaran";
+    }
+
 }

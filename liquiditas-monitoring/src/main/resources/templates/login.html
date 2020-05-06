@@ -66,6 +66,9 @@
                     <div align="center" th:if="${param.logout}">
                         <p style="color: cornflowerblue; margin-bottom: 10px">You have been logged out.</p>
                     </div>
+                    <div align="center" th:if="${param.captcha_error}">
+                        <p style="color: red; margin-bottom: 10px">Invalid Captcha.</p>
+                    </div>
                     <div class="wrap-input100 validate-input">
                         <input class="input100" type="text" placeholder="Username" id="username" name="username"/>
                         <span class="focus-input100"></span>
@@ -73,6 +76,9 @@
                     <div class="wrap-input100 validate-input">
                         <input class="input100" type="password" placeholder="Password" id="password" name="password"/>
                         <span class="focus-input100"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input">
+                        <div class="g-recaptcha" data-sitekey="6LdSV-YUAAAAABJjM37d95MADY_PzE-2jumlPcU2"></div>
                     </div>
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
@@ -90,5 +96,6 @@
 <script src="/static/js/jquery-2.2.0.min.js"></script>
 <script src="/static/js/bootstrap.js"></script>
 <script src="/static/js/backend/coreapps.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async="async" defer="defer"></script>
 </body>
 </html>

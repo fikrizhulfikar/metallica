@@ -19,6 +19,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.util.WebUtils;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -26,6 +27,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.SQLException;
@@ -877,6 +879,49 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
     }
     //===BATAS AKHIR UNTUK PAYMENT===//
 
+    public List<Map<String, Object>> getAllPembayaran(String idUser, String pTglAwal, String pTglAkhir,  String pCurr, String pStatusTracking, String pBank, String pCaraBayar, String pStatus){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_all_invoice_by_status2");
+        Map<String, Object> param = new HashMap<>();
+        param.put("p_tgl_awal", pTglAwal);
+        param.put("p_tgl_akhir", pTglAkhir);
+        param.put("p_bank", pBank);
+        param.put("p_currency", pCurr);
+        param.put("p_cara_bayar", pCaraBayar);
+        param.put("p_user_id", idUser);
+        param.put("p_status", pStatus);
+        param.put("p_status_tracking", pStatusTracking);
 
+        List<Map<String, Object>> result = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+        AppUtils.getLogger(this).debug("get all pembayaran debug : {}", result);
+
+        return result;
+    }
+
+    public BigDecimal getTotalTagihan(String tglAwal,
+                                      String tglAkhir,
+                                      String currency,
+                                      String caraBayar,
+                                      String bank,
+                                      String userId,
+                                      String search) {
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", tglAwal, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", tglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_currency", currency, OracleTypes.VARCHAR)
+                .addValue("p_cara_bayar", caraBayar, OracleTypes.VARCHAR)
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR)
+                .addValue("p_search", search, OracleTypes.VARCHAR);
+
+        getJdbcTemplate().execute("alter session set NLS_NUMERIC_CHARACTERS = '.,'");
+
+        BigDecimal result = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_corpay")
+                .withFunctionName("get_total_tagihan_invoice2")
+                .executeFunction(BigDecimal.class, in);
+        return result;
+    }
 
 }

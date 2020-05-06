@@ -279,7 +279,8 @@ public class PembayaranController {
 
     @RequestMapping(value = "/delete_data", method = RequestMethod.POST)
     public Map<String, Object> deleteData(
-            @RequestParam(value = "pIdValas", defaultValue = "") String pIdValas
+            @RequestParam(value = "pIdValas", defaultValue = "") String pIdValas,
+            @RequestParam(value = "pOssId", defaultValue = "") String pOssId
     ) {
 
         AppUtils.getLogger(this).debug("idValas : {} ", pIdValas);
@@ -336,7 +337,8 @@ public class PembayaranController {
             @RequestParam(value = "pJenisTagihan", defaultValue = "") String pJenisTagihan,
             @RequestParam(value = "pPosAnggaran", defaultValue = "") String pPosAnggaran,
             @RequestParam(value = "pSubPosAnggaran", defaultValue = "") String pSubPosAnggaran,
-            @RequestParam(value = "pUnitAnggaran", defaultValue = "") String pUnitAnggaran
+            @RequestParam(value = "pUnitAnggaran", defaultValue = "") String pUnitAnggaran,
+            @RequestParam(value = "pJenisDokumen", defaultValue = "") String pJenisDokumen
     ) {
 
         AppUtils.getLogger(this).debug("idValas : {} ", pIdValas);
@@ -365,6 +367,7 @@ public class PembayaranController {
         AppUtils.getLogger(this).debug("pPosAnggaran : {} ", pPosAnggaran);
         AppUtils.getLogger(this).debug("pSubPosAnggaran : {} ", pSubPosAnggaran);
         AppUtils.getLogger(this).debug("pUnitAnggaran : {} ", pUnitAnggaran);
+        AppUtils.getLogger(this).debug("pJenisTransaksi : {}",pJenisDokumen);
 
         try {
             String message = "";
@@ -385,7 +388,7 @@ public class PembayaranController {
             Map<String, Object> res = valasService.insPembayaran(pIdValas, pJenisPembayaran, pTglJatuhTempo, pVendor, pCurr, pNilaiTagihan,
                     pBankTujuan, pBankPembayar, pUnitPenerima, pNoTagihan, pTglTagihan, pNoNotdin, pTglNotdin, pStatusValas,
                     WebUtils.getUsernameLogin(), pKeterangan, pTipeTransaksi, pTglTerimaInvoice, pNominalSblmPajak, pNominalUnderlying,
-                    pPajak, pNominalTanpaUnderlying, pKursJisdor, pSpread, pJenisTagihan, pPosAnggaran,pSubPosAnggaran,pUnitAnggaran);
+                    pPajak, pNominalTanpaUnderlying, pKursJisdor, pSpread, pJenisTagihan, pPosAnggaran,pSubPosAnggaran,pUnitAnggaran,pJenisDokumen);
             if (isUpdate) {
                 Map<String, String> sesudah = notificationUtil.getNotificationDetailByIdValas(pIdValas);
                 message += "Perubahan: " + sesudah.get("NAMA_JENIS_PEMBAYARAN") + "-" + sesudah.get("NAMA_VENDOR") + "-" + pTglJatuhTempo + "-" + pCurr + "-" + pNilaiTagihan + "-" + pNoTagihan + ".";
@@ -1060,70 +1063,66 @@ public class PembayaranController {
     private String parseColumn(int index) {
         switch (index) {
             case 1:
-                return "JENIS_TAGIHAN";
+                return "ID_VALAS";
             case 2:
-                return "JENIS_PEMBAYARAN";
+                return "JENIS_TAGIHAN";
             case 3:
-                return "UNIT_ANGGARAN";
+                return "JENIS_PEMBAYARAN";
             case 4:
-                return "POS_ANGGARAN";
-            case 5:
-                return "SUB_POS_ANGGARAN";
-            case 6:
                 return "JATUH_TEMPO";
-            case 7:
+            case 5:
                 return "VENDOR";
-            case 8:
+            case 6:
                 return "CURRENCY";
-            case 9:
+            case 7:
                 return "TAGIHAN";
-            case 10:
+            case 8:
                 return "UNIT";
-            case 11:
+            case 9:
                 return "BANK_TUJUAN";
-            case 12:
+            case 10:
                 return "BANK_PEMBAYAR";
-            case 13:
+            case 11:
                 return "TGL_TERIMA_INVOICE";
-            case 14:
+            case 12:
                 return "TGL_TAGIHAN";
-            case 15:
+            case 13:
                 return "NO_TAGIHAN";
-            case 16:
+            case 14:
                 return "TGL_NOTDIN";
-            case 17:
+            case 15:
                 return "NO_NOTDIN";
-            case 18:
+            case 16:
                 return "TGL_LUNAS";
-            case 19:
+            case 17:
                 return "COUNT_DOWN";
-            case 20:
+            case 18:
                 return "STATUS_VALAS";
-            case 21:
+            case 19:
                 return "TIPE_TRANSAKSI";
-            case 22:
+            case 20:
                 return "NOMINAL_SBLM_PAJAK";
-            case 23:
+            case 21:
                 return "PAJAK";
-            case 24:
+            case 22:
                 return "NOMINAL_STLH_PAJAK";
-            case 25:
+            case 23:
                 return "NOMINAL_UNDERLYING";
-            case 26:
+            case 24:
                 return "NOMINAL_TANPA_UNDERLYING";
-            case 27:
+            case 25:
                 return "KURS_JISDOR";
-            case 28:
+            case 26:
                 return "SPREAD";
-            case 29:
+            case 27:
                 return "KURS_TRANSAKSI";
-            case 30:
+            case 28:
                 return "NOMINAL_PEMBAYARAN_IDR";
-            case 31:
+            case 29:
                 return "CREATE_DATE";
-            case 32:
+            case 30:
                 return "STATUS_TRACKING";
-            case 33:
+            case 31:
                 return "DESKRIPSI";
             default:
                 return "UPDATE_DATE";

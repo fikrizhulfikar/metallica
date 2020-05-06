@@ -156,19 +156,6 @@ public class MasterService {
         return resultset;
     }
 
-//    public List<Map<String,Object>> getPosAnggaran() throws SQLException {
-//
-//        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-//                .withCatalogName("PKG_MASTER")
-//                .withFunctionName("get_pos_anggaran");
-//
-//        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
-//
-//        AppUtils.getLogger(this).info("data get_pos_anggaran : {}",resultset);
-//
-//        return resultset;
-//    }
-
     public List<Map<String,Object>> getPosAnggaran(String pTipeTransaksi) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -1129,4 +1116,120 @@ public class MasterService {
         }
         return true;
     }
+
+    public List<Map<String,Object>> getListGeneralBank() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_MASTER")
+                .withFunctionName("get_list_general_bank");
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+
+        AppUtils.getLogger(this).info("data get_list_metode_bayar : {}",resultset);
+        return resultset;
+    }
+
+    public List<Map<String,Object>> getListPaymentHouseBank() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_MASTER")
+                .withFunctionName("get_list_payment_house_bank");
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+
+        AppUtils.getLogger(this).info("data get_list_metode_bayar : {}",resultset);
+        return resultset;
+    }
+
+    public List<Map<String,Object>> getListInvoiceHRPayable() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_MASTER")
+                .withFunctionName("get_invoice_hr_payable");
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+
+        AppUtils.getLogger(this).info("data get_list_metode_bayar : {}",resultset);
+        return resultset;
+    }
+
+    public List<Map<String,Object>> getListInvoiceAPInvoice() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_MASTER")
+                .withFunctionName("get_invoice_ap_invoice");
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+
+        AppUtils.getLogger(this).info("data get_list_metode_bayar : {}",resultset);
+        return resultset;
+    }
+
+    public List<Map<String,Object>> getListPaymentInvoice() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_MASTER")
+                .withFunctionName("get_payment_invoice");
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+
+        AppUtils.getLogger(this).info("data get_list_metode_bayar : {}",resultset);
+        return resultset;
+    }
+
+    public List<Map<String,Object>> getListBillingInvoice() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_MASTER")
+                .withFunctionName("get_billing_invoice");
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+
+        AppUtils.getLogger(this).info("data get_list_metode_bayar : {}",resultset);
+        return resultset;
+    }
+
+    public List<Map<String,Object>> getListCustomer() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_MASTER")
+                .withFunctionName("get_list_customer");
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+
+        AppUtils.getLogger(this).info("data get_list_metode_bayar : {}",resultset);
+        return resultset;
+    }
+
+    public List<Map<String,Object>> getApInvoice(String in_Pawal, String in_Pakhir) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_INTEG_SAP_CORPAY")
+                .withFunctionName("getAPInvoice");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("in_Pawal", in_Pawal);
+        params.put("in_Pakhir", in_Pakhir);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_list_keterangan : {}",resultset);
+        return resultset;
+    }
+
+    public Map<String, Object> updateStatus(
+            String p_id_group, String p_status
+    ) throws SQLException {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_MASTER")
+                .withFunctionName("upd_user_status");
+        Map<String, Object> out;
+        SqlParameterSource inParent = new MapSqlParameterSource()
+                .addValue("p_id_group", p_id_group)
+                .addValue("p_status", p_status)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        out = simpleJdbcCall.execute(inParent);
+        AppUtils.getLogger(this).info("update status user : {}", out);
+        return out;
+    }
+
 }

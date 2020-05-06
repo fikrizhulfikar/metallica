@@ -87,8 +87,6 @@ function setSelectBank(idHtml, jenis, jenisBank, idForSelected, form) {
     });
 }
 
-
-
 function setSelectStatus(idHtml) {
     $("#" + idHtml + "").append('<option value="0">PENDING</option>');
     $("#" + idHtml + "").append('<option value="2">WAITING</option>');
@@ -282,7 +280,7 @@ function setSelectUnitAnggaran(idHtml ,idForSelected) {
         sync :true,
 
 
-        success: function (res) {pass
+        success: function (res) {
             $("#" + idHtml + "").html('');
             $.each(res, function (key, val) {
                 $("#" + idHtml + "").append('<option value="' + val.KODE_UNIT_EBUDGET + '">'+val.COMPANY_CODE+' - '+ val.COMPANY_NAME + '</option>');

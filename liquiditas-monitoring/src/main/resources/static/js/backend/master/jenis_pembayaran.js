@@ -54,7 +54,7 @@ function submit() {
             pIsUpdate: isUpdate
         },
         success: function (res) {
-            console.log("response : ", res);
+            // console.log("response : ", res);
             hideLoadingCss("")
             if (res.return == 1) {
                 alert(res.OUT_MESSAGE);
@@ -71,7 +71,7 @@ function submit() {
 
 function clearForm() {
     $('input[type=checkbox]').each(function () {
-        console.log("running boy")
+        // console.log("running boy")
         listChk.push($(this).attr('id'));
     });
     isUpdate = "0"
@@ -95,17 +95,17 @@ function getbyId(id) {
         success: function (res) {
 
             $('input[type=checkbox]').each(function () {
-                console.log("running boy")
+                // console.log("running boy")
                 listChk.push($(this).attr('id'));
             });
 
-            console.log("list chk : "+listChk);
+            // console.log("list chk : "+listChk);
             for(var i = 0; i < listChk.length;i++){
                 $( "#"+listChk[i]+"").prop( "checked", false );
             }
 
             hideLoadingCss("")
-            console.log("get by id : ", res);
+            // console.log("get by id : ", res);
             $("#pIdJenisPembayaran").val(res.return[0].ID_JENIS_PEMBAYARAN);
             $("#pIdJenisPembayaran").prop('disabled', true);
             $("#pNamaJenisPembayaran").val(res.return[0].NAMA_PEMBAYARAN);
@@ -135,7 +135,7 @@ function upload_server_xls() {
 
     formData.append('file', $('input[type=file]#file-xls')[0].files[0]);
     formData.append('pIdJenisFile', "8");
-    console.log(formData);
+    // console.log(formData);
     $.ajax({
         crossOrigin: true,
         type: "POST",
@@ -148,7 +148,7 @@ function upload_server_xls() {
         processData: false,
         success: function (res) {
             hideLoadingCss("");
-            console.log("res",res);
+            // console.log("res",res);
             if (res.V_RETURN == 0) {
                 alert("sukses");
             } else {
@@ -182,7 +182,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pketeranga
                 "mRender": function (data, type, full) {
 
                     var ret_value =
-                        '<button style="width: 15px !important;" class="btn btn-info" title="Edit Data" onclick="getbyId(\'' + full.ID_JENIS_PEMBAYARAN + '\')"><i class="fa fa-pencil"></i></button>'
+                        '<button style="width: 15px !important;" class="btn btn-info" title="Edit Data" onclick="getbyId(\'' + full.ID_JENIS_PEMBAYARAN + '\')"><i class="fas fa-edit"></i></button>'
                     return ret_value;
 
                 }

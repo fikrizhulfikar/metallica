@@ -17,7 +17,7 @@ import java.util.List;
  * Created by israjhaliri on 9/29/17.
  */
 @Component
-public class MainTask extends Thread {
+public class MainTask {
 
     @Autowired
     FtpService ftpService;
@@ -61,6 +61,11 @@ public class MainTask extends Thread {
         } else {
             AppUtils.getLogger(this).info("NO DATA TR VALAS TO PROCESS FOR");
         }
+    }
 
+    @Scheduled(fixedRate = 30000)
+    public void testScheduler(){
+        System.out.println("Fikri Aulia Zhulfikar");
+        AppUtils.getLogger(this).info("FIKRI AULIA ZHULFIKAR");
     }
 }

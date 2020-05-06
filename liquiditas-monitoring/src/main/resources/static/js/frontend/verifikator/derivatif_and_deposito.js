@@ -12,7 +12,7 @@ function initDataTable() {
         dataType: 'JSON',
         type: "GET",
         success: function (res) {
-            console.log(res);
+            // console.log(res);
             var data = res.return;
             $('#table-produk-derivatif tbody').empty();
             $.each(data, function (key, val) {

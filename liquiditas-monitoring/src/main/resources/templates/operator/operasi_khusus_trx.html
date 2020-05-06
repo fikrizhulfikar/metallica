@@ -1,4 +1,4 @@
-    <div th:fragment="stylesheets-backend">
+<div th:fragment="stylesheets-backend">
     <style>
         button{ cursor: pointer
         }
@@ -23,18 +23,18 @@
         tbody {
             font-size: 12px; !important;
         }
+        .mandatory{color: red;}
     </style>
 </div>
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" style="cursor: default">Rekap Invoice Belum</li>
-        <li class="breadcrumb-menu d-md-down-none">
+        <li class="breadcrumb-item active" style="cursor: default">Transaksi Operasi Khusus</li>
+        <li class="breadcrumb-menu d-md-down-none fungsional-button">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
-                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')">
-                    <i class="icon-pencil"></i> &nbsp;New Data
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>-->
+                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew()" sec:authorize="hasAnyAuthority('ROLE_JA_CASH','ROLE_JA_IE','ROLE_CENTRALIZED_RECEIPT')">
+                    <i class="fas fa-plus-square"></i> &nbsp;New Data
                 </button>
             </div>
         </li>
@@ -47,62 +47,47 @@
                         <label class="lbl-src">Tanggal Awal </label>
                     </div>
                     <div class="col-md-3" style="padding-right: 0px;">
-                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal"/>
+                        <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal"/>
                     </div>
                     <div class="col-md-1" style="padding-right: 0px;">
                         <label class="lbl-src">Tanggal Akhir </label>
                     </div>
                     <div class="col-md-3" style="padding-right: 0px;">
-                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>
+                        <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>
                     </div>
                     <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Bank </label>
+                        <label class="lbl-src">Currency </label>
                     </div>
                     <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="bank" id="cmb_bank" class="form-control">
+                        <select name="bacurrecnynk" id="cmb_currency" class="form-control">
                             <option value="">Pilih Data</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
                     <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Currency </label>
+
                     </div>
                     <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="bacurrecnynk" id="cmb_currecny" class="form-control">
-                            <option value="">Pilih Data</option>
-                        </select>
+
                     </div>
                     <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Metode Bayar</label>
+
                     </div>
                     <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="cmb_cara_pembayaran" id="cmb_cara_pembayaran" class="form-control">
-                            <option value="">Pilih Data</option>
-                        </select>
+
                     </div>
                     <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
                     <div class="col-md-3" style="padding-right: 0px;">
                         <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
                     </div>
                 </div>
-                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
-
-                    <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Status Tracking</label>
-                    </div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="status_tracking" id="cmb_status_tracking" class="form-control">
-                            <option value="">PILIH STATUS TRACKING</option>
-                        </select>
-                    </div>
-                </div>
             </div>
-<!--            start table for pindah buku HEAD-->
+            <!--            start table for pindah buku HEAD-->
             <div class="list-data" style="margin-top:25px;">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <table id="table-rekapitulasi" class="table table-bordered table-striped">
+                        <table id="table-rekapitulasi" class="table table-condensed table-striped">
                             <thead style="font-size: 12px">
                             <tr>
                                 <th>NO.</th>
@@ -110,12 +95,16 @@
                                 <th>POSTING DATE</th>
                                 <th>DOCUMENT NUMBER</th>
                                 <th>REFERENCE</th>
+                                <th>FISCAL YEAR</th>
                                 <th>COMPANY CODE</th>
                                 <th>BUSINESS AREA</th>
                                 <th>CURRENCY</th>
+                                <th>EXCHANGE RATE</th>
+                                <th>TOTAL TAGIHAN</th>
+                                <th>SUMBER DANA</th>
                                 <th>DOC HDR TEXT</th>
                                 <th>STATUS TRACKING</th>
-                                <th>AKSI</th>
+                                <th width="120px">AKSI</th>
                                 <th id="forcbparent"></th>
                             </tr>
                             </thead>
@@ -125,7 +114,7 @@
                     </div>
                 </div>
             </div>
-<!--            end of TABLE PINDAH BUKU HEAD-->
+            <!--            end of TABLE PINDAH BUKU HEAD-->
         </div>
     </div>
 
@@ -134,45 +123,68 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title">Form Edit Invoice</h5>
+                    <h5 class="modal-title">Form Operasi Khusus</h5>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="pDocDate">&nbsp;Document Date :</label>
-                                <input type="text" class="form-control" id="pDocDate" style="background-color: white" value=""/>
+                                <label for="pHeadDocDate"><span class="mandatory">*</span>&nbsp;Document Date :</label>
+                                <input type="text" class="form-control" id="pHeadDocDate" style="background-color: white" value="" required="required" readonly="readonly"/>
                             </div>
                             <div class="form-group">
-                                <label for="pPostingDate">&nbsp;Posting Date :</label>
-                                <input type="text" class="form-control" id="pPostingDate" style="background-color: white" value=""/>
+                                <label for="pHeadPostingDate"><span class="mandatory">*</span>&nbsp;Posting Date :</label>
+                                <input type="text" class="form-control" id="pHeadPostingDate" style="background-color: white" value="" required="required" readonly="readonly"/>
                             </div>
                             <div class="form-group">
-                                <label for="pDocNo">&nbsp;Document Number :</label>
-                                <input type="number" class="form-control" id="pDocNo" style="background-color: white" value=""/>
+                                <label for="pHeadSumberDana"><span class="mandatory">*</span>&nbsp;Sumber Dana :</label>
+                                <select class="form-control" id="pHeadSumberDana" style="background-color: white" value="" required="required">
+                                    <option value="">Pilih Data</option>
+                                    <option value="PMN">PMN</option>
+                                    <option value="NON PMN">NON PMN</option>
+                                </select>
+                                <input id="pHeadSumberDanaHidden" type="hidden" value=""/>
                             </div>
                             <div class="form-group">
-                                <label for="pReference">&nbsp;Reference :</label>
-                                <input type="text" class="form-control" id="pReference" style="background-color: white" value=""/>
+                                <label for="pHeadReference">&nbsp;Reference :</label>
+                                <input type="text" class="form-control" id="pHeadReference" style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pHeadFiscYear"><span class="mandatory">*</span>&nbsp;Fiscal Year :</label>
+                                <input type="number" class="form-control" id="pHeadFiscYear" style="background-color: white" value="" pattern="[0-9]" required="required"/>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="pCompCode">&nbsp;Company Code :</label>
-                                <input type="number" class="form-control" id="pCompCode" style="background-color: white" value=""/>
+                                <label for="pHeadCompCode">&nbsp;<span class="mandatory">*</span>&nbsp;Company Code :</label>
+                                <select class="form-control" id="pHeadCompCode" onchange="setListBusinessArea(this.value)" style="background-color: white" required="required">
+
+                                </select>
+                                <input type="hidden" id="pHeadCompCodeHidden" />
                             </div>
                             <div class="form-group">
-                                <label for="pBusArea">&nbsp;Business Area :</label>
-                                <input type="text" class="form-control" id="pBusArea" style="background-color: white" value=""/>
+                                <label for="pHeadBusArea">&nbsp;<span class="mandatory">*</span>&nbsp;Business Area :</label>
+                                <select class="form-control" id="pHeadBusArea" style="background-color: white" value="" required="required">
+
+                                </select>
+                                <input type="hidden" id="pHeadBusAreaHidden" />
                             </div>
                             <div class="form-group">
-                                <label for="pCurrency">&nbsp;Currency :</label>
-                                <input type="text" class="form-control" id="pCurrency" style="background-color: white" value=""/>
+                                <label for="pHeadDocHdrTxt">&nbsp;Doc Hdr Text :</label>
+                                <textarea class="form-control" id="pHeadDocHdrTxt" style="background-color: white" value=""></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="pDocHdrTxt">&nbsp;Doc Hdr Text :</label>
-                                <input type="text" class="form-control" id="pDocHdrTxt" style="background-color: white" value=""/>
+                                <label for="pHeadCurrency">&nbsp;<span class="mandatory">*</span>&nbsp;Currency :</label>
+                                <select class="form-control" id="pHeadCurrency" style="background-color: white" required="required">
+
+                                </select>
+                                <input type="hidden" value="" id="pHeadCurrencyHidden"/>
                             </div>
+                            <div class="form-group pExcRate">
+                                <label for="pHeadExchangeRate"><span class="mandatory">*</span>&nbsp;Exchange Rate</label>
+                                <input type="text" class="form-control" id="pHeadExchangeRate" style="background-color: white" required="required"/>
+                            </div>
+                            <input type="hidden" id="pIdMetallica"/>
                         </div>
                     </div>
                 </div>
@@ -221,96 +233,109 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="pDocumentNumber"><span style="color: red">*)</span>&nbsp;Document Number :</label>
-                                <input type="text" class="form-control" id="pDocumentNumber" readonly="readonly"/>
+                                <label for="pDetailDocumentNumber">Document Number :</label>
+                                <input type="text" class="form-control" id="pDetailDocumentNumber" readonly="readonly"/>
                             </div>
                             <div class="form-group">
-                                <label for="pPmtProposalId"><span style="color: red">*)</span>&nbsp;Proposal Payment Id :</label>
-                                <input type="text" class="form-control" id="pPmtProposalId" />
+                                <label for="pDetailPmtProposalId">Proposal Payment Id :</label>
+                                <input type="text" class="form-control" id="pDetailPmtProposalId" readonly="readonly"/>
                             </div>
                             <div class="form-group">
-                                <label for="pDetailCompCode"><span style="color: red">*)</span>&nbsp;Company Code:</label>
-                                <select id="pDetailCompCode" class="form-control" required="required">
-                                    <option value="1000">1000</option>
-                                    <option value="1500">1500</option>
+                                <label for="pDetailReference">Reference :</label>
+                                <input type="text" class="form-control" id="pDetailReference" readonly="readonly"/>
+                            </div>
+                            <div class="form-group just-for-input-data">
+                                <label for="pDetailDrCrInd"><span style="color: red">*)</span>&nbsp;Debit Credit Indicator :</label>
+                                <select id="pDetailDrCrInd" class="form-control" required="required">
+                                    <option value="C">Credit</option>
+                                    <option value="D">Debit</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="pFiscYear"><span style="color: red">*)</span>&nbsp;Fiscal Year :</label>
-                                <input type="text" class="form-control" id="pFiscYear" required="required"/>
+                            <div class="form-group just-for-input-data">
+                                <label for="pDetailLineNo">Line Number :</label>
+                                <input type="text" class="form-control" id="pDetailLineNo" readonly="readonly"/>
                             </div>
-                            <div class="form-group">
-                                <label for="pLineNo"><span style="color: red">*)</span>&nbsp;Line Number :</label>
-                                <input type="text" class="form-control" id="pLineNo" required="required"/>
+                            <div class="form-group just-for-input-data">
+                                <label for="pDetailRemarks"><span style="color: red;">*)</span>&nbsp;Remarks :</label>
+                                <input type="text" class="form-control" id="pDetailRemarks" required="required"/>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="pDrCrInd"><span style="color: red">*)</span>&nbsp;Debit Credit Indicator :</label>
-                                <select id="pDrCrInd" class="form-control" required="required">
-                                    <option value="H">Debit</option>
-                                    <option value="S">Credit</option>
+                                <label for="pDetailFiscYear">Fiscal Year :</label>
+                                <input type="text" class="form-control" id="pDetailFiscYear" readonly="readonly"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDetailCompCode">Company Code:</label>
+                                <input type="text" id="pDetailCompCode" class="form-control" readonly="readonly" />
+                            </div>
+                            <div class="form-group pExchangeRate">
+                                <label for="pDetailExchangeRate">Exchange Rate :</label>
+                                <input type="text" class="form-control" id="pDetailExchangeRate" readonly="readonly"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDetailSumberDana">Sumber Dana :</label>
+                                <input type="text" class="form-control" id="pDetailSumberDana" readonly="readonly"/>
+                            </div>
+                            <div class="form-group just-for-input-data">
+                                <label for="pDetailAmount"><span style="color: red">*)</span>&nbsp;Amount :</label>
+                                <input type="text" class="form-control" id="pDetailAmount" required="required"/>
+                            </div>
+                            <div class="form-group just-for-input-data">
+                                <label for="pDetailGlAccount"><span style="color: red">*)</span>&nbsp;GL Account :</label>
+                                <select class="form-control" id="pDetailGlAccount" required="required">
+                                    <option value="">Pilih Data</option>
                                 </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="pGlAccount"><span style="color: red">*)</span>&nbsp;GL Account :</label>
-                                <input type="text" class="form-control" id="pGlAccount" required="required"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pAmount"><span style="color: red">*)</span>&nbsp;Amount :</label>
-                                <input type="text" class="form-control" id="pAmount" required="required"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pDetailReference"><span style="color: red">*)</span>&nbsp;Reference :</label>
-                                <input type="text" class="form-control" id="pDetailReference" required="required"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pExchangeRate"><span style="color: red">*)</span>&nbsp;Exchange Rate :</label>
-                                <input type="text" class="form-control" id="pExchangeRate" required="required"/>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="pDetailBusArea"><span style="color: red">*)</span>&nbsp;Business Area :</label>
-                                <input type="text" class="form-control" id="pDetailBusArea" required="required"/>
+                                <label for="pDetailBusArea">Business Area :</label>
+                                <input type="text" class="form-control" id="pDetailBusArea" readonly="readonly"/>
                             </div>
                             <div class="form-group">
-                                <label for="pPostDate"><span style="color: red">*)</span>&nbsp;Posting Date :</label>
-                                <input type="text" class="form-control" id="pPostDate" required="required"/>
+                                <label for="pDetailPostDate">&nbsp;Posting Date :</label>
+                                <input type="text" class="form-control" id="pDetailPostDate" readonly="readonly"/>
                             </div>
                             <div class="form-group">
-                                <label for="pDetailCurrency"><span style="color: red">*)</span>&nbsp;Currency :</label>
-                                <input type="text" class="form-control" id="pDetailCurrency" required="required"/>
+                                <label for="pDetailCurrency">Currency :</label>
+                                <input type="text" class="form-control" id="pDetailCurrency" readonly="readonly" />
                             </div>
-                            <div class="form-group">
-                                <label for="pRemarks"><span style="color: red">*)</span>&nbsp;Remarks :</label>
-                                <input type="text" class="form-control" id="pRemarks" required="required"/>
+                            <div class="form-group just-for-input-data">
+                                <label for="pDetailCostCtr"><span style="color: red">*)</span>Cost Center : </label>
+                                <input type="text" id="pDetailCostCtr" class="form-control" maxlength="10" minlength="10" required="required"/>
+                            </div>
+                            <div class="form-group just-for-input-data">
+                                <label for="pDetailCashCode"><span style="color: red">*)</span>Cash Code : </label>
+                                <select id="pDetailCashCode" class="form-control">
+                                    <option value="">Pilih Data</option>
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <div align="right">
-                        <button onclick="AddToTable()" class="btn btn-success">Add</button>
+                    <div align="right" class="just-for-input-data">
+                        <button onclick="AddToTable()" class="btn btn-success"><i class="fa fa-plus-square"></i> Add</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="table-responsive" style="margin-top: 50px">
-            <table id="table-main-detail" class="table table-bordered table-striped" width="100%"
-                   style="margin-right: 0px !important;" >
+        <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
+            <table id="table-main-detail" class="table table-striped table-condensed">
                 <thead>
                 <tr>
                     <th>DOCUMENT NUMBER</th>
                     <th>PAYMENT PROPOSAL</th>
                     <th>COMPANY CODE</th>
+                    <th>CASH CODE</th>
+                    <th>SUMBER DANA</th>
                     <th>FISCAL YEAR</th>
                     <th>LINE NUMBER</th>
-                    <th>REFERENCE</th>
                     <th>DEBIT CREDIT INDICATOR</th>
                     <th>GL ACCOUNT</th>
+                    <th>REAL AMOUNT</th>
                     <th>AMOUNT</th>
-                    <th>EXCHANGE RATE</th>
                     <th>CURRENCY</th>
-                    <th>POSTING DATE</th>
+                    <th>COST CENTER</th>
                     <th>BUSINESS AREA</th>
                     <th>REMARKS</th>
                     <th>MASUK</th>
@@ -318,17 +343,24 @@
                 </tr>
                 </thead>
                 <tbody>
-<!--                <tr>-->
-<!--                    <td align="center" colspan="14">No Data</td>-->
-<!--                </tr>-->
+
                 </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="3"></td>
+                    <td colspan="3"></td>
+                    <td colspan="2"></td>
+                </tr>
+                </tfoot>
             </table>
         </div>
         <div align="right">
-            <button onclick="submitChild()" class="btn btn-success">Submit</button>
+            <button class="btn btn-danger" onclick="back()"><i class="fas fa-arrow-circle-left"></i>&nbsp;Back</button>
+            <button onclick="submitChild()" class="btn btn-success just-for-input-data"><i class="fa fa-save"></i>&nbsp;Submit</button>
         </div>
     </div>
 </main>
 <div th:fragment="scripts-backend">
     <script src="/static/js/backend/controller/operasiKhususTrx.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </div>

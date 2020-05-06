@@ -259,7 +259,7 @@ function simpan() {
             "nilai": Number.parseFloat(tgl7)
         }
     ];
-    console.log(json);
+    // console.log(json);
     $.ajax({
         url: baseUrl + "api_dashboard/ins_cash_flow_idr",
         dataType: 'JSON',

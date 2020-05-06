@@ -1,0 +1,214 @@
+<div th:fragment="stylesheets-backend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        table {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        table th {
+            font-size: 12px;
+            vertical-align: middle;
+            font-weight: bold;
+        }
+
+        table td {
+            font-size: 12px;
+        }
+
+        #myInput {
+          background-image: url('../static/images/searchicon.png');
+          background-position: 10px 10px;
+          background-repeat: no-repeat;
+          width: 30%;
+          font-size: 16px;
+          padding: 12px 20px 12px 40px;
+          border: 1px solid #ddd;
+          margin-bottom: 15px;
+          }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Pengelolaan Likuiditas</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div style="overflow-y:auto;">
+                            <table id="saldo-operasi" class="table table-rencana-realisasi table-condensed table-bordered">
+                                <thead>
+                                <tr>
+                                    <td rowspan="4" style="background-color: #3185FC; vertical-align: middle;" width="100%" align="center"><b>NAMA BANK</b></td>
+                                    <td colspan="12" rowspan="2" style="background-color: #F4D35E; vertical-align: middle;" width="100%" align="center"><b>OPERASI</b></td>
+                                    <td colspan="2" style="background-color: #FF773D; vertical-align: middle;" width="100%" align="center"><b>JUMLAH OPERASI</b></td>
+                                </tr>
+                                <tr style="background-color: #FF773D; vertical-align: middle; font-weight: bold;" align="center">
+                                    <td >IDR</td>
+                                    <td style="background-color: #FF773D; vertical-align: middle;" align="center">VALAS</td>
+                                </tr>
+                                <tr style="background-color: #F4D35E; vertical-align: middle; font-weight: bold;" align="center">
+                                    <td >A</td>
+                                    <td >B</td>
+                                    <td >C</td>
+                                    <td >D</td>
+                                    <td >E</td>
+                                    <td >F</td>
+                                    <td >G</td>
+                                    <td >H</td>
+                                    <td >I</td>
+                                    <td >J</td>
+                                    <td >K</td>
+                                    <td >L</td>
+                                    <td >M</td>
+                                    <td >N</td>
+                                </tr>
+                                <tr style="background-color: #3185FC; vertical-align: middle; font-weight: bold;" align="center">
+                                    <td >RECEIPT</td>
+                                    <td >OBLIGASI</td>
+                                    <td >DEPRESIASI</td>
+                                    <td >BENCANA</td>
+                                    <td >GLOBAL BOND</td>
+                                    <td >DOKUMEN LELANG</td>
+                                    <td >IMPREST</td>
+                                    <td >IMPREST OPERASI TERPUSAT</td>
+                                    <td >IMPREST VALAS</td>
+                                    <td >IMPOR</td>
+                                    <td >SUBSIDI</td>
+                                    <td >KMK</td>
+                                    <td >M = A+B+C+D+F +G+H+J+K+L</td>
+                                    <td >N = E+I</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" align="center">
+                <div class="card">
+                    <div class="card-block">
+                        <div style="overflow-y:auto;">
+                            <table id="saldo-investasi" class="table table-rencana-realisasi table-condensed table-bordered" width="100%">
+                                <thead>
+                                <tr>
+                                    <td rowspan="4" style="background-color: #3185FC; vertical-align: middle;" align="center"><b>NAMA BANK</b></td>
+                                    <td colspan="7" rowspan="2" style="background-color: #F4D35E; vertical-align: middle;" align="center"><b>INVESTASI</b></td>
+                                    <td colspan="2" style="background-color: #FF773D; vertical-align: middle;" align="center"><b>JUMLAH INVESTASI</b></td>
+                                    <td rowspan="2" style="background-color: #FF773D; vertical-align: middle;" align="center"><b>TOTAL</b></td>
+                                </tr>
+                                <tr style="background-color: #FF773D; vertical-align: middle; font-weight: bold;" align="center">
+                                    <td >IDR</td>
+                                    <td >VALAS</td>
+                                </tr>
+                                <tr style="background-color: #F4D35E; vertical-align: middle; font-weight: bold;" align="center">
+                                    <td >O</td>
+                                    <td >P</td>
+                                    <td >Q</td>
+                                    <td >R</td>
+                                    <td >S</td>
+                                    <td >T</td>
+                                    <td >U</td>
+                                    <td style="background-color: #FF773D; vertical-align: middle;" align="center">V</td>
+                                    <td style="background-color: #FF773D; vertical-align: middle;" align="center">W</td>
+                                    <td style="background-color: #FF773D; vertical-align: middle;" align="center">X</td>
+                                </tr>
+                                <tr style="background-color: #3185FC; vertical-align: middle; font-weight: bold;" align="center">
+                                    <td >IMPREST INVESTASI TERPUSAT</td>
+                                    <td >SUKUK</td>
+                                    <td >DEPOSITO</td>
+                                    <td >PMN</td>
+                                    <td >ESCROW (IDR)</td>
+                                    <td >EXCROW (VALAS)</td>
+                                    <td >ADB RBL</td>
+                                    <td >V=O+P+Q+R+S</td>
+                                    <td >W=T+U+N</td>
+                                    <td >X=M+N+V+W</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <div class="view-table">
+                                <table id="keterangan" class="table table-bordered" width="50%" style="margin-top: 10   px;">
+                                    <thead>
+                                    <tr>
+                                        <th style="background-color: #FF773D; text-align: center" align="center">KETERANGAN</th>
+                                        <th style="background-color: #FF773D; text-align: center" align="center">TOTAL</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"/>
+                        <table id="rincian-saldo" class="table table-rencana-realisasi table-condensed table-bordered">
+                            <thead>
+                            <tr class="header">
+                                <th style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="11%" align="center">NO REKENING</th>
+                                <th style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">BANK</th>
+                                <th style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">CURRENCY</th>
+                                <th style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">JENIS REKENING</th>
+                                <th style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">TIPE REKENING</th>
+                                <th style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">ORIGINAL CURRENCY</th>
+                                <th style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">EQ CURRENCY</th>
+                                <th style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="6%" align="center">%</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--    modal detail -->
+    <div class="modal fade" id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/pengelolaan_likuiditas.js"></script>
+    <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
+    <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
+</div>

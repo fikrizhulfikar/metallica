@@ -1,0 +1,106 @@
+<div th:fragment="menu-param" class="sidebar">
+    <nav class="sidebar-nav">
+        <ul class="nav">
+            <li th:each="menu : ${session.menus}" class="nav-item" th:classappend="${(menu.id != 'mnuTransaksiDerivatif' ? '' : 'nav-dropdown') + (menu.id != 'mnuTransaksiInvoice' ? '' : 'nav-dropdown')+ (menu.id != 'mnuInvoiceGrouping' ? '' : 'nav-dropdown') + (menu.id != 'mnuPembelianValas' ? '' : 'nav-dropdown') + (menu.id != 'mnuPindahBuku' ? '' : 'nav-dropdown') + (menu.id != 'mnuOperasiKhusus' ? '' : 'nav-dropdown') + (menu.id != 'mnuPotensi' ? '' : 'nav-dropdown')  + (menu.id != 'mnuTransaksiRekapData' ? '' : 'nav-dropdown')}" th:if="${menu.IS_API == 0 &#x26;&#x26; menu.root_id != 'mnuDashIdr' &#x26;&#x26; menu.root_id != 'mnuTransaksiMaster' &#x26;&#x26; menu.root_id != 'mnuPotensi' &#x26;&#x26; menu.id != 'mnuTransaksiMaster'  &#x26;&#x26; menu.root_id != 'mnuDashValas'}">
+                <a th:if="${menu.id != 'mnuTransaksiRekapData' &#x26;&#x26; menu.root_id != 'mnuTransaksiRekapData' &#x26;&#x26; menu.id != 'mnuTransaksiInvoice' &#x26;&#x26; menu.root_id != 'mnuTransaksiInvoice' &#x26;&#x26; menu.id != 'mnuInvoiceGrouping' &#x26;&#x26; menu.root_id != 'mnuInvoiceGrouping' &#x26;&#x26; menu.id != 'mnuPembelianValas' &#x26;&#x26; menu.root_id != 'mnuPembelianValas' &#x26;&#x26; menu.id != 'mnuPindahBuku' &#x26;&#x26; menu.root_id != 'mnuPindahBuku' &#x26;&#x26; menu.id != 'mnuOperasiKhusus' &#x26;&#x26; menu.root_id != 'mnuOperasiKhusus' &#x26;&#x26; menu.id != 'mnuTransaksiDerivatif' &#x26;&#x26; menu.root_id != 'mnuTransaksiDerivatif' &#x26;&#x26; menu.id != 'mnuPotensi' &#x26;&#x26; menu.root_id != 'mnuPotensi'}" class="nav-link" style="font-size: 13px;" th:href="@{${menu.form_id}}">
+                    <i th:class="${menu.icon_style}"></i>
+                    <span th:text="${menu.text}"></span>
+                </a>
+                <a th:if="${menu.id == 'mnuPotensi'}" class="nav-link nav-dropdown-toggle" href="#">
+                    <i th:class="${menu.icon_style}"></i><span th:text="${menu.text}"></span>
+                </a>
+                <ul th:if="${menu.id == 'mnuPotensi'}" class="nav-dropdown-items">
+                    <li th:each="potensi : ${session.potensi}" class="nav-item">
+                        <a class="nav-link" style="font-size: 13px;" th:href="@{${potensi.form_id}}">
+                            <span style="margin-left:15px;" th:text="${potensi.text}"></span>
+                        </a>
+                    </li>
+                </ul>
+                <a th:if="${menu.id == 'mnuTransaksiInvoice'}" class="nav-link nav-dropdown-toggle" href="#">
+                    <i th:class="${menu.icon_style}"></i> <span th:text="${menu.text}"></span>
+                </a>
+                <ul th:if="${menu.id == 'mnuTransaksiInvoice'}" class="nav-dropdown-items">
+                    <li th:each="invoice : ${session.invoice}" class="nav-item">
+                        <a class="nav-link" style="font-size: 13px;" th:href="@{${invoice.form_id}}">
+                            <span style="margin-left:15px;" th:text="${invoice.text}"></span>
+                        </a>
+                    </li>
+                </ul>
+                <a th:if="${menu.id == 'mnuInvoiceGrouping'}" class="nav-link nav-dropdown-toggle" href="#">
+                    <i th:class="${menu.icon_style}"></i> <span th:text="${menu.text}"></span>
+                </a>
+                <ul th:if="${menu.id == 'mnuInvoiceGrouping'}" class="nav-dropdown-items">
+                    <li th:each="invoicegrouping : ${session.invoicegrouping}" class="nav-item">
+                        <a class="nav-link" style="font-size: 13px;" th:href="@{${invoicegrouping.form_id}}">
+                            <span style="margin-left:15px;" th:text="${invoicegrouping.text}"></span>
+                        </a>
+                    </li>
+                </ul>
+                <a th:if="${menu.id == 'mnuPembelianValas'}" class="nav-link nav-dropdown-toggle" href="#">
+                    <i th:class="${menu.icon_style}"></i> <span th:text="${menu.text}"></span>
+                </a>
+                <ul th:if="${menu.id == 'mnuPembelianValas'}" class="nav-dropdown-items">
+                    <li th:each="pembelianvalas : ${session.pembelianvalas}" class="nav-item">
+                        <a class="nav-link" style="font-size: 13px;" th:href="@{${pembelianvalas.form_id}}">
+                            <span style="margin-left:15px;" th:text="${pembelianvalas.text}"></span>
+                        </a>
+                    </li>
+                </ul>
+                <a th:if="${menu.id == 'mnuPindahBuku'}" class="nav-link nav-dropdown-toggle" href="#">
+                    <i th:class="${menu.icon_style}"></i> <span th:text="${menu.text}"></span>
+                </a>
+                <ul th:if="${menu.id == 'mnuPindahBuku'}" class="nav-dropdown-items">
+                    <li th:each="pindahbuku : ${session.pindahbuku}" class="nav-item">
+                        <a class="nav-link" style="font-size: 13px;" th:href="@{${pindahbuku.form_id}}">
+                            <span style="margin-left:15px;" th:text="${pindahbuku.text}"></span>
+                        </a>
+                    </li>
+                </ul>
+                <a th:if="${menu.id == 'mnuOperasiKhusus'}" class="nav-link nav-dropdown-toggle" href="#">
+                    <i th:class="${menu.icon_style}"></i> <span th:text="${menu.text}"></span>
+                </a>
+                <ul th:if="${menu.id == 'mnuOperasiKhusus'}" class="nav-dropdown-items">
+                    <li th:each="operasikhusus : ${session.operasikhusus}" class="nav-item">
+                        <a class="nav-link" style="font-size: 13px;" th:href="@{${operasikhusus.form_id}}">
+                            <span style="margin-left:15px;" th:text="${operasikhusus.text}"></span>
+                        </a>
+                    </li>
+                </ul>
+                <a th:if="${menu.id == 'mnuTransaksiDerivatif'}" class="nav-link nav-dropdown-toggle" href="#">
+                    <i th:class="${menu.icon_style}"></i> <span th:text="${menu.text}"></span>
+                </a>
+                <ul th:if="${menu.id == 'mnuTransaksiDerivatif'}" class="nav-dropdown-items">
+                    <li th:each="derivatif : ${session.derivatif}" class="nav-item">
+                        <a class="nav-link" style="font-size: 13px;" th:href="@{${derivatif.form_id}}">
+                            <span style="margin-left:15px;" th:text="${derivatif.text}"></span>
+                        </a>
+                    </li>
+                </ul>
+                <a th:if="${menu.id == 'mnuTransaksiRekapData'}" class="nav-link nav-dropdown-toggle" href="#">
+                    <i th:class="${menu.icon_style}"></i> <span th:text="${menu.text}"></span>
+                </a>
+                <ul th:if="${menu.id == 'mnuTransaksiRekapData'}" class="nav-dropdown-items">
+                    <li th:each="rekap_data : ${session.rekap_data}" class="nav-item">
+                        <a class="nav-link" style="font-size: 13px;" th:href="@{${rekap_data.form_id}}">
+                            <span style="margin-left:15px;" th:text="${rekap_data.text}"></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li th:each="menu : ${session.menus}" class="nav-item nav-dropdown" th:if="${menu.IS_API == 0 &#x26;&#x26; menu.id == 'mnuTransaksiMaster'}">
+                <a class="nav-link nav-dropdown-toggle" href="#">
+                    <i th:class="${menu.icon_style}"></i> <span th:text="${menu.text}"></span>
+                </a>
+                <ul th:if="${menu.id == 'mnuTransaksiMaster'}" class="nav-dropdown-items">
+                    <li th:each="master : ${session.master}" th:if="${master.root_id != 'mnuTransaksi'}" class="nav-item">
+                        <a class="nav-link" style="font-size: 13px;" th:href="@{${master.form_id}}">
+                            <i th:class="${master.icon_style}"></i>
+                            <span style="margin-left:15px;" th:text="${master.text}"></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="divider"></li>
+        </ul>
+    </nav>
+</div>

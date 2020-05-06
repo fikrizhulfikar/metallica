@@ -111,6 +111,34 @@ function upload_server_xls() {
     });
 }
 
+function update_status(pIdGroup, pStatus) {
+    showLoadingCss()
+    $.ajax({
+        url: baseUrl + "api_master/user/update_status",
+        dataType: 'JSON',
+        type: "POST",
+        data: {
+            p_id_group: pIdGroup,
+            p_status : pStatus
+        },
+        success: function (res) {
+            //console.log("COBA DIAZ :",res);
+                    hideLoadingCss("")
+                    //var result = res.return.split(";")[0];
+                    //var result = res;
+                    if (res.return == 1) {
+                        alert(res.OUT_MESSAGE);
+                        tableMain.ajax.reload();
+                    } else {
+                        alert(res.OUT_MSG);
+                    }
+                },
+                error: function () {
+                    hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
+                }
+            });
+}
+
 function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pketerangan) {
     showLoadingCss()
     $('#table-main tbody').empty();
@@ -120,21 +148,21 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pketeranga
         "aoColumnDefs": [
             {
                 "bSortable": false,
-                "aTargets": [0, 1, 2, 3, 4]
+                "aTargets": [0, 1, 2, 3, 4,5,6,7]
             },
             {
-                "aTargets": [5],
+                "aTargets": [8],
                 "sClass": "datatables-action-center",
                 "mRender": function (data, type, full) {
                     var ret_value =
-                        '<button style="width: 15px !important;" class="btn btn-info" title="Edit Data" onclick="getbyId(\'' + full.USERNAME + '\')"><i class="fa fa-pencil"></i></button>'
+                        '<button style="width: 15px !important;" class="btn btn-info" title="Edit Data" onclick="getbyId(\'' + full.USERNAME + '\')"><i class="fas fa-edit"></i></button>'+
+                        '<button style="width: 15px !important;" class="btn btn-danger" title="Update" onclick="update_status(\'' + full.ID_GROUP2 + '\',\''+full.STATUS+'\')"><i class="fas fa-edit"></i></button>';
                     return ret_value;
-
                 }
 
             },
             {
-                "aTargets": 4,
+                "aTargets": 6,
                 "mRender": function (data, type, full) {
                     if (full.ENABLED == 1) {
                         return "AKTIF"
@@ -160,13 +188,18 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pketeranga
             {"data": "ROW_NUMBER", "defaultContent": ""},
             {"data": "USERNAME", "defaultContent": ""},
             {"data": "EMAIL", "defaultContent": ""},
+            {"data": "ID_GROUP2", "defaultContent": ""},
             {"data": "ID_GROUP", "defaultContent": ""},
-            {"data": "ENABLED", "defaultContent": ""}
+            {"data": "JENIS", "defaultContent": ""},
+            {"data": "ENABLED", "defaultContent": ""},
+            {"data": "STATUS", "defaultContent": ""}
         ],
         "drawCallback": function (settings) {
             $('th').removeClass('sorting_asc');
             $('th').addClass('th-middle');
         }
     })
+
+
 
 }

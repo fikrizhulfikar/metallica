@@ -72,7 +72,7 @@ function delete_data(id) {
             },
             success: function (res) {
                 hideLoadingCss("")
-                console.log("delete log : ", res)
+                // console.log("delete log : ", res)
                 if (res.return == 1) {
                     alert(res.OUT_MSG);
                     location.reload();
@@ -99,7 +99,7 @@ function edit_data(id) {
         },
         success: function (res) {
             hideLoadingCss("");
-            console.log("data edit_data :", res);
+            // console.log("data edit_data :", res);
             idPembelianValas = id;
 
             $("#pTglPosting").val(res[0].TGL_POSTING);
@@ -145,7 +145,7 @@ function ins_data() {
         },
         success: function (res) {
             hideLoadingCss("");
-            console.log("ins log : ", res);
+            // console.log("ins log : ", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
                 // location.reload();

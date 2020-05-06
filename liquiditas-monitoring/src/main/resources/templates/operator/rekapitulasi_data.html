@@ -34,11 +34,11 @@
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
                 <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS','ROLE_DM_LIKUIDITAS','ROLE_VICE_PRESIDENT_OPERATION','ROLE_VICE_PRESIDENT_INVESTMENT','ROLE_KASIR_IDR','ROLE_KASIR', 'ROLE_MANAGER_PAYMENT',
                 'ROLE_MANAGER_OPERATION','ROLE_MANAGER_INVESTMENT_APLN','ROLE_MANAGER_INVESTMENT_SLPMN','ROLE_MANAGER_POWER_PURCHASE','ROLE_MANAGER_PRIMARY_ENERGY','EXECUTIVE_VICE_PRESIDENT')">
-                    <i class="icon-pencil"></i> &nbsp;New Data
+                    <i class="fas fa-plus-square"></i> &nbsp;New Data
                 </button>
             </div>
         </li>
@@ -97,6 +97,14 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <label><span style="color: red">*)</span>&nbsp;Jenis Dokumen:</label>
+                                <div class="form-check">
+                                    <input type="radio" value="HR PAYABLE" id="hrpayableradio" name="pJenisDokumen"/> <span>HR Payable</span>
+                                    <input type="radio" value="AP INVOICE" id="apinvoiceradio" name="pJenisDokumen"/> <span>AP Invoice</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="pJenisPemabayaran"><span style="color: red">*)</span>&nbsp;Jenis
                                     Pembayaran:</label>
                                 <select id="pJenisPemabayaran" class="form-control"
@@ -116,31 +124,6 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="pUnitAnggaran"><span style="color: red">*)</span>&nbsp;Unit Anggaran:</label>
-                                <select id="pUnitAnggaran" class="form-control"
-                                        onChange="selectUnitAnggaran(this.value);" required="required">
-                                    <option value="">Pilih Data</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="pPosAnggaran"><span style="color: red">*)</span>&nbsp;Pos Anggaran:</label>
-                                <select id="pPosAnggaran" class="form-control"
-                                        onChange="selectPosAnggaran(this.value);" required="required">
-                                    <option value="">Pilih Data</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="pSubPosAnggaran"><span style="color: red">*)</span>&nbsp;Sub Pos Anggaran:</label>
-                                <select id="pSubPosAnggaran" class="form-control"
-                                        onChange="selectSubPosAnggaran(this.value);" required="required">
-                                    <option value="">Pilih Data</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="pNilaiAnggaran">&nbsp;Nilai Anggaran :</label>
-                                <input type="text" class="form-control" id="pNilaiAnggaran" disabled="disabled"  style="background-color: white" value=""/>
-                            </div>
-                            <div class="form-group">
                                 <label for="pCurrecny"><span style="color: red">*)</span>&nbsp;Currency:</label>
                                 <select id="pCurrecny" onChange="selectCurrency(this.value);" class="form-control" required="required">
                                     <option value="">Pilih Data</option>
@@ -150,10 +133,6 @@
                                 <label for="pNilaiTagihan"><span style="color: red">*)</span>&nbsp;Nilai
                                     Tagihan:</label>
                                 <input type="number" onInput="selectNilaiTagihan(this.value);" class="form-control" id="pNilaiTagihan" required="required"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pSisaAnggaran">&nbsp;Sisa Anggaran:</label>
-                                <input type="text" class="form-control" id="pSisaAnggaran" disabled="disabled" style="background-color: white"/>
                             </div>
                             <div class="form-group">
                                 <label for="pBankTujuan"><span style="color: red">*)</span>&nbsp;Bank Tujuan
@@ -279,132 +258,120 @@
                             <label class="form-check-label" for="hc2">JENIS PEMBAYARAN</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc3" data-column="3"/>
-                            <label class="form-check-label" for="hc3">UNIT ANGGARAN</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc4" data-column="4"/>
-                            <label class="form-check-label" for="hc4">POS ANGGARAN</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc5" data-column="5"/>
-                            <label class="form-check-label" for="hc5">SUB POS ANGGARAN</label>
-                        </div>
-                        <div class="form-check">
-                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc6" data-column="6"/>
-                        <label class="form-check-label" for="hc6">JATUH TEMPO</label>
+                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc3" data-column="3"/>
+                        <label class="form-check-label" for="hc3">JATUH TEMPO</label>
                         </div>
                     <div class="form-check">
+                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc4" data-column="4"/>
+                        <label class="form-check-label" for="hc4">VENDOR/PENGEMBANG/PEMASOK/LOAN</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc5" data-column="5"/>
+                        <label class="form-check-label" for="hc5">CURRENCY</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc6" data-column="6"/>
+                        <label class="form-check-label" for="hc6">NILAI TAGIHAN</label>
+                    </div>
+                    <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc7" data-column="7"/>
-                        <label class="form-check-label" for="hc7">VENDOR/PENGEMBANG/PEMASOK/LOAN</label>
+                        <label class="form-check-label" for="hc7">NAMA KONTRAK/LOAN/UNIT PENERIMA/PEMBANGKIT</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc8" data-column="8"/>
-                        <label class="form-check-label" for="hc8">CURRENCY</label>
+                        <label class="form-check-label" for="hc8">BANK TUJUAN PEMBAYARAN</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc9" data-column="9"/>
-                        <label class="form-check-label" for="hc9">NILAI TAGIHAN</label>
+                        <label class="form-check-label" for="hc9">BANK PEMBAYAR</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc10" data-column="10"/>
-                        <label class="form-check-label" for="hc10">NAMA KONTRAK/LOAN/UNIT PENERIMA/PEMBANGKIT</label>
+                        <label class="form-check-label" for="hc10">TGL TERIMA TAGIHAN</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc11" data-column="11"/>
-                        <label class="form-check-label" for="hc11">BANK TUJUAN PEMBAYARAN</label>
+                        <label class="form-check-label" for="hc11">TGL TAGIHAN</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc12" data-column="12"/>
-                        <label class="form-check-label" for="hc12">BANK PEMBAYAR</label>
+                        <label class="form-check-label" for="hc12">NO TAGIHAN</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc13" data-column="13"/>
-                        <label class="form-check-label" for="hc13">TGL TERIMA TAGIHAN</label>
+                        <label class="form-check-label" for="hc13">TGL. NOTA DINAS PEMBAYARAN</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc14" data-column="14"/>
-                        <label class="form-check-label" for="hc14">TGL TAGIHAN</label>
+                        <label class="form-check-label" for="hc14">NO. NOTA DINAS PEMBAYARAN</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc15" data-column="15"/>
-                        <label class="form-check-label" for="hc15">NO TAGIHAN</label>
+                        <label class="form-check-label" for="hc15">TANGGAL PEMBAYARAN</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc16" data-column="16"/>
-                        <label class="form-check-label" for="hc16">TGL. NOTA DINAS PEMBAYARAN</label>
+                        <label class="form-check-label" for="hc16">COUNTDOWN</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc17" data-column="17"/>
-                        <label class="form-check-label" for="hc17">NO. NOTA DINAS PEMBAYARAN</label>
+                        <label class="form-check-label" for="hc17">STATUS</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc18" data-column="18"/>
-                        <label class="form-check-label" for="hc18">TANGGAL PEMBAYARAN</label>
+                        <label class="form-check-label" for="hc18">TIPE TRANSAKSI</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc19" data-column="19"/>
-                        <label class="form-check-label" for="hc19">COUNTDOWN</label>
+                        <label class="form-check-label" for="hc19">NOMINAL SEBELUM PAJAK</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc20" data-column="20"/>
-                        <label class="form-check-label" for="hc20">STATUS</label>
+                        <label class="form-check-label" for="hc20">PAJAK</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc21" data-column="21"/>
-                        <label class="form-check-label" for="hc21">TIPE TRANSAKSI</label>
+                        <label class="form-check-label" for="hc21">NOMINAL SETELAH PAJAK</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc22" data-column="22"/>
-                        <label class="form-check-label" for="hc22">NOMINAL SEBELUM PAJAK</label>
+                        <label class="form-check-label" for="hc22">NOMINAL UNDERLYING</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc23" data-column="23"/>
-                        <label class="form-check-label" for="hc23">PAJAK</label>
+                        <label class="form-check-label" for="hc23">NOMINAL TANPA UNDERLYING</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc24" data-column="24"/>
-                        <label class="form-check-label" for="hc24">NOMINAL SETELAH PAJAK</label>
+                        <label class="form-check-label" for="hc24">KURS JISDOR</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc25" data-column="25"/>
-                        <label class="form-check-label" for="hc25">NOMINAL UNDERLYING</label>
+                        <label class="form-check-label" for="hc25">SPREAD</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc26" data-column="26"/>
-                        <label class="form-check-label" for="hc26">NOMINAL TANPA UNDERLYING</label>
+                        <label class="form-check-label" for="hc26">KURS TRANSAKSI</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc27" data-column="27"/>
-                        <label class="form-check-label" for="hc27">KURS JISDOR</label>
+                        <label class="form-check-label" for="hc27">NOMINAL PEMBAYARAN IDR</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc28" data-column="28"/>
-                        <label class="form-check-label" for="hc28">SPREAD</label>
+                        <label class="form-check-label" for="hc28">CREATE DATE</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc29" data-column="29"/>
-                        <label class="form-check-label" for="hc29">KURS TRANSAKSI</label>
+                        <label class="form-check-label" for="hc29">UPDATE DATE</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc30" data-column="30"/>
-                        <label class="form-check-label" for="hc30">NOMINAL PEMBAYARAN IDR</label>
+                        <label class="form-check-label" for="hc30">STATUS TAGIHAN</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input checkbox-toggle" type="checkbox" id="hc31" data-column="31"/>
-                        <label class="form-check-label" for="hc31">CREATE DATE</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc32" data-column="32"/>
-                        <label class="form-check-label" for="hc32">UPDATE DATE</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc33" data-column="33"/>
-                        <label class="form-check-label" for="hc33">STATUS TAGIHAN</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input checkbox-toggle" type="checkbox" id="hc34" data-column="34"/>
-                        <label class="form-check-label" for="hc34">KETERANGAN</label>
+                        <label class="form-check-label" for="hc31">KETERANGAN</label>
                     </div>
                     </div>
                 </div>
@@ -490,10 +457,8 @@
                             <tr>
                                 <th>NO.</th>
                                 <th>JENIS TAGIHAN</th>
+                                <th>ID OSS</th>
                                 <th>JENIS PEMBAYARAN</th>
-                                <th>ANGGARAN UNIT</th>-->
-                                <th>POS ANGGARAN</th>
-                                <th>SUB POS ANGGARAN</th>
                                 <th>JATUH TEMPO</th>
                                 <th>VENDOR / PENGEMBANG / PEMASOK / LOAN</th>
                                 <th>CURRENCY</th><!--5-->
@@ -525,6 +490,7 @@
                                 <th>UPDATE DATE</th><!--29-->
                                 <th>STATUS TAGIHAN</th>
                                 <th>KETERANGAN</th>
+                                <th>JENIS TRANSAKSI</th>
                                 <th>AKSI</th>
                                 <th id="forcbparent"></th>
                             </tr>

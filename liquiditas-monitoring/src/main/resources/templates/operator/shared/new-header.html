@@ -9,7 +9,7 @@
     <ul class="nav navbar-nav ml-auto">
         <li id="notification_li" class="nav-item dropdown d-md-down-none">
             <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
-                <i class="icon-envelope-letter"></i><span class="badge badge-pill badge-info" id="notification_count"></span>
+                <i class="far fa-envelope"></i><span class="badge badge-pill badge-info" id="notification_count"></span>
             </a>
         </li>
         <li class="nav-item dropdown">
@@ -24,7 +24,7 @@
                 </div>
                 <form id="form-logout" th:action="@{/logout}" method="post">
                 </form>
-                <a class="dropdown-item" onclick="logout()" href="#"><i class="fa fa-share"></i> Logout</a>
+                <a class="dropdown-item" onclick="logout()" href="#"><i class="fas fa-power-off"></i> Logout</a>
                 <script>
                     function logout() {
                         document.getElementById("form-logout").submit();

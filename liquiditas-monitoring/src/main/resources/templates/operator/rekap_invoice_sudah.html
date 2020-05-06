@@ -30,16 +30,16 @@
 </div>
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" style="cursor: default">Rekap Invoice Belum</li>
+        <li class="breadcrumb-item active" style="cursor: default">Rekap Invoice Verified</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
-                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS','ROLE_DM_LIKUIDITAS','ROLE_VICE_PRESIDENT_OPERATION','ROLE_VICE_PRESIDENT_INVESTMENT','ROLE_KASIR_IDR','ROLE_KASIR', 'ROLE_MANAGER_PAYMENT',
-                'ROLE_MANAGER_OPERATION','ROLE_MANAGER_INVESTMENT_APLN','ROLE_MANAGER_INVESTMENT_SLPMN','ROLE_MANAGER_POWER_PURCHASE','ROLE_MANAGER_PRIMARY_ENERGY','EXECUTIVE_VICE_PRESIDENT')">
-                    <i class="icon-pencil"></i> &nbsp;New Data
-                </button>
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>-->
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>-->
+<!--                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS','ROLE_DM_LIKUIDITAS','ROLE_VICE_PRESIDENT_OPERATION','ROLE_VICE_PRESIDENT_INVESTMENT','ROLE_KASIR_IDR','ROLE_KASIR', 'ROLE_MANAGER_PAYMENT',-->
+<!--                'ROLE_MANAGER_OPERATION','ROLE_MANAGER_INVESTMENT_APLN','ROLE_MANAGER_INVESTMENT_SLPMN','ROLE_MANAGER_POWER_PURCHASE','ROLE_MANAGER_PRIMARY_ENERGY','EXECUTIVE_VICE_PRESIDENT')">-->
+<!--                    <i class="fas fa-plus-square"></i> &nbsp;New Data-->
+<!--                </button>-->
             </div>
         </li>
     </ol>
@@ -590,17 +590,17 @@
                                 <th>COMPANY CODE</th>
                                 <th>DOCUMENT NO</th>
                                 <th>FISCAL YEAR</th>
-                                <th>DOCUMENT TYPE</th>-->
+                                <th>DOCUMENT TYPE</th>
                                 <th>DOCOUMENT DATE</th>
                                 <th>POSTING DATE</th>
                                 <th>ENTRY DATE</th>
                                 <th>REFERENCE</th>
-                                <th>REVERSE WITH</th><!--5-->
+                                <th>REVERSE WITH</th>
                                 <th>REVERSE YEAR</th>
                                 <th>DOCUMENT HDR TXT</th>
                                 <th>CURRENCY</th>
                                 <th>EXCHANGE RATE</th>
-                                <th>REFERENCE KEY</th><!--10-->
+                                <th>REFERENCE KEY</th>
                                 <th>PAYMENT INDICATOR</th>
                                 <th>TRANSACTION TYPE</th>
                                 <th>SPREAD VALUE</th>
@@ -608,18 +608,18 @@
                                 <th>OPEN ITEM INDIKATOR</th>
                                 <th>ACCOUNT TYPE</th>
                                 <th>SPECIAL GL INDIKATOR</th>
-                                <th>BUSINESS AREA</th><!--19-->
+                                <th>BUSINESS AREA</th>
                                 <th>TRADING PARTNER BISNIS AREA</th>
                                 <th>AMOUNT IN LOCAL CURRENCY</th>
                                 <th>AMOUNT IN TRANSACTION CURRENCY</th>
                                 <th>AMOUNT WITHHOLDING BASE</th>
-                                <th>AMOUNT WITHHOLDING</th><!--24-->
+                                <th>AMOUNT WITHHOLDING</th>
                                 <th>TOTAL TAGIHAN</th>
                                 <th>ASSIGNMENT</th>
                                 <th>ITEM TEXT</th>
                                 <th>COST CENTER CODE</th>
                                 <th>GL ACCOUNT CODE</th>
-                                <th>CUSTOMER NAME</th><!--29-->
+                                <th>CUSTOMER NAME</th>
                                 <th>VENDOR NAME</th>
                                 <th>BASELINE PAYMENT DATE</th>
                                 <th>TERM OF PAYMENT</th>
@@ -647,8 +647,8 @@
                                 <th>KETERANGAN</th>
                                 <th>STATUS TRACKING</th>
                                 <th>NO REK HOUSE BANK</th>
-                                <th>AKSI</th>
-                                <th id="forcbparent"></th>
+<!--                                <th>AKSI</th>-->
+<!--                                <th id="forcbparent"></th>-->
                             </tr>
                             </thead>
                             <tbody style="font-size: 12px">

@@ -22,7 +22,7 @@ function submit() {
             pIsUpdate: isUpdate
         },
         success: function (res) {
-            console.log("response : ", res);
+            // console.log("response : ", res);
             hideLoadingCss("")
             if (res.return == 1) {
                 alert(res.OUT_MESSAGE);
@@ -57,7 +57,7 @@ function getbyId(id,jenis) {
         },
         success: function (res) {
             hideLoadingCss("")
-            console.log("get by id : ", res);
+            // console.log("get by id : ", res);
             $("#pIdUnit").val(res[0].ID_UNIT);
             $("#pNamaUnit").val(res[0].NAMA_UNIT);
             $("#pJenis").val(res[0].ID_JENIS_PEMBAYARAN);
@@ -83,7 +83,7 @@ function upload_server_xls() {
     var formData = new FormData(form);
     formData.append('file', $('input[type=file]#file-xls')[0].files[0]);
     formData.append('pIdJenisFile', "4");
-    console.log(formData);
+    // console.log(formData);
     $.ajax({
         crossOrigin: true,
         type: "POST",
@@ -96,7 +96,7 @@ function upload_server_xls() {
         processData: false,
         success: function (res) {
             hideLoadingCss("");
-            console.log("res",res);
+            // console.log("res",res);
             if (res.V_RETURN == 0) {
                 alert("sukses");
             } else {
@@ -131,7 +131,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pketeranga
                 "mRender": function (data, type, full) {
 
                     var ret_value =
-                        '<button style="width: 15px !important;" class="btn btn-info" title="Edit Data" onclick="getbyId(\'' + full.ID_UNIT + '\',\'' + full.ID_JENIS_PEMBAYARAN + '\')"><i class="fa fa-pencil"></i></button>'
+                        '<button style="width: 15px !important;" class="btn btn-info" title="Edit Data" onclick="getbyId(\'' + full.ID_UNIT + '\',\'' + full.ID_JENIS_PEMBAYARAN + '\')"><i class="fas fa-edit"></i></button>'
                     return ret_value;
 
                 }
@@ -156,7 +156,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pketeranga
             "dataType": "json",
             "dataSrc": function (res) {
                 hideLoadingCss("")
-                console.log("get log : ", res);
+                // console.log("get log : ", res);
                 return res.data;
             }
         },

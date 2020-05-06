@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 @SpringBootApplication(scanBasePackages = { "com.iconpln.liquiditas.fcm" })
 @EnableWebSecurity
 @EnableScheduling
-public class Application {
+public class Application{
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

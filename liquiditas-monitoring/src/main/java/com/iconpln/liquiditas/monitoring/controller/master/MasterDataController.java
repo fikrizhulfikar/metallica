@@ -3,6 +3,7 @@ package com.iconpln.liquiditas.monitoring.controller.master;
 import com.iconpln.liquiditas.core.domain.Bank;
 import com.iconpln.liquiditas.core.domain.BankDetail;
 import com.iconpln.liquiditas.core.service.MasterService;
+import com.iconpln.liquiditas.core.service.Sap;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import net.sf.jxls.transformer.XLSTransformer;
@@ -910,7 +911,6 @@ public class MasterDataController {
             e.printStackTrace();
             return null;
         }
-
     }
 
     @RequestMapping(value = "/upload_file", method = RequestMethod.POST)
@@ -1071,4 +1071,146 @@ public class MasterDataController {
         return null;
     }
 
+    @RequestMapping(value = "/general_bank/get_general_bank", method = RequestMethod.GET)
+    public Map listGeneralBank() {
+
+        try{
+            List<Map<String, Object>> list = new ArrayList<>();
+            list = masterService.getListGeneralBank();
+
+            Map hashMap = new HashMap();
+            hashMap.put("data",list);
+            return hashMap;
+        }catch (Exception e){
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/general_bank/get_payment_house_bank", method = RequestMethod.GET)
+    public Map listPaymentHouseBank() {
+
+        try{
+            List<Map<String, Object>> list = new ArrayList<>();
+            list = masterService.getListPaymentHouseBank();
+
+            Map hashMap = new HashMap();
+            hashMap.put("data",list);
+            return hashMap;
+        }catch (Exception e){
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/general_bank/invoice_hr_payable", method = RequestMethod.GET)
+    public Map listInvoiceHRPayable() {
+
+        try{
+            List<Map<String, Object>> list = new ArrayList<>();
+            list = masterService.getListInvoiceHRPayable();
+
+            Map hashMap = new HashMap();
+            hashMap.put("data",list);
+            return hashMap;
+        }catch (Exception e){
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/general_bank/ap_invoice", method = RequestMethod.GET)
+    public Map listInvoiceAPInvoice() {
+
+        try{
+            List<Map<String, Object>> list = new ArrayList<>();
+            list = masterService.getListInvoiceAPInvoice();
+
+            Map hashMap = new HashMap();
+            hashMap.put("data",list);
+            return hashMap;
+        }catch (Exception e){
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/general_bank/payment_invoice", method = RequestMethod.GET)
+    public Map listPaymentInvoice() {
+
+        try{
+            List<Map<String, Object>> list = new ArrayList<>();
+            list = masterService.getListPaymentInvoice();
+
+            Map hashMap = new HashMap();
+            hashMap.put("data",list);
+            return hashMap;
+        }catch (Exception e){
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/general_bank/billing_invoice", method = RequestMethod.GET)
+    public Map listBillingInvoice() {
+
+        try{
+            List<Map<String, Object>> list = new ArrayList<>();
+            list = masterService.getListBillingInvoice();
+
+            Map hashMap = new HashMap();
+            hashMap.put("data",list);
+            return hashMap;
+        }catch (Exception e){
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/customer/get_list_customer", method = RequestMethod.GET)
+    public Map listCustomer() {
+
+        try{
+            List<Map<String, Object>> list = new ArrayList<>();
+            list = masterService.getListCustomer();
+
+            Map hashMap = new HashMap();
+            hashMap.put("data",list);
+            return hashMap;
+        }catch (Exception e){
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_ap_invoice", method = RequestMethod.GET)
+    public List getApInvoice(
+            @RequestParam(value = "in_Pawal", defaultValue = "") String in_Pawal,
+            @RequestParam(value = "in_Pakhir", defaultValue = "") String in_Pakhir
+    ) {
+        try {
+            return masterService.getApInvoice(in_Pawal, in_Pakhir);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "user/update_status", method = RequestMethod.POST)
+    public Map<String, Object> updateStatus(
+            @RequestParam(value = "p_id_group", defaultValue = "") String p_id_group,
+            @RequestParam(value = "p_status", defaultValue = "") String p_status
+    ) {
+        AppUtils.getLogger(this).info("p_id_group update data: {}", p_id_group);
+        try {
+            Map<String, Object> res = masterService.updateStatus(p_id_group, p_status);
+            if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
+
+            }
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

@@ -1,0 +1,181 @@
+<div th:fragment="stylesheets-backend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        table {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+        }
+        table th {
+            font-size: 12px;
+            vertical-align: middle;
+        }
+        table td {
+            font-size: 12px;
+            text-align: center;
+        }
+<!--        tbody:hover td {-->
+<!--            color: transparent;-->
+<!--            text-shadow: 0 0 3px #aaa;-->
+<!--        }-->
+
+<!--        tbody:hover tr:hover td {-->
+<!--            color: #444;-->
+<!--            text-shadow: 0 1px 0 #fff;-->
+<!--        }-->
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Dashboard Rencana</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div style="overflow-y:auto;">
+                        <table id="pembayaran-bank" class="table table-rencana-realisasi table-condensed table-bordered" width="100%">
+                            <thead>
+                            <tr>
+                                <th colspan="11" style="vertical-align: middle; text-align: center; background-color: #F4D35E;">PEMANTAUAN RENCANA PEMBAYARAN - BANK</th>
+                            <tr style="background: #F4D35E" width="12%">
+<!--                                id="header-tanggal1"<td style="background-color: #F4D35E" width="5%">NO</td>-->
+                                <th style="background: #F4D35E" width="10%">BANK</th>
+                                <th style="background: #F4D35E; text-align: center;" width="9%">BANK</th>
+                                <th style="background: #F4D35E; text-align: center;" width="7%">CURRENCY</th>
+                                <th id="tgl1" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th id="tgl2" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th id="tgl3" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th id="tgl4" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th id="tgl5" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th id="tgl6" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th id="tgl7" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th style="background: #F4D35E;vertical-align: middle !important; text-align: center;" width="10%" >TOTAL</th>
+                            </tr>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <table id="jenis-pembayaran" class="table table-rencana-realisasi table-condensed table-bordered" width="100%">
+                            <thead>
+                            <tr>
+                                <th colspan="9" style="vertical-align: middle; text-align: center; background-color: #F4D35E;">PEMANTAUAN RENCANA PEMBAYARAN - JENIS PEMBAYARAN</th>
+                            <tr style="background: #F4D35E" width="12%">
+<!--                                <td style="background-color: #F4D35E" width="5%">NO</td>-->
+                                <th style="background: #F4D35E; text-align: left;" width="20%">KETERANGAN</th>
+                                <th id="tgl1b" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th id="tgl2b" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th id="tgl3b" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th id="tgl4b" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th id="tgl5b" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th id="tgl6b" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th id="tgl7b" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  width="10%">TOTAL</th>
+
+                            </tr>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div style="overflow-y:auto;">
+                        <table id="jenis-rekening" class="table table-rencana-realisasi table-condensed table-bordered" width="100%">
+                            <thead>
+                            <tr>
+                                <th colspan="11" style="vertical-align: middle; text-align: center; background-color: #F4D35E;">PEMANTAUAN RENCANA PEMBAYARAN - JENIS REKENING</th>
+                            <tr style="background: #F4D35E">
+                                <th style="background: #F4D35E" width="7%">KETERANGAN</th>
+                                <th style="background: #F4D35E; text-align: center;" width="10%">KETERANGAN</th>
+                                <th style="background: #F4D35E; text-align: center;" width="5%">CURRENCY</th>
+                                <th id="tgl1c" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th id="tgl2c" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th id="tgl3c" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th id="tgl4c" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th id="tgl5c" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th id="tgl6c" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th id="tgl7c" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>
+                                <th style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  width="10%">TOTAL</th>
+
+                            </tr>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <table class="table table-rencana-realisasi table-bordered table-condensed" id="dash_rencana_per_vendor" width="100%">
+                            <thead>
+                            <tr style="background-color: #f9dc84;">
+                                <th colspan="13" style="text-align: center; background: #F4D35E" width="100%">RENCANA PEMBAYARAN PER VENDOR</th>
+                            </tr>
+                            <tr style="background-color: #8688ca; color: black;">
+                                <th style="vertical-align: middle; background: #F4D35E">TANGGAL</th>
+                                <th style="vertical-align: middle; background: #F4D35E; text-align: center;" width="16%">TANGGAL</th>
+                                <th style="background: #F4D35E; text-align: center;" width="20%">JENIS PEMBAYARAN</th>
+                                <th style="background: #F4D35E; text-align: center;" width="16%">VENDOR</th>
+                                <th style="background: #F4D35E; text-align: center;" width="16%">BANK</th>
+                                <th style="background: #F4D35E; text-align: center;" width="16%">CURRENCY</th>
+                                <th style="background: #F4D35E; text-align: center;" width="16%">EQ IDR</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--    modal detail -->
+    <div class="modal fade" id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/dash_rencana.js"></script>
+    <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
+    <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
+</div>
