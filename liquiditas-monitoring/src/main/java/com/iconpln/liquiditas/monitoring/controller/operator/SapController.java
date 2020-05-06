@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.access.method.P;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -42,7 +39,7 @@ public class SapController {
     private ResourceLoader resourceLoader;
 
     @RequestMapping(value = "/get_apinvoice", method = RequestMethod.POST)
-    public String getApInvoice(
+    public Map<String, Object> getApInvoice(
             @RequestParam(value = "pCompanyCode", defaultValue = "") String pCompanyCode,
             @RequestParam(value = "pBusArea", defaultValue = "") String pBusArea,
             @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
@@ -53,11 +50,11 @@ public class SapController {
         try {
 //            Map<String, String> param = new HashMap<>();
 
-            Object res = sap.getApInvoice(pCompanyCode, pBusArea, pDocNo, pFiscYear, pDatefrom, pDateTo);
+            Map<String, Object> res = sap.getApInvoice(pCompanyCode, pBusArea, pDocNo, pFiscYear, pDatefrom, pDateTo);
             // if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
             //  }
-            return res.toString();
+            return res;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -75,9 +72,6 @@ public class SapController {
     ){
         try {
             Map<String, Object> res = sap.getHrPayable(pCompanyCode, pBusArea, pDocNo, pFiscYear, pDatefrom, pDateTo);
-             if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
-
-              }
             return res;
         } catch (Exception e) {
             e.printStackTrace();
@@ -85,13 +79,14 @@ public class SapController {
         }
     }
 
-    public Map<String, Object> getMasterCustomer(
+    @GetMapping(path = "/get_customer")
+    public Map getMasterCustomer(
             @RequestParam(value = "pDate") String date,
-            @RequestParam(value = "pCustomer") String customer,
-            @RequestParam(value = "pcompCode") String comp_code
+            @RequestParam(value = "pCustomerNo") String customer,
+            @RequestParam(value = "pCompCode") String comp_code
     ){
         try {
-            Map<String, Object> result = sap.getCustomer(date, customer, comp_code);
+            Map<String, Object> result= sap.getCustomer(date, customer, comp_code);
             return result;
         }catch (Exception e){
             e.printStackTrace();
@@ -99,4 +94,50 @@ public class SapController {
         }
     }
 
+    @GetMapping(path = "/get_vendor")
+    public Map<String, Object> getMasterVendor(
+            @RequestParam(value = "pDate") String date,
+            @RequestParam(value = "pVendorNo") String vendor,
+            @RequestParam(value = "pCompCode") String comp_code
+    ){
+        try {
+            Map<String, Object> result = sap.getVendor(date, vendor, comp_code);
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping(path = "/get_payment_house_bank")
+    public Map<String, Object> getMasterPaymentHouseBank(
+            @RequestParam(value = "pCompCode") String comp_code,
+            @RequestParam(value = "pHouseBank") String house_bank,
+            @RequestParam(value = "pBankCountry") String bank_country,
+            @RequestParam(value = "pBankKey") String bank_key
+    ){
+        try {
+            Map<String, Object> result = sap.getPaymentHouaseBank(comp_code, house_bank, bank_country,bank_key);
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping(path = "/get_general_bank")
+    public Map<String, Object> getMasterGeneralBank(
+            @RequestParam(value = "pCompCode") String comp_code,
+            @RequestParam(value = "pHouseBank") String house_bank,
+            @RequestParam(value = "pBankCountry") String bank_country,
+            @RequestParam(value = "pBankKey") String bank_key
+    ){
+        try {
+            Map<String, Object> result = sap.getGeneralHouseBank(comp_code, house_bank, bank_country,bank_key);
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

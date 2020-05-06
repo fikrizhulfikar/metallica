@@ -47,7 +47,7 @@ function initData(pTgl) {
         },
         success: function (res) {
             hideLoadingCss()
-            console.log(res);
+            // console.log(res);
             createUI(res.return)
         },
         error: function () {

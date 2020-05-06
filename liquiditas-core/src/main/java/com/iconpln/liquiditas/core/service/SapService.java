@@ -1,5 +1,6 @@
 package com.iconpln.liquiditas.core.service;
 
+import com.iconpln.liquiditas.core.utils.AppUtils;
 import oracle.jdbc.OracleTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,8 +24,9 @@ public class SapService {
     DataSource dataSource;
 
     private JdbcTemplate getJdbcTemplate() {return new JdbcTemplate(dataSource);}
+    private Map<String, Object> out = new HashMap<>();
 
-    public List<Map<String, Object>> insertApInvoiceHead(
+    public Map<String, Object> insertApInvoiceHead(
             String pCompCode, String pDocNo, String pFiscYear, String pDocType, String pDocDate, String pPostDate, String pEntryDate,
             String pReference, String pRevWith, String pRevYear, String pDocHdrText, String pCurrency, String pExcRate,
             String pReferenceKey, String pPmtInd, String pTransType, String pSpreadVal, String pOssId, String pGroupId, String pSumberDana,
@@ -67,11 +69,12 @@ public class SapService {
                 .addValue("p_verified_on", pVerifiedOn)
                 .addValue("out_msg", OracleTypes.VARCHAR);
 
-        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+        out = simpleJdbcCall.execute(param);
+        AppUtils.getLogger(this).info("insert ap_invoice_head data : {}",out);
         return out;
     }
 
-    public List<Map<String, Object>> insertApInvoiceItem(Map<String, String> insData){
+    public Map<String, Object> insertApInvoiceItem(Map<String, String> insData){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("sap_invoice_item_ins");
@@ -116,13 +119,12 @@ public class SapService {
                 .addValue("p_m_data_date",insData.get("m_data_date"))
                 .addValue("out_msg", OracleTypes.VARCHAR);
 
-        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
-
-        System.out.println("What is the error? : "+out);
+        out = simpleJdbcCall.execute(param);
+        AppUtils.getLogger(this).info("insert ap_invoice_item data : {}",out);
         return out;
     }
 
-    public List<Map<String, Object>> insertHrPayableHead(Map<String, String> insData){
+    public Map<String, Object> insertHrPayableHead(Map<String, String> insData){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("sap_hr_head_ins");
@@ -159,11 +161,12 @@ public class SapService {
                 .addValue("p_verified_on", insData.get("verified_on"))
                 .addValue("out_msg", OracleTypes.VARCHAR);
 
-        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+        out = simpleJdbcCall.execute(param);
+        AppUtils.getLogger(this).info("insert hr_payable_head data : ",out);
         return out;
     }
 
-    public List<Map<String, Object>> insertHrPayableItem(Map<String, String> insData){
+    public Map<String, Object> insertHrPayableItem(Map<String, String> insData){
         List<Map<String, Object>> result = new ArrayList<>();
 //        System.out.println("Jancok kon cok! : "+insData);
 
@@ -210,8 +213,182 @@ public class SapService {
                 .addValue("p_m_data_date",insData.get("m_data_date"))
                 .addValue("p_wbs_num", insData.get("wbs_num"));
 
-        result = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
-        return result;
+        out = simpleJdbcCall.execute(param);
+        AppUtils.getLogger(this).info("insert hr_payable_item data : {}",out);
+        return out;
+    }
 
+// ==============================CUSTOMER====================================
+    public Map<String, Object> insertCustomer(Map<String, String> insData){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_MASTER")
+                .withFunctionName("sap_ins_customer");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_customer_no", insData.get("customer_no"))
+                .addValue("p_comp_code", insData.get("comp_code"))
+                .addValue("p_cust_acc_grp", insData.get("cust_acc_grp"))
+                .addValue("p_customer_name", insData.get("customer_name"))
+                .addValue("p_street_no", insData.get("street_no"))
+                .addValue("p_postal_code", insData.get("postal_code"))
+                .addValue("p_city", insData.get("city"))
+                .addValue("p_country", insData.get("country"))
+                .addValue("p_customer_tax_no", insData.get("customer_tax_no"))
+                .addValue("p_customer_vat_no", insData.get("customer_vat_no"))
+                .addValue("p_customer_recon_acct", insData.get("customer_recon_acct"))
+                .addValue("p_customer_mgmt_grp", insData.get("customer_mgmt_grp"))
+                .addValue("p_customer_pmt_term", insData.get("customer_pmt_term"))
+                .addValue("p_customer_pmt_method", insData.get("customer_pmt_method"))
+                .addValue("p_customer_email", insData.get("customer_email"))
+                .addValue("p_personnel_no","NULL")
+                .addValue("out_msg", OracleTypes.VARCHAR);
+
+        out =  simpleJdbcCall.execute(param);
+        AppUtils.getLogger(this).info("insert customer main data : {}",out);
+        return out;
+    }
+
+    public Map<String, Object> insertCustomerBank(Map<String, String> insData){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_MASTER")
+                .withFunctionName("sap_ins_customer_bank");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_customer_no",insData.get("customer_no"))
+                .addValue("p_bank_country",insData.get("bank_country"))
+                .addValue("p_bank_key", insData.get("bank_key"))
+                .addValue("p_bank_account",insData.get("bank_account"))
+                .addValue("p_partner_bank",insData.get("partner_bank"))
+                .addValue("p_account_holder",insData.get("account_holder"))
+                .addValue("out_msg",OracleTypes.VARCHAR);
+        out = simpleJdbcCall.execute(param);
+        AppUtils.getLogger(this).info("insert customer bank : {}",out);
+        return out;
+    }
+
+    public Map<String, Object> insertCustomerWht(Map<String, String> insData){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_MASTR")
+                .withFunctionName("sap_ins_customer_wht");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_customer_no",insData.get("customer_no"))
+                .addValue("p_comp_code",insData.get("customer_no"))
+                .addValue("p_with_tax_type",insData.get("customer_no"))
+                .addValue("p_with_tax_code",insData.get("customer_no"))
+                .addValue("p_desc",insData.get("customer_no"))
+                .addValue("out_msg",OracleTypes.VARCHAR);
+        out = simpleJdbcCall.execute(param);
+        AppUtils.getLogger(this).info("insert customer wht data : {}",out);
+        return out;
+    }
+    //===========================END OF CUSTOMER=============================
+
+    //============================VENDOR=====================================
+    public Map<String, Object> insertVendor(Map<String, String> insData){
+        Map<String, Object> out;
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_MASTER")
+                .withFunctionName("sap_ins_vendor");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_vendor_no",insData.get("vendor_no"))
+                .addValue("p_comp_code",insData.get("comp_code"))
+                .addValue("p_vend_acc_grp",insData.get("vend_acc_grp"))
+                .addValue("p_vendor_name",insData.get("vendor_name"))
+                .addValue("p_street_no",insData.get("street_no"))
+                .addValue("p_postal_code",insData.get("postal_code"))
+                .addValue("p_city",insData.get("city"))
+                .addValue("p_country",insData.get("country"))
+                .addValue("p_tax_no",insData.get("tax_no"))
+                .addValue("p_vat_no",insData.get("vat_no"))
+                .addValue("p_recon_acct",insData.get("recon_acct"))
+                .addValue("p_cash_mgmt_grp",insData.get("cash_mgmt_grp"))
+                .addValue("p_pmt_term",insData.get("pmt_term"))
+                .addValue("p_method",insData.get("method"))
+                .addValue("p_mail",insData.get("mail"))
+                .addValue("out_msg",OracleTypes.VARCHAR);
+        out = simpleJdbcCall.execute(param);
+        AppUtils.getLogger(this).info("insert vendor main data : {}",out);
+        return out;
+    }
+
+    public Map<String, Object> insertVendorBank(Map<String, String> insData){
+        Map<String, Object> out;
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_MASTER")
+                .withFunctionName("sap_ins_vendor_bank");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_vendor_no",insData.get("vendor_no"))
+                .addValue("p_bank_country",insData.get("bank_country"))
+                .addValue("p_bank_key",insData.get("bank_key"))
+                .addValue("p_bank_account",insData.get("bank_account"))
+                .addValue("p_partner_bank",insData.get("partner_bank"))
+                .addValue("p_account_holder",insData.get("account_holder"))
+                .addValue("out_msg",OracleTypes.VARCHAR);
+
+        out = simpleJdbcCall.execute(param);
+        AppUtils.getLogger(this).info("insert vendor bank : {}",out);
+        return out;
+    }
+
+    public Map<String, Object> insertVendorWht(Map<String, String> insData){
+        Map<String, Object> out;
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_MASTER")
+                .withFunctionName("sap_ins_vendor_wht");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_vendor_no",insData.get("vendor_no"))
+                .addValue("p_comp_code",insData.get("comp_code"))
+                .addValue("p_with_tax_type",insData.get("with_tax_type"))
+                .addValue("p_with_tax_code",insData.get("with_tax_code"))
+                .addValue("p_desc",insData.get("desc"))
+                .addValue("out_msg",OracleTypes.VARCHAR);
+
+        out = simpleJdbcCall.execute(param);
+        AppUtils.getLogger(this).info("insert vendor wht :{}",out);
+        return out;
+    }
+//    ================================END OF VENDOR==============================
+
+    public Map<String, Object> insertPaymentHouseBank(Map<String, String> insData) {
+        Map<String, Object> out;
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_MASTER")
+                .withFunctionName("sap_ins_house_bank");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_account_id", insData.get("account_id"))
+                .addValue("p_bank_account", insData.get("bank_account"))
+                .addValue("p_bank_control_key", insData.get("bank_control_key"))
+                .addValue("p_bank_country", insData.get("bank_country"))
+                .addValue("p_bank_key", insData.get("bank_key"))
+                .addValue("p_comp_code", insData.get("comp_code"))
+                .addValue("p_contact_person", insData.get("contact_person"))
+                .addValue("p_currency", insData.get("currency"))
+                .addValue("p_description", insData.get("description"))
+                .addValue("p_gl_account", insData.get("gl_accoun"))
+                .addValue("p_house_bank", insData.get("house_bank"))
+                .addValue("p_telephone1", insData.get("telephone1"))
+                .addValue("out_msg", OracleTypes.VARCHAR);
+
+        out = simpleJdbcCall.execute(param);
+        AppUtils.getLogger(this).info("insert payment house bank :{}", out);
+        return out;
+    }
+
+    public Map<String, Object> insertGeneralBank(Map<String, String> insData) {
+        Map<String, Object> out;
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_MASTER")
+                .withFunctionName("sap_ins_general_bank");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_bank_country", insData.get("bank_country"))
+                .addValue("p_bank_key", insData.get("bank_key"))
+                .addValue("p_bank_name", insData.get("bank_name"))
+                .addValue("p_bank_no", insData.get("bank_no"))
+                .addValue("p_city", insData.get("city"))
+                .addValue("p_street", insData.get("street"))
+                .addValue("p_swift_code", insData.get("swift_code"))
+                .addValue("out_msg", OracleTypes.VARCHAR);
+
+        out = simpleJdbcCall.execute(param);
+        AppUtils.getLogger(this).info("insert general bank :{}", out);
+        return out;
     }
 }

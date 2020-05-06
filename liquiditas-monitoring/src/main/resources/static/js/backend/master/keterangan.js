@@ -21,7 +21,7 @@ function submit() {
             pIsUpdate: isUpdate
         },
         success: function (res) {
-            console.log("response : ", res);
+            // console.log("response : ", res);
             hideLoadingCss("")
             if (res.return == 1) {
                 alert(res.OUT_MESSAGE);
@@ -55,7 +55,7 @@ function getbyId(id) {
         },
         success: function (res) {
             hideLoadingCss("")
-            console.log("get by id : ", res);
+            // console.log("get by id : ", res);
             $("#pIdKeterangan").val(res[0].ID_KETERANGAN);
             $("#pIdKeterangan").prop('disabled', true);
             $("#pNama").val(res[0].NAMA);
@@ -84,7 +84,7 @@ function upload_server_xls() {
 
     formData.append('file', $('input[type=file]#file-xls')[0].files[0]);
     formData.append('pIdJenisFile', "7");
-    console.log(formData);
+    // console.log(formData);
     $.ajax({
         crossOrigin: true,
         type: "POST",
@@ -132,7 +132,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pketeranga
                 "mRender": function (data, type, full) {
 
                     var ret_value =
-                        '<button style="width: 15px !important;" class="btn btn-info" title="Edit Data" onclick="getbyId(\'' + full.ID_KETERANGAN + '\')"><i class="fa fa-pencil"></i></button>'
+                        '<button style="width: 15px !important;" class="btn btn-info" title="Edit Data" onclick="getbyId(\'' + full.ID_KETERANGAN + '\')"><i class="fas fa-edit"></i></button>'
                     return ret_value;
 
                 }

@@ -243,108 +243,153 @@ public class CorpayService {
     public String saveColumn(
             String userId,
             int nomor,
-            int compCode,
-            int docNo,
-            int fiscYear,
-            int docType,
-            int docDate,
-            int postDate,
-            int entryDate,
+            int ket,
+            int doc_no,
+            int doc_date2,
+            int rev_with,
+            int rev_year,
+            int post_date2,
+            int base_date,
+            int entry_date2,
+            int doc_type,
+            int fisc_year,
+            int doc_hdr_txt,
             int reference,
-            int revWith,
-            int revYear,
-            int docHdrTxt,
+            int tgl_tagihan_diterima,
+            int comp_code,
+            int bus_area,
             int currency,
-            int exchRate,
-            int referenceKey,
-            int pmtInd,
-            int transType,
-            int spreadVal,
-            int lineItem,
-            int oiInd,
-            int acctType,
-            int specGl,
-            int busArea,
-            int tpba,
-            int amtLc,
-            int amtTc,
-            int amtWithBaseTc,
-            int amtWithTc,
+            int exch_rate,
+            int line_item,
+            int dr_cr_ind,
+            int spec_gl,
+            int gl_acct,
+            int amt_tc,
+            int amt_lc,
+            int amt_with_base_tc,
+            int amt_with_tc,
+            int amt_with_base_lc,
+            int amt_with_lc,
+            int amount,
+            int acct_type,
             int assignment,
-            int itemText,
-            int costCtr,
-            int glAcct,
+            int item_text,
             int customer,
             int vendor,
-            int baseDate,
-            int termPmt,
-            int dueOn,
-            int pmtBlock,
-            int houseBank,
-            int prtnrBankType,
-            int poNum,
-            int poItem,
-            int refKey1,
-            int refKey2,
-            int refKey3,
-            int intOrder,
-            int wbsNum,
-            int cashCode,
-            int corpPmt) {
+            int term_pmt,
+            int due_on,
+            int reference_key,
+            int pmt_ind,
+            int trans_type,
+            int spread_val,
+            int pmt_block,
+            int house_bank,
+            int no_rek_house_bank,
+            int prtnr_bank_type,
+            int bank_key,
+            int bank_account,
+            int account_holder,
+            int cost_ctr,
+            int int_order,
+            int wbs_num,
+            int cash_code,
+            int po_num,
+            int po_item,
+            int ref_key1,
+            int ref_key2,
+            int ref_key3,
+            int oi_ind,
+            int tpba,
+            int metode_pembayaran,
+            int tgl_rencana_bayar,
+            int oss_id,
+            int group_id,
+            int bank_byr,
+            int curr_bayar,
+            int amount_bayar,
+            int bank_benef,
+            int no_rek_benef,
+            int nama_benef,
+            int tgl_act_bayar,
+            int sumber_dana,
+            int partial_ind,
+            int keterangan,
+            int status_tracking) {
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_user_id", userId, OracleTypes.VARCHAR)
-                .addValue("p_nomor", nomor, OracleTypes.NUMBER)
-                .addValue("p_comp_code", compCode, OracleTypes.NUMBER)
-                .addValue("p_doc_no", docNo, OracleTypes.NUMBER)
-                .addValue("p_fisc_year", fiscYear, OracleTypes.NUMBER)
-                .addValue("p_doc_type", docType, OracleTypes.NUMBER)
-                .addValue("p_doc_date", docDate, OracleTypes.NUMBER)
-                .addValue("p_post_date", postDate, OracleTypes.NUMBER)
-
-                .addValue("p_entry_date", entryDate, OracleTypes.NUMBER)
-                .addValue("p_reference", reference, OracleTypes.NUMBER)
-                .addValue("p_rev_with", revWith, OracleTypes.NUMBER)
-                .addValue("p_rev_year", revYear, OracleTypes.NUMBER)
-                .addValue("p_doc_hdr_txt", docHdrTxt, OracleTypes.NUMBER)
-
-                .addValue("p_currency", currency, OracleTypes.NUMBER)
-                .addValue("p_exch_rate", exchRate, OracleTypes.NUMBER)
-                .addValue("p_reference_key", referenceKey, OracleTypes.NUMBER)
-                .addValue("p_pmt_ind", pmtInd, OracleTypes.NUMBER)
-                .addValue("p_trans_type", transType, OracleTypes.NUMBER)
-
-                .addValue("p_spread_val", spreadVal, OracleTypes.NUMBER)
-                .addValue("p_line_item", lineItem, OracleTypes.NUMBER)
-                .addValue("p_oi_ind", oiInd, OracleTypes.NUMBER)
-                .addValue("p_acct_type", acctType, OracleTypes.NUMBER)
-                .addValue("p_spec_gl", specGl, OracleTypes.NUMBER)
-                .addValue("p_bus_area", busArea, OracleTypes.NUMBER)
-                .addValue("p_tpba", tpba, OracleTypes.NUMBER)
-                .addValue("p_amt_lc", amtLc, OracleTypes.NUMBER)
-                .addValue("p_amt_tc", amtTc, OracleTypes.NUMBER)
-                .addValue("p_amt_with_base_tc", amtWithBaseTc, OracleTypes.NUMBER)
-                .addValue("p_amt_with_tc", amtWithTc, OracleTypes.NUMBER)
-                .addValue("p_assignment", assignment, OracleTypes.NUMBER)
-                .addValue("p_item_text", itemText, OracleTypes.NUMBER)
-                .addValue("p_cost_ctr", costCtr, OracleTypes.NUMBER)
-                .addValue("p_gl_acct", glAcct, OracleTypes.NUMBER)
-                .addValue("p_customer", customer, OracleTypes.NUMBER)
-                .addValue("p_vendor", vendor, OracleTypes.NUMBER)
-                .addValue("p_base_date", baseDate, OracleTypes.NUMBER)
-                .addValue("p_term_pmt", termPmt, OracleTypes.NUMBER)
-                .addValue("p_due_on", dueOn, OracleTypes.NUMBER)
-                .addValue("p_pmt_block", pmtBlock, OracleTypes.NUMBER)
-                .addValue("p_house_bank", houseBank, OracleTypes.NUMBER)
-                .addValue("p_prtnr_bank_type", prtnrBankType, OracleTypes.NUMBER)
-                .addValue("p_po_num", poNum, OracleTypes.NUMBER)
-                .addValue("p_po_item", poItem, OracleTypes.NUMBER)
-                .addValue("p_ref_key1", refKey1, OracleTypes.NUMBER)
-                .addValue("p_ref_key2", refKey2, OracleTypes.NUMBER)
-                .addValue("p_ref_key3", refKey3, OracleTypes.NUMBER)
-                .addValue("p_int_order", intOrder, OracleTypes.NUMBER)
-                .addValue("p_wbs_num", wbsNum, OracleTypes.NUMBER)
-                .addValue("p_cash_code", cashCode, OracleTypes.NUMBER)
-                .addValue("p_corp_pmt", corpPmt, OracleTypes.NUMBER);
+                .addValue("p_nomor",nomor, OracleTypes.NUMBER)
+                .addValue("p_ket",ket, OracleTypes.NUMBER)
+                .addValue("p_doc_no",doc_no, OracleTypes.NUMBER)
+                .addValue("p_doc_date2",doc_date2, OracleTypes.NUMBER)
+                .addValue("p_rev_with",rev_with, OracleTypes.NUMBER)
+                .addValue("p_rev_year",rev_year, OracleTypes.NUMBER)
+                .addValue("p_post_date2",post_date2, OracleTypes.NUMBER)
+                .addValue("p_base_date",base_date, OracleTypes.NUMBER)
+                .addValue("p_entry_date2",entry_date2, OracleTypes.NUMBER)
+                .addValue("p_doc_type",doc_type, OracleTypes.NUMBER)
+                .addValue("p_fisc_year",fisc_year, OracleTypes.NUMBER)
+                .addValue("p_doc_hdr_txt",doc_hdr_txt, OracleTypes.NUMBER)
+                .addValue("p_reference",reference, OracleTypes.NUMBER)
+                .addValue("p_tgl_tagihan_diterima",tgl_tagihan_diterima, OracleTypes.NUMBER)
+                .addValue("p_comp_code",comp_code, OracleTypes.NUMBER)
+                .addValue("p_bus_area",bus_area, OracleTypes.NUMBER)
+                .addValue("p_currency",currency, OracleTypes.NUMBER)
+                .addValue("p_exch_rate",exch_rate, OracleTypes.NUMBER)
+                .addValue("p_line_item",line_item, OracleTypes.NUMBER)
+                .addValue("p_dr_cr_ind",dr_cr_ind, OracleTypes.NUMBER)
+                .addValue("p_spec_gl",spec_gl, OracleTypes.NUMBER)
+                .addValue("p_gl_acct",gl_acct, OracleTypes.NUMBER)
+                .addValue("p_amt_tc",amt_tc, OracleTypes.NUMBER)
+                .addValue("p_amt_lc",amt_lc, OracleTypes.NUMBER)
+                .addValue("p_amt_with_base_tc",amt_with_base_tc, OracleTypes.NUMBER)
+                .addValue("p_amt_with_tc",amt_with_tc, OracleTypes.NUMBER)
+                .addValue("p_amt_with_base_lc",amt_with_base_lc, OracleTypes.NUMBER)
+                .addValue("p_amt_with_lc",amt_with_lc, OracleTypes.NUMBER)
+                .addValue("p_amount",amount, OracleTypes.NUMBER)
+                .addValue("p_acct_type",acct_type, OracleTypes.NUMBER)
+                .addValue("p_assignment",assignment, OracleTypes.NUMBER)
+                .addValue("p_item_text",item_text, OracleTypes.NUMBER)
+                .addValue("p_customer",customer, OracleTypes.NUMBER)
+                .addValue("p_vendor",vendor, OracleTypes.NUMBER)
+                .addValue("p_term_pmt",term_pmt, OracleTypes.NUMBER)
+                .addValue("p_due_on",due_on, OracleTypes.NUMBER)
+                .addValue("p_reference_key",reference_key, OracleTypes.NUMBER)
+                .addValue("p_pmt_ind",pmt_ind, OracleTypes.NUMBER)
+                .addValue("p_trans_type",trans_type, OracleTypes.NUMBER)
+                .addValue("p_spread_val",spread_val, OracleTypes.NUMBER)
+                .addValue("p_pmt_block",pmt_block, OracleTypes.NUMBER)
+                .addValue("p_house_bank",house_bank, OracleTypes.NUMBER)
+                .addValue("p_no_rek_house_bank",no_rek_house_bank, OracleTypes.NUMBER)
+                .addValue("p_prtnr_bank_type",prtnr_bank_type, OracleTypes.NUMBER)
+                .addValue("p_bank_key",bank_key, OracleTypes.NUMBER)
+                .addValue("p_bank_account",bank_account, OracleTypes.NUMBER)
+                .addValue("p_account_holder",account_holder, OracleTypes.NUMBER)
+                .addValue("p_cost_ctr",cost_ctr, OracleTypes.NUMBER)
+                .addValue("p_int_order",int_order, OracleTypes.NUMBER)
+                .addValue("p_wbs_num",wbs_num, OracleTypes.NUMBER)
+                .addValue("p_cash_code",cash_code, OracleTypes.NUMBER)
+                .addValue("p_po_num",po_num, OracleTypes.NUMBER)
+                .addValue("p_po_item",po_item, OracleTypes.NUMBER)
+                .addValue("p_ref_key1",ref_key1, OracleTypes.NUMBER)
+                .addValue("p_ref_key2",ref_key2, OracleTypes.NUMBER)
+                .addValue("p_ref_key3",ref_key3, OracleTypes.NUMBER)
+                .addValue("p_oi_ind",oi_ind, OracleTypes.NUMBER)
+                .addValue("p_tpba",tpba, OracleTypes.NUMBER)
+                .addValue("p_metode_pembayaran",metode_pembayaran, OracleTypes.NUMBER)
+                .addValue("p_tgl_rencana_bayar",tgl_rencana_bayar, OracleTypes.NUMBER)
+                .addValue("p_oss_id",oss_id, OracleTypes.NUMBER)
+                .addValue("p_group_id",group_id, OracleTypes.NUMBER)
+                .addValue("p_bank_byr",bank_byr, OracleTypes.NUMBER)
+                .addValue("p_curr_bayar",curr_bayar, OracleTypes.NUMBER)
+                .addValue("p_amount_bayar",amount_bayar, OracleTypes.NUMBER)
+                .addValue("p_bank_benef",bank_benef, OracleTypes.NUMBER)
+                .addValue("p_no_rek_benef",no_rek_benef, OracleTypes.NUMBER)
+                .addValue("p_nama_benef",nama_benef, OracleTypes.NUMBER)
+                .addValue("p_tgl_act_bayar",tgl_act_bayar, OracleTypes.NUMBER)
+                .addValue("p_sumber_dana",sumber_dana, OracleTypes.NUMBER)
+                .addValue("p_partial_ind",partial_ind, OracleTypes.NUMBER)
+                .addValue("p_keterangan",keterangan, OracleTypes.NUMBER)
+                .addValue("p_status_tracking",status_tracking, OracleTypes.NUMBER);
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("invoice_save_column");
@@ -354,7 +399,8 @@ public class CorpayService {
     public Map<String, Object> updatePembayaran(
             String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet, String pBankPembayar, String pKeterangan, String pTglRencanaBayar,
             String pSumberDana, String pMetodePembayaran, String pNoRekHouseBank, String pInqCustomerName, String pInqAccountNumber, String pInqAccountStatus,
-            String pKodeBankPenerima, String pRetrievalRefNumber, String pCustomerRefNumber, String pConfirmationCode, String pTglActBayar) throws SQLException {
+            String pKodeBankPenerima, String pRetrievalRefNumber, String pCustomerRefNumber, String pConfirmationCode, String pTglActBayar, String pJamBayar,
+            String pUserId, String pOssId, String pGroupId) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("invoice_edit");
@@ -379,10 +425,44 @@ public class CorpayService {
                 .addValue("p_customer_ref_number", pCustomerRefNumber)
                 .addValue("p_confirmation_code", pConfirmationCode)
                 .addValue("p_tgl_act_bayar", pTglActBayar)
+                .addValue("p_jam_bayar", pJamBayar)
+                .addValue("p_user_id", pUserId)
+                .addValue("p_oss_id", pOssId)
+                .addValue("p_group_id", pGroupId)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data edit pembayaran : {}", out);
         return out;
+    }
+
+    public Map<String, Object> getAllTracking(String pSearch) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_tracking_level1");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_search", pSearch);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data get_tracking_level1 : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> getDetailTracking(String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pOssId) throws SQLException {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_tracking_level2");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_comp_code", pCompCode)
+                .addValue("p_doc_no", pDocNo)
+                .addValue("p_fisc_year", pFiscYear)
+                .addValue("p_line_item", pLineItem)
+                .addValue("p_oss_id", pOssId);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data get_tracking_level2 : {}", out);
+        return out;
+
     }
 
     public Map<String, Object> updateHouseBank(
@@ -409,7 +489,7 @@ public class CorpayService {
 
     public Map<String, Object> updateLunas(
             String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pJenisTransaksi,
-            String pUserId, String pStatus
+            String pUserId, String pStatus, String pOssId, String pGroupId
     ) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -423,6 +503,8 @@ public class CorpayService {
                 .addValue("p_jenis_transaksi", pJenisTransaksi)
                 .addValue("p_user_id", pUserId)
                 .addValue("p_status", pStatus)
+                .addValue("p_oss_id", pOssId)
+                .addValue("p_group_id", pGroupId)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("update data lunas : {}", out);
@@ -468,7 +550,7 @@ public class CorpayService {
 
     public Map<String, Object> updateLunasGiro(
             String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pJenisTransaksi,
-            String pUserId
+            String pUserId, String pOssId, String pGroupId
     ) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -480,6 +562,31 @@ public class CorpayService {
                 .addValue("p_fisc_year", pFiscYear)
                 .addValue("p_line_item", pLineItem)
                 .addValue("p_jenis_transaksi", pJenisTransaksi)
+                .addValue("p_oss_id",pOssId)
+                .addValue("p_group_id", pGroupId)
+                .addValue("p_user_id", pUserId)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        out = simpleJdbcCall.execute(inParent);
+        AppUtils.getLogger(this).info("update data lunas Giro : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> updateSiapBayarGiro(
+            String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pJenisTransaksi,
+            String pUserId, String pOssId, String pGroupId
+    ) throws SQLException {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("invoice_upd_siap_bayar");
+        Map<String, Object> out;
+        SqlParameterSource inParent = new MapSqlParameterSource()
+                .addValue("p_comp_code", pCompCode)
+                .addValue("p_doc_no", pDocNo)
+                .addValue("p_fisc_year", pFiscYear)
+                .addValue("p_line_item", pLineItem)
+                .addValue("p_jenis_transaksi", pJenisTransaksi)
+                .addValue("p_oss_id",pOssId)
+                .addValue("p_group_id", pGroupId)
                 .addValue("p_user_id", pUserId)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
@@ -489,7 +596,7 @@ public class CorpayService {
 
     public Map<String, Object> updateStatus(
             String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet, String pStatusTracking,
-            String pCustomerName, String pAccountNumber
+            String pCustomerName, String pAccountNumber, String pUserId, String pOssId, String pGroupId
     ) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -501,9 +608,12 @@ public class CorpayService {
                 .addValue("p_fisc_year", pFiscYear)
                 .addValue("p_line_item", pLineItem)
                 .addValue("p_ket", pKet)
+                .addValue("p_user_id", pUserId)
                 .addValue("p_status_tracking", pStatusTracking)
                 .addValue("p_customer_name", pCustomerName)
-                    .addValue("p_account_number", pAccountNumber)
+                .addValue("p_account_number", pAccountNumber)
+                .addValue("p_oss_id", pOssId)
+                .addValue("p_group_id", pGroupId)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data update status : {}", out);
@@ -511,7 +621,8 @@ public class CorpayService {
     }
 
     public Map<String, Object> updateStatusGiro(
-            String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet, String pStatusTracking
+            String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet, String pStatusTracking,
+            String pOssId, String pGroupId, String pUserId
     ) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -524,6 +635,9 @@ public class CorpayService {
                 .addValue("p_line_item", pLineItem)
                 .addValue("p_ket", pKet)
                 .addValue("p_status_tracking", pStatusTracking)
+                .addValue("p_oss_id", pOssId)
+                .addValue("p_group_id", pGroupId)
+                .addValue("p_user_id",pUserId)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data update status Giro : {}", out);
@@ -531,7 +645,8 @@ public class CorpayService {
     }
 
     public Map<String, Object> reverseStatus(
-            String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet, String pStatusTracking
+            String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet, String pStatusTracking,
+            String pUserId, String pOssId, String pGroupId
     ) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -543,7 +658,10 @@ public class CorpayService {
                 .addValue("p_fisc_year", pFiscYear)
                 .addValue("p_line_item", pLineItem)
                 .addValue("p_ket", pKet)
+                .addValue("p_user_id", pUserId)
                 .addValue("p_status_tracking", pStatusTracking)
+                .addValue("p_oss_id", pOssId)
+                .addValue("p_group_id", pGroupId)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data reverse status : {}", out);
@@ -551,7 +669,8 @@ public class CorpayService {
     }
 
     public Map<String, Object> reverseSap(
-            String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet
+            String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet, String pUserId,
+            String pOssId, String pGroupId
     ) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -563,6 +682,9 @@ public class CorpayService {
                 .addValue("p_fisc_year", pFiscYear)
                 .addValue("p_line_item", pLineItem)
                 .addValue("p_ket", pKet)
+                .addValue("p_user_id", pUserId)
+                .addValue("p_oss_id", pOssId)
+                .addValue("p_group_id", pGroupId)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data reverse SAP : {}", out);
@@ -612,6 +734,17 @@ public class CorpayService {
                 .withFunctionName("get_kode_bank_pembayar");
         Map<String, Object> params = new HashMap<>();
         params.put("p_currency", pCurrency);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+        AppUtils.getLogger(this).info("data get_house_bank : {}", resultset);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getKodeBankPenerima(String pSingkatan) throws SQLException {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_kode_bank_penerima");
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_singkatan", pSingkatan);
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
         AppUtils.getLogger(this).info("data get_house_bank : {}", resultset);
         return resultset;
@@ -743,8 +876,7 @@ public class CorpayService {
 
     public Map<String, Object> insertMultipleEdit(
             String CompCode, String DocNo, String fisYear, String lineItem, String keterangan,
-            String cashCode, String metodePembayaran, String jamBayar
-            ){
+            String cashCode, String metodePembayaran, String jamBayar, String pUserId           ){
         SqlParameterSource params = new MapSqlParameterSource()
                 .addValue("p_comp_code", CompCode)
                 .addValue("p_doc_no", DocNo)
@@ -754,6 +886,7 @@ public class CorpayService {
                 .addValue("p_cash_code", cashCode)
                 .addValue("p_metode_pembayaran", metodePembayaran)
                 .addValue("p_jam_bayar", jamBayar)
+                .addValue("p_user_id", pUserId)
                 .addValue("out_msg ", OracleTypes.VARCHAR);
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -1454,7 +1587,8 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
     }
 
     public Map<String, Object> verifikasiTgl(
-            String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet
+            String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet, String pUserId,
+            String pOssId, String pGroupId
     ) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -1466,6 +1600,9 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
                 .addValue("p_fisc_year", pFiscYear)
                 .addValue("p_line_item", pLineItem)
                 .addValue("p_ket", pKet)
+                .addValue("p_user_id", pUserId)
+                .addValue("p_oss_id", pOssId)
+                .addValue("p_group_id", pGroupId)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data reverse SAP : {}", out);
@@ -1666,8 +1803,6 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("get_all_invoice_by_status");
-
-
         Map<String, Object> params = new HashMap<>();
         params.put("p_user_id", idUser);
         params.put("p_tgl_awal", pTglAwal);
@@ -1682,5 +1817,31 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         AppUtils.getLogger(this).info("data get_all_pembayaran_by_status1 : {} and userid {}", resultset, idUser);
         return resultset;
     }
+
+//    public List<Map<String, Object>> getAllpembayaran(String idUser, String pTglAwal, String pTglAkhir,  String pCurr, String pCaraBayar, String pBank, String status, String statusTracking) throws SQLException {
+//
+//        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
+//        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
+//        AppUtils.getLogger(this).debug("PARAM SEARCH pCurr : {}", pCurr);
+//
+//        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+//                .withCatalogName("PKG_CORPAY")
+//                .withFunctionName("get_all_invoice_by_status");
+//
+//
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("p_user_id", idUser);
+//        params.put("p_tgl_awal", pTglAwal);
+//        params.put("p_tgl_akhir", pTglAkhir);
+//        params.put("p_currency", pCurr);
+//        params.put("p_cara_bayar", pCaraBayar);
+//        params.put("p_bank", pBank);
+//        params.put("p_status", status);
+//        params.put("p_status_tracking", statusTracking);
+//        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+//
+//        AppUtils.getLogger(this).info("data get_all_pembayaran_by_status1 : {} and userid {}", resultset, idUser);
+//        return resultset;
+//    }
 
 }

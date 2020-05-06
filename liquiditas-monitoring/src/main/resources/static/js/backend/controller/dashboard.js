@@ -1,3 +1,20 @@
+$(document).ready(function () {
+    tableMainDashboard();
+    dataTable();
+    tableRencanaImprestValas();
+    tableRencanaImpres();
+    tableRealisasiBankCurrency();
+    var date = new Date();
+    var newDate = date.toJSON().slice(0, 10).replace(new RegExp("-", 'g'), "/").split("/").reverse().join("/")
+    $("#tglcetak").html(newDate);
+
+    $("#dashboard-carousel").carousel({
+        interval : 1000*5,
+        pause : "hover",
+    });
+$("#dash_date").datepicker({dateFormat : "dd/mm/yy"});
+});
+
 function tableMainDashboard(_date){
 
     let date = new Date();
@@ -125,12 +142,6 @@ function tableMainDashboard(_date){
             $(row).attr("onclick", "showParents(this)");
 
         }
-
-//        if(data["URAIAN"] === "Bank"){
-//            $(".clickable-row").click(function() {
-//                window.location = $(this).data("href");
-//            });
-//        }
 
         if (data["ISANAK"] === 0 && regexChild1.test(data["KODE"])){
             $(row).css({
@@ -497,7 +508,7 @@ function tableRencanaImpres(_date){
 
     let tb_rencana_imprest_valas = $("#dash_rencana_imprest").DataTable({
         "ajax" : {
-            "url" : baseUrl + "api_operator/api_report/get_dashboard_rencana_imprest",
+            "url" : baseUrl + "api_operator/api_report/dashboard_rencana_imprest",
             "data" : {
                 "ptanggal" : current_full_date
             },
@@ -768,27 +779,6 @@ function showModal(){
 
 }
 
-$(document).ready(function () {
-//    popupModal();
-//    toggleModal();
-//    windowOnClick();
-//    rencanaBayarBarLine();
-    tableMainDashboard();
-    dataTable();
-    tableRencanaImprestValas();
-    tableRencanaImpres();
-    tableRealisasiBankCurrency();
-    var date = new Date();
-    var newDate = date.toJSON().slice(0, 10).replace(new RegExp("-", 'g'), "/").split("/").reverse().join("/")
-    $("#tglcetak").html(newDate);
-
-    $("#dashboard-carousel").carousel({
-        interval : 1000*5,
-        pause : "hover",
-    });
-$("#dash_date").datepicker({dateFormat : "dd/mm/yy"});
-});
-
 function dataTable(){
 $.ajax({
           url: baseUrl + "api_dashboard/get_rekening_vs_rencana",
@@ -889,234 +879,253 @@ $.ajax({
           success: function (res) {
             var data = res.return;
             var data2 = res.OUT_HARI;
+            var data2_real = res.OUT_HARI_REAL;
             var data3 = res.OUT_MINGGU;
+            var data3_real = res.OUT_MINGGU_REAL;
             var data4 = res.OUT_BULAN;
-//            var tes = JSON.stringify(res.return);
-//            var tes2 = JSON.stringify(res);
-//            console.log('testes' + tes2)
-            $("#tglcetak").html(data[0].TANGGAL);
+            var data4_real = res.OUT_BULAN_REAL;
+            var data5 = res.OUT_TAHUN_REAL;
 
-            var dataChartRenPembayaran = [];
+            var dataChartRenPembayaranHari = [];
             $.each(data2, function (index, value) {
                 var dataPieTemp = {
-                    seriesname : value.CASH_DESCRIPTION,
-                    data : [
-                    {
-                        value: value.KE_1
-                    },
-                    {
-                        value: value.KE_2
-                    },
-                    {
-                        value: value.KE_3
-                    },
-                    {
-                        value: value.KE_4
-                    },
-                    {
-                        value: value.KE_5
-                    }
-                    ]
+                       seriesname : value.CASH_DESCRIPTION,
+                       data : [
+                       {
+                           value: value.KE_1,
+                           toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_1)
+                       },
+                       {
+                           value: value.KE_2,
+                           toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_2)
+                       },
+                       {
+                           value: value.KE_3,
+                           toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_3)
+                       },
+                       {
+                           value: value.KE_4,
+                           toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_4)
+                       },
+                       {
+                           value: value.KE_5,
+                           toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_5)
+                       }
+                   ]
                 };
-                dataChartRenPembayaran.push(dataPieTemp)
+                dataChartRenPembayaranHari.push(dataPieTemp)
             });
+            var dataseth1 = [];
+            var datah1 = {dataset : dataChartRenPembayaranHari};
+            dataseth1.push(datah1);
 
-            var dataChartRenPembayaran2 = [];
-            $.each(data3, function (index, value) {
+            var dataChartRealPembayaranHari = [];
+            $.each(data2_real, function (index, value) {
                 var dataPieTemp2 = {
-                    seriesname : value.CASH_DESCRIPTION,
-                    data : [
-                    {
-                        value: value.KE_1
-                    },
-                    {
-                        value: value.KE_2
-                    },
-                    {
-                        value: value.KE_3
-                    },
-                    {
-                        value: value.KE_4
-                    },
-                    {
-                        value: value.KE_5
-                    }
+                        seriesname : value.CASH_DESCRIPTION,
+                        data : [
+                        {
+                           value: value.KE_1,
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_1)
+                        },
+                        {
+                           value: value.KE_2,
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_2)
+                        },
+                        {
+                           value: value.KE_3,
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_3)
+                        },
+                        {
+                           value: value.KE_4,
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_4)
+                        },
+                        {
+                           value: value.KE_5,
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_5)
+                        }
                     ]
                 };
-                dataChartRenPembayaran2.push(dataPieTemp2)
+                dataChartRealPembayaranHari.push(dataPieTemp2)
             });
+            var dataseth2 = [];
+            var datah2 = {dataset : dataChartRealPembayaranHari};
+            dataseth2.push(datah2);
 
-            var dataChartRenPembayaran3 = [];
-            $.each(data4, function (index, value) {
-                var dataPieTemp3 = {
-                    seriesname : value.CASH_DESCRIPTION,
-                    data : [
-                    {
-                        value: value.KE_1
-                    },
-                    {
-                        value: value.KE_2
-                    },
-                    {
-                        value: value.KE_3
-                    },
-                    {
-                        value: value.KE_4
-                    },
-                    {
-                        value: value.KE_5
-                    }
-                    ]
-                };
-                dataChartRenPembayaran3.push(dataPieTemp3)
-            });
-
-            rencanaPembayaranBarLine(dataChartRenPembayaran)
-            rencanaPembayaranBarLine2(dataChartRenPembayaran2)
-            rencanaPembayaranBarLine3(dataChartRenPembayaran3)
-            hideLoadingCss()
-      },
-      error: function () {
-          // hideLoadingCss("Gagal Ambil Data");
-          hideLoadingCss();
-          $('#table-jenis-bank tbody').empty();
-          var html = "<tr>" +
-              "<td colspan='5' align='center'> No Data </td>" +
-              "</tr>";
-          $('#table-jenis-bank tbody').append(html);
-      }
-     });
-$.ajax({
-          url: baseUrl + "api_dashboard/get_realisasi_pembayaran",
-          dataType: 'JSON',
-          type: "GET",
-          success: function (res) {
-            var data = res.return;
-            var data2 = res.OUT_HARI;
-            var data3 = res.OUT_MINGGU;
-            var data4 = res.OUT_BULAN;
-            var data5 = res.OUT_TAHUN;
-//            var tes = JSON.stringify(res.return);
-            var tes2 = JSON.stringify(data3);
-            console.log('Realisasi :'+tes2)
-            $("#tglcetak").html(data[0].TANGGAL);
-
-            var dataChartRealPembayaran = [];
-            $.each(data2, function (index, value) {
+            var dataChartRenPembayaranMinggu = [];
+            $.each(data3, function (index, value) {
                 var dataPieTemp = {
-                    seriesname : value.CASH_DESCRIPTION,
-                    data : [
-                    {
-                        value: value.KE_1
-                    },
-                    {
-                        value: value.KE_2
-                    },
-                    {
-                        value: value.KE_3
-                    },
-                    {
-                        value: value.KE_4
-                    },
-                    {
-                        value: value.KE_5
-                    }
-                    ]
+                       seriesname : value.CASH_DESCRIPTION,
+                       data : [
+                       {
+                           value: value.KE_1,
+                           toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_1)
+                       },
+                       {
+                           value: value.KE_2,
+                           toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_2)
+                       },
+                       {
+                           value: value.KE_3,
+                           toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_3)
+                       },
+                       {
+                           value: value.KE_4,
+                           toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_4)
+                       },
+                       {
+                           value: value.KE_5,
+                           toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_5)
+                       }
+                   ]
                 };
-                dataChartRealPembayaran.push(dataPieTemp)
+                dataChartRenPembayaranMinggu.push(dataPieTemp)
             });
+            var datasetm1 = [];
+            var datam1 = {dataset : dataChartRenPembayaranMinggu};
+            datasetm1.push(datam1);
 
-            var dataChartRealPembayaran2 = [];
-            $.each(data3, function (index, value) {
+            var dataChartRealPembayaranMinggu = [];
+            $.each(data3_real, function (index, value) {
                 var dataPieTemp2 = {
-                    seriesname : value.CASH_DESCRIPTION,
-                    data : [
-                    {
-                        value: value.KE_1
-                    },
-                    {
-                        value: value.KE_2
-                    },
-                    {
-                        value: value.KE_3
-                    },
-                    {
-                        value: value.KE_4
-                    },
-                    {
-                        value: value.KE_5
-                    }
+                        seriesname : value.CASH_DESCRIPTION,
+                        data : [
+                        {
+                           value: value.KE_1,
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_1)
+                        },
+                        {
+                           value: value.KE_2,
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_2)
+                        },
+                        {
+                           value: value.KE_3,
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_3)
+                        },
+                        {
+                           value: value.KE_4,
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_4)
+                        },
+                        {
+                           value: value.KE_5,
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_5)
+                        }
                     ]
                 };
-                dataChartRealPembayaran2.push(dataPieTemp2)
+                dataChartRealPembayaranMinggu.push(dataPieTemp2)
             });
+            var datasetm2 = [];
+            var datam2 = {dataset : dataChartRealPembayaranMinggu};
+            datasetm2.push(datam2);
 
-            var dataChartRealPembayaran3 = [];
+            var dataChartRenPembayaranBulan = [];
             $.each(data4, function (index, value) {
-                var dataPieTemp3 = {
-                    seriesname : value.CASH_DESCRIPTION,
-                    data : [
-                    {
-                        value: value.KE_1
-                    },
-                    {
-                        value: value.KE_2
-                    },
-                    {
-                        value: value.KE_3
-                    },
-                    {
-                        value: value.KE_4
-                    },
-                    {
-                        value: value.KE_5
-                    }
+                var dataPieTemp = {
+                       seriesname : value.CASH_DESCRIPTION,
+                       data : [
+                       {
+                           value: value.KE_1,
+                           toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_1)
+                       },
+                       {
+                           value: value.KE_2,
+                           toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_2)
+                       },
+                       {
+                           value: value.KE_3,
+                           toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_3)
+                       },
+                       {
+                           value: value.KE_4,
+                           toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_4)
+                       },
+                       {
+                           value: value.KE_5,
+                           toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_5)
+                       }
+                   ]
+                };
+                dataChartRenPembayaranBulan.push(dataPieTemp)
+            });
+            var datasetb1 = [];
+            var datab1 = {dataset : dataChartRenPembayaranBulan};
+            datasetb1.push(datab1);
+
+            var dataChartRealPembayaranBulan = [];
+            $.each(data4_real, function (index, value) {
+                var dataPieTemp2 = {
+                        seriesname : value.CASH_DESCRIPTION,
+                        data : [
+                        {
+                           value: value.KE_1,
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_1)
+                        },
+                        {
+                           value: value.KE_2,
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_2)
+                        },
+                        {
+                           value: value.KE_3,
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_3)
+                        },
+                        {
+                           value: value.KE_4,
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_4)
+                        },
+                        {
+                           value: value.KE_5,
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_5)
+                        }
                     ]
                 };
-                dataChartRealPembayaran3.push(dataPieTemp3)
+                dataChartRealPembayaranBulan.push(dataPieTemp2)
             });
+            var datasetb2 = [];
+            var datab2 = {dataset : dataChartRealPembayaranBulan};
+            datasetb2.push(datab2);
 
-            var dataChartRealPembayaran4 = [];
+            var dataChartRealPembayaranTahun = [];
             $.each(data5, function (index, value) {
                 var dataPieTemp4 = {
                     seriesname : value.CASH_DESCRIPTION,
                     data : [
                     {
-                        value: value.KE_1
+                        value: value.KE_1,
+                        toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_1)
                     },
                     {
-                        value: value.KE_2
+                        value: value.KE_2,
+                        toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_2)
                     },
                     {
-                        value: value.KE_3
+                        value: value.KE_3,
+                        toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_3)
                     },
                     {
-                        value: value.KE_4
+                        value: value.KE_4,
+                        toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_4)
                     },
                     {
-                        value: value.KE_5
+                        value: value.KE_5,
+                        toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_5)
                     }
                     ]
                 };
-                dataChartRealPembayaran4.push(dataPieTemp4)
+                dataChartRealPembayaranTahun.push(dataPieTemp4)
             });
 
-            realisasiPembayaranBarLine(dataChartRealPembayaran)
-            realisasiPembayaranBarLine2(dataChartRealPembayaran2)
-            realisasiPembayaranBarLine3(dataChartRealPembayaran3)
-            realisasiPembayaranBarLine4(dataChartRealPembayaran4)
-            hideLoadingCss()
-      },
-      error: function () {
-          // hideLoadingCss("Gagal Ambil Data");
-          hideLoadingCss();
-          $('#table-jenis-bank tbody').empty();
-          var html = "<tr>" +
-              "<td colspan='5' align='center'> No Data </td>" +
-              "</tr>";
-          $('#table-jenis-bank tbody').append(html);
+            var chart_hari = dataseth1.concat(dataseth2);
+            barRencanaRealisasiPembayaranHari(chart_hari)
+
+            var chart_minggu = datasetm1.concat(datasetm2);
+            barRencanaRealisasiPembayaranMinggu(chart_minggu)
+
+            var chart_bulan = datasetb1.concat(datasetb2);
+            barRencanaRealisasiPembayaranBulan(chart_bulan)
+
+            barRencanaRealisasiPembayaranTahun(dataChartRealPembayaranTahun)
       }
-     });
+ });
 $.ajax({
        url: baseUrl + "api_dashboard/get_ana_realisasi_pembayaran",
        dataType: 'JSON',
@@ -1124,10 +1133,7 @@ $.ajax({
        success: function (res) {
          var data = res.return;
          var data2 = res.OUT_LINE;
-//         $("#tglcetak").html(data[0].TANGGAL);
-         console.log('Tes' + data)
 // KOLOM
-
          var dataChartAnaRealPembayaran = [];
          $.each(data, function (index, value) {
              var dataPieTemp = {
@@ -1374,13 +1380,10 @@ function creteChartKompSaldo(data) {
     });
 }
 
-function rencanaPembayaranBarLine(data){
-    var tes = JSON.stringify(data);
-    console.log('tes2'+ tes)
-var tes = JSON.stringify(data);
+function barRencanaRealisasiPembayaranHari(chart_hari){
     const dataSource = {
         chart : {
-            caption : "Rencana Pembayaran",
+            caption : "Rencana & Realisasi Pembayaran Per Hari",
             subcaption : "PT. PLN (Persero) Divisi Treasury",
             showSum : "1",
             numberprefix : "Rp ",
@@ -1397,29 +1400,29 @@ var tes = JSON.stringify(data);
             {
                 category : [
                     {
-                        label : "Hari 1"
+                        label : "Hari ke 1"
                     },
                     {
-                        label : "Hari 2"
+                        label : "Hari ke 2"
                     },
                     {
-                        label : "Hari 3"
+                        label : "Hari ke 3"
                     },
                     {
-                        label : "Hari 4"
+                        label : "Hari ke 4"
                     },
                     {
-                        label : "Hari 5"
+                        label : "Hari ke 5"
                     }
                 ]
             }
         ],
-        dataset : data
+        dataset : chart_hari
     };
 
     FusionCharts.ready(function () {
         let chart = new FusionCharts({
-            type: "stackedcolumn2dline",
+            type: "msstackedcolumn2d",
             renderAt: "column-rencana-pembayaran",
             width: "100%",
             height: "100%",
@@ -1429,10 +1432,10 @@ var tes = JSON.stringify(data);
     });
 }
 
-function rencanaPembayaranBarLine2(data2){
+function barRencanaRealisasiPembayaranMinggu(chart_minggu){
     const dataSource = {
         chart : {
-            caption : "Rencana Pembayaran",
+            caption : "Rencana & Realisasi Pembayaran Per Minggu",
             subcaption : "PT. PLN (Persero) Divisi Treasury",
             showSum : "1",
             numberprefix : "Rp ",
@@ -1442,36 +1445,36 @@ function rencanaPembayaranBarLine2(data2){
             divLineAlpha: "60",
             divLineDashed: "0",
             showLegend: "0",
-                        numberScaleValue: "1000, 1000, 1000, 1000",
-                        numberScaleUnit: "Rb, Jt, M, T"
+            numberScaleValue: "1000, 1000, 1000, 1000",
+            numberScaleUnit: "Rb, Jt, M, T"
         },
         categories : [
             {
                 category : [
                     {
-                        label : "Minggu 1"
+                        label : "Minggu ke 1"
                     },
                     {
-                        label : "Minggu 2"
+                        label : "Minggu ke 2"
                     },
                     {
-                        label : "Minggu 3"
+                        label : "Minggu ke 3"
                     },
                     {
-                        label : "Minggu 4"
+                        label : "Minggu ke 4"
                     },
                     {
-                        label : "Minggu 5"
+                        label : "Minggu ke 5"
                     }
                 ]
             }
         ],
-        dataset : data2
+        dataset : chart_minggu
     };
 
     FusionCharts.ready(function () {
         let chart = new FusionCharts({
-            type: "stackedcolumn2dline",
+            type: "msstackedcolumn2d",
             renderAt: "column-rencana-pembayaran2",
             width: "100%",
             height: "100%",
@@ -1481,10 +1484,10 @@ function rencanaPembayaranBarLine2(data2){
     });
 }
 
-function rencanaPembayaranBarLine3(data3){
+function barRencanaRealisasiPembayaranBulan(chart_bulan){
     const dataSource = {
         chart : {
-            caption : "Rencana Pembayaran",
+            caption : "Rencana & Realisasi Pembayaran Per Bulan",
             subcaption : "PT. PLN (Persero) Divisi Treasury",
             showSum : "1",
             numberprefix : "Rp ",
@@ -1494,36 +1497,36 @@ function rencanaPembayaranBarLine3(data3){
             divLineAlpha: "60",
             divLineDashed: "0",
             showLegend: "0",
-                        numberScaleValue: "1000, 1000, 1000, 1000",
-                        numberScaleUnit: "Rb, Jt, M, T"
+            numberScaleValue: "1000, 1000, 1000, 1000",
+            numberScaleUnit: "Rb, Jt, M, T"
         },
         categories : [
             {
                 category : [
                     {
-                        label : "Bulan 1"
+                        label : "Bulan ke 1"
                     },
                     {
-                        label : "Bulan 2"
+                        label : "Bulan ke 2"
                     },
                     {
-                        label : "Bulan 3"
+                        label : "Bulan ke 3"
                     },
                     {
-                        label : "Bulan 4"
+                        label : "Bulan ke 4"
                     },
                     {
-                        label : "Bulan 5"
+                        label : "Bulan ke 5"
                     }
                 ]
             }
         ],
-        dataset : data3
+        dataset : chart_bulan
     };
 
     FusionCharts.ready(function () {
         let chart = new FusionCharts({
-            type: "stackedcolumn2dline",
+            type: "msstackedcolumn2d",
             renderAt: "column-rencana-pembayaran3",
             width: "100%",
             height: "100%",
@@ -1533,7 +1536,7 @@ function rencanaPembayaranBarLine3(data3){
     });
 }
 
-function realisasiPembayaranBarLine(data2){
+function barRencanaRealisasiPembayaranTahun(data5){
     const dataSource = {
         chart : {
             caption : "Realisasi Pembayaran",
@@ -1546,182 +1549,26 @@ function realisasiPembayaranBarLine(data2){
             divLineAlpha: "60",
             divLineDashed: "0",
             showLegend: "0",
-                        numberScaleValue: "1000, 1000, 1000, 1000",
-                        numberScaleUnit: "Rb, Jt, M, T"
+            numberScaleValue: "1000, 1000, 1000, 1000",
+            numberScaleUnit: "Rb, Jt, M, T"
         },
         categories : [
             {
                 category : [
                     {
-                        label : "Hari 1"
+                        label : "2019"
                     },
                     {
-                        label : "Hari 2"
+                        label : "2020"
                     },
                     {
-                        label : "Hari 3"
+                        label : "2021"
                     },
                     {
-                        label : "Hari 4"
+                        label : "2022"
                     },
                     {
-                        label : "Hari 5"
-                    }
-                ]
-            }
-        ],
-        dataset : data2
-    };
-
-    FusionCharts.ready(function () {
-        let chart = new FusionCharts({
-            type: "stackedcolumn2dline",
-            renderAt: "column-realisasi-pembayaran",
-            width: "100%",
-            height: "100%",
-            dataFormat: "json",
-            dataSource
-        }).render();
-    });
-}
-
-function realisasiPembayaranBarLine2(data3){
-    const dataSource = {
-        chart : {
-            caption : "Realisasi Pembayaran",
-            subcaption : "PT. PLN (Persero) Divisi Treasury",
-            showSum : "1",
-            numberprefix : "Rp ",
-            theme : "fusion",
-            numDivLines : "5",
-            divLineColor: "#6699cc",
-            divLineAlpha: "60",
-            divLineDashed: "0",
-            showLegend: "0",
-                        numberScaleValue: "1000, 1000, 1000, 1000",
-                        numberScaleUnit: "Rb, Jt, M, T"
-        },
-        categories : [
-            {
-                category : [
-                    {
-                        label : "Minggu 1"
-                    },
-                    {
-                        label : "Minggu 2"
-                    },
-                    {
-                        label : "Minggu 3"
-                    },
-                    {
-                        label : "Minggu 4"
-                    },
-                    {
-                        label : "Minggu 5"
-                    }
-                ]
-            }
-        ],
-        dataset : data3
-    };
-
-    FusionCharts.ready(function () {
-        let chart = new FusionCharts({
-            type: "stackedcolumn2dline",
-            renderAt: "column-realisasi-pembayaran2",
-            width: "100%",
-            height: "100%",
-            dataFormat: "json",
-            dataSource
-        }).render();
-    });
-}
-
-function realisasiPembayaranBarLine3(data4){
-    const dataSource = {
-        chart : {
-            caption : "Realisasi Pembayaran",
-            subcaption : "PT. PLN (Persero) Divisi Treasury",
-            showSum : "1",
-            numberprefix : "Rp ",
-            theme : "fusion",
-            numDivLines : "5",
-            divLineColor: "#6699cc",
-            divLineAlpha: "60",
-            divLineDashed: "0",
-            showLegend: "0",
-                        numberScaleValue: "1000, 1000, 1000, 1000",
-                        numberScaleUnit: "Rb, Jt, M, T"
-        },
-        categories : [
-            {
-                category : [
-                    {
-                        label : "Bulan 1"
-                    },
-                    {
-                        label : "Bulan 2"
-                    },
-                    {
-                        label : "Bulan 3"
-                    },
-                    {
-                        label : "Bulan 4"
-                    },
-                    {
-                        label : "Bulan 4"
-                    }
-                ]
-            }
-        ],
-        dataset : data4
-    };
-
-    FusionCharts.ready(function () {
-        let chart = new FusionCharts({
-            type: "stackedcolumn2dline",
-            renderAt: "column-realisasi-pembayaran3",
-            width: "100%",
-            height: "100%",
-            dataFormat: "json",
-            dataSource
-        }).render();
-    });
-}
-
-function realisasiPembayaranBarLine4(data5){
-    const dataSource = {
-        chart : {
-            caption : "Realisasi Pembayaran",
-            subcaption : "PT. PLN (Persero) Divisi Treasury",
-            showSum : "1",
-            numberprefix : "Rp ",
-            theme : "fusion",
-            numDivLines : "5",
-            divLineColor: "#6699cc",
-            divLineAlpha: "60",
-            divLineDashed: "0",
-            showLegend: "0",
-                        numberScaleValue: "1000, 1000, 1000, 1000",
-                        numberScaleUnit: "Rb, Jt, M, T"
-        },
-        categories : [
-            {
-                category : [
-                    {
-                        label : "Tahun 1"
-                    },
-                    {
-                        label : "Tahun 2"
-                    },
-                    {
-                        label : "Tahun 3"
-                    },
-                    {
-                        label : "Tahun 4"
-                    },
-                    {
-                        label : "Tahun 4"
+                        label : "2023"
                     }
                 ]
             }
@@ -1732,7 +1579,7 @@ function realisasiPembayaranBarLine4(data5){
     FusionCharts.ready(function () {
         let chart = new FusionCharts({
             type: "stackedcolumn2dline",
-            renderAt: "column-realisasi-pembayaran4",
+            renderAt: "column-rencana-pembayaran4",
             width: "100%",
             height: "100%",
             dataFormat: "json",
@@ -1787,34 +1634,14 @@ function analisaPembayaranBarLine(coba){
                    }
                ],
                dataset : coba
-           },
-            events:{
-              "rendered": function (eventObj, dataObj) {
-              var mydatasource = chart.getJSONData();
-              console.log(mydatasource)
-                }
-            }
+           }
+//            events:{
+//              "rendered": function (eventObj, dataObj) {
+//              var mydatasource = chart.getJSONData();
+//              console.log(mydatasource)
+//                }
+//            }
         }).render();
     });
 }
-
-//function popupModal(){
-//    var modal = document.querySelector(".modal");
-//    var trigger = document.querySelector(".trigger");
-//    var closeButton = document.querySelector(".close-button");
-//
-//    function toggleModal() {
-//        modal.classList.toggle("show-modal");
-//    }
-//
-//    function windowOnClick(event) {
-//        if (event.target === modal) {
-//            toggleModal();
-//        }
-//    }
-//
-//    trigger.addEventListener("click", toggleModal);
-//    closeButton.addEventListener("click", toggleModal);
-//    window.addEventListener("click", windowOnClick);
-//}
 

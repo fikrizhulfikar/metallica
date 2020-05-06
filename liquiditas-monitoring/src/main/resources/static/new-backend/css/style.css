@@ -1582,7 +1582,7 @@ pre {
     color: #b0bec5;
     opacity: 1; }
   .form-control:disabled, .form-control[readonly] {
-    background-color: #cfd8dc;
+    background-color: #ececec;
     opacity: 1; }
 
 select.form-control:not([size]):not([multiple]) {
@@ -1921,26 +1921,57 @@ fieldset[disabled] a.btn {
     background-image: none;
     border-color: #379558; }
 
+/*=============*/
 .btn-elementary {
   color: #fff;
   background-color: #7fa998;
-  border-color: #7fa998; }
+  border-color: #7fa998;
+}
 .btn-elementary:hover {
   color: #fff;
   background-color: #587666;
-  border-color: #587666; }
+  border-color: #587666;
+}
 .btn-elementary:focus, .btn-elementary.focus {
-  box-shadow: 0 0 0 2px rgba(88, 106, 184, 0.5); }
+  box-shadow: 0 0 0 2px rgba(88, 106, 184, 0.5);
+}
 .btn-elementary.disabled, .btn-elementary:disabled {
   background-color: #7fa998;
-  border-color: #7fa998; }
+  border-color: #7fa998;
+}
 .btn-elementary:active, .btn-elementary.active,
 .show > .btn-elementary.dropdown-toggle {
   color: #fff;
   background-color: #7fa998;
   background-image: none;
-  border-color: #7fa998; }
-
+  border-color: #7fa998;
+}
+/*==================*/
+.btn-ready {
+  color: #fff;
+  background-color: #3fbac2;
+  border-color: #3fbac2;
+}
+.btn-ready:hover {
+  color: #fff;
+  background-color: #3e9192;
+  border-color: #3e9192;
+}
+.btn-ready:focus, .btn-ready.focus {
+  box-shadow: 0 0 0 2px rgba(54, 184, 174, 0.5);
+}
+.btn-ready.disabled, .btn-elementary:disabled {
+  background-color: #49f2fa;
+  border-color: #49f2fa;
+}
+.btn-ready:active, .btn-ready.active,
+.show > .btn-ready.dropdown-toggle {
+  color: #fff;
+  background-color: #3fbac2;
+  background-image: none;
+  border-color: #3fbac2;
+}
+/*=============*/
 .btn-warning {
   color: #fff;
   background-color: #f8cb00;
@@ -7586,7 +7617,7 @@ base-chart.chart {
           list-style: none; }
       .sidebar .nav .nav-item .nav-link, .sidebar .nav .nav-item .navbar .dropdown-toggle, .navbar .sidebar .nav .nav-item .dropdown-toggle {
         display: block;
-        padding: 0.75rem 1rem;
+        padding: 0.75rem 0.6rem;
         color: #fff;
         text-decoration: none;
         background: transparent; }

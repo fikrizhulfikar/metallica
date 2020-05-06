@@ -27,7 +27,7 @@
 </div>
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" style="cursor: default">Master Bank</li>
+        <li class="breadcrumb-item active" style="cursor: default">Master HR Payable</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
@@ -65,8 +65,8 @@
                                 <input type="number" class="form-control" id="pDateTo"/>
                             </div>
                             <div align="right">
-                                <button onclick="clearForm()" class="btn btn-warning">Clear Form</button>
-                                <button onclick="getHrPayable()" class="btn btn-success">Add Hoc</button>
+<!--                                <button onclick="clearForm()" class="btn btn-warning">Clear Form</button>-->
+                                <button onclick="getHrPayable()" class="btn btn-success"><i class="fas fa-cloud-download-alt"></i>&nbsp; Get Data</button>
                             </div>
                         </div>
                     </div>
@@ -133,7 +133,6 @@
                             <th>DR CR IND</th>
                             <th>AMT WITH BASE LC</th>
                             <th>AMT WITH LC</th>
-                            <th>M DATA DATE</th>
                             <th>TGL VERIFIKASI MAKER</th>
                             <th>TGL VERIFIKASI CHECKER</th>
                             <th>TGL VERIFIKASI APPROVER</th>
@@ -143,9 +142,6 @@
                             <th>KETERANGAN</th>
                             <th>FLAG STATUS</th>
                             <th>ID GROUP</th>
-                            <th>NAMA GROUP</th>
-                            <th>TGL GROUP</th>
-                            <th>GROUP BY</th>
                             <th>NO REK HOUSE BANK</th>
                             <th>INQ CUSTOMER NAME</th>
                             <th>INQ ACCOUNT NUMBER</th>
@@ -246,4 +242,5 @@
 </main>
 <div th:fragment="scripts-backend">
     <script src="/static/js/backend/master/invoice_hr_payable.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </div>

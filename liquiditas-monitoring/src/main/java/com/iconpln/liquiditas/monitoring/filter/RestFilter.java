@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Created by israjhaliri on 8/31/17.
+ * Created by israjhaliri & Diaz on 8/31/17.
  */
 @Component
 @Order(0)
@@ -48,6 +48,7 @@ public class RestFilter implements Filter {
             String currentPrincipalName = authentication.getName();
 
             List<Map<String, Object>> menus = userService.loadMenu(currentPrincipalName);
+            List<Map<String, Object>> menuDashOperasional = new ArrayList<>();
             List<Map<String, Object>> menuDerivatif = new ArrayList<>();
             List<Map<String, Object>> menuInvoice = new ArrayList<>();
             List<Map<String, Object>> menuInvoiceGrouping = new ArrayList<>();
@@ -70,6 +71,9 @@ public class RestFilter implements Filter {
                         }
                         if(menus.get(i).get("root_id").equals("mnuTransaksiInvoice")){
                             menuInvoice.add(menus.get(i));
+                        }
+                        if(menus.get(i).get("root_id").equals("mnuDashOperasional")){
+                            menuDashOperasional.add(menus.get(i));
                         }
                         if(menus.get(i).get("root_id").equals("mnuInvoiceGrouping")){
                             menuInvoiceGrouping.add(menus.get(i));
@@ -96,6 +100,7 @@ public class RestFilter implements Filter {
                 }
                 session.setAttribute("menus", menus);
                 session.setAttribute("derivatif", menuDerivatif);
+                session.setAttribute("dashoperasional", menuDashOperasional);
                 session.setAttribute("invoice", menuInvoice);
                 session.setAttribute("invoicegrouping", menuInvoiceGrouping);
                 session.setAttribute("pembelianvalas", menuPembelianValas);

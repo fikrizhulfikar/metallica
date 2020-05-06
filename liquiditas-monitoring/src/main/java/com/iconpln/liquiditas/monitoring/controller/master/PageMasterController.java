@@ -20,10 +20,11 @@ public class PageMasterController {
         return "operator/bank";
     }
 
-    @RequestMapping("/vendor")
-    public String vendor(){
-        return "operator/vendor";
-    }
+//    Old mapping for master vendor
+//    @RequestMapping("/vendor")
+//    public String vendor(){
+//        return "operator/vendor";
+//    }
 
     @RequestMapping("/jenis_pembayaran")
     public String jenisPembayaran(){
@@ -88,4 +89,9 @@ public class PageMasterController {
 
     @RequestMapping("/customer")
     public String customer(){return "operator/master_customer";}
+
+    @RequestMapping("/vendor")
+    public String vendor(){
+        return "operator/master_vendor";
+    }
 }

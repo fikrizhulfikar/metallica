@@ -96,7 +96,6 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-messaging</artifactId>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
@@ -136,7 +135,23 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<nonFilteredFileExtensions>
+						<nonFilteredFileExtension>xls</nonFilteredFileExtension>
+					</nonFilteredFileExtensions>
+				</configuration>
+			</plugin>
+
 		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
 
 	<profiles>
@@ -149,18 +164,21 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 		</profile>
-		<profile>
-			<id>testing</id>
-			<properties>
-				<activatedProperties>testing</activatedProperties>
-			</properties>
-		</profile>
-		<profile>
-			<id>production</id>
-			<properties>
-				<activatedProperties>production</activatedProperties>
-			</properties>
-		</profile>
+<!--		<profile>-->
+<!--			<id>testing</id>-->
+<!--			<properties>-->
+<!--				<activatedProperties>testing</activatedProperties>-->
+<!--			</properties>-->
+<!--		</profile>-->
+<!--		<profile>-->
+<!--			<id>production</id>-->
+<!--			<properties>-->
+<!--				<activatedProperties>production</activatedProperties>-->
+<!--			</properties>-->
+<!--			<activation>-->
+<!--				<activeByDefault>true</activeByDefault>-->
+<!--			</activation>-->
+<!--		</profile>-->
 	</profiles>
 
 	<repositories>

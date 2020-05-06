@@ -6,107 +6,6 @@ function tableMainDashboard(_date){
     (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString() : current_full_date = _date;
     console.log("Current Date : ",current_full_date);
 
-//    let saldo_operasi = $("#saldo-operasi").DataTable({
-//        "ajax" : {
-//            "url": baseUrl + "api_operator/rekap_invoice_belum/laporan_komposisi_saldo",
-//            "data" : {
-//                "tanggal" : current_full_date,
-//            },
-//            "type" : "GET",
-//            "dataType" : "json",
-//        },
-//        "sorting": false,
-//        "searching" : false,
-//        "paging": false,
-//        "bInfo" : false,
-//        "bLengthChange" : false,
-//        "columns" : [
-//            {"data": null,"render": (data, type, row) => {return '<td>'+data.BANK+'</td>';}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RECEIPT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.OBLIGASI)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.DEPRESIASI)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.BENCANA)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.GLOBAL_BOND)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.DOKUMEN_LELANG)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.IMPREST)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.IMPREST_OPERASI_TERPUSAT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.IMPREST_VALAS)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.IMPOR)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.SUBSIDI)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.KMK)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.JML_OPERASI_IDR)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.JML_OPERASI_VALAS)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//        ],
-//        "createdRow" : function (row, data, dataIndex){
-//
-//            if ((data["BANK"] === "TOTAL")){
-//                $(row).css({
-//                    "background-color": "#FF773D",
-//                });
-//             };
-//         },
-//    });
-//
-//    let saldo_investasi = $("#saldo-investasi").DataTable({
-//        "ajax" : {
-//            "url": baseUrl + "api_operator/rekap_invoice_belum/laporan_komposisi_saldo",
-//            "data" : {
-//                "tanggal" : current_full_date,
-//            },
-//            "type" : "GET",
-//            "dataType" : "json",
-//        },
-//        "sorting": false,
-//        "searching" : false,
-//        "paging": false,
-//        "bInfo" : false,
-//        "bLengthChange" : false,
-//        "columns" : [
-//            {"data": null,"render": (data, type, row) => {return '<td>'+data.BANK+'</td>';}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.IMPREST_INVESTASI_TERPUSAT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.SUKUK)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.DEPOSITO)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.PMN)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.ESCROW_IDR)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.ESCROW_VALAS)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.ADB_RBL)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.JML_INVESTASI_IDR)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.JML_INVESTASI_VALAS)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.TOTAL)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//        ],
-//        "createdRow" : function (row, data, dataIndex){
-//
-//        console.log(data)
-//
-//            if ((data["BANK"] === "TOTAL")){
-//                $(row).css({
-//                    "background-color": "#FF773D",
-//                });
-//             };
-//         },
-//    });
-//
-//    let keterangan = $("#keterangan").DataTable({
-//            "ajax" : {
-//                "url": baseUrl + "api_operator/rekap_invoice_belum/laporan_komposisi_saldo",
-//                "data" : {
-//                    "tanggal" : current_full_date,
-//                },
-//                "type" : "GET",
-//                "dataType" : "json",
-//            },
-//            "sorting": false,
-//            "searching" : false,
-//            "paging": false,
-//            "bInfo" : false,
-//            "bLengthChange" : false,
-//            "columns" : [
-//                {"data": null,"render": (data, type, row) => {return '<td>'+data.URAIAN+'</td>';}},
-//                {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            ],
-//        });
-
-
     let rincian_saldo = $("#rincian-saldo").DataTable({
         "ajax" : {
             "url": baseUrl + "api_operator/rekap_invoice_belum/rincian_saldo",
@@ -123,8 +22,8 @@ function tableMainDashboard(_date){
         "bLengthChange" : false,
         "columns" : [
             {"data": null,"render": (data, type, row) => {return '<td>'+data.NO_REKENING+'</td>';}},
-            {"data": null,"render": (data, type, row) => {return '<td>'+data.BANK+'</td>';}},
-            {"data": null,"render": (data, type, row) => {return '<td>'+data.CURRENCY+'</td>';}},
+            {"data": null,"render": (data, type, row) => {return '<td>'+data.BANK+'</td>';},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+            {"data": null,"render": (data, type, row) => {return '<td>'+data.CURRENCY+'</td>';},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
             {"data": null,"render": (data, type, row) => {return '<td>'+data.JENIS_REKENING+'</td>';}},
             {"data": null,"render": (data, type, row) => {return '<td>'+data.TIPE_REKENING+'</td>';}},
             {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR"){
@@ -157,6 +56,7 @@ function tableMainDashboard(_date){
 $(document).ready(function () {
     tableMainDashboard();
     tableMainDashboard2();
+    myFunction();
 
 
     $("#dashboard-carousel").carousel({
@@ -321,6 +221,12 @@ $.ajax({
          $('#keterangan tbody').append(html);
      }
     });
+}
+
+function myFunction() {
+  const filter = document.querySelector('#myInput').value.toUpperCase();
+  const trs = document.querySelectorAll('#rincian-saldo tr:not(.header)');
+  trs.forEach(tr => tr.style.display = [...tr.children].find(tbody => tbody.innerHTML.toUpperCase().includes(filter)) ? '' : 'none');
 }
 
 

@@ -23,14 +23,15 @@ function connect() {
             });
         });
     });
+    stompClient.debug = null;
 }
 
 function disconnect() {
     if(stompClient != null) {
         stompClient.disconnect();
-        console.log("Disconnected");
+        // console.log("Disconnected");
     }
-
+    stompClient.debug = null;
 }
 
 function showMessageOutput(message) {
@@ -183,7 +184,7 @@ function flagSeen() {
             $("#notification_count").html('0');
         },
         error: function (e) {
-            console.log(e);
+            // console.log(e);
         }
     });
 }

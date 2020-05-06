@@ -161,14 +161,14 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                 {width: 130, targets: 2},
                 {width: 150, targets: 3},
                 {width: 130, targets: 4},
-                {width: 110, targets: 5},
-                {width: 150, targets: 6},
-                {width: 150, targets: 7},
-                {width: 150, targets: 8},
+                {width: 100, targets: 5},
+                {width: 100, targets: 6},
+                {width: 100, targets: 7},
+                {width: 90, targets: 8},
                 {width: 100, targets: 9},
                 {width: 140, targets: 10},
-                {width: "80%", "targets": 0},
-                { className: "datatables_action", "targets": [9,2] },
+                {width: 140, targets: 11},
+                { className: "datatables_action", "targets": [9] },
                 {
                     "bSortable": true,
                     "aTargets": [1, 2, 3, 4, 5, 7, 8, 9,10]
@@ -176,6 +176,14 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                 {
                     "sortable": false,
                     "aTargets": [0]
+                },
+                {
+                    "targets": [0,1,2,3,5,6,7,8,10],
+                    "className": "dt-body-center",
+                },
+                {
+                    "targets": [11],
+                    "className": "dt-body-right",
                 },
                 {
                     "aTargets": [0],
@@ -608,4 +616,48 @@ function back(){
     tablePembelianValasLunas.ajax.reload();
     tablePembelianValasLunasDetail.destroy();
     hideLoadingCss();
+}
+
+function deleteHead (idMetallica){
+    Swal.fire({
+        title : "Hapus",
+        html : "<p>Anda yakin akan <b>menghapus</b> tagihan ini ?</p>",
+        icon : "question",
+        showCancelButton : true,
+        confirmButtonColor : "#3085d6",
+        cancelButtonColor : "#d33",
+        confirmButtonText : "Ya"
+    }).then(response => {
+        if(response.value){
+            showLoadingCss();
+            $.ajax({
+                url : baseUrl + "api_operator/pembelian_valas_trx/delete_pembelian_valas_trx_head",
+                dataType : "JSON",
+                type : "POST",
+                data : {
+                    pIdMetallica : idMetallica,
+                },
+                success : (result) => {
+                    // console.log("Delete Result : ",result);
+                    hideLoadingCss("");
+                    // var result = res.return.split(";")[0];
+                    // console.log("Result : "+result);
+                    if (result.return == 1 ) {
+                        Swal.fire("Berhasil", result.OUT_MSG.charAt(0).toUpperCase() + result.OUT_MSG.slice(1),"success");
+                        // alert(result.OUT_MSG);
+                        search("load");
+                        $('#edit-modal').modal('hide');
+                        tablePembelianValasLunas.ajax.reload();
+                    } else {
+                        alert(result.OUT_MSG);
+                    }
+                },
+                error : () => {
+                    hideLoadingCss("Gagal Menghapus Data, Silahkan Hubungi Administrator");
+                }
+            });
+        }else{
+            hideLoadingCss("");
+        }
+    });
 }

@@ -52,6 +52,7 @@ public class SapHttp {
             String basicAuth = "Basic " + DatatypeConverter.printBase64Binary(userpass.getBytes());
             request.addHeader("Authorization", basicAuth);
 
+            System.out.println("Authentication for GET SAP : "+userpass);
             HttpResponse response = client.execute(request);
 
             System.out.println("\nSending 'GET' request to URL : " + targetURL);

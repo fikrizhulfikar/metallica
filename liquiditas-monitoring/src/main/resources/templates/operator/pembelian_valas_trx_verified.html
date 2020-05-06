@@ -30,7 +30,7 @@
         <li class="breadcrumb-item active" style="cursor: default">Pembelian Valas Diverifikasi</li>
         <li class="breadcrumb-menu d-md-down-none fungsional-button">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
             </div>
         </li>
     </ol>
@@ -42,13 +42,13 @@
                         <label class="lbl-src">Tanggal Awal </label>
                     </div>
                     <div class="col-md-3" style="padding-right: 0px;">
-                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal"/>
+                        <input type="text" placeholder="Posting date" style="border-radius: 5px" class="form-control" id="tanggal_awal"/>
                     </div>
                     <div class="col-md-1" style="padding-right: 0px;">
                         <label class="lbl-src">Tanggal Akhir </label>
                     </div>
                     <div class="col-md-3" style="padding-right: 0px;">
-                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>
+                        <input type="text" placeholder="Posting date" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>
                     </div>
                     <div class="col-md-1" style="padding-right: 0px;">
                         <label class="lbl-src">Currency </label>
@@ -82,7 +82,7 @@
             <div class="list-data" style="margin-top:25px;">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <table id="table-rekapitulasi" class="table table-bordered table-striped">
+                        <table id="table-rekapitulasi" class="table table-condensed table-striped">
                             <thead style="font-size: 12px">
                             <tr>
                                 <th>NO.</th>
@@ -94,7 +94,7 @@
                                 <th>COMPANY CODE</th>
                                 <th>BUSINESS AREA</th>
                                 <th>CURRENCY</th>
-                                <th>EXCHANGE RATE</th>
+                                <th>TOTAL TAGIHAN</th>
                                 <th>DOC HDR TEXT</th>
                                 <th>STATUS TRACKING</th>
                                 <th width="120px">AKSI</th>
@@ -293,7 +293,7 @@
             </table>
         </div>
         <div align="right">
-            <button class="btn btn-danger" onclick="back()"><i class="fa fa-arrow-circle-left"> &nbsp; Back</i></button>
+            <button class="btn btn-danger" onclick="back()"><i class="fas fa-arrow-circle-left"></i>&nbsp;Back</button>
 <!--            <button onclick="submitChild()" class="btn btn-success">Submit</button>-->
         </div>
     </div>

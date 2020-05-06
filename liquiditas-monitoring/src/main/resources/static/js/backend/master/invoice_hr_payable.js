@@ -5,6 +5,9 @@ var tableMain;
 var isUpdate = "0";
 $(document).ready(function () {
     initDataTable();
+    $('#pDateFrom').datepicker({dateFormat : 'yymmdd'});
+    $('#pDateTo').datepicker({dateFormat : 'yymmdd'});
+    $('#pFiscYear').datepicker({dateFormat : 'yy'});
 });
 
 function getbyId(id) {
@@ -288,6 +291,7 @@ function initDataTable() {
             "type": "GET",
             "dataType": "json",
         },
+        "scrollX" : "100%",
         "columns": [
 
             {"data": "COMP_CODE"},
@@ -347,7 +351,6 @@ function initDataTable() {
             {"data": "DR_CR_IND"},
             {"data": "AMT_WITH_BASE_LC"},
             {"data": "AMT_WITH_LC"},
-            {"data": "M_DATA_DATE"},
             {"data": "TGL_VERIFIKASI_MAKER"},
             {"data": "TGL_VERIFIKASI_CHECKER"},
             {"data": "TGL_VERIFIKASI_APPROVER"},
@@ -356,10 +359,7 @@ function initDataTable() {
             {"data": "SUMBER_DANA"},
             {"data": "KETERANGAN"},
             {"data": "FLAG_STATUS"},
-            {"data": "ID_GROUP"},
-            {"data": "NAMA_GROUP"},
-            {"data": "TGL_GROUP"},
-            {"data": "GROUP_BY"},
+            {"data": "GROUP_ID"},
             {"data": "NO_REK_HOUSE_BANK"},
             {"data": "INQ_CUSTOMER_NAME"},
             {"data": "INQ_ACCOUNT_NUMBER"},
@@ -394,21 +394,21 @@ function getHrPayable(){
                 pDateFrom: $("#pDateFrom").val(),
                 pDateTo: $("#pDateTo").val()
             },
-            success: function (res) {
-                showLoadingCss();
-                if (res.ERROR_CODE == 'undefined' || res.ERROR_CODE == null) {
-                    alert('DATA BERHASIL DI TARIK');
-                    // search("load");
-                    // $('#edit-modal').modal('hide');
-                    hideLoadingCss();
+            success: function (response) {
+                // showLoadingCss();
+                if (response.status === 404) {
+                    Swal.fire('Oops!',response.status_message,'info');
+                    // showLoadingCss();
+                } else if(response.status === 200 && response.description.return === 1){
+                    Swal.fire('Berhasil!','Data berhasil ditarik dari SAP','success');
+                    // hideLoadingCss();
                     tableMain.ajax.reload();
-                } else {
-                    alert('DATA GAGAL DI TARIK');
-                    hideLoadingCss()
                 }
+                hideLoadingCss();
             },
             error: function () {
-                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+                Swal.fire("Error", "Terjadi kesalahan, silahkan hubungi Admin","error");
+                hideLoadingCss();
             }
         });
 

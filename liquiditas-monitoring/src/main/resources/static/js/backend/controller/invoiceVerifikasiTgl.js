@@ -264,17 +264,19 @@ function getAllData() {
                         {width: 100, targets: 68},
                         {width: 100, targets: 69},
                         {width: 100, targets: 70},
+                        {width: 100, targets: 71},
+                        {width: 100, targets: 72},
                         // {width: 100, targets: 35},
                         // {width: 100, targets: 36},
                         {width: "20%", "targets": 0},
                         { className: "datatables_action", "targets": [9,23,24,25,26,27,28,29] },
                         {
                             "bSortable": true,
-                            "aTargets": [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69]
+                            "aTargets": [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71]
                         },
                         {
                             "sortable": false,
-                            "aTargets": [0,35, 36]
+                            "aTargets": [0,74]
                         },
                         {
                             "aTargets": [0],
@@ -737,20 +739,26 @@ function getAllData() {
                                 return full.KETERANGAN;
                               }
                           },
-                        {
+                         {
                             "aTargets": [70],
                             "mRender": function (data, type, full) {
-                                return full.TGL_TAGIHAN_DITERIMA;
+                              return full.TGL_TAGIHAN_DITERIMA;
                             }
                         },
+                        {
+                          "aTargets": [71],
+                          "mRender": function (data, type, full) {
+                          return full.PARTIAL_IND;
+                                }
+                         },
                          {
-                              "aTargets": [71],
+                              "aTargets": [72],
                               "mRender": function (data, type, full) {
                               return full.STATUS_TRACKING;
                                     }
                          },
                         {
-                            "aTargets": [72],
+                            "aTargets": [73],
                             "mRender": function (data, type, full) {
                                 var ret_value;
                                 var role = newRoleUser[0];
@@ -758,32 +766,30 @@ function getAllData() {
                                 ret_value =
                                 '<div class="btn-group">'+
                                 '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title="Approve Tanggal" onclick="verifikasi_tanggal(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-check"></i></button>'+
-                                '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-danger" title="Reject" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-times"></i></button>'+
+                                '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-danger" title="Reject" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                 '</div>';
                                 }
                                 return ret_value;
                             }
-
                         },
                         {
-                            "aTargets": [73],
+                            "aTargets": [74],
                             "mRender": function (data, type, full) {
                                 var value = new Object();
                                 var full_value = new Object();
                                 var ret_value = ''
                                 if (newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT") {
-                                    value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
-                                    full_value = '{"full":'+JSON.stringify(full)+'}';
+                                    value = '{"pCompCode":"'+full.COMP_CODE+'", "pBusArea":"'+full.BUS_AREA+'","pLineItem":"'+full.LINE_ITEM+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pOssId":"'+full.OSS_ID+'","pGroupId":"'+full.GROUP_ID+'","pFiscYear":"'+full.FISC_YEAR+'","pKet":"'+full.KET+'"}';
                                 }
 //                                value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
 //                                full_value = '{"full":'+JSON.stringify(full)+'}';
 
                                 for (x=0; x<invoiceCheckedArray.length;x++){
                                     if(JSON.stringify(invoiceCheckedArray[x]) === value){
-                                        return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' data-full='"+full_value+"' onchange='checkArray(this)' id='cbcheckbox' checked>";
+                                        return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' onchange='checkArray(this)' id='cbcheckbox' checked>";
                                     }
                                 }
-                                return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' data-full='"+full_value+"' onchange='checkArray(this)' id='cbcheckbox'>";
+                                return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' onchange='checkArray(this)' id='cbcheckbox'>";
                             }
                         }
                     ],
@@ -798,14 +804,10 @@ function getAllData() {
                             "data":
                                 {
                                     pTglAwal: pTglAwal,
-                                    pTglAkhir:
-                                    pTglAkhir,
-                                    pBank:
-                                    pBank,
-                                    pCurrency:
-                                    pCurrency,
-                                    pCaraBayar:
-                                    pCaraBayar,
+                                    pTglAkhir: pTglAkhir,
+                                    pBank: pBank,
+                                    pCurrency: pCurrency,
+                                    pCaraBayar: pCaraBayar,
                                     status: $("#cmb_status").val(),
                                     statusTracking: statusTracking
                                 }
@@ -813,8 +815,8 @@ function getAllData() {
                             "dataSrc":
 
                                 function (res) {
-                                    hideLoadingCss()
-                                    getTotalTagihan();
+                                    hideLoadingCss();
+                                   // getTotalTagihan();
                                     return res.data;
                                 }
                         }
@@ -826,7 +828,7 @@ function getAllData() {
                             table_rekapitulasi.columns.adjust();
                             var currentPageNumber = this.api().page.info().page;
                             for (x=0;x<cbParentArray.length;x++){
-                                if(cbParentArray[x] == currentPageNumber){
+                                if(cbParentArray[x] === currentPageNumber){
                                     $("#cbparent").prop('checked', true);
                                     break;
                                 }
@@ -1220,10 +1222,20 @@ function getAllData() {
                                  } else {
                                     api.column(69).visible(false);
                                 }
-                                if (response.STATUS_TRACKING == 1) {
-                                     api.column(70).visible(true);
+                                if (response.TGL_TAGIHAN_DITERIMA == 1) {
+                                    api.column(70).visible(true);
                                  } else {
-                                     api.column(70).visible(false);
+                                    api.column(70).visible(false);
+                                }
+                                if (response.PARTIAL_IND == 1) {
+                                     api.column(71).visible(true);
+                                 } else {
+                                     api.column(71).visible(false);
+                                }
+                                if (response.STATUS_TRACKING == 1) {
+                                     api.column(72).visible(true);
+                                 } else {
+                                     api.column(72).visible(false);
                                 }
                             },
                             error: function () {
@@ -1239,15 +1251,15 @@ function getAllData() {
             });
 
             $('.dataTables_length').each(function () {
-                var html = '<label style="margin-left: 250px; cursor:default;">Total tagihan (Rp): <b id="total_tagihan">0</b></label>';
-                $(this).append(html);
+//                var html = '<label style="margin-left: 250px; cursor:default;">Total tagihan (Rp): <b id="total_tagihan">0</b></label>';
+//                $(this).append(html);
             });
 
             $('.dataTables_filter').each(function () {
                  var html = '';
                  if(newRoleUser[0] == "ROLE_VERIFIKATOR"){
-                html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
-                html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
+                    html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
+                    html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
                 }
                  if(newRoleUser[0] == "ROLE_ADMIN"){
                 var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" title="Sembunyikan Kolom" data-toggle="modal" onclick="showColumn()">' +
@@ -1255,17 +1267,16 @@ function getAllData() {
                 /*button reject*/
                 html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="rejectData()">' +
                     '            <i class="fa fa-ban"></i></button>';
-                html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
-                html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fa fa-pencil"></i></button>';
+                html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fas fa-edit"></i></button>';
+                html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fas fa-edit"></i></button>';
                 html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
                 html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
                 html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
                 html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
                 }
-//                if(newRoleUser[0] != "ROLE_OSS" && newRoleUser[0] != "ROLE_DIVKEU"){
-//
-//
-//                }
+               if(newRoleUser[0] === "ROLE_EXECUTIVE_VICE_PRESIDENT"){
+                   html = html + '<button class="btn btn-sm btn-success" id="btn-verified" title="Verifikasi Tanggal" style="margin-left: 10px" type="button" onclick="verifikasi_tanggal_multiple()"><i class="fas fa-check-double"></i></button>';
+               }
                 $(this).append(html);
             });
 
@@ -1455,6 +1466,38 @@ function reverse_sap(pCompCode, pDocNo, pFiscYear, pLineItem, pKet){
     }
 }
 
+function verifikasi_tanggal_multiple(){
+    if (invoiceCheckedArray.length <= 0){
+        alert("Maaf, Silahkan pilih data terlebih dahulu!");
+    }else if(invoiceCheckedArray.length > 0){
+        var stateCrf = confirm("Anda Yakin Akan Memverifikasi Tagihan - tagihan Ini ?");
+        if (stateCrf){
+            showLoadingCss();
+            $.ajax({
+                url : baseUrl + "api_operator/rekap_invoice_belum/verifikasi_tanggal_multiple",
+                dataType : "JSON",
+                type : "POST",
+                data : {
+                    pData : JSON.stringify(invoiceCheckedArray)
+                },
+                success : response => {
+                    hideLoadingCss();
+                    if (response.return === 1){
+                        alert(response.OUT_MSG);
+                        table_rekapitulasi.ajax.reload();
+                    }else{
+                        alert(response.OUT_MSG);
+                    }
+                },
+                error : error => {
+                    alert(error);
+                    hideLoadingCss();
+                }
+            })
+        }
+    }else{alert("Maaf terjadi kesalahan");}
+}
+
 function verifikasi_tanggal(pCompCode, pDocNo, pFiscYear, pLineItem, pKet){
     var stateCrf = confirm("Anda Yakin Akan Memverifikasi Tagihan Ini ?");
     if (stateCrf == true) {
@@ -1506,7 +1549,7 @@ function checkArray(e) {
     if($(e).is(":checked")) {
         if(invoiceCheckedArray.length == 0) {
             invoiceCheckedArray.push($(e).data("value"));
-            fullArray.push($(e).data("full").full);
+            // fullArray.push($(e).data("full").full);
         }else {
             for (x = 0; x < invoiceCheckedArray.length; x++){
                 var valArr = JSON.stringify(invoiceCheckedArray[x]);
@@ -1517,17 +1560,17 @@ function checkArray(e) {
                 }
             }
             // test fikri
-            for(let i = 0; i < fullArray.length; i++){
-                var fullVal = JSON.stringify(fullArray[i]);
-                var valCb2 = JSON.stringify($(e).data("full").full);
-                if (fullVal == valCb2){
-                    isNew = false;
-                    break;
-                }
-            }
+            // for(let i = 0; i < fullArray.length; i++){
+            //     var fullVal = JSON.stringify(fullArray[i]);
+            //     var valCb2 = JSON.stringify($(e).data("full").full);
+            //     if (fullVal == valCb2){
+            //         isNew = false;
+            //         break;
+            //     }
+            // }
             if(isNew == true){
                 invoiceCheckedArray.push($(e).data("value"));
-                fullArray.push($(e).data("full").full);
+                // fullArray.push($(e).data("full").full);
             }
         }
     }
@@ -1539,6 +1582,7 @@ function checkArray(e) {
         var total2 = $("#table-rekapitulasi input[type=checkbox]:checked").map(function () {
             return $(this).data("full");
         }).get().length;
+
         if(total == 0 || total2 == 0){
             $("#cbparent").prop('checked', false);
         }
@@ -1550,16 +1594,16 @@ function checkArray(e) {
             }
         }
 
-        for (x = 0; x < fullArray.length; x++){
-            let fullVal = JSON.stringify(fullArray[x]);
-            let valCb2 = JSON.stringify($(e).data("full").full);
-            if(fullVal == valCb2){
-                fullArray.splice(x, 1);
-            }
-        }
+        // for (x = 0; x < fullArray.length; x++){
+        //     let fullVal = JSON.stringify(fullArray[x]);
+        //     let valCb2 = JSON.stringify($(e).data("full").full);
+        //     if(fullVal == valCb2){
+        //         fullArray.splice(x, 1);
+        //     }
+        // }
     }
-    console.log("Checked : ", invoiceCheckedArray);
-    console.log("Full Array : ", fullArray);
+    // console.log("Checked : ", invoiceCheckedArray);
+    // console.log("Full Array : ", fullArray);
 }
 
 function checkGroup(){

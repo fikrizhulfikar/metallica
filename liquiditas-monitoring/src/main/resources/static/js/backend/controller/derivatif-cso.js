@@ -89,7 +89,7 @@ function delete_data(id) {
             },
             success: function (res) {
                 hideLoadingCss("")
-                console.log("delete log : ", res)
+                // console.log("delete log : ", res)
                 if (res.return == 1) {
                     alert(res.OUT_MSG);
                     location.reload();
@@ -118,7 +118,7 @@ function edit_data(id) {
         success: function (res) {
             hideLoadingCss("")
             idDeviratif = id
-            console.log("data edit_data :", res);
+            // console.log("data edit_data :", res);
 
             $("#pTglDeal").val(res[0].TGL_DEAL);
             $("#pTglJatuhTempo").val(res[0].TGL_JATUH_TEMPO);
@@ -153,16 +153,16 @@ function edit_data(id) {
 
 function ins_data() {
     showLoadingCss();
-    console.log("idDeviratif : ", idDeviratif);
-    console.log("p tgl deal tempo : ", $("#pTglDeal").val() + "T" + $("#pJam").val());
-    console.log("peruntukan dana : ", $("#pPeruntukanDana").val());
+    // console.log("idDeviratif : ", idDeviratif);
+    // console.log("p tgl deal tempo : ", $("#pTglDeal").val() + "T" + $("#pJam").val());
+    // console.log("peruntukan dana : ", $("#pPeruntukanDana").val());
 
     var newtgl = $("#pTglDeal").val();
     var resTgl = newtgl.split("/");
     var newJam = $("#pJam").val();
     var resJam = newJam.split(":");
     var datetime = resTgl[0] + resTgl[1] + resTgl[2] + resJam[0] + resJam[1];
-    console.log(datetime);
+    // console.log(datetime);
 
     $.ajax({
         url: baseUrl + "api_operator/derivatif/ins_data",
@@ -189,7 +189,7 @@ function ins_data() {
         },
         success: function (res) {
             hideLoadingCss("");
-            console.log("ins log : ", res);
+            // console.log("ins log : ", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
                 search("load");
@@ -231,11 +231,11 @@ function getAllData() {
             pTenor : $("#cmb_tenor").val()
         },
         success: function (res) {
-            console.log(res);
+            // console.log(res);
             allData = res;
         },
         error: function () {
-            console.log("Gagal Melakukan Proses,Harap Hubungi Administrator")
+            // console.log("Gagal Melakukan Proses,Harap Hubungi Administrator")
         }
     });
 }
@@ -253,7 +253,7 @@ function exportXls() {
 }
 
 function generatePDF() {
-    console.log("all data  : " + allData);
+    // console.log("all data  : " + allData);
     var column = [];
     column.push({
         text: "NO.",
@@ -385,7 +385,7 @@ function generatePDF() {
 
         data.forEach(function (row) {
             var dataRow = [];
-            console.log(row);
+            // console.log(row);
             dataRow.push(row["NO"]);
             dataRow.push(row["BANK_COUNTERPARTY"]);
             dataRow.push(row["CURRENCY"]);
@@ -500,7 +500,7 @@ function upload_server_xls() {
 
 
     formData.append('pIdDerivatif', "3");
-    console.log(formData);
+    // console.log(formData);
     $.ajax({
         crossOrigin: true,
         type: "POST",
@@ -513,7 +513,7 @@ function upload_server_xls() {
         processData: false,
         success: function (res) {
             hideLoadingCss("");
-            console.log("res",res);
+            // console.log("res",res);
             if (res.V_RETURN == 0) {
                 alert("sukses");
 //                location.reload();
@@ -571,7 +571,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor) {
                    }else{
                         var ret_value =
                             '<div class="btn-group">' +
-                            '<button style="width: 15px !important;" class="btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_DERIVATIF + '\')"><i class="fa fa-pencil"></i></button>' +
+                            '<button style="width: 15px !important;" class="btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_DERIVATIF + '\')"><i class="fas fa-edit"></i></button>' +
                             '<button style="width: 15px !important;" class="btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_DERIVATIF + '\')"><i class="fa fa-remove"></i></button>' +
                             '</div>'
                         return ret_value;
@@ -667,7 +667,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor) {
             },
             "dataSrc": function (res) {
                 hideLoadingCss("")
-                console.log("get log : ", res);
+                // console.log("get log : ", res);
                 return res.data;
             }
         },
@@ -702,7 +702,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor) {
 
     table_derivatif_cso.on('search.dt', function() {
         var value = $('.dataTables_filter input').val();
-        console.log(value); // <-- the value
+        // console.log(value); // <-- the value
         tempTableSearch = value;
     });
 

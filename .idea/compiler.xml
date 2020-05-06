@@ -11,5 +11,11 @@
         <module name="liquiditas-scheduler" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="bca-api" target="1.8" />
+      <module name="bcaapi" target="1.8" />
+      <module name="bi-bca" target="1.8" />
+      <module name="liquiditas-datasap" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

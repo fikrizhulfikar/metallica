@@ -34,11 +34,11 @@
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="icon-docs"></i>&nbsp;Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
                 <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS','ROLE_DM_LIKUIDITAS','ROLE_VICE_PRESIDENT_OPERATION','ROLE_VICE_PRESIDENT_INVESTMENT','ROLE_KASIR_IDR','ROLE_KASIR', 'ROLE_MANAGER_PAYMENT',
                 'ROLE_MANAGER_OPERATION','ROLE_MANAGER_INVESTMENT_APLN','ROLE_MANAGER_INVESTMENT_SLPMN','ROLE_MANAGER_POWER_PURCHASE','ROLE_MANAGER_PRIMARY_ENERGY','EXECUTIVE_VICE_PRESIDENT')">
-                    <i class="icon-pencil"></i> &nbsp;New Data
+                    <i class="fas fa-plus-square"></i> &nbsp;New Data
                 </button>
             </div>
         </li>
@@ -636,9 +636,10 @@
                                 <th>BASE DATE</th>
                                 <th>ENTRY DATE</th>
                                 <th>DOCUMENT TYPE</th>
-                                <th>FISICAL YEAR</th>
+                                <th>FISCAL YEAR</th>
                                 <th>DOCUMENT HDR TXT</th>
                                 <th>REFERENCE</th>
+                                <th>TGL TERIMA TAGIHAN</th>
                                 <th>COMPANY CODE</th>
                                 <th>BUSINESS AREA</th><!--10-->
                                 <th>CURRENCY</th>
@@ -695,6 +696,7 @@
                                 <th>NAMA BENEFICIARY</th>
                                 <th>TGL ACTUAL BAYAR</th>
                                 <th>SUMBER DANA</th>
+                                <th>PARTIAL INDIKATOR</th>
                                 <th>KETERANGAN</th>
                                 <th>STATUS TRACKING</th>
                                 <th>AKSI</th>
@@ -2064,7 +2066,7 @@
     </div>
 </main>
 <div th:fragment="scripts-backend">
-    <script src="/static/js/backend/controller/rekapInvoiceAdmin.js"></script>
+    <script src="/static/js/backend/controller/rekapInvoiceBelum.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <!--<script src="static/js/jquery.mask.min.js"></script>-->
 </div>

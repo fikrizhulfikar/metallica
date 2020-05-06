@@ -160,7 +160,7 @@
         <li>
             <form id="form-logout" th:action="@{/logout}" method="post">
             </form>
-            <a href="javascript:void(0)" onclick="logout()"><i class="fa fa-power-off"></i>&nbsp;Log Out</a>
+            <a href="javascript:void(0)" onclick="logout()"><i class="fas fa-power-off"></i>&nbsp;Log Out</a>
             <script>
                 function logout() {
                     document.getElementById("form-logout").submit();
@@ -251,12 +251,12 @@
                 pTglRencana : pTgl_Rencana
             },
             success: function (res) {
-                console.log("all data  :  ",res);
+                // console.log("all data  :  ",res);
                 allData = res;
                 createUIPdf(res);
             },
             error: function (res) {
-                console.log("error cannot get data pdf");
+                // console.log("error cannot get data pdf");
                 waitingDialog.hide();
             }
         });

@@ -15,7 +15,7 @@ function getSumberDana() {
         success: function (res) {
             hideLoadingCss("")
 
-             console.log("sumber placement : ",res);
+             // console.log("sumber placement : ",res);
 
             $.each(res.return, function (key, val) {
                 var str = val.BANK;
@@ -42,7 +42,7 @@ function getListSumberDana(type) {
         type: "GET",
         success: function (res) {
 
-             console.log("list placement : ",res);
+             // console.log("list placement : ",res);
 
             $.each(res.return, function (key, val) {
                 if (val.JENIS == "valas" && val.NAMA_BANK == "MANDIRI") {
@@ -322,7 +322,7 @@ function getPlacementAwal() {
                 if (value.JENIS == "investasi" && value.NAMA_BANK == "BUKOPIN") {
                     investasi[investasi_bukopin_index].saldo_awal.bukopin = value.SALDO_AWAL;
                     investasi[investasi_bukopin_index].saldo_akhir.bukopin = value.SALDO_AKHIR;
-                    console.log("SALDO AKHIR: " + value.SALDO_AKHIR);
+                    // console.log("SALDO AKHIR: " + value.SALDO_AKHIR);
                     investasi_bukopin_index++;
                 }
 
@@ -358,11 +358,11 @@ function getPlacementAwal() {
                 }
             });
 
-            console.log("valas : ", valas);
-            console.log("imprest : ", imprest);
-            console.log("investasi : ", investasi);
-            console.log("operasi : ", operasi);
-            console.log("impor : ", impor);
+            // console.log("valas : ", valas);
+            // console.log("imprest : ", imprest);
+            // console.log("investasi : ", investasi);
+            // console.log("operasi : ", operasi);
+            // console.log("impor : ", impor);
 
             if (valas.length > 0) {
                 var html_saldo = "<tr id='saldo_awal_valas'>\n" +
@@ -505,8 +505,8 @@ function openSetDana(pJenis, pJenisSumber, pSumberDana) {
 
             tempJenis = pJenis;
             tempSumberDana = pSumberDana;
-            console.log("sumber dana : ", pSumberDana);
-            console.log("sumber placement for set dana : ", res);
+            // console.log("sumber dana : ", pSumberDana);
+            // console.log("sumber placement for set dana : ", res);
 
             $.each(res.return, function (key, val) {
                 // receipt
@@ -557,11 +557,11 @@ function openSetDana(pJenis, pJenisSumber, pSumberDana) {
                     success: function (res) {
                         hideLoadingCss("")
 
-                        console.log("detil sumber dana : ", res);
+                        // console.log("detil sumber dana : ", res);
 
                         $.each(res.return, function (index, val) {
 //                        jika salah kode bank pengirim berarti urutanya tidak betul
-//                            console.log(val.KODE_BANK);
+//                            // console.log(val.KODE_BANK);
                             tempData[index].mandiri = val.NILAI_PLACEMENT;
                             tempData[index].kode_bank_mandiri = val.KODE_BANK;
                             tempData[index].kode_bank_tujuan_mandiri = val.KODE_BANK_TUJUAN;
@@ -731,10 +731,10 @@ function recordSetDana() {
         bukopin[i_bukopin].kode_bank_tujuan = $('.inp-kode-bank-tujuan-bukopin')[i_bukopin].value
     }
 
-    console.log(mandiri);
-    console.log(bni);
-    console.log(bri);
-    console.log(bukopin);
+    // console.log(mandiri);
+    // console.log(bni);
+    // console.log(bri);
+    // console.log(bukopin);
 
     total_mandiri = 0;
     total_bni = 0;
@@ -742,25 +742,25 @@ function recordSetDana() {
     total_bukopin = 0;
 
     for(var j_mandiri = 0; j_mandiri < mandiri.length; j_mandiri++){
-        console.log("run mandiri : ", j_mandiri, mandiri.length);
+        // console.log("run mandiri : ", j_mandiri, mandiri.length);
         insHistoryPlacement(mandiri[j_mandiri].value, mandiri[j_mandiri].kode_bank_tujuan, mandiri[j_mandiri].kode_bank,time)
         total_mandiri = total_mandiri + mandiri[j_mandiri].value;
         if(j_mandiri == mandiri.length-1){
             for(var j_bni = 0; j_bni < bni.length; j_bni++){
 
-                console.log("run bni");
+                // console.log("run bni");
                 insHistoryPlacement(bni[j_bni].value, bni[j_bni].kode_bank_tujuan, bni[j_bni].kode_bank,time)
                 total_bni = total_bni + bni[j_bni].value
                 if(j_bni == bni.length-1){
                     for(var j_bri = 0; j_bri < bri.length; j_bri++){
 
-                        console.log("run bri");
+                        // console.log("run bri");
                         insHistoryPlacement(bri[j_bri].value, bri[j_bri].kode_bank_tujuan, bri[j_bri].kode_bank,time)
                         total_bri = total_bri + bri[j_bri].value
                         if(j_bri == bri.length-1){
                             for(var j_bukopin = 0; j_bukopin < bukopin.length; j_bukopin++){
 
-                                console.log("run bukopin");
+                                // console.log("run bukopin");
                                 insHistoryPlacement(bukopin[j_bukopin].value, bukopin[j_bukopin].kode_bank_tujuan, bukopin[j_bukopin].kode_bank,time)
                                 total_bukopin = total_bukopin + bukopin[j_bukopin].value
                                 if(j_bukopin == bukopin.length-1){
@@ -791,7 +791,7 @@ function insHistoryPlacement(pNilai, pBankTujuan, pBankSumberDana,time) {
             sessionId : time,
         },
         success: function (res) {
-            console.log("ins "+pBankSumberDana+" history placement TMP: ",res);
+            // console.log("ins "+pBankSumberDana+" history placement TMP: ",res);
         }
     });
 }
@@ -807,7 +807,7 @@ function saveMain(time){
             pJenisSumber : tempJenisSumber
         },
         success: function (res) {
-            console.log("ins history placement MAIN: ",res);
+            // console.log("ins history placement MAIN: ",res);
             hideLoadingCss("Sukses set sumber dana");
             location.reload();
         },
@@ -818,7 +818,7 @@ function saveMain(time){
 }
 
 function exportXls(idJenis) {
-    console.log("export:"+idJenis);
+    // console.log("export:"+idJenis);
     if(idJenis != "0"){
         window.open(baseUrl + "api_operator/placement/xls_detail?idJenis="+idJenis);
     }
@@ -837,7 +837,7 @@ function deletePlacement() {
 
         },
         success: function (res) {
-            console.log("ins history placement MAIN: ",res);
+            // console.log("ins history placement MAIN: ",res);
             hideLoadingCss(res.message);
             location.reload();
         },

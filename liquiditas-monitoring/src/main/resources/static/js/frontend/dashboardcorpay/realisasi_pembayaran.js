@@ -842,7 +842,9 @@ var tes = JSON.stringify(data);
             divLineDashed: "0",
             bgColor: "#BBEAEA",
             showLegend: "0",
-            crosslinecolor: "#ABD6D6"
+            crosslinecolor: "#ABD6D6",
+            numberScaleValue: "1000, 1000, 1000, 1000",
+            numberScaleUnit: "Rb, Jt, M, T"
         },
         categories : [
             {
@@ -903,7 +905,9 @@ console.log("Tes : " + tes)
                    divLineDashed: "0",
                    bgColor: "#BBEAEA",
                    showLegend: "0",
-                   crosslinecolor: "#ABD6D6"
+                   crosslinecolor: "#ABD6D6",
+                   numberScaleValue: "1000, 1000, 1000, 1000",
+                   numberScaleUnit: "Rb, Jt, M, T"
                },
                categories : [
                    {
@@ -942,19 +946,20 @@ function tableRealisasiBankCurrency(_date){
     let date = new Date();
     let current_month = date.getMonth()+1;
     let current_full_date;
-    (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString() : current_full_date = _date;
+    (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+"0"+date.getDate().toString() : current_full_date = _date;
 
     let tb_dash_real_bank_curr = $("#dash_real_bank_curr").DataTable({
         "ajax" : {
             "url" : baseUrl + "api_operator/api_report/get_dashboard_real_curr",
             "data" : {
-                "ptanggal" : "20200212"
+                "ptanggal" : current_full_date,
             },
             "type" : "GET",
             "dataType" : "JSON"
         },
         "sorting": false,
         "searching" : false,
+        "retrieve": true,
         "paging": false,
         "bInfo" : false,
         "bLengthChange" : false,
@@ -1033,16 +1038,22 @@ function tableRealisasiBankCurrency(_date){
     })
 }
 
-function tableRealisasiCashCode(){
+function tableRealisasiCashCode(_date){
+    let date = new Date();
+    let current_month = date.getMonth()+1;
+    let current_full_date;
+    (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+"0"+date.getDate().toString() : current_full_date = _date;
+
     let tb_realisasi_cashcode = $("#dash_real_cashcode").DataTable({
         "ajax" : {
             "url" : baseUrl + "api_operator/api_report/get_dashboard_real_cashcode",
             "data" : {
-                "ptanggal" : "20200213"
+                "ptanggal" : current_full_date,
             },
             "type" : "GET",
             "dataType" : "JSON"
         },
+        "retrieve": true,
         "sorting": false,
         "searching" : false,
         "paging": false,
@@ -1124,16 +1135,23 @@ function tableRealisasiCashCode(){
 }
 
 function tableRealisasiPembayaranJenis(_date){
+
+    let date = new Date();
+    let current_month = date.getMonth()+1;
+    let current_full_date;
+    (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+"0"+date.getDate().toString() : current_full_date = _date;
+
     let tb_realisasi_pembayaran_jenis = $("#dash_real_jenis").DataTable({
         "ajax" : {
             "url" : baseUrl + "api_operator/api_report/get_dashboard_real_jenis",
             "data" : {
-                "ptanggal" : "20200213"
+                "ptanggal" : current_full_date,
             },
             "type" : "GET",
             "dataType" : "JSON"
         },
         "sorting": false,
+        "retrieve": true,
         "searching" : false,
         "paging": false,
         "bInfo" : false,

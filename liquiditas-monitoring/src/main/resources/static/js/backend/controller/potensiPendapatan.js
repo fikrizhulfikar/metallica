@@ -2,7 +2,7 @@ $(document).ready(function () {
     getAllData();
     var date = new Date();
     $("#date").text("Tanggal : "+ date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear());
-    console.log("date",date);
+    // console.log("date",date);
 });
 
 function getAllData() {
@@ -13,7 +13,7 @@ function getAllData() {
         type: "GET",
         success: function (res) {
             hideLoadingCss("")
-            console.log("list potensi : ",res);
+            // console.log("list potensi : ",res);
 
             var newHtml;
             $.each(res.return, function (key, val) {
@@ -68,7 +68,7 @@ function updatePotensi()
         map.potensi_h1 = cell.find('input#hsatu').val();
         list.push(map)
     });
-    console.log(list);
+    // console.log(list);
 
     $.ajax({
         url: baseUrl + "/api_operator/placement/ins_saldo_potensi",
@@ -80,7 +80,7 @@ function updatePotensi()
             pData: JSON.stringify(list)
         },
         success: function (res) {
-            console.log("res ins potensi : ",res);
+            // console.log("res ins potensi : ",res);
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
                 location.reload();

@@ -45,13 +45,13 @@ function initData(pTgl) {
         },
         success: function (res) {
             hideLoadingCss()
-            console.log('TESTTT'+res);
+            // console.log('TESTTT'+res);
             createUI(res.return)
         },
         error: function () {
             // hideLoadingCss("Gagal Ambil Data RENCANA BAYAR");
             hideLoadingCss();
-            console.log('ERROR');
+            // console.log('ERROR');
             $("#table-main tbody").empty();
             var newHtml = "<tr>" +
                 "<td colspan='10' align='center'> No Data</td>" +
@@ -115,8 +115,8 @@ function createUI(data) {
             $("#table-main").append(newHtml);
         });
 
-        console.log(objDiv.scrollHeight);
-        console.log(objDiv.clientHeight);
+        // console.log(objDiv.scrollHeight);
+        // console.log(objDiv.clientHeight);
         hasScroll= objDiv.scrollHeight>objDiv.clientHeight;
         setTimeout('pageScroll()', 6000);
     } else {

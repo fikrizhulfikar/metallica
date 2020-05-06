@@ -123,7 +123,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pketeranga
                 "sClass": "datatables_action-center",
                 "mRender": function (data, type, full) {
 
-                    var ret_value = '<button style="width: 15px !important;" class="btn btn-info" title="Edit Data" onclick="getbyId(\'' + full.CURRENCY + '\')"><i class="fa fa-pencil"></i></button>'
+                    var ret_value = '<button style="width: 15px !important;" class="btn btn-info" title="Edit Data" onclick="getbyId(\'' + full.CURRENCY + '\')"><i class="fas fa-edit"></i></button>'
                     return ret_value;
 
                 }

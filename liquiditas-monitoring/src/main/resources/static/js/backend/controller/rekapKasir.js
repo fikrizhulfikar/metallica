@@ -81,7 +81,7 @@ function duplicate_data(id) {
         },
         success: function (res) {
             hideLoadingCss("")
-            console.log("data duplicate :", res);
+            // console.log("data duplicate :", res);
             idValas = "";
             $("#pTglJatuhTempo").val("");
             $("#pNilaiTagihan").val("");
@@ -187,7 +187,7 @@ function delete_data(id) {
             },
             success: function (res) {
                 hideLoadingCss("")
-                console.log("delete log : ", res)
+                // console.log("delete log : ", res)
                 if (res.return == 1) {
                     alert(res.OUT_MSG);
                     table_rekapitulasi.ajax.reload();
@@ -213,7 +213,7 @@ function siap() {
         for (var i = 0; i < c.length; i++) {
             pilihan += '<option value="' + c[i] + '" />';
         }
-        console.log(c[i]);
+        // console.log(c[i]);
 
         if (c[0] == "null") {
             localStorage.removeItem("real_no_tagihan_RD");
@@ -256,7 +256,7 @@ function ins_data() {
         localStorage.removeItem("real_no_tagihan_RD");
         localStorage.removeItem("NT");
         localStorage.setItem("NT", no_ta);
-        console.log(no_ta);
+        // console.log(no_ta);
 
         all_val.push(no_ta);
         localStorage.setItem("real_no_tagihan_RD", all_val);
@@ -304,7 +304,7 @@ function ins_data() {
     }
 
     showLoadingCss();
-    console.log("id valas : ", idValas)
+    // console.log("id valas : ", idValas)
     $.ajax({
         url: baseUrl + "api_operator/pembayaran/ins_data",
         dataType: 'JSON',
@@ -358,7 +358,7 @@ function edit_data(id) {
         success: function (res) {
             hideLoadingCss("")
             idValas = id
-            console.log("data cmb edit_data :", res);
+            // console.log("data cmb edit_data :", res);
 
             $("#pTglJatuhTempo").val("");
             $("#pNilaiTagihan").val("");
@@ -465,7 +465,7 @@ function getAllData() {
             allData = res;
         },
         error: function (res) {
-            console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
+            // console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
         }
     });
 }
@@ -614,7 +614,7 @@ function generatePDF() {
 
         data.forEach(function (row) {
             var dataRow = [];
-            console.log(row);
+            // console.log(row);
             dataRow.push(row["NO"]);
             dataRow.push(row["JENIS_PEMBAYARAN"]);
             dataRow.push(row["JATUH_TEMPO"]);
@@ -697,7 +697,7 @@ function show_modal(id) {
 }
 
 function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statusTracking) {
-    console.log("USERLOGIN", newRoleUser[0]);
+    // console.log("USERLOGIN", newRoleUser[0]);
     showLoadingCss();
     $('#table-rekapitulasi tbody').empty();
     $('#table-rekapitulasi').dataTable().fnDestroy();
@@ -761,11 +761,11 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                 '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
                             if(full.STATUS_TRACKING == "INPUT DATA"){
                                 ret_value = ret_value +
-                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>';
+                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-edit"></i></button>';
                             }
                             ret_value = ret_value +
                                 '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-trash"></i></button>' +
                                 '</div>';
                         }else {
                             if (full.STATUS_TRACKING == "INPUT DATA") {
@@ -774,13 +774,13 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                     '<div class="btn-group">' +
                                     '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>' +
                                     '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Staff" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +2+ '\',\''+full.ID_JENIS_PEMBAYARAN+'\',\''+full.CURRENCY+'\',\''+full.TOTAL_TAGIHAN+'\')"><i class="fa fa-arrows-alt"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-pencil"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-edit"></i></button>' +
                                     '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-trash"></i></button>' +
                                     '</div>'
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY STAFF") {
-                                console.log("here");
+                                // console.log("here");
                                 ret_value =
                                     '<div class="btn-group">' +
                                     '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
@@ -790,7 +790,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                 }
                                 ret_value = ret_value +
                                     '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-trash"></i></button>' +
                                     '</div>'
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY MANAGER" && full.UPDATE_BY == "dmkeukonap" || full.UPDATE_BY == "dmkeukonslap"){
@@ -804,7 +804,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                 }
                                 ret_value = ret_value +
                                     '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-trash"></i></button>' +
                                     '</div>'
                             }
                             else if (full.UPDATE_BY == "dmkeukonslap" && full.STATUS_TRACKING == "VERIFIED BY MANAGER" || full.STATUS_TRACKING == "VERIFIED BY STAFF " || full.UPDATE_BY !== "dmkeukonap" && full.STATUS_TRACKING == "VERIFIED BY MANAGER" || full.STATUS_TRACKING == "VERIFIED BY VP TREASURY INVESTMENT"){
@@ -823,7 +823,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                 }
                                 ret_value = ret_value +
                                     '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-trash"></i></button>' +
                                     '</div>'
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY MANAGER PE"){
@@ -838,7 +838,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                 }
                                 ret_value = ret_value +
                                     '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-trash"></i></button>' +
                                     '</div>'
                             }
 
@@ -865,7 +865,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                 ret_value = ret_value +
                                     '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title ="Reverse" onclick ="reverse(\'' + full.ID_VALAS + '\',\'' + 10 + '\',\'' + full.CURRENCY+ '\',\''+full.ID_JENIS_PEMBAYARAN+'\',\''+full.TOTAL_TAGIHAN+'\')"><i class="fa fa-arrow-left"></i></button>' +
                                     '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-trash"></i></button>' +
                                     '</div>'
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY EVP") {
@@ -880,13 +880,13 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                 }
                                 ret_value = ret_value +
                                     '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-trash"></i></button>' +
                                     '</div>'
                             }
                             else {
                                 ret_value =
                                     '<div class="btn-group">' +
-                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-trash"></i></button>' +
                                     '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
                                     '</div>'
                             }
@@ -944,7 +944,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                 }
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY VP TREASURY OPERATION TREASURY OPERATION"){
-                                console.log(newRoleUser[0]);
+                                // console.log(newRoleUser[0]);
                                 if(newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "ROLE_KADIV"){
                                     value = '{"10":"'+full.ID_VALAS+'"}';
                                 }else {
@@ -1098,9 +1098,9 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
         var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
         if(newRoleUser[0] != "ROLE_OSS"){
             html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' +
-                '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fa fa-pencil"></i></button>';
+                '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fas fa-edit"></i></button>';
         }
-        html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
+        html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" onclick="multipleDelete()"><i class="fas fa-trash"></i></button>';
         $(this).append(html);
     });
     initCbparent();
@@ -1108,12 +1108,12 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
         var column = table_rekapitulasi.column( $(this).attr('data-column') );
         column.visible( ! column.visible() );
         var id = this.attributes[0].value;
-        console.log(id);
+        // console.log(id);
         if ($('#'+id).hasClass('btn-primary')) {
-            console.log($('#'+id));
+            // console.log($('#'+id));
             $('#'+id).addClass('btn-success').removeClass('btn-primary');
         } else {
-            console.log($('#'+id));
+            // console.log($('#'+id));
             $('#'+id).addClass('btn-primary').removeClass('btn-success');
         }
     });
@@ -1165,11 +1165,11 @@ function upload_file(pIdValas) {
 
 function upd_status_tracking(idValas, pStatusInvoice, pIdJenisPembayaran, pCurrency, pTotalTagihan){
     showLoadingCss();
-    console.log("idvalas :",idValas);
-    console.log("statusinvoice :",pStatusInvoice);
-    console.log("idjenispembayaran :",pIdJenisPembayaran);
-    console.log("currency :",pCurrency);
-    console.log("totaltagihan :",pTotalTagihan);
+    // console.log("idvalas :",idValas);
+    // console.log("statusinvoice :",pStatusInvoice);
+    // console.log("idjenispembayaran :",pIdJenisPembayaran);
+    // console.log("currency :",pCurrency);
+    // console.log("totaltagihan :",pTotalTagihan);
     $.ajax({
         url: baseUrl + "api_operator/pembayaran/upd_status",
         dataType: 'JSON',
@@ -1183,7 +1183,7 @@ function upd_status_tracking(idValas, pStatusInvoice, pIdJenisPembayaran, pCurre
         },
         success: function (res) {
             hideLoadingCss("")
-            console.log("data upd_status :", res);
+            // console.log("data upd_status :", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
                 table_rekapitulasi.ajax.reload();
@@ -1240,7 +1240,7 @@ function reverse(idValas, statusInvoice, currency, idJenisPembayaran, totalTagih
         },
         success: function (res) {
             hideLoadingCss("")
-            console.log("data upd_reverse :", res);
+            // console.log("data upd_reverse :", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
                 idValas = "";
@@ -1267,7 +1267,7 @@ function update_datas() {
         },
         success: function (res) {
             hideLoadingCss("")
-            console.log("data upd_status :", res);
+            // console.log("data upd_status :", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG)
                 table_rekapitulasi.ajax.reload();
@@ -1292,7 +1292,7 @@ function multipleDelete() {
         },
         success: function (res) {
             hideLoadingCss("")
-            console.log("data upd_status :", res);
+            // console.log("data upd_status :", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
                 table_rekapitulasi.ajax.reload();
@@ -1316,7 +1316,7 @@ function getFilesRekap(pIdValas) {
         },
 
         success: function (data) {
-            console.log("get files rekap  : ", data);
+            // console.log("get files rekap  : ", data);
             $.each(data.data_pembayaran.return, function (index, val) {
                 if (val.JENIS_FILE == 1) {
                     if (val.NAMA_FILE != "" || val.NAMA_FILE != null) {
@@ -1376,7 +1376,7 @@ function getFilesRekap(pIdValas) {
             });
         },
         error: function () {
-            console.log("Gagal mengambil data files rekap")
+            // console.log("Gagal mengambil data files rekap")
         }
     });
 }
@@ -1420,7 +1420,7 @@ function upload_server(jenisFile) {
         contentType: false,
         processData: false,
         success: function (data) {
-            console.log("response upload file : ", data);
+            // console.log("response upload file : ", data);
             if (data.return == 1) {
                 alert("Sukses upload file");
                 getFilesRekap($("#temp-id-valas-file").val());
@@ -1456,7 +1456,7 @@ function upload_server_xls() {
     fileSize = $('input[type=file]#file-xls')[0].files[0].size / 1000;
     $("#file-xls").val('');
 
-    console.log(formData);
+    // console.log(formData);
     $.ajax({
         crossOrigin: true,
         type: "POST",
@@ -1469,7 +1469,7 @@ function upload_server_xls() {
         processData: false,
         success: function (res) {
             hideLoadingCss("");
-            console.log("res", res)
+            // console.log("res", res)
             if (res.V_RETURN == 0) {
                 alert("sukses");
                 table_rekapitulasi.ajax.reload();
@@ -1528,7 +1528,7 @@ function multipleUpdate() {
         },
         success: function (res) {
             hideLoadingCss("")
-            console.log("data upd_status :", res);
+            // console.log("data upd_status :", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
                 search("load");

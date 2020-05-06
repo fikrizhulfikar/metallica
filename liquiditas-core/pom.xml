@@ -58,6 +58,12 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.2.1.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 
@@ -74,25 +80,27 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
-
-        <profile>
-            <id>testing</id>
-            <properties>
-                <activatedProperties>testing</activatedProperties>
-                <db.url>jdbc:oracle:thin:@10.14.152.120:1591:cisqa</db.url>
-                <db.username>DASHBOARD</db.username>
-                <db.password>DASHBOARD</db.password>
-            </properties>
-        </profile>
-        <profile>
-            <id>production</id>
-            <properties>
-                <activatedProperties>production</activatedProperties>
-                <db.url>jdbc:oracle:thin:@10.14.158.192:1521:DBTRESRY</db.url>
-                <db.username>dashboard</db.username>
-                <db.password>dashboard</db.password>
-            </properties>
-        </profile>
+<!--        <profile>-->
+<!--            <id>testing</id>-->
+<!--            <properties>-->
+<!--                <activatedProperties>testing</activatedProperties>-->
+<!--                <db.url>jdbc:oracle:thin:@10.14.152.120:1591:cisqa</db.url>-->
+<!--                <db.username>DASHBOARD</db.username>-->
+<!--                <db.password>DASHBOARD</db.password>-->
+<!--            </properties>-->
+<!--        </profile>-->
+<!--        <profile>-->
+<!--            <id>production</id>-->
+<!--            <properties>-->
+<!--                <activatedProperties>production</activatedProperties>-->
+<!--                <db.url>jdbc:oracle:thin:@10.14.158.192:1521:DBTRESRY</db.url>-->
+<!--                <db.username>corpay</db.username>-->
+<!--                <db.password>corpay</db.password>-->
+<!--            </properties>-->
+<!--            <activation>-->
+<!--                <activeByDefault>true</activeByDefault>-->
+<!--            </activation>-->
+<!--        </profile>-->
     </profiles>
 
 </project>

@@ -142,6 +142,9 @@ public class PageOperatorController {
         return "operator/rekap_invoice_belum";
     }
 
+    @RequestMapping("/rekap_invoice_siap_bayar")
+    public String rekap_invoice_siap_bayar(){return "operator/rekap_invoice_siap_bayar";}
+
     @RequestMapping("/rekap_invoice_realisasi")
     public String rekap_invoice_realisasi() {
         return "operator/rekap_invoice_realisasi";

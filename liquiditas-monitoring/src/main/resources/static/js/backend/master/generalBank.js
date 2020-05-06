@@ -289,7 +289,6 @@ function initDataTable() {
             "dataType": "json",
         },
         "columns": [
-
             {"data": "BANK_COUNTRY"},
             {"data": "BANK_KEY"},
             {"data": "BANK_NAME"},
@@ -303,4 +302,47 @@ function initDataTable() {
         }
     })
 hideLoadingCss()
+}
+
+function getGeneralBank(){
+    Swal.fire({
+        title : "Mengambil Data",
+        text : "Apakah Anda yakin akan mengambil data dari SAP ?",
+        icon : "question",
+        showCancelButton : true,
+        confirmButtonColor : "#3085d6",
+        cancelButtonColor : "#d33",
+        confirmButtonText : "Ya"
+    }).then(response => {
+        if(response.value){
+            showLoadingCss();
+            $.ajax({
+                url : baseUrl + "api_master/integrasi_sap/get_general_bank",
+                data : {
+                    pCompCode : $("#pCompCode").val(),
+                    pHouseBank : $("#pHouseBank").val(),
+                    pBankCountry : $("#pBankCountry").val() ,
+                    pBankKey : $("#pBankKey").val(),
+                },
+                dataType : "JSON",
+                success : (response => {
+
+                    // console.log('TEST DIAZ : '+res)
+                    if (response.status === 404) {
+                        Swal.fire('Oops!',response.status_message,'info');
+                        // hideLoadingCss();
+                    } else if(response.status === 200 && response.description.return === 1){
+                        Swal.fire('Berhasil!',response.data_length + ' data berhasil ditarik dari SAP','success');
+                        // hideLoadingCss();
+                        tableMain.ajax.reload();
+                    }
+                    hideLoadingCss();
+                }),
+                error : response => {
+                    Swal.fire("Error", "Terjadi kesalahan, silahkan hubungi Admin","error");
+                    hideLoadingCss();
+                }
+            })
+        }
+    })
 }
