@@ -1,1 +1,5 @@
 2020-05-06 08:20:21,630 DEBUG c.i.l.monitoring.task.EmailTask - Send email. 
+2020-05-06 09:35:27,952 INFO  c.i.l.m.ApplicationMonitoring - Starting ApplicationMonitoring on LHPX5CD8048N4D with PID 33384 (D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\target\classes started by Administrator in D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas) 
+2020-05-06 09:35:27,955 DEBUG c.i.l.m.ApplicationMonitoring - Running with Spring Boot v1.5.3.RELEASE, Spring v4.3.8.RELEASE 
+2020-05-06 09:35:27,955 INFO  c.i.l.m.ApplicationMonitoring - The following profiles are active: development 
+2020-05-06 09:35:36,550 INFO  c.i.l.m.ApplicationMonitoring - Started ApplicationMonitoring in 9.18 seconds (JVM running for 11.233) 
