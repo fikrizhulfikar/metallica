@@ -16,8 +16,8 @@ public class ApplicationScheduler {
 		SpringApplication.run(ApplicationScheduler.class, args);
 	}
 
-	@Bean
-	public TaskScheduler taskScheduler() {
-		return new ConcurrentTaskScheduler(); //single threaded by default
-	}
+//	@Bean
+//	public TaskScheduler taskScheduler() {
+//		return new ConcurrentTaskScheduler(); //single threaded by default
+//	}
 }

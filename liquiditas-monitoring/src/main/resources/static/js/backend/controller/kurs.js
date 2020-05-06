@@ -17,7 +17,7 @@ function getAllData() {
         type: "GET",
         success: function (res) {
             hideLoadingCss("")
-            console.log(res);
+            // console.log(res);
 
             $.each(res.return, function (key, val) {
                 var newHtml = "<tr>"+

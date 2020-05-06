@@ -17,6 +17,7 @@
       <set>
         <option value="$PROJECT_DIR$/bca-api/pom.xml" />
         <option value="$PROJECT_DIR$/bi-bca/pom.xml" />
+        <option value="$PROJECT_DIR$/liquiditas-datasap/pom.xml" />
       </set>
     </option>
   </component>

@@ -96,7 +96,6 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-messaging</artifactId>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
@@ -176,6 +175,9 @@
 <!--			<properties>-->
 <!--				<activatedProperties>production</activatedProperties>-->
 <!--			</properties>-->
+<!--			<activation>-->
+<!--				<activeByDefault>true</activeByDefault>-->
+<!--			</activation>-->
 <!--		</profile>-->
 	</profiles>
 

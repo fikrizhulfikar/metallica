@@ -36,7 +36,7 @@ function get_list_function()
 
             $.each(param, function (index, value)
             {            
-                console.log("value",value);
+                // console.log("value",value);
                 funct.push({caption: value[0].filename, width: "120px", url: "gallery/delete", key: value[0].id});
             });
         },
@@ -44,7 +44,7 @@ function get_list_function()
             alert("something when wrong");
         }
     });
-    console.log(funct);
+    // console.log(funct);
     return funct;
 }
 
@@ -77,7 +77,7 @@ $(document).ready(function(){
     });
 
     $('#input-gallery').on('filepredelete', function(event, key) {
-        console.log('Key = ' + key);
+        // console.log('Key = ' + key);
         var abort = true;
         if (confirm("Are you sure you want to delete this image?")) {
             abort = false;

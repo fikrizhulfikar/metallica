@@ -279,7 +279,8 @@ public class PembayaranController {
 
     @RequestMapping(value = "/delete_data", method = RequestMethod.POST)
     public Map<String, Object> deleteData(
-            @RequestParam(value = "pIdValas", defaultValue = "") String pIdValas
+            @RequestParam(value = "pIdValas", defaultValue = "") String pIdValas,
+            @RequestParam(value = "pOssId", defaultValue = "") String pOssId
     ) {
 
         AppUtils.getLogger(this).debug("idValas : {} ", pIdValas);

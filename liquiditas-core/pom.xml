@@ -97,6 +97,9 @@
 <!--                <db.username>corpay</db.username>-->
 <!--                <db.password>corpay</db.password>-->
 <!--            </properties>-->
+<!--            <activation>-->
+<!--                <activeByDefault>true</activeByDefault>-->
+<!--            </activation>-->
 <!--        </profile>-->
     </profiles>
 

@@ -568,8 +568,9 @@ public class Sap {
             String res = IOUtils.toString(inputStream);
             // end of fetch data from file
 
+            String res_result = sapmaster.getDataBank(param);
 //            JSONObject object = (JSONObject) parser.parse(res);
-            JSONObject object = (JSONObject) parser.parse(sapmaster.getDataBank(param));
+            JSONObject object = (JSONObject) parser.parse(res_result);
             if(object.get("ERROR_CODE") == null){
                 result.put("status",200);
             }else if(object.get("ERROR_CODE") != null){
@@ -578,7 +579,7 @@ public class Sap {
             }
 
 //            String list = "["+res+"]";
-            String list = "["+sapmaster.getDataBank(param)+"]";
+            String list = "["+res_result+"]";
             arr = (JSONArray) parser.parse(list);
 
             for (int i=0; i<arr.size(); i++){

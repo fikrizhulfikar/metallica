@@ -15,7 +15,7 @@ function initDataTable() {
         dataType: 'JSON',
         type: "GET",
         success: function (res) {
-            console.log("resonse : ",res);
+            // console.log("resonse : ",res);
             $("#tglcetak").html(res.return[0].TANGGAL)
             var data = res.return;
             $('#table-imprst-idr tbody').empty();

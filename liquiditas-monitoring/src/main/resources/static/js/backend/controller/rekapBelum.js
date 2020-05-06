@@ -107,8 +107,8 @@ function duplicate_data(id) {
             pIdValas: id,
         },
         success: function (res) {
-            hideLoadingCss("")
-            console.log("data duplicate :", res);
+            hideLoadingCss("");
+            // console.log("data duplicate :", res);
             idValas = "";
             $("#pTglJatuhTempo").val("");
             $("#pNilaiTagihan").val("");
@@ -148,21 +148,11 @@ function duplicate_data(id) {
             if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
                 $('#pTglJatuhTempo').prop('disabled', true);
             }
-            se$("#pVendor").select2({
-                width: "100%"
-            });
-            $("#pSubPosAnggaran").select2({
-                width: "100%"
-            });
-            $("#pUnitPenerima").select2({
-                width: "100%"
-            });
-            $('#pUnitAnggaran').select2({
-                width: '100%'
-            });
-                $('#edit-rekap-modal').modal({backdrop: 'static', keyboard: false});
-            }, timeSowFormEdit);
-            hideLoadingCss()
+            $("#pVendor").select2({width: "100%"});
+            $("#pSubPosAnggaran").select2({width: "100%"});
+            $("#pUnitPenerima").select2({ width: "100%" });
+            $('#pUnitAnggaran').select2({width: '100%'});
+            $('#edit-rekap-modal').modal({backdrop: 'static', keyboard: false});
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -231,7 +221,7 @@ function delete_data(id) {
             },
             success: function (res) {
                 hideLoadingCss("")
-                console.log("delete log : ", res)
+                // console.log("delete log : ", res)
                 if (res.return == 1) {
                     alert(res.OUT_MSG);
                     table_rekapitulasi.ajax.reload();
@@ -257,7 +247,7 @@ function siap() {
         for (var i = 0; i < c.length; i++) {
             pilihan += '<option value="' + c[i] + '" />';
         }
-        console.log(c[i]);
+        // console.log(c[i]);
 
         if (c[0] == "null") {
             localStorage.removeItem("real_no_tagihan_RD");
@@ -300,7 +290,7 @@ function ins_data() {
         localStorage.removeItem("real_no_tagihan_RD");
         localStorage.removeItem("NT");
         localStorage.setItem("NT", no_ta);
-        console.log(no_ta);
+        // console.log(no_ta);
 
         all_val.push(no_ta);
         localStorage.setItem("real_no_tagihan_RD", all_val);
@@ -348,7 +338,7 @@ function ins_data() {
     }
 
     showLoadingCss();
-    console.log("id valas : ", idValas)
+    // console.log("id valas : ", idValas)
     $.ajax({
         url: baseUrl + "api_operator/pembayaran/ins_data",
         dataType: 'JSON',
@@ -412,7 +402,7 @@ function edit_data(id) {
         success: function (res) {
             hideLoadingCss("")
             idValas = id
-            console.log("data cmb edit_data :", res);
+            // console.log("data cmb edit_data :", res);
 
             $("#pTglJatuhTempo").val("");
             $("#pNilaiTagihan").val("");
@@ -597,7 +587,7 @@ function getAllData() {
             allData = res;
         },
         error: function (res) {
-            console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
+            // console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
         }
     });
 }
@@ -764,7 +754,7 @@ function generatePDF() {
 
         data.forEach(function (row) {
             var dataRow = [];
-            console.log(row);
+            // console.log(row);
             dataRow.push(row["NO"]);
             dataRow.push(row["JENIS_PEMBAYARAN"]);
             dataRow.push(row["UNIT_ANGGARAN"]);

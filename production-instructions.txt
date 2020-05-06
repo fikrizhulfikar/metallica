@@ -1,0 +1,6 @@
+1. change securityConfig.java to activate : 
+	- LDAP user login.
+	- Recaptcha
+2. change profiles to production in every POM.xml (core, monitoring, scheduler)
+3. change xsap_client variable to production (100) and ensure sap url and authentication is for production.
+4. change sap url to production in application properties
