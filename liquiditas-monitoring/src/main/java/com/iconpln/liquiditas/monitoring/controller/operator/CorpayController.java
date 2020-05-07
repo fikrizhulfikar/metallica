@@ -540,7 +540,8 @@ public class CorpayController {
             @RequestParam(value = "pTglActBayar", defaultValue = "") String pTglActBayar,
             @RequestParam(value = "pJamBayar", defaultValue = "") String pJamBayar,
             @RequestParam(value = "pOssId", defaultValue = "") String pOssId,
-            @RequestParam(value = "pGroupId", defaultValue = "") String pGroupId
+            @RequestParam(value = "pGroupId", defaultValue = "") String pGroupId,
+            @RequestParam(value = "pNoGiro",defaultValue = "") String pNoGiro
     ) {
         AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
 //        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
@@ -555,7 +556,7 @@ public class CorpayController {
         try {
             Map<String, Object> res = corpayService.updatePembayaran(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pBankPembayar, pKeterangan, pTglRencanaBayar,pSumberDana,
                     pMetodePembayaran,pNoRekHouseBank,pInqCustomerName,pInqAccountNumber,pInqAccountStatus, pKodeBankPenerima, pRetrievalRefNumber,
-                    pCustomerRefNumber, pConfirmationCode, pTglActBayar, pJamBayar, WebUtils.getUsernameLogin(), pOssId, pGroupId);
+                    pCustomerRefNumber, pConfirmationCode, pTglActBayar, pJamBayar, WebUtils.getUsernameLogin(), pOssId, pGroupId, pNoGiro);
             if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
             }
@@ -1144,21 +1145,20 @@ public class CorpayController {
     ) throws SQLException, JSONException {
 
         Map<String, Object> out = null;
-        //pNamaGroup = (pNamaGroup.toString().equals("null") ? "" : pNamaGroup);
-        System.out.println("Fikri2 : "+pData);
+//        System.out.println("Fikri2 : "+pData);
         String jsonString = corpayService.getPerfectJsonString(pData);
         JSONArray jsonArray = new JSONArray(pData);
-        System.out.println("JSON Array : "+jsonArray);
+//        System.out.println("JSON Array : "+jsonArray);
         String[] listData = jsonString.split(";");
-        System.out.println("Jancok : "+listData.length);
+//        System.out.println("Jancok : "+listData.length);
         int i=0;
 
         try{
             for (int j = 0; j < jsonArray.length(); j++) {
                 JSONObject json = jsonArray.getJSONObject(i);
                 json.getString("COMP_CODE");
-                System.out.println("Loop : "+i++);
-                System.out.println("DIAZZZZZ:"+json.getString("COMP_CODE"));
+//                System.out.println("Loop : "+i++);
+//                System.out.println("DIAZZZZZ:"+json.getString("COMP_CODE"));
                 out = corpayService.insGroupTemp(
                         json.getString("KET"), json.getString("COMP_CODE"), json.getString("DOC_NO"),
                         json.getString("FISC_YEAR"),json.getString("DOC_TYPE"),json.getString("DOC_DATE"), json.getString("DOC_DATE2"), json.getString("POST_DATE"),

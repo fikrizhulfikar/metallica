@@ -696,93 +696,99 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                                return full.METODE_PEMBAYARAN;
                                  }
                          },
+                        {
+                            "aTargets": [59],
+                            "mRender": function (data, type, full) {
+                                return full.NO_GIRO;
+                            }
+                        },
                          {
-                              "aTargets": [59],
+                              "aTargets": [60],
                               "mRender": function (data, type, full) {
                               return full.TGL_RENCANA_BAYAR;
                                   }
                          },
                           {
-                               "aTargets": [60],
+                               "aTargets": [61],
                                "mRender": function (data, type, full) {
                                return full.OSS_ID;
                                    }
                           },
                           {
-                             "aTargets": [61],
+                             "aTargets": [62],
                              "mRender": function (data, type, full) {
                              return full.GROUP_ID;
                                  }
                         },
                          {
-                               "aTargets": [62],
+                               "aTargets": [63],
                                "mRender": function (data, type, full) {
                                return full.BANK_BYR;
                                    }
                           },
                           {
-                             "aTargets": [63],
+                             "aTargets": [64],
                              "mRender": function (data, type, full) {
                              return full.CURR_BAYAR;
                                  }
                         },
                         {
-                             "aTargets": [64],
+                             "aTargets": [65],
                              "mRender": function (data, type, full) {
                              return full.AMOUNT_BAYAR;
                                  }
                         },
                         {
-                             "aTargets": [65],
+                             "aTargets": [66],
                              "mRender": function (data, type, full) {
                              return full.BANK_BENEF;
                                  }
                         },
                         {
-                             "aTargets": [66],
+                             "aTargets": [67],
                              "mRender": function (data, type, full) {
                              return full.NO_REK_BENEF;
                                  }
                         },
                         {
-                             "aTargets": [67],
+                             "aTargets": [68],
                              "mRender": function (data, type, full) {
                              return full.NAMA_BENEF;
                                  }
                         },
                           {
-                              "aTargets": [68],
+                              "aTargets": [69],
                               "mRender": function (data, type, full) {
                               return full.TGL_ACT_BAYAR;
                               }
                           },
                          {
-                              "aTargets": [69],
+                              "aTargets": [70],
                               "mRender": function (data, type, full) {
                               return full.SUMBER_DANA;
                                     }
                          },
                           {
-                               "aTargets": [70],
+                               "aTargets": [71],
                                "mRender": function (data, type, full) {
                                return full.PARTIAL_IND;
                                      }
                           },
                          {
-                              "aTargets": [71],
+                              "aTargets": [72],
                               "mRender": function (data, type, full) {
                                 return full.KETERANGAN;
                               }
                           },
                          {
-                              "aTargets": [72],
+                              "aTargets": [73],
                               "mRender": function (data, type, full) {
                               return full.STATUS_TRACKING;
 
                                     }
                          },
                         {
-                            "aTargets": [73],
+                            "aTargets": [74],
                             "mRender": function (data, type, full) {
                                 var ret_value;
                                 /*alert('BOOOMB2'+full.STATUS_TRACKING);*/
@@ -1059,31 +1065,31 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                         },
                         {
-                            "aTargets": [74],
+                            "aTargets": [75],
                             "mRender": function (data, type, full) {
                                 var value = new Object();
                                 var full_value = new Object();
                                 var ret_value = ''
                                     if (full.STATUS_TRACKING == "INPUT DATA") {
-                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+1+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'"}';
+                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+1+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
                                         full_value = '{"full":'+JSON.stringify(full)+'}';
 
                                     }
                                      if (full.STATUS_TRACKING == "VALIDASI DATA") {
-                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+1+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'"}';
+                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+1+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
                                         full_value = '{"full":'+JSON.stringify(full)+'}';
 
                                     }
                                     else if (full.STATUS_TRACKING == "VERIFIED BY MAKER") {
-                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+2+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'"}';
+                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+2+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
                                         full_value = '{"full":'+JSON.stringify(full)+'}';
                                     }
                                     else if (full.STATUS_TRACKING == "VERIFIED BY CHECKER") {
-                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+3+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'"}';
+                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+3+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
                                         full_value = '{"full":'+JSON.stringify(full)+'}';
                                     }
                                     else if (full.STATUS_TRACKING == "VERIFIED BY APPROVER") {
-                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+4+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'"}';
+                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+4+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
                                         full_value = '{"full":'+JSON.stringify(full)+'}';
                                     }
 
@@ -1778,6 +1784,7 @@ function edit_data(pCompCode, pNoDoc, pFiscYear, pLineItem,pSource, pBank,  pBen
             $("#pCusRefNum").val(res[0].CUSTOMER_REF_NUMBER);
             $("#pJamBayar").val(res[0].JAM_BAYAR);
             $("#pConfirmationCode").val(res[0].CONFIRMATION_CODE);
+            $("#pNoGiro").val(res[0].NO_GIRO);
             setSelectBankAccount("pNoRekPln","", res[0].CURRENCY, res[0].BANK_BYR);
             $('#pDocumentDate').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
             $('#pEntryDate').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
@@ -1786,16 +1793,21 @@ function edit_data(pCompCode, pNoDoc, pFiscYear, pLineItem,pSource, pBank,  pBen
             $('#pPostDate').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
             $('#pBaseline').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
 
-            if(res[0].METODE_PEMBAYARAN == "GIRO" || res[0].METODE_PEMBAYARAN == "INTERNETBANKING"){
-                    $("#btn-inquiry").hide();
-                }else{
-                    $("#btn-inquiry").show();
-                }
-            if(res[0].METODE_PEMBAYARAN == "GIRO"){
-                    $(".pNoGiro").show();
-                }else{
-                    $(".pNoGiro").hide();
-                }
+            if(res[0].METODE_PEMBAYARAN === "GIRO" || res[0].METODE_PEMBAYARAN === "INTERNETBANKING"){
+                $("#btn-inquiry").hide();
+            }else{
+                $("#btn-inquiry").show();
+            }
+
+            if(res[0].METODE_PEMBAYARAN === "GIRO"){
+                $(".pNoGiro").show();
+                $("#jamBayar").hide();
+            }else if(res[0].METODE_PEMBAYARAN === "INTERNETBANKING"){
+                $(".pNoGiro").hide();
+                $("#jamBayar").hide();
+            }else{
+                $(".pNoGiro").hide();
+            }
         setTimeout(function(){ $('#edit-modal').modal({backdrop: 'static', keyboard: false}); }, timeSowFormEdit);
         },
         error: function () {
@@ -2993,6 +3005,10 @@ function setSelectAccountName(idHtml, bankAccount, idForSelected) {
 }
 
 function update_pembayaran() {
+    if ($("#pMetodePembayaran").val() === 'GIRO' && $('#pNoGiro').val() === ""){
+        alert("Maaf, NO GIRO harus diisi untuk Jenis Pembayaran GIRO.");
+    }
+
     showLoadingCss()
     $.ajax({
         url: baseUrl + "api_operator/rekap_invoice_belum/update_pembayaran",
@@ -3021,6 +3037,7 @@ function update_pembayaran() {
             pJamBayar : $("#pJamBayar").val(),
             pOssId : $("#pOssId").val(),
             pGroupId : $("#pGroupId").val(),
+            pNoGiro : ($("#pMetodePembayaran").val() === 'GIRO') ? $('#pNoGiro').val() : "-",
         },
         success: function (res) {
             //console.log("COBA DIAZ :",res);
@@ -3939,13 +3956,14 @@ function isSame(data){
         let due_on = data[0].TGL_RENCANA_BAYAR;
         let sumber_dana = data[0].SUMBER_DANA;
         let inq_name = data[0].INQ_CUSTOMER_NAME;
+        let no_giro = data[0].NO_GIRO;
 
         for(let x = 0; x < data.length; x++){
              if (data[x].INQ_CUSTOMER_NAME === "-"){
                  return 222;
              }
             if(due_on != data[x].TGL_RENCANA_BAYAR || bank != data[x].BANK_BYR || hb_rekening != data[x].NO_REK_HOUSE_BANK || comp_code != data[x].COMP_CODE || assign != data[x].ASSIGNMENT || bus_area != data[x].BUS_AREA || sumber_dana != data[x].SUMBER_DANA ||
-            inq_name != data[x].INQ_CUSTOMER_NAME){
+            inq_name != data[x].INQ_CUSTOMER_NAME || no_giro != data[x].NO_GIRO){
                 return false;
             }
         }
