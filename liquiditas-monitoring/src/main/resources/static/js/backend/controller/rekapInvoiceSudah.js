@@ -618,35 +618,41 @@ function getAllData() {
                          {
                             "aTargets": [55],
                             "mRender": function (data, type, full) {
-                            return full.METODE_PEMBAYARAN;
-                                 }
+                                return full.METODE_PEMBAYARAN;
+                            }
                         },
                         {
                             "aTargets": [56],
+                            "mRender": function (data, type, full) {
+                                return full.NO_GIRO;
+                            }
+                        },
+                        {
+                            "aTargets": [57],
                             "mRender": function (data, type, full) {
                              return full.TGL_RENCANA_BAYAR;
                                   }
                          },
                          {
-                             "aTargets": [57],
+                             "aTargets": [58],
                               "mRender": function (data, type, full) {
                                return full.SUMBER_DANA;
                                  }
                          },
                          {
-                              "aTargets": [58],
+                              "aTargets": [59],
                               "mRender": function (data, type, full) {
                               return full.KETERANGAN;
                                   }
                          },
                          {
-                              "aTargets": [59],
+                              "aTargets": [60],
                               "mRender": function (data, type, full) {
                               return full.STATUS_TRACKING;
                                     }
                          },
                          {
-                              "aTargets": [60],
+                              "aTargets": [61],
                               "mRender": function (data, type, full) {
                               return full.NO_REK_HOUSE_BANK;
                                     }

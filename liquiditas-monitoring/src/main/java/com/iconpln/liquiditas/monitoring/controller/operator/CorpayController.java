@@ -540,7 +540,8 @@ public class CorpayController {
             @RequestParam(value = "pTglActBayar", defaultValue = "") String pTglActBayar,
             @RequestParam(value = "pJamBayar", defaultValue = "") String pJamBayar,
             @RequestParam(value = "pOssId", defaultValue = "") String pOssId,
-            @RequestParam(value = "pGroupId", defaultValue = "") String pGroupId
+            @RequestParam(value = "pGroupId", defaultValue = "") String pGroupId,
+            @RequestParam(value = "pNoGiro",defaultValue = "") String pNoGiro
     ) {
         AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
 //        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
@@ -555,7 +556,7 @@ public class CorpayController {
         try {
             Map<String, Object> res = corpayService.updatePembayaran(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pBankPembayar, pKeterangan, pTglRencanaBayar,pSumberDana,
                     pMetodePembayaran,pNoRekHouseBank,pInqCustomerName,pInqAccountNumber,pInqAccountStatus, pKodeBankPenerima, pRetrievalRefNumber,
-                    pCustomerRefNumber, pConfirmationCode, pTglActBayar, pJamBayar, WebUtils.getUsernameLogin(), pOssId, pGroupId);
+                    pCustomerRefNumber, pConfirmationCode, pTglActBayar, pJamBayar, WebUtils.getUsernameLogin(), pOssId, pGroupId, pNoGiro);
             if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
             }
