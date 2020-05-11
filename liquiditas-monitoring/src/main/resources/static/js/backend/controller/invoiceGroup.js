@@ -675,7 +675,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                 {width: 150, targets: 4},
                 {width: 150, targets: 5},
                 {width: 150, targets: 6},
-                {width: 150, targets: 7},
+                {width: 100, targets: 7},
                 {width: 20, targets: 8},
                 // {width: 100, targets: 35},
                 // {width: 100, targets: 36},
@@ -735,26 +735,40 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                 {
                     "aTargets": [6],
                     "mRender": function (data, type, full) {
-                        return Intl.NumberFormat().format(full.TOTAL_TAGIHAN);
+                        return full.METODE_PEMBAYARAN;
                     }
 
                 },
                 {
                     "aTargets": [7],
                     "mRender": function (data, type, full) {
-                        return full.ASSIGNMENT;
+                        return full.NO_GIRO;
                     }
 
                 },
                 {
                     "aTargets": [8],
                     "mRender": function (data, type, full) {
-                        return full.SUMBER_DANA;
+                        return Intl.NumberFormat().format(full.TOTAL_TAGIHAN);
                     }
 
                 },
                 {
                     "aTargets": [9],
+                    "mRender": function (data, type, full) {
+                        return full.ASSIGNMENT;
+                    }
+
+                },
+                {
+                    "aTargets": [10],
+                    "mRender": function (data, type, full) {
+                        return full.SUMBER_DANA;
+                    }
+
+                },
+                {
+                    "aTargets": [11],
                     "mRender": function (data, type, full) {
                         var jenis = "AP INVOICE";
                         console.log("Ini Full : ", full);
