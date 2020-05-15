@@ -17,9 +17,9 @@ function tableMainDashboard(_date){
         },
         "sorting": false,
         "searching" : false,
-        "paging": false,
+        "paging": true,
         "bInfo" : false,
-        "bLengthChange" : false,
+        "bLengthChange" : true,
         "columns" : [
             {"data": null,"render": (data, type, row) => {return '<td>'+data.NO_REKENING+'</td>';}},
             {"data": null,"render": (data, type, row) => {return '<td>'+data.BANK+'</td>';},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
@@ -50,6 +50,11 @@ function tableMainDashboard(_date){
                 });
              };
          },
+    });
+
+    $('.dataTables_length').each(function () {
+        var html = '<label style="margin-left: 250px; cursor:default;">Total tagihan (Rp): <b id="total_tagihan">0</b></label>';
+        $(this).append(html);
     });
 }
 
