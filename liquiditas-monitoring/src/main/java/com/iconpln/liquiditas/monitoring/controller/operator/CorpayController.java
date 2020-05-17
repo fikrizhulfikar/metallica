@@ -1148,14 +1148,14 @@ public class CorpayController {
 //        System.out.println("Fikri2 : "+pData);
         String jsonString = corpayService.getPerfectJsonString(pData);
         JSONArray jsonArray = new JSONArray(pData);
-//        System.out.println("JSON Array : "+jsonArray);
+        System.out.println("JSON Array : "+jsonArray);
         String[] listData = jsonString.split(";");
-//        System.out.println("Jancok : "+listData.length);
+        System.out.println("Jancok : "+listData.length);
         int i=0;
 
         try{
             for (int j = 0; j < jsonArray.length(); j++) {
-                JSONObject json = jsonArray.getJSONObject(i);
+                JSONObject json = jsonArray.getJSONObject(j);
                 json.getString("COMP_CODE");
 //                System.out.println("Loop : "+i++);
 //                System.out.println("DIAZZZZZ:"+json.getString("COMP_CODE"));
