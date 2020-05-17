@@ -7,6 +7,10 @@ import spark.utils.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class NumberToWordConverter {
     static String[] huruf={"","SATU ","DUA ","TIGA ","EMPAT ","LIMA ","ENAM ","TUJUH ","DELAPAN ","SEMBILAN ","SEPULUH ","SEBELAS "};
@@ -14,7 +18,7 @@ public class NumberToWordConverter {
     public String toCurrency(String currency) throws IOException, JSONParseException {
         String curr = "IDR";
         if (currency.equals("IDR")){
-            curr = " RUPIAH";
+            curr = "RUPIAH";
         }else{
             JSONParser jsonParser = new JSONParser();
             ClassLoader classLoader = NumberToWordConverter.class.getClassLoader();
@@ -29,6 +33,16 @@ public class NumberToWordConverter {
             }
         }
         return curr.toUpperCase();
+    }
+
+    public String toIndoLocale(String raw){
+        double db = Double.parseDouble(raw.replace(",","."));
+        Locale locale = new Locale("in","ID");
+        NumberFormat nf = NumberFormat.getInstance(locale);
+        String pattern = "###.00";
+        DecimalFormat decimalFormat = (DecimalFormat) nf;
+        decimalFormat.applyPattern(pattern);
+        return decimalFormat.format(db);
     }
 
     public String toWords(Double angka){
@@ -58,17 +72,14 @@ public class NumberToWordConverter {
     }
 
 //    public static void main(String[] args) throws IOException, JSONParseException {
-//        String n = "12400098098.10";
-////        String d = String.valueOf(1000.5);
-//        String[] arr = n.split("\\.");
-//        System.out.println(arr.length);
+//        String bd = "999000,9";
+//        String amt = toIndoLocale(bd);
+//        String[] arr = amt.split(",");
 //        String koma = "";
 //        if (arr.length > 1){
 //            koma = "TITIK ";
 //            koma = koma + toWords(Double.parseDouble(arr[1]));
-////            System.out.println(koma);
 //        }
-////        System.out.println(arr[1]);
-//        System.out.println(toWords(Double.parseDouble(n))+koma+toCurrency("EUR"));
+//        System.out.println(koma);
 //    }
 }
