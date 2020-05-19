@@ -26,6 +26,11 @@ public class SapService {
     private JdbcTemplate getJdbcTemplate() {return new JdbcTemplate(dataSource);}
     private Map<String, Object> out = new HashMap<>();
 
+    public Map insertToLogTable(){
+        Map<String,Object> ok = new HashMap<>();
+        return ok;
+    }
+
     public Map<String, Object> insertApInvoiceHead(
             String pCompCode, String pDocNo, String pFiscYear, String pDocType, String pDocDate, String pPostDate, String pEntryDate,
             String pReference, String pRevWith, String pRevYear, String pDocHdrText, String pCurrency, String pExcRate,
