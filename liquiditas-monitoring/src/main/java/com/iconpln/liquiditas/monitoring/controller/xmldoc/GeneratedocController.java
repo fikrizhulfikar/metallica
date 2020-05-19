@@ -1,15 +1,9 @@
 package com.iconpln.liquiditas.monitoring.controller.xmldoc;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.iconpln.liquiditas.core.alt.AltHttpRequest;
-import com.iconpln.liquiditas.core.alt.AltHttpResponse;
 import com.iconpln.liquiditas.core.xmldoc.DocGenerator;
-//import id.co.pln.iconplus.engine.master.DboVGab;
 import com.iconpln.liquiditas.core.alt.AltException;
 import oracle.jdbc.OracleTypes;
-import oracle.jdbc.oracore.OracleType;
 import org.apache.chemistry.opencmis.commons.impl.json.parser.JSONParseException;
-import org.apache.chemistry.opencmis.commons.impl.json.parser.JSONParser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,9 +27,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.net.MalformedURLException;
-import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
@@ -98,7 +90,7 @@ public class GeneratedocController {
         JSONArray jsonArray = new JSONArray(pDocumentNumbers);
         for (int index = 0; index < jsonArray.length(); index++){
             JSONObject jsonObject = jsonArray.getJSONObject(index);
-            String filename = "upload/temp/laporan_"+jsonObject.getString("pDocNo");
+            String filename = "uploadcorpay/temp/laporan_"+jsonObject.getString("pDocNo");
             DocGenerator dg = new DocGenerator();
             System.out.println("Doc Numbers : "+pDocumentNumbers);
 
@@ -165,7 +157,7 @@ public class GeneratedocController {
         JSONArray jsonArray = new JSONArray(pDocumentNumbers);
         for (int index = 0; index < jsonArray.length(); index++){
             JSONObject jsonObject = jsonArray.getJSONObject(index);
-            String filename = "upload/temp/laporan_bkg"+jsonObject.getString("DOC_NO");
+            String filename = "uploadcorpay/temp/laporan_bkg"+jsonObject.getString("DOC_NO");
             DocGenerator dg = new DocGenerator();
             System.out.println("Doc Numbers : "+pDocumentNumbers);
             System.out.println("Object Loop : "+jsonObject);
@@ -234,7 +226,7 @@ public class GeneratedocController {
     public Map suratnGroup(@RequestParam("pIdGroup") String pIdGroup) throws AltException, SQLException, JSONException, ParseException, IOException, JSONParseException {
         Map out = new HashMap();
         if (!isgeneratedoc) aksiNonaktif();
-            String filename = "upload/temp/surat_group_"+pIdGroup;
+            String filename = "uploadcorpay/temp/surat_group_"+pIdGroup;
             NumberToWordConverter conv = new NumberToWordConverter();
             DocGenerator dg = new DocGenerator();
             System.out.println("Id Groups : "+pIdGroup);
@@ -297,7 +289,7 @@ public class GeneratedocController {
     public Map lampiranGroup(@RequestParam("pIdGroup") String pIdGroup) throws AltException, SQLException, JSONException, ParseException, IOException, JSONParseException {
         Map out = new HashMap();
         if (!isgeneratedoc) aksiNonaktif();
-        String filename = "upload/temp/lampiran_group_"+pIdGroup;
+        String filename = "uploadcorpay/temp/lampiran_group_"+pIdGroup;
         NumberToWordConverter converter = new NumberToWordConverter();
         DocGenerator dg = new DocGenerator();
         System.out.println("Id Groups : "+pIdGroup);
@@ -419,7 +411,7 @@ public class GeneratedocController {
     ) throws AltException, SQLException, JSONException, ParseException, IOException, JSONParseException {
         Map out = new HashMap();
         if (!isgeneratedoc) aksiNonaktif();
-            String filename = "upload/temp/laporan_"+pDocumentNumbers;
+            String filename = "uploadcorpay/temp/laporan_"+pDocumentNumbers;
             NumberToWordConverter conv = new NumberToWordConverter();
             DocGenerator dg = new DocGenerator();
             System.out.println("Doc Numbers : "+pDocumentNumbers);
@@ -498,9 +490,12 @@ public class GeneratedocController {
                 }else{
                     dg.createDocFromTemplate("template_laporan_cms", filename);
                 }
+                System.out.println("Berhasil Generate Doc");
             } catch (Exception e) {
                 throw new AltException("Tidak dapat membuat dokumen. " + e.getMessage());
             }
+//            return checkfile(filename + ".docx");
+            System.out.println("Check File :"+filename);
             out.put("createdoc",checkfile(filename + ".docx")) ;
         return out;
     }
@@ -508,7 +503,7 @@ public class GeneratedocController {
 
     @GetMapping(path = "/downloadfile/{fileName:.+}")
     public ResponseEntity downloadSingleFile(@PathVariable String fileName){
-        Path path = Paths.get("upload/temp/"+fileName);
+        Path path = Paths.get("uploadcorpay/temp/"+fileName);
         Resource resource = null;
         try{
             resource = new UrlResource(path.toUri());
@@ -528,7 +523,7 @@ public class GeneratedocController {
         FileOutputStream fos = new FileOutputStream("reportCompressed.zip");
         ZipOutputStream zipout = new ZipOutputStream(fos);
         for (String filename : name){
-            FileSystemResource systemResource = new FileSystemResource("upload/temp/"+filename);
+            FileSystemResource systemResource = new FileSystemResource("uploadcorpay/temp/"+filename);
             FileInputStream fis = new FileInputStream(systemResource.getFilename());
             ZipEntry zipEntry = new ZipEntry(systemResource.getFilename());
             zipEntry.setSize(systemResource.contentLength());

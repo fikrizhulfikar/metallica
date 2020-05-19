@@ -48,11 +48,12 @@ function tableMainDashboard(_date){
         "columns" : [
 //            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
             {"data": null,"visible": false,"render": (data, type, row) => {return data.BANK;}},
-            {"data": null,"render": (data, type, row) => {if (data.BANK === "TOTAL"){
-                                                            return '<td> TOTAL '+data.CURRENCY+'</td>';
-                                                            }else
-                                                            return '<td>'+data.CURRENCY+'</td>';
-                                                            }},
+            {"data": null,"render": (data, type, row) => {return data.CURRENCY;}},
+//            {"data": null,"render": (data, type, row) => {if (data.BANK === "TOTAL"){
+//                                                            return '<td> TOTAL '+data.CURRENCY+'</td>';
+//                                                            }else
+//                                                            return '<td>'+data.CURRENCY+'</td>';
+//                                                            }},
             {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D0 == "0" || data.RP_D0 == null){
                                                               return '<td> - </td>';
                                                               } else
@@ -102,7 +103,7 @@ function tableMainDashboard(_date){
                                                            },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
-            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D0 == "0" || data.RP_TOTAL == null){
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_TOTAL == "0" || data.RP_TOTAL == null){
                                                               return '<td> - </td>';
                                                               } else
                                                               return '<td>'+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
@@ -119,7 +120,7 @@ function tableMainDashboard(_date){
                     "text-align": "center",
                     "font-weight": "bold",
                 });
-                $('td', row).eq(0).attr("colspan","2");
+//                $('td', row).eq(0).attr("colspan","2");
              };
          },
 
@@ -135,15 +136,19 @@ function tableMainDashboard(_date){
             if (last !== group.BANK){
                 let count = 1;
 
-                for (let j=i; i<array.length; j++){
+                for (let j=i; j<array.length; j++){
                     let first = array[i].BANK;
                     if (first !== array[j].BANK) break;
                     count+= 1;
                 }
-                $(rows).eq(i).before(
-                    '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold">'+group.BANK+'</td></tr>'
-                );
-
+                if ((group.BANK === "TOTAL")){
+                    $(rows).eq(i).before(
+                        '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold; background-color: #F4D35E">'+group.BANK+'</td></tr>'
+                    );
+                }else
+                    $(rows).eq(i).before(
+                        '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold;">'+group.BANK+'</td></tr>'
+                    );
 //                console.log(array)
                 last = group.BANK;
                 }
@@ -168,14 +173,46 @@ function tableMainDashboard(_date){
         "columns" : [
 //            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
             {"data": null,"render": (data, type, row) => {return '<td>'+data.URAIAN+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","left");}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D6)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D0 == "0" || data.RP_D0 == null){
+                                                            return '<td> - </td>';
+                                                            } else
+                                                            return '<td>'+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+                                                         },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D1 == "0" || data.RP_D1 == null){
+                                                            return '<td> - </td>';
+                                                            } else
+                                                            return '<td>'+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
+                                                         },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D2 == "0" || data.RP_D2 == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
+                                                           },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D3 == "0" || data.RP_D3 == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
+                                                           },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D4 == "0" || data.RP_D4 == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
+                                                           },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D5 == "0" || data.RP_D5 == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
+                                                           },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D6 == "0" || data.RP_D6 == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
+                                                           },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_TOTAL == "0" || data.RP_TOTAL == null){
+                                                                return '<td> - </td>';
+                                                                } else
+                                                                return '<td>'+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
+                                                             },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
         ],
         "createdRow" : function (row, data, dataIndex){
             if ((data["URAIAN"] === "TOTAL")){
@@ -203,11 +240,12 @@ function tableMainDashboard(_date){
         "bLengthChange" : false,
         "columns" : [
             {"data": null,"visible" : false,"render": (data, type, row) => {return data.JENIS;}},
-            {"data": null,"render": (data, type, row) => {if (data.JENIS === "TOTAL"){
-                                                             return '<td> TOTAL '+data.CURRENCY+'</td>';
-                                                             }else
-                                                             return '<td>'+data.CURRENCY+'</td>';
-                                                             }},
+            {"data": null,"render": (data, type, row) => {return data.CURRENCY;}},
+//            {"data": null,"render": (data, type, row) => {if (data.JENIS === "TOTAL"){
+//                                                             return '<td> TOTAL '+data.CURRENCY+'</td>';
+//                                                             }else
+//                                                             return '<td>'+data.CURRENCY+'</td>';
+//                                                             }},
             {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D0 == "0" || data.RP_D0 == null){
                                                              return '<td> - </td>';
                                                              } else
@@ -274,7 +312,9 @@ function tableMainDashboard(_date){
                     "text-align": "center",
                     "font-weight": "bold",
                 });
-                $('td', row).eq(0).attr("colspan","2");
+//                $('td', row).eq(0).attr("colspan","2");
+//                $('td:eq(0)', newRow).attr("JENIS", "TOTAL");
+//                  $('td', row).eq(0).append('<td>new</td>')
              };
          },
 
@@ -289,15 +329,20 @@ function tableMainDashboard(_date){
             if (last !== group.JENIS){
                 let count = 1;
 
-                for (let j=i; i<array.length; j++){
+                for (let j=i; j<array.length; j++){
                     let first = array[i].JENIS;
                     if (first !== array[j].JENIS) break;
                     count+= 1;
                 }
-                $(rows).eq(i).before(
-                    '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold">'+group.JENIS+'</td></tr>'
-                );
-                console.log(array)
+                if ((group.JENIS === "TOTAL")){
+                    $(rows).eq(i).before(
+                        '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold; background-color: #F4D35E">'+group.JENIS+'</td></tr>'
+                    );
+                }else
+                    $(rows).eq(i).before(
+                        '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold;">'+group.JENIS+'</td></tr>'
+                    );
+//                console.log(array)
                 last = group.JENIS;
             }
             });
@@ -377,7 +422,7 @@ function tableRencanaPerVendor(_date){
 //                },
                 "createdCell" : (cell)=>{
                     $(cell).css({
-                        "text-align" : "right"
+                        "text-align" : "center"
                     })
                 }
             },
@@ -386,6 +431,14 @@ function tableRencanaPerVendor(_date){
 //                "render" : (data) => {
 //                    return data.CURRENCY;
 //                },
+                "createdCell" : (cell)=>{
+                    $(cell).css({
+                        "text-align" : "center"
+                    })
+                }
+            },
+           {
+                "data" : "ORI_CURR",
                 "createdCell" : (cell)=>{
                     $(cell).css({
                         "text-align" : "right"
@@ -416,6 +469,7 @@ function tableRencanaPerVendor(_date){
                     "text-align": "center",
                     "font-weight": "bold",
                 });
+//                $('td', row).eq(0).attr("colspan","4");
             }
         },
         "drawCallback" : function (settings){

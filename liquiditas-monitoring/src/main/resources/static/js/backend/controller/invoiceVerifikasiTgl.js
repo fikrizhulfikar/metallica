@@ -180,6 +180,7 @@ function getAllData() {
             $('#table-rekapitulasi tbody').empty();
             $('#table-rekapitulasi').dataTable().fnDestroy();
 
+
             table_rekapitulasi = $('#table-rekapitulasi').DataTable({
                     "serverSide": true,
                     "oSearch": {"sSearch": tempTableSearch},
@@ -760,14 +761,24 @@ function getAllData() {
                         {
                             "aTargets": [73],
                             "mRender": function (data, type, full) {
+                                let now = new Date();
+                                let dd = String(now.getDate()).padStart(2,'0');
+                                let mm = String(now.getMonth()+1).padStart(2,'0');
+                                let yyyy = now.getFullYear();
+                                let verif = "";
+                                var today = dd + '/' + mm + '/' + yyyy;
+                                console.log();
+                                if (full.TGL_RENCANA_BAYAR < today){
+                                    verif = '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-danger" title="Reject" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-arrow-left"></i></button>';
+                                }else{
+                                    verif = '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title="Approve Tanggal" onclick="verifikasi_tanggal(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-check"></i></button>'+'<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-danger" title="Reject" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-arrow-left"></i></button>';
+                                }
                                 var ret_value;
                                 var role = newRoleUser[0];
                                 if(newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT"){
+
                                 ret_value =
-                                '<div class="btn-group">'+
-                                '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title="Approve Tanggal" onclick="verifikasi_tanggal(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-check"></i></button>'+
-                                '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-danger" title="Reject" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                '</div>';
+                                '<div class="btn-group">' + verif + '</div>';
                                 }
                                 return ret_value;
                             }
@@ -779,7 +790,7 @@ function getAllData() {
                                 var full_value = new Object();
                                 var ret_value = ''
                                 if (newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT") {
-                                    value = '{"pCompCode":"'+full.COMP_CODE+'", "pBusArea":"'+full.BUS_AREA+'","pLineItem":"'+full.LINE_ITEM+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pOssId":"'+full.OSS_ID+'","pGroupId":"'+full.GROUP_ID+'","pFiscYear":"'+full.FISC_YEAR+'","pKet":"'+full.KET+'"}';
+                                    value = '{"pCompCode":"'+full.COMP_CODE+'", "pBusArea":"'+full.BUS_AREA+'","pLineItem":"'+full.LINE_ITEM+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pOssId":"'+full.OSS_ID+'","pGroupId":"'+full.GROUP_ID+'","pFiscYear":"'+full.FISC_YEAR+'","pKet":"'+full.KET+'","ok":"'+full.FLAG_TOMBOL+'"}';
                                 }
 //                                value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
 //                                full_value = '{"full":'+JSON.stringify(full)+'}';
@@ -1467,6 +1478,16 @@ function reverse_sap(pCompCode, pDocNo, pFiscYear, pLineItem, pKet){
 }
 
 function verifikasi_tanggal_multiple(){
+    let breakPoint;
+    invoiceCheckedArray.forEach((item, index) => {
+        console.log(item);
+        if (item.ok === "1"){
+            alert("Silahkan Ubah Tanggal Rencana Bayar");
+            throw breakPoint;
+            return;
+        }
+
+    });
     if (invoiceCheckedArray.length <= 0){
         alert("Maaf, Silahkan pilih data terlebih dahulu!");
     }else if(invoiceCheckedArray.length > 0){
@@ -1488,6 +1509,7 @@ function verifikasi_tanggal_multiple(){
                     }else{
                         alert(response.OUT_MSG);
                     }
+                    invoiceCheckedArray = new Array();
                 },
                 error : error => {
                     alert(error);

@@ -68,7 +68,7 @@ public class DocGenerator {
 
     //pakai xmldocx
     public void createDocFromTemplate(String templateFileName, String outputFileName) throws AltException{
-        String filesPath = "temp/xmldocx" + (new Date()).getTime() + "/";
+        String filesPath = "tempcorpay/xmldocx" + (new Date()).getTime() + "/";
         File filedir = new File(filesPath);
         filedir.mkdirs();
         filedir.setExecutable(true);
@@ -95,11 +95,13 @@ public class DocGenerator {
             Element econfig = dom.createElement("pdx:config");
 
             Element etemplate = dom.createElement("pdx:template");
+//            etemplate.setAttribute("pdx:path",templateFileName);
             etemplate.setAttribute("pdx:path","upload/template/"+templateFileName+".docx");
 
             Element eoutput = dom.createElement("pdx:output");
             eoutput.setAttribute("pdx:name",outputFileName);
             eoutput.setAttribute("pdx:type","docx");
+
 //            eoutput.setAttribute("pdx:type","pdf");
 
             econfig.appendChild(etemplate);

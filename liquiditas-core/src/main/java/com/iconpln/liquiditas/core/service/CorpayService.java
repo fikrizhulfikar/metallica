@@ -1845,4 +1845,69 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 //        return resultset;
 //    }
 
+    public List<Map<String, Object>> getDashboardPengelolaan2(String bank, String jenisRekening, String tipeRekening){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_dashboard_rincian_saldo");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_jenis_rekening", jenisRekening, OracleTypes.VARCHAR)
+                .addValue("p_tipe_rekening", tipeRekening, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public List<Map<String,Object>> getJenisRekening() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_jenis_rekening");
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+
+        AppUtils.getLogger(this).info("data get_jenis_rekening : {}",resultset);
+
+        return resultset;
+    }
+
+    public List<Map<String,Object>> getTipeRekening() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_tipe_rekening");
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+
+        AppUtils.getLogger(this).info("data get_tipe_rekening : {}",resultset);
+
+        return resultset;
+    }
+
+    public List<Map<String,Object>> getBank() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_bank");
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+
+        AppUtils.getLogger(this).info("data get_bank : {}",resultset);
+
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getEqCurr( String bank, String jenisRekening, String tipeRekening){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_total_rincian_saldo");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_jenis_rekening", jenisRekening, OracleTypes.VARCHAR)
+                .addValue("p_tipe_rekening", tipeRekening, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
 }

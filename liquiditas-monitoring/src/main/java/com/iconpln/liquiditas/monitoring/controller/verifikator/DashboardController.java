@@ -1,8 +1,8 @@
 package com.iconpln.liquiditas.monitoring.controller.verifikator;
 
 import com.iconpln.liquiditas.core.domain.CashFlow;
-import com.iconpln.liquiditas.core.service.DashboardService;
 import com.iconpln.liquiditas.core.service.DashboardCorpay;
+import com.iconpln.liquiditas.core.service.DashboardService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import javax.print.attribute.standard.Media;
 import net.sf.jxls.transformer.XLSTransformer;
@@ -10,12 +10,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -80,7 +75,6 @@ public class DashboardController {
             e.printStackTrace();
             return null;
         }
-
     }
 
     ////////////
@@ -521,7 +515,6 @@ public class DashboardController {
         return map;
     }
 
-
     @RequestMapping(value = "/get_rekening_vs_rencana", method = RequestMethod.GET)
     public Map getRekRencana() {
         try {
@@ -556,6 +549,16 @@ public class DashboardController {
     public Map getRealPembayaran() {
         try {
             return dashboardService.getRealPembayaran();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_ana_realisasi_pembayaran", method = RequestMethod.GET)
+    public Map getAnaRealPembayaran() {
+        try {
+            return dashboardService.getAnaRealPembayaran();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -662,16 +665,6 @@ public class DashboardController {
     public Map getRealPembayaran2() {
         try {
             return dashboardCorpay.getRealPembayaran2();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @RequestMapping(value = "/get_ana_realisasi_pembayaran", method = RequestMethod.GET)
-    public Map getAnaRealPembayaran() {
-        try {
-            return dashboardService.getAnaRealPembayaran();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

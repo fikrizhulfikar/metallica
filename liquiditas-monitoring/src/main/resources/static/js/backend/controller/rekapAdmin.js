@@ -2253,7 +2253,7 @@ function multipleUpdate() {
         data: {
             pData: JSON.stringify(checkedArray),
             pTglJatuhTempo: $("#pNewTglJatuhTempo").val(),
-            pBankPembayar: $("#pNewBankPembayar").val()
+            pBankPembayar: $("#pNewBankPembayar").val(),
         },
         success: function (res) {
             hideLoadingCss("")

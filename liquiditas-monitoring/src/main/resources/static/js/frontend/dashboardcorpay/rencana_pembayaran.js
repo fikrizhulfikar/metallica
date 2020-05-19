@@ -33,15 +33,15 @@ function initDataTableSaldoRek1() {
                     $('#table-rencana-pembayaran tbody').append(html);
                 });
 
-                    var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                        "<td align='center'>SUB TOTAL</td>" +
-                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H0,2,".",",") + "</td>" +
-                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H1,2,".",",") + "</td>" +
-                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H2,2,".",",") + "</td>" +
-                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_WEEKLY,2,".",",") + "</td>" +
-                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_MONTHLY,2,".",",") + "</td>" +
-                        "</tr>";
-                    $('#table-rencana-pembayaran tbody').append(total1);
+//                    var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
+//                        "<td align='center'>SUB TOTAL</td>" +
+//                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H0,2,".",",") + "</td>" +
+//                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H1,2,".",",") + "</td>" +
+//                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_H2,2,".",",") + "</td>" +
+//                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_WEEKLY,2,".",",") + "</td>" +
+//                        "<td align='right'> Rp. " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_MONTHLY,2,".",",") + "</td>" +
+//                        "</tr>";
+//                    $('#table-rencana-pembayaran tbody').append(total1);
 
                     var total3 = "<tr style='background-color:#67a2d8;color: white'>" +
                         "<td align='center'>TOTAL</td>" +

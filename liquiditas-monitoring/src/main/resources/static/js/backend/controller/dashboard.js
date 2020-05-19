@@ -791,7 +791,7 @@ $.ajax({
             var tes2 = JSON.stringify(data2);
 //            console.log('Tes 1 :' +tes);
 //            console.log('Tes 2 :' +tes2);
-            $("#tglcetak").html(data[0].TANGGAL);
+//            $("#tglcetak").html(data[0].TANGGAL);
 
             var dataPieRekRencana = [];
             $.each(data, function (index, value) {
@@ -1140,19 +1140,19 @@ $.ajax({
                  seriesname : value.CASH_DESCRIPTION,
                  data : [
                      {
-                         value: value.H_MIN2
+                          value: value.H_2
                      },
                      {
-                         value: value.H_MIN1
+                          value: value.H_1
                      },
                      {
                          value: value.H_0
                      },
                      {
-                         value: value.H_1
+                        value: value.H_MIN1
                      },
                      {
-                         value: value.H_2
+                          value: value.H_MIN2
                      }
                  ]
              };
@@ -1166,19 +1166,19 @@ $.ajax({
                      renderas : "line",
                      data : [
                        {
-                           value: value.H_MIN2
+                          value: value.H_2
                        },
                        {
-                           value: value.H_MIN1
+                          value: value.H_1
                        },
                        {
-                           value: value.H_0
+                          value: value.H_0
                        },
                        {
-                           value: value.H_1
+                          value: value.H_MIN1
                        },
                        {
-                           value: value.H_2
+                          value: value.H_MIN2
                        }
                      ]
                   };
@@ -1539,7 +1539,7 @@ function barRencanaRealisasiPembayaranBulan(chart_bulan){
 function barRencanaRealisasiPembayaranTahun(data5){
     const dataSource = {
         chart : {
-            caption : "Realisasi Pembayaran",
+            caption : "Rencana & Realisasi Pembayaran Per Tahun",
             subcaption : "PT. PLN (Persero) Divisi Treasury",
             showSum : "1",
             numberprefix : "Rp ",
@@ -1616,19 +1616,19 @@ function analisaPembayaranBarLine(coba){
                    {
                        category : [
                            {
-                               label : "Hari H-2"
+                               label : "Hari H +2"
                            },
                            {
-                               label : "Hari H-1"
+                               label : "Hari H +1"
                            },
                            {
                                label : "Hari H"
                            },
                            {
-                               label : "Hari H+1"
+                               label : "Hari H -1"
                            },
                            {
-                               label : "Hari H+2"
+                               label : "Hari H -2"
                            }
                        ]
                    }

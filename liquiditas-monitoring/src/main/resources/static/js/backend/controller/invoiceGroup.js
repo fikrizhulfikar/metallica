@@ -2725,9 +2725,9 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
     );
             $('.dataTables_filter').each(function () {
                 var html = '';
-                html =  '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
-                html = html + '<button class="btn btn-verified btn-primary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Bukti Kas" onclick="cetakBuktiKasGroupingMultiple()"><i class="fas fa-file-alt"></i></button>' ;
-                html = html + '<button class="btn btn-verified btn-info btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Lampiran" onclick="cetakLampiranGrouping('+idGroup+')"><i class="fas fa-file-alt"></i></button>' ;
+                html =  '<button class="btn btn-dtl btn-dribbble btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
+                html = html + '<button class="btn btn-dtl btn-primary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Bukti Kas" onclick="cetakBuktiKasGroupingMultiple()"><i class="fas fa-file-alt"></i></button>' ;
+                html = html + '<button class="btn btn-dtl btn-info btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Lampiran" onclick="cetakLampiranGrouping('+idGroup+')"><i class="fas fa-paperclip"></i></button>' ;
                 $(this).append(html);
             });
 }
@@ -3531,6 +3531,7 @@ function cetakBuktiKasGroupingMultiple(){
             type : "POST",
             success : (res) => {
                 if (res){
+                    alert("Berhasil Mencetak Dokumen");
                     fullArrayGroup.forEach((item,index) => {
                         console.log(item);
                         window.open(baseUrl+"generate_doc/cetak/downloadfile/laporan_bkg"+item.DOC_NO+".docx","_blank");
@@ -3558,7 +3559,7 @@ function cetakSuratGroup(id_group){
         success : (res) => {
             if (res.result.status === 1){
                 console.log("Result : ",res);
-                alert("Udah");
+                alert("Berhasil Mencetak Dokumen");
                 window.open(baseUrl+"generate_doc/cetak/downloadfile/surat_group_"+id_group+".docx","_blank");
             }
 
@@ -3580,7 +3581,7 @@ function cetakLampiranGrouping(id_group){
         success : (res) => {
             if (res.result.status === 1){
                 console.log("Result : ",res);
-                alert("Udah");
+                alert("Berhasil Mencetak Dokumen");
                 window.open(baseUrl+"generate_doc/cetak/downloadfile/lampiran_group_"+id_group+".docx","_blank");
             }
 
@@ -3596,4 +3597,5 @@ function back(){
     $(".detail-data").hide();
     tableInvoiceGroup.ajax.reload()
     tableDetailGroupInvoice.destroy();
+    $(".btn-dtl").remove();
 }

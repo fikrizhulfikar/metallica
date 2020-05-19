@@ -1579,7 +1579,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
             });
 
             $('.dataTables_length').each(function () {
-                var html = '<label style="margin-left: 250px; cursor:default;">Total tagihan (Rp): <b id="total_tagihan">0</b></label>';
+                var html = '<label style="margin-left: 120px; cursor:default;">Total tagihan (Rp): <b id="total_tagihan">0</b></label>';
                 $(this).append(html);
             });
 
@@ -3991,6 +3991,7 @@ function cetakBuktiKasMultiple(){
             type : "POST",
             success : (res) => {
                 if (res){
+                    alert("Berhasil Mencetak Dokumen");
                     invoiceCheckedArray.forEach((item,index) => {
                         console.log(item);
                         window.open(baseUrl+"generate_doc/cetak/downloadfile/laporan_"+item.pDocNo+".docx","_blank");
@@ -4021,10 +4022,9 @@ function cetakBuktiKasSingle(comp_code, doc_no, fiscal_year, line_item, ket){
         success : (res) => {
             if (res.createdoc.status === 1){
                 console.log("Result : ",res);
-                alert("Udah");
+                alert("Berhasil Mencetak Dokumen");
                 window.open(baseUrl+"generate_doc/cetak/downloadfile/laporan_"+doc_no+".docx","_blank");
             }
-
         },
         error : (err) => {
             console.log("Error : ",err.error);
@@ -4046,7 +4046,7 @@ function downloadDokPengantar(laporan){
         type : "POST",
         success : (res) => {
             console.log("Result : ",res);
-            alert("Udah");
+            alert("Berhasil Mencetak Dokumen");
         },
         error : (err) => {
             console.log("Error : ",err.error);

@@ -499,22 +499,22 @@ function initDataTableSaldoRek1() {
               var dataPieTemp = {
                   seriesname : value.CASH_DESCRIPTION,
                   data : [
-                      {
-                          value: value.H_MIN2
-                      },
-                      {
+                       {
+                            value: value.H_2
+                       },
+                       {
+                            value: value.H_1
+                       },
+                       {
+                           value: value.H_0
+                       },
+                       {
                           value: value.H_MIN1
-                      },
-                      {
-                          value: value.H_0
-                      },
-                      {
-                          value: value.H_1
-                      },
-                      {
-                          value: value.H_2
-                      }
-                  ]
+                       },
+                       {
+                            value: value.H_MIN2
+                       }
+                   ]
               };
               dataChartAnaRealPembayaran.push(dataPieTemp)
           });
@@ -525,21 +525,21 @@ function initDataTableSaldoRek1() {
                       seriesname : value.KETERANGAN,
                       renderas : "line",
                       data : [
-                        {
-                            value: value.H_MIN2
-                        },
-                        {
-                            value: value.H_MIN1
-                        },
-                        {
-                            value: value.H_0
-                        },
-                        {
-                            value: value.H_1
-                        },
-                        {
-                            value: value.H_2
-                        }
+                           {
+                                value: value.H_2
+                           },
+                           {
+                                value: value.H_1
+                           },
+                           {
+                               value: value.H_0
+                           },
+                           {
+                              value: value.H_MIN1
+                           },
+                           {
+                                value: value.H_MIN2
+                           }
                       ]
                    };
                    dataChartAnaRealPembayaran2.push(dataPieTemp2)
@@ -913,19 +913,19 @@ console.log("Tes : " + tes)
                    {
                        category : [
                            {
-                               label : "Hari H-2"
+                               label : "Hari H +2"
                            },
                            {
-                               label : "Hari H-1"
+                               label : "Hari H +1"
                            },
                            {
                                label : "Hari H"
                            },
                            {
-                               label : "Hari H+1"
+                               label : "Hari H -1"
                            },
                            {
-                               label : "Hari H+2"
+                               label : "Hari H -2"
                            }
                        ]
                    }
