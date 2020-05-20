@@ -1,373 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1bb35cd6-6e1f-4873-bb7b-6e5a0fd705b9" name="Default Changelist" comment="update 19-05-2020 (Generate Doc)">
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/config/xmldocx_config.cfg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/classes/StructureDocx.inc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/classes/TemplateProcessing.inc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/classes/Text2Docx.inc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/classes/TransformDoc.inc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/classes/WordFragment.inc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/classes/WordML.inc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/classes/WordMLFragment.inc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/SimpleExample.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/TemplateBlocks.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/TemplateComplexTable.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/TemplateExternalFile.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/TemplateHTML.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/TemplateHeaderAndFooter.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/TemplateList.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/TemplatePipeSymbol.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/TemplateSimpleTable.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/TemplateSimpleText.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/TemplateStyles.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/TemplateVariables.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/TemplateWordFragment_1.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/TemplateWordFragment_2.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/TemplateWordFragment_3.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/TemplateWordML.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/Test.mht" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/Test.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/Test.pem" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/Test.rtf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/Test2.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/Test3.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/Text.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/Text.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/Watermark.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/WatermarkImage.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/simpleRTF.rtf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/simpleTemplate.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/stylesTemplate.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/examples/files/test2.mht" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/excel/xl/_rels/workbook.xml.rels" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/excel/xl/sharedStrings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/excel/xl/styles.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/excel/xl/tables/table1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/excel/xl/theme/theme1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/excel/xl/workbook.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/excel/xl/worksheets/_rels/sheet1.xml.rels" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/excel/xl/worksheets/sheet1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/UniversalClassLoader.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/VFXP.inc.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/dompdfParser/include/styleparser.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/dompdfParser/include/styleparsersheet.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/include/style.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/include/stylesheet.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/include/table_cell_frame_decorator.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/include/table_cell_frame_reflower.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/include/table_cell_positioner.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/include/table_cell_renderer.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/include/table_frame_decorator.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/include/table_frame_reflower.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/include/table_row_frame_decorator.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/include/table_row_frame_reflower.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/include/table_row_group_frame_decorator.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/include/table_row_group_frame_reflower.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/include/table_row_positioner.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/include/tcpdf_adapter.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/include/text_frame_decorator.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/include/text_frame_reflower.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/include/text_renderer.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/include/ttf_info.cls.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/fonts/Symbol.afm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/fonts/Times-Bold.afm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/fonts/Times-Bold.afm.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/fonts/Times-BoldItalic.afm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/fonts/Times-Italic.afm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/fonts/Times-Roman.afm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/fonts/Times-Roman.afm.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/fonts/ZapfDingbats.afm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/bin/ttf2ufm.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/app/RPM/ttf2pt1.spec" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/app/RPM/ttf2pt1.spec.src" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/app/TeX/sfd2map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/app/X11/t1-xf86.334.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/app/X11/t1-xf86.39.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/maps/T2A_compact.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/maps/ubig5.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/maps/ugb.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/maps/ugbk.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/maps/unicode-sample.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/other/showdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/other/showg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/scripts/t1fdir" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/scripts/trans" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/scripts/unhtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/scripts/x2gs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/t1asm.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/ttf.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/ttf.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/ttf2pt1.1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/ttf2pt1.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/ttf2pt1_convert.1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/ttf2pt1_x2gs.1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/ttf2ufm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/version.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/winbuild.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/lib/ttf2ufm/src/windows.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/cache/table_data_demo.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/cache/utf8test.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/config/lang/slv.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/config/lang/spa.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/config/lang/sqi.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/config/lang/srp.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/config/lang/swa.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/config/lang/swe.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/config/lang/urd.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/config/lang/yid.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/config/lang/zho.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/config/tcpdf_config.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/config/tcpdf_config_alt.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/dejavu-fonts-ttf-2.32/status.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/dejavu-fonts-ttf-2.32/unicover.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/stsongstdlight.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/symbol.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/times.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/timesb.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/timesbi.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/timesi.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/uni2cid_ac15.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/uni2cid_ag15.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/uni2cid_aj16.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/uni2cid_ak12.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/utils/src/ttf2ufm-src.tar.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/utils/ttf2ufm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/utils/ttf2ufm.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/utils/zlib1.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/zapfdingbats.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/zarbold.ctg.z" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/zarbold.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/fonts/zarbold.z" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/images/tcpdf_cell.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/images/tcpdf_logo.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/images/tcpdf_signature.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/images/testsvg.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/images/tiger.ai" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/images/tux.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/spotcolors.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/tcpdf.crt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/tcpdf.fdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/tcpdf.p12" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/tcpdf.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/tcpdf/unicode_data.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/images/small_logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/images/star_01.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/images/star_02.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/images/star_03.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/images/star_04.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/images/star_05.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/images/title.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/images/v_bar.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/images/xhtml10.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/test/images/smiley.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/test/images/what_ordered.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/test/simple_ul.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/test/special.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/test/symbols.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/test/table.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/test/table_01.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/test/table_height.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/test/table_image.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/test/ul.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/test/unicode.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/lib/pdf/www/test/unicode_wrapping.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/templates/xmls/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/lib/phpdocx/templates/xmls/styles.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addBookmark/sample_1/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addBookmark/sample_2/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addBreak/sample_1/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addBreak/sample_2/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addChart/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addComment/sample_1/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addComment/sample_2/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addDateAndHour/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addEndnote/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addExternalFile/sample_1/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addExternalFile/sample_2/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addExternalFile/sample_3/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addFootnote/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addFormElement/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addHeading/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addImage/sample_1/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addImage/sample_2/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addLink/sample_1/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addLink/sample_2/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addList/sample_1/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addList/sample_2/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addList/sample_3/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addMathEquation/sample_1/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addMathEquation/sample_2/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addMathEquation/sample_3/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addMergeField/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addPageNumber/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addShape/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addSimpleField/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addStructuredDocumentTag/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addTable/sample_1/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addTable/sample_2/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addTableContents/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addText/sample_1/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addText/sample_2/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addText/sample_3/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addTextBox/sample_1/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addTextBox/sample_2/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/addWordML/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/embedHTML/sample_1/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/embedHTML/sample_2/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/addBackgroundImage/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/addFooter/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/addHeader/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/addLineNumbering/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/addMacroFromDoc/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/addPageBorders/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/addProperties/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/addSection/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/createListStyle/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/createParagraphStyle/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/docxSettings/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/importHeadersAndFooters/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/importStyles/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/modifyPageLayout/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/parseStyles/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/setBackgroundColor/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/setDefaultFont/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/setEncodeUTF8/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/setLanguage/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/LayoutAndGeneral/setMarkAsFinal/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Templates/clearBlocks/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Templates/deleteTemplateBlock/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Templates/modifyInputFields/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Templates/processTemplate/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Templates/removeTemplateVariable/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Templates/replaceListVariable/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Templates/replacePlaceholderImage/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Templates/replaceTableVariable/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Templates/replaceVariableByExternalFile/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Templates/replaceVariableByHTML/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Templates/replaceVariableByText/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Templates/replaceVariableByWordFragment/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Templates/replaceVariableByWordML/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Templates/setTemplateSymbol/settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/SimpleExample.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/TemplateBlocks.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/TemplateComplexTable.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/TemplateExternalFile.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/TemplateHTML.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/TemplateHeaderAndFooter.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/TemplateList.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/TemplatePipeSymbol.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/TemplateSimpleTable.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/TemplateSimpleText.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/TemplateStyles.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/TemplateVariables.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/TemplateWordFragment_1.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/TemplateWordFragment_2.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/TemplateWordFragment_3.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/TemplateWordML.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/Test.mht" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/Test.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/Test.pem" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/Test.rtf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/Test2.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/Test3.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/Text.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/Text.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/Watermark.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/WatermarkImage.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/simpleRTF.rtf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/simpleTemplate.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/stylesTemplate.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/files/test2.mht" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/schemas/xmldocx.xsd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/wrappers/c/XmlDocx.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/wrappers/c/XmlDocx.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/wrappers/cpp/XmlDocx.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/wrappers/cpp/XmlDocx.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/wrappers/java/com/xmldocx/XmlDocx.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/wrappers/java/com/xmldocx/XmlDocx.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/wrappers/net/XmlDocx.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/wrappers/net/XmlDocx.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/wrappers/node.js/XmlDocx.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/wrappers/python/XmlDocx/XmlDocx.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/wrappers/ruby/XmlDocx.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/xmldocx/XMLAPI.inc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/drivers/xmldocx/xmldocx/XMLAPICommand.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/xmldoc/XmlDocx.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-core/src/main/resources/files/JSONApInvoicetescase.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-core/src/main/resources/files/apinvoicetestcetak.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/files/master-currency/common-currency.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/files/master-currency/currency.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/test/java/com/iconpln/liquiditas/monitoring/TestDateFormat.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/xmldocx1589431879294/config.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/xmldocx1589431879294/content.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/xmldocx1589432184650/config.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/xmldocx1589432184650/content.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/xmldocx1589445326646/config.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/xmldocx1589445326646/content.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/xmldocx1589445673141/config.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/xmldocx1589445673141/content.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/xmldocx1589446612397/config.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/xmldocx1589446612397/content.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/xmldocx1589448854021/config.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/xmldocx1589448854021/content.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/upload/temp/laporan_0800000013.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/upload/temp/laporan_0800000031.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/upload/template/template_lampiran_cms_group.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/upload/template/template_lampiran_giro.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/upload/template/template_lampiran_giro_group.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/upload/template/template_lampiran_group.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/upload/template/template_laporan.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/upload/template/template_laporan_bukti_kas_grouping.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/upload/template/template_laporan_cms.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/upload/template/template_laporan_giro.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/upload/template/template_surat_cms_group.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/upload/template/template_surat_giro_group.docx" afterDir="false" />
+    <list default="true" id="1bb35cd6-6e1f-4873-bb7b-6e5a0fd705b9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/CorpayService.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/CorpayService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/DashboardCorpay.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/DashboardCorpay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/Sap.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/Sap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/SapService.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/SapService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/Sapmaster.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/Sapmaster.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/ValasService.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/ValasService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/xmldoc/DocGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/xmldoc/DocGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/resources/files/JSONApInvoice.json" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/resources/files/JSONApInvoice.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/resources/files/JSONApInvoice_back.json" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/resources/files/JSONApInvoice_back.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-log/core.log" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-log/core.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/CorpayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/CorpayController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/verifikator/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/verifikator/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/xmldoc/GeneratedocController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/xmldoc/GeneratedocController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/dash_realisasi.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/dash_realisasi.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/dash_rencana.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/dash_rencana.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/invoiceGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/invoiceGroup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/invoiceGroupLunas.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/invoiceGroupLunas.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/invoiceGroupVerified.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/invoiceGroupVerified.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/invoiceVerifikasiTgl.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/invoiceVerifikasiTgl.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pengelolaan_likuiditas.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pengelolaan_likuiditas.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapAdmin.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapAdmin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapInvoiceBelum.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapInvoiceBelum.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapInvoiceOss.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapInvoiceOss.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/coreapps.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/coreapps.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/frontend/dashboardcorpay/realisasi_pembayaran.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/frontend/dashboardcorpay/realisasi_pembayaran.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/frontend/dashboardcorpay/rencana_pembayaran.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/frontend/dashboardcorpay/rencana_pembayaran.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/frontend/dashboardcorpay/saldo_rekening.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/frontend/dashboardcorpay/saldo_rekening.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/dashboardcorpay/saldo_rekening3.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/dashboardcorpay/saldo_rekening3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/dash_realisasi.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/dash_realisasi.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/dash_rencana.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/dash_rencana.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/dashboard2.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/dashboard2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pengelolaan_likuiditas.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pengelolaan_likuiditas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/rekap_invoice_belum.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/rekap_invoice_belum.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/rekap_invoice_oss.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/rekap_invoice_oss.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/upload/temp/lampiran_group_50.docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/upload/temp/laporan_bkg800000567.docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/upload/temp/laporan_bkg800000587.docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/upload/temp/laporan_bkg800000599.docx" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -443,7 +80,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1568789622014" />
     <property name="jsx.switch.disabled" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -457,10 +94,10 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-core\src\main\java\com\iconpln\liquiditas\core\service" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\frontend\dashboardcorpay" />
       <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\backend\controller" />
       <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\operator" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-core\src\main\java\com\iconpln\liquiditas\core\service" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\frontend\dashboardcorpay" />
       <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\dashboardcorpay" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -749,56 +386,7 @@
       <workItem from="1587603490564" duration="13046000" />
       <workItem from="1587949973651" duration="45092000" />
       <workItem from="1588126855338" duration="245370000" />
-      <workItem from="1589638925526" duration="104854000" />
-    </task>
-    <task id="LOCAL-00070" summary="Menambah function get saldo">
-      <created>1587346547005</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1587346547005</updated>
-    </task>
-    <task id="LOCAL-00071" summary="Menambah function get saldo dan get column">
-      <created>1587346565362</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1587346565362</updated>
-    </task>
-    <task id="LOCAL-00072" summary="Update ajax url">
-      <created>1587346601875</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1587346601875</updated>
-    </task>
-    <task id="LOCAL-00073" summary="Perubahan port development">
-      <created>1587546591499</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1587546591501</updated>
-    </task>
-    <task id="LOCAL-00074" summary="Penambahan function siap bayar multiple dan conditional if untuk verifikasi pembayaran corpay atau giro/cms">
-      <created>1587546662544</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1587546662544</updated>
-    </task>
-    <task id="LOCAL-00075" summary="Penambahan function untuk Export Excel">
-      <created>1587546695546</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1587546695546</updated>
-    </task>
-    <task id="LOCAL-00076" summary="Penambahan function untuk Get All Pembayaran">
-      <created>1587546780024</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1587546780024</updated>
+      <workItem from="1589638925526" duration="115414000" />
     </task>
     <task id="LOCAL-00077" summary="Update Dashboard, fixed typo, fixed button style, export excel">
       <created>1587605802622</created>
@@ -1094,7 +682,56 @@
       <option name="project" value="LOCAL" />
       <updated>1589727995943</updated>
     </task>
-    <option name="localTasksCounter" value="119" />
+    <task id="LOCAL-00119" summary="update 20-05-2020">
+      <created>1589925670466</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1589925670466</updated>
+    </task>
+    <task id="LOCAL-00120" summary="Function insert to log integrasi sap">
+      <created>1589926248159</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1589926248159</updated>
+    </task>
+    <task id="LOCAL-00121" summary="Tambah function siap bayar item group">
+      <created>1589935930767</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1589935930767</updated>
+    </task>
+    <task id="LOCAL-00122" summary="Tambah halaman siap bayat invoice group">
+      <created>1589935971780</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1589935971780</updated>
+    </task>
+    <task id="LOCAL-00123" summary="Tambah halaman siap bayat invoice group .html">
+      <created>1589935997074</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1589935997074</updated>
+    </task>
+    <task id="LOCAL-00124" summary="Tambah request mapping ke halaman siap bayar group">
+      <created>1589936033691</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1589936033691</updated>
+    </task>
+    <task id="LOCAL-00125" summary="Tambah function get head group siap bayar, item grop siap bayar, dan fucntion item siap bayar">
+      <created>1589936099823</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1589936099823</updated>
+    </task>
+    <option name="localTasksCounter" value="126" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1115,13 +752,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="tambah kolom jenis transaksi dan selected radio button ketika edit" />
-    <MESSAGE value="Tambah kolom jenis transaksi" />
-    <MESSAGE value="SAP Url ke training" />
-    <MESSAGE value="POM ke development environment" />
-    <MESSAGE value="Disable LDAP" />
-    <MESSAGE value="Tambah parameter no giro" />
-    <MESSAGE value="Penambahan parameter no giro" />
     <MESSAGE value="update" />
     <MESSAGE value="Penambahan kolom NO GIRO" />
     <MESSAGE value="Prodcution Envt" />
@@ -1140,7 +770,14 @@
     <MESSAGE value="Fix Looping Invoice pada controller" />
     <MESSAGE value="Class Convert Bilangan ke Terbilang, Currency" />
     <MESSAGE value="update 19-05-2020 (Generate Doc)" />
-    <option name="LAST_COMMIT_MESSAGE" value="update 19-05-2020 (Generate Doc)" />
+    <MESSAGE value="update 20-05-2020" />
+    <MESSAGE value="Function insert to log integrasi sap" />
+    <MESSAGE value="Tambah function siap bayar item group" />
+    <MESSAGE value="Tambah halaman siap bayat invoice group" />
+    <MESSAGE value="Tambah halaman siap bayat invoice group .html" />
+    <MESSAGE value="Tambah request mapping ke halaman siap bayar group" />
+    <MESSAGE value="Tambah function get head group siap bayar, item grop siap bayar, dan fucntion item siap bayar" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tambah function get head group siap bayar, item grop siap bayar, dan fucntion item siap bayar" />
   </component>
   <component name="WindowStateProjectService">
     <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1574666059564">
