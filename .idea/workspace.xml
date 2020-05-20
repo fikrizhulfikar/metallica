@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1bb35cd6-6e1f-4873-bb7b-6e5a0fd705b9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-log/core.log" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-log/core.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/invoiceGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/invoiceGroup.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -386,14 +384,7 @@
       <workItem from="1587603490564" duration="13046000" />
       <workItem from="1587949973651" duration="45092000" />
       <workItem from="1588126855338" duration="245370000" />
-      <workItem from="1589638925526" duration="115414000" />
-    </task>
-    <task id="LOCAL-00077" summary="Update Dashboard, fixed typo, fixed button style, export excel">
-      <created>1587605802622</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1587605802625</updated>
+      <workItem from="1589638925526" duration="115782000" />
     </task>
     <task id="LOCAL-00078" summary="Penambahan Function Export Excel">
       <created>1587605837027</created>
@@ -731,7 +722,14 @@
       <option name="project" value="LOCAL" />
       <updated>1589936099823</updated>
     </task>
-    <option name="localTasksCounter" value="126" />
+    <task id="LOCAL-00126" summary="Log">
+      <created>1589936143936</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1589936143936</updated>
+    </task>
+    <option name="localTasksCounter" value="127" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -752,7 +750,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="update" />
     <MESSAGE value="Penambahan kolom NO GIRO" />
     <MESSAGE value="Prodcution Envt" />
     <MESSAGE value="SAP Production URL" />
@@ -777,7 +774,8 @@
     <MESSAGE value="Tambah halaman siap bayat invoice group .html" />
     <MESSAGE value="Tambah request mapping ke halaman siap bayar group" />
     <MESSAGE value="Tambah function get head group siap bayar, item grop siap bayar, dan fucntion item siap bayar" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tambah function get head group siap bayar, item grop siap bayar, dan fucntion item siap bayar" />
+    <MESSAGE value="Log" />
+    <option name="LAST_COMMIT_MESSAGE" value="Log" />
   </component>
   <component name="WindowStateProjectService">
     <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1574666059564">
