@@ -2094,8 +2094,8 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
                                 }
                                 if(newRoleUser[0] == "ROLE_VP_OPERATION_EXPENDITURE"){
                                     ret_value = ret_value +
-
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Lunas (giro)" onclick="updLunasGiro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.ID_GROUP+'\')"><i class="fa fa-money"></i></button>';
+                                        // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Lunas (giro)" onclick="updLunasGiro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.ID_GROUP+'\')"><i class="fas fa-money"></i></button>';
+                                        '<button style="width: 15px !important;" class="btn btn-edit-data btn-sm btn-ready" title="Siap Bayar" onclick="siapBayarItemGroupGroup(\'' +full.ID_GROUP_METALLICA+'\',\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.ID_GROUP+'\')"><i class="fas fa-money-check"></i></button>';
 //                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>';
                                 }
                                 '</div>'
@@ -3405,6 +3405,44 @@ function ins_data() {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
         }
     });
+}
+
+function siapBayarItemGroupGroup(id_group_metallica, comp_code, doc_no, fiscal_year, line_item, jenis_transaksi, oss_id, group_id){
+    var stateCrf = confirm("Anda Yakin Menjadikan Tagihan Ini Siap Bayar ?");
+    if  (stateCrf === true){
+        showLoadingCss();
+        $.ajax({
+            url : baseUrl + "api_operator/invoice_group/update_group_item_siap_bayar",
+            dataType : "JSON",
+            type : "POST",
+            data : {
+                pIdGroupMetallica : id_group_metallica,
+                pCompCode : comp_code,
+                pDocNo : doc_no,
+                pFiscYear : fiscal_year,
+                pLineItem : line_item,
+                pJenisTransaksi : jenis_transaksi,
+                pOssId : oss_id,
+                pGroupId : group_id
+
+            },
+            success : (res) => {
+                if (res.result === 1){
+                    alert(res.OUT_MSG);
+                    tableDetailGroupInvoice.ajax.reload();
+                }else {
+                    alert(res.OUT_MSG);
+                    tableDetailGroupInvoice.ajax.reload();
+                }
+
+                hideLoadingCss();
+            },
+            error : err => {
+                alert(err.OUT_MSG);
+                hideLoadingCss();
+            }
+        })
+    }
 }
 
 function updLunasGiro(pCompCode, pDocNo, pFiscYear, pLineItem, pJenisTransaksi, ossId, groupId){
