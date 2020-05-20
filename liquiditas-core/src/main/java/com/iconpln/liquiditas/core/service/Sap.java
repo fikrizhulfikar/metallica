@@ -463,9 +463,9 @@ public class Sap {
             param.put("date",date);
             param.put("vendor",vendor_no);
 // to fetch data from file ==
-            ClassLoader classLoader = Sap.class.getClassLoader();
-            InputStream inputStream = classLoader.getResourceAsStream("files/Vendor.json");
-            String res = IOUtils.toString(inputStream);
+//            ClassLoader classLoader = Sap.class.getClassLoader();
+//            InputStream inputStream = classLoader.getResourceAsStream("files/Vendor.json");
+//            String res = IOUtils.toString(inputStream);
             String get_result = sapmaster.getDataVendor(param);
             System.out.println("Vendor : "+get_result);
 // end of fetch data from file
