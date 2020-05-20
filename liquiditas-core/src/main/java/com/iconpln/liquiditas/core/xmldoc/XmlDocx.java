@@ -136,7 +136,7 @@ public class XmlDocx
 
         try {
 //            Process p = new ProcessBuilder("php", this.xmldocxPath + "xmldocx/XMLAPICommand.php", "-c" + this.configXml, "-d" + documentProperties, "-b" + content).start();
-            Process p = new ProcessBuilder("php", this.xmldocxPath + "xmldocx/XMLAPICommand.php", "-c" + this.configXml, "-d" + documentProperties, "-b" + content).start();
+            Process p = new ProcessBuilder("/usr/bin/php", this.xmldocxPath + "xmldocx/XMLAPICommand.php", "-c" + this.configXml, "-d" + documentProperties, "-b" + content).start();
             // /opt/lampp/bin/php ==> path lama, untuk server 169
             // /usr/bin/php ==> server prod 209
             // C:\xampp\php5_6\php.exe => local
