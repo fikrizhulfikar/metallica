@@ -315,6 +315,7 @@ function ins_data() {
     var no_ta = $("#pNoTagihan").val().toString();
     var old_data = localStorage.getItem("real_no_tagihan_RD");
     var all_val = [];
+    let jenis_dok = $("input[name='pJenisDokumen']:checked").val();
 
     if (old_data == null) {
         localStorage.removeItem("real_no_tagihan_RD");
@@ -394,7 +395,8 @@ function ins_data() {
             pNominalTanpaUnderlying: $("#pNominalTanpaUnderlying").val(),
             pKursJisdor: $("#pKursJisdor").val(),
             pSpread: $("#pSpread").val(),
-            pJenisTagihan: $("#pJenisTagihan").val()
+            pJenisTagihan: $("#pJenisTagihan").val(),
+            pJenisDokumen: jenis_dok
         },
         success: function (res) {
             hideLoadingCss("")
@@ -444,6 +446,7 @@ function edit_data(id) {
             setSelectCurr("pCurrecny", "", res[0].CURRENCY, "REKAP");
             setSelectBank2("pBankTujuan", "", "TUJUAN", res[0].KODE_BANK_TUJUAN, "REKAP");
             setSelectBank("pBankPembayar", "", "PEMBAYAR", res[0].KODE_BANK_PEMBAYAR, "REKAP");
+            setSelectVendor("pLVNamaVendor","",res[0].NAMA_VENDOR);
             $("#pTglJatuhTempo").val(res[0].TGL_JATUH_TEMPO);
             $("#pNilaiTagihan").val(res[0].TOTAL_TAGIHAN);
             $("#pNoTagihan").val(res[0].NO_TAGIHAN);
@@ -464,6 +467,15 @@ function edit_data(id) {
             if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
                 $('#pTglJatuhTempo').prop('disabled', true);
             }
+            if(res[0].JENIS_TRANSAKSI === 'AP INVOICE'){
+                $("#hrpayableradio").prop('checked',false)
+                $("#apinvoiceradio").prop('checked',true)
+            }else{
+                $("#hrpayableradio").prop('checked',true)
+                $("#apinvoiceradio").prop('checked',false)
+            }
+            $("#hrpayableradio").attr('disabled',true)
+            $("#apinvoiceradio").attr('disabled',true)
             setTimeout(function () {
                 $("#pVendor").select2({
                     width: "100%"
@@ -925,7 +937,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 },
                 {
                     "sortable": false,
-                    "aTargets": [0,25, 30]
+                    "aTargets": [0,25, 30, 34]
                 },
                 {
                     "aTargets": [0],
@@ -1189,10 +1201,9 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                 if(newRoleUser[0] == "ROLE_ADMIN"){
                                     ret_value = ret_value +
                                         // '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openInsIdOss()"><i class="fa fa-university"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn btn-edit-data btn-sm btn-warning" title="Verified Manager" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +2+ '\',\''+full.ID_JENIS_PEMBAYARAN+'\',\''+full.CURRENCY+'\',\''+full.TOTAL_TAGIHAN+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        // '<button style="width: 15px !important;" class="btn btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>'+
+                                        // '<button style="width: 15px !important;" class="btn btn-edit-data btn-sm btn-warning" title="Verified Manager" onclick="upd_status_tracking(\'' +full.ID_VALAS+'\',\'' +2+ '\',\''+full.ID_JENIS_PEMBAYARAN+'\',\''+full.CURRENCY+'\',\''+full.TOTAL_TAGIHAN+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-edit"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
                                         '<button style="width: 15px !important;" class="btn btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-trash"></i></button>' ;
                                 }
                                 if(newRoleUser[0] == "ROLE_DIVKEU"){
@@ -1846,17 +1857,17 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
 
     $('.dataTables_filter').each(function () {
         // var html = '';
-        var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" title="Sembunyikan Kolom" data-toggle="modal" onclick="showColumn()">' +
+        var html = '<button class="btn btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" title="Sembunyikan Kolom" data-toggle="modal" onclick="showColumn()">' +
             '<i class="fa fa-arrows-alt"></i></button>';
         /*button reject*/
-        html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="rejectData()">' +
-            '            <i class="fa fa-ban"></i></button>';
-        html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fas fa-edit"></i></button>';
+        // html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="rejectData()">' +
+        //     '            <i class="fa fa-ban"></i></button>';
+        html = html + '<button class="btn btn-edit-data btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 5px" type="button" onclick="openMultipleEditForm()"><i class="fas fa-edit"></i></button>';
         if(newRoleUser[0] != "ROLE_OSS" && newRoleUser[0] != "ROLE_DIVKEU"){
-            html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
+            // html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
 
         }
-        html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fas fa-trash"></i></button>';
+        html = html + '<button class="btn btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 5px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fas fa-trash"></i></button>';
         $(this).append(html);
     });
 
@@ -2290,7 +2301,8 @@ function multipleUpdate() {
         data: {
             pData: JSON.stringify(checkedArray),
             pTglJatuhTempo: $("#pNewTglJatuhTempo").val(),
-            pBankPembayar: $("#pNewBankPembayar").val()
+            pBankPembayar: $("#pNewBankPembayar").val(),
+            pJenisDokumen: $("#pJenisTagihanAll").val()
         },
         success: function (res) {
             hideLoadingCss("")

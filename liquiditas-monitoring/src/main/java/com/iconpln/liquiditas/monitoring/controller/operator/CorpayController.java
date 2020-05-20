@@ -1148,14 +1148,14 @@ public class CorpayController {
 //        System.out.println("Fikri2 : "+pData);
         String jsonString = corpayService.getPerfectJsonString(pData);
         JSONArray jsonArray = new JSONArray(pData);
-//        System.out.println("JSON Array : "+jsonArray);
+        System.out.println("JSON Array : "+jsonArray);
         String[] listData = jsonString.split(";");
-//        System.out.println("Jancok : "+listData.length);
+        System.out.println("Jancok : "+listData.length);
         int i=0;
 
         try{
             for (int j = 0; j < jsonArray.length(); j++) {
-                JSONObject json = jsonArray.getJSONObject(i);
+                JSONObject json = jsonArray.getJSONObject(j);
                 json.getString("COMP_CODE");
 //                System.out.println("Loop : "+i++);
 //                System.out.println("DIAZZZZZ:"+json.getString("COMP_CODE"));
@@ -1413,32 +1413,6 @@ public class CorpayController {
         return mapData;
     }
 
-    @RequestMapping(value = "/laporan_komposisi_saldo", method = RequestMethod.GET)
-    public Map getDashboardPengelolaan() {
-        try {
-            return corpayService.getDashboardPengelolaan();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @GetMapping(path = "/rincian_saldo")
-    public Map listDashboardPengelolaan2(@RequestParam(value = "tanggal") String tanggal){
-        List<Map<String, Object>> list = new ArrayList<>();
-
-        try {
-            list = corpayService.getDashboardPengelolaan2(tanggal);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        Map mapData = new HashMap();
-        mapData.put("data", list);
-
-        return mapData;
-    }
-
     @RequestMapping(value = "/get_total_tagihan", method = RequestMethod.GET)
     public String getTotalTagihan(@RequestParam(value = "tgl_awal", defaultValue = "") String tglAwal,
                                   @RequestParam(value = "tgl_akhir", defaultValue = "") String tglAkhir,
@@ -1622,154 +1596,85 @@ public class CorpayController {
         }
         return out;
     }
-//    @RequestMapping(value = "/xls/{pTglAwal}/{pTglAkhir}/{pCurr}/{pCaraBayar}/{pBank}/{pStatus}/{pStatusTracking}", method = RequestMethod.GET)
-//    public String export(
-//            @PathVariable String pTglAwal,
-//            @PathVariable String pTglAkhir,
-//            @PathVariable String pCurr,
-//            @PathVariable String pCaraBayar,
-//            @PathVariable String pBank,
-//            @PathVariable String pStatus,
-//            @PathVariable String pStatusTracking,
-//            HttpServletRequest request,
-//            HttpServletResponse response) {
-//        try {
-//
-//            String tglAwal = "";
-//            String tglAkhir = "";
-//
-//            if (!pTglAwal.equals("null")) {
-//                tglAwal = pTglAwal;
-//            }
-//            if (!pTglAkhir.equals("null")) {
-//                tglAkhir = pTglAkhir;
-//            }
-//
-//            String title = "REKAP INVOICE";
-//            String namaFile = "rekap_invoice_belum.xls";
-//
-//            ServletOutputStream os = response.getOutputStream();
-//            response.setContentType("application/vnd.ms-excel");
-//            response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
-//
-//            List<Map<String, Object>> listData = corpayService.getAllpembayaran(WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pCurr, pCaraBayar, pBank, pStatus, pStatusTracking);
-//
-//            Map param = new HashMap();
-//            List<Map<String, Object>> listDetail = new ArrayList<>();
-//
-//            param.put("TITLE", title);
-//            for (Map data : listData) {
-//                Map paramDetail = new HashMap();
-//                paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
-//                paramDetail.put("KET",data.get("KET"));
-//                paramDetail.put("COMP_CODE",data.get("COMP_CODE"));
-//                paramDetail.put("DOC_NO",data.get("DOC_NO"));
-//                paramDetail.put("FISC_YEAR",data.get("FISC_YEAR"));
-//                paramDetail.put("DOC_TYPE",data.get("DOC_TYPE"));
-//                paramDetail.put("DOC_DATE",data.get("DOC_DATE"));
-//                paramDetail.put("DOC_DATE2",data.get("DOC_DATE2"));
-//                paramDetail.put("POST_DATE",data.get("POST_DATE"));
-//                paramDetail.put("POST_DATE2",data.get("POST_DATE2"));
-//                paramDetail.put("ENTRY_DATE",data.get("ENTRY_DATE"));
-//                paramDetail.put("ENTRY_DATE2",data.get("ENTRY_DATE2"));
-//                paramDetail.put("REFERENCE",data.get("REFERENCE"));
-//                paramDetail.put("REV_WITH",data.get("REV_WITH"));
-//                paramDetail.put("REV_YEAR",data.get("REV_YEAR"));
-//                paramDetail.put("DOC_HDR_TXT",data.get("DOC_HDR_TXT"));
-//                paramDetail.put("CURRENCY",data.get("CURRENCY"));
-//                paramDetail.put("EXCH_RATE",data.get("EXCH_RATE"));
-//                paramDetail.put("REFERENCE_KEY",data.get("REFERENCE_KEY"));
-//                paramDetail.put("PMT_IND",data.get("PMT_IND"));
-//                paramDetail.put("TRANS_TYPE",data.get("TRANS_TYPE"));
-//                paramDetail.put("SPREAD_VAL",data.get("SPREAD_VAL"));
-//                paramDetail.put("LINE_ITEM",data.get("LINE_ITEM"));
-//                paramDetail.put("OI_IND",data.get("OI_IND"));
-//                paramDetail.put("ACCT_TYPE",data.get("ACCT_TYPE"));
-//                paramDetail.put("SPEC_GL",data.get("SPEC_GL"));
-//                paramDetail.put("BUS_AREA",data.get("BUS_AREA"));
-//                paramDetail.put("TPBA",data.get("TPBA"));
-//                paramDetail.put("AMT_LC",data.get("AMT_LC"));
-//                paramDetail.put("AMT_TC",data.get("AMT_TC"));
-//                paramDetail.put("AMT_WITH_BASE_TC",data.get("AMT_WITH_BASE_TC"));
-//                paramDetail.put("AMT_WITH_TC",data.get("AMT_WITH_TC"));
-//                paramDetail.put("AMOUNT",data.get("AMOUNT"));
-//                paramDetail.put("ASSIGNMENT",data.get("ASSIGNMENT"));
-//                paramDetail.put("ITEM_TEXT",data.get("ITEM_TEXT"));
-//                paramDetail.put("COST_CTR",data.get("COST_CTR"));
-//                paramDetail.put("GL_ACCT",data.get("GL_ACCT"));
-//                paramDetail.put("CUSTOMER",data.get("CUSTOMER"));
-//                paramDetail.put("CUSTOMER_NAME",data.get("CUSTOMER_NAME"));
-//                paramDetail.put("VENDOR",data.get("VENDOR"));
-//                paramDetail.put("VENDOR_NAME",data.get("VENDOR_NAME"));
-//                paramDetail.put("BASE_DATE",data.get("BASE_DATE"));
-//                paramDetail.put("TERM_PMT",data.get("TERM_PMT"));
-//                paramDetail.put("DUE_ON",data.get("DUE_ON"));
-//                paramDetail.put("PMT_BLOCK",data.get("PMT_BLOCK"));
-//                paramDetail.put("HOUSE_BANK",data.get("HOUSE_BANK"));
-//                paramDetail.put("PRTNR_BANK_TYPE",data.get("PRTNR_BANK_TYPE"));
-//                paramDetail.put("BANK_KEY",data.get("BANK_KEY"));
-//                paramDetail.put("BANK_ACCOUNT",data.get("BANK_ACCOUNT"));
-//                paramDetail.put("ACCOUNT_HOLDER",data.get("ACCOUNT_HOLDER"));
-//                paramDetail.put("PO_NUM",data.get("PO_NUM"));
-//                paramDetail.put("PO_ITEM",data.get("PO_ITEM"));
-//                paramDetail.put("REF_KEY1",data.get("REF_KEY1"));
-//                paramDetail.put("REF_KEY2",data.get("REF_KEY2"));
-//                paramDetail.put("REF_KEY3",data.get("REF_KEY3"));
-//                paramDetail.put("INT_ORDER",data.get("INT_ORDER"));
-//                paramDetail.put("WBS_NUM",data.get("WBS_NUM"));
-//                paramDetail.put("CASH_CODE",data.get("CASH_CODE"));
-//                paramDetail.put("AMT_WITH_BASE_LC",data.get("AMT_WITH_BASE_LC"));
-//                paramDetail.put("AMT_WITH_LC",data.get("AMT_WITH_LC"));
-//                paramDetail.put("DR_CR_IND",data.get("DR_CR_IND"));
-//                paramDetail.put("CORP_PMT",data.get("CORP_PMT"));
-//                paramDetail.put("TGL_VERIFIKASI_MAKER",data.get("TGL_VERIFIKASI_MAKER"));
-//                paramDetail.put("TGL_VERIFIKASI_CHECKER",data.get("TGL_VERIFIKASI_CHECKER"));
-//                paramDetail.put("TGL_VERIFIKASI_APPROVER",data.get("TGL_VERIFIKASI_APPROVER"));
-//                paramDetail.put("METODE_PEMBAYARAN",data.get("METODE_PEMBAYARAN"));
-//                paramDetail.put("MAKER",data.get("MAKER"));
-//                paramDetail.put("CHECKER",data.get("CHECKER"));
-//                paramDetail.put("APPROVER",data.get("APPROVER"));
-//                paramDetail.put("COUNTER",data.get("COUNTER"));
-//                paramDetail.put("KETERANGAN",data.get("KETERANGAN"));
-//                paramDetail.put("FLAG_STATUS",data.get("FLAG_STATUS"));
-//                paramDetail.put("NO_REK_HOUSE_BANK",data.get("NO_REK_HOUSE_BANK"));
-//                paramDetail.put("INQ_CUSTOMER_NAME",data.get("INQ_CUSTOMER_NAME"));
-//                paramDetail.put("INQ_ACCOUNT_NUMBER",data.get("INQ_ACCOUNT_NUMBER"));
-//                paramDetail.put("INQ_ACCOUNT_STATUS",data.get("INQ_ACCOUNT_STATUS"));
-//                paramDetail.put("KODE_BANK_PENERIMA",data.get("KODE_BANK_PENERIMA"));
-//                paramDetail.put("RETRIEVAL_REF_NUMBER",data.get("RETRIEVAL_REF_NUMBER"));
-//                paramDetail.put("CUSTOMER_REF_NUMBER",data.get("CUSTOMER_REF_NUMBER"));
-//                paramDetail.put("CONFIRMATION_CODE",data.get("CONFIRMATION_CODE"));
-//                paramDetail.put("TGL_ACT_BAYAR",data.get("TGL_ACT_BAYAR"));
-//                paramDetail.put("OSS_ID",data.get("OSS_ID"));
-//                paramDetail.put("GROUP_ID",data.get("GROUP_ID"));
-//                paramDetail.put("SUMBER_DANA",data.get("SUMBER_DANA"));
-//                paramDetail.put("TGL_RENCANA_BAYAR",data.get("TGL_RENCANA_BAYAR"));
-//                paramDetail.put("BANK_BYR",data.get("BANK_BYR"));
-//                paramDetail.put("CURR_BAYAR",data.get("CURR_BAYAR"));
-//                paramDetail.put("PARTIAL_IND",data.get("PARTIAL_IND"));
-//                paramDetail.put("AMOUNT_BAYAR",data.get("AMOUNT_BAYAR"));
-//                paramDetail.put("BANK_BENEF",data.get("BANK_BENEF"));
-//                paramDetail.put("NO_REK_BENEF",data.get("NO_REK_BENEF"));
-//                paramDetail.put("NAMA_BENEF",data.get("NAMA_BENEF"));
-//                paramDetail.put("VERIFIED_BY",data.get("VERIFIED_BY"));
-//                paramDetail.put("VERIFIED_ON",data.get("VERIFIED_ON"));
-//                paramDetail.put("APPROVE_TGL_RENCANA_BAYAR",data.get("APPROVE_TGL_RENCANA_BAYAR"));
-//                paramDetail.put("STATUS_TRACKING",data.get("STATUS_TRACKING"));
-//                listDetail.add(paramDetail);
-//            }
-//            param.put("DETAILS", listDetail);
-//
-//
-//            XLSTransformer transformer = new XLSTransformer();
-//            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/rekap_invoice_belum.xls").getInputStream();
-//            Workbook workbook = transformer.transformXLS(streamTemplate, param);
-//            workbook.write(os);
-//            os.flush();
-//            return null;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return "Gagal Export Data :" + e.getMessage();
-//        }
-//    }
+
+    @RequestMapping(value = "/laporan_komposisi_saldo", method = RequestMethod.GET)
+    public Map getDashboardPengelolaan() {
+        try {
+            return corpayService.getDashboardPengelolaan();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping(path = "/rincian_saldo")
+    public Map listDashboardPengelolaan2(
+            @RequestParam(value = "bank", defaultValue = "ALL") String bank,
+            @RequestParam(value = "jenisRekening", defaultValue = "ALL") String jenisRekening,
+            @RequestParam(value = "tipeRekening", defaultValue = "ALL") String tipeRekening
+    ){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = corpayService.getDashboardPengelolaan2( bank, jenisRekening, tipeRekening);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @GetMapping(path = "/eq_curr")
+    public Map eqCurr(
+            @RequestParam(value = "bank", defaultValue = "ALL") String bank,
+            @RequestParam(value = "jenisRekening", defaultValue = "ALL") String jenisRekening,
+            @RequestParam(value = "tipeRekening", defaultValue = "ALL") String tipeRekening
+    ){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = corpayService.getEqCurr( bank, jenisRekening, tipeRekening);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @RequestMapping(value = "/get_bank", method = RequestMethod.GET)
+    public List<Map<String,Object>> getBank() {
+        try {
+            return corpayService.getBank();
+        } catch (Exception e) {
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_jenis_rekening", method = RequestMethod.GET)
+    public List<Map<String,Object>> getJenisRekening() {
+        try {
+            return corpayService.getJenisRekening();
+        } catch (Exception e) {
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_tipe_rekening", method = RequestMethod.GET)
+    public List<Map<String,Object>> getTipeRekening() {
+        try {
+            return corpayService.getTipeRekening();
+        } catch (Exception e) {
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
 }

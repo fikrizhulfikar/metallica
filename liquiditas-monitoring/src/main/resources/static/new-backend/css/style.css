@@ -6779,14 +6779,14 @@ body {
       background: #880000; }
 
 .btn-dribbble {
-  background: #ea4c89; }
+  background: #e08f62; }
   .btn-dribbble::before {
     content: "\f17d";
-    background: #e7357a; }
+    background: #e08f62; }
   .btn-dribbble:hover {
-    background: #e7357a; }
+    background: #a35638; }
     .btn-dribbble:hover::before {
-      background: #e51e6b; }
+      background: #a35638; }
 
 .btn-google-plus {
   background: #bb4b39; }

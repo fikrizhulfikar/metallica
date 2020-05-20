@@ -82,6 +82,57 @@
                     <div class="carousel-inner">
                         <input class="carousel-open" type="radio" id="carousel-1" name="carousel" aria-hidden="true" hidden="" checked="checked"/>
                         <div class="carousel-item">
+                            <div class="col-md-12" style="margin-top: 20px">
+                                <div class="card">
+                                    <div class="card-block" >
+                                        <div align="center"><h5><b>Rencana Pembayaran</b></h5></div>
+                                        <table id="main-rencana" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-bottom: 5px">
+                                            <thead>
+                                            <tr>
+                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
+                                                <th rowspan="2">KODE</th>
+                                                <th colspan="5" style="text-align: center; vertical-align: middle;">TANGGAL</th>
+                                            </tr>
+                                            <tr id="header-tanggal" style="vertical-align: middle !important;text-align: center">
+                                                <th id="tgl1a" ></th>
+                                                <th id="tgl2a" ></th>
+                                                <th id="tgl3a" ></th>
+                                                <th id="tgl4a" ></th>
+                                                <th id="tgl5a" ></th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                        <div align="center" style="margin-top: 10px"><h5><b>Realisasi Pembayaran</b></h5></div>
+                                        <table id="main-realisasi" class="table table-rencana-realisasi table-condensed table-bordered" width="100%">
+                                            <thead>
+                                            <tr>
+                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
+                                                <th rowspan="2">KODE</th>
+                                                <th colspan="5" style="text-align: center; vertical-align: middle;">TANGGAL</th>
+                                            </tr>
+                                            <tr id="header_tanggal_realisasi">
+                                                <th id="tgl1b" ></th>
+                                                <th id="tgl2b" ></th>
+                                                <th id="tgl3b" ></th>
+                                                <th id="tgl4b" ></th>
+                                                <th id="tgl5b" ></th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input class="carousel-open" type="radio" id="carousel-2" name="carousel" aria-hidden="true" hidden=""/>
+                        <div class="carousel-item">
                             <div class="col-md-12" align="center" style="margin-top: 20px">
                                 <div class="card">
                                     <div class="card-block">
@@ -89,7 +140,7 @@
                                             <!--                                            <div><h6><b>2A</b></h6></div>-->
                                             <div align="center" id="chart-komposisi-saldo" style="margin-top: -19px"></div>
                                             <div class="wrapper" style="margin-top: 5px">
-                                                <ul align="center" class="legend">
+                                                <ul align="center" class="legend">s
                                                     <li><span class="one"></span> REKENING IMPREST</li>
                                                     <li><span class="three"></span> REKENING OPERASIONAL LAINNYA</li>
                                                     <li><span class="two"></span> REKENING RESTRICTED</li>
@@ -117,102 +168,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input class="carousel-open" type="radio" id="carousel-2" name="carousel" aria-hidden="true" hidden=""/>
-                        <div class="carousel-item">
-                            <div class="col-md-12" style="margin-top: 20px">
-                                <div class="card">
-                                    <div class="card-block" >
-                                        <div align="center"><h6><b>Rencana Pembayaran</b></h6></div>
-                                        <table id="main-rencana" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-bottom: 5px">
-                                            <thead>
-                                            <tr>
-                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
-                                                <th rowspan="2">KODE</th>
-                                                <th colspan="5" style="text-align: center; vertical-align: middle;">TANGGAL</th>
-                                            </tr>
-                                            <tr id="header-tanggal" style="vertical-align: middle !important;text-align: center">
-                                                <th id="tgl1a" ></th>
-                                                <th id="tgl2a" ></th>
-                                                <th id="tgl3a" ></th>
-                                                <th id="tgl4a" ></th>
-                                                <th id="tgl5a" ></th>
-
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
-                                        </table>
-                                        <div align="center"><h6><b>Realisasi Pembayaran</b></h6></div>
-                                        <table id="main-realisasi" class="table table-rencana-realisasi table-condensed table-bordered" width="100%">
-                                            <thead>
-                                            <tr>
-                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
-                                                <th rowspan="2">KODE</th>
-                                                <th colspan="5" style="text-align: center; vertical-align: middle;">TANGGAL</th>
-                                            </tr>
-                                            <tr id="header_tanggal_realisasi">
-                                                <th id="tgl1b" ></th>
-                                                <th id="tgl2b" ></th>
-                                                <th id="tgl3b" ></th>
-                                                <th id="tgl4b" ></th>
-                                                <th id="tgl5b" ></th>
-
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
-                                        </table>
-                                        <!--                                        <a class="btn" id="myBtn">Detail Bank</a>-->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <input class="carousel-open" type="radio" id="carousel-3" name="carousel" aria-hidden="true" hidden=""/>
-                        <div class="carousel-item">
-                            <div class="col-md-12" style="margin-top: 20px">
-                                <div class="card">
-                                    <div class="card-block">
-                                        <div class="col-md-12" style="padding-top: 0px;">
-                                            <!--                                            <div><h6><b>4A</b></h6></div>-->
-                                            <div id="chart-container" style="height: 35rem; width: 100%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <input class="carousel-open" type="radio" id="carousel-4" name="carousel" aria-hidden="true" hidden=""/>
-                        <div class="carousel-item">
-                            <div class="col-md-12" style="margin-top: 20px">
-                                <div class="card">
-                                    <div class="card-block">
-                                        <div class="col-md-12" style="padding-top: 0px;">
-<!--                                            <div><h6><b>3B</b></h6></div>-->
-                                            <div id="column-rencana-pembayaran"  class="a" style="height: 35rem; width: 100%;"></div>
-                                            <div id="column-rencana-pembayaran2" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
-                                            <div id="column-rencana-pembayaran3" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
-                                            <div id="column-rencana-pembayaran4" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
-                                        </div>
-                                        <div class="col-md-12" align="center">
-                                            <button class="btn" onclick="renHari()">
-                                                Hari
-                                            </button>
-                                            <button class="btn" onclick="renMinggu()">
-                                                Minggu
-                                            </button>
-                                            <button class="btn" onclick="renBulan()">
-                                                Bulan
-                                            </button>
-                                            <button class="btn" onclick="renTahun()">
-                                                Tahun
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <input class="carousel-open" type="radio" id="carousel-5" name="carousel" aria-hidden="true" hidden=""/>
                         <div class="carousel-item">
                             <div class="col-md-12" align="center" style="margin-top: 20px">
                                 <div class="card">
@@ -233,6 +189,49 @@
                                                     <li><span class="nine"></span> RECEIPT</li>
                                                 </ul>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input class="carousel-open" type="radio" id="carousel-4" name="carousel" aria-hidden="true" hidden=""/>
+                        <div class="carousel-item">
+                            <div class="col-md-12" style="margin-top: 20px">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div class="col-md-12" style="padding-top: 0px;">
+                                            <!--                                            <div><h6><b>4A</b></h6></div>-->
+                                            <div id="chart-container" style="height: 35rem; width: 100%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input class="carousel-open" type="radio" id="carousel-5" name="carousel" aria-hidden="true" hidden=""/>
+                        <div class="carousel-item">
+                            <div class="col-md-12" style="margin-top: 20px">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div class="col-md-12" style="padding-top: 0px;">
+                                            <!--                                            <div><h6><b>3B</b></h6></div>-->
+                                            <div id="column-rencana-pembayaran"  class="a" style="height: 35rem; width: 100%;"></div>
+                                            <div id="column-rencana-pembayaran2" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                            <div id="column-rencana-pembayaran3" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                            <div id="column-rencana-pembayaran4" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                        </div>
+                                        <div class="col-md-12" align="center">
+                                            <button class="btn" onclick="renHari()">
+                                                Hari
+                                            </button>
+                                            <button class="btn" onclick="renMinggu()">
+                                                Minggu
+                                            </button>
+                                            <button class="btn" onclick="renBulan()">
+                                                Bulan
+                                            </button>
+                                            <button class="btn" onclick="renTahun()">
+                                                Tahun
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

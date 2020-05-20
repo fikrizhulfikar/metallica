@@ -26,6 +26,11 @@ public class SapService {
     private JdbcTemplate getJdbcTemplate() {return new JdbcTemplate(dataSource);}
     private Map<String, Object> out = new HashMap<>();
 
+    public Map insertToLogTable(){
+        Map<String,Object> ok = new HashMap<>();
+        return ok;
+    }
+
     public Map<String, Object> insertApInvoiceHead(
             String pCompCode, String pDocNo, String pFiscYear, String pDocType, String pDocDate, String pPostDate, String pEntryDate,
             String pReference, String pRevWith, String pRevYear, String pDocHdrText, String pCurrency, String pExcRate,
@@ -319,7 +324,7 @@ public class SapService {
                 .addValue("p_bank_country",insData.get("bank_country"))
                 .addValue("p_bank_key",insData.get("bank_key"))
                 .addValue("p_bank_account",insData.get("bank_account"))
-                .addValue("p_partner_bank",insData.get("partner_bank"))
+                .addValue("p_partner_bank",insData.get("partner_bank_type"))
                 .addValue("p_account_holder",insData.get("account_holder"))
                 .addValue("out_msg",OracleTypes.VARCHAR);
 

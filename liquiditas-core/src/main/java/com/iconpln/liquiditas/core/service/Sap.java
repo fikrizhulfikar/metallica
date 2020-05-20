@@ -174,7 +174,8 @@ public class Sap {
             Sapmaster sapmaster = new Sapmaster();
 //
 //            ClassLoader classLoader = Sap.class.getClassLoader();
-//            InputStream inputStream = classLoader.getResourceAsStream("files/JSONApInvoice.json");
+//            InputStream inputStream = classLoader.getResourceAsStream("files/apinvoicetestcetak.json");
+//            assert inputStream != null;
 //            String res = IOUtils.toString(inputStream);
             String get_result = sapmaster.getDataApInvoice(param);
 
@@ -466,6 +467,7 @@ public class Sap {
             InputStream inputStream = classLoader.getResourceAsStream("files/Vendor.json");
             String res = IOUtils.toString(inputStream);
             String get_result = sapmaster.getDataVendor(param);
+            System.out.println("Vendor : "+get_result);
 // end of fetch data from file
 
 //            JSONObject object = (JSONObject) parser.parse(res);

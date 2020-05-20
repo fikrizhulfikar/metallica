@@ -380,26 +380,47 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                 {
                     "aTargets": [6],
                     "mRender": function (data, type, full) {
-                        return Intl.NumberFormat().format(full.TOTAL_TAGIHAN);
+                        return full.METODE_PEMBAYARAN;
                     }
 
                 },
                 {
                     "aTargets": [7],
                     "mRender": function (data, type, full) {
-                        return full.ASSIGNMENT;
+                        return full.NO_GIRO;
                     }
 
                 },
                 {
                     "aTargets": [8],
                     "mRender": function (data, type, full) {
-                        return full.SUMBER_DANA;
+                        return full.NO_GIRO;
                     }
 
                 },
                 {
                     "aTargets": [9],
+                    "mRender": function (data, type, full) {
+                        return Intl.NumberFormat().format(full.TOTAL_TAGIHAN);
+                    }
+
+                },
+                {
+                    "aTargets": [10],
+                    "mRender": function (data, type, full) {
+                        return full.ASSIGNMENT;
+                    }
+
+                },
+                {
+                    "aTargets": [11],
+                    "mRender": function (data, type, full) {
+                        return full.SUMBER_DANA;
+                    }
+
+                },
+                {
+                    "aTargets": [12],
                     "mRender": function (data, type, full) {
                         var jenis = "AP INVOICE";
                         // console.log("Ini Full : ", full);

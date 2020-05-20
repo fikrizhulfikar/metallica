@@ -101,7 +101,7 @@ public class ValasService {
 
     //multiple edit
     public Map<String, Object> updateMultiplePembayaran(
-            String pIdValas, String pTglJatuhTempo, String pBankPembayar, String pUpdateBy
+            String pIdValas, String pTglJatuhTempo, String pBankPembayar,String pUpdateBy
     ) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())

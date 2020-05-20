@@ -170,6 +170,9 @@ public class PageOperatorController {
         return "operator/rekap_invoice_group_lunas";
     }
 
+    @RequestMapping("/rekap_invoice_group_siap_bayar")
+    public String rekap_invoice_group_siap_bayar(){return "operator/rekap_invoice_group_siap_bayar";}
+
     @RequestMapping("/rekap_invoice_reject")
     public String rekap_invoice_reject() {
         return "operator/rekap_invoice_reject";

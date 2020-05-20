@@ -40,7 +40,7 @@ public String getdatasap(Map<String, Object> param) throws URISyntaxException,IO
     }
 
     public String getDataVendor(HashMap<String, Object> param) throws URISyntaxException,IOException {
-        String url = AltConfig.get("sap.url")+"?sap-client="+xsap_client+"&interface=IFM077&vendor="+param.get("vendor")+"&comp_code="+param.get("comp_code")+((param.get("date") == null) ? "" : "&date="+param.get("date") );
+        String url = AltConfig.get("sap.url")+"?sap-client="+xsap_client+"&interface=IFM077&vendor="+param.get("vendor")+"&comp_code="+param.get("comp_code");
         String response = SapHttp.executeGet(url);
         return response;
     }
