@@ -5,7 +5,7 @@ var tableMain;
 var isUpdate = "0";
 $(document).ready(function () {
     // initDataTable();
-    $("#pCustomerDate").datepicker();
+    $("#pVendorDate").datepicker({dateFormat : "yymmdd"});
 });
 
 function getVendor(){
