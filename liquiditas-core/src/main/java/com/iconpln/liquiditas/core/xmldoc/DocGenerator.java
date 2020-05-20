@@ -96,7 +96,7 @@ public class DocGenerator {
 
             Element etemplate = dom.createElement("pdx:template");
 //            etemplate.setAttribute("pdx:path",templateFileName);
-            etemplate.setAttribute("pdx:path","upload/template/"+templateFileName+".docx");
+            etemplate.setAttribute("pdx:path","uploadcorpay/template/"+templateFileName+".docx");
 
             Element eoutput = dom.createElement("pdx:output");
             eoutput.setAttribute("pdx:name",outputFileName);
