@@ -38,18 +38,18 @@ function initDataTableSaldoRek1() {
             $('#table-jenis-mata-uang tbody').append(total1);
 
 
-            var dataPieSaldoCurr = [];
-            $.each(res.OUT_PIE_CURR, function (index, value) {
-                var dataPieTemp = {
-                    label: value.CURRENCY,
-                    value: value.PERSENTASE == 0 ? null : value.PERSENTASE
-                };
-                dataPieSaldoCurr.push(dataPieTemp)
-            });
-
-            console.log("");
-
-            creteChartSaldoCurr(dataPieSaldoCurr);
+//            var dataPieSaldoCurr = [];
+//            $.each(res.OUT_PIE_CURR, function (index, value) {
+//                var dataPieTemp = {
+//                    label: value.CURRENCY,
+//                    value: value.PERSENTASE == 0 ? null : value.PERSENTASE
+//                };
+//                dataPieSaldoCurr.push(dataPieTemp)
+//            });
+//
+//            console.log("");
+//
+//            creteChartSaldoCurr(dataPieSaldoCurr);
             hideLoadingCss()
         },
         error: function () {
@@ -57,7 +57,7 @@ function initDataTableSaldoRek1() {
             hideLoadingCss();
             $('#table-jenis-mata-uang tbody').empty();
             var html = "<tr>" +
-                "<td colspan='5' align='center'> No Data </td>" +
+                "<td colspan='5' align='center'> No Data Available</td>" +
                 "</tr>";
             $('#table-jenis-mata-uang tbody').append(html);
         }
@@ -91,18 +91,18 @@ function initDataTableSaldoRek1() {
             $('#table-jenis-rekening tbody').append(total1);
 
 
-            var dataPieSaldoRek = [];
-            $.each(res.OUT_PIE_JENIS, function (index, value) {
-                var dataPieTemp = {
-                    label: value.JENIS_REKENING,
-                    value: value.PERSENTASE == 0 ? null : value.PERSENTASE
-                };
-                dataPieSaldoRek.push(dataPieTemp)
-            });
-
-            console.log("");
-
-            creteChartSaldoRek(dataPieSaldoRek);
+//            var dataPieSaldoRek = [];
+//            $.each(res.OUT_PIE_JENIS, function (index, value) {
+//                var dataPieTemp = {
+//                    label: value.JENIS_REKENING,
+//                    value: value.PERSENTASE == 0 ? null : value.PERSENTASE
+//                };
+//                dataPieSaldoRek.push(dataPieTemp)
+//            });
+//
+//            console.log("");
+//
+//            creteChartSaldoRek(dataPieSaldoRek);
             hideLoadingCss()
         },
         error: function () {
@@ -140,18 +140,18 @@ function initDataTableSaldoRek1() {
               $('#table-jenis-bank tbody').append(total1);
 
 
-              var dataPieSaldoBank = [];
-              $.each(res.OUT_PIE_BANK, function (index, value) {
-                  var dataPieTemp = {
-                      label: value.BANK,
-                      value: value.PERSENTASE == 0 ? null : value.PERSENTASE
-                  };
-                  dataPieSaldoBank.push(dataPieTemp)
-              });
-
-              console.log("");
-
-              creteChartSaldoBank(dataPieSaldoBank);
+//              var dataPieSaldoBank = [];
+//              $.each(res.OUT_PIE_BANK, function (index, value) {
+//                  var dataPieTemp = {
+//                      label: value.BANK,
+//                      value: value.PERSENTASE == 0 ? null : value.PERSENTASE
+//                  };
+//                  dataPieSaldoBank.push(dataPieTemp)
+//              });
+//
+//              console.log("");
+//
+//              creteChartSaldoBank(dataPieSaldoBank);
               hideLoadingCss()
           },
           error: function () {
@@ -191,8 +191,8 @@ function initDataTableSaldoRek1() {
 
                   var dataPieKompSaldo = [];
                   $.each(res.OUT_PIE_KOMPOSISI, function (index, value) {
-                  console.log('PERSENTASE :'+value.PERSENTASE);
-                  console.log('WARNA :'+value.WARNA);
+//                  console.log('PERSENTASE :'+value.PERSENTASE);
+//                  console.log('WARNA :'+value.WARNA);
                       var dataPieTemp = {
 //                          minvalue: value.JENIS_REKENING,
 //                          maxvalue: value.PERSENTASE == 0 ? null : value.PERSENTASE
@@ -202,8 +202,6 @@ function initDataTableSaldoRek1() {
                       };
                       dataPieKompSaldo.push(dataPieTemp)
                   });
-
-                  //console.log('Diaz Ganteng :'+res.OUT_PIE_KOMPOSISI);
 
                   creteChartKompSaldo(dataPieKompSaldo);
                   hideLoadingCss()
@@ -247,18 +245,18 @@ function initDataTableSaldoRek1() {
               $('#table-rekening-operasi tbody').append(total1);
 
 
-              var dataPieRekOperasi = [];
-              $.each(res.OUT_PIE_OPERASI, function (index, value) {
-                  var dataPieTemp = {
-                      label: value.TIPE,
-                      value: value.PERSENTASE == 0 ? null : value.PERSENTASE
-                  };
-                  dataPieRekOperasi.push(dataPieTemp)
-              });
-
-              console.log("");
-
-              creteChartRekOperasi(dataPieRekOperasi);
+//              var dataPieRekOperasi = [];
+//              $.each(res.OUT_PIE_OPERASI, function (index, value) {
+//                  var dataPieTemp = {
+//                      label: value.TIPE,
+//                      value: value.PERSENTASE == 0 ? null : value.PERSENTASE
+//                  };
+//                  dataPieRekOperasi.push(dataPieTemp)
+//              });
+//
+//              console.log("");
+//
+//              creteChartRekOperasi(dataPieRekOperasi);
               hideLoadingCss()
           },
           error: function () {
@@ -272,57 +270,56 @@ function initDataTableSaldoRek1() {
           }
         });
      $.ajax({
-                  url: baseUrl + "api_dashboard/get_rekening_investasi",
-                  dataType: 'JSON',
-                  type: "GET",
-                  success: function (res) {
-                      var data = res.return;
-                     // console.log("response : "+data);
-                      $("#tglcetak").html(data[0].TANGGAL);
-                      $('#table-rekening-investasi tbody').empty();
-                      $.each(data, function (key, val) {
-                          var html = "<tr>" +
-                              "<td>" + val.TIPE + "</td>" +
-                              "<td align='right'>" + "Rp " + accounting.formatNumber(val.VALAS,2,".",",") + "</td>" +
-                              "<td align='right'>" + "Rp " + accounting.formatNumber(val.RUPIAH,2,".",",") + "</td>" +
-                              "<td align='right'>" + "Rp " + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
-                              "</tr>";
-                          $('#table-rekening-investasi tbody').append(html);
-                      });
-
-                      var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                          "<td>TOTAL EQ IDR</td>" +
-                          "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_VALAS,2,".",",") + "</td>" +
-                          "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_SELURUH,2,".",",") + "</td>" +
-                          "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_SELURUH,2,".",",") + "</td>" +
-                          "</tr>";
-                  $('#table-rekening-investasi tbody').append(total1);
-
-
-                  var dataPieRekInvestasi = [];
-                  $.each(res.OUT_PIE_INVESTASI, function (index, value) {
-                      var dataPieTemp = {
-                          label: value.TIPE,
-                          value: value.PERSENTASE == 0 ? null : value.PERSENTASE
-                      };
-                      dataPieRekInvestasi.push(dataPieTemp)
-                  });
-
-                  console.log("");
-
-                  creteChartRekInvestasi(dataPieRekInvestasi);
-                  hideLoadingCss()
-              },
-              error: function () {
-                  // hideLoadingCss("Gagal Ambil Data");
-                  hideLoadingCss();
-                  $('#table-rekening-investasi tbody').empty();
+          url: baseUrl + "api_dashboard/get_rekening_investasi",
+          dataType: 'JSON',
+          type: "GET",
+          success: function (res) {
+              var data = res.return;
+             // console.log("response : "+data);
+              $("#tglcetak").html(data[0].TANGGAL);
+              $('#table-rekening-investasi tbody').empty();
+              $.each(data, function (key, val) {
                   var html = "<tr>" +
-                      "<td colspan='5' align='center'> No Data </td>" +
+                      "<td>" + val.TIPE + "</td>" +
+                      "<td align='right'>" + "Rp " + accounting.formatNumber(val.VALAS,2,".",",") + "</td>" +
+                      "<td align='right'>" + "Rp " + accounting.formatNumber(val.RUPIAH,2,".",",") + "</td>" +
+                      "<td align='right'>" + "Rp " + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
                       "</tr>";
                   $('#table-rekening-investasi tbody').append(html);
-              }
-            });
+              });
+
+              var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
+                  "<td>TOTAL EQ IDR</td>" +
+                  "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_VALAS,2,".",",") + "</td>" +
+                  "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_SELURUH,2,".",",") + "</td>" +
+                  "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL_BAWAH[0].TOTAL_SELURUH,2,".",",") + "</td>" +
+                  "</tr>";
+          $('#table-rekening-investasi tbody').append(total1);
+
+//          var dataPieRekInvestasi = [];
+//          $.each(res.OUT_PIE_INVESTASI, function (index, value) {
+//              var dataPieTemp = {
+//                  label: value.TIPE,
+//                  value: value.PERSENTASE == 0 ? null : value.PERSENTASE
+//              };
+//              dataPieRekInvestasi.push(dataPieTemp)
+//          });
+//
+//                  console.log("");
+//
+//          creteChartRekInvestasi(dataPieRekInvestasi);
+          hideLoadingCss()
+      },
+      error: function () {
+          // hideLoadingCss("Gagal Ambil Data");
+          hideLoadingCss();
+          $('#table-rekening-investasi tbody').empty();
+          var html = "<tr>" +
+              "<td colspan='5' align='center'> No Data </td>" +
+              "</tr>";
+          $('#table-rekening-investasi tbody').append(html);
+      }
+    });
      $.ajax({
           url: baseUrl + "api_dashboard/get_total_deposito",
           dataType: 'JSON',
@@ -330,7 +327,7 @@ function initDataTableSaldoRek1() {
           success: function (res) {
               var data = res.return;
              // console.log("response : "+data);
-              $("#tglcetak").html(data[0].TANGGAL);
+//              $("#tglcetak").html(data[0].TANGGAL);
               $('#table-total-deposito tbody').empty();
               $.each(data, function (key, val) {
                   var html = "<tr>" +
@@ -348,19 +345,18 @@ function initDataTableSaldoRek1() {
                   "</tr>";
           $('#table-total-deposito tbody').append(total1);
 
-
-          var dataPieTotDeposito = [];
-          $.each(res.OUT_PIE_DEPOSITO, function (index, value) {
-              var dataPieTemp = {
-                  label: value.NAMA_BANK,
-                  value: value.PERSENTASE == 0 ? null : value.PERSENTASE
-              };
-              dataPieTotDeposito.push(dataPieTemp)
-          });
-
-          console.log("");
-
-          creteChartTotDeposito(dataPieTotDeposito);
+//          var dataPieTotDeposito = [];
+//          $.each(res.OUT_PIE_DEPOSITO, function (index, value) {
+//              var dataPieTemp = {
+//                  label: value.NAMA_BANK,
+//                  value: value.PERSENTASE == 0 ? null : value.PERSENTASE
+//              };
+//              dataPieTotDeposito.push(dataPieTemp)
+//          });
+//
+//          console.log("");
+//
+//          creteChartTotDeposito(dataPieTotDeposito);
           hideLoadingCss()
       },
       error: function () {
@@ -374,60 +370,59 @@ function initDataTableSaldoRek1() {
       }
     });
      $.ajax({
-              url: baseUrl + "api_dashboard/get_lindung_nilai",
-              dataType: 'JSON',
-              type: "GET",
-              success: function (res) {
-                  var data = res.return;
-                 // console.log("response : "+data);
-                  $("#tglcetak").html(data[0].TANGGAL);
-                  $('#table-lindung-nilai tbody').empty();
-                  $.each(data, function (key, val) {
-                      var str = val.NAMA_BANK;
-                      var html = "<tr>" +
-                          "<td>" + str + "</td>" +
-                          "<td align='right'>" + "$ " + accounting.formatNumber(val.FORWARD, 2, ".", ",") + "</td>" +
-                          "<td align='right'>" + "$ " + accounting.formatNumber(val.SWAP, 2, ".", ",") + "</td>" +
-                          "<td align='right'>" + "$ " + accounting.formatNumber(val.DNDF, 2, ".", ",") + "</td>" +
-                          "<td align='right'>" + "$ " + accounting.formatNumber(val.CALL_SPREAD_OPTION, 2, ".", ",") + "</td>" +
-                          "<td align='right'>" + "$ " + accounting.formatNumber(val.TOTAL_SAMPING, 2, ".", ",") + "</td>" +
-                          "</tr>";
-                          $('#table-lindung-nilai tbody').append(html);
-                  });
-
-                  var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                      "<td>TOTAL</td>" +
-                      "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_FORWARD,2,".",",") + "</td>" +
-                      "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SWAP,2,".",",") + "</td>" +
-                      "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_DNDF,2,".",",") + "</td>" +
-                      "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_CALL_SPREAD_OPTION,2,".",",") + "</td>" +
-                      "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SELURUH,2,".",",") + "</td>" +
+          url: baseUrl + "api_dashboard/get_lindung_nilai",
+          dataType: 'JSON',
+          type: "GET",
+          success: function (res) {
+              var data = res.return;
+             // console.log("response : "+data);
+//                  $("#tglcetak").html(data[0].TANGGAL);
+              $('#table-lindung-nilai tbody').empty();
+              $.each(data, function (key, val) {
+                  var str = val.NAMA_BANK;
+                  var html = "<tr>" +
+                      "<td>" + str + "</td>" +
+                      "<td align='right'>" + "$ " + accounting.formatNumber(val.FORWARD, 2, ".", ",") + "</td>" +
+                      "<td align='right'>" + "$ " + accounting.formatNumber(val.SWAP, 2, ".", ",") + "</td>" +
+                      "<td align='right'>" + "$ " + accounting.formatNumber(val.DNDF, 2, ".", ",") + "</td>" +
+                      "<td align='right'>" + "$ " + accounting.formatNumber(val.CALL_SPREAD_OPTION, 2, ".", ",") + "</td>" +
+                      "<td align='right'>" + "$ " + accounting.formatNumber(val.TOTAL_SAMPING, 2, ".", ",") + "</td>" +
                       "</tr>";
-              $('#table-lindung-nilai tbody').append(total1);
-
-
-              var dataPieLinNilai= [];
-              $.each(res.OUT_PIE_LINDUNG, function (index, value) {
-                  var dataPieTemp = {
-                      label: value.NAMA_BANK,
-                      value: value.PERSENTASE == 0 ? null : value.PERSENTASE
-                  };
-                  dataPieLinNilai.push(dataPieTemp)
+                      $('#table-lindung-nilai tbody').append(html);
               });
 
-              creteChartLinNilai(dataPieLinNilai);
-              hideLoadingCss()
-          },
-          error: function () {
-              // hideLoadingCss("Gagal Ambil Data");
-              hideLoadingCss();
-              $('#table-lindung-nilai tbody').empty();
-              var html = "<tr>" +
-                  "<td colspan='5' align='center'> No Data </td>" +
+              var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
+                  "<td>TOTAL</td>" +
+                  "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_FORWARD,2,".",",") + "</td>" +
+                  "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SWAP,2,".",",") + "</td>" +
+                  "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_DNDF,2,".",",") + "</td>" +
+                  "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_CALL_SPREAD_OPTION,2,".",",") + "</td>" +
+                  "<td align='right'>" + "$ " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_SELURUH,2,".",",") + "</td>" +
                   "</tr>";
-              $('#table-lindung-nilai tbody').append(html);
-          }
-        });
+          $('#table-lindung-nilai tbody').append(total1);
+
+//          var dataPieLinNilai= [];
+//          $.each(res.OUT_PIE_LINDUNG, function (index, value) {
+//              var dataPieTemp = {
+//                  label: value.NAMA_BANK,
+//                  value: value.PERSENTASE == 0 ? null : value.PERSENTASE
+//              };
+//              dataPieLinNilai.push(dataPieTemp)
+//          });
+//
+//          creteChartLinNilai(dataPieLinNilai);
+          hideLoadingCss()
+      },
+      error: function () {
+          // hideLoadingCss("Gagal Ambil Data");
+          hideLoadingCss();
+          $('#table-lindung-nilai tbody').empty();
+          var html = "<tr>" +
+              "<td colspan='5' align='center'> No Data Availabe </td>" +
+              "</tr>";
+          $('#table-lindung-nilai tbody').append(html);
+      }
+    });
 }
 
 function creteChartSaldoCurr(data) {

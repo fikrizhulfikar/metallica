@@ -256,6 +256,17 @@ function tableRealisasiPerVendor(_date){
             {
                 "data" : "EQ_IDR",
                 "render" : (data) => {
+                    return '<td>'+ new Intl.NumberFormat().format(data) +'</td>'
+                },
+                "createdCell" : (cell)=>{
+                    $(cell).css({
+                        "text-align" : "right"
+                    })
+                }
+            },
+            {
+                "data" : "EQ_IDR",
+                "render" : (data) => {
                     return '<td> Rp. '+ new Intl.NumberFormat().format(data) +'</td>'
                 },
                 "createdCell" : (cell)=>{

@@ -6,13 +6,45 @@
 
         table th {
             font-size: 12px;
-            vertical-align: middle;
             font-weight: bold;
+            text-align: center;
+            vertical-align: middle !important;
+            padding: 5px !important;
+            width: 500px;
         }
 
         table td {
             font-size: 12px;
+            width:1%;
+            white-space:nowrap;
         }
+
+        #bankfilter {
+          width: 30%;
+          height: 80%;
+          font-size: 16px;
+          padding: 12px 20px 12px 40px;
+          border: 1px solid #ddd;
+          margin-bottom: 15px;
+          }
+
+        #jenrekfilter {
+          width: 30%;
+          height: 80%;
+          font-size: 16px;
+          padding: 12px 20px 12px 40px;
+          border: 1px solid #ddd;
+          margin-bottom: 15px;
+          }
+
+        #tiperekfilter {
+          width: 30%;
+          height: 80%;
+          font-size: 16px;
+          padding: 12px 20px 12px 40px;
+          border: 1px solid #ddd;
+          margin-bottom: 15px;
+          }
 
         #myInput {
           background-image: url('../static/images/searchicon.png');
@@ -40,45 +72,45 @@
                             <table id="saldo-operasi" class="table table-rencana-realisasi table-condensed table-bordered">
                                 <thead>
                                 <tr>
-                                    <td rowspan="4" style="background-color: #3185FC; vertical-align: middle;" width="100%" align="center"><b>NAMA BANK</b></td>
-                                    <td colspan="12" rowspan="2" style="background-color: #F4D35E; vertical-align: middle;" width="100%" align="center"><b>OPERASI</b></td>
-                                    <td colspan="2" style="background-color: #FF773D; vertical-align: middle;" width="100%" align="center"><b>JUMLAH OPERASI</b></td>
+                                    <th rowspan="4" style="background-color: #3185FC;vertical-align: middle !important; text-align: center;" width="10%" align="center"><b>NAMA BANK</b></th>
+                                    <th colspan="12" rowspan="2" style="background-color: #F4D35E;vertical-align: middle !important; text-align: center;" width="70%" align="center"><b>OPERASI (JUTA)</b></th>
+                                    <th colspan="2" style="background-color: #FF773D;vertical-align: middle !important; text-align: center;" width="20%" align="center"><b>JUMLAH OPERASI (JUTA)</b></th>
                                 </tr>
-                                <tr style="background-color: #FF773D; vertical-align: middle; font-weight: bold;" align="center">
-                                    <td >IDR</td>
-                                    <td style="background-color: #FF773D; vertical-align: middle;" align="center">VALAS</td>
+                                <tr style="background-color: #FF773D" align="center">
+                                    <th>IDR</th>
+                                    <th>VALAS</th>
                                 </tr>
-                                <tr style="background-color: #F4D35E; vertical-align: middle; font-weight: bold;" align="center">
-                                    <td >A</td>
-                                    <td >B</td>
-                                    <td >C</td>
-                                    <td >D</td>
-                                    <td >E</td>
-                                    <td >F</td>
-                                    <td >G</td>
-                                    <td >H</td>
-                                    <td >I</td>
-                                    <td >J</td>
-                                    <td >K</td>
-                                    <td >L</td>
-                                    <td >M</td>
-                                    <td >N</td>
+                                <tr style="background-color: #F4D35E;" align="center">
+                                    <th>A</th>
+                                    <th>B</th>
+                                    <th>C</th>
+                                    <th>D</th>
+                                    <th>E</th>
+                                    <th>F</th>
+                                    <th>G</th>
+                                    <th>H</th>
+                                    <th>I</th>
+                                    <th>J</th>
+                                    <th>K</th>
+                                    <th>L</th>
+                                    <th>M</th>
+                                    <th>N</th>
                                 </tr>
-                                <tr style="background-color: #3185FC; vertical-align: middle; font-weight: bold;" align="center">
-                                    <td >RECEIPT</td>
-                                    <td >OBLIGASI</td>
-                                    <td >DEPRESIASI</td>
-                                    <td >BENCANA</td>
-                                    <td >GLOBAL BOND</td>
-                                    <td >DOKUMEN LELANG</td>
-                                    <td >IMPREST</td>
-                                    <td >IMPREST OPERASI TERPUSAT</td>
-                                    <td >IMPREST VALAS</td>
-                                    <td >IMPOR</td>
-                                    <td >SUBSIDI</td>
-                                    <td >KMK</td>
-                                    <td >M = A+B+C+D+F +G+H+J+K+L</td>
-                                    <td >N = E+I</td>
+                                <tr style="background-color: #3185FC;" align="center">
+                                    <th>RECEIPT</th>
+                                    <th>OBLIGASI</th>
+                                    <th>DEPRESIASI</th>
+                                    <th>BENCANA</th>
+                                    <th>GLOBAL BOND</th>
+                                    <th>DOKUMEN LELANG</th>
+                                    <th>IMPREST</th>
+                                    <th>IMPREST OPERASI TERPUSAT</th>
+                                    <th>IMPREST VALAS</th>
+                                    <th>IMPOR</th>
+                                    <th>SUBSIDI</th>
+                                    <th>KMK</th>
+                                    <th>M = A+B+C+D+F +G+H+J+K+L</th>
+                                    <th>N = E+I</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -98,38 +130,38 @@
                             <table id="saldo-investasi" class="table table-rencana-realisasi table-condensed table-bordered" width="100%">
                                 <thead>
                                 <tr>
-                                    <td rowspan="4" style="background-color: #3185FC; vertical-align: middle;" align="center"><b>NAMA BANK</b></td>
-                                    <td colspan="7" rowspan="2" style="background-color: #F4D35E; vertical-align: middle;" align="center"><b>INVESTASI</b></td>
-                                    <td colspan="2" style="background-color: #FF773D; vertical-align: middle;" align="center"><b>JUMLAH INVESTASI</b></td>
-                                    <td rowspan="2" style="background-color: #FF773D; vertical-align: middle;" align="center"><b>TOTAL</b></td>
+                                    <th rowspan="4" style="background-color: #3185FC; vertical-align: middle;" align="center"><b>NAMA BANK</b></th>
+                                    <th colspan="7" rowspan="2" style="background-color: #F4D35E; vertical-align: middle;" align="center"><b>INVESTASI (JUTA)</b></th>
+                                    <th colspan="2" style="background-color: #FF773D; vertical-align: middle;" align="center"><b>JUMLAH INVESTASI (JUTA)</b></th>
+                                    <th rowspan="2" style="background-color: #FF773D; vertical-align: middle;" align="center"><b>TOTAL (JUTA)</b></th>
                                 </tr>
                                 <tr style="background-color: #FF773D; vertical-align: middle; font-weight: bold;" align="center">
-                                    <td >IDR</td>
-                                    <td >VALAS</td>
+                                    <th>IDR</th>
+                                    <th>VALAS</th>
                                 </tr>
                                 <tr style="background-color: #F4D35E; vertical-align: middle; font-weight: bold;" align="center">
-                                    <td >O</td>
-                                    <td >P</td>
-                                    <td >Q</td>
-                                    <td >R</td>
-                                    <td >S</td>
-                                    <td >T</td>
-                                    <td >U</td>
-                                    <td style="background-color: #FF773D; vertical-align: middle;" align="center">V</td>
-                                    <td style="background-color: #FF773D; vertical-align: middle;" align="center">W</td>
-                                    <td style="background-color: #FF773D; vertical-align: middle;" align="center">X</td>
+                                    <th>O</th>
+                                    <th>P</th>
+                                    <th>Q</th>
+                                    <th>R</th>
+                                    <th>S</th>
+                                    <th>T</th>
+                                    <th>U</th>
+                                    <th style="background-color: #FF773D;">V</th>
+                                    <th style="background-color: #FF773D;">W</th>
+                                    <th style="background-color: #FF773D;">X</th>
                                 </tr>
                                 <tr style="background-color: #3185FC; vertical-align: middle; font-weight: bold;" align="center">
-                                    <td >IMPREST INVESTASI TERPUSAT</td>
-                                    <td >SUKUK</td>
-                                    <td >DEPOSITO</td>
-                                    <td >PMN</td>
-                                    <td >ESCROW (IDR)</td>
-                                    <td >EXCROW (VALAS)</td>
-                                    <td >ADB RBL</td>
-                                    <td >V=O+P+Q+R+S</td>
-                                    <td >W=T+U+N</td>
-                                    <td >X=M+N+V+W</td>
+                                    <th>IMPREST INVESTASI TERPUSAT</th>
+                                    <th>SUKUK</th>
+                                    <th>DEPOSITO</th>
+                                    <th>PMN</th>
+                                    <th>ESCROW (IDR)</th>
+                                    <th>EXCROW (VALAS)</th>
+                                    <th>ADB RBL</th>
+                                    <th>V=O+P+Q+R+S</th>
+                                    <th>W=T+U+N</th>
+                                    <th>X=M+N+V+W</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -144,7 +176,7 @@
                                     <thead>
                                     <tr>
                                         <th style="background-color: #FF773D; text-align: center" align="center">KETERANGAN</th>
-                                        <th style="background-color: #FF773D; text-align: center" align="center">TOTAL</th>
+                                        <th style="background-color: #FF773D; text-align: center" align="center">TOTAL (JUTA)</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -162,21 +194,53 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-block">
-                        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"/>
-                        <table id="rincian-saldo" class="table table-rencana-realisasi table-condensed table-bordered">
+                        <div class="col-md-12 row" style="padding-left: 0px; padding-right: 0px">
+<!--                            <div class="col-md-3">-->
+<!--                            </div>-->
+                            <div class="col-md-1">
+                                <label class="lbl-src" style="align-text: center">Bank</label>
+                            </div>
+                            <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">
+                                <select name="bank" id="bank_filter" class="form-control">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="col-md-1" style="padding-right: 0px;">
+                                <label class="lbl-src">Jenis Rekening</label>
+                            </div>
+                            <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">
+                                <select name="bank" id="jenrek_filter" class="form-control">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="col-md-1" style="padding-right: 0px; ">
+                                <label class="lbl-src">Tipe Rekening</label>
+                            </div>
+                            <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">
+                                <select name="bank" id="tiperek_filter" class="form-control">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
+                            <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
+                            <div class="col-md-1" style="padding-right: 0px;">
+                                <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
+                            </div>
+                        </div>
+                        <table id="rincian-saldo" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-top: 5px; margin-bottom: 15px">
                             <thead>
                             <tr class="header">
-                                <th style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="11%" align="center">NO REKENING</th>
-                                <th style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">BANK</th>
-                                <th style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">CURRENCY</th>
-                                <th style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">JENIS REKENING</th>
-                                <th style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">TIPE REKENING</th>
-                                <th style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">ORIGINAL CURRENCY</th>
-                                <th style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">EQ CURRENCY</th>
-                                <th style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="6%" align="center">%</th>
+                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="11%" align="center">NO REKENING</th>
+                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">BANK</th>
+                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">CURRENCY</th>
+                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">JENIS REKENING</th>
+                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">TIPE REKENING</th>
+                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">ORIGINAL CURRENCY</th>
+                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">EQ CURRENCY</th>
+                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="6%" align="center">%</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="isi">
 
                             </tbody>
                         </table>

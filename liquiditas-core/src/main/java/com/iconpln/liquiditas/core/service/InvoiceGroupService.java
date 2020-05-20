@@ -171,6 +171,38 @@ public class InvoiceGroupService {
         return result;
     }
 
+    public List<Map<String, Object>> getListInvoiceGroupHeadSiapBayar(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pUserId, String sortBy, String sortDir, String pSearch) throws SQLException {
+        AppUtils.getLogger(this).debug("data rekap search info = " +
+                        "pStart : {}, " +
+                        "pLength : {}, " +
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, " +
+                        "pBank : {}, " +
+                        "pUserId : {}," +
+                        "pSortBy : {}," +
+                        "pSortDir : {}," +
+                        "pSearch : {},",
+
+                pStart, pLength, pTglAwal, pTglAkhir, pBank, pUserId, sortBy, sortDir, pSearch);
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("group_head_get_siap_bayar");
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_start", pStart, Types.INTEGER)
+                .addValue("p_length", pLength, Types.INTEGER)
+                .addValue("p_tgl_awal", pTglAwal, Types.VARCHAR)
+                .addValue("p_tgl_akhir", pTglAkhir, Types.VARCHAR)
+                .addValue("p_bank", pBank, Types.VARCHAR)
+                .addValue("p_user_id", pUserId, Types.VARCHAR)
+                .addValue("p_sort_by", sortBy, Types.VARCHAR)
+                .addValue("p_sort_dir", sortDir, Types.VARCHAR)
+                .addValue("p_search", pSearch, Types.VARCHAR);
+
+        List<Map<String, Object>> result = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+        AppUtils.getLogger(this).info("data get_invoice_group_head_siap_bayar : {}", result);
+        return result;
+    }
+
     public List<Map<String, Object>> getColumn(String userId) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -255,6 +287,8 @@ public class InvoiceGroupService {
         AppUtils.getLogger(this).info("data invoice_get : {}", resultset);
         return resultset;
     }
+
+
 
     public static String inhousePayment (String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
@@ -646,6 +680,29 @@ public class InvoiceGroupService {
         return out;
     }
 
+    public Map<String, Object> updateSiapBayar(
+            String pIdGroupMetallica, String pIdGroup, String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pJenisTransaksi, String pUserId, String pOssId
+    ) throws SQLException {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("group_upd_siap_bayar");
+        Map<String, Object> out;
+        SqlParameterSource inParent = new MapSqlParameterSource()
+                .addValue("p_comp_code", pCompCode)
+                .addValue("p_doc_no", pDocNo)
+                .addValue("p_fisc_year", pFiscYear)
+                .addValue("p_line_item", pLineItem)
+                .addValue("p_jenis_transaksi", pJenisTransaksi)
+                .addValue("p_user_id", pUserId)
+                .addValue("p_oss_id",pOssId)
+                .addValue("p_group_id", pIdGroup)
+                .addValue("p_id_group_metallica", pIdGroupMetallica)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        out = simpleJdbcCall.execute(inParent);
+        AppUtils.getLogger(this).info("update data lunas : {}", out);
+        return out;
+    }
+
     public Map<String, Object> updateGroupLunasGiro(
             String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pJenisTransaksi,
             String pUserId, String pOssId, String pGroupId
@@ -712,6 +769,52 @@ public class InvoiceGroupService {
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
 
         AppUtils.getLogger(this).info("data invoice_get : {}", resultset);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getDetailGroupSiapBayar(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pCaraBayar, String pUserId, String sortBy, String sortDir, String status, String statusTracking, String pSearch, String pIdGroup) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data rekap search info = " +
+                        "pStart : {}, " +
+                        "pLength : {}, " +
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, " +
+                        "pBank : {}, " +
+                        "pCurrency : {}, " +
+                        "pCaraBayar : {}," +
+                        "pStatusValas : {}," +
+                        "pUserId : {}," +
+                        "pSortBy : {}," +
+                        "pSortDir : {}," +
+                        "pStatus : {}," +
+                        "pStatusTracking : {}," +
+                        "pSearch : {},",
+
+                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, pUserId, sortBy, sortDir, pSearch);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("group_item_get_siap_bayar");
+
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_start", pStart, Types.INTEGER)
+                .addValue("p_length", pLength, Types.INTEGER)
+                .addValue("p_tgl_awal", pTglAwal, Types.VARCHAR)
+                .addValue("p_tgl_akhir", pTglAkhir, Types.VARCHAR)
+                .addValue("p_bank", pBank, Types.VARCHAR)
+                .addValue("p_cur", pCurrency, Types.VARCHAR)
+                .addValue("p_cara_bayar", pCaraBayar, Types.VARCHAR)
+                .addValue("p_user_id", pUserId, Types.VARCHAR)
+                .addValue("p_sort_by", sortBy, Types.VARCHAR)
+                .addValue("p_sort_dir", sortDir, Types.VARCHAR)
+                .addValue("p_status", status, Types.VARCHAR)
+                .addValue("p_status_tracking", statusTracking, Types.VARCHAR)
+                .addValue("p_id_group",pIdGroup)
+                .addValue("p_search", pSearch, Types.VARCHAR);
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data invoice_grou_get_siap_bayar : {}", resultset);
         return resultset;
     }
 

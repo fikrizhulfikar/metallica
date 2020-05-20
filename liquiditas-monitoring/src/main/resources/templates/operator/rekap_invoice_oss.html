@@ -33,9 +33,9 @@
         <li class="breadcrumb-item active" style="cursor: default">Rekapitulasi Data</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>-->
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>-->
                 <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS','ROLE_DM_LIKUIDITAS','ROLE_VICE_PRESIDENT_OPERATION','ROLE_VICE_PRESIDENT_INVESTMENT','ROLE_KASIR_IDR','ROLE_KASIR', 'ROLE_MANAGER_PAYMENT',
                 'ROLE_MANAGER_OPERATION','ROLE_MANAGER_INVESTMENT_APLN','ROLE_MANAGER_INVESTMENT_SLPMN','ROLE_MANAGER_POWER_PURCHASE','ROLE_MANAGER_PRIMARY_ENERGY','EXECUTIVE_VICE_PRESIDENT')">
                     <i class="fas fa-plus-square"></i> &nbsp;New Data
@@ -95,6 +95,13 @@
                                     <option value="1">OPERASI</option>
                                     <option value="2">INVESTASI</option>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label><span style="color: red">*)</span>&nbsp;Jenis Dokumen:</label>
+                                <div class="form-check">
+                                    <input type="radio" value="HR PAYABLE" id="hrpayableradio" name="pJenisDokumen"/> <span>HR Payable</span>
+                                    <input type="radio" value="AP INVOICE" id="apinvoiceradio" name="pJenisDokumen"/> <span>AP Invoice</span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="pJenisPemabayaran"><span style="color: red">*)</span>&nbsp;Jenis
@@ -577,14 +584,14 @@
                         </select>
                     </div>
 
-                    <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Status Tracking</label>
-                    </div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="status_tracking" id="cmb_status_tracking" class="form-control">
-                            <option value="">PILIH STATUS TRACKING</option>
-                        </select>
-                    </div>
+<!--                    <div class="col-md-1" style="padding-right: 0px;">-->
+<!--                        <label class="lbl-src">Status Tracking</label>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-3" style="padding-right: 0px;">-->
+<!--                        <select name="status_tracking" id="cmb_status_tracking" class="form-control">-->
+<!--                            <option value="">PILIH STATUS TRACKING</option>-->
+<!--                        </select>-->
+<!--                    </div>-->
                 </div>
             </div>
             <div class="list-data" style="margin-top:25px;">

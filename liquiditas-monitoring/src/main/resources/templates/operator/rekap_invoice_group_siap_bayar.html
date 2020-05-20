@@ -1,0 +1,287 @@
+<div th:fragment="stylesheets-backend">
+    <style>
+        button{ cursor: pointer
+        }
+        .table td {
+            padding-right: 0.75rem;
+            padding-bottom: 0.25rem;
+            padding-left: 0.75rem;
+            padding-top: 0.25rem;
+        }
+        div.dataTables_wrapper div.dataTables_paginate {
+            float: right !important;
+            text-align: left !important;
+            padding-left: 0px;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter {
+            text-align: right !important;
+        }
+        thead {
+            font-size: 12px; !important;
+        }
+        tbody {
+            font-size: 12px; !important;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Invoice Group Siap Bayar</li>
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
+            </div>
+        </li>
+    </ol>
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+            <div id="filter">
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;">
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Tanggal Awal </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal"/>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Tanggal Akhir </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Bank </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="bank" id="cmb_bank" class="form-control">
+                            <option value="ALL">PILIH SELURUH BANK</option>
+                            <option value="BNI">BANK BNI</option>
+                            <option value="BRI">BANK BRI</option>
+                            <option value="MANDIRI">BANK MANDIRI</option>
+                            <option value="BUKOPIN">BANK BUKOPIN</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
+                    </div>
+                </div>
+            </div>
+            <div class="list-data" style="margin-top:25px;">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <table id="table-rekapitulasi" class="table table-bordered table-striped" style="width: 2000px;">
+                            <thead style="font-size: 12px">
+                            <tr>
+                                <th>NUM</th>
+                                <th>HOUSE BANK</th>
+                                <th>NO REK HOUSE BANK</th>
+                                <th>COMP CODE</th>
+                                <th>BUSINESS AREA</th>
+                                <th>TANGGAL RENCANA BAYAR</th>
+                                <th>METODE PEMBAYARAN</th>
+                                <th>NO GIRO</th>
+                                <th>CURRENCY BAYAR</th>
+                                <th>TOTAL TAGIHAN</th>
+                                <th>ASSIGNMENT</th>
+                                <th>SUMBER DANA</th>
+                                <th>TANGGAL SIAP BAYAR</th>
+                                <th>AKSI</th>
+<!--                                <th id="forcbparent"></th>-->
+                            </tr>
+                            </thead>
+                            <tbody style="font-size: 12px">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Edit Invoice</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pDocDate">&nbsp;Document Date :</label>
+                                <input type="text" class="form-control" id="pDocDate" style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPostingDate">&nbsp;Posting Date :</label>
+                                <input type="text" class="form-control" id="pPostingDate" style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDocNo">&nbsp;Document Number :</label>
+                                <input type="number" class="form-control" id="pDocNo" style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pReference">&nbsp;Reference :</label>
+                                <input type="text" class="form-control" id="pReference" style="background-color: white" value=""/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pCompCode">&nbsp;Company Code :</label>
+                                <input type="number" class="form-control" id="pCompCode" style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pBusArea">&nbsp;Business Area :</label>
+                                <input type="text" class="form-control" id="pBusArea" style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCurrency">&nbsp;Currency :</label>
+                                <input type="text" class="form-control" id="pCurrency" style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDocHdrTxt">&nbsp;Doc Hdr Text :</label>
+                                <input type="text" class="form-control" id="pDocHdrTxt" style="background-color: white" value=""/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="ins_data()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-upload-xls" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title_modal_upload_xls">UPLOAD FILE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="input_file_xls">
+                    <div class="form-group" style="display:none">
+                        <input type="text" class="form-control" id="temp-xls"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">UPLOAD FILE XLS |
+                            <a th:href="@{/api_master/template/2}" id="btn-download-template-data-bank">
+                                Download Template
+                            </a></label>
+                        <input type="file" class="form-control" id="file-xls"
+                               accept="application/vnd.ms-excel"/>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal" onclick="upload_server_xls()">Selesai</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="detail-data container-fluid" style="display: none;">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <table id="table-main-detail" class="table table-bordered table-striped" width="7500px"
+                       style="margin-right: 0px !important;" >
+                    <thead>
+                    <tr>
+                        <th>NO.</th>
+                        <th>JENIS</th>
+                        <th>DOCUMENT NO</th>
+                        <th>DOCUMENT DATE</th>
+                        <th>REVERSE WITH</th>
+                        <th>REVERSE YEAR</th>
+                        <th>POSTING DATE</th>
+                        <th>BASE DATE</th>
+                        <th>ENTRY DATE</th>
+                        <th>DOCUMENT TYPE</th>
+                        <th>FISICAL YEAR</th>
+                        <th>DOCUMENT HDR TXT</th>
+                        <th>REFERENCE</th>
+                        <th>TGL TERIMA TAGIHAN</th>
+                        <th>COMPANY CODE</th>
+                        <th>BUSINESS AREA</th><!--10-->
+                        <th>CURRENCY</th>
+                        <th>EXCHANGE RATE</th>
+                        <th>LINE ITEM</th>
+                        <th>DEBIT CREDIT INDIKATOR</th>
+                        <th>SPEC GL</th>
+                        <th>GL ACCOUNT</th>
+                        <th>AMOUNT IN TRANSACTION CURRENCY</th>
+                        <th>AMOUNT IN LOCAL CURRENCY</th>
+                        <th>AMOUNT WITHHOLDING BASE TC</th><!--19-->
+                        <th>AMOUNT WITHHOLDING TC</th>
+                        <th>AMOUNT WITHHOLDING BASE LC</th>
+                        <th>AMOUNT WITHHOLDING LC</th>
+                        <th>AMOUNT</th>
+                        <th>ACCOUNT TYPE</th>
+                        <th>ASSIGNMENT</th>
+                        <th>ITEM TEXT</th><!--24-->
+                        <th>CUSTOMER</th>
+                        <th>VENDOR</th>
+                        <th>TERM OF PAYMENT</th>
+                        <th>DUE ON</th>
+                        <th>REFERENCE KEY</th>
+                        <th>PAYMENT INDIKATOR</th><!--29-->
+                        <th>TRANSACTION TYPE</th>
+                        <th>SPREAD VALUE</th>
+                        <th>PAYMENT BLOCK</th>
+                        <th>HOUSE BANK</th>
+                        <th>NO REK HOUSE BANK</th>
+                        <th>PARTNER BANK TYPE</th>
+                        <th>BANK KEY</th>
+                        <th>BANK ACCOUNT</th>
+                        <th>ACCOUNT HOLDER</th>
+                        <th>COST CENTER</th>
+                        <th>INTERNAL ORDER</th>
+                        <th>WBS NUMBER</th>
+                        <th>CASH CODE</th>
+                        <th>PO NUMBER</th>
+                        <th>PO ITEM</th>
+                        <th>REFERENCE KEY 1</th>
+                        <th>REFERENCE KEY 2</th>
+                        <th>REFERENCE KEY 3</th>
+                        <th>OPEN ITEM INDIKATOR</th>
+                        <th>TRADING PARTNER BUSINESS AREA</th>
+                        <th>METODE PEMBAYARAN</th>
+                        <th>TGL RENCANA BAYAR</th>
+                        <th>OSS ID</th>
+                        <th>GROUP ID</th>
+                        <th>BANK BAYAR</th>
+                        <th>CURRENCY BAYAR</th>
+                        <th>AMOUNT BAYAR</th>
+                        <th>BANK BENEFICIARY</th>
+                        <th>NO REK BENEFICIARY</th>
+                        <th>NAMA BENEFICIARY</th>
+                        <th>TGL ACTUAL BAYAR</th>
+                        <th>SUMBER DANA</th>
+                        <th>KETERANGAN</th>
+                        <th>STATUS TRACKING</th>
+<!--                        <th>AKSI</th>-->
+<!--                        <th id="forcbparent"></th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div align="right">
+                    <button onclick="back()" class="btn btn-sm btn-danger"><i class="fa fa-arrow-left"></i> Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/invoiceGroupSiapBayar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+</div>

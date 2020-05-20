@@ -984,3 +984,78 @@ function checkColumn(value) {
     $("#hc34").prop("checked", value);
     $("#hc35").prop("checked", value);
 }
+
+function setSelectJenisRekening(idHtml, jenis, idForSelected, form) {
+    $.ajax({
+        url: baseUrl + "api_operator/rekap_invoice_belum/get_jenis_rekening",
+        dataType: 'JSON',
+        type: "GET",
+        sync: true,
+        data: {
+            pJenis: jenis,
+            pForm: form
+        },
+        success: function (res) {
+            $("#" + idHtml + "").html('');
+            $.each(res, function (key, val) {
+                $("#" + idHtml + "").append('<option value="' + val.CATEGORY + '">' + val.CATEGORY + '</option>');
+            });
+            if (idForSelected != "") {
+                $("#" + idHtml + "").val(idForSelected);
+            }
+        },
+        error: function () {
+            $("#" + idHtml + "").html('<option value="">Pilih Data</option>');
+        }
+    });
+}
+
+function setSelectTipeRekening(idHtml, jenis, idForSelected, form) {
+    $.ajax({
+        url: baseUrl + "api_operator/rekap_invoice_belum/get_tipe_rekening",
+        dataType: 'JSON',
+        type: "GET",
+        sync: true,
+        data: {
+            pJenis: jenis,
+            pForm: form
+        },
+        success: function (res) {
+            $("#" + idHtml + "").html('');
+            $.each(res, function (key, val) {
+                $("#" + idHtml + "").append('<option value="' + val.TIPE + '">' + val.TIPE + '</option>');
+            });
+            if (idForSelected != "") {
+                $("#" + idHtml + "").val(idForSelected);
+            }
+        },
+        error: function () {
+            $("#" + idHtml + "").html('<option value="">Pilih Data</option>');
+        }
+    });
+}
+
+function setSelectBankSaldo(idHtml, jenis, idForSelected, form) {
+    $.ajax({
+        url: baseUrl + "api_operator/rekap_invoice_belum/get_bank",
+        dataType: 'JSON',
+        type: "GET",
+        sync: true,
+        data: {
+            pJenis: jenis,
+            pForm: form
+        },
+        success: function (res) {
+            $("#" + idHtml + "").html('');
+            $.each(res, function (key, val) {
+                $("#" + idHtml + "").append('<option value="' + val.BANK + '">' + val.BANK + '</option>');
+            });
+            if (idForSelected != "") {
+                $("#" + idHtml + "").val(idForSelected);
+            }
+        },
+        error: function () {
+            $("#" + idHtml + "").html('<option value="">Pilih Data</option>');
+        }
+    });
+}
