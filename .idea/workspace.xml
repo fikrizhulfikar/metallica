@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1bb35cd6-6e1f-4873-bb7b-6e5a0fd705b9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/invoiceGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/invoiceGroup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-log/core.log" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-log/core.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -78,7 +80,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1568789622014" />
     <property name="jsx.switch.disabled" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -91,12 +93,12 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/operasiKhususTrx.js" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\backend\controller" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\operator" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-core\src\main\java\com\iconpln\liquiditas\core\service" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\frontend\dashboardcorpay" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\drivers" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\new-backend\node_modules" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\error" />
       <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\dashboardcorpay" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\new-backend\js" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.iconpln.liquiditas.monitoring.controller.xmldoc" />
@@ -105,12 +107,12 @@
       <recent name="com.iconpln.liquiditas.core.service" />
       <recent name="com.iconpln.liquiditas.core.domain" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\drivers" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\new-backend\node_modules" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\error" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\operator" />
       <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\dashboardcorpay" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\new-backend\js" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\backend\controller" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-core\src\main\java\com\iconpln\liquiditas\core\service" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\frontend\dashboardcorpay" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -385,41 +387,7 @@
       <workItem from="1587949973651" duration="45092000" />
       <workItem from="1588126855338" duration="245370000" />
       <workItem from="1589638925526" duration="115782000" />
-    </task>
-    <task id="LOCAL-00078" summary="Penambahan Function Export Excel">
-      <created>1587605837027</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1587605837027</updated>
-    </task>
-    <task id="LOCAL-00079" summary="Penambahan Function Get All Pembayaran Untuk Export Excel">
-      <created>1587605885406</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1587605885406</updated>
-    </task>
-    <task id="LOCAL-00080" summary="Fix Sorted Column">
-      <created>1587605923030</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1587605923030</updated>
-    </task>
-    <task id="LOCAL-00081" summary="Dashboard">
-      <created>1587605956261</created>
-      <option name="number" value="00081" />
-      <option name="presentableId" value="LOCAL-00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1587605956261</updated>
-    </task>
-    <task id="LOCAL-00082" summary="Fixed button styling dan sorted column">
-      <created>1587606028003</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1587606028003</updated>
+      <workItem from="1589942917960" duration="2596000" />
     </task>
     <task id="LOCAL-00083" summary="Penambahan function export excel">
       <created>1587606069021</created>
@@ -729,7 +697,42 @@
       <option name="project" value="LOCAL" />
       <updated>1589936143936</updated>
     </task>
-    <option name="localTasksCounter" value="127" />
+    <task id="LOCAL-00127" summary="Update Dashboard 20 Mei 2020">
+      <created>1589945103465</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1589945103465</updated>
+    </task>
+    <task id="LOCAL-00128" summary="Update Path">
+      <created>1589945153363</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1589945153363</updated>
+    </task>
+    <task id="LOCAL-00129" summary="Update Path To Production">
+      <created>1589945385754</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1589945385754</updated>
+    </task>
+    <task id="LOCAL-00130" summary="Change SAP Url To Production">
+      <created>1589945781125</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1589945781125</updated>
+    </task>
+    <task id="LOCAL-00131" summary="Comment Get From File SAP">
+      <created>1589945812976</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1589945812976</updated>
+    </task>
+    <option name="localTasksCounter" value="132" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -750,11 +753,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Penambahan kolom NO GIRO" />
-    <MESSAGE value="Prodcution Envt" />
-    <MESSAGE value="SAP Production URL" />
-    <MESSAGE value="Comments" />
-    <MESSAGE value="LDAP" />
     <MESSAGE value="Penambahan No Giro Grouping" />
     <MESSAGE value="Pindah Ke Production" />
     <MESSAGE value="Penambahan No Giro Grouping dan Metode Bayar" />
@@ -775,7 +773,12 @@
     <MESSAGE value="Tambah request mapping ke halaman siap bayar group" />
     <MESSAGE value="Tambah function get head group siap bayar, item grop siap bayar, dan fucntion item siap bayar" />
     <MESSAGE value="Log" />
-    <option name="LAST_COMMIT_MESSAGE" value="Log" />
+    <MESSAGE value="Update Dashboard 20 Mei 2020" />
+    <MESSAGE value="Update Path" />
+    <MESSAGE value="Update Path To Production" />
+    <MESSAGE value="Change SAP Url To Production" />
+    <MESSAGE value="Comment Get From File SAP" />
+    <option name="LAST_COMMIT_MESSAGE" value="Comment Get From File SAP" />
   </component>
   <component name="WindowStateProjectService">
     <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1574666059564">
