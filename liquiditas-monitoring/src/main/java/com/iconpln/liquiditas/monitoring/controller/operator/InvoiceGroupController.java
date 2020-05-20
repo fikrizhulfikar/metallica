@@ -169,6 +169,39 @@ public class InvoiceGroupController {
         }
     }
 
+    @RequestMapping(value = "/update_group_item_siap_bayar", method = RequestMethod.POST)
+    public Map<String, Object> updateGroupItemSiapBayar(
+            @RequestParam(value = "pIdGroupMetallica", defaultValue = "") String pIdGroupMetallica,
+            @RequestParam(value = "pGroupId", defaultValue = "") String pGroupId,
+            @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
+            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
+            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
+            @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem,
+            @RequestParam(value = "pJenisTransaksi", defaultValue = "") String pJenisTransaksi,
+            @RequestParam(value = "pOssId", defaultValue = "") String pOssId
+    ) {
+        AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
+//        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
+//        AppUtils.getLogger(this).info("pFiscYear edit data: {}", pFiscYear);
+//        AppUtils.getLogger(this).info("pLineItem edit data: {}", pLineItem);
+//        AppUtils.getLogger(this).info("pKet edit data: {}", pKet);
+//        AppUtils.getLogger(this).info("pBankPembayar edit data: {}", pBankPembayar);
+//        AppUtils.getLogger(this).info("pKeterangan edit data: {}", pKeterangan);
+//        AppUtils.getLogger(this).info("pTglRencanaBayar edit data: {}", pTglRencanaBayar);
+//        AppUtils.getLogger(this).info("pSumberDana edit data: {}", pSumberDana);
+//        AppUtils.getLogger(this).info("pMetodePembayaran edit data: {}", pMetodePembayaran);
+        try {
+            Map<String, Object> res = invoiceGroupService.updateSiapBayar(pIdGroupMetallica, pGroupId,pCompCode, pDocNo, pFiscYear, pLineItem, pJenisTransaksi, WebUtils.getUsernameLogin(), pOssId);
+            if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
+
+            }
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @RequestMapping(value = "/update_group_lunas_giro", method = RequestMethod.POST)
     public Map<String, Object> updateGroupLunasGiro(
             @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
@@ -344,6 +377,51 @@ public class InvoiceGroupController {
         List<Map<String, Object>> list = new ArrayList<>();
         try {
             list = invoiceGroupService.getDetailGroupLunas(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank , pCurrency, pCaraBayar,WebUtils.getUsernameLogin(), sortBy, sortDir,pStatus,pStatusTracking,pSearch,pIdGroup);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("draw", draw);
+        mapData.put("data", list);
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
+        return mapData;
+    }
+
+    @RequestMapping(value = "/get_detail_group_siap_bayar", method = RequestMethod.GET)
+    public Map getDetailGroupSiapBayar(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "10") int length,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
+            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
+            @RequestParam(value = "pCaraBayar", defaultValue = "ALL") String pCaraBayar,
+            @RequestParam(value = "status", defaultValue = "ALL") String pStatus,
+            @RequestParam(value = "statusTracking", defaultValue = "ALL") String pStatusTracking,
+            @RequestParam(value = "search[value]", defaultValue = "") String pSearch,
+            @RequestParam(value = "pIdGroup", defaultValue = "") String pIdGroup
+    ){
+        String sortBy = parseColumn(sortIndex);
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = invoiceGroupService.getDetailGroupSiapBayar(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank , pCurrency, pCaraBayar,WebUtils.getUsernameLogin(), sortBy, sortDir,pStatus,pStatusTracking,pSearch,pIdGroup);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -892,6 +970,46 @@ public class InvoiceGroupController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @RequestMapping(value = "/get_invoice_group_siap_bayar_head", method = RequestMethod.GET)
+    public Map ListInvoiceGroupHeadSiapBayar(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "10") int length,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
+            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "search[value]", defaultValue = "") String pSearch
+    ){
+        String sortBy = parseColumn(sortIndex);
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = invoiceGroupService.getListInvoiceGroupHeadSiapBayar(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, WebUtils.getUsernameLogin(), sortBy, sortDir, pSearch);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("draw", draw);
+        mapData.put("data", list);
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
+        return mapData;
     }
 
 //    @RequestMapping(value = "/update_lunas", method = RequestMethod.POST)
