@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1bb35cd6-6e1f-4873-bb7b-6e5a0fd705b9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/invoiceGroup.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/invoiceGroup.js" afterDir="false" />
-    </list>
+    <list default="true" id="1bb35cd6-6e1f-4873-bb7b-6e5a0fd705b9" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +76,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1568789622014" />
     <property name="jsx.switch.disabled" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -384,21 +382,7 @@
       <workItem from="1587603490564" duration="13046000" />
       <workItem from="1587949973651" duration="45092000" />
       <workItem from="1588126855338" duration="245370000" />
-      <workItem from="1589638925526" duration="115782000" />
-    </task>
-    <task id="LOCAL-00078" summary="Penambahan Function Export Excel">
-      <created>1587605837027</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1587605837027</updated>
-    </task>
-    <task id="LOCAL-00079" summary="Penambahan Function Get All Pembayaran Untuk Export Excel">
-      <created>1587605885406</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1587605885406</updated>
+      <workItem from="1589638925526" duration="116521000" />
     </task>
     <task id="LOCAL-00080" summary="Fix Sorted Column">
       <created>1587605923030</created>
@@ -729,7 +713,21 @@
       <option name="project" value="LOCAL" />
       <updated>1589936143936</updated>
     </task>
-    <option name="localTasksCounter" value="127" />
+    <task id="LOCAL-00127" summary="Tambah Tombol siap bayar di item group invoice">
+      <created>1589936634401</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1589936634401</updated>
+    </task>
+    <task id="LOCAL-00128" summary="log">
+      <created>1589936655898</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1589936655898</updated>
+    </task>
+    <option name="localTasksCounter" value="129" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -750,8 +748,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Penambahan kolom NO GIRO" />
-    <MESSAGE value="Prodcution Envt" />
     <MESSAGE value="SAP Production URL" />
     <MESSAGE value="Comments" />
     <MESSAGE value="LDAP" />
@@ -775,7 +771,9 @@
     <MESSAGE value="Tambah request mapping ke halaman siap bayar group" />
     <MESSAGE value="Tambah function get head group siap bayar, item grop siap bayar, dan fucntion item siap bayar" />
     <MESSAGE value="Log" />
-    <option name="LAST_COMMIT_MESSAGE" value="Log" />
+    <MESSAGE value="Tambah Tombol siap bayar di item group invoice" />
+    <MESSAGE value="log" />
+    <option name="LAST_COMMIT_MESSAGE" value="log" />
   </component>
   <component name="WindowStateProjectService">
     <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1574666059564">
