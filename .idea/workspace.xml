@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1bb35cd6-6e1f-4873-bb7b-6e5a0fd705b9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-log/core.log" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-log/core.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" afterDir="false" />
-    </list>
+    <list default="true" id="1bb35cd6-6e1f-4873-bb7b-6e5a0fd705b9" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -387,21 +383,7 @@
       <workItem from="1587949973651" duration="45092000" />
       <workItem from="1588126855338" duration="245370000" />
       <workItem from="1589638925526" duration="115782000" />
-      <workItem from="1589942917960" duration="2596000" />
-    </task>
-    <task id="LOCAL-00083" summary="Penambahan function export excel">
-      <created>1587606069021</created>
-      <option name="number" value="00083" />
-      <option name="presentableId" value="LOCAL-00083" />
-      <option name="project" value="LOCAL" />
-      <updated>1587606069021</updated>
-    </task>
-    <task id="LOCAL-00084" summary="Penambahan function export excel">
-      <created>1587606093974</created>
-      <option name="number" value="00084" />
-      <option name="presentableId" value="LOCAL-00084" />
-      <option name="project" value="LOCAL" />
-      <updated>1587606093974</updated>
+      <workItem from="1589942917960" duration="2942000" />
     </task>
     <task id="LOCAL-00085" summary="Penambahan function export excel">
       <created>1587606118505</created>
@@ -732,7 +714,21 @@
       <option name="project" value="LOCAL" />
       <updated>1589945812976</updated>
     </task>
-    <option name="localTasksCounter" value="132" />
+    <task id="LOCAL-00132" summary="Activate Ldap and Captcha">
+      <created>1589945899070</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1589945899070</updated>
+    </task>
+    <task id="LOCAL-00133" summary="Log">
+      <created>1589946002788</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1589946002788</updated>
+    </task>
+    <option name="localTasksCounter" value="134" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -753,7 +749,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Penambahan No Giro Grouping" />
     <MESSAGE value="Pindah Ke Production" />
     <MESSAGE value="Penambahan No Giro Grouping dan Metode Bayar" />
     <MESSAGE value="XmlDoc file" />
@@ -772,13 +767,14 @@
     <MESSAGE value="Tambah halaman siap bayat invoice group .html" />
     <MESSAGE value="Tambah request mapping ke halaman siap bayar group" />
     <MESSAGE value="Tambah function get head group siap bayar, item grop siap bayar, dan fucntion item siap bayar" />
-    <MESSAGE value="Log" />
     <MESSAGE value="Update Dashboard 20 Mei 2020" />
     <MESSAGE value="Update Path" />
     <MESSAGE value="Update Path To Production" />
     <MESSAGE value="Change SAP Url To Production" />
     <MESSAGE value="Comment Get From File SAP" />
-    <option name="LAST_COMMIT_MESSAGE" value="Comment Get From File SAP" />
+    <MESSAGE value="Activate Ldap and Captcha" />
+    <MESSAGE value="Log" />
+    <option name="LAST_COMMIT_MESSAGE" value="Log" />
   </component>
   <component name="WindowStateProjectService">
     <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1574666059564">
