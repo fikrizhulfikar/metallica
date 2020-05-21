@@ -1,13 +1,7 @@
 package com.iconpln.liquiditas.core.service;
 
-
-import com.iconpln.liquiditas.core.service.ApacheHttp;
-import com.iconpln.liquiditas.core.service.SapHttp;
-import com.iconpln.liquiditas.core.service.AltConfig;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,13 +28,14 @@ public String getdatasap(Map<String, Object> param) throws URISyntaxException,IO
 }
 
     public String getDataCustomer(HashMap<String, Object> param) throws URISyntaxException,IOException {
-        String url = AltConfig.get("sap.url")+"?sap_client="+xsap_client+"&interface=IFM079&customer="+param.get("customer")+"&comp_code="+param.get("comp_code")+((param.get("date") == null) ? "":"&date="+param.get("date"));
+        String url = AltConfig.get("sap.url")+"?sap_client="+xsap_client+"&interface=IFM079&customer="+param.get("customer")+"&comp_code="+param.get("comp_code")+(param.get("date").toString() == null || param.get("date").equals("") ? "":"&date="+param.get("date"));
         String response = SapHttp.executeGet(url);
         return response;
     }
 
     public String getDataVendor(HashMap<String, Object> param) throws URISyntaxException,IOException {
-        String url = AltConfig.get("sap.url")+"?sap-client="+xsap_client+"&interface=IFM077&vendor="+param.get("vendor")+"&comp_code="+param.get("comp_code");
+        System.out.println("param Date : "+param.get("date"));
+        String url = AltConfig.get("sap.url")+"?sap-client="+xsap_client+"&interface=IFM077&vendor="+param.get("vendor")+"&comp_code="+param.get("comp_code")+(param.get("date").toString() == null || param.get("date").equals("") ? "" : "&date="+param.get("date"));
         String response = SapHttp.executeGet(url);
         return response;
     }

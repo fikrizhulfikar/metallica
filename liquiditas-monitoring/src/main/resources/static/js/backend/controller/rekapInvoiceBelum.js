@@ -3668,7 +3668,7 @@ function create_group() {
         title: 'Anda Yakin ?',
         text: "Anda Yakin Akan Melakukan Grouping Tagihan Ini ?",
         icon: 'warning',
-        html : '<p>Pastikan <b>Sumber Dana</b>, <b>Bank Pembayar</b>, <b>Rekening Bank Pembayar</b>, dan <b>Assignment</b> sama</p>',
+        html : '<p>Pastikan <b>Sumber Dana</b>, <b>Company Code</b>, <b>Bank Pembayar</b>, <b>Tanggal Rencana Bayar</b>, <b>Rekening Bank Pembayar</b>, <b>No Giro</b>, dan <b>Assignment</b> sama</p>',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
@@ -3933,9 +3933,10 @@ function checkArray(e) {
 }
 
 function checkGroup(){
-    if (isSame(fullArrayGroup)){
+    if (isSame(fullArrayGroup) === true){
         // Swal.fire("Good!","Good To Group :)","success");
         // alert("Good To Group :)");
+        console.log("Group : "+isSame(fullArrayGroup));
         create_group();
     } else if(isSame(fullArrayGroup) === 222){
         Swal.fire({
@@ -3954,7 +3955,7 @@ function isSame(data){
     } else {
         let bank = data[0].BANK_BYR;
         let hb_rekening = data[0].NO_REK_HOUSE_BANK;
-        let comp_code = data[0].COMP_CODE;
+        // let comp_code = data[0].COMP_CODE;
         let assign = data[0].ASSIGNMENT;
         let bus_area = data[0].BUS_AREA;
         let due_on = data[0].TGL_RENCANA_BAYAR;
@@ -3963,11 +3964,13 @@ function isSame(data){
         let no_giro = data[0].NO_GIRO;
         let curr_bayar = data[0].CURR_BAYAR;
 
+    // || comp_code != data[x].COMP_CODE
+
         for(let x = 0; x < data.length; x++){
-             if (data[x].INQ_CUSTOMER_NAME === "-"){
-                 return 222;
-             }
-            if(due_on !== data[x].TGL_RENCANA_BAYAR || bank !== data[x].BANK_BYR || hb_rekening !== data[x].NO_REK_HOUSE_BANK || comp_code != data[x].COMP_CODE || assign != data[x].ASSIGNMENT || bus_area != data[x].BUS_AREA || sumber_dana != data[x].SUMBER_DANA ||
+             // if (data[x].INQ_CUSTOMER_NAME === "-"){
+             //     return 222;
+             // }
+            if(due_on !== data[x].TGL_RENCANA_BAYAR || bank !== data[x].BANK_BYR || hb_rekening !== data[x].NO_REK_HOUSE_BANK || assign !== data[x].ASSIGNMENT || bus_area !== data[x].BUS_AREA || sumber_dana !== data[x].SUMBER_DANA ||
             inq_name !== data[x].INQ_CUSTOMER_NAME || no_giro !== data[x].NO_GIRO || curr_bayar !== data[x].CURR_BAYAR){
                 return false;
             }
