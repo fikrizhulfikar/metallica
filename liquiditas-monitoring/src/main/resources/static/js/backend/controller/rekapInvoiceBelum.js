@@ -3668,7 +3668,7 @@ function create_group() {
         title: 'Anda Yakin ?',
         text: "Anda Yakin Akan Melakukan Grouping Tagihan Ini ?",
         icon: 'warning',
-        html : '<p>Pastikan <b>Sumber Dana</b>, <b>Bank Pembayar</b>, <b>Rekening Bank Pembayar</b>, dan <b>Assignment</b> sama</p>',
+        html : '<p>Pastikan <b>Sumber Dana</b>, <b>Company Code</b>, <b>Bank Pembayar</b>, <b>Tanggal Rencana Bayar</b>, <b>Rekening Bank Pembayar</b>, <b>No Giro</b>, dan <b>Assignment</b> sama</p>',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
