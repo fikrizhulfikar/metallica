@@ -79,7 +79,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1568789622014" />
     <property name="jsx.switch.disabled" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -92,12 +92,12 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/operasiKhususTrx.js" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\drivers" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\new-backend\node_modules" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\error" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\operator" />
       <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\dashboardcorpay" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\new-backend\js" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\backend\controller" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-core\src\main\java\com\iconpln\liquiditas\core\service" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\frontend\dashboardcorpay" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.iconpln.liquiditas.monitoring.controller.xmldoc" />
@@ -106,12 +106,12 @@
       <recent name="com.iconpln.liquiditas.core.service" />
       <recent name="com.iconpln.liquiditas.core.domain" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\backend\controller" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\operator" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-core\src\main\java\com\iconpln\liquiditas\core\service" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\frontend\dashboardcorpay" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\drivers" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\new-backend\node_modules" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\error" />
       <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\dashboardcorpay" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\new-backend\js" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -386,48 +386,7 @@
       <workItem from="1587949973651" duration="45092000" />
       <workItem from="1588126855338" duration="245370000" />
       <workItem from="1589638925526" duration="115782000" />
-    </task>
-    <task id="LOCAL-00079" summary="Penambahan Function Get All Pembayaran Untuk Export Excel">
-      <created>1587605885406</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1587605885406</updated>
-    </task>
-    <task id="LOCAL-00080" summary="Fix Sorted Column">
-      <created>1587605923030</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1587605923030</updated>
-    </task>
-    <task id="LOCAL-00081" summary="Dashboard">
-      <created>1587605956261</created>
-      <option name="number" value="00081" />
-      <option name="presentableId" value="LOCAL-00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1587605956261</updated>
-    </task>
-    <task id="LOCAL-00082" summary="Fixed button styling dan sorted column">
-      <created>1587606028003</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1587606028003</updated>
-    </task>
-    <task id="LOCAL-00083" summary="Penambahan function export excel">
-      <created>1587606069021</created>
-      <option name="number" value="00083" />
-      <option name="presentableId" value="LOCAL-00083" />
-      <option name="project" value="LOCAL" />
-      <updated>1587606069021</updated>
-    </task>
-    <task id="LOCAL-00084" summary="Penambahan function export excel">
-      <created>1587606093974</created>
-      <option name="number" value="00084" />
-      <option name="presentableId" value="LOCAL-00084" />
-      <option name="project" value="LOCAL" />
-      <updated>1587606093974</updated>
+      <workItem from="1589942917960" duration="2942000" />
     </task>
     <task id="LOCAL-00085" summary="Penambahan function export excel">
       <created>1587606118505</created>
@@ -723,14 +682,56 @@
       <option name="project" value="LOCAL" />
       <updated>1589936143936</updated>
     </task>
-    <task id="LOCAL-00127" summary="Update Path php to server path">
-      <created>1589946562975</created>
+    <task id="LOCAL-00127" summary="Update Dashboard 20 Mei 2020">
+      <created>1589945103465</created>
       <option name="number" value="00127" />
       <option name="presentableId" value="LOCAL-00127" />
       <option name="project" value="LOCAL" />
-      <updated>1589946562975</updated>
+      <updated>1589945103465</updated>
     </task>
-    <option name="localTasksCounter" value="128" />
+    <task id="LOCAL-00128" summary="Update Path">
+      <created>1589945153363</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1589945153363</updated>
+    </task>
+    <task id="LOCAL-00129" summary="Update Path To Production">
+      <created>1589945385754</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1589945385754</updated>
+    </task>
+    <task id="LOCAL-00130" summary="Change SAP Url To Production">
+      <created>1589945781125</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1589945781125</updated>
+    </task>
+    <task id="LOCAL-00131" summary="Comment Get From File SAP">
+      <created>1589945812976</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1589945812976</updated>
+    </task>
+    <task id="LOCAL-00132" summary="Activate Ldap and Captcha">
+      <created>1589945899070</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1589945899070</updated>
+    </task>
+    <task id="LOCAL-00133" summary="Log">
+      <created>1589946002788</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1589946002788</updated>
+    </task>
+    <option name="localTasksCounter" value="134" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -774,61 +775,45 @@
     <MESSAGE value="Tambah halaman siap bayat invoice group .html" />
     <MESSAGE value="Tambah request mapping ke halaman siap bayar group" />
     <MESSAGE value="Tambah function get head group siap bayar, item grop siap bayar, dan fucntion item siap bayar" />
+    <MESSAGE value="Update Dashboard 20 Mei 2020" />
+    <MESSAGE value="Update Path" />
+    <MESSAGE value="Update Path To Production" />
+    <MESSAGE value="Change SAP Url To Production" />
+    <MESSAGE value="Comment Get From File SAP" />
+    <MESSAGE value="Activate Ldap and Captcha" />
     <MESSAGE value="Log" />
     <MESSAGE value="Update Path php to server path" />
     <option name="LAST_COMMIT_MESSAGE" value="Update Path php to server path" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1574666059564">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1574666059564" />
-    <state width="1322" height="229" key="GridCell.Tab.0.bottom" timestamp="1574772706000">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="657" height="65" key="GridCell.Tab.0.bottom/0.0.1366.728/1366.0.1366.768@0.0.1366.728" timestamp="1573464969162" />
-    <state width="1322" height="229" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1574772706000" />
-    <state width="1322" height="229" key="GridCell.Tab.0.center" timestamp="1574772705999">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="657" height="65" key="GridCell.Tab.0.center/0.0.1366.728/1366.0.1366.768@0.0.1366.728" timestamp="1573464969162" />
-    <state width="1322" height="229" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1574772705999" />
-    <state width="1322" height="229" key="GridCell.Tab.0.left" timestamp="1574772705999">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="657" height="65" key="GridCell.Tab.0.left/0.0.1366.728/1366.0.1366.768@0.0.1366.728" timestamp="1573464969162" />
-    <state width="1322" height="229" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1574772705999" />
-    <state width="1322" height="229" key="GridCell.Tab.0.right" timestamp="1574772706000">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state width="657" height="65" key="GridCell.Tab.0.right/0.0.1366.728/1366.0.1366.768@0.0.1366.728" timestamp="1573464969162" />
-    <state width="1322" height="229" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1574772706000" />
-    <state x="213" y="18" key="Maven.ArtifactSearchDialog" timestamp="1574165969312">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="213" y="18" key="Maven.ArtifactSearchDialog/0.0.1366.728@0.0.1366.728" timestamp="1574165969312" />
-    <state x="378" y="186" key="com.intellij.ide.util.TipDialog" timestamp="1574821610538">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="378" y="186" key="com.intellij.ide.util.TipDialog/0.0.1366.728/1366.0.1920.1080@0.0.1366.728" timestamp="1574320108898" />
-    <state x="378" y="186" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1574821610538" />
-    <state x="380" y="128" width="736" height="542" key="find.popup" timestamp="1574245099102">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="380" y="128" width="736" height="542" key="find.popup/0.0.1366.728/1366.0.1366.768@0.0.1366.728" timestamp="1573127457696" />
-    <state x="380" y="128" width="736" height="542" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1574245099102" />
-    <state x="389" y="0" key="refactoring.ChangeSignatureDialog" timestamp="1574227491274">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="389" y="0" key="refactoring.ChangeSignatureDialog/0.0.1366.728@0.0.1366.728" timestamp="1574227491274" />
-    <state x="339" y="157" key="run.anything.popup" timestamp="1572848191080">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="339" y="157" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1572848191080" />
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1574762196971">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1574762196971" />
+    <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog" />
+    <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" />
+    <state width="1322" height="229" key="GridCell.Tab.0.bottom" />
+    <state width="657" height="65" key="GridCell.Tab.0.bottom/0.0.1366.728/1366.0.1366.768@0.0.1366.728" />
+    <state width="1322" height="229" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" />
+    <state width="1322" height="229" key="GridCell.Tab.0.center" />
+    <state width="657" height="65" key="GridCell.Tab.0.center/0.0.1366.728/1366.0.1366.768@0.0.1366.728" />
+    <state width="1322" height="229" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" />
+    <state width="1322" height="229" key="GridCell.Tab.0.left" />
+    <state width="657" height="65" key="GridCell.Tab.0.left/0.0.1366.728/1366.0.1366.768@0.0.1366.728" />
+    <state width="1322" height="229" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" />
+    <state width="1322" height="229" key="GridCell.Tab.0.right" />
+    <state width="657" height="65" key="GridCell.Tab.0.right/0.0.1366.728/1366.0.1366.768@0.0.1366.728" />
+    <state width="1322" height="229" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" />
+    <state x="213" y="18" key="Maven.ArtifactSearchDialog" />
+    <state x="213" y="18" key="Maven.ArtifactSearchDialog/0.0.1366.728@0.0.1366.728" />
+    <state x="378" y="186" key="com.intellij.ide.util.TipDialog" />
+    <state x="378" y="186" key="com.intellij.ide.util.TipDialog/0.0.1366.728/1366.0.1920.1080@0.0.1366.728" />
+    <state x="378" y="186" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" />
+    <state x="380" y="128" width="736" height="542" key="find.popup" />
+    <state x="380" y="128" width="736" height="542" key="find.popup/0.0.1366.728/1366.0.1366.768@0.0.1366.728" />
+    <state x="380" y="128" width="736" height="542" key="find.popup/0.0.1366.728@0.0.1366.728" />
+    <state x="389" y="0" key="refactoring.ChangeSignatureDialog" />
+    <state x="389" y="0" key="refactoring.ChangeSignatureDialog/0.0.1366.728@0.0.1366.728" />
+    <state x="339" y="157" key="run.anything.popup" />
+    <state x="339" y="157" key="run.anything.popup/0.0.1366.728@0.0.1366.728" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
