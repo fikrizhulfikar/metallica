@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1bb35cd6-6e1f-4873-bb7b-6e5a0fd705b9" name="Default Changelist" comment="Ubah number ke text" />
+    <list default="true" id="1bb35cd6-6e1f-4873-bb7b-6e5a0fd705b9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-log/core.log" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-log/core.log" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,12 +93,12 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/operasiKhususTrx.js" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\drivers" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\new-backend\node_modules" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\error" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\operator" />
       <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\dashboardcorpay" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\new-backend\js" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\backend\controller" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-core\src\main\java\com\iconpln\liquiditas\core\service" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\frontend\dashboardcorpay" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.iconpln.liquiditas.monitoring.controller.xmldoc" />
@@ -104,12 +107,12 @@
       <recent name="com.iconpln.liquiditas.core.service" />
       <recent name="com.iconpln.liquiditas.core.domain" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\uploadcorpay\template" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\operator" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\drivers" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\new-backend\node_modules" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\error" />
       <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\dashboardcorpay" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\backend\controller" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-core\src\main\java\com\iconpln\liquiditas\core\service" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\new-backend\js" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -760,6 +763,19 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Prodcution Envt" />
+    <MESSAGE value="SAP Production URL" />
+    <MESSAGE value="Comments" />
+    <MESSAGE value="LDAP" />
+    <MESSAGE value="Penambahan No Giro Grouping" />
+    <MESSAGE value="Pindah Ke Production" />
+    <MESSAGE value="Penambahan No Giro Grouping dan Metode Bayar" />
+    <MESSAGE value="XmlDoc file" />
+    <MESSAGE value="xmlDoc plugin file" />
+    <MESSAGE value="XmlDox Files" />
+    <MESSAGE value="XmlDoc Files" />
+    <MESSAGE value="Penambahan kolom currency, tombol cetak surat invoice group" />
+    <MESSAGE value="Generate Document invoice metallica" />
     <MESSAGE value="Fix Looping Invoice pada controller" />
     <MESSAGE value="Class Convert Bilangan ke Terbilang, Currency" />
     <MESSAGE value="update 19-05-2020 (Generate Doc)" />
@@ -785,7 +801,8 @@
     <MESSAGE value="Ubah Layout Dokumen Pendamping Invoice" />
     <MESSAGE value="Ubah Validasi Logic Grouping" />
     <MESSAGE value="Menambah Notifikasi Validasi Group" />
-    <option name="LAST_COMMIT_MESSAGE" value="Menambah Notifikasi Validasi Group" />
+    <MESSAGE value="Update Path php to server path" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update Path php to server path" />
   </component>
   <component name="WindowStateProjectService">
     <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog" />
