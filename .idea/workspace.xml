@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1bb35cd6-6e1f-4873-bb7b-6e5a0fd705b9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-log/core.log" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-log/core.log" afterDir="false" />
-    </list>
+    <list default="true" id="1bb35cd6-6e1f-4873-bb7b-6e5a0fd705b9" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -387,13 +384,7 @@
       <workItem from="1588126855338" duration="245370000" />
       <workItem from="1589638925526" duration="115782000" />
       <workItem from="1589942917960" duration="2942000" />
-    </task>
-    <task id="LOCAL-00085" summary="Penambahan function export excel">
-      <created>1587606118505</created>
-      <option name="number" value="00085" />
-      <option name="presentableId" value="LOCAL-00085" />
-      <option name="project" value="LOCAL" />
-      <updated>1587606118505</updated>
+      <workItem from="1590474112099" duration="197000" />
     </task>
     <task id="LOCAL-00086" summary="Penambahan function export excel dan total tagihan">
       <created>1587606236731</created>
@@ -731,7 +722,14 @@
       <option name="project" value="LOCAL" />
       <updated>1589946002788</updated>
     </task>
-    <option name="localTasksCounter" value="134" />
+    <task id="LOCAL-00134" summary="Fix Role New Data Button">
+      <created>1590474306302</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1590474306302</updated>
+    </task>
+    <option name="localTasksCounter" value="135" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -752,7 +750,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Prodcution Envt" />
     <MESSAGE value="SAP Production URL" />
     <MESSAGE value="Comments" />
     <MESSAGE value="LDAP" />
@@ -783,7 +780,8 @@
     <MESSAGE value="Activate Ldap and Captcha" />
     <MESSAGE value="Log" />
     <MESSAGE value="Update Path php to server path" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update Path php to server path" />
+    <MESSAGE value="Fix Role New Data Button" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix Role New Data Button" />
   </component>
   <component name="WindowStateProjectService">
     <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog" />
