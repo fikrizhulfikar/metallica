@@ -1012,6 +1012,23 @@ public class InvoiceGroupController {
         return mapData;
     }
 
+    @PostMapping(path = "/ungroup")
+    public Map ungroup(@RequestParam(value = "pItems") String pItems) throws JSONException {
+        Map<String, Object> out = new HashMap<>();
+        JSONArray jsonArray = new JSONArray(pItems);
+
+        for (int index = 0; index < jsonArray.length(); index++){
+            JSONObject object = jsonArray.getJSONObject(index);
+            String comp_code = object.getString("COMP_CODE");
+            String doc_no = object.getString("DOC_NO");
+            String fiscal_year = object.getString("FISC_YEAR");
+            String line_item = object.getString("LINE_ITEM");
+            String ket = object.getString("KET");
+            out = invoiceGroupService.ungroup(comp_code, doc_no, fiscal_year, line_item, ket, WebUtils.getUsernameLogin());
+        }
+        return out;
+    }
+
 //    @RequestMapping(value = "/update_lunas", method = RequestMethod.POST)
 //    public Map<String, Object> updateLunas(
 ////            @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
