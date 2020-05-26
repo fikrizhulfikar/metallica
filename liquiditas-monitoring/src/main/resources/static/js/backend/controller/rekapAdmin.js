@@ -884,7 +884,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                 },
                 {
                     "sortable": false,
-                    "aTargets": [0,28, 33]
+                    "aTargets": [0,28, 33, 34]
                 },
                 {
                     "aTargets": [0],

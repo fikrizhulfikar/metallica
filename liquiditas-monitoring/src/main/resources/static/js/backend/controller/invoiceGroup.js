@@ -104,7 +104,7 @@ function reverse_status(idGroup, statusTracking){
             hideLoadingCss("");
             if (response.return == 1){
                 alert(response.OUT_MSG);
-                tablePembelianValas.ajax.reload();
+                tableInvoiceGroup.ajax.reload()
             } else {
                 alert(response.OUT_MSG);
             }
@@ -822,7 +822,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_GROUP + '\')"><i class="fas fa-trash"></i></button>'+
+                                        // '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_GROUP + '\')"><i class="fas fa-trash"></i></button>'+
                                         '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         '</div>';
                                 }
@@ -830,7 +830,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                                     ret_value = ret_value +
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_GROUP + '\')"><i class="fa fa-close"></i></button>'+
+                                        // '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_GROUP + '\')"><i class="fa fa-close"></i></button>'+
                                         '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         '</div>';
                                 }
@@ -1174,7 +1174,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
         // var html = '';
         var html =  '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
         if (newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "ROLE_JA_CASH" || newRoleUser[0] == "ROLE_JA_IE"){
-            html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fas fa-trash"></i></button>';
+            // html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fas fa-trash"></i></button>';
         }
         if (newRoleUser[0] === "ROLE_VP_LIQUIDITY_AND_RECEIPT" || newRoleUser[0] === "ROLE_VP_OPERATION_EXPENDITURE"
             || newRoleUser[0] === "ROLE_MSB_PAYMENT_EXPENDITURE" || newRoleUser[0] === "ROLE_PLH_EXECUTIVE_VICE_PRESIDENT"
@@ -1218,31 +1218,6 @@ function updateLunas(idGroup){
             }
         });
     }
-}
-
-function reverse_status(idMetallica, statusTracking){
-    showLoadingCss();
-    $.ajax({
-        url : baseUrl + "api_operator/pembelian_valas_trx/update_reverse",
-        dataType : "JSON",
-        type : "POST",
-        data : {
-            pIdMetallica : idMetallica,
-            pStatusTracking : statusTracking
-        },
-        success : (response) => {
-            hideLoadingCss("");
-            if (response.return == 1){
-                alert(response.OUT_MSG);
-                tableInvoiceGroup.ajax.reload();
-            } else {
-                alert(response.OUT_MSG);
-            }
-        },
-        error : () => {
-            hideLoadingCss("Gagal Melakukan Proses, Harap Hubungi Administrator");
-        }
-    });
 }
 
 function clearForm() {
@@ -2730,6 +2705,7 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
                 html =  '<button class="btn btn-dtl btn-dribbble btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
                 html = html + '<button class="btn btn-dtl btn-primary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Bukti Kas" onclick="cetakBuktiKasGroupingMultiple()"><i class="fas fa-file-alt"></i></button>' ;
                 html = html + '<button class="btn btn-dtl btn-info btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Lampiran" onclick="cetakLampiranGrouping('+idGroup+')"><i class="fas fa-paperclip"></i></button>' ;
+                html = html + '<button class="btn btn-dtl btn-danger btn-sm" id="btn-ungroup" style="margin-left: 10px" type="button" title="Ungroup" onclick="ungroup()"><i class="fas fa-folder-open"></i></button>' ;
                 $(this).append(html);
             });
 }
@@ -3630,6 +3606,35 @@ function cetakLampiranGrouping(id_group){
             console.log("Error : ",err.error);
         }
     })
+}
+
+function ungroup(){
+    if (fullArrayGroup.length <= 0){
+        alert("SIlahkan Pilih data terlebih dahulu")
+    } else{
+        showLoadingCss();
+        $.ajax({
+            url : baseUrl + "api_operator/invoice_group/ungroup",
+            data : {
+                pItems : JSON.stringify(fullArrayGroup)
+            },
+            dataType : "JSON",
+            type : "POST",
+            success : (res) => {
+                if (res.return === 1){
+                    alert("Berhasil Ungroup");
+                    tableDetailGroupInvoice.ajax.reload();
+                    fullArrayGroup = new Array();
+                }
+                console.log("Result : ",res);
+            },
+            error : (err) => {
+                console.log("Error : ",err.error);
+                fullArrayGroup = new Array();
+            }
+        })
+        hideLoadingCss();
+    }
 }
 
 function back(){
