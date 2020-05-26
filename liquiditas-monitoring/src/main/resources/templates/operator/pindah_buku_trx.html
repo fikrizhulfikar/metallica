@@ -32,7 +32,7 @@
         <li class="breadcrumb-menu d-md-down-none fungsional-button">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
-                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="hasAnyAuthority('ROLE_JA_CASH','ROLE_JA_IE')">
+                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="hasAnyAuthority('ROLE_PRIMARY_ENERGY','ROLE_CENTRALIZED_RECEIPT','ROLE_ADMIN','ROLE_JA_CASH','ROLE_JA_IE')">
                     <i class="fas fa-plus-square"></i> &nbsp;New Data
                 </button>
             </div>
