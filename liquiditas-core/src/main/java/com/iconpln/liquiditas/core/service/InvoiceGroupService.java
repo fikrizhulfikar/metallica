@@ -3,6 +3,7 @@ package com.iconpln.liquiditas.core.service;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.core.utils.PlsqlUtils;
 import oracle.jdbc.OracleTypes;
+import oracle.jdbc.oracore.OracleType;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -816,6 +817,23 @@ public class InvoiceGroupService {
 
         AppUtils.getLogger(this).info("data invoice_grou_get_siap_bayar : {}", resultset);
         return resultset;
+    }
+
+    public Map ungroup(String pCompCode, String pDocNo, String pFiscalYear, String pLineItem, String pKet, String pUserId){
+        Map<String, Object> out = new HashMap<>();
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("group_ungroup");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_comp_code",pCompCode)
+                .addValue("p_doc_no", pDocNo)
+                .addValue("p_fisc_year", pFiscalYear)
+                .addValue("p_line_item", pLineItem)
+                .addValue("p_ket", pKet)
+                .addValue("p_user_id", pUserId)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        out = simpleJdbcCall.execute(param);
+        return out;
     }
 
 }
