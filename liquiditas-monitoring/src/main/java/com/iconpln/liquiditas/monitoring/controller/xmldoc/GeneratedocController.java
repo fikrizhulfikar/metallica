@@ -1,5 +1,6 @@
 package com.iconpln.liquiditas.monitoring.controller.xmldoc;
 
+import com.iconpln.liquiditas.core.service.GenerateDocService;
 import com.iconpln.liquiditas.core.xmldoc.DocGenerator;
 import com.iconpln.liquiditas.core.alt.AltException;
 import oracle.jdbc.OracleTypes;
@@ -54,6 +55,9 @@ public class GeneratedocController {
     private DataSource dataSource;
 
     public JdbcTemplate getJdbcTemplate(){ return new JdbcTemplate(dataSource);}
+
+    @Autowired
+    private GenerateDocService generateDocService;
 
     boolean isgeneratedoc = true;
     SimpleDateFormat formatdb = new SimpleDateFormat("yyyyMMdd");
@@ -162,15 +166,7 @@ public class GeneratedocController {
             System.out.println("Doc Numbers : "+pDocumentNumbers);
             System.out.println("Object Loop : "+jsonObject);
 
-            SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                    .withCatalogName("PKG_CORPAY")
-                    .withFunctionName("cetak_bukti_kas_grouping"); //item grouping satuan
-            SqlParameterSource param = new MapSqlParameterSource()
-                    .addValue("p_comp_code",jsonObject.getString("COMP_CODE"))
-                    .addValue("p_doc_no", jsonObject.getString("DOC_NO"))
-                    .addValue("p_fisc_year", jsonObject.getString("FISC_YEAR"))
-                    .addValue("p_ket",jsonObject.getString("KET"));
-            List<Map<String, Object>> list = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class,param);
+            List<Map<String, Object>> list = generateDocService.getCetakBuktiKasGrouping(jsonObject.getString("COMP_CODE"), jsonObject.getString("DOC_NO"), jsonObject.getString("FISC_YEAR"), jsonObject.getString("KET"));
             System.out.println("Hasil Select : "+list);
             JSONObject object = new JSONObject(list.get(0));
             System.out.println("Object Hasil Select : "+object);
@@ -223,7 +219,7 @@ public class GeneratedocController {
     }
 
     @RequestMapping(path = "/surat_group")
-    public Map suratnGroup(@RequestParam("pIdGroup") String pIdGroup) throws AltException, SQLException, JSONException, ParseException, IOException, JSONParseException {
+    public Map suratnGroup(@RequestParam("pIdGroup") String pIdGroup) throws AltException, JSONException, ParseException, IOException, JSONParseException {
         Map out = new HashMap();
         if (!isgeneratedoc) aksiNonaktif();
             String filename = "uploadcorpay/temp/surat_group_"+pIdGroup;
@@ -231,12 +227,7 @@ public class GeneratedocController {
             DocGenerator dg = new DocGenerator();
             System.out.println("Id Groups : "+pIdGroup);
 
-            SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                    .withCatalogName("PKG_CORPAY")
-                    .withFunctionName("cetak_surat_grouping"); //aksi samping
-            SqlParameterSource param = new MapSqlParameterSource()
-                    .addValue("p_id_group",pIdGroup);
-            List<Map<String, Object>> list = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+            List<Map<String, Object>> list = generateDocService.getCetakSuratGrouping(pIdGroup);
             System.out.println("Hasil Select : "+list);
             JSONObject object = new JSONObject(list.get(0));
             String no_giro = object.getString("NO_GIRO");
@@ -286,7 +277,7 @@ public class GeneratedocController {
     }
 
     @RequestMapping(path = "/lampiran_group")
-    public Map lampiranGroup(@RequestParam("pIdGroup") String pIdGroup) throws AltException, SQLException, JSONException, ParseException, IOException, JSONParseException {
+    public Map lampiranGroup(@RequestParam("pIdGroup") String pIdGroup) throws AltException, JSONException, ParseException, IOException, JSONParseException {
         Map out = new HashMap();
         if (!isgeneratedoc) aksiNonaktif();
         String filename = "uploadcorpay/temp/lampiran_group_"+pIdGroup;
@@ -294,13 +285,8 @@ public class GeneratedocController {
         DocGenerator dg = new DocGenerator();
         System.out.println("Id Groups : "+pIdGroup);
 
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_CORPAY")
-                .withFunctionName("cetak_bukti_lampiran_grouping");
-        SqlParameterSource param = new MapSqlParameterSource()
-                .addValue("p_group_id",pIdGroup)
-                .addValue("out_total", OracleTypes.CURSOR);
-        Map<String, Object> ini = simpleJdbcCall.execute(param);
+        Map<String, Object> ini = generateDocService.getLampiranGroup(pIdGroup);
+
         JSONObject jj = new JSONObject(ini);
         JSONArray total_tagihan =  new JSONArray(jj.getString("OUT_TOTAL"));
         JSONObject kk =  total_tagihan.getJSONObject(0);
@@ -416,16 +402,7 @@ public class GeneratedocController {
             DocGenerator dg = new DocGenerator();
             System.out.println("Doc Numbers : "+pDocumentNumbers);
 
-            SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                    .withCatalogName("PKG_CORPAY")
-                    .withFunctionName("cetak_bukti_kas");
-            SqlParameterSource param = new MapSqlParameterSource()
-                    .addValue("p_comp_code",pCompCode)
-                    .addValue("p_doc_no", pDocumentNumbers)
-                    .addValue("p_fisc_year", pFiscalYear)
-                    .addValue("p_line_item", pLineItem)
-                    .addValue("p_ket",pKet);
-            List<Map<String, Object>> list = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+            List<Map<String, Object>> list = generateDocService.getCetakBuktiKasSingle(pCompCode, pDocumentNumbers, pFiscalYear, pLineItem, pKet);
             System.out.println("Hasil Select : "+list);
             JSONObject object = new JSONObject(list.get(0));
             String no_giro = object.getString("NO_GIRO");
