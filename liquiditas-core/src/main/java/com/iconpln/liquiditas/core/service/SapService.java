@@ -367,7 +367,7 @@ public class SapService {
                 .addValue("p_contact_person", insData.get("contact_person"))
                 .addValue("p_currency", insData.get("currency"))
                 .addValue("p_description", insData.get("description"))
-                .addValue("p_gl_account", insData.get("gl_accoun"))
+                .addValue("p_gl_account", insData.get("gl_account"))
                 .addValue("p_house_bank", insData.get("house_bank"))
                 .addValue("p_telephone1", insData.get("telephone1"))
                 .addValue("out_msg", OracleTypes.VARCHAR);
