@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1bb35cd6-6e1f-4873-bb7b-6e5a0fd705b9" name="Default Changelist" comment="Move Jdbc Call Function to Service">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="1bb35cd6-6e1f-4873-bb7b-6e5a0fd705b9" name="Default Changelist" comment="Move Jdbc Call Function to Service" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -387,6 +385,7 @@
       <workItem from="1589638925526" duration="115782000" />
       <workItem from="1589942917960" duration="2942000" />
       <workItem from="1590474112099" duration="197000" />
+      <workItem from="1590543377396" duration="3000" />
     </task>
     <task id="LOCAL-00086" summary="Penambahan function export excel dan total tagihan">
       <created>1587606236731</created>
