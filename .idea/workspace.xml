@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="30a23d2c-bc4d-4f0e-897e-86825e793e03" name="Default Changelist" comment="Add Multiple Reverse SAP Function">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="30a23d2c-bc4d-4f0e-897e-86825e793e03" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -389,21 +386,7 @@
       <workItem from="1589942917960" duration="2942000" />
       <workItem from="1590474112099" duration="197000" />
       <workItem from="1590543377396" duration="3000" />
-      <workItem from="1590684859049" duration="320000" />
-    </task>
-    <task id="LOCAL-00086" summary="Penambahan function export excel dan total tagihan">
-      <created>1587606236731</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
-      <option name="project" value="LOCAL" />
-      <updated>1587606236731</updated>
-    </task>
-    <task id="LOCAL-00087" summary="Penambahan function export excel dan total tagihan">
-      <created>1587606250469</created>
-      <option name="number" value="00087" />
-      <option name="presentableId" value="LOCAL-00087" />
-      <option name="project" value="LOCAL" />
-      <updated>1587606250469</updated>
+      <workItem from="1590684859049" duration="356000" />
     </task>
     <task id="LOCAL-00088" summary="Menonaktifkan tombol">
       <created>1587606309788</created>
@@ -734,7 +717,21 @@
       <option name="project" value="LOCAL" />
       <updated>1590474306302</updated>
     </task>
-    <option name="localTasksCounter" value="135" />
+    <task id="LOCAL-00135" summary="Add Logging Level for Prod">
+      <created>1590685204441</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1590685204442</updated>
+    </task>
+    <task id="LOCAL-00136" summary="Log">
+      <created>1590685212906</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
+      <option name="project" value="LOCAL" />
+      <updated>1590685212906</updated>
+    </task>
+    <option name="localTasksCounter" value="137" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -755,8 +752,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="SAP Production URL" />
-    <MESSAGE value="Comments" />
     <MESSAGE value="LDAP" />
     <MESSAGE value="Penambahan No Giro Grouping" />
     <MESSAGE value="Pindah Ke Production" />
@@ -783,10 +778,11 @@
     <MESSAGE value="Change SAP Url To Production" />
     <MESSAGE value="Comment Get From File SAP" />
     <MESSAGE value="Activate Ldap and Captcha" />
-    <MESSAGE value="Log" />
     <MESSAGE value="Update Path php to server path" />
     <MESSAGE value="Fix Role New Data Button" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix Role New Data Button" />
+    <MESSAGE value="Add Logging Level for Prod" />
+    <MESSAGE value="Log" />
+    <option name="LAST_COMMIT_MESSAGE" value="Log" />
   </component>
   <component name="WindowStateProjectService">
     <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog" />
