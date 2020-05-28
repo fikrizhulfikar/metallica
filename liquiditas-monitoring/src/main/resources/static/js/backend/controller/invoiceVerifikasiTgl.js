@@ -790,7 +790,7 @@ function getAllData() {
                                 var full_value = new Object();
                                 var ret_value = ''
                                 if (newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT") {
-                                    value = '{"pCompCode":"'+full.COMP_CODE+'", "pBusArea":"'+full.BUS_AREA+'","pLineItem":"'+full.LINE_ITEM+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pOssId":"'+full.OSS_ID+'","pGroupId":"'+full.GROUP_ID+'","pFiscYear":"'+full.FISC_YEAR+'","pKet":"'+full.KET+'","ok":"'+full.FLAG_TOMBOL+'"}';
+                                    value = '{"pCompCode":"'+full.COMP_CODE+'", "pBusArea":"'+full.BUS_AREA+'","pLineItem":"'+full.LINE_ITEM+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","pFiscYear":"'+full.FISC_YEAR+'","pKet":"'+full.KET+'","ok":"'+full.FLAG_TOMBOL+'"}';
                                 }
 //                                value = '{"pHouseBank":"'+full.HOUSE_BANK+'","pNoRekHouseBank" : "'+full.NO_REK_HOUSE_BANK+'", "pCompCode":"'+full.COMP_CODE+'", "pDueOn":"'+full.DUE_ON+'","pBusArea":"'+full.BUS_AREA+'","pAssignment":"'+full.ASSIGNMENT+'","pDocNo":"'+full.DOC_NO+'","pSumberDana":"'+full.SUMBER_DANA+'"}';
 //                                full_value = '{"full":'+JSON.stringify(full)+'}';
@@ -1287,6 +1287,7 @@ function getAllData() {
                 }
                if(newRoleUser[0] === "ROLE_EXECUTIVE_VICE_PRESIDENT"){
                    html = html + '<button class="btn btn-sm btn-success" id="btn-verified" title="Verifikasi Tanggal" style="margin-left: 10px" type="button" onclick="verifikasi_tanggal_multiple()"><i class="fas fa-check-double"></i></button>';
+                   html = html + '<button class="btn btn-reverse-sap btn-danger btn-sm" id="btn-reverse-sap" style="margin-left: 10px" type="button" title="Reverse SAP" onclick="multipleReverseSap()"><i class="fas fa-arrow-left"></i></button>';
                }
                 $(this).append(html);
             });
@@ -1474,6 +1475,41 @@ function reverse_sap(pCompCode, pDocNo, pFiscYear, pLineItem, pKet){
                 hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
             }
         });
+    }
+}
+
+function multipleReverseSap(){
+    let map = new Map();
+    let success = 0;
+    let fail = 0;
+    console.log("Selected : ", invoiceCheckedArray)
+    if (invoiceCheckedArray.length <= 0){
+        alert("Silahkan Pilih Data Terlebih Dahulu");
+    }else{
+        let confirmed = confirm("Apakah Anda yakin ingin reverse ke SAP tagihan-tagihan ini ?");
+        if (confirmed){
+            showLoadingCss();
+            $.ajax({
+                url : baseUrl + "api_operator/rekap_invoice_belum/reverse_sap_multiple",
+                data : {
+                    pData : JSON.stringify(invoiceCheckedArray),
+                },
+                dataType : "JSON",
+                type : "POST",
+                success : (res) => {
+                    for(let value in res){
+                        (res[value].return === 1) ? success += 1 : fail += 1 ;
+                    }
+                    alert(success+" data berhasil direverse ke SAP");
+                    hideLoadingCss();
+                    invoiceCheckedArray = new Array();
+                    table_rekapitulasi.ajax.reload();
+                },
+                error : (err) => {
+                    hideLoadingCss("Gagal! Terjadi Keasalahan. SIlahkan Hubungi Administrator");
+                }
+            })
+        }
     }
 }
 
