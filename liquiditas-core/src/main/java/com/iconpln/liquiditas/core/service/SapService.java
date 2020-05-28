@@ -275,10 +275,10 @@ public class SapService {
                 .withFunctionName("sap_ins_customer_wht");
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("p_customer_no",insData.get("customer_no"))
-                .addValue("p_comp_code",insData.get("customer_no"))
-                .addValue("p_with_tax_type",insData.get("customer_no"))
-                .addValue("p_with_tax_code",insData.get("customer_no"))
-                .addValue("p_desc",insData.get("customer_no"))
+                .addValue("p_comp_code",insData.get("comp_code"))
+                .addValue("p_with_tax_type",insData.get("with_tax_type"))
+                .addValue("p_with_tax_code",insData.get("with_tax_code"))
+                .addValue("p_desc",insData.get("with_tax_type_desc"))
                 .addValue("out_msg",OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(param);
         AppUtils.getLogger(this).info("insert customer wht data : {}",out);
