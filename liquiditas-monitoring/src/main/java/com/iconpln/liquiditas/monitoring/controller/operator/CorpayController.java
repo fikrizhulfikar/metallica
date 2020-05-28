@@ -1610,8 +1610,8 @@ public class CorpayController {
             String fiscal_year = object.getString("pFiscYear");
             String line_item = object.getString("pLineItem");
             String ket = object.getString("pKet");
-            String oss_id = object.getString("pOssId");
-            String group_id = object.getString("pGroupId");
+            String oss_id = object.getString("oss_id");
+            String group_id = object.getString("group_id");
             out = corpayService.verifikasiTgl(comp_code, doc_no, fiscal_year, line_item, ket, WebUtils.getUsernameLogin(), oss_id, group_id);
         }
         return out;
