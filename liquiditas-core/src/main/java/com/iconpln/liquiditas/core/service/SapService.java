@@ -275,10 +275,10 @@ public class SapService {
                 .withFunctionName("sap_ins_customer_wht");
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("p_customer_no",insData.get("customer_no"))
-                .addValue("p_comp_code",insData.get("customer_no"))
-                .addValue("p_with_tax_type",insData.get("customer_no"))
-                .addValue("p_with_tax_code",insData.get("customer_no"))
-                .addValue("p_desc",insData.get("customer_no"))
+                .addValue("p_comp_code",insData.get("comp_code"))
+                .addValue("p_with_tax_type",insData.get("with_tax_type"))
+                .addValue("p_with_tax_code",insData.get("with_tax_code"))
+                .addValue("p_desc",insData.get("with_tax_type_desc"))
                 .addValue("out_msg",OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(param);
         AppUtils.getLogger(this).info("insert customer wht data : {}",out);
@@ -367,7 +367,7 @@ public class SapService {
                 .addValue("p_contact_person", insData.get("contact_person"))
                 .addValue("p_currency", insData.get("currency"))
                 .addValue("p_description", insData.get("description"))
-                .addValue("p_gl_account", insData.get("gl_accoun"))
+                .addValue("p_gl_account", insData.get("gl_account"))
                 .addValue("p_house_bank", insData.get("house_bank"))
                 .addValue("p_telephone1", insData.get("telephone1"))
                 .addValue("out_msg", OracleTypes.VARCHAR);

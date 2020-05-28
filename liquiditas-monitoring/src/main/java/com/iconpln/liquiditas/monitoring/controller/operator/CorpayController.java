@@ -896,6 +896,26 @@ public class CorpayController {
         }
     }
 
+    @PostMapping(path = "/reverse_sap_multiple")
+    public Map<String, Object> multipleReverseSap(@RequestParam(value = "pData") String pData) throws JSONException, SQLException{
+        Map<String, Object> reverse = new HashMap<>();
+        Map<String, Object> out = new HashMap<>();
+        JSONArray jsonArray = new JSONArray(pData);
+        for (int index = 0; index < jsonArray.length(); index++){
+            JSONObject jsonObject = jsonArray.getJSONObject(index);
+            String comp_code = jsonObject.getString("pCompCode");
+            String doc_no = jsonObject.getString("pDocNo");
+            String fiscal_year = jsonObject.getString("pFiscYear");
+            String line_item = jsonObject.getString("pLineItem");
+            String ket = jsonObject.getString("pKet");
+            String oss_id = jsonObject.getString("oss_id");
+            String group_id = jsonObject.getString("group_id");
+            reverse = corpayService.reverseSap(comp_code, doc_no, fiscal_year, line_item, ket, WebUtils.getUsernameLogin(), oss_id, group_id);
+            out.put("reverse("+index+")",reverse);
+        }
+        return out;
+    }
+
     @RequestMapping(value = "/get_bank_pembayar", method = RequestMethod.GET)
     public List<Map<String,Object>> getBankPembayar() {
         try {
@@ -1590,8 +1610,8 @@ public class CorpayController {
             String fiscal_year = object.getString("pFiscYear");
             String line_item = object.getString("pLineItem");
             String ket = object.getString("pKet");
-            String oss_id = object.getString("pOssId");
-            String group_id = object.getString("pGroupId");
+            String oss_id = object.getString("oss_id");
+            String group_id = object.getString("group_id");
             out = corpayService.verifikasiTgl(comp_code, doc_no, fiscal_year, line_item, ket, WebUtils.getUsernameLogin(), oss_id, group_id);
         }
         return out;

@@ -69,7 +69,7 @@ public class Sap {
         String list = '[' + get_result + ']';
         System.out.println(list);
         arr = (org.apache.chemistry.opencmis.commons.impl.json.JSONArray) parser.parse(list);
-        System.out.println("ARR:"+arr);
+        System.out.println("List Customer:"+list);
 
         Map<String, Object> out = new HashMap<>();
         try {
@@ -193,11 +193,11 @@ public class Sap {
             String list = "["+get_result+"]";
             arr = (org.apache.chemistry.opencmis.commons.impl.json.JSONArray) parser.parse(list);
 
-            System.out.println("ARR:"+arr);
+            System.out.println("List AP Invoice:"+list);
 
             int countter = 0 ;
 
-            System.out.println("ARR SIZE :"+arr.size());
+//            System.out.println("ARR SIZE :"+arr.size());
             for(int i=0; i<arr.size(); i++){
                 org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObject = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arr.get(i);
                 if (jsonObject.get("HEADER_DATA") != null){
@@ -237,8 +237,8 @@ public class Sap {
                         String verified_by = String.valueOf(jsonObjectLines.get("VERIFIED_BY"));
                         String verified_on = String.valueOf(jsonObjectLines.get("VERIFIED_ON"));
 
-                        System.out.println("Exch Rate : "+exch_rate);
-                        System.out.println("Amount Bayar : "+amount_bayar);
+//                        System.out.println("Exch Rate : "+exch_rate);
+//                        System.out.println("Amount Bayar : "+amount_bayar);
 
                         try {
                             out = sapService.insertApInvoiceHead(comp_code, doc_no, fisc_year, doc_type, doc_date, post_date, entry_date, reference, rev_with, rev_year,
@@ -254,8 +254,8 @@ public class Sap {
                 System.out.println("Loop Head Ap Invoice :"+ countter);
                 if (jsonObject.get("ITEM_DATA") != null){
                     arrLines2 = (org.apache.chemistry.opencmis.commons.impl.json.JSONArray) parser.parse(String.valueOf(jsonObject.get("ITEM_DATA")));
-                    System.out.println("Arrlines Size:"+arrLines2.size());
-                    System.out.println("Arrlines Head:"+arrLines2);
+//                    System.out.println("Arrlines Size:"+arrLines2.size());
+//                    System.out.println("Arrlines Head:"+arrLines2);
                     countter = 0;
                     for(int j=0; j < arrLines2.size(); j++){
                         condition.clear();
@@ -341,7 +341,7 @@ public class Sap {
             }
             String list = "["+get_result+"]";
 //            String list = "["+res+"]";
-            System.out.println("List HR Payable"+list);
+            System.out.println("List HR Payable :"+list);
 
             arr = (JSONArray) parser.parse(list);
             int counter = 0;
@@ -481,6 +481,7 @@ public class Sap {
 //            sapmaster.getDataVendor(param)
             String list = "["+ get_result + "]";
             arr = (JSONArray) parser.parse(list);
+            System.out.println("List Vendor : "+get_result);
 
             for (int i = 0;i < arr.size(); i++){
                 org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObject = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arr.get(i);
@@ -580,6 +581,7 @@ public class Sap {
                 result.put("status_message",object.get("ERROR_MESSAGE").toString());
             }
 
+            System.out.println("List Payment House Bank : "+res_result);
 //            String list = "["+res+"]";
             String list = "["+res_result+"]";
             arr = (JSONArray) parser.parse(list);
@@ -644,6 +646,7 @@ public class Sap {
                 result.put("status_message",object.get("ERROR_MESSAGE").toString());
             }
 
+            System.out.println("List General Bank : "+get_result);
 //            String list = "["+res+"]";
             String list = "["+get_result+"]";
 //            System.out.println("Ini List : "+list);
