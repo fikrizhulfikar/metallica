@@ -89,12 +89,12 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/operasiKhususTrx.js" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\operator" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\drivers" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\new-backend\node_modules" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\error" />
       <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\dashboardcorpay" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\backend\controller" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-core\src\main\java\com\iconpln\liquiditas\core\service" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\frontend\dashboardcorpay" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\new-backend\js" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.iconpln.liquiditas.monitoring.controller.xmldoc" />
@@ -103,12 +103,12 @@
       <recent name="com.iconpln.liquiditas.core.service" />
       <recent name="com.iconpln.liquiditas.core.domain" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\drivers" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\new-backend\node_modules" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\error" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\operator" />
       <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\dashboardcorpay" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\new-backend\js" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\backend\controller" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-core\src\main\java\com\iconpln\liquiditas\core\service" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\frontend\dashboardcorpay" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -820,13 +820,13 @@
         <line-breakpoint type="java-method">
           <url>file://$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/ValasService.java</url>
           <line>1613</line>
-          <properties class="com.iconpln.liquiditas.core.service.ValasService" method="insPlacement" />
+          <properties class="com.iconpln.liquiditas.core.service.ValasService" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/master/PageMasterController.java</url>
           <line>39</line>
-          <properties class="com.iconpln.liquiditas.monitoring.controller.master.PageMasterController" method="tenor">
+          <properties class="com.iconpln.liquiditas.monitoring.controller.master.PageMasterController">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="15" />
