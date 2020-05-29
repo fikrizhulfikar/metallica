@@ -884,7 +884,8 @@ $.ajax({
             var data3_real = res.OUT_MINGGU_REAL;
             var data4 = res.OUT_BULAN;
             var data4_real = res.OUT_BULAN_REAL;
-            var data5 = res.OUT_TAHUN_REAL;
+            var data5 = res.OUT_TAHUN;
+            var data5_real = res.OUT_TAHUN_REAL;
 
             var dataChartRenPembayaranHari = [];
             $.each(data2, function (index, value) {
@@ -925,24 +926,24 @@ $.ajax({
                         seriesname : value.CASH_DESCRIPTION,
                         data : [
                         {
-                           value: value.KE_1,
-                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_1)
-                        },
-                        {
-                           value: value.KE_2,
-                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_2)
-                        },
-                        {
-                           value: value.KE_3,
-                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_3)
+                           value: value.KE_5,
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_5)
                         },
                         {
                            value: value.KE_4,
                            toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_4)
                         },
                         {
-                           value: value.KE_5,
-                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_5)
+                           value: value.KE_3,
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_3)
+                        },
+                        {
+                           value: value.KE_2,
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_2)
+                        },
+                        {
+                           value: value.KE_1,
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_1)
                         }
                     ]
                 };
@@ -991,11 +992,11 @@ $.ajax({
                         seriesname : value.CASH_DESCRIPTION,
                         data : [
                         {
-                           value: value.KE_1,
+                           value: value.KE_5,
                            toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_1)
                         },
                         {
-                           value: value.KE_2,
+                           value: value.KE_4,
                            toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_2)
                         },
                         {
@@ -1003,11 +1004,11 @@ $.ajax({
                            toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_3)
                         },
                         {
-                           value: value.KE_4,
+                           value: value.KE_2,
                            toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_4)
                         },
                         {
-                           value: value.KE_5,
+                           value: value.KE_1,
                            toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_5)
                         }
                     ]
@@ -1057,11 +1058,11 @@ $.ajax({
                         seriesname : value.CASH_DESCRIPTION,
                         data : [
                         {
-                           value: value.KE_1,
+                           value: value.KE_5,
                            toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_1)
                         },
                         {
-                           value: value.KE_2,
+                           value: value.KE_4,
                            toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_2)
                         },
                         {
@@ -1069,11 +1070,11 @@ $.ajax({
                            toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_3)
                         },
                         {
-                           value: value.KE_4,
+                           value: value.KE_2,
                            toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_4)
                         },
                         {
-                           value: value.KE_5,
+                           value: value.KE_1,
                            toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_5)
                         }
                     ]
@@ -1084,17 +1085,50 @@ $.ajax({
             var datab2 = {dataset : dataChartRealPembayaranBulan};
             datasetb2.push(datab2);
 
+            var dataChartRenPembayaranTahun = [];
+                $.each(data5, function (index, value) {
+                    var dataPieTemp = {
+                        seriesname : value.CASH_DESCRIPTION,
+                        data : [
+                        {
+                            value: value.KE_1,
+                            toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_1)
+                        },
+                        {
+                            value: value.KE_2,
+                            toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_2)
+                        },
+                        {
+                            value: value.KE_3,
+                            toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_3)
+                        },
+                        {
+                            value: value.KE_4,
+                            toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_4)
+                        },
+                        {
+                            value: value.KE_5,
+                            toolText: "Rencana $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_5)
+                        }
+                        ]
+                    };
+                    dataChartRenPembayaranTahun.push(dataPieTemp)
+                });
+                var datasett1 = [];
+                var datat1 = {dataset : dataChartRenPembayaranTahun};
+                datasett1.push(datat1);
+
             var dataChartRealPembayaranTahun = [];
-            $.each(data5, function (index, value) {
-                var dataPieTemp4 = {
+            $.each(data5_real, function (index, value) {
+                var dataPieTemp2 = {
                     seriesname : value.CASH_DESCRIPTION,
                     data : [
                     {
-                        value: value.KE_1,
+                        value: value.KE_5,
                         toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_1)
                     },
                     {
-                        value: value.KE_2,
+                        value: value.KE_4,
                         toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_2)
                     },
                     {
@@ -1102,28 +1136,45 @@ $.ajax({
                         toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_3)
                     },
                     {
-                        value: value.KE_4,
+                        value: value.KE_2,
                         toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_4)
                     },
                     {
-                        value: value.KE_5,
+                        value: value.KE_1,
                         toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_5)
                     }
                     ]
                 };
-                dataChartRealPembayaranTahun.push(dataPieTemp4)
+                dataChartRealPembayaranTahun.push(dataPieTemp2)
             });
+            var datasett2 = [];
+            var datat2 = {dataset : dataChartRealPembayaranTahun};
+            datasett2.push(datat2);
 
-            var chart_hari = dataseth1.concat(dataseth2);
-            barRencanaRealisasiPembayaranHari(chart_hari)
+            barRencanaPembayaranHari(dataseth1)
+            barRencanaPembayaranMinggu(datasetm1)
+            barRencanaPembayaranBulan(datasetb1)
+            barRencanaPembayaranTahun(datasett1)
 
-            var chart_minggu = datasetm1.concat(datasetm2);
-            barRencanaRealisasiPembayaranMinggu(chart_minggu)
+            barRealisasiPembayaranHari(dataseth2)
+            barRealisasiPembayaranMinggu(datasetm2)
+            barRealisasiPembayaranBulan(datasetb2)
+            barRealisasiPembayaranTahun(datasett2)
 
-            var chart_bulan = datasetb1.concat(datasetb2);
-            barRencanaRealisasiPembayaranBulan(chart_bulan)
 
-            barRencanaRealisasiPembayaranTahun(dataChartRealPembayaranTahun)
+//            var chart_hari = dataseth1.concat(dataseth2);
+//            barRencanaRealisasiPembayaranHari(chart_hari)
+//
+//            var chart_minggu = datasetm1.concat(datasetm2);
+//            barRencanaRealisasiPembayaranMinggu(chart_minggu)
+//
+//            var chart_bulan = datasetb1.concat(datasetb2);
+//            barRencanaRealisasiPembayaranBulan(chart_bulan)
+//
+//            var chart_tahun = datasett1.concat(datasett2);
+//            barRencanaRealisasiPembayaranTahun(chart_tahun)
+
+//            barRencanaRealisasiPembayaranTahun(dataChartRealPembayaranTahun)
       }
  });
 $.ajax({
@@ -1140,19 +1191,19 @@ $.ajax({
                  seriesname : value.CASH_DESCRIPTION,
                  data : [
                      {
-                          value: value.H_2
+                         value: value.H_MIN2
                      },
                      {
-                          value: value.H_1
+                         value: value.H_MIN1
                      },
                      {
                          value: value.H_0
                      },
                      {
-                        value: value.H_MIN1
+                        value: value.H_1
                      },
                      {
-                          value: value.H_MIN2
+                        value: value.H_2
                      }
                  ]
              };
@@ -1166,19 +1217,19 @@ $.ajax({
                      renderas : "line",
                      data : [
                        {
-                          value: value.H_2
-                       },
-                       {
-                          value: value.H_1
-                       },
-                       {
-                          value: value.H_0
+                          value: value.H_MIN2
                        },
                        {
                           value: value.H_MIN1
                        },
                        {
-                          value: value.H_MIN2
+                          value: value.H_0
+                       },
+                       {
+                          value: value.H_1
+                       },
+                       {
+                          value: value.H_2
                        }
                      ]
                   };
@@ -1380,10 +1431,69 @@ function creteChartKompSaldo(data) {
     });
 }
 
-function barRencanaRealisasiPembayaranHari(chart_hari){
+function analisaPembayaranBarLine(coba, _date){
+    let date = new Date();
+    var datestring = dateToString(date);
+    FusionCharts.ready(function () {
+        let chart = new FusionCharts({
+            type: "stackedcolumn2dline",
+            renderAt: "chart-container",
+            id: "chart",
+            width: "100%",
+            height: "100%",
+            dataFormat: "json",
+            dataSource: {
+               chart : {
+                   caption : "Analisa Performa Pembayaran",
+                   subcaption : "PT. PLN (Persero) Divisi Treasury",
+                   showSum : "1",
+                   numberprefix : "Rp ",
+                   theme : "fusion",
+                   numDivLines : "5",
+                   divLineColor: "#6699cc",
+                   divLineAlpha: "60",
+                   divLineDashed: "0",
+                   showLegend: "0",
+                   numberScaleValue : "1000, 1000, 1000, 1000",
+                   numberScaleValue : "Rp, Jt, M, T"
+               },
+               categories : [
+                   {
+                       category : [
+                           {
+                               label : incDate(date, -2)
+                           },
+                           {
+                               label : incDate(date, -1)
+                           },
+                           {
+                               label : datestring
+                           },
+                           {
+                               label : incDate(date, 1)
+                           },
+                           {
+                               label : incDate(date, 2)
+                           }
+                       ]
+                   }
+               ],
+               dataset : coba
+           }
+//            events:{
+//              "rendered": function (eventObj, dataObj) {
+//              var mydatasource = chart.getJSONData();
+//              console.log(mydatasource)
+//                }
+//            }
+        }).render();
+    });
+}
+
+function barRencanaPembayaranHari(dataseth1){
     const dataSource = {
         chart : {
-            caption : "Rencana & Realisasi Pembayaran Per Hari",
+            caption : "Rencana Pembayaran Per Hari",
             subcaption : "PT. PLN (Persero) Divisi Treasury",
             showSum : "1",
             numberprefix : "Rp ",
@@ -1417,7 +1527,7 @@ function barRencanaRealisasiPembayaranHari(chart_hari){
                 ]
             }
         ],
-        dataset : chart_hari
+        dataset : dataseth1
     };
 
     FusionCharts.ready(function () {
@@ -1432,10 +1542,10 @@ function barRencanaRealisasiPembayaranHari(chart_hari){
     });
 }
 
-function barRencanaRealisasiPembayaranMinggu(chart_minggu){
+function barRencanaPembayaranMinggu(datasetm1){
     const dataSource = {
         chart : {
-            caption : "Rencana & Realisasi Pembayaran Per Minggu",
+            caption : "Rencana Pembayaran Per Minggu",
             subcaption : "PT. PLN (Persero) Divisi Treasury",
             showSum : "1",
             numberprefix : "Rp ",
@@ -1469,7 +1579,7 @@ function barRencanaRealisasiPembayaranMinggu(chart_minggu){
                 ]
             }
         ],
-        dataset : chart_minggu
+        dataset : datasetm1
     };
 
     FusionCharts.ready(function () {
@@ -1484,10 +1594,13 @@ function barRencanaRealisasiPembayaranMinggu(chart_minggu){
     });
 }
 
-function barRencanaRealisasiPembayaranBulan(chart_bulan){
+function barRencanaPembayaranBulan(datasetb1){
+
+//    console.log(chart_bulan)
+
     const dataSource = {
         chart : {
-            caption : "Rencana & Realisasi Pembayaran Per Bulan",
+            caption : "Rencana Pembayaran Per Bulan",
             subcaption : "PT. PLN (Persero) Divisi Treasury",
             showSum : "1",
             numberprefix : "Rp ",
@@ -1521,7 +1634,7 @@ function barRencanaRealisasiPembayaranBulan(chart_bulan){
                 ]
             }
         ],
-        dataset : chart_bulan
+        dataset : datasetb1
     };
 
     FusionCharts.ready(function () {
@@ -1536,10 +1649,13 @@ function barRencanaRealisasiPembayaranBulan(chart_bulan){
     });
 }
 
-function barRencanaRealisasiPembayaranTahun(data5){
+function barRencanaPembayaranTahun(datasett1){
+
+//    console.log(chart_bulan)
+
     const dataSource = {
         chart : {
-            caption : "Rencana & Realisasi Pembayaran Per Tahun",
+            caption : "Rencana Pembayaran Per Tahun",
             subcaption : "PT. PLN (Persero) Divisi Treasury",
             showSum : "1",
             numberprefix : "Rp ",
@@ -1573,12 +1689,12 @@ function barRencanaRealisasiPembayaranTahun(data5){
                 ]
             }
         ],
-        dataset : data5
+        dataset : datasett1
     };
 
     FusionCharts.ready(function () {
         let chart = new FusionCharts({
-            type: "stackedcolumn2dline",
+            type: "msstackedcolumn2d",
             renderAt: "column-rencana-pembayaran4",
             width: "100%",
             height: "100%",
@@ -1588,60 +1704,431 @@ function barRencanaRealisasiPembayaranTahun(data5){
     });
 }
 
-function analisaPembayaranBarLine(coba){
+function barRealisasiPembayaranHari(dataseth2){
+    const dataSource = {
+        chart : {
+            caption : "Realisasi Pembayaran Per Hari",
+            subcaption : "PT. PLN (Persero) Divisi Treasury",
+            showSum : "1",
+            numberprefix : "Rp ",
+            theme : "fusion",
+            numDivLines : "5",
+            divLineColor: "#6699cc",
+            divLineAlpha: "60",
+            divLineDashed: "0",
+            showLegend: "0",
+            numberScaleValue: "1000, 1000, 1000, 1000",
+            numberScaleUnit: "Rb, Jt, M, T"
+        },
+        categories : [
+            {
+                category : [
+                    {
+                        label : "Hari H -4"
+                    },
+                    {
+                        label : "Hari H -3"
+                    },
+                    {
+                        label : "Hari H -2"
+                    },
+                    {
+                        label : "Hari H -1"
+                    },
+                    {
+                        label : "Hari H"
+                    }
+                ]
+            }
+        ],
+        dataset : dataseth2
+    };
+
     FusionCharts.ready(function () {
         let chart = new FusionCharts({
-            type: "stackedcolumn2dline",
-            renderAt: "chart-container",
-            id: "chart",
+            type: "msstackedcolumn2d",
+            renderAt: "column-realisasi-pembayaran",
             width: "100%",
             height: "100%",
             dataFormat: "json",
-            dataSource: {
-               chart : {
-                   caption : "Analisa Performa Pembayaran",
-                   subcaption : "PT. PLN (Persero) Divisi Treasury",
-                   showSum : "1",
-                   numberprefix : "Rp ",
-                   theme : "fusion",
-                   numDivLines : "5",
-                   divLineColor: "#6699cc",
-                   divLineAlpha: "60",
-                   divLineDashed: "0",
-                   showLegend: "0",
-                   numberScaleValue : "1000, 1000, 1000, 1000",
-                   numberScaleValue : "Rp, Jt, M, T"
-               },
-               categories : [
-                   {
-                       category : [
-                           {
-                               label : "Hari H +2"
-                           },
-                           {
-                               label : "Hari H +1"
-                           },
-                           {
-                               label : "Hari H"
-                           },
-                           {
-                               label : "Hari H -1"
-                           },
-                           {
-                               label : "Hari H -2"
-                           }
-                       ]
-                   }
-               ],
-               dataset : coba
-           }
-//            events:{
-//              "rendered": function (eventObj, dataObj) {
-//              var mydatasource = chart.getJSONData();
-//              console.log(mydatasource)
-//                }
-//            }
+            dataSource
         }).render();
     });
 }
+
+function barRealisasiPembayaranMinggu(datasetm2){
+    const dataSource = {
+        chart : {
+            caption : "Realisasi Pembayaran Per Minggu",
+            subcaption : "PT. PLN (Persero) Divisi Treasury",
+            showSum : "1",
+            numberprefix : "Rp ",
+            theme : "fusion",
+            numDivLines : "5",
+            divLineColor: "#6699cc",
+            divLineAlpha: "60",
+            divLineDashed: "0",
+            showLegend: "0",
+            numberScaleValue: "1000, 1000, 1000, 1000",
+            numberScaleUnit: "Rb, Jt, M, T"
+        },
+        categories : [
+            {
+                category : [
+                    {
+                        label : "Minggu H -4"
+                    },
+                    {
+                        label : "Minggu H -3"
+                    },
+                    {
+                        label : "Minggu H -2"
+                    },
+                    {
+                        label : "Minggu H -1"
+                    },
+                    {
+                        label : "Minggu H"
+                    }
+                ]
+            }
+        ],
+        dataset : datasetm2
+    };
+
+    FusionCharts.ready(function () {
+        let chart = new FusionCharts({
+            type: "msstackedcolumn2d",
+            renderAt: "column-realisasi-pembayaran2",
+            width: "100%",
+            height: "100%",
+            dataFormat: "json",
+            dataSource
+        }).render();
+    });
+}
+
+function barRealisasiPembayaranBulan(datasetb2){
+
+//    console.log(chart_bulan)
+
+    const dataSource = {
+        chart : {
+            caption : "Realisasi Pembayaran Per Bulan",
+            subcaption : "PT. PLN (Persero) Divisi Treasury",
+            showSum : "1",
+            numberprefix : "Rp ",
+            theme : "fusion",
+            numDivLines : "5",
+            divLineColor: "#6699cc",
+            divLineAlpha: "60",
+            divLineDashed: "0",
+            showLegend: "0",
+            numberScaleValue: "1000, 1000, 1000, 1000",
+            numberScaleUnit: "Rb, Jt, M, T"
+        },
+        categories : [
+            {
+                category : [
+                    {
+                        label : "Bulan H -4"
+                    },
+                    {
+                        label : "Bulan H -3"
+                    },
+                    {
+                        label : "Bulan H -2"
+                    },
+                    {
+                        label : "Bulan H -1"
+                    },
+                    {
+                        label : "Bulan H"
+                    }
+                ]
+            }
+        ],
+        dataset : datasetb2
+    };
+
+    FusionCharts.ready(function () {
+        let chart = new FusionCharts({
+            type: "msstackedcolumn2d",
+            renderAt: "column-realisasi-pembayaran3",
+            width: "100%",
+            height: "100%",
+            dataFormat: "json",
+            dataSource
+        }).render();
+    });
+}
+
+function barRealisasiPembayaranTahun(datasett2){
+
+//    console.log(chart_bulan)
+
+    const dataSource = {
+        chart : {
+            caption : "Realisasi Pembayaran Per Tahun",
+            subcaption : "PT. PLN (Persero) Divisi Treasury",
+            showSum : "1",
+            numberprefix : "Rp ",
+            theme : "fusion",
+            numDivLines : "5",
+            divLineColor: "#6699cc",
+            divLineAlpha: "60",
+            divLineDashed: "0",
+            showLegend: "0",
+            numberScaleValue: "1000, 1000, 1000, 1000",
+            numberScaleUnit: "Rb, Jt, M, T"
+        },
+        categories : [
+            {
+                category : [
+                    {
+                        label : "2016"
+                    },
+                    {
+                        label : "2017"
+                    },
+                    {
+                        label : "2018"
+                    },
+                    {
+                        label : "2019"
+                    },
+                    {
+                        label : "2020"
+                    }
+                ]
+            }
+        ],
+        dataset : datasett2
+    };
+
+    FusionCharts.ready(function () {
+        let chart = new FusionCharts({
+            type: "msstackedcolumn2d",
+            renderAt: "column-realisasi-pembayaran4",
+            width: "100%",
+            height: "100%",
+            dataFormat: "json",
+            dataSource
+        }).render();
+    });
+}
+
+//function barRencanaRealisasiPembayaranHari(chart_hari){
+//    const dataSource = {
+//        chart : {
+//            caption : "Rencana & Realisasi Pembayaran Per Hari",
+//            subcaption : "PT. PLN (Persero) Divisi Treasury",
+//            showSum : "1",
+//            numberprefix : "Rp ",
+//            theme : "fusion",
+//            numDivLines : "5",
+//            divLineColor: "#6699cc",
+//            divLineAlpha: "60",
+//            divLineDashed: "0",
+//            showLegend: "0",
+//            numberScaleValue: "1000, 1000, 1000, 1000",
+//            numberScaleUnit: "Rb, Jt, M, T"
+//        },
+//        categories : [
+//            {
+//                category : [
+//                    {
+//                        label : "Hari ke 1"
+//                    },
+//                    {
+//                        label : "Hari ke 2"
+//                    },
+//                    {
+//                        label : "Hari ke 3"
+//                    },
+//                    {
+//                        label : "Hari ke 4"
+//                    },
+//                    {
+//                        label : "Hari ke 5"
+//                    }
+//                ]
+//            }
+//        ],
+//        dataset : chart_hari
+//    };
+//
+//    FusionCharts.ready(function () {
+//        let chart = new FusionCharts({
+//            type: "msstackedcolumn2d",
+//            renderAt: "column-rencana-pembayaran",
+//            width: "100%",
+//            height: "100%",
+//            dataFormat: "json",
+//            dataSource
+//        }).render();
+//    });
+//}
+//
+//function barRencanaRealisasiPembayaranMinggu(chart_minggu){
+//    const dataSource = {
+//        chart : {
+//            caption : "Rencana & Realisasi Pembayaran Per Minggu",
+//            subcaption : "PT. PLN (Persero) Divisi Treasury",
+//            showSum : "1",
+//            numberprefix : "Rp ",
+//            theme : "fusion",
+//            numDivLines : "5",
+//            divLineColor: "#6699cc",
+//            divLineAlpha: "60",
+//            divLineDashed: "0",
+//            showLegend: "0",
+//            numberScaleValue: "1000, 1000, 1000, 1000",
+//            numberScaleUnit: "Rb, Jt, M, T"
+//        },
+//        categories : [
+//            {
+//                category : [
+//                    {
+//                        label : "Minggu ke 1"
+//                    },
+//                    {
+//                        label : "Minggu ke 2"
+//                    },
+//                    {
+//                        label : "Minggu ke 3"
+//                    },
+//                    {
+//                        label : "Minggu ke 4"
+//                    },
+//                    {
+//                        label : "Minggu ke 5"
+//                    }
+//                ]
+//            }
+//        ],
+//        dataset : chart_minggu
+//    };
+//
+//    FusionCharts.ready(function () {
+//        let chart = new FusionCharts({
+//            type: "msstackedcolumn2d",
+//            renderAt: "column-rencana-pembayaran2",
+//            width: "100%",
+//            height: "100%",
+//            dataFormat: "json",
+//            dataSource
+//        }).render();
+//    });
+//}
+//
+//function barRencanaRealisasiPembayaranBulan(chart_bulan){
+//
+////    console.log(chart_bulan)
+//
+//    const dataSource = {
+//        chart : {
+//            caption : "Rencana & Realisasi Pembayaran Per Bulan",
+//            subcaption : "PT. PLN (Persero) Divisi Treasury",
+//            showSum : "1",
+//            numberprefix : "Rp ",
+//            theme : "fusion",
+//            numDivLines : "5",
+//            divLineColor: "#6699cc",
+//            divLineAlpha: "60",
+//            divLineDashed: "0",
+//            showLegend: "0",
+//            numberScaleValue: "1000, 1000, 1000, 1000",
+//            numberScaleUnit: "Rb, Jt, M, T"
+//        },
+//        categories : [
+//            {
+//                category : [
+//                    {
+//                        label : "Bulan ke 1"
+//                    },
+//                    {
+//                        label : "Bulan ke 2"
+//                    },
+//                    {
+//                        label : "Bulan ke 3"
+//                    },
+//                    {
+//                        label : "Bulan ke 4"
+//                    },
+//                    {
+//                        label : "Bulan ke 5"
+//                    }
+//                ]
+//            }
+//        ],
+//        dataset : chart_bulan
+//    };
+//
+//    FusionCharts.ready(function () {
+//        let chart = new FusionCharts({
+//            type: "msstackedcolumn2d",
+//            renderAt: "column-rencana-pembayaran3",
+//            width: "100%",
+//            height: "100%",
+//            dataFormat: "json",
+//            dataSource
+//        }).render();
+//    });
+//}
+//
+//function barRencanaRealisasiPembayaranTahun(chart_tahun){
+//
+////    console.log(chart_bulan)
+//
+//    const dataSource = {
+//        chart : {
+//            caption : "Rencana & Realisasi Pembayaran Per Bulan",
+//            subcaption : "PT. PLN (Persero) Divisi Treasury",
+//            showSum : "1",
+//            numberprefix : "Rp ",
+//            theme : "fusion",
+//            numDivLines : "5",
+//            divLineColor: "#6699cc",
+//            divLineAlpha: "60",
+//            divLineDashed: "0",
+//            showLegend: "0",
+//            numberScaleValue: "1000, 1000, 1000, 1000",
+//            numberScaleUnit: "Rb, Jt, M, T"
+//        },
+//        categories : [
+//            {
+//                category : [
+//                    {
+//                        label : "2019"
+//                    },
+//                    {
+//                        label : "2020"
+//                    },
+//                    {
+//                        label : "2021"
+//                    },
+//                    {
+//                        label : "2022"
+//                    },
+//                    {
+//                        label : "2023"
+//                    }
+//                ]
+//            }
+//        ],
+//        dataset : chart_tahun
+//    };
+//
+//    FusionCharts.ready(function () {
+//        let chart = new FusionCharts({
+//            type: "msstackedcolumn2d",
+//            renderAt: "column-rencana-pembayaran4",
+//            width: "100%",
+//            height: "100%",
+//            dataFormat: "json",
+//            dataSource
+//        }).render();
+//    });
+//}
 

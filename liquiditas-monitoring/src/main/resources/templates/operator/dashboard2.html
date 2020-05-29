@@ -141,10 +141,10 @@
                                             <div align="center" id="chart-komposisi-saldo" style="margin-top: -19px"></div>
                                             <div class="wrapper" style="margin-top: 5px">
                                                 <ul align="center" class="legend">
-                                                    <li><span class="one"></span> REKENING IMPREST</li>
-                                                    <li><span class="four"></span> REKENING OPERASIONAL LAINNYA</li>
-                                                    <li><span class="two"></span> REKENING RESTRICTED</li>
-                                                    <li><span class="three"></span> DEPOSITO</li>
+                                                    <li><span class="three"></span> REKENING IMPREST</li>
+                                                    <li><span class="two"></span> REKENING OPERASIONAL LAINNYA</li>
+                                                    <li><span class="one"></span> REKENING RESTRICTED</li>
+                                                    <li><span class="four"></span> DEPOSITO</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -185,8 +185,8 @@
                                             </div>
                                             <div class="wrapper" style="margin-top: 10px">
                                                 <ul class="legend">
-                                                    <li><span class="eight"></span> IMPREST</li>
-                                                    <li><span class="nine"></span> RECEIPT</li>
+                                                    <li><span class="nine"></span> IMPREST</li>
+                                                    <li><span class="eight"></span> RECEIPT</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -237,7 +237,37 @@
                                 </div>
                             </div>
                         </div>
-                        <label for="carousel-5" class="carousel-control prev control-1">‹</label>
+                        <input class="carousel-open" type="radio" id="carousel-6" name="carousel" aria-hidden="true" hidden=""/>
+                        <div class="carousel-item">
+                            <div class="col-md-12" style="margin-top: 20px">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div class="col-md-12" style="padding-top: 0px;">
+                                            <!--                                            <div><h6><b>3B</b></h6></div>-->
+                                            <div id="column-realisasi-pembayaran"  class="a" style="height: 35rem; width: 100%;"></div>
+                                            <div id="column-realisasi-pembayaran2" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                            <div id="column-realisasi-pembayaran3" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                            <div id="column-realisasi-pembayaran4" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                        </div>
+                                        <div class="col-md-12" align="center">
+                                            <button class="btn" onclick="realHari()">
+                                                Hari
+                                            </button>
+                                            <button class="btn" onclick="realMinggu()">
+                                                Minggu
+                                            </button>
+                                            <button class="btn" onclick="realBulan()">
+                                                Bulan
+                                            </button>
+                                            <button class="btn" onclick="realTahun()">
+                                                Tahun
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <label for="carousel-6" class="carousel-control prev control-1">‹</label>
                         <label for="carousel-2" class="carousel-control next control-1">›</label>
                         <label for="carousel-1" class="carousel-control prev control-2">‹</label>
                         <label for="carousel-3" class="carousel-control next control-2">›</label>
@@ -246,7 +276,9 @@
                         <label for="carousel-3" class="carousel-control prev control-4">‹</label>
                         <label for="carousel-5" class="carousel-control next control-4">›</label>
                         <label for="carousel-4" class="carousel-control prev control-5">‹</label>
-                        <label for="carousel-1" class="carousel-control next control-5">›</label>
+                        <label for="carousel-6" class="carousel-control next control-5">›</label>
+                        <label for="carousel-5" class="carousel-control prev control-6">‹</label>
+                        <label for="carousel-1" class="carousel-control next control-6">›</label>
                     </div>
                 </div>
             </div>
@@ -315,6 +347,50 @@
             element = document.querySelector('#column-rencana-pembayaran2');
 			element.style.visibility = 'hidden';
             element = document.querySelector('#column-rencana-pembayaran');
+			element.style.visibility = 'hidden';
+		}
+
+		function realHari() {
+			element = document.querySelector('#column-realisasi-pembayaran');
+			element.style.visibility = 'visible';
+            element = document.querySelector('#column-realisasi-pembayaran2');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#column-realisasi-pembayaran3');
+			element.style.visibility = 'hidden';
+			element = document.querySelector('#column-realisasi-pembayaran4');
+			element.style.visibility = 'hidden';
+		}
+
+		function realMinggu() {
+			element = document.querySelector('#column-realisasi-pembayaran2');
+			element.style.visibility = 'visible';
+            element = document.querySelector('#column-realisasi-pembayaran');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#column-realisasi-pembayaran3');
+			element.style.visibility = 'hidden';
+			element = document.querySelector('#column-realisasi-pembayaran4');
+			element.style.visibility = 'hidden';
+		}
+
+		function realBulan() {
+			element = document.querySelector('#column-realisasi-pembayaran3');
+			element.style.visibility = 'visible';
+            element = document.querySelector('#column-realisasi-pembayaran2');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#column-realisasi-pembayaran');
+			element.style.visibility = 'hidden';
+			element = document.querySelector('#column-realisasi-pembayaran4');
+			element.style.visibility = 'hidden';
+		}
+
+        function realTahun() {
+            element = document.querySelector('#column-realisasi-pembayaran4');
+			element.style.visibility = 'visible';
+			element = document.querySelector('#column-realisasi-pembayaran3');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#column-realisasi-pembayaran2');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#column-realisasi-pembayaran');
 			element.style.visibility = 'hidden';
 		}
 	</script>
