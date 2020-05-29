@@ -112,7 +112,7 @@ public class GeneratedocController {
             JSONObject object = new JSONObject(list.get(0));
             String no_giro = object.getString("NO_GIRO");
             String rawDate = object.getString("TGL_RENCANA_BAYAR");
-            Date tgl_rencana_bayar = new SimpleDateFormat("yyyy-M-dd HH:mm:ss").parse(rawDate);
+            Date tgl_rencana_bayar = new SimpleDateFormat("dd/MM/yyyy").parse(rawDate);
             System.out.println("Object Hasil Select : "+object);
 
             dg.addVariable("COMP_CODE",object.getString("COMP_CODE"));
