@@ -567,7 +567,6 @@ public class InvoiceGroupService {
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("get_all_group_head_by_status");
 
-
         Map<String, Object> params = new HashMap<>();
         params.put("p_user_id", idUser);
         params.put("p_tgl_awal", pTglAwal);
@@ -577,7 +576,7 @@ public class InvoiceGroupService {
         params.put("p_status_tracking", statusTracking);
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
 
-        AppUtils.getLogger(this).info("data get_all_pembayaran_by_status1 : {} and userid {}", resultset, idUser);
+        AppUtils.getLogger(this).info("data get_all_pembayaran_by_status : {} and userid {}", resultset, idUser);
         return resultset;
     }
 

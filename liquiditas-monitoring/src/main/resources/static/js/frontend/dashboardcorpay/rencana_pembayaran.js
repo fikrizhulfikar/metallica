@@ -3,8 +3,8 @@ $(document).ready(function () {
     var date = new Date();
     var newDate = date.toJSON().slice(0, 10).replace(new RegExp("-", 'g'), "/").split("/").reverse().join("/")
     $("#tglcetak").html(newDate);
-    tableRencanaImpres();
-    tableRencanaImprestValas();
+//    tableRencanaImpres();
+//    tableRencanaImprestValas();
 
     setInterval(function () {
         initDataTableSaldoRek1();
