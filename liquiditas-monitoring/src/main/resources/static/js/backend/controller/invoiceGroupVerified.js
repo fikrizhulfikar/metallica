@@ -689,13 +689,13 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
     $('.dataTables_filter').each(function () {
         // var html = '';
         if(newRoleUser[0] === "ROLE_ADMIN"){
-            var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" title="Sembunyikan Kolom" data-toggle="modal" onclick="showColumn()">' +
+            var html = '<button class="btn btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" title="Sembunyikan Kolom" data-toggle="modal" onclick="showColumn()">' +
                 '<i class="fa fa-arrows-alt"></i></button>';
             /*button reject*/
-            html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="rejectData()">' +
-                '            <i class="fa fa-ban"></i></button>';
-            html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fas fa-edit"></i></button>';
-            html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
+            // html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="rejectData()">' +
+            //     '            <i class="fa fa-ban"></i></button>';
+            // html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fas fa-edit"></i></button>';
+            // html = html + '<button class="btn btn-edit-data btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 5px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
         }
         $(this).append(html);
     });
