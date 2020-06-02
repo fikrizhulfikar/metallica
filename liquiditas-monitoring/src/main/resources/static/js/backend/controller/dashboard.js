@@ -993,11 +993,11 @@ $.ajax({
                         data : [
                         {
                            value: value.KE_5,
-                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_1)
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_5)
                         },
                         {
                            value: value.KE_4,
-                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_2)
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_4)
                         },
                         {
                            value: value.KE_3,
@@ -1005,11 +1005,11 @@ $.ajax({
                         },
                         {
                            value: value.KE_2,
-                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_4)
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_2)
                         },
                         {
                            value: value.KE_1,
-                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_5)
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_1)
                         }
                     ]
                 };
@@ -1059,11 +1059,11 @@ $.ajax({
                         data : [
                         {
                            value: value.KE_5,
-                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_1)
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_5)
                         },
                         {
                            value: value.KE_4,
-                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_2)
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_4)
                         },
                         {
                            value: value.KE_3,
@@ -1071,11 +1071,11 @@ $.ajax({
                         },
                         {
                            value: value.KE_2,
-                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_4)
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_2)
                         },
                         {
                            value: value.KE_1,
-                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_5)
+                           toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_1)
                         }
                     ]
                 };
@@ -1125,11 +1125,11 @@ $.ajax({
                     data : [
                     {
                         value: value.KE_5,
-                        toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_1)
+                        toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_5)
                     },
                     {
                         value: value.KE_4,
-                        toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_2)
+                        toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_4)
                     },
                     {
                         value: value.KE_3,
@@ -1137,11 +1137,11 @@ $.ajax({
                     },
                     {
                         value: value.KE_2,
-                        toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_4)
+                        toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_2)
                     },
                     {
                         value: value.KE_1,
-                        toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_5)
+                        toolText: "Realisasi $seriesname pada $label sebesar Rp " + Intl.NumberFormat().format(value.KE_1)
                     }
                     ]
                 };
@@ -1672,9 +1672,6 @@ function barRencanaPembayaranTahun(datasett1){
             {
                 category : [
                     {
-                        label : "2019"
-                    },
-                    {
                         label : "2020"
                     },
                     {
@@ -1685,6 +1682,9 @@ function barRencanaPembayaranTahun(datasett1){
                     },
                     {
                         label : "2023"
+                    },
+                    {
+                        label : "2024"
                     }
                 ]
             }
