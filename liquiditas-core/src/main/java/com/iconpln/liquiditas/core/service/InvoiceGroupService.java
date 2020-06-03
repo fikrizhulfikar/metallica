@@ -628,7 +628,7 @@ public class InvoiceGroupService {
         return resultset;
     }
 
-    public Map<String, Object> updateStatus(String pIdMetallica, String pStatusTracking){
+    public Map<String, Object> updateStatus(String pIdMetallica, String pStatusTracking, String pUserId){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("group_verifikasi");
@@ -636,19 +636,21 @@ public class InvoiceGroupService {
         SqlParameterSource inParent = new MapSqlParameterSource()
                 .addValue("p_id_group", pIdMetallica)
                 .addValue("p_status_tracking", pStatusTracking)
+                .addValue("p_user_id", pUserId)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data update_status : {}", out);
         return out;
     }
 
-    public Map<String, Object> updateReverse(String pIdMetallica, String pStatusTracking){
+    public Map<String, Object> updateReverse(String pIdMetallica, String pStatusTracking, String pUserId){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("group_reverse");
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("p_id_group", pIdMetallica)
                 .addValue("p_status_tracking", pStatusTracking)
+                .addValue("p_user_id", pUserId)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         Map<String, Object> result = simpleJdbcCall.execute(param);
 

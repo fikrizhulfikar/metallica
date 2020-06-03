@@ -858,7 +858,7 @@ public class InvoiceGroupController {
         AppUtils.getLogger(this).info("pStatusTracking : {}", pStatusTracking);
 
         try {
-            Map<String, Object> resutl = invoiceGroupService.updateStatus(pIdGroup,pStatusTracking);
+            Map<String, Object> resutl = invoiceGroupService.updateStatus(pIdGroup,pStatusTracking, WebUtils.getUsernameLogin());
             if(((BigDecimal) resutl.get("return")).equals(BigDecimal.ONE)){
 
             }
@@ -878,7 +878,7 @@ public class InvoiceGroupController {
         AppUtils.getLogger(this).info("param pIdMetallica : {}", pIdGroup);
         AppUtils.getLogger(this).info("param pStatusTracking : {}", pStatusTracking);
         try {
-            Map<String, Object> result = invoiceGroupService.updateReverse(pIdGroup,pStatusTracking);
+            Map<String, Object> result = invoiceGroupService.updateReverse(pIdGroup, pStatusTracking, WebUtils.getUsernameLogin());
             System.out.println(result);
             if(((BigDecimal) result.get("return")).equals(BigDecimal.ONE)){
 
