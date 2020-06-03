@@ -1,5 +1,6 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
+import com.graphbuilder.math.func.EFunction;
 import com.iconpln.liquiditas.core.service.InvoiceGroupService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.monitoring.utils.NotificationUtil;
@@ -200,6 +201,28 @@ public class InvoiceGroupController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @RequestMapping(path = "/update_group_item_siap_bayar_multiple")
+    public Map<String, Object> updateSiapBayarGroupItemMultiple(@RequestParam(value = "pItems") String pItems) throws JSONException, SQLException {
+        Map<String, Object> res = new HashMap<>();
+        Map<String, Object> siaplunas = new HashMap<>();
+        JSONArray jsonArray = new JSONArray(pItems);
+        for (int index = 0; index < jsonArray.length(); index++){
+            JSONObject jsonObject = jsonArray.getJSONObject(index);
+            String pIdGroupMetallica = jsonObject.getString("ID_GROUP_METALLICA");
+            String pGroupId = jsonObject.getString("ID_GROUP");
+            String pCompCode = jsonObject.getString("COMP_CODE");
+            String pDocNo = jsonObject.getString("DOC_NO");
+            String pFiscYear = jsonObject.getString("FISC_YEAR");
+            String pLineItem = jsonObject.getString("LINE_ITEM");
+            String pJenisTransaksi = jsonObject.getString("KET");
+            String pOssId = jsonObject.getString("OSS_ID");
+            siaplunas = invoiceGroupService.updateSiapBayar(pIdGroupMetallica, pGroupId,pCompCode, pDocNo, pFiscYear, pLineItem, pJenisTransaksi, WebUtils.getUsernameLogin(), pOssId);
+            res.put("siaplunas["+index+"]",siaplunas);
+        }
+
+        return res;
     }
 
     @RequestMapping(value = "/update_group_lunas_giro", method = RequestMethod.POST)
@@ -933,6 +956,7 @@ public class InvoiceGroupController {
     @PostMapping(path = "/ungroup")
     public Map ungroup(@RequestParam(value = "pItems") String pItems) throws JSONException {
         Map<String, Object> out = new HashMap<>();
+
         JSONArray jsonArray = new JSONArray(pItems);
 
         for (int index = 0; index < jsonArray.length(); index++){
