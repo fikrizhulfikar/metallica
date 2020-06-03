@@ -2706,6 +2706,7 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                 html = html + '<button class="btn btn-dtl btn-primary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Bukti Kas" onclick="cetakBuktiKasGroupingMultiple()"><i class="fas fa-file-alt"></i></button>' ;
                 html = html + '<button class="btn btn-dtl btn-info btn-sm" id="btn-cetak-lampiran" style="margin-left: 10px" type="button" title="Cetak Lampiran" onclick="cetakLampiranGrouping(\''+group_id+'\')"><i class="fas fa-paperclip"></i></button>' ;
                 html = html + '<button class="btn btn-dtl btn-danger btn-sm" id="btn-ungroup" style="margin-left: 10px" type="button" title="Ungroup" onclick="ungroup()"><i class="fas fa-folder-open"></i></button>' ;
+                html = html + '<button class="btn btn-dtl btn-sm btn-ready" id="btn-siap-bayar-multiple" style="margin-left: 10px" type="button" title="Siap Bayar" onclick="multipleSiapBayarItemGroup()"><i class="fas fa-money-check"></i></button>' ;
                 $(this).append(html);
             });
 }
@@ -3420,6 +3421,49 @@ function siapBayarItemGroupGroup(id_group_metallica, comp_code, doc_no, fiscal_y
                 hideLoadingCss();
             }
         })
+    }
+}
+
+function checkSiapLunas(el, index, arr){
+    return el.STATUS_TRACKING === "VERIFIED BY APPROVER";
+}
+
+function multipleSiapBayarItemGroup(){
+    let success = 0;
+    let fail = 0;
+    if (fullArrayGroup.length <= 0){
+        alert("Maaf, silahkan pilih data terlebih dahulu.");
+    }else{
+        if (fullArrayGroup.every(checkSiapLunas) === true){
+            let conf = confirm("Apakah Anda yakin akan menjadikan tagihan - tagihan ini siap bayar ?");
+            if (conf){
+                showLoadingCss();
+                $.ajax({
+                    url : baseUrl + "api_operator/invoice_group/update_group_item_siap_bayar_multiple",
+                    data : {
+                        pItems : JSON.stringify(fullArrayGroup)
+                    },
+                    type : "POST",
+                    dataType : "JSON",
+                    success : (res) => {
+                        for (let value in res){
+                            (res[value].return === 1) ? success += 1 : fail += 1;
+                        }
+                        alert(success+" data berhasil dijadikan Siap Bayar");
+                        hideLoadingCss();
+                        fullArrayGroup = new Array();
+                        tableDetailGroupInvoice.ajax.reload();
+                    },
+                    error : (err) =>{
+                        alert("Gagal, silahkan hubungi Administrator :(");
+                        hideLoadingCss();
+                    }
+                })
+            }
+        }else{
+            alert("Tidak dapat melakukan Siap Bayar");
+        }
+
     }
 }
 
