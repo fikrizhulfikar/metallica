@@ -871,6 +871,7 @@ function checkArray(e) {
 }
 
 function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
+    console.log("ID Group : ",idGroup);
     showLoadingCss()
     $(".list-data").hide();
     $(".detail-data").show();
@@ -959,15 +960,15 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
                 {width: 100, targets: 68},
                 {width: 100, targets: 69},
                 {width: 100, targets: 70},
-                {width: 100, targets: 71},
+                // {width: 100, targets: 71},
                 { className: "datatables_action", "targets": [9,23,24,25,26,27,28,29] },
                 {
                     "bSortable": true,
-                    "aTargets": [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71]
+                    "aTargets": [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,70]
                 },
                 {
                     "sortable": false,
-                    "aTargets": [0,72]
+                    "aTargets": [0,71]
                 },
                 {
                     "aTargets": [0],
@@ -1251,7 +1252,7 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
                 {
                     "aTargets": [41],
                     "mRender": function (data, type, full) {
-                        return full.HOUSE_BANK;
+                        return full.BANK_BYR;
                     }
                 },
                 {
@@ -1371,71 +1372,71 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
                 {
                     "aTargets": [61],
                     "mRender": function (data, type, full) {
-                        return full.GROUP_ID;
+                        return full.ID_GROUP;
                     }
                 },
+                // {
+                //     "aTargets": [62],
+                //     "mRender": function (data, type, full) {
+                //         return full.BANK_BYR;
+                //     }
+                // },
                 {
                     "aTargets": [62],
-                    "mRender": function (data, type, full) {
-                        return full.BANK_BYR;
-                    }
-                },
-                {
-                    "aTargets": [63],
                     "mRender": function (data, type, full) {
                         return full.CURR_BAYAR;
                     }
                 },
                 {
-                    "aTargets": [64],
+                    "aTargets": [63],
                     "mRender": function (data, type, full) {
                         return full.AMOUNT_BAYAR;
                     }
                 },
                 {
-                    "aTargets": [65],
+                    "aTargets": [64],
                     "mRender": function (data, type, full) {
                         return full.BANK_BENEF;
                     }
                 },
                 {
-                    "aTargets": [66],
+                    "aTargets": [65],
                     "mRender": function (data, type, full) {
                         return full.NO_REK_BENEF;
                     }
                 },
                 {
-                    "aTargets": [67],
+                    "aTargets": [66],
                     "mRender": function (data, type, full) {
                         return full.NAMA_BENEF;
                     }
                 },
                 {
-                    "aTargets": [68],
+                    "aTargets": [67],
                     "mRender": function (data, type, full) {
                         return full.TGL_ACT_BAYAR;
                     }
                 },
                 {
-                    "aTargets": [69],
+                    "aTargets": [68],
                     "mRender": function (data, type, full) {
                         return full.SUMBER_DANA;
                     }
                 },
                 {
-                    "aTargets": [70],
+                    "aTargets": [69],
                     "mRender": function (data, type, full) {
                         return full.KETERANGAN;
                     }
                 },
                 {
-                    "aTargets": [71],
+                    "aTargets": [70],
                     "mRender": function (data, type, full) {
                         return full.STATUS_TRACKING;
                     }
                 },
                 {
-                    "aTargets": [72],
+                    "aTargets": [71],
                     "mRender": function (data, type, full) {
                         var ret_value;
                         /*alert('BOOOMB2'+full.STATUS_TRACKING);*/
@@ -1958,6 +1959,6 @@ function exportXls() {
 function back(){
     $(".list-data").show();
     $(".detail-data").hide();
-    tableDetailGroupInvoiceVerified.ajax.reload()
+    tableInvoiceGroupVerified.ajax.reload()
     tableDetailGroupInvoiceVerified.destroy();
 }

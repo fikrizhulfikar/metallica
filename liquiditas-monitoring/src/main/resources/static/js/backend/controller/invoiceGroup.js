@@ -1379,7 +1379,7 @@ function checkArray(e) {
     console.log("invoice array : ",invoiceCheckedArray);
 }
 
-function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
+function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
     showLoadingCss()
     $(".list-data").hide();
     $(".detail-data").show();
@@ -1760,7 +1760,7 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
                 {
                     "aTargets": [41],
                     "mRender": function (data, type, full) {
-                        return full.HOUSE_BANK;
+                        return full.BANK_BYR;
                     }
                 },
                 {
@@ -1883,68 +1883,68 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
                         return full.ID_GROUP;
                     }
                 },
+                // {
+                //     "aTargets": [62],
+                //     "mRender": function (data, type, full) {
+                //         return full.BANK_BYR;
+                //     }
+                // },
                 {
                     "aTargets": [62],
-                    "mRender": function (data, type, full) {
-                        return full.BANK_BYR;
-                    }
-                },
-                {
-                    "aTargets": [63],
                     "mRender": function (data, type, full) {
                         return full.CURR_BAYAR;
                     }
                 },
                 {
-                    "aTargets": [64],
+                    "aTargets": [63],
                     "mRender": function (data, type, full) {
                         return full.AMOUNT_BAYAR;
                     }
                 },
                 {
-                    "aTargets": [65],
+                    "aTargets": [64],
                     "mRender": function (data, type, full) {
                         return full.BANK_BENEF;
                     }
                 },
                 {
-                    "aTargets": [66],
+                    "aTargets": [65],
                     "mRender": function (data, type, full) {
                         return full.NO_REK_BENEF;
                     }
                 },
                 {
-                    "aTargets": [67],
+                    "aTargets": [66],
                     "mRender": function (data, type, full) {
                         return full.NAMA_BENEF;
                     }
                 },
                 {
-                    "aTargets": [68],
+                    "aTargets": [67],
                     "mRender": function (data, type, full) {
                         return full.TGL_ACT_BAYAR;
                     }
                 },
                 {
-                    "aTargets": [69],
+                    "aTargets": [68],
                     "mRender": function (data, type, full) {
                         return full.SUMBER_DANA;
                     }
                 },
                 {
-                    "aTargets": [70],
+                    "aTargets": [69],
                     "mRender": function (data, type, full) {
                         return full.KETERANGAN;
                     }
                 },
                 {
-                    "aTargets": [71],
+                    "aTargets": [70],
                     "mRender": function (data, type, full) {
                         return full.STATUS_TRACKING;
                     }
                 },
                 {
-                    "aTargets": [72],
+                    "aTargets": [71],
                     "mRender": function (data, type, full) {
                         var ret_value;
                         /*alert('BOOOMB2'+full.STATUS_TRACKING);*/
@@ -2203,7 +2203,7 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
 
                 },
                 {
-                    "aTargets": [73],
+                    "aTargets": [72],
                     "mRender": function (data, type, full) {
                         var value = new Object();
                         var full_value = new Object();
@@ -2254,7 +2254,7 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
                             // pBank: pBank,
                             // pTglAwal : pTglAwal,
                             // pTglAkhir : pTglAkhir,
-                            pIdGroup : idGroup
+                            pIdGroup : group_id
                         }
                     ,
                     "dataSrc":
@@ -2704,8 +2704,9 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
                 var html = '';
                 html =  '<button class="btn btn-dtl btn-dribbble btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
                 html = html + '<button class="btn btn-dtl btn-primary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Bukti Kas" onclick="cetakBuktiKasGroupingMultiple()"><i class="fas fa-file-alt"></i></button>' ;
-                html = html + '<button class="btn btn-dtl btn-info btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Lampiran" onclick="cetakLampiranGrouping('+idGroup+')"><i class="fas fa-paperclip"></i></button>' ;
+                html = html + '<button class="btn btn-dtl btn-info btn-sm" id="btn-cetak-lampiran" style="margin-left: 10px" type="button" title="Cetak Lampiran" onclick="cetakLampiranGrouping(\''+group_id+'\')"><i class="fas fa-paperclip"></i></button>' ;
                 html = html + '<button class="btn btn-dtl btn-danger btn-sm" id="btn-ungroup" style="margin-left: 10px" type="button" title="Ungroup" onclick="ungroup()"><i class="fas fa-folder-open"></i></button>' ;
+                html = html + '<button class="btn btn-dtl btn-sm btn-ready" id="btn-siap-bayar-multiple" style="margin-left: 10px" type="button" title="Siap Bayar" onclick="multipleSiapBayarItemGroup()"><i class="fas fa-money-check"></i></button>' ;
                 $(this).append(html);
             });
 }
@@ -3423,6 +3424,49 @@ function siapBayarItemGroupGroup(id_group_metallica, comp_code, doc_no, fiscal_y
     }
 }
 
+function checkSiapLunas(el, index, arr){
+    return el.STATUS_TRACKING === "VERIFIED BY APPROVER";
+}
+
+function multipleSiapBayarItemGroup(){
+    let success = 0;
+    let fail = 0;
+    if (fullArrayGroup.length <= 0){
+        alert("Maaf, silahkan pilih data terlebih dahulu.");
+    }else{
+        if (fullArrayGroup.every(checkSiapLunas) === true){
+            let conf = confirm("Apakah Anda yakin akan menjadikan tagihan - tagihan ini siap bayar ?");
+            if (conf){
+                showLoadingCss();
+                $.ajax({
+                    url : baseUrl + "api_operator/invoice_group/update_group_item_siap_bayar_multiple",
+                    data : {
+                        pItems : JSON.stringify(fullArrayGroup)
+                    },
+                    type : "POST",
+                    dataType : "JSON",
+                    success : (res) => {
+                        for (let value in res){
+                            (res[value].return === 1) ? success += 1 : fail += 1;
+                        }
+                        alert(success+" data berhasil dijadikan Siap Bayar");
+                        hideLoadingCss();
+                        fullArrayGroup = new Array();
+                        tableDetailGroupInvoice.ajax.reload();
+                    },
+                    error : (err) =>{
+                        alert("Gagal, silahkan hubungi Administrator :(");
+                        hideLoadingCss();
+                    }
+                })
+            }
+        }else{
+            alert("Tidak dapat melakukan Siap Bayar");
+        }
+
+    }
+}
+
 function updLunasGiro(pCompCode, pDocNo, pFiscYear, pLineItem, pJenisTransaksi, ossId, groupId){
     var stateCrf = confirm("Anda Yakin Akan Melunasi Tagihan Ini?");
     if (stateCrf == true) {
@@ -3586,11 +3630,12 @@ function cetakSuratGroup(id_group){
     })
 }
 
-function cetakLampiranGrouping(id_group){
+function cetakLampiranGrouping(group_id){
+    console.log("Id Group : ",group_id);
     $.ajax({
         url : baseUrl + "generate_doc/cetak/lampiran_group",
         data : {
-            pIdGroup : id_group,
+            pIdGroup : group_id,
         },
         dataType : "JSON",
         type : "POST",
@@ -3598,7 +3643,7 @@ function cetakLampiranGrouping(id_group){
             if (res.result.status === 1){
                 console.log("Result : ",res);
                 alert("Berhasil Mencetak Dokumen");
-                window.open(baseUrl+"generate_doc/cetak/downloadfile/lampiran_group_"+id_group+".docx","_blank");
+                window.open(baseUrl+"generate_doc/cetak/downloadfile/lampiran_group_"+group_id+".docx","_blank");
             }
 
         },
