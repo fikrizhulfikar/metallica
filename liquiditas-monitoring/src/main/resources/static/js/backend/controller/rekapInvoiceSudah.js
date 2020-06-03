@@ -1185,8 +1185,8 @@ function getAllData() {
 
             $('.dataTables_filter').each(function () {
                 // var html = '';
-//                var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" title="Sembunyikan Kolom" data-toggle="modal" onclick="showColumn()">' +
-//                    '<i class="fa fa-arrows-alt"></i></button>';
+               var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" title="Sembunyikan Kolom" data-toggle="modal" onclick="showColumn()">' +
+                   '<i class="fa fa-arrows-alt"></i></button>';
 //                /*button reject*/
 //                html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="rejectData()">' +
 //                    '            <i class="fa fa-ban"></i></button>';
@@ -1197,7 +1197,7 @@ function getAllData() {
 //
 //                }
 //                html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
-//                $(this).append(html);
+               $(this).append(html);
             });
 
             table_rekapitulasi.columns.adjust();

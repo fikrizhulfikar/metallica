@@ -1581,14 +1581,14 @@ function getAllData() {
             });
 
             $('.dataTables_filter').each(function () {
-                 var html = '';
+                 var html = '<button class="btn btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
                  if(newRoleUser[0] == "ROLE_VERIFIKATOR"){
                     html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-archive"></i></button>';
                     html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
                 }
                  if(newRoleUser[0] == "ROLE_ADMIN"){
                 /*button reject*/
-                    var html = '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reverse Data" data-toggle="modal" onclick="rejectData()">' +
+                    html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reverse Data" data-toggle="modal" onclick="rejectData()">' +
                         '            <i class="fa fa-ban"></i></button>';
                     html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fa fa-folder"></i></button>';
                     html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-archive"></i></button>';
