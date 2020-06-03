@@ -1379,7 +1379,7 @@ function checkArray(e) {
     console.log("invoice array : ",invoiceCheckedArray);
 }
 
-function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
+function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
     showLoadingCss()
     $(".list-data").hide();
     $(".detail-data").show();
@@ -2254,7 +2254,7 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
                             // pBank: pBank,
                             // pTglAwal : pTglAwal,
                             // pTglAkhir : pTglAkhir,
-                            pIdGroup : idGroup
+                            pIdGroup : group_id
                         }
                     ,
                     "dataSrc":
@@ -2704,7 +2704,7 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
                 var html = '';
                 html =  '<button class="btn btn-dtl btn-dribbble btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
                 html = html + '<button class="btn btn-dtl btn-primary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Bukti Kas" onclick="cetakBuktiKasGroupingMultiple()"><i class="fas fa-file-alt"></i></button>' ;
-                html = html + '<button class="btn btn-dtl btn-info btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Lampiran" onclick="cetakLampiranGrouping('+idGroup+')"><i class="fas fa-paperclip"></i></button>' ;
+                html = html + '<button class="btn btn-dtl btn-info btn-sm" id="btn-cetak-lampiran" style="margin-left: 10px" type="button" title="Cetak Lampiran" onclick="cetakLampiranGrouping(\''+group_id+'\')"><i class="fas fa-paperclip"></i></button>' ;
                 html = html + '<button class="btn btn-dtl btn-danger btn-sm" id="btn-ungroup" style="margin-left: 10px" type="button" title="Ungroup" onclick="ungroup()"><i class="fas fa-folder-open"></i></button>' ;
                 $(this).append(html);
             });
@@ -3586,11 +3586,12 @@ function cetakSuratGroup(id_group){
     })
 }
 
-function cetakLampiranGrouping(id_group){
+function cetakLampiranGrouping(group_id){
+    console.log("Id Group : ",group_id);
     $.ajax({
         url : baseUrl + "generate_doc/cetak/lampiran_group",
         data : {
-            pIdGroup : id_group,
+            pIdGroup : group_id,
         },
         dataType : "JSON",
         type : "POST",
@@ -3598,7 +3599,7 @@ function cetakLampiranGrouping(id_group){
             if (res.result.status === 1){
                 console.log("Result : ",res);
                 alert("Berhasil Mencetak Dokumen");
-                window.open(baseUrl+"generate_doc/cetak/downloadfile/lampiran_group_"+id_group+".docx","_blank");
+                window.open(baseUrl+"generate_doc/cetak/downloadfile/lampiran_group_"+group_id+".docx","_blank");
             }
 
         },
