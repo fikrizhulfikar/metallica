@@ -522,139 +522,139 @@ function getAllData() {
                         {
                                 "aTargets": [39],
                                 "mRender": function (data, type, full) {
-                                     return full.HOUSE_BANK;
+                                     return full.BANK_BYR;
                                      }
                           },
                         {
-                                 "aTargets": [40],
+                            "aTargets": [40],
+                            "mRender": function (data, type, full) {
+                                return full.NO_REK_HOUSE_BANK;
+                            }
+                        },
+                        {
+                                 "aTargets": [41],
                                  "mRender": function (data, type, full) {
                                   return full.PRTNR_BANK_TYPE;
                                     }
                          },
                          {
-                             "aTargets": [41],
+                             "aTargets": [42],
                              "mRender": function (data, type, full) {
                               return full.BANK_KEY;
                                 }
                          },
                          {
-                              "aTargets": [42],
+                              "aTargets": [43],
                               "mRender": function (data, type, full) {
                                return full.BANK_ACCOUNT;
                                 }
                          },
                          {
-                               "aTargets": [43],
+                               "aTargets": [44],
                                "mRender": function (data, type, full) {
                                   return full.ACCOUNT_HOLDER;
                                     }
                          },
                         {
-                                  "aTargets": [44],
+                                  "aTargets": [45],
                                   "mRender": function (data, type, full) {
                                     return full.PO_NUM;
                                      }
                         },
                         {
-                                 "aTargets": [45],
+                                 "aTargets": [46],
                                  "mRender": function (data, type, full) {
                                      return full.PO_ITEM;
                                      }
                          },
                         {
-                                 "aTargets": [46],
+                                 "aTargets": [47],
                                  "mRender": function (data, type, full) {
                                    return full.REF_KEY1;
                                       }
                         },
                          {
-                                  "aTargets": [47],
+                                  "aTargets": [48],
                                   "mRender": function (data, type, full) {
                                      return full.REF_KEY2;
                                        }
                          },
                          {
-                                   "aTargets": [48],
+                                   "aTargets": [49],
                                    "mRender": function (data, type, full) {
                                       return full.REF_KEY3;
                                          }
                          },
                          {
-                                   "aTargets": [49],
+                                   "aTargets": [50],
                                    "mRender": function (data, type, full) {
                                       return full.INT_ORDER;
                                         }
                           },
                          {
-                                    "aTargets": [50],
+                                    "aTargets": [51],
                                     "mRender": function (data, type, full) {
                                        return full.WBS_NUM;
                                          }
                          },
                          {
-                                     "aTargets": [51],
+                                     "aTargets": [52],
                                      "mRender": function (data, type, full) {
                                          return full.CASH_CODE;
                                             }
                          },
                          {
-                                       "aTargets": [52],
+                                       "aTargets": [53],
                                        "mRender": function (data, type, full) {
                                           return full.DR_CR_IND;
                                               }
                         },
                         {
-                           "aTargets": [53],
+                           "aTargets": [54],
                             "mRender": function (data, type, full) {
                             return full.AMT_WITH_BASE_LC;
                                 }
                          },
                          {
-                            "aTargets": [54],
+                            "aTargets": [55],
                             "mRender": function (data, type, full) {
                              return full.AMT_WITH_LC;
                                 }
                          },
                          {
-                            "aTargets": [55],
+                            "aTargets": [56],
                             "mRender": function (data, type, full) {
                                 return full.METODE_PEMBAYARAN;
                             }
                         },
                         {
-                            "aTargets": [56],
+                            "aTargets": [57],
                             "mRender": function (data, type, full) {
                                 return full.NO_GIRO;
                             }
                         },
                         {
-                            "aTargets": [57],
+                            "aTargets": [58],
                             "mRender": function (data, type, full) {
                              return full.TGL_RENCANA_BAYAR;
                                   }
                          },
                          {
-                             "aTargets": [58],
+                             "aTargets": [59],
                               "mRender": function (data, type, full) {
                                return full.SUMBER_DANA;
                                  }
                          },
                          {
-                              "aTargets": [59],
+                              "aTargets": [60],
                               "mRender": function (data, type, full) {
                               return full.KETERANGAN;
                                   }
                          },
                          {
-                              "aTargets": [60],
-                              "mRender": function (data, type, full) {
-                              return full.STATUS_TRACKING;
-                                    }
-                         },
-                         {
                               "aTargets": [61],
                               "mRender": function (data, type, full) {
-                              return full.NO_REK_HOUSE_BANK;
+                              return full.STATUS_TRACKING;
                                     }
                          },
                        {

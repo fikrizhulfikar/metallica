@@ -25,7 +25,7 @@ var addedDays = 2;
 $(document).ready(function () {
     getAllData();
 //     $( '#pAccountBalance' ).mask('000.000.000.000.000', {reverse: true});
-    $('#tanggal_awal').datepicker({dateFormat: 'yymmdd'});
+    $('#tanggal_awal').datepicker({dateFormat: 'dd/mm/yy'});
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
     setSelectBank("cmb_bank", "FILTER", "", "", "REKAP");
@@ -47,7 +47,7 @@ $("#tanggal_awal").change(function () {
         $('#tanggal_akhir').val("");
     } else {
         $('#tanggal_akhir').attr("disabled", false);
-        $('#tanggal_akhir').datepicker({dateFormat: 'yymmdd', minDate: tglAwalData});
+        $('#tanggal_akhir').datepicker({dateFormat: 'dd/mm/yy', minDate: tglAwalData});
     }
 });
 
@@ -77,7 +77,7 @@ function getAllData() {
 
 function getTotalTagihan() {
     $.ajax({
-        url: baseUrl + "/api_operator/rekap_invoice_belum/get_total_tagihan",
+        url: baseUrl + "api_operator/rekap_invoice_belum/get_total_tagihan",
         type: "GET",
         data: {
             tgl_awal: $("#tanggal_awal").val(),
@@ -307,7 +307,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "sortable": false,
-                            "aTargets": [0,35, 36,74]
+                            "aTargets": [0,35, 36, 73, 74]
                         },
                         {
                             "aTargets": [0],
@@ -591,7 +591,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         {
                                  "aTargets": [41],
                                  "mRender": function (data, type, full) {
-                                  return full.HOUSE_BANK;
+                                  return full.BANK_BYR;
                                     }
                          },
                          {
@@ -720,77 +720,78 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                              return full.GROUP_ID;
                                  }
                         },
-                         {
-                               "aTargets": [63],
-                               "mRender": function (data, type, full) {
-                               return full.BANK_BYR;
-                                   }
-                          },
+                         // {
+                         //       "aTargets": [63],
+                         //       "mRender": function (data, type, full) {
+                         //       return full.BANK_BYR;
+                         //           }
+                         //  },
                           {
-                             "aTargets": [64],
+                             "aTargets": [63],
                              "mRender": function (data, type, full) {
                              return full.CURR_BAYAR;
                                  }
                         },
                         {
-                             "aTargets": [65],
+                             "aTargets": [64],
                              "mRender": function (data, type, full) {
                              return full.AMOUNT_BAYAR;
                                  }
                         },
                         {
-                             "aTargets": [66],
+                             "aTargets": [65],
                              "mRender": function (data, type, full) {
                              return full.BANK_BENEF;
                                  }
                         },
                         {
-                             "aTargets": [67],
+                             "aTargets": [66],
                              "mRender": function (data, type, full) {
                              return full.NO_REK_BENEF;
                                  }
                         },
                         {
-                             "aTargets": [68],
+                             "aTargets": [67],
                              "mRender": function (data, type, full) {
                              return full.NAMA_BENEF;
                                  }
                         },
                           {
-                              "aTargets": [69],
+                              "aTargets": [68],
                               "mRender": function (data, type, full) {
                               return full.TGL_ACT_BAYAR;
                               }
                           },
                          {
-                              "aTargets": [70],
+                              "aTargets": [69],
                               "mRender": function (data, type, full) {
                               return full.SUMBER_DANA;
                                     }
                          },
                           {
-                               "aTargets": [71],
+                               "aTargets": [70],
                                "mRender": function (data, type, full) {
                                return full.PARTIAL_IND;
                                      }
                           },
                          {
-                              "aTargets": [72],
+                              "aTargets": [71],
                               "mRender": function (data, type, full) {
                                 return full.KETERANGAN;
                               }
                           },
                          {
-                              "aTargets": [73],
+                              "aTargets": [72],
                               "mRender": function (data, type, full) {
                                 return full.STATUS_TRACKING;
 
                               }
                          },
                         {
-                            "aTargets": [74],
+                            "aTargets": [73],
                             "mRender": function (data, type, full) {
                                 var ret_value;
+                                console.log("Ini Full :",full);
                                 /*alert('BOOOMB2'+full.STATUS_TRACKING);*/
                                 /*    if(newRoleUser[0].includes("DIVKEU")){
                                         ret_value =
@@ -1068,7 +1069,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                         },
                         {
-                            "aTargets": [75],
+                            "aTargets": [74],
                             "mRender": function (data, type, full) {
                                 var value = new Object();
                                 var full_value = new Object();
@@ -1593,11 +1594,10 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                     var html = '<button class="btn btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" title="Sembunyikan Kolom" data-toggle="modal" onclick="showColumn()">' +
                         '<i class="fa fa-arrows-alt"></i></button>';
                     /*button reject*/
-                    html = html + '<button class="btn btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="rejectData()">' +
-                        '            <i class="fa fa-ban"></i></button>';
                     html = html + '<button class="btn btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="far fa-edit"></i></button>';
                     html = html + '<button class="btn btn-sm btn-primary" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fas fa-folder"></i></button>';
                     html = html + '<button class="btn btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
+                     html = html + '<button class="btn btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
 //                    html = html + '<button class="btn btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
                     html = html + '<button class="btn btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fas fa-trash"></i></button>';
                     html = html + '<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
@@ -1607,6 +1607,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                      var html = '<button class="btn btn-sm btn-primary" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fas fa-folder"></i></button>';
                      html = html + '<button class="btn btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
+                     html = html + '<button class="btn btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
 //                     html = html + '<button class="btn btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
                      html = html + '<button class="btn btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="far fa-edit"></i></button>';
                      html = html + '<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;

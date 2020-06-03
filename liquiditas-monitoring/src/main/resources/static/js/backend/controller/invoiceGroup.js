@@ -1760,7 +1760,7 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                 {
                     "aTargets": [41],
                     "mRender": function (data, type, full) {
-                        return full.HOUSE_BANK;
+                        return full.BANK_BYR;
                     }
                 },
                 {
@@ -1883,68 +1883,68 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                         return full.ID_GROUP;
                     }
                 },
+                // {
+                //     "aTargets": [62],
+                //     "mRender": function (data, type, full) {
+                //         return full.BANK_BYR;
+                //     }
+                // },
                 {
                     "aTargets": [62],
-                    "mRender": function (data, type, full) {
-                        return full.BANK_BYR;
-                    }
-                },
-                {
-                    "aTargets": [63],
                     "mRender": function (data, type, full) {
                         return full.CURR_BAYAR;
                     }
                 },
                 {
-                    "aTargets": [64],
+                    "aTargets": [63],
                     "mRender": function (data, type, full) {
                         return full.AMOUNT_BAYAR;
                     }
                 },
                 {
-                    "aTargets": [65],
+                    "aTargets": [64],
                     "mRender": function (data, type, full) {
                         return full.BANK_BENEF;
                     }
                 },
                 {
-                    "aTargets": [66],
+                    "aTargets": [65],
                     "mRender": function (data, type, full) {
                         return full.NO_REK_BENEF;
                     }
                 },
                 {
-                    "aTargets": [67],
+                    "aTargets": [66],
                     "mRender": function (data, type, full) {
                         return full.NAMA_BENEF;
                     }
                 },
                 {
-                    "aTargets": [68],
+                    "aTargets": [67],
                     "mRender": function (data, type, full) {
                         return full.TGL_ACT_BAYAR;
                     }
                 },
                 {
-                    "aTargets": [69],
+                    "aTargets": [68],
                     "mRender": function (data, type, full) {
                         return full.SUMBER_DANA;
                     }
                 },
                 {
-                    "aTargets": [70],
+                    "aTargets": [69],
                     "mRender": function (data, type, full) {
                         return full.KETERANGAN;
                     }
                 },
                 {
-                    "aTargets": [71],
+                    "aTargets": [70],
                     "mRender": function (data, type, full) {
                         return full.STATUS_TRACKING;
                     }
                 },
                 {
-                    "aTargets": [72],
+                    "aTargets": [71],
                     "mRender": function (data, type, full) {
                         var ret_value;
                         /*alert('BOOOMB2'+full.STATUS_TRACKING);*/
@@ -2203,7 +2203,7 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
 
                 },
                 {
-                    "aTargets": [73],
+                    "aTargets": [72],
                     "mRender": function (data, type, full) {
                         var value = new Object();
                         var full_value = new Object();
