@@ -23,7 +23,7 @@ function initDataTableSaldoRek1() {
                 $.each(data, function (key, val) {
                     var html = "<tr>" +
                         "<td>" + val.CURRENCY + "</td>" +
-                        "<td align='right'>" + "Rp " + accounting.formatNumber(val.SALDO_REAL,2,".",",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.SALDO_REAL,2,".",",") + "</td>" +
                         "<td align='right'>" + "Rp " + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
                         "</tr>";
                     $('#table-jenis-mata-uang tbody').append(html);
@@ -31,7 +31,7 @@ function initDataTableSaldoRek1() {
 
                 var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
                     "<td>TOTAL</td>" +
-                    "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_REAL,2,".",",") + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_REAL,2,".",",") + "</td>" +
                     "<td align='right'>" + "Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_EQ_IDR,2,".",",") + "</td>" +
                     "</tr>";
 
