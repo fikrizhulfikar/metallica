@@ -8,6 +8,7 @@ import spark.utils.IOUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -15,7 +16,7 @@ import java.util.Locale;
 public class NumberToWordConverter {
     static String[] huruf={"","SATU ","DUA ","TIGA ","EMPAT ","LIMA ","ENAM ","TUJUH ","DELAPAN ","SEMBILAN ","SEPULUH ","SEBELAS "};
 
-    public String toCurrency(String currency) throws IOException, JSONParseException {
+    public static String toCurrency(String currency) throws IOException, JSONParseException {
         String curr = "IDR";
         if (currency.equals("IDR")){
             curr = "RUPIAH";
@@ -35,7 +36,7 @@ public class NumberToWordConverter {
         return curr.toUpperCase();
     }
 
-    public String toIndoLocale(String raw){
+    public static String toIndoLocale(String raw){
         double db = Double.parseDouble(raw.replace(",","."));
         Locale locale = new Locale("in","ID");
         NumberFormat nf = NumberFormat.getInstance(locale);
@@ -45,41 +46,47 @@ public class NumberToWordConverter {
         return decimalFormat.format(db);
     }
 
-    public String toWords(Double angka){
+    public static String toWords(Double angka){
         if(angka < 12)
             return huruf[angka.intValue()];
-        if(angka >=12 && angka <= 19)
+        if(angka >=12 && angka < 20)
             return huruf[angka.intValue() % 10] + "BELAS ";
-        if(angka >= 20 && angka <= 99)
+        if(angka >= 20 && angka < 100)
             return toWords(angka / 10) + "PULUH " + huruf[angka.intValue() % 10];
-        if(angka >= 100 && angka <= 199)
+        if(angka >= 100 && angka < 200)
             return "SERATUS " + toWords(angka % 100);
-        if(angka >= 200 && angka <= 999)
+        if(angka >= 200 && angka < 1000)
             return toWords(angka / 100) + "RATUS " + toWords(angka % 100);
-        if(angka >= 1000 && angka <= 1999)
+        if(angka >= 1000 && angka < 2000)
             return "SERIBU " + toWords(angka % 1000);
-        if(angka >= 2000 && angka <= 999999)
+        if(angka >= 2000 && angka < 1000000)
             return toWords(angka / 1000) + "RIBU " + toWords(angka % 1000);
-        if(angka >= 1000000 && angka <= 999999999)
+        if(angka >= 1000000 && angka < 1000000000)
             return toWords(angka / 1000000) + "JUTA " + toWords(angka % 1000000);
-        if(angka >= 1000000000 && angka <= 999999999999L)
+        if(angka >= 1000000000 && angka < 1000000000000L)
             return toWords(angka / 1000000000) + "MILIAR " + toWords(angka % 1000000000);
-        if(angka >= 1000000000000L && angka <= 999999999999999L)
+        if(angka >= 1000000000000L && angka < 1000000000000000L)
             return toWords(angka / 1000000000000L) + "TRILIUN " + toWords(angka % 1000000000000L);
         if(angka >= 1000000000000000L && angka <= 999999999999999999L)
             return toWords(angka / 1000000000000000L) + "QUADRILIUN " + toWords(angka % 1000000000000000L);
         return "";
     }
 
-//    public static void main(String[] args) throws IOException, JSONParseException {
-//        String bd = "999000,9";
-//        String amt = toIndoLocale(bd);
-//        String[] arr = amt.split(",");
-//        String koma = "";
-//        if (arr.length > 1){
-//            koma = "TITIK ";
-//            koma = koma + toWords(Double.parseDouble(arr[1]));
-//        }
-//        System.out.println(koma);
-//    }
+    public static void main(String[] args) throws IOException, JSONParseException {
+        String bd = "997270560908700.45";
+        String amt = toIndoLocale(bd);
+        System.out.println(amt);
+        String[] arr = amt.split(",");
+        String koma = "";
+        if (arr.length > 1){
+            if (arr[1].equals("00")){
+                koma = "";
+                koma = koma + toWords(Double.parseDouble(arr[1]));
+            }else{
+                koma = "TITIK ";
+                koma = koma + toWords(Double.parseDouble(arr[1]));
+            }
+        }
+        System.out.println(toWords(Double.parseDouble(bd.replace(",",".")))+koma);
+    }
 }
