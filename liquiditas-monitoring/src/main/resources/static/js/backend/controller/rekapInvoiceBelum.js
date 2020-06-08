@@ -4050,7 +4050,7 @@ function checkGroup(){
         Swal.fire({
             icon : "error",
             title : "Maaf!",
-            html : '<p>Silahkan Melakukan Inquiry Terlebih Dahulu</p>',
+            html : '<p>Silahkan Tentukan Metode Pembayaran Terlebih Dahulu</p>',
         });
         // alert("No Way, Sorry :(");
     } else Swal.fire("Maaf", "Tidak bisa melakukan Grouping","error");
@@ -4075,9 +4075,9 @@ function isSame(data){
     // || comp_code != data[x].COMP_CODE
 
         for(let x = 0; x < data.length; x++){
-             // if (data[x].INQ_CUSTOMER_NAME === "-"){
-             //     return 222;
-             // }
+             if (data[x].METODE_PEMBAYARAN === "-"){
+                 return 222;
+             }
             if(due_on !== data[x].TGL_RENCANA_BAYAR || bank !== data[x].BANK_BYR || hb_rekening !== data[x].NO_REK_HOUSE_BANK || assign !== data[x].ASSIGNMENT || bus_area !== data[x].BUS_AREA || sumber_dana !== data[x].SUMBER_DANA ||
             inq_name !== data[x].INQ_CUSTOMER_NAME || no_giro !== data[x].NO_GIRO || curr_bayar !== data[x].CURR_BAYAR){
                 return false;
