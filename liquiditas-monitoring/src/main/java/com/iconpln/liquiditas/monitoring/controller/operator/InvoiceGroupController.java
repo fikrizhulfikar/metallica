@@ -965,7 +965,8 @@ public class InvoiceGroupController {
             String fiscal_year = object.getString("FISC_YEAR");
             String line_item = object.getString("LINE_ITEM");
             String ket = object.getString("KET");
-            out = invoiceGroupService.ungroup(comp_code, doc_no, fiscal_year, line_item, ket, WebUtils.getUsernameLogin());
+            String id_group = object.getString("ID_GROUP_METALLICA");
+            out = invoiceGroupService.ungroup(comp_code, doc_no, fiscal_year, line_item, ket, id_group, WebUtils.getUsernameLogin());
         }
         return out;
     }
