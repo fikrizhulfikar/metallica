@@ -2,6 +2,7 @@ package com.iconpln.liquiditas.core.service;
 
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import oracle.jdbc.OracleTypes;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -75,6 +76,15 @@ public class SapService {
                 .addValue("out_msg", OracleTypes.VARCHAR);
 
         out = simpleJdbcCall.execute(param);
+        if(!out.get("return").toString().equals("1")){
+            System.out.println("masuk tabel penampung ap : Gagal");
+            insertApInvoiceHeadGagal(
+                    pCompCode, pDocNo, pFiscYear, pDocType, pDocDate, pPostDate, pEntryDate,
+                    pReference, pRevWith, pRevYear, pDocHdrText, pCurrency, pExcRate,
+                    pReferenceKey, pPmtInd, pTransType, pSpreadVal, pOssId, pGroupId, pSumberDana,
+                    pTglRencanBayar, pBankBayar, pCurrBayar, pPartialInd, pAmountBayar, pBankBenef,
+                    pNoRekBenef, pNamaBenef, pVerifiedBy, pVerifiedOn);
+        }
         AppUtils.getLogger(this).info("insert ap_invoice_head data : {}",out);
         return out;
     }
@@ -167,7 +177,11 @@ public class SapService {
                 .addValue("out_msg", OracleTypes.VARCHAR);
 
         out = simpleJdbcCall.execute(param);
-        AppUtils.getLogger(this).info("insert hr_payable_head data : ",out);
+        if(!out.get("return").toString().equals("1")){
+            System.out.println("masuk tabel penampung hr : Gagal");
+            insertHrPayableHeadGagal(insData);
+        }
+        AppUtils.getLogger(this).info("insert hr_payable_head data : {}",out);
         return out;
     }
 
@@ -396,4 +410,95 @@ public class SapService {
         AppUtils.getLogger(this).info("insert general bank :{}", out);
         return out;
     }
+
+    public Map<String, Object> insertHrPayableHeadGagal(Map<String, String> insData){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("sap_hr_head_gagal");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_comp_code", insData.get("comp_code"))
+                .addValue("p_doc_no", insData.get("doc_no"))
+                .addValue("p_fisc_year", insData.get("fisc_year"))
+                .addValue("p_doc_type", insData.get("doc_type"))
+                .addValue("p_doc_date", insData.get("doc_date"))
+                .addValue("p_post_date", insData.get("post_date"))
+                .addValue("p_entry_date", insData.get("entry_date"))
+                .addValue("p_reference", insData.get("reference"))
+                .addValue("p_rev_with", insData.get("rev_with"))
+                .addValue("p_rev_year", insData.get("rev_year"))
+                .addValue("p_doc_hdr_txt", insData.get("doc_hdr_txt"))
+                .addValue("p_currency", insData.get("currency"))
+                .addValue("p_exch_rate", insData.get("exch_rate"))
+                .addValue("p_reference_key", insData.get("reference_key"))
+                .addValue("p_pmt_ind", insData.get("pmt_ind"))
+                .addValue("p_trans_type", insData.get("trans_type"))
+                .addValue("p_spread_val", insData.get("spread_val"))
+                .addValue("p_oss_id", insData.get("oss_id"))
+                .addValue("p_group_id", insData.get("group_id"))
+                .addValue("p_sumber_dana", insData.get("sumber_dana"))
+                .addValue("p_tgl_rencana_byr", insData.get("tgl_rencana_byr"))
+                .addValue("p_bank_byr", insData.get("bank_byr"))
+                .addValue("p_curr_bayar", insData.get("curr_bayar"))
+                .addValue("p_partial_ind", insData.get("partial_ind"))
+                .addValue("p_amount_bayar", insData.get("amount_bayar"))
+                .addValue("p_bank_benef", insData.get("bank_benef"))
+                .addValue("p_no_rek_benef", insData.get("no_rek_benef"))
+                .addValue("p_nama_benef", insData.get("nama_benef"))
+                .addValue("p_verified_by", insData.get("verified_by"))
+                .addValue("p_verified_on", insData.get("verified_on"))
+                .addValue("out_msg", OracleTypes.VARCHAR);
+
+        out = simpleJdbcCall.execute(param);
+        AppUtils.getLogger(this).info("insert hr_payable_head data_gagal : {}",out);
+        return out;
+    }
+
+    public Map<String, Object> insertApInvoiceHeadGagal(
+            String pCompCode, String pDocNo, String pFiscYear, String pDocType, String pDocDate, String pPostDate, String pEntryDate,
+            String pReference, String pRevWith, String pRevYear, String pDocHdrText, String pCurrency, String pExcRate,
+            String pReferenceKey, String pPmtInd, String pTransType, String pSpreadVal, String pOssId, String pGroupId, String pSumberDana,
+            String pTglRencanBayar, String pBankBayar, String pCurrBayar, String pPartialInd, String pAmountBayar, String pBankBenef,
+            String pNoRekBenef, String pNamaBenef, String pVerifiedBy, String pVerifiedOn
+    ){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("sap_invoice_head_gagal");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_comp_code", pCompCode)
+                .addValue("p_doc_no", pDocNo)
+                .addValue("p_fisc_year", pFiscYear)
+                .addValue("p_doc_type", pDocType)
+                .addValue("p_doc_date", pDocDate)
+                .addValue("p_post_date", pPostDate)
+                .addValue("p_entry_date", pEntryDate)
+                .addValue("p_reference", pReference)
+                .addValue("p_rev_with", pRevWith)
+                .addValue("p_rev_year", pRevYear)
+                .addValue("p_doc_hdr_txt", pDocHdrText)
+                .addValue("p_currency", pCurrency)
+                .addValue("p_exch_rate", pExcRate)
+                .addValue("p_reference_key", pReferenceKey)
+                .addValue("p_pmt_ind", pPmtInd)
+                .addValue("p_trans_type", pTransType)
+                .addValue("p_spread_val", pSpreadVal)
+                .addValue("p_oss_id", pOssId)
+                .addValue("p_group_id", pGroupId)
+                .addValue("p_sumber_dana", pSumberDana)
+                .addValue("p_tgl_rencana_byr", pTglRencanBayar)
+                .addValue("p_bank_byr", pBankBayar)
+                .addValue("p_curr_bayar", pCurrBayar)
+                .addValue("p_partial_ind", pPartialInd)
+                .addValue("p_amount_bayar", pAmountBayar)
+                .addValue("p_bank_benef",pBankBenef)
+                .addValue("p_no_rek_benef", pNoRekBenef)
+                .addValue("p_nama_benef", pNamaBenef)
+                .addValue("p_verified_by", pVerifiedBy)
+                .addValue("p_verified_on", pVerifiedOn)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+
+        out = simpleJdbcCall.execute(param);
+        AppUtils.getLogger(this).info("insert ap_invoice_head data_gagal : {}",out);
+        return out;
+    }
+
 }
