@@ -174,7 +174,7 @@ public class Sap {
             Sapmaster sapmaster = new Sapmaster();
 //
 //            ClassLoader classLoader = Sap.class.getClassLoader();
-//            InputStream inputStream = classLoader.getResourceAsStream("files/apinvoicetestcetak.json");
+//            InputStream inputStream = classLoader.getResourceAsStream("files/3200008799.json");
 //            assert inputStream != null;
 //            String res = IOUtils.toString(inputStream);
             String get_result = sapmaster.getDataApInvoice(param);
@@ -327,7 +327,7 @@ public class Sap {
             param.put("date_to", date_to);
 
 //            ClassLoader classLoader = Sap.class.getClassLoader();
-//            InputStream inputStream = classLoader.getResourceAsStream("files/JSONHrPayable_20200409_origin.json");
+//            InputStream inputStream = classLoader.getResourceAsStream("files/hrpayable.json");
 //            String res = IOUtils.toString(inputStream);
 
             String get_result = sapmaster.getDataHrPayable(param);
@@ -339,6 +339,7 @@ public class Sap {
                 result.put("status",Integer.parseInt(object.get("ERROR_CODE").toString()));
                 result.put("status_message",object.get("ERROR_MESSAGE").toString());
             }
+
             String list = "["+get_result+"]";
 //            String list = "["+res+"]";
             System.out.println("List HR Payable :"+list);
@@ -384,7 +385,7 @@ public class Sap {
                         condition.put("verified_by",String.valueOf(jsonObjectLines.get("VERIFIED_BY")));
                         condition.put("verified_on",String.valueOf(jsonObjectLines.get("VERIFIED_ON")));
                         try {
-                            sapService.insertHrPayableHead(condition);
+                            out = sapService.insertHrPayableHead(condition);
                             counter++;
                         }catch (Exception e){
                             e.printStackTrace();
