@@ -820,7 +820,7 @@ public class InvoiceGroupService {
         return resultset;
     }
 
-    public Map ungroup(String pCompCode, String pDocNo, String pFiscalYear, String pLineItem, String pKet, String pUserId){
+    public Map ungroup(String pCompCode, String pDocNo, String pFiscalYear, String pLineItem, String pKet, String pIdGroup, String pUserId){
         Map<String, Object> out = new HashMap<>();
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -831,6 +831,7 @@ public class InvoiceGroupService {
                 .addValue("p_fisc_year", pFiscalYear)
                 .addValue("p_line_item", pLineItem)
                 .addValue("p_ket", pKet)
+                .addValue("p_group_id", pIdGroup)
                 .addValue("p_user_id", pUserId)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(param);
