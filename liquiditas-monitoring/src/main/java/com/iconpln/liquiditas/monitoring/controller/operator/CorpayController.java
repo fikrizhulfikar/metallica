@@ -1211,7 +1211,7 @@ public class CorpayController {
                         json.getString("AMT_WITH_LC"),json.getString("DR_CR_IND"),json.getString("CORP_PMT"), "", "",
                         "",json.getString("METODE_PEMBAYARAN"),json.getString("TGL_RENCANA_BAYAR"), json.getString("SUMBER_DANA"), "",
                         "","", "", json.getString("KETERANGAN"), "",
-                        "",pNamaGroup,json.getString("NO_REK_HOUSE_BANK"), json.getString("INQ_CUSTOMER_NAME"), json.getString("INQ_ACCOUNT_NUMBER"),
+                        json.getString("GROUP_ID"),pNamaGroup,json.getString("NO_REK_HOUSE_BANK"), json.getString("INQ_CUSTOMER_NAME"), json.getString("INQ_ACCOUNT_NUMBER"),
                         json.getString("REF_KEY3"),json.getString("INT_ORDER"),json.getString("WBS_NUM"), json.getString("CASH_CODE"), json.getString("CONFIRMATION_CODE"),
                         json.getString("TGL_ACT_BAYAR")
                 );
