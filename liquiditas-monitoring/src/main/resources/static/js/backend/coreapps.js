@@ -594,7 +594,7 @@ function showColumn() {
             } else {
                 $("#hc6").prop("checked", false);
             }
-            if (response.VENDOR == 1) {
+            if (response.VENDOR_NAME == 1) {
                 $("#hc7").prop("checked", true);
             } else {
                 $("#hc7").prop("checked", false);
@@ -983,6 +983,52 @@ function checkColumn(value) {
     $("#hc33").prop("checked", value);
     $("#hc34").prop("checked", value);
     $("#hc35").prop("checked", value);
+    $("#hc36").prop("checked", value);
+    $("#hc37").prop("checked", value);
+    $("#hc38").prop("checked", value);
+    $("#hc39").prop("checked", value);
+    $("#hc40").prop("checked", value);
+    $("#hc41").prop("checked", value);
+    $("#hc42").prop("checked", value);
+    $("#hc43").prop("checked", value);
+    $("#hc44").prop("checked", value);
+    $("#hc45").prop("checked", value);
+    $("#hc46").prop("checked", value);
+    $("#hc47").prop("checked", value);
+    $("#hc48").prop("checked", value);
+    $("#hc49").prop("checked", value);
+    $("#hc50").prop("checked", value);
+    $("#hc51").prop("checked", value);
+    $("#hc52").prop("checked", value);
+    $("#hc53").prop("checked", value);
+    $("#hc54").prop("checked", value);
+    $("#hc55").prop("checked", value);
+    $("#hc56").prop("checked", value);
+    $("#hc57").prop("checked", value);
+    $("#hc58").prop("checked", value);
+    $("#hc59").prop("checked", value);
+    $("#hc60").prop("checked", value);
+    $("#hc61").prop("checked", value);
+    $("#hc62").prop("checked", value);
+    $("#hc63").prop("checked", value);
+    $("#hc64").prop("checked", value);
+    $("#hc65").prop("checked", value);
+    $("#hc66").prop("checked", value);
+    $("#hc67").prop("checked", value);
+    $("#hc68").prop("checked", value);
+    $("#hc69").prop("checked", value);
+    $("#hc70").prop("checked", value);
+    $("#hc71").prop("checked", value);
+    $("#hc72").prop("checked", value);
+    $("#hc73").prop("checked", value);
+    $("#hc74").prop("checked", value);
+    $("#hc75").prop("checked", value);
+    $("#hc76").prop("checked", value);
+    $("#hc77").prop("checked", value);
+    $("#hc78").prop("checked", value);
+    $("#hc79").prop("checked", value);
+    $("#hc80").prop("checked", value);
+    $("#hc81").prop("checked", value);
 }
 
 function setSelectJenisRekening(idHtml, jenis, idForSelected, form) {

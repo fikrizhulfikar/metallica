@@ -244,152 +244,171 @@ public class CorpayService {
             String userId,
             int nomor,
             int ket,
+            int comp_code,
             int doc_no,
+            int fisc_year,
+            int doc_type,
             int doc_date2,
+            int post_date2,
+            int entry_date2,
+            int reference,
             int rev_with,
             int rev_year,
-            int post_date2,
-            int base_date,
-            int entry_date2,
-            int doc_type,
-            int fisc_year,
             int doc_hdr_txt,
-            int reference,
-            int tgl_tagihan_diterima,
-            int comp_code,
-            int bus_area,
             int currency,
             int exch_rate,
-            int line_item,
-            int dr_cr_ind,
-            int spec_gl,
-            int gl_acct,
-            int amt_tc,
-            int amt_lc,
-            int amt_with_base_tc,
-            int amt_with_tc,
-            int amt_with_base_lc,
-            int amt_with_lc,
-            int amount,
-            int acct_type,
-            int assignment,
-            int item_text,
-            int customer,
-            int vendor,
-            int term_pmt,
-            int due_on,
             int reference_key,
             int pmt_ind,
             int trans_type,
             int spread_val,
+            int line_item,
+            int oi_ind,
+            int acct_type,
+            int spec_gl,
+            int bus_area,
+            int tpba,
+            int amt_lc,
+            int amt_tc,
+            int amt_with_base_tc,
+            int amount,
+            int amt_with_tc,
+            int assignment,
+            int item_text,
+            int cost_ctr,
+            int gl_acct,
+            int customer,
+            int vendor,
+            int base_date,
+            int term_pmt,
+            int due_on,
             int pmt_block,
             int house_bank,
-            int no_rek_house_bank,
             int prtnr_bank_type,
             int bank_key,
             int bank_account,
             int account_holder,
-            int cost_ctr,
-            int int_order,
-            int wbs_num,
-            int cash_code,
             int po_num,
             int po_item,
             int ref_key1,
             int ref_key2,
             int ref_key3,
-            int oi_ind,
-            int tpba,
+            int int_order,
+            int wbs_num,
+            int cash_code,
+            int dr_cr_ind,
+            int corp_pmt,
+            int amt_with_base_lc,
+            int amt_with_lc,
             int metode_pembayaran,
-            int tgl_rencana_bayar,
+            int keterangan,
+            int status_tracking,
+            int no_rek_house_bank,
+            int inq_customer_name,
+            int inq_account_number,
+            int retrieval_ref_number,
+            int customer_ref_number,
+            int confirmation_code,
+            int tgl_act_bayar,
             int oss_id,
             int group_id,
+            int sumber_dana,
+            int tgl_rencana_bayar,
             int bank_byr,
             int curr_bayar,
+            int partial_ind,
             int amount_bayar,
             int bank_benef,
             int no_rek_benef,
             int nama_benef,
-            int tgl_act_bayar,
-            int sumber_dana,
-            int partial_ind,
-            int keterangan,
-            int status_tracking) {
+            int verified_by,
+            int verified_on,
+            int tgl_tagihan_diterima,
+            int no_giro) {
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_user_id", userId, OracleTypes.VARCHAR)
                 .addValue("p_nomor",nomor, OracleTypes.NUMBER)
                 .addValue("p_ket",ket, OracleTypes.NUMBER)
-                .addValue("p_doc_no",doc_no, OracleTypes.NUMBER)
-                .addValue("p_doc_date2",doc_date2, OracleTypes.NUMBER)
-                .addValue("p_rev_with",rev_with, OracleTypes.NUMBER)
-                .addValue("p_rev_year",rev_year, OracleTypes.NUMBER)
-                .addValue("p_post_date2",post_date2, OracleTypes.NUMBER)
-                .addValue("p_base_date",base_date, OracleTypes.NUMBER)
-                .addValue("p_entry_date2",entry_date2, OracleTypes.NUMBER)
-                .addValue("p_doc_type",doc_type, OracleTypes.NUMBER)
-                .addValue("p_fisc_year",fisc_year, OracleTypes.NUMBER)
-                .addValue("p_doc_hdr_txt",doc_hdr_txt, OracleTypes.NUMBER)
-                .addValue("p_reference",reference, OracleTypes.NUMBER)
-                .addValue("p_tgl_tagihan_diterima",tgl_tagihan_diterima, OracleTypes.NUMBER)
                 .addValue("p_comp_code",comp_code, OracleTypes.NUMBER)
-                .addValue("p_bus_area",bus_area, OracleTypes.NUMBER)
+                .addValue("p_doc_no",doc_no, OracleTypes.NUMBER)
+                .addValue("p_fisc_year",fisc_year, OracleTypes.NUMBER) //==
+                .addValue("p_doc_type",doc_type, OracleTypes.NUMBER)
+                .addValue("p_doc_date",doc_date2, OracleTypes.NUMBER) //==
+                .addValue("p_post_date",post_date2, OracleTypes.NUMBER)
+                .addValue("p_entry_date",entry_date2, OracleTypes.NUMBER) //==
+                .addValue("p_reference",reference, OracleTypes.NUMBER)
+                .addValue("p_rev_with",rev_with, OracleTypes.NUMBER) //==
+                .addValue("p_rev_year",rev_year, OracleTypes.NUMBER)
+                .addValue("p_doc_hdr_txt",doc_hdr_txt, OracleTypes.NUMBER) //==
                 .addValue("p_currency",currency, OracleTypes.NUMBER)
-                .addValue("p_exch_rate",exch_rate, OracleTypes.NUMBER)
+                .addValue("p_exch_rate",exch_rate, OracleTypes.NUMBER) //==
+                .addValue("p_reference_key",reference_key, OracleTypes.NUMBER)
+                .addValue("p_pmt_ind",pmt_ind, OracleTypes.NUMBER) //==
+                .addValue("p_trans_type",trans_type, OracleTypes.NUMBER)
+                .addValue("p_spread_val",spread_val, OracleTypes.NUMBER) //==
                 .addValue("p_line_item",line_item, OracleTypes.NUMBER)
-                .addValue("p_dr_cr_ind",dr_cr_ind, OracleTypes.NUMBER)
-                .addValue("p_spec_gl",spec_gl, OracleTypes.NUMBER)
-                .addValue("p_gl_acct",gl_acct, OracleTypes.NUMBER)
-                .addValue("p_amt_tc",amt_tc, OracleTypes.NUMBER)
-                .addValue("p_amt_lc",amt_lc, OracleTypes.NUMBER)
-                .addValue("p_amt_with_base_tc",amt_with_base_tc, OracleTypes.NUMBER)
-                .addValue("p_amt_with_tc",amt_with_tc, OracleTypes.NUMBER)
-                .addValue("p_amt_with_base_lc",amt_with_base_lc, OracleTypes.NUMBER)
-                .addValue("p_amt_with_lc",amt_with_lc, OracleTypes.NUMBER)
-                .addValue("p_amount",amount, OracleTypes.NUMBER)
+                .addValue("p_oi_ind",oi_ind, OracleTypes.NUMBER)
                 .addValue("p_acct_type",acct_type, OracleTypes.NUMBER)
+                .addValue("p_spec_gl",spec_gl, OracleTypes.NUMBER)
+                .addValue("p_bus_area",bus_area, OracleTypes.NUMBER)
+                .addValue("p_tpba",tpba, OracleTypes.NUMBER)
+                .addValue("p_amt_lc",amt_lc, OracleTypes.NUMBER)
+                .addValue("p_amt_tc",amt_tc, OracleTypes.NUMBER)
+                .addValue("p_amt_with_base_tc",amt_with_base_tc, OracleTypes.NUMBER)
+                .addValue("p_amount",amount, OracleTypes.NUMBER)
+                .addValue("p_amt_with_tc",amt_with_tc, OracleTypes.NUMBER)
                 .addValue("p_assignment",assignment, OracleTypes.NUMBER)
                 .addValue("p_item_text",item_text, OracleTypes.NUMBER)
-                .addValue("p_customer",customer, OracleTypes.NUMBER)
-                .addValue("p_vendor",vendor, OracleTypes.NUMBER)
+                .addValue("p_cost_ctr",cost_ctr, OracleTypes.NUMBER)
+                .addValue("p_gl_acct",gl_acct, OracleTypes.NUMBER)
+                .addValue("p_customer_name",customer, OracleTypes.NUMBER)
+                .addValue("p_vendor_name",vendor, OracleTypes.NUMBER)
+                .addValue("p_base_date",base_date, OracleTypes.NUMBER)
                 .addValue("p_term_pmt",term_pmt, OracleTypes.NUMBER)
                 .addValue("p_due_on",due_on, OracleTypes.NUMBER)
-                .addValue("p_reference_key",reference_key, OracleTypes.NUMBER)
-                .addValue("p_pmt_ind",pmt_ind, OracleTypes.NUMBER)
-                .addValue("p_trans_type",trans_type, OracleTypes.NUMBER)
-                .addValue("p_spread_val",spread_val, OracleTypes.NUMBER)
                 .addValue("p_pmt_block",pmt_block, OracleTypes.NUMBER)
                 .addValue("p_house_bank",house_bank, OracleTypes.NUMBER)
-                .addValue("p_no_rek_house_bank",no_rek_house_bank, OracleTypes.NUMBER)
                 .addValue("p_prtnr_bank_type",prtnr_bank_type, OracleTypes.NUMBER)
                 .addValue("p_bank_key",bank_key, OracleTypes.NUMBER)
                 .addValue("p_bank_account",bank_account, OracleTypes.NUMBER)
                 .addValue("p_account_holder",account_holder, OracleTypes.NUMBER)
-                .addValue("p_cost_ctr",cost_ctr, OracleTypes.NUMBER)
-                .addValue("p_int_order",int_order, OracleTypes.NUMBER)
-                .addValue("p_wbs_num",wbs_num, OracleTypes.NUMBER)
-                .addValue("p_cash_code",cash_code, OracleTypes.NUMBER)
                 .addValue("p_po_num",po_num, OracleTypes.NUMBER)
                 .addValue("p_po_item",po_item, OracleTypes.NUMBER)
                 .addValue("p_ref_key1",ref_key1, OracleTypes.NUMBER)
                 .addValue("p_ref_key2",ref_key2, OracleTypes.NUMBER)
                 .addValue("p_ref_key3",ref_key3, OracleTypes.NUMBER)
-                .addValue("p_oi_ind",oi_ind, OracleTypes.NUMBER)
-                .addValue("p_tpba",tpba, OracleTypes.NUMBER)
+                .addValue("p_int_order",int_order, OracleTypes.NUMBER)
+                .addValue("p_wbs_num",wbs_num, OracleTypes.NUMBER)
+                .addValue("p_cash_code",cash_code, OracleTypes.NUMBER)
+                .addValue("p_dr_cr_ind",dr_cr_ind, OracleTypes.NUMBER)
+                .addValue("p_corp_pmt",corp_pmt, OracleTypes.NUMBER)
+                .addValue("p_amt_with_base_lc",amt_with_base_lc, OracleTypes.NUMBER)
+                .addValue("p_amt_with_lc",amt_with_lc, OracleTypes.NUMBER)
                 .addValue("p_metode_pembayaran",metode_pembayaran, OracleTypes.NUMBER)
-                .addValue("p_tgl_rencana_bayar",tgl_rencana_bayar, OracleTypes.NUMBER)
+                .addValue("p_keterangan",keterangan, OracleTypes.NUMBER)
+                .addValue("p_status_tracking",status_tracking, OracleTypes.NUMBER)
+                .addValue("p_no_rek_house_bank",no_rek_house_bank, OracleTypes.NUMBER)
+                .addValue("p_inq_customer_name",inq_customer_name, OracleTypes.NUMBER)
+                .addValue("p_inq_account_number",inq_account_number , OracleTypes.NUMBER)
+                .addValue("p_retrieval_ref_number",retrieval_ref_number , OracleTypes.NUMBER)
+                .addValue("p_customer_ref_number",customer_ref_number , OracleTypes.NUMBER)
+                .addValue("p_confirmation_code", confirmation_code , OracleTypes.NUMBER)
+                .addValue("p_tgl_act_bayar",tgl_act_bayar, OracleTypes.NUMBER)
                 .addValue("p_oss_id",oss_id, OracleTypes.NUMBER)
                 .addValue("p_group_id",group_id, OracleTypes.NUMBER)
+                .addValue("p_sumber_dana",sumber_dana, OracleTypes.NUMBER)
+                .addValue("p_tgl_rencana_bayar",tgl_rencana_bayar, OracleTypes.NUMBER)
                 .addValue("p_bank_byr",bank_byr, OracleTypes.NUMBER)
                 .addValue("p_curr_bayar",curr_bayar, OracleTypes.NUMBER)
+                .addValue("p_partial_ind",partial_ind, OracleTypes.NUMBER)
                 .addValue("p_amount_bayar",amount_bayar, OracleTypes.NUMBER)
                 .addValue("p_bank_benef",bank_benef, OracleTypes.NUMBER)
                 .addValue("p_no_rek_benef",no_rek_benef, OracleTypes.NUMBER)
                 .addValue("p_nama_benef",nama_benef, OracleTypes.NUMBER)
-                .addValue("p_tgl_act_bayar",tgl_act_bayar, OracleTypes.NUMBER)
-                .addValue("p_sumber_dana",sumber_dana, OracleTypes.NUMBER)
-                .addValue("p_partial_ind",partial_ind, OracleTypes.NUMBER)
-                .addValue("p_keterangan",keterangan, OracleTypes.NUMBER)
-                .addValue("p_status_tracking",status_tracking, OracleTypes.NUMBER);
+                .addValue("p_verified_by", verified_by , OracleTypes.NUMBER)
+                .addValue("p_verified_on", verified_on , OracleTypes.NUMBER)
+                .addValue("p_tgl_tagihan_diterima",tgl_tagihan_diterima, OracleTypes.NUMBER)
+                .addValue("p_no_giro", no_giro , OracleTypes.NUMBER);
+
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("invoice_save_column");

@@ -769,7 +769,7 @@ function getAllData() {
                                 var today = dd + '/' + mm + '/' + yyyy;
                                 console.log();
                                 if (full.TGL_RENCANA_BAYAR < today){
-                                    verif = '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-danger" title="Reject" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-arrow-left"></i></button>';
+                                    verif = '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-danger" title="Reject" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
                                 }else{
                                     verif = '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title="Approve Tanggal" onclick="verifikasi_tanggal(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-check"></i></button>'+'<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-danger" title="Reject" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-arrow-left"></i></button>';
                                 }
@@ -1447,7 +1447,7 @@ function getPaymentStatus(pBank, pRefNum){
 
 
 
-function reverse_sap(pCompCode, pDocNo, pFiscYear, pLineItem, pKet){
+function reverse_sap(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pIdGroupSap){
     var stateCrf = confirm("Anda Yakin Akan Mereverse Tagihan Ini ?");
     if (stateCrf == true) {
         showLoadingCss();
@@ -1461,6 +1461,7 @@ function reverse_sap(pCompCode, pDocNo, pFiscYear, pLineItem, pKet){
                  pFiscYear: pFiscYear,
                  pLineItem: pLineItem,
                  pKet: pKet,
+                 pGroupId: pIdGroupSap,
             },
             success: function (res) {
                 hideLoadingCss("")

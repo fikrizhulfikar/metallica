@@ -937,6 +937,12 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                                                         // '<button style="width: 15px !important;" class="btn btn-sm btn-primary" title="Lunas (giro)" onclick="updLunasGiro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fas fa-money-check"></i></button>'+
                                                         '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
                                             }
+                                            if (newRoleUser[0] === "ROLE_EXECUTIVE_VICE_PRESIDENT"){
+                                                ret_value = ret_value +
+                                                    '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-ready" title="Siap Bayar (Giro)" onclick="updSiapBayarGiro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fas fa-money-check"></i></button>'+
+                                                    // '<button style="width: 15px !important;" class="btn btn-sm btn-primary" title="Lunas (giro)" onclick="updLunasGiro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fas fa-money-check"></i></button>'+
+                                                    '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
+                                            }
                                              '</div>'
                                             }
                                 }
@@ -1213,7 +1219,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                                 } else {
                                     api.column(2).visible(false);
                                 }
-                                if (response.DOC_DATE2 == 1) {
+                                if (response.DOC_DATE == 1) {
                                     api.column(3).visible(true);
                                 } else {
                                     api.column(3).visible(false);
@@ -1228,7 +1234,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                                 } else {
                                     api.column(5).visible(false);
                                 }
-                                if (response.POST_DATE2 == 1) {
+                                if (response.POST_DATE == 1) {
                                     api.column(6).visible(true);
                                 } else {
                                     api.column(6).visible(false);
@@ -1238,7 +1244,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                                 } else {
                                     api.column(7).visible(false);
                                 }
-                                if (response.ENTRY_DATE2 == 1) {
+                                if (response.ENTRY_DATE == 1) {
                                     api.column(8).visible(true);
                                 } else {
                                     api.column(8).visible(false);
@@ -1563,9 +1569,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                                 } else {
                                     api.column(72).visible(false);
                                 }
-
-
-
                             },
                             error: function () {
                                 hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -1585,7 +1588,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
             });
 
             $('.dataTables_filter').each(function () {
-                 var html = '<button class="btn btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
+                 var html = '<button class="btn btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Tampilkan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
 
                  if(newRoleUser[0] == "ROLE_VERIFIKATOR"){
                     // html = html + '<button class="btn btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
@@ -2056,7 +2059,7 @@ function showColumn() {
             } else {
                 $("#hc2").prop("checked", false);
             }
-            if (response.DOC_DATE2 == 1) {
+            if (response.DOC_DATE == 1) {
                 $("#hc3").prop("checked", true);
             } else {
                 $("#hc3").prop("checked", false);
@@ -2071,7 +2074,7 @@ function showColumn() {
             } else {
                 $("#hc5").prop("checked", false);
             }
-            if (response.POST_DATE2 == 1) {
+            if (response.POST_DATE == 1) {
                 $("#hc6").prop("checked", true);
             } else {
                 $("#hc6").prop("checked", false);
@@ -2081,7 +2084,7 @@ function showColumn() {
             } else {
                 $("#hc7").prop("checked", false);
             }
-            if (response.ENTRY_DATE2 == 1) {
+            if (response.ENTRY_DATE == 1) {
                 $("#hc8").prop("checked", true);
             } else {
                 $("#hc8").prop("checked", false);
@@ -2201,12 +2204,12 @@ function showColumn() {
             } else {
                 $("#hc31").prop("checked", false);
             }
-            if (response.CUSTOMER == 1) {
+            if (response.CUSTOMER_NAME == 1) {
                 $("#hc32").prop("checked", true);
             } else {
                 $("#hc32").prop("checked", false);
             }
-            if (response.VENDOR == 1) {
+            if (response.VENDOR_NAME == 1) {
                 $("#hc33").prop("checked", true);
             } else {
                 $("#hc33").prop("checked", false);
@@ -2406,6 +2409,52 @@ function showColumn() {
                 } else {
                     $("#hc72").prop("checked", false);
                 }
+
+                 if (response.CORP_PMT === 1){
+                     $("#hc73").prop("checked", true);
+                 }else{
+                     $("#hc73").prop("checked", false);
+                 }
+                if (response.INQ_CUSTOMER_NAME === 1){
+                    $("#hc74").prop("checked", true);
+                }else{
+                    $("#hc74").prop("checked", false);
+                }
+                if (response.INQ_ACCOUNT_NUMBER === 1){
+                    $("#hc75").prop("checked", true);
+                }else{
+                    $("#hc75").prop("checked", false);
+                }
+                if (response.RETRIEVAL_REF_NUMBER === 1){
+                    $("#hc76").prop("checked", true);
+                }else{
+                    $("#hc76").prop("checked", false);
+                }
+                if (response.CUSTOMER_REF_NUMBER === 1){
+                    $("#hc77").prop("checked", true);
+                }else{
+                    $("#hc77").prop("checked", false);
+                }
+                if (response.CONFIRMATION_CODE === 1){
+                    $("#hc78").prop("checked", true);
+                }else{
+                    $("#hc78").prop("checked", false);
+                }
+                if (response.VERIFIED_BY === 1){
+                    $("#hc79").prop("checked", true);
+                }else{
+                    $("#hc79").prop("checked", false);
+                }
+                if (response.VERIFIED_ON === 1){
+                    $("#hc80").prop("checked", true);
+                }else{
+                    $("#hc80").prop("checked", false);
+                }
+                if (response.NO_GIRO === 1){
+                    $("#hc81").prop("checked", true);
+                }else{
+                    $("#hc81").prop("checked", false);
+                }
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -2489,6 +2538,16 @@ function saveColumn() {
     var hc71 = $("#hc71").prop('checked');
     var hc72 = $("#hc72").prop('checked');
 
+    var hc73 = $("#hc73").prop('checked');
+    var hc74 = $("#hc74").prop('checked');
+    var hc75 = $("#hc75").prop('checked');
+    var hc76 = $("#hc76").prop('checked');
+    var hc77 = $("#hc77").prop('checked');
+    var hc78 = $("#hc78").prop('checked');
+    var hc79 = $("#hc79").prop('checked');
+    var hc80 = $("#hc80").prop('checked');
+    var hc81 = $("#hc81").prop('checked');
+
     var data = {
         "nomor" : hc0 == true ? 1 : 0,
         "ket" : hc1 == true ? 1 : 0,
@@ -2562,7 +2621,17 @@ function saveColumn() {
         "sumber_dana" : hc69 == true ? 1 : 0,
         "partial_ind" : hc70 == true ? 1 : 0,
         "keterangan" : hc71 == true ? 1 : 0,
-        "status_tracking" : hc72 == true ? 1 : 0
+        "status_tracking" : hc72 == true ? 1 : 0,
+
+        "corp_pmt" : hc73 == true ? 1 : 0,
+        "inq_customer_name" : hc74 == true ? 1 : 0,
+        "inq_account_number" : hc75 == true ? 1 : 0,
+        "retrieval_ref_number" : hc76 == true ? 1 : 0,
+        "customer_ref_number" : hc77 == true ? 1 : 0,
+        "confirmation_code" : hc78 == true ? 1 : 0,
+        "verified_by" : hc79 == true ? 1 : 0,
+        "verified_on" : hc80 == true ? 1 : 0,
+        "no_giro" : hc81 == true ? 1 : 0,
     };
     // console.log("data save column", data);
     $.ajax({
@@ -3981,7 +4050,7 @@ function checkGroup(){
         Swal.fire({
             icon : "error",
             title : "Maaf!",
-            html : '<p>Silahkan Melakukan Inquiry Terlebih Dahulu</p>',
+            html : '<p>Silahkan Tentukan Metode Pembayaran Terlebih Dahulu</p>',
         });
         // alert("No Way, Sorry :(");
     } else Swal.fire("Maaf", "Tidak bisa melakukan Grouping","error");
@@ -4006,9 +4075,9 @@ function isSame(data){
     // || comp_code != data[x].COMP_CODE
 
         for(let x = 0; x < data.length; x++){
-             // if (data[x].INQ_CUSTOMER_NAME === "-"){
-             //     return 222;
-             // }
+             if (data[x].METODE_PEMBAYARAN === "-"){
+                 return 222;
+             }
             if(due_on !== data[x].TGL_RENCANA_BAYAR || bank !== data[x].BANK_BYR || hb_rekening !== data[x].NO_REK_HOUSE_BANK || assign !== data[x].ASSIGNMENT || bus_area !== data[x].BUS_AREA || sumber_dana !== data[x].SUMBER_DANA ||
             inq_name !== data[x].INQ_CUSTOMER_NAME || no_giro !== data[x].NO_GIRO || curr_bayar !== data[x].CURR_BAYAR){
                 return false;

@@ -1102,60 +1102,21 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                         }
                     }
                 },
-        "initComplete": function(settings, json) {
-            var api = this.api();
-            $.ajax({
-                url: baseUrl + "api_operator/invoice_group/get_column",
-                dataType: 'JSON',
-                type: "GET",
-                success: function (res) {
-                    var response = res.data[0];
-                    if (response.ROW_NUMBER == 1) {
-                        api.column(0).visible(true);
-                    } else {
-                        api.column(0).visible(false);
-                    }
-                    if (response.HOUSE_BANK == 1) {
-                        api.column(1).visible(true);
-                    } else {
-                        api.column(1).visible(false);
-                    }
-                    if (response.NO_REK_HOUSE_BANK == 1) {
-                        api.column(2).visible(true);
-                    } else {
-                        api.column(2).visible(false);
-                    }
-                    if (response.COMP_CODE == 1) {
-                        api.column(3).visible(true);
-                    } else {
-                        api.column(3).visible(false);
-                    }
-                    if (response.BUS_AREA == 1) {
-                        api.column(4).visible(true);
-                    } else {
-                        api.column(4).visible(false);
-                    }
-                    if (response.DUE_ON == 1) {
-                        api.column(5).visible(true);
-                    } else {
-                        api.column(5).visible(false);
-                    }
-                    if (response.TOTAL_TAGIHAN == 1) {
-                        api.column(6).visible(true);
-                    } else {
-                        api.column(6).visible(false);
-                    }
-                    if (response.ASSIGNMENT == 1) {
-                        api.column(7).visible(true);
-                    } else {
-                        api.column(7).visible(false);
-                    }
-                },
-                error: function () {
-                    hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-                }
-            });
-        }
+        // "initComplete": function(settings, json) {
+        //     var api = this.api();
+        //     $.ajax({
+        //         url: baseUrl + "api_operator/invoice_group/get_column",
+        //         dataType: 'JSON',
+        //         type: "GET",
+        //         success: function (res) {
+        //             var response = res.data[0];
+        //
+        //         },
+        //         error: function () {
+        //             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        //         }
+        //     });
+        // }
         },
 
     );
@@ -2316,7 +2277,7 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                 "initComplete": function(settings, json) {
                                         var api = this.api();
                                         $.ajax({
-                                            url: baseUrl + "api_operator/rekap_invoice_belum/get_column",
+                                            url: baseUrl + "api_operator/invoice_group/get_column",
                                             dataType: 'JSON',
                                             type: "GET",
                 //                            success: function (res) {
@@ -2339,7 +2300,7 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                                                 } else {
                                                     api.column(2).visible(false);
                                                 }
-                                                if (response.DOC_DATE2 == 1) {
+                                                if (response.DOC_DATE == 1) {
                                                     api.column(3).visible(true);
                                                 } else {
                                                     api.column(3).visible(false);
@@ -2354,7 +2315,7 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                                                 } else {
                                                     api.column(5).visible(false);
                                                 }
-                                                if (response.POST_DATE2 == 1) {
+                                                if (response.POST_DATE == 1) {
                                                     api.column(6).visible(true);
                                                 } else {
                                                     api.column(6).visible(false);
@@ -2364,7 +2325,7 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                                                 } else {
                                                     api.column(7).visible(false);
                                                 }
-                                                if (response.ENTRY_DATE2 == 1) {
+                                                if (response.ENTRY_DATE == 1) {
                                                     api.column(8).visible(true);
                                                 } else {
                                                     api.column(8).visible(false);
@@ -2415,7 +2376,7 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                                                     api.column(17).visible(false);
                                                 }
                                                 if (response.LINE_ITEM == 1) {
-                                                    api.column(18).visible(false);
+                                                    api.column(18).visible(true);
                                                 } else {
                                                     api.column(18).visible(false);
                                                 }
@@ -2484,12 +2445,12 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                                                 } else {
                                                     api.column(31).visible(false);
                                                 }
-                                                if (response.CUSTOMER == 1) {
+                                                if (response.CUSTOMER_NAME == 1) {
                                                     api.column(32).visible(true);
                                                 } else {
                                                     api.column(32).visible(false);
                                                 }
-                                                if (response.VENDOR == 1) {
+                                                if (response.VENDOR_NAME == 1) {
                                                     api.column(33).visible(true);
                                                 } else {
                                                     api.column(33).visible(false);
@@ -2674,24 +2635,16 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                                                 } else {
                                                     api.column(69).visible(false);
                                                 }
-                                                 if (response.PARTIAL_IND == 1) {
+                                                if (response.KETERANGAN == 1) {
                                                     api.column(70).visible(true);
                                                 } else {
                                                     api.column(70).visible(false);
                                                 }
-                                                if (response.KETERANGAN == 1) {
+                                                if (response.STATUS_TRACKING == 1) {
                                                     api.column(71).visible(true);
                                                 } else {
                                                     api.column(71).visible(false);
                                                 }
-                                                    if (response.STATUS_TRACKING == 1) {
-                                                    api.column(72).visible(true);
-                                                } else {
-                                                    api.column(72).visible(false);
-                                                }
-
-
-
                                             },
                                             error: function () {
                                                 hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -2725,12 +2678,11 @@ function search(state) {
 function showColumn() {
     $("#hide_column_modal").modal("show");
     $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/get_column",
+        url: baseUrl + "api_operator/invoice_group/get_column",
         dataType: 'JSON',
         type: "GET",
         success: function (res) {
             var response = res.data[0];
-
             if (response.NOMOR == 1) {
                 $("#hc0").prop("checked", true);
             } else {
@@ -2746,7 +2698,7 @@ function showColumn() {
             } else {
                 $("#hc2").prop("checked", false);
             }
-            if (response.DOC_DATE2 == 1) {
+            if (response.DOC_DATE == 1) {
                 $("#hc3").prop("checked", true);
             } else {
                 $("#hc3").prop("checked", false);
@@ -2761,7 +2713,7 @@ function showColumn() {
             } else {
                 $("#hc5").prop("checked", false);
             }
-            if (response.POST_DATE2 == 1) {
+            if (response.POST_DATE == 1) {
                 $("#hc6").prop("checked", true);
             } else {
                 $("#hc6").prop("checked", false);
@@ -2771,7 +2723,7 @@ function showColumn() {
             } else {
                 $("#hc7").prop("checked", false);
             }
-            if (response.ENTRY_DATE2 == 1) {
+            if (response.ENTRY_DATE == 1) {
                 $("#hc8").prop("checked", true);
             } else {
                 $("#hc8").prop("checked", false);
@@ -2861,7 +2813,7 @@ function showColumn() {
             } else {
                 $("#hc25").prop("checked", false);
             }
-             if (response.AMT_WITH_BASE_LC == 1) {
+            if (response.AMT_WITH_BASE_LC == 1) {
                 $("#hc26").prop("checked", true);
             } else {
                 $("#hc26").prop("checked", false);
@@ -2891,12 +2843,12 @@ function showColumn() {
             } else {
                 $("#hc31").prop("checked", false);
             }
-            if (response.CUSTOMER == 1) {
+            if (response.CUSTOMER_NAME == 1) {
                 $("#hc32").prop("checked", true);
             } else {
                 $("#hc32").prop("checked", false);
             }
-            if (response.VENDOR == 1) {
+            if (response.VENDOR_NAME == 1) {
                 $("#hc33").prop("checked", true);
             } else {
                 $("#hc33").prop("checked", false);
@@ -2921,181 +2873,176 @@ function showColumn() {
             } else {
                 $("#hc37").prop("checked", false);
             }
-             if (response.TRANS_TYPE == 1) {
+            if (response.TRANS_TYPE == 1) {
                 $("#hc38").prop("checked", true);
             } else {
                 $("#hc38").prop("checked", false);
             }
-             if (response.SPREAD_VAL == 1) {
+            if (response.SPREAD_VAL == 1) {
                 $("#hc39").prop("checked", true);
             } else {
                 $("#hc39").prop("checked", false);
             }
-             if (response.PMT_BLOCK == 1) {
+            if (response.PMT_BLOCK == 1) {
                 $("#hc40").prop("checked", true);
             } else {
                 $("#hc40").prop("checked", false);
             }
-             if (response.HOUSE_BANK == 1) {
+            if (response.HOUSE_BANK == 1) {
                 $("#hc41").prop("checked", true);
             } else {
                 $("#hc41").prop("checked", false);
             }
-             if (response.NO_REK_HOUSE_BANK == 1) {
+            if (response.NO_REK_HOUSE_BANK == 1) {
                 $("#hc42").prop("checked", true);
             } else {
                 $("#hc42").prop("checked", false);
             }
-             if (response.PRTNR_BANK_TYPE == 1) {
+            if (response.PRTNR_BANK_TYPE == 1) {
                 $("#hc43").prop("checked", true);
             } else {
                 $("#hc43").prop("checked", false);
             }
-             if (response.BANK_KEY == 1) {
+            if (response.BANK_KEY == 1) {
                 $("#hc44").prop("checked", true);
             } else {
                 $("#hc44").prop("checked", false);
             }
             if (response.BANK_ACCOUNT == 1) {
-                 $("#hc45").prop("checked", true);
-             } else {
-                 $("#hc45").prop("checked", false);
-             }
-              if (response.ACCOUNT_HOLDER == 1) {
-                  $("#hc46").prop("checked", true);
-              } else {
-                  $("#hc46").prop("checked", false);
-              }
-               if (response.COST_CTR == 1) {
-                   $("#hc47").prop("checked", true);
-               } else {
-                   $("#hc47").prop("checked", false);
-               }
-                if (response.INT_ORDER == 1) {
-                    $("#hc48").prop("checked", true);
-                } else {
-                    $("#hc48").prop("checked", false);
-                }
-                 if (response.WBS_NUM == 1) {
-                     $("#hc49").prop("checked", true);
-                 } else {
-                     $("#hc49").prop("checked", false);
-                 }
-                  if (response.CASH_CODE == 1) {
-                      $("#hc50").prop("checked", true);
-                  } else {
-                      $("#hc50").prop("checked", false);
-                  }
-               if (response.PO_NUM == 1) {
-                    $("#hc51").prop("checked", true);
-                } else {
-                    $("#hc51").prop("checked", false);
-                }
-                if (response.PO_ITEM == 1) {
-                      $("#hc52").prop("checked", true);
-                  } else {
-                      $("#hc52").prop("checked", false);
-                  }
-                if (response.REF_KEY1 == 1) {
-                    $("#hc53").prop("checked", true);
-                } else {
-                    $("#hc53").prop("checked", false);
-                }
-                if (response.REF_KEY2 == 1) {
-                    $("#hc54").prop("checked", true);
-                } else {
-                    $("#hc54").prop("checked", false);
-                }
-                if (response.REF_KEY3 == 1) {
-                    $("#hc55").prop("checked", true);
-                } else {
-                    $("#hc55").prop("checked", false);
-                }
-                if (response.OI_IND == 1) {
-                    $("#hc56").prop("checked", true);
-                } else {
-                    $("#hc56").prop("checked", false);
-                }
-                if (response.TPBA == 1) {
-                    $("#hc57").prop("checked", true);
-                } else {
-                    $("#hc57").prop("checked", false);
-                }
-                if (response.METODE_PEMBAYARAN == 1) {
-                    $("#hc58").prop("checked", true);
-                } else {
-                    $("#hc58").prop("checked", false);
-                }
-                if (response.TGL_RENCANA_BAYAR == 1) {
-                    $("#hc59").prop("checked", true);
-                } else {
-                    $("#hc59").prop("checked", false);
-                }
-                if (response.OSS_ID == 1) {
-                    $("#hc60").prop("checked", true);
-                } else {
-                    $("#hc60").prop("checked", false);
-                }
-                if (response.GROUP_ID == 1) {
-                    $("#hc61").prop("checked", true);
-                } else {
-                    $("#hc61").prop("checked", false);
-                }
-                if (response.BANK_BYR == 1) {
-                    $("#hc62").prop("checked", true);
-                } else {
-                    $("#hc62").prop("checked", false);
-                }
-                if (response.CURR_BAYAR == 1) {
-                    $("#hc63").prop("checked", true);
-                } else {
-                    $("#hc63").prop("checked", false);
-                }
-                if (response.AMOUNT_BAYAR == 1) {
-                    $("#hc64").prop("checked", true);
-                } else {
-                    $("#hc64").prop("checked", false);
-                }
-                if (response.BANK_BENEF == 1) {
-                    $("#hc65").prop("checked", true);
-                } else {
-                    $("#hc65").prop("checked", false);
-                }
-                 if (response.NO_REK_BENEF == 1) {
-                    $("#hc66").prop("checked", true);
-                } else {
-                    $("#hc66").prop("checked", false);
-                }
-                 if (response.NAMA_BENEF == 1) {
-                    $("#hc67").prop("checked", true);
-                } else {
-                    $("#hc67").prop("checked", false);
-                }
-                 if (response.TGL_ACT_BAYAR == 1) {
-                    $("#hc68").prop("checked", true);
-                } else {
-                    $("#hc68").prop("checked", false);
-                }
-                 if (response.SUMBER_DANA == 1) {
-                    $("#hc69").prop("checked", true);
-                } else {
-                    $("#hc69").prop("checked", false);
-                }
-                 if (response.PARTIAL_IND == 1) {
-                    $("#hc70").prop("checked", true);
-                } else {
-                    $("#hc70").prop("checked", false);
-                }
-                 if (response.KETERANGAN == 1) {
-                    $("#hc71").prop("checked", true);
-                } else {
-                    $("#hc71").prop("checked", false);
-                }
-                 if (response.STATUS_TRACKING == 1) {
-                    $("#hc72").prop("checked", true);
-                } else {
-                    $("#hc72").prop("checked", false);
-                }
+                $("#hc45").prop("checked", true);
+            } else {
+                $("#hc45").prop("checked", false);
+            }
+            if (response.ACCOUNT_HOLDER == 1) {
+                $("#hc46").prop("checked", true);
+            } else {
+                $("#hc46").prop("checked", false);
+            }
+            if (response.COST_CTR == 1) {
+                $("#hc47").prop("checked", true);
+            } else {
+                $("#hc47").prop("checked", false);
+            }
+            if (response.INT_ORDER == 1) {
+                $("#hc48").prop("checked", true);
+            } else {
+                $("#hc48").prop("checked", false);
+            }
+            if (response.WBS_NUM == 1) {
+                $("#hc49").prop("checked", true);
+            } else {
+                $("#hc49").prop("checked", false);
+            }
+            if (response.CASH_CODE == 1) {
+                $("#hc50").prop("checked", true);
+            } else {
+                $("#hc50").prop("checked", false);
+            }
+            if (response.PO_NUM == 1) {
+                $("#hc51").prop("checked", true);
+            } else {
+                $("#hc51").prop("checked", false);
+            }
+            if (response.PO_ITEM == 1) {
+                $("#hc52").prop("checked", true);
+            } else {
+                $("#hc52").prop("checked", false);
+            }
+            if (response.REF_KEY1 == 1) {
+                $("#hc53").prop("checked", true);
+            } else {
+                $("#hc53").prop("checked", false);
+            }
+            if (response.REF_KEY2 == 1) {
+                $("#hc54").prop("checked", true);
+            } else {
+                $("#hc54").prop("checked", false);
+            }
+            if (response.REF_KEY3 == 1) {
+                $("#hc55").prop("checked", true);
+            } else {
+                $("#hc55").prop("checked", false);
+            }
+            if (response.OI_IND == 1) {
+                $("#hc56").prop("checked", true);
+            } else {
+                $("#hc56").prop("checked", false);
+            }
+            if (response.TPBA == 1) {
+                $("#hc57").prop("checked", true);
+            } else {
+                $("#hc57").prop("checked", false);
+            }
+            if (response.METODE_PEMBAYARAN == 1) {
+                $("#hc58").prop("checked", true);
+            } else {
+                $("#hc58").prop("checked", false);
+            }
+            if (response.TGL_RENCANA_BAYAR == 1) {
+                $("#hc59").prop("checked", true);
+            } else {
+                $("#hc59").prop("checked", false);
+            }
+            if (response.OSS_ID == 1) {
+                $("#hc60").prop("checked", true);
+            } else {
+                $("#hc60").prop("checked", false);
+            }
+            if (response.GROUP_ID == 1) {
+                $("#hc61").prop("checked", true);
+            } else {
+                $("#hc61").prop("checked", false);
+            }
+            if (response.BANK_BYR == 1) {
+                $("#hc62").prop("checked", true);
+            } else {
+                $("#hc62").prop("checked", false);
+            }
+            if (response.CURR_BAYAR == 1) {
+                $("#hc63").prop("checked", true);
+            } else {
+                $("#hc63").prop("checked", false);
+            }
+            if (response.AMOUNT_BAYAR == 1) {
+                $("#hc64").prop("checked", true);
+            } else {
+                $("#hc64").prop("checked", false);
+            }
+            if (response.BANK_BENEF == 1) {
+                $("#hc65").prop("checked", true);
+            } else {
+                $("#hc65").prop("checked", false);
+            }
+            if (response.NO_REK_BENEF == 1) {
+                $("#hc66").prop("checked", true);
+            } else {
+                $("#hc66").prop("checked", false);
+            }
+            if (response.NAMA_BENEF == 1) {
+                $("#hc67").prop("checked", true);
+            } else {
+                $("#hc67").prop("checked", false);
+            }
+            if (response.TGL_ACTL_BAYAR == 1) {
+                $("#hc68").prop("checked", true);
+            } else {
+                $("#hc68").prop("checked", false);
+            }
+            if (response.SUMBER_DANA == 1) {
+                $("#hc69").prop("checked", true);
+            } else {
+                $("#hc69").prop("checked", false);
+            }
+            if (response.KETERANGAN == 1) {
+                $("#hc70").prop("checked", true);
+            } else {
+                $("#hc70").prop("checked", false);
+            }
+            if (response.STATUS_TRACKING == 1) {
+                $("#hc71").prop("checked", true);
+            } else {
+                $("#hc71").prop("checked", false);
+            }
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -3177,18 +3124,17 @@ function saveColumn() {
     var hc69 = $("#hc69").prop('checked');
     var hc70 = $("#hc70").prop('checked');
     var hc71 = $("#hc71").prop('checked');
-    var hc72 = $("#hc72").prop('checked');
 
     var data = {
         "nomor" : hc0 == true ? 1 : 0,
         "ket" : hc1 == true ? 1 : 0,
         "doc_no" : hc2 == true ? 1 : 0,
-        "doc_date2" : hc3 == true ? 1 : 0,
+        "doc_date" : hc3 == true ? 1 : 0,
         "rev_with" : hc4 == true ? 1 : 0,
         "rev_year" : hc5 == true ? 1 : 0,
-        "post_date2" : hc6 == true ? 1 : 0,
+        "post_date" : hc6 == true ? 1 : 0,
         "base_date" : hc7 == true ? 1 : 0,
-        "entry_date2" : hc8 == true ? 1 : 0,
+        "entry_date" : hc8 == true ? 1 : 0,
         "doc_type" : hc9 == true ? 1 : 0,
         "fisc_year" : hc10 == true ? 1 : 0,
         "doc_hdr_txt" : hc11 == true ? 1 : 0,
@@ -3212,8 +3158,8 @@ function saveColumn() {
         "acct_type" : hc29 == true ? 1 : 0,
         "assignment" : hc30 == true ? 1 : 0,
         "item_text" : hc31 == true ? 1 : 0,
-        "customer" : hc32 == true ? 1 : 0,
-        "vendor" : hc33 == true ? 1 : 0,
+        "customer_name" : hc32 == true ? 1 : 0,
+        "vendor_name" : hc33 == true ? 1 : 0,
         "term_pmt" : hc34 == true ? 1 : 0,
         "due_on" : hc35 == true ? 1 : 0,
         "reference_key" : hc36 == true ? 1 : 0,
@@ -3241,6 +3187,7 @@ function saveColumn() {
         "metode_pembayaran" : hc58 == true ? 1 : 0,
         "tgl_rencana_bayar" : hc59 == true ? 1 : 0,
         "oss_id" : hc60 == true ? 1 : 0,
+        "group_id_sap" : hc61 == true ? 1 : 0,
         "group_id" : hc61 == true ? 1 : 0,
         "bank_byr" : hc62 == true ? 1 : 0,
         "curr_bayar" : hc63 == true ? 1 : 0,
@@ -3250,13 +3197,12 @@ function saveColumn() {
         "nama_benef" : hc67 == true ? 1 : 0,
         "tgl_act_bayar" : hc68 == true ? 1 : 0,
         "sumber_dana" : hc69 == true ? 1 : 0,
-        "partial_ind" : hc70 == true ? 1 : 0,
-        "keterangan" : hc71 == true ? 1 : 0,
-        "status_tracking" : hc72 == true ? 1 : 0
+        "keterangan" : hc70 == true ? 1 : 0,
+        "status_tracking" : hc71 == true ? 1 : 0,
     };
     // console.log("data save column", data);
     $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/save_column",
+        url: baseUrl + "api_operator/invoice_group/group_save_column",
         dataType: 'JSON',
         type: "POST",
         data: data,
@@ -3268,6 +3214,81 @@ function saveColumn() {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
         }
     });
+}
+
+function checkColumn(value) {
+    $("#hc0").prop("checked", value);
+    $("#hc1").prop("checked", value);
+    $("#hc2").prop("checked", value);
+    $("#hc3").prop("checked", value);
+    $("#hc4").prop("checked", value);
+    $("#hc5").prop("checked", value);
+    $("#hc6").prop("checked", value);
+    $("#hc7").prop("checked", value);
+    $("#hc8").prop("checked", value);
+    $("#hc9").prop("checked", value);
+    $("#hc10").prop("checked", value);
+    $("#hc11").prop("checked", value);
+    $("#hc12").prop("checked", value);
+    $("#hc13").prop("checked", value);
+    $("#hc14").prop("checked", value);
+    $("#hc15").prop("checked", value);
+    $("#hc16").prop("checked", value);
+    $("#hc17").prop("checked", value);
+    $("#hc18").prop("checked", value);
+    $("#hc19").prop("checked", value);
+    $("#hc20").prop("checked", value);
+    $("#hc21").prop("checked", value);
+    $("#hc22").prop("checked", value);
+    $("#hc23").prop("checked", value);
+    $("#hc24").prop("checked", value);
+    $("#hc25").prop("checked", value);
+    $("#hc26").prop("checked", value);
+    $("#hc27").prop("checked", value);
+    $("#hc28").prop("checked", value);
+    $("#hc29").prop("checked", value);
+    $("#hc30").prop("checked", value);
+    $("#hc31").prop("checked", value);
+    $("#hc32").prop("checked", value);
+    $("#hc33").prop("checked", value);
+    $("#hc34").prop("checked", value);
+    $("#hc35").prop("checked", value);
+    $("#hc36").prop("checked", value);
+    $("#hc37").prop("checked", value);
+    $("#hc38").prop("checked", value);
+    $("#hc39").prop("checked", value);
+    $("#hc40").prop("checked", value);
+    $("#hc41").prop("checked", value);
+    $("#hc42").prop("checked", value);
+    $("#hc43").prop("checked", value);
+    $("#hc44").prop("checked", value);
+    $("#hc45").prop("checked", value);
+    $("#hc46").prop("checked", value);
+    $("#hc47").prop("checked", value);
+    $("#hc48").prop("checked", value);
+    $("#hc49").prop("checked", value);
+    $("#hc50").prop("checked", value);
+    $("#hc51").prop("checked", value);
+    $("#hc52").prop("checked", value);
+    $("#hc53").prop("checked", value);
+    $("#hc54").prop("checked", value);
+    $("#hc55").prop("checked", value);
+    $("#hc56").prop("checked", value);
+    $("#hc57").prop("checked", value);
+    $("#hc58").prop("checked", value);
+    $("#hc59").prop("checked", value);
+    $("#hc60").prop("checked", value);
+    $("#hc61").prop("checked", value);
+    $("#hc62").prop("checked", value);
+    $("#hc63").prop("checked", value);
+    $("#hc64").prop("checked", value);
+    $("#hc65").prop("checked", value);
+    $("#hc66").prop("checked", value);
+    $("#hc67").prop("checked", value);
+    $("#hc68").prop("checked", value);
+    $("#hc69").prop("checked", value);
+    $("#hc70").prop("checked", value);
+    $("#hc71").prop("checked", value);
 }
 
 function initCbparent() {
