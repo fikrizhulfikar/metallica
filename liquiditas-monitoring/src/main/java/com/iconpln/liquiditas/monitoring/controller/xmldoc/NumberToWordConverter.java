@@ -16,7 +16,7 @@ import java.util.Locale;
 public class NumberToWordConverter {
     static String[] huruf={"","SATU ","DUA ","TIGA ","EMPAT ","LIMA ","ENAM ","TUJUH ","DELAPAN ","SEMBILAN ","SEPULUH ","SEBELAS "};
 
-    public static String toCurrency(String currency) throws IOException, JSONParseException {
+    public String toCurrency(String currency) throws IOException, JSONParseException {
         String curr = "IDR";
         if (currency.equals("IDR")){
             curr = "RUPIAH";
@@ -36,7 +36,7 @@ public class NumberToWordConverter {
         return curr.toUpperCase();
     }
 
-    public static String toIndoLocale(String raw){
+    public String toIndoLocale(String raw){
         double db = Double.parseDouble(raw.replace(",","."));
         Locale locale = new Locale("in","ID");
         NumberFormat nf = NumberFormat.getInstance(locale);
@@ -46,7 +46,7 @@ public class NumberToWordConverter {
         return decimalFormat.format(db);
     }
 
-    public static String toWords(Double angka){
+    public String toWords(Double angka){
         if(angka < 12)
             return huruf[angka.intValue()];
         if(angka >=12 && angka < 20)
@@ -72,21 +72,21 @@ public class NumberToWordConverter {
         return "";
     }
 
-    public static void main(String[] args) throws IOException, JSONParseException {
-        String bd = "997270560908700.45";
-        String amt = toIndoLocale(bd);
-        System.out.println(amt);
-        String[] arr = amt.split(",");
-        String koma = "";
-        if (arr.length > 1){
-            if (arr[1].equals("00")){
-                koma = "";
-                koma = koma + toWords(Double.parseDouble(arr[1]));
-            }else{
-                koma = "TITIK ";
-                koma = koma + toWords(Double.parseDouble(arr[1]));
-            }
-        }
-        System.out.println(toWords(Double.parseDouble(bd.replace(",",".")))+koma);
-    }
+//    public void main(String[] args) throws IOException, JSONParseException {
+//        String bd = "997270560908700.45";
+//        String amt = toIndoLocale(bd);
+//        System.out.println(amt);
+//        String[] arr = amt.split(",");
+//        String koma = "";
+//        if (arr.length > 1){
+//            if (arr[1].equals("00")){
+//                koma = "";
+//                koma = koma + toWords(Double.parseDouble(arr[1]));
+//            }else{
+//                koma = "TITIK ";
+//                koma = koma + toWords(Double.parseDouble(arr[1]));
+//            }
+//        }
+//        System.out.println(toWords(Double.parseDouble(bd.replace(",",".")))+koma);
+//    }
 }
