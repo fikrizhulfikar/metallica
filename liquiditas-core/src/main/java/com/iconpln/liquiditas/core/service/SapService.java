@@ -501,24 +501,4 @@ public class SapService {
         return out;
     }
 
-    public Map<String, Object> insertIntoIntegrationLog(String pJenisData, String pKontenData, String pStatusJson, String pParam, String pUrl){
-        Map<String, Object> insert = new HashMap<>();
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_CORPAY")
-                .withFunctionName("ins_log_sap_clob");
-        SqlParameterSource param = new MapSqlParameterSource()
-                .addValue("p_jenis_data", pJenisData, OracleTypes.VARCHAR)
-                .addValue("p_konten_data", pKontenData, OracleTypes.CLOB)
-                .addValue("p_status_json", pStatusJson, OracleTypes.VARCHAR)
-                .addValue("p_param",pParam, OracleTypes.VARCHAR)
-                .addValue("p_url", pUrl, OracleTypes.VARCHAR);
-        try{
-            insert = simpleJdbcCall.execute(param);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        AppUtils.getLogger(this).info("insert_into_integration_log : {}",insert);
-        return insert;
-    }
-
 }
