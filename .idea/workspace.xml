@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5d4fe2df-3f74-4761-a3cf-9c85b5eb6ef4" name="Default Changelist" comment="Fix Logic For '19'" />
+    <list default="true" id="5d4fe2df-3f74-4761-a3cf-9c85b5eb6ef4" name="Default Changelist" comment="Fix Logic For '19'">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -258,7 +260,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="30a23d2c-bc4d-4f0e-897e-86825e793e03" name="Default Changelist" comment="Add Multiple Reverse SAP Function" />
+      <changelist id="5d4fe2df-3f74-4761-a3cf-9c85b5eb6ef4" name="Default Changelist" comment="Fix Logic For '19'" />
       <created>1548216688663</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -387,6 +389,9 @@
       <workItem from="1590474112099" duration="197000" />
       <workItem from="1590543377396" duration="3000" />
       <workItem from="1590684859049" duration="356000" />
+      <workItem from="1591810923427" duration="814000" />
+      <workItem from="1591812633823" duration="61000" />
+      <workItem from="1591813315722" duration="268000" />
     </task>
     <task id="LOCAL-00088" summary="Menonaktifkan tombol">
       <created>1587606309788</created>
