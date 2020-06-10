@@ -174,13 +174,13 @@ public class Sap {
             Sapmaster sapmaster = new Sapmaster();
 //
 //            ClassLoader classLoader = Sap.class.getClassLoader();
-//            InputStream inputStream = classLoader.getResourceAsStream("files/3200008799.json");
+//            InputStream inputStream = classLoader.getResourceAsStream("files/JSONApInvoice.json");
 //            assert inputStream != null;
 //            String res = IOUtils.toString(inputStream);
-            String get_result = sapmaster.getDataApInvoice(param);
+            Map get_result = sapmaster.getDataApInvoice(param);
 
 //            JSONObject object = (JSONObject) parser.parse(res);
-            JSONObject object = (JSONObject) parser.parse(get_result);
+            JSONObject object = (JSONObject) parser.parse(get_result.get("response").toString());
             if(object.get("ERROR_CODE") == null){
                 result.put("status",200);
             }else if(object.get("ERROR_CODE") != null){
@@ -190,14 +190,13 @@ public class Sap {
 
 //            sapmaster.getDataApInvoice(param);
 //            String list = "["+res+"]";
-            String list = "["+get_result+"]";
+            String list = "["+get_result.get("response").toString()+"]";
             arr = (org.apache.chemistry.opencmis.commons.impl.json.JSONArray) parser.parse(list);
 
             System.out.println("List AP Invoice:"+list);
 
             int countter = 0 ;
-
-//            System.out.println("ARR SIZE :"+arr.size());
+            out = sapService.insertIntoIntegrationLog("AP_INVOICE",list,result.get("status").toString(),param.toString(),get_result.get("url").toString());
             for(int i=0; i<arr.size(); i++){
                 org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObject = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arr.get(i);
                 if (jsonObject.get("HEADER_DATA") != null){
@@ -330,9 +329,9 @@ public class Sap {
 //            InputStream inputStream = classLoader.getResourceAsStream("files/hrpayable.json");
 //            String res = IOUtils.toString(inputStream);
 
-            String get_result = sapmaster.getDataHrPayable(param);
+            Map<String, String> get_result = sapmaster.getDataHrPayable(param);
 //            JSONObject object = (JSONObject) parser.parse(res);
-            JSONObject object = (JSONObject) parser.parse(get_result);
+            JSONObject object = (JSONObject) parser.parse(get_result.get("response"));
             if(object.get("ERROR_CODE") == null){
                 result.put("status",200);
             }else if(object.get("ERROR_CODE") != null){
@@ -340,9 +339,10 @@ public class Sap {
                 result.put("status_message",object.get("ERROR_MESSAGE").toString());
             }
 
-            String list = "["+get_result+"]";
+            String list = "["+get_result.get("response")+"]";
 //            String list = "["+res+"]";
             System.out.println("List HR Payable :"+list);
+            out = sapService.insertIntoIntegrationLog("HR_PAYABLE",get_result.get("response"),result.get("status").toString(),param.toString(),get_result.get("url"));
 
             arr = (JSONArray) parser.parse(list);
             int counter = 0;

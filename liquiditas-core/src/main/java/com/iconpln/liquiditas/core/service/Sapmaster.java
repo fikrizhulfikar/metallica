@@ -46,7 +46,8 @@ public String getdatasap(Map<String, Object> param) throws URISyntaxException,IO
         return response;
     }
 
-    public  String getDataApInvoice(HashMap<String, Object> param) throws URISyntaxException,IOException {
+    public  Map getDataApInvoice(HashMap<String, Object> param) throws URISyntaxException,IOException {
+        Map result = new HashMap();
         this.intf = "IFM082";
         System.out.println("INI PARAMETER");
         System.out.println("comp_code : "+param.get("comp_code"));
@@ -57,17 +58,22 @@ public String getdatasap(Map<String, Object> param) throws URISyntaxException,IO
         System.out.println("date_to : "+param.get("date_to"));
         String url = AltConfig.get("sap.url")+"?sap-client="+xsap_client+"&interface=IFM082&comp_code="+param.get("comp_code")+"&bus_area="+param.get("bus_area")+"&doc_no="+param.get("doc_no")+"&fiscal_year="+param.get("fiscal_year")+"&date_from="+param.get("date_from")+"&date_to="+param.get("date_to");
         String response = SapHttp.executeGet(url);
+        result.put("url",url);
+        result.put("response",response);
         System.out.println("SAP URL"+url);
         System.out.println("DIAZ GANTENG : "+response);
-        return response;
+        return result;
     }
 
-    public  String getDataHrPayable(HashMap<String, Object> param) throws URISyntaxException,IOException {
+    public  Map<String, String> getDataHrPayable(HashMap<String, Object> param) throws URISyntaxException,IOException {
         this.intf = "IFM081";
+        Map result = new HashMap();
         String url = AltConfig.get("sap.url")+"?sap-client="+xsap_client+"&interface=IFM081&comp_code="+param.get("comp_code")+"&bus_area="+param.get("bus_area")+"&doc_no="+param.get("doc_no")+"&fiscal_year="+param.get("fiscal_year")+"&date_from="+param.get("date_from")+"&date_to="+param.get("date_to");
         System.out.println("SAP URL"+url);
         String response = SapHttp.executeGet(url);
-        return response;
+        result.put("url",url);
+        result.put("response",response);
+        return result;
     }
 
     public  String getDataPayment(HashMap<String, Object> param) throws URISyntaxException,IOException {
