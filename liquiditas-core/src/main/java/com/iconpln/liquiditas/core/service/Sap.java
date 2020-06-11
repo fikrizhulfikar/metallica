@@ -161,6 +161,8 @@ public class Sap {
     }
 
     public Map<String, Object> getApInvoice (String pCompanyCode,String pBusArea,String pDocNo,String pFiscYear, String pDatefrom, String pDateTo) throws IOException, URISyntaxException, AltException {
+        String header_data = "";
+        String item_data = "";
         Map<String, Object> out = new HashMap<>();
         result.clear();
         try {
@@ -183,6 +185,8 @@ public class Sap {
             JSONObject object = (JSONObject) parser.parse(get_result.get("response").toString());
             if(object.get("ERROR_CODE") == null){
                 result.put("status",200);
+                header_data = (object.get("HEADER_DATA") != null) ? object.get("HEADER_DATA").toString() : "";
+                item_data = (object.get("ITEM_DATA") != null) ? object.get("ITEM_DATA").toString() : "" ;
             }else if(object.get("ERROR_CODE") != null){
                 result.put("status",Integer.parseInt(object.get("ERROR_CODE").toString()));
                 result.put("status_message",object.get("ERROR_MESSAGE").toString());
@@ -196,13 +200,12 @@ public class Sap {
             System.out.println("List AP Invoice:"+list);
 
             int countter = 0 ;
-            out = sapService.insertIntoIntegrationLog("AP_INVOICE",list,result.get("status").toString(),param.toString(),get_result.get("url").toString());
+            out = sapService.insertIntoIntegrationLog("AP_INVOICE",list,header_data,item_data,result.get("status").toString(),param.toString(),get_result.get("url").toString());
             for(int i=0; i<arr.size(); i++){
                 org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObject = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arr.get(i);
                 if (jsonObject.get("HEADER_DATA") != null){
                     arrLines = (org.apache.chemistry.opencmis.commons.impl.json.JSONArray) parser.parse(String.valueOf(jsonObject.get("HEADER_DATA")));
-                    System.out.println("Arrlines Siza:"+arrLines.size());
-                    System.out.println("Arrlines Head:"+arrLines);
+
                     for(int j=0; j < arrLines.size(); j++){
                         org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObjectLines = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arrLines.get(j);
                         String comp_code = String.valueOf(jsonObjectLines.get("COMP_CODE"));
@@ -315,6 +318,8 @@ public class Sap {
     }
 
     public Map<String, Object> getHrPayable (String comp_code, String bus_area, String doc_no, String fiscal_year, String date_from, String date_to) throws IOException, URISyntaxException, AltException {
+        String header_data = "";
+        String item_data = "";
         Map<String, Object> out = new HashMap<>();
         try {
             Sapmaster sapmaster = new Sapmaster();
@@ -334,6 +339,8 @@ public class Sap {
             JSONObject object = (JSONObject) parser.parse(get_result.get("response"));
             if(object.get("ERROR_CODE") == null){
                 result.put("status",200);
+                header_data = (object.get("HEADER_DATA") != null) ? object.get("HEADER_DATA").toString() : "";
+                item_data = (object.get("ITEM_DATA") != null) ? object.get("ITEM_DATA").toString() : "";
             }else if(object.get("ERROR_CODE") != null){
                 result.put("status",Integer.parseInt(object.get("ERROR_CODE").toString()));
                 result.put("status_message",object.get("ERROR_MESSAGE").toString());
@@ -342,7 +349,7 @@ public class Sap {
             String list = "["+get_result.get("response")+"]";
 //            String list = "["+res+"]";
             System.out.println("List HR Payable :"+list);
-            out = sapService.insertIntoIntegrationLog("HR_PAYABLE",get_result.get("response"),result.get("status").toString(),param.toString(),get_result.get("url"));
+            out = sapService.insertIntoIntegrationLog("HR_PAYABLE",get_result.get("response"),header_data,item_data,result.get("status").toString(),param.toString(),get_result.get("url"));
 
             arr = (JSONArray) parser.parse(list);
             int counter = 0;
