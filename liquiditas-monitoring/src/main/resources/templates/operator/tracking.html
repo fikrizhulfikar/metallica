@@ -28,8 +28,9 @@
             <div class="form-group">
                 <div class="animated fadeIn" align="center">
                     <H5 style="cursor: default">Masukkan Kata Kunci</H5>
+                    <h6>(Dokumen Number, Group ID SAP, OSS ID, AMOUNT, AMOUNT BAYAR)</h6>
                     <div class="col-lg-6 col-md-8 col-sm-5">
-                        <input type="text" class="form-control" id="search-no-tagihan" placeholder="Masukkan kata kunci.." list="data-no-tagihan"/>
+                        <input type="text" class="form-control" id="search-no-tagihan" placeholder="Kata kunci.." list="data-no-tagihan"/>
                         <datalist id="data-no-tagihan">
                         </datalist>
                     </div>
@@ -44,49 +45,82 @@
     </div>
     <div class="container" id="all_table" style="display: none">
         <div class="col-md-12">
-            <div class="form-group">
-                <div class="view-table" id="div-table-tracking" style="width:100%;">
-                    <table width="100%" id="table-tracking" class="table table-bordered"
+            <div class="panel panel-default">
+                <div class="panel-body panel-custom">
+                    <div class="view-table" id="div-table-tracking" style="width:100%;">
+                        <table width="100%" id="table-tracking" class="table table-bordered"
                            style="margin-bottom: 0px !important;">
                         <thead>
                         <tr>
                             <th width="10%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
-                                Nomor
-                                Tagihan
+                                Company Code
                             </th>
                             <th width="10%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
-                                No. Nota Dinas
+                                Document Number
                             </th>
                             <th width="11%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
-                                Jenis
-                                Pembayaran
-                            </th>
-                            <th width="10%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
-                                Jatuh
-                                Tempo
-                            </th>
-                            <th width="10%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
-                                Vendor
-                            </th>
-                            <th width="10%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
-                                Currency
+                                Fiscal Year
                             </th>
                             <th width="11%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
-                                Nilai
-                                Tagihan
+                                Line Item
+                            </th>
+                            <th width="10%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
+                                Document Date
+                            </th>
+                            <th width="10%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
+                                Posting Date
+                            </th>
+                            <th width="10%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
+                                Entry Date
+                            </th>
+                            <th width="11%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
+                                Trans Type
                             </th>
                             <th width="22%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
-                                Nama
-                                Kontrak/Loan
+                                Currency
                             </th>
                             <th width="10%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
-                                Detail
+                                Exch Rate
+                            </th>
+                            <th width="10%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
+                                Amount
+                            </th>
+                            <th width="10%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
+                                Amount Bayar
+                            </th>
+                            <th width="30%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
+                                Item Text
+                            </th>
+                            <th width="10%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
+                                Vendor Name
+                            </th>
+                            <th width="10%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
+                                Due On
+                            </th>
+                            <th width="10%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
+                                Tgl Rencana Bayar
+                            </th>
+                            <th width="10%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
+                                Bank Bayar
+                            </th>
+                            <th width="10%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
+                                Bank Beneficiary
+                            </th>
+                            <th width="10%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
+                                Group ID
+                            </th>
+                            <th width="10%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
+                                OSS ID
+                            </th>
+                            <th width="10%" style="vertical-align: middle !important;background: #8DB4E2;" rowspan="2">
+                                Aksi
                             </th>
                         </tr>
                         </thead>
                         <tbody>
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>
