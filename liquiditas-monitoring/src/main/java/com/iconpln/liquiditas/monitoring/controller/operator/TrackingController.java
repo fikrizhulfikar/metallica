@@ -1,5 +1,6 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
+import com.iconpln.liquiditas.core.service.CorpayService;
 import com.iconpln.liquiditas.core.service.ValasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,9 @@ public class TrackingController {
     @Autowired
     ValasService valasService;
 
+    @Autowired
+    CorpayService corpayService;
+
 
     @RequestMapping(value = "/get_data", method = RequestMethod.GET)
     @ResponseBody
@@ -24,7 +28,7 @@ public class TrackingController {
             @RequestParam(value = "pSearch", defaultValue = "") String pSearch
     ) {
         try {
-            return valasService.getAllTracking(pSearch);
+            return corpayService.getAllTracking(pSearch);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -34,10 +38,14 @@ public class TrackingController {
     @RequestMapping(value = "/get_detail_tracking", method = RequestMethod.GET)
     @ResponseBody
     public Map getDetailTracking(
-            @RequestParam(value = "pIdValas", defaultValue = "") String pIdValas
+            @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
+            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
+            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
+            @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem,
+            @RequestParam(value = "pOssId", defaultValue = "") String pOssId
     ) {
         try {
-            return valasService.getDetailTracking(pIdValas);
+            return corpayService.getDetailTracking(pCompCode, pDocNo, pFiscYear, pLineItem, pOssId);
         }catch (Exception e){
             e.printStackTrace();
             return null;
