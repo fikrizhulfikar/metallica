@@ -501,7 +501,7 @@ public class SapService {
         return out;
     }
 
-    public Map<String, Object> insertIntoIntegrationLog(String pJenisData, String pKontenData, String pStatusJson, String pParam, String pUrl){
+    public Map<String, Object> insertIntoIntegrationLog(String pJenisData, String pKontenData, String pHeader, String pItem, String pStatusJson, String pParam, String pUrl){
         Map<String, Object> insert = new HashMap<>();
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -509,6 +509,8 @@ public class SapService {
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("p_jenis_data", pJenisData, OracleTypes.VARCHAR)
                 .addValue("p_konten_data", pKontenData, OracleTypes.CLOB)
+                .addValue("p_header", pHeader, OracleTypes.CLOB)
+                .addValue("p_item", pItem, OracleTypes.CLOB)
                 .addValue("p_status_json", pStatusJson, OracleTypes.VARCHAR)
                 .addValue("p_param",pParam, OracleTypes.VARCHAR)
                 .addValue("p_url", pUrl, OracleTypes.VARCHAR);
