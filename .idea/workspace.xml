@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5d4fe2df-3f74-4761-a3cf-9c85b5eb6ef4" name="Default Changelist" comment="Fix Logic For '19'">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="5d4fe2df-3f74-4761-a3cf-9c85b5eb6ef4" name="Default Changelist" comment="Fix Logic For '19'" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -392,6 +390,7 @@
       <workItem from="1591810923427" duration="814000" />
       <workItem from="1591812633823" duration="61000" />
       <workItem from="1591813315722" duration="268000" />
+      <workItem from="1591817031671" duration="346000" />
     </task>
     <task id="LOCAL-00088" summary="Menonaktifkan tombol">
       <created>1587606309788</created>
