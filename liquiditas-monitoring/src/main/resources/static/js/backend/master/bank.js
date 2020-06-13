@@ -175,7 +175,7 @@ function submitChild() {
     });
 
     Bank.bankDetails = dataList;
-    // console.log("bank : ",Bank);
+    // // console.log("bank : ",Bank);
     showLoadingCss()
     $.ajax({
         url: baseUrl + "api_master/bank/ins_bank_valas",
@@ -184,7 +184,7 @@ function submitChild() {
         type: "POST",
         data: JSON.stringify(Bank),
         success: function (res) {
-            // console.log("response : ", res);
+            // // console.log("response : ", res);
             hideLoadingCss()
             if (res.return == 1) {
                 alert(res.OUT_MESSAGE);
@@ -213,7 +213,7 @@ function submit() {
             pIsUpdate: isUpdate
         },
         success: function (res) {
-            // console.log("response : ", res);
+            // // console.log("response : ", res);
             hideLoadingCss()
             if (res.return == 1) {
                 alert(res.OUT_MESSAGE);
@@ -249,7 +249,7 @@ function upload_server_xls() {
 
     formData.append('file', $('input[type=file]#file-xls')[0].files[0]);
     formData.append('pIdJenisFile', "2");
-    // console.log(formData);
+    // // console.log(formData);
     $.ajax({
         crossOrigin: true,
         type: "POST",
@@ -262,7 +262,7 @@ function upload_server_xls() {
         processData: false,
         success: function (res) {
             hideLoadingCss("");
-            // console.log("res",res);
+            // // console.log("res",res);
             if (res.V_RETURN == 0) {
                 alert("sukses");
             } else {
@@ -331,7 +331,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pketeranga
             "dataType": "json",
             "dataSrc": function (res) {
                 hideLoadingCss()
-                // console.log("get log : ", res);
+                // // console.log("get log : ", res);
                 return res.data;
             }
         },

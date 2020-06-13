@@ -47,9 +47,9 @@ function initData(pTgl) {
         },
 
         success: function (res) {
-            console.log("ini pTgl",pTgl);
+            // console.log("ini pTgl",pTgl);
             hideLoadingCss()
-            console.log("ini res",res);
+            // console.log("ini res",res);
             createUI(res.return)
         },
         error: function () {
@@ -139,8 +139,8 @@ function createUI(data) {
 
         });
 
-        console.log(objDiv.scrollHeight);
-        console.log(objDiv.clientHeight);
+        // console.log(objDiv.scrollHeight);
+        // console.log(objDiv.clientHeight);
         hasScroll= objDiv.scrollHeight>objDiv.clientHeight;
         setTimeout('pageScroll()', 6000);
 

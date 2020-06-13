@@ -64,7 +64,7 @@ function getAllData() {
             allData = res;
         },
         error: function (res) {
-            console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
+            // console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
         }
     });
 
