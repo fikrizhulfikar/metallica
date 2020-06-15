@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="96282456-0617-41f3-91de-366e619c18f8" name="Default Changelist" comment="Updated">
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/xmldoc/XmlDocx.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/xmldoc/XmlDocx.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-scheduler/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-scheduler/pom.xml" afterDir="false" />
-    </list>
+    <list default="true" id="96282456-0617-41f3-91de-366e619c18f8" name="Default Changelist" comment="Updated" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,7 +159,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
