@@ -1437,7 +1437,7 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                 },
                 {
                     "sortable": false,
-                    "aTargets": [0]
+                    "aTargets": [0,71,72]
                 },
                 {
                     "aTargets": [0],
@@ -2031,6 +2031,12 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
 //                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>';
                                 }
                                 if(newRoleUser[0] == "ROLE_VP_OPERATION_EXPENDITURE"){
+                                    ret_value = ret_value +
+                                        // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Lunas (giro)" onclick="updLunasGiro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.ID_GROUP+'\')"><i class="fas fa-money"></i></button>';
+                                        '<button style="width: 15px !important;" class="btn btn-edit-data btn-sm btn-ready" title="Siap Bayar" onclick="siapBayarItemGroupGroup(\'' +full.ID_GROUP_METALLICA+'\',\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.ID_GROUP+'\')"><i class="fas fa-money-check"></i></button>';
+//                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>';
+                                }
+                                if(newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT"){
                                     ret_value = ret_value +
                                         // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Lunas (giro)" onclick="updLunasGiro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.ID_GROUP+'\')"><i class="fas fa-money"></i></button>';
                                         '<button style="width: 15px !important;" class="btn btn-edit-data btn-sm btn-ready" title="Siap Bayar" onclick="siapBayarItemGroupGroup(\'' +full.ID_GROUP_METALLICA+'\',\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.ID_GROUP+'\')"><i class="fas fa-money-check"></i></button>';
