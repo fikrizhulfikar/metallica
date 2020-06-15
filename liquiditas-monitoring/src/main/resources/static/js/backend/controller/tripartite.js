@@ -21,7 +21,7 @@ $(document).ready(function () {
     $('#tanggal_awal').datepicker({dateFormat: 'dd/mm/yy'});
     $('#tanggal_akhir').attr("disabled", "disabled");
 
-    console.log("new date ; ", new Date());
+    // console.log("new date ; ", new Date());
 
     $("#pTglInvoice").datepicker({dateFormat: 'dd/mm/yy'});
     $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
@@ -114,7 +114,7 @@ function delete_data(id) {
             },
             success: function (res) {
                 hideLoadingCss("");
-                console.log("delete log : ", res)
+                // console.log("delete log : ", res)
                 if (res.return == 1) {
                     alert(res.OUT_MSG);
                     location.reload();
@@ -131,7 +131,7 @@ function delete_data(id) {
 }
 
 function duplicate_data(id) {
-    console.log("duplicate data tripartite");
+    // console.log("duplicate data tripartite");
     showLoadingCss();
     $.ajax({
         url: baseUrl + "api_operator/tripartite/edit_data",
@@ -142,7 +142,7 @@ function duplicate_data(id) {
         },
         success: function (res) {
             hideLoadingCss("");
-            console.log("data duplicate :", res);
+            // console.log("data duplicate :", res);
             idTripartite = "";
             $("#pTglJatuhTempo").val(res[0].TGL_JATUH_TEMPO);
             $("#pTglJatuhTempoH2").val(res[0].H2_JATUH_TEMPO);
@@ -196,7 +196,7 @@ function edit_data(id) {
         success: function (res) {
             hideLoadingCss("");
             idTripartite = id;
-            console.log("data edit_data :", res);
+            // console.log("data edit_data :", res);
             $('#pTglJatuhTempo').prop('disabled', false);
             $('#pTglJatuhTempoH2').prop('disabled', false);
             if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){

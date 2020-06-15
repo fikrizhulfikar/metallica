@@ -20,7 +20,7 @@ function submit() {
             pIsUpdate: isUpdate
         },
         success: function (res) {
-            // console.log("response : ", res);
+            // // console.log("response : ", res);
             hideLoadingCss("")
             if (res.return == 1) {
                 alert(res.OUT_MESSAGE);
@@ -53,7 +53,7 @@ function getbyId(id) {
         },
         success: function (res) {
             hideLoadingCss("")
-            // console.log("get by id : ", res);
+            // // console.log("get by id : ", res);
             $("#pIdSumberDana").val(res[0].ID_SUMBER_DANA);
             $("#pNama").val(res[0].NAMA);
             $("#pFlag").val(res[0].FLAG_TAMPIL);

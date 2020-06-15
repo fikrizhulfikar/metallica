@@ -87,7 +87,7 @@ public class GeneratedocController {
     }
 
     @RequestMapping(path = "/bukti_kas_multiple")
-    public Map buktiKas(@RequestParam("pDocNumbers") String pDocumentNumbers) throws AltException, SQLException, JSONException, ParseException {
+    public Map buktiKas(@RequestParam("pDocNumbers") String pDocumentNumbers) throws AltException, SQLException, JSONException, ParseException, IOException, JSONParseException {
         Map out = new HashMap();
         if (!isgeneratedoc) aksiNonaktif();
         NumberToWordConverter conv = new NumberToWordConverter();
@@ -115,13 +115,19 @@ public class GeneratedocController {
             Date tgl_rencana_bayar = new SimpleDateFormat("dd/MM/yyyy").parse(rawDate);
             System.out.println("Object Hasil Select : "+object);
 
+            dg.addVariable("NO_URUT","1");
             dg.addVariable("COMP_CODE",object.getString("COMP_CODE"));
             dg.addVariable("DOC_NO", object.getString("DOCUMENT_NUMBER"));
             dg.addVariable("ITEM_TEXT", object.getString("ITEM_TEXT"));
             dg.addVariable("CURR_BAYAR", object.getString("CURR_BAYAR"));
-            dg.addVariable("AMOUNT_BAYAR",numberFormat.format(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",","."))));
+            DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
+            decimalFormat.applyPattern(pattern);
+            String amount = decimalFormat.format(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",",".")));
+            dg.addVariable("AMOUNT_BAYAR", amount);
             dg.addVariable("ID_GROUP", object.getString("ID_GROUP"));
             dg.addVariable("NO_REK_BENEF", object.getString("NO_REK_BENEF"));
+            dg.addVariable("BANK_BENEF",object.getString("BANK_BENEF"));
+            dg.addVariable("ALAMAT_BANK_BENEF", object.getString("ALAMAT_BANK_BENEF"));
             dg.addVariable("NAMA_VENDOR", object.getString("NAMA_VENDOR"));
             dg.addVariable("ALAMAT_VENDOR", object.getString("ALAMAT_VENDOR"));
             dg.addVariable("NAMA_APPROVER", object.getString("NAMA_APPROVER"));
@@ -129,7 +135,19 @@ public class GeneratedocController {
             dg.addVariable("NAMA_COUNTER_SIGNER", object.getString("NAMA_COUNTER_SIGNER"));
             dg.addVariable("DETAIL_COUNTER_SIGNER", object.getString("DETAIL_COUNTER_SIGNER"));
             dg.addVariable("NO_REK_HOUSE_BANK", object.getString("NO_REK_HOUSE_BANK"));
-            dg.addVariable("NOMINAL_TERBILANG", conv.toWords(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",","."))));
+            String amt = object.getString("AMOUNT_BAYAR").replace(",",".");
+            String[] arr = amt.split("\\.");
+            String koma = "";
+            if (arr.length > 1){
+                if (arr[1].equals("00")){
+                    koma = "";
+                    koma = koma + conv.toWords(Double.parseDouble(arr[1]));
+                }else{
+                    koma = "TITIK ";
+                    koma = koma + conv.toWords(Double.parseDouble(arr[1]));
+                }
+            }
+            dg.addVariable("NOMINAL_TERBILANG", conv.toWords(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",",".")))+koma+conv.toCurrency(object.getString("CURR_BAYAR")));
             dg.addVariable("NO_GIRO", object.getString("NO_GIRO"));
             dg.addVariable("TGL_RENCANA_BAYAR", localFormatter.format(tgl_rencana_bayar));
 

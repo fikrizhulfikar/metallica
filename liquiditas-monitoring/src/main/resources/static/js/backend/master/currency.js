@@ -19,7 +19,7 @@ function submit() {
             pIsUpdate: isUpdate
         },
         success: function (res) {
-            console.log("response : ", res);
+            // console.log("response : ", res);
             hideLoadingCss("")
             if (res.return == 1) {
                 alert(res.OUT_MESSAGE);
@@ -51,7 +51,7 @@ function getbyId(id) {
         },
         success: function (res) {
             hideLoadingCss("")
-            console.log("get by id : ", res);
+            // console.log("get by id : ", res);
             $("#pCurr").val(res[0].CURRENCY);
             $("#pFlag").val(res[0].FLAG_TAMPIL);
             $("#pCurr").prop('disabled', true);
@@ -77,7 +77,7 @@ function upload_server_xls() {
 
     formData.append('file', $('input[type=file]#file-xls')[0].files[0]);
     formData.append('pIdJenisFile', "1");
-    console.log(formData);
+    // console.log(formData);
     $.ajax({
         crossOrigin: true,
         type: "POST",
@@ -90,7 +90,7 @@ function upload_server_xls() {
         processData: false,
         success: function (res) {
             hideLoadingCss("");
-            console.log("res",res);
+            // console.log("res",res);
             if (res.V_RETURN == 0) {
                 alert("sukses");
             } else {
@@ -148,7 +148,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pketeranga
             "dataType": "json",
             "dataSrc": function (res) {
                 hideLoadingCss("")
-                console.log("get log : ", res);
+                // console.log("get log : ", res);
                 return res.data;
             }
         },

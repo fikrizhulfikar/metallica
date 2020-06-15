@@ -16,7 +16,7 @@ function initDataTable() {
         dataType: 'JSON',
         type: "GET",
         success: function (res) {
-            // // console.log("resonse : ", res);
+            // // ("resonse : ", res);
             if (res.return.length > 0) {
 
 
@@ -206,7 +206,7 @@ function creteChartImprestInvestasiTerpusat(data) {
 }
 
 function creteChartOperaasiTerpusat(data) {
-    // console.log(data);
+    // (data);
     FusionCharts.ready(function () {
         var fusioncharts = new FusionCharts({
                 type: 'pie2d',
@@ -235,7 +235,7 @@ function creteChartOperaasiTerpusat(data) {
 }
 
 function creteChartImport(data) {
-    // console.log(data);
+    // (data);
     FusionCharts.ready(function () {
         var fusioncharts = new FusionCharts({
                 type: 'pie2d',

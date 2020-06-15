@@ -72,7 +72,7 @@ function delete_data(id) {
             },
             success: function (res) {
                 hideLoadingCss("")
-                // console.log("delete log : ", res)
+                // ("delete log : ", res)
                 if (res.return == 1) {
                     alert(res.OUT_MSG);
                     location.reload();
@@ -99,7 +99,7 @@ function edit_data(id) {
         },
         success: function (res) {
             hideLoadingCss("");
-            // console.log("data edit_data :", res);
+            // ("data edit_data :", res);
             idPembelianValas = id;
 
             $("#pTglPosting").val(res[0].TGL_POSTING);
@@ -145,7 +145,7 @@ function ins_data() {
         },
         success: function (res) {
             hideLoadingCss("");
-            // console.log("ins log : ", res);
+            // ("ins log : ", res);
             if (res.return == 1) {
                 alert(res.OUT_MSG);
                 // location.reload();
@@ -186,11 +186,11 @@ function getAllData() {
             pDok2: $("#no_dok2").val(),
         },
         success: function (res) {
-            console.log(res);
+            // console.log(res);
             allData = res;
         },
         error: function () {
-            console.log("Gagal Melakukan Proses,Harap Hubungi Administrator")
+            // console.log("Gagal Melakukan Proses,Harap Hubungi Administrator")
         }
     });
 }
@@ -219,7 +219,7 @@ function exportXls() {
 }
 
 function generatePDF() {
-    console.log("all data  : " + allData);
+    // console.log("all data  : " + allData);
     var column = [];
     column.push({
         text: "NO.",
@@ -319,7 +319,7 @@ function generatePDF() {
 
         data.forEach(function (row) {
             var dataRow = [];
-            console.log(row);
+            // console.log(row);
             dataRow.push(row["ROW"]);
             dataRow.push(row["POSTING_DATE"]);
             dataRow.push(row["NAMA_BANK_PENGIRIM"]);
@@ -391,9 +391,9 @@ function generatePDF() {
 }
 
 function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pDok1, pDok2) {
-    console.log(pCurrency);
-    console.log(pDok1);
-    console.log(pDok2);
+    // console.log(pCurrency);
+    // console.log(pDok1);
+    // console.log(pDok2);
     showLoadingCss()
     $('#table-pembelian-valas tbody').empty();
     $('#table-pembelian-valas').dataTable().fnDestroy();
@@ -492,7 +492,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pDok1, pDok2) {
             },
             "dataSrc": function (res) {
                 hideLoadingCss("")
-                console.log("get log : ", res);
+                // console.log("get log : ", res);
                 return res.data;
             }
         },
@@ -522,7 +522,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pDok1, pDok2) {
 
     table_pembelian_valas.on('search.dt', function() {
         var value = $('.dataTables_filter input').val();
-        console.log(value); // <-- the value
+        // console.log(value); // <-- the value
         tempTableSearch = value;
     });
 

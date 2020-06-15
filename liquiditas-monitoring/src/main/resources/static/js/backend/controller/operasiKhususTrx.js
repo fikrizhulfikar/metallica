@@ -45,7 +45,7 @@ function getbyId(id) {
         },
         success: function (res) {
             hideLoadingCss()
-            console.log("get by id : ", res);
+            // console.log("get by id : ", res);
             $("#pKodeBank").val(res[0].KODE_BANK);
             $("#pKodeBank").prop('disabled', true);
             $("#pNamaBank").val(res[0].NAMA_BANK);
@@ -145,7 +145,7 @@ function AddToTable() {
     var real_amount = $("#pDetailAmount").val().toString();
     let very_real_amount = parseInt(real_amount.replace(/,/g,""))
 
-    console.log("Real Amount : ",very_real_amount);
+    // console.log("Real Amount : ",very_real_amount);
     var flag = 0;
     let amount = 0;
 
@@ -205,7 +205,7 @@ function deletedb(idMetallica,idItem,lineNo){
                     pLineNo : lineNo
                 },
                 success : (res) => {
-                    console.log("get detail : ", res);
+                    // console.log("get detail : ", res);
                     if (res.OUT_MSG === "DATA BERHASIL DI HAPUS" || res.return === 1){
                         hideLoadingCss();
                         Swal.fire("Berhasil!","Data Berhasil Dihapus","success");
@@ -235,10 +235,10 @@ function deleteHead (idMetallica){
                 pIdMetallica : idMetallica,
             },
             success : (result) => {
-                console.log("Delete Result : ",result);
+                // console.log("Delete Result : ",result);
                 hideLoadingCss("");
                 // var result = res.return.split(";")[0];
-                console.log("Result : "+result);
+                // console.log("Result : "+result);
                 if (result == 1 ) {
                     alert(result.OUT_MSG);
                     search("load");
@@ -300,7 +300,7 @@ function checkArray(e) {
             }
         }
     }
-    console.log("Checked Array : ",checkedArray);
+    // console.log("Checked Array : ",checkedArray);
 }
 
 function update_datas() {
@@ -580,7 +580,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                     "aTargets": [14],
                     "mRender": function (data, type, full) {
                         var jenis = "OPERASI_KHUSUS";
-                        console.log("Ini Full : "+full);
+                        // console.log("Ini Full : "+full);
                         var ret_value;
                         if (newRoleUser[0] === "ROLE_MS_LIKUIDITAS" || newRoleUser[0] === "ROLE_DM_LIKUIDITAS") {
                             return "-"
