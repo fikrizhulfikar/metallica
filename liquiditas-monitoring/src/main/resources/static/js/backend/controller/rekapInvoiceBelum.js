@@ -21,6 +21,7 @@ var cbParentArray = new Array();
 var srcTglAwal = null;
 var srcTglAkhir = null;
 var addedDays = 2;
+var row_selected;
 
 $(document).ready(function () {
     getAllData();
@@ -223,6 +224,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                     /*"scrollY": "300px",
                     "scrollX": true,*/
                     "scrollCollapse": true,
+                    "lengthMenu": [[10, 25, 50, 100, 200, 400, 600], [10, 25, 50, 100, 200, 400, 600]],
                     "aoColumnDefs": [
                         {width: 20, targets: 0},
                         {width: 100, targets: 1},
