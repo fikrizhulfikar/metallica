@@ -166,6 +166,7 @@ public class Sap {
         Map<String, Object> out = new HashMap<>();
         result.clear();
         try {
+            param.clear();
             param.put("comp_code",pCompanyCode);
             param.put("bus_area",pBusArea);
             param.put("doc_no",pDocNo);
@@ -323,6 +324,7 @@ public class Sap {
         Map<String, Object> out = new HashMap<>();
         try {
             Sapmaster sapmaster = new Sapmaster();
+            param.clear();
             param.put("comp_code",comp_code);
             param.put("bus_area", bus_area);
             param.put("doc_no", doc_no);
@@ -356,7 +358,7 @@ public class Sap {
 
             for(int i=0; i<arr.size(); i++){
                 org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObject = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arr.get(i);
-                if (jsonObject.get("HEADER_DATA") !=null){
+                if (jsonObject.get("HEADER_DATA") != null){
                     arrLines = (JSONArray) parser.parse(String.valueOf(jsonObject.get("HEADER_DATA")));
                     for(int j=0; j<arrLines.size(); j++){
                         condition.clear();
@@ -467,6 +469,7 @@ public class Sap {
         Map<String, Object> out = new HashMap<>();
         try {
             Sapmaster sapmaster = new Sapmaster();
+            param.clear();
             param.put("comp_code",comp_code);
             param.put("date",date);
             param.put("vendor",vendor_no);
@@ -567,7 +570,7 @@ public class Sap {
         Map<String, Object> out = new HashMap<>();
         try {
             Sapmaster sapmaster = new Sapmaster();
-
+            param.clear();
             param.put("comp_code",comp_code);
             param.put("house_bank", house_bank);
             param.put("bank_country", bank_country);
@@ -632,7 +635,7 @@ public class Sap {
         result.clear();
         try {
             Sapmaster sapmaster = new Sapmaster();
-
+            param.clear();
             param.put("comp_code",comp_code);
             param.put("house_bank", house_bank);
             param.put("bank_country", bank_country);

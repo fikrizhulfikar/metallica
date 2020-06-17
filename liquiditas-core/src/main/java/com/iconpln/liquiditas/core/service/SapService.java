@@ -275,7 +275,7 @@ public class SapService {
                 .addValue("p_bank_country",insData.get("bank_country"))
                 .addValue("p_bank_key", insData.get("bank_key"))
                 .addValue("p_bank_account",insData.get("bank_account"))
-                .addValue("p_partner_bank",insData.get("partner_bank"))
+                .addValue("p_partner_bank",insData.get("partner_bank_type"))
                 .addValue("p_account_holder",insData.get("account_holder"))
                 .addValue("out_msg",OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(param);
@@ -285,7 +285,7 @@ public class SapService {
 
     public Map<String, Object> insertCustomerWht(Map<String, String> insData){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_MASTR")
+                .withCatalogName("PKG_MASTER")
                 .withFunctionName("sap_ins_customer_wht");
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("p_customer_no",insData.get("customer_no"))
@@ -315,13 +315,13 @@ public class SapService {
                 .addValue("p_postal_code",insData.get("postal_code"))
                 .addValue("p_city",insData.get("city"))
                 .addValue("p_country",insData.get("country"))
-                .addValue("p_tax_no",insData.get("tax_no"))
-                .addValue("p_vat_no",insData.get("vat_no"))
-                .addValue("p_recon_acct",insData.get("recon_acct"))
-                .addValue("p_cash_mgmt_grp",insData.get("cash_mgmt_grp"))
-                .addValue("p_pmt_term",insData.get("pmt_term"))
-                .addValue("p_method",insData.get("method"))
-                .addValue("p_mail",insData.get("mail"))
+                .addValue("p_tax_no",insData.get("vendor_tax_no"))
+                .addValue("p_vat_no",insData.get("vendor_vat_no"))
+                .addValue("p_recon_acct",insData.get("vendor_recon_acct"))
+                .addValue("p_cash_mgmt_grp",insData.get("vendor_cash_mgmt_grp"))
+                .addValue("p_pmt_term",insData.get("vendor_pmt_term"))
+                .addValue("p_method",insData.get("vendor_pmt_method"))
+                .addValue("p_mail",insData.get("vendor_mail"))
                 .addValue("out_msg",OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(param);
         AppUtils.getLogger(this).info("insert vendor main data : {}",out);
@@ -357,7 +357,7 @@ public class SapService {
                 .addValue("p_comp_code",insData.get("comp_code"))
                 .addValue("p_with_tax_type",insData.get("with_tax_type"))
                 .addValue("p_with_tax_code",insData.get("with_tax_code"))
-                .addValue("p_desc",insData.get("desc"))
+                .addValue("p_desc",insData.get("with_tax_type_desc"))
                 .addValue("out_msg",OracleTypes.VARCHAR);
 
         out = simpleJdbcCall.execute(param);
