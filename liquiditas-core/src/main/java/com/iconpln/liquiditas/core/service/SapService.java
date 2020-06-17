@@ -285,7 +285,7 @@ public class SapService {
 
     public Map<String, Object> insertCustomerWht(Map<String, String> insData){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_MASTR")
+                .withCatalogName("PKG_MASTER")
                 .withFunctionName("sap_ins_customer_wht");
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("p_customer_no",insData.get("customer_no"))
