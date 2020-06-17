@@ -275,7 +275,7 @@ public class SapService {
                 .addValue("p_bank_country",insData.get("bank_country"))
                 .addValue("p_bank_key", insData.get("bank_key"))
                 .addValue("p_bank_account",insData.get("bank_account"))
-                .addValue("p_partner_bank",insData.get("partner_bank"))
+                .addValue("p_partner_bank",insData.get("partner_bank_type"))
                 .addValue("p_account_holder",insData.get("account_holder"))
                 .addValue("out_msg",OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(param);
