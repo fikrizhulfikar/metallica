@@ -330,21 +330,21 @@ public class CorpayService {
                 .addValue("p_ket",ket, OracleTypes.NUMBER)
                 .addValue("p_comp_code",comp_code, OracleTypes.NUMBER)
                 .addValue("p_doc_no",doc_no, OracleTypes.NUMBER)
-                .addValue("p_fisc_year",fisc_year, OracleTypes.NUMBER) //==
+                .addValue("p_fisc_year",fisc_year, OracleTypes.NUMBER)
                 .addValue("p_doc_type",doc_type, OracleTypes.NUMBER)
-                .addValue("p_doc_date",doc_date2, OracleTypes.NUMBER) //==
+                .addValue("p_doc_date",doc_date2, OracleTypes.NUMBER)
                 .addValue("p_post_date",post_date2, OracleTypes.NUMBER)
-                .addValue("p_entry_date",entry_date2, OracleTypes.NUMBER) //==
+                .addValue("p_entry_date",entry_date2, OracleTypes.NUMBER)
                 .addValue("p_reference",reference, OracleTypes.NUMBER)
-                .addValue("p_rev_with",rev_with, OracleTypes.NUMBER) //==
+                .addValue("p_rev_with",rev_with, OracleTypes.NUMBER)
                 .addValue("p_rev_year",rev_year, OracleTypes.NUMBER)
-                .addValue("p_doc_hdr_txt",doc_hdr_txt, OracleTypes.NUMBER) //==
+                .addValue("p_doc_hdr_txt",doc_hdr_txt, OracleTypes.NUMBER)
                 .addValue("p_currency",currency, OracleTypes.NUMBER)
-                .addValue("p_exch_rate",exch_rate, OracleTypes.NUMBER) //==
+                .addValue("p_exch_rate",exch_rate, OracleTypes.NUMBER)
                 .addValue("p_reference_key",reference_key, OracleTypes.NUMBER)
-                .addValue("p_pmt_ind",pmt_ind, OracleTypes.NUMBER) //==
+                .addValue("p_pmt_ind",pmt_ind, OracleTypes.NUMBER)
                 .addValue("p_trans_type",trans_type, OracleTypes.NUMBER)
-                .addValue("p_spread_val",spread_val, OracleTypes.NUMBER) //==
+                .addValue("p_spread_val",spread_val, OracleTypes.NUMBER)
                 .addValue("p_line_item",line_item, OracleTypes.NUMBER)
                 .addValue("p_oi_ind",oi_ind, OracleTypes.NUMBER)
                 .addValue("p_acct_type",acct_type, OracleTypes.NUMBER)
