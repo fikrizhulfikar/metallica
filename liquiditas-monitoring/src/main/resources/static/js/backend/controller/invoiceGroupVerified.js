@@ -15,6 +15,8 @@ var srcTglAkhir = "";
 
 $(document).ready(function () {
     initDataTable();
+    $('#exportHeadBtn').show();
+    $('#exportItemBtn').hide();
     $('#tanggal_awal').datepicker({dateFormat: "dd/mm/yy"});
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
@@ -888,6 +890,10 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
     console.log("ID Group : ",idGroup);
     showLoadingCss()
     $(".list-data").hide();
+    $('#exportHeadBtn').hide();
+    $('#exportItemBtn')
+        .show()
+        .find("button").attr("onclick","exportXlsItem('"+idGroup+"')");
     $(".detail-data").show();
     hideLoadingCss()
     tableDetailGroupInvoiceVerified = $('#table-main-detail').DataTable({
@@ -1992,9 +1998,25 @@ function exportXls() {
     window.open(baseUrl + "api_operator/invoice_group/xls/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_bank").val() + "/" +null+ "/" +null);
 }
 
+function exportXlsItem(group_id) {
+    var tglAwal = "null";
+    if (srcTglAwal != "") {
+        tglAwal = srcTglAwal
+    }
+    var tglAkhir = "null";
+    if (srcTglAkhir != "") {
+        tglAkhir = srcTglAkhir
+    }
+    window.open(baseUrl + "api_operator/invoice_group/xls_item/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_bank").val() + "/" +group_id);
+}
+
 function back(){
     $(".list-data").show();
     $(".detail-data").hide();
+    $('#exportHeadBtn').show();
+    $('#exportItemBtn')
+        .hide()
+        .find("button").unbind('click');
     tableInvoiceGroupVerified.ajax.reload()
     tableDetailGroupInvoiceVerified.destroy();
 }
