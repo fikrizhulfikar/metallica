@@ -95,7 +95,6 @@ function getTotalTagihan() {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
         }
     });
-
 }
 
 function exportXls() {
@@ -1080,29 +1079,29 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                             "aTargets": [74],
                             "mRender": function (data, type, full) {
                                 var value = new Object();
-                                var full_value = new Object();
+                                let json_string = JSON.stringify(full);
+                                var full_value = '{"full":'+json_string.replace(/'/g,"")+'}';
                                 var ret_value = ''
                                     if (full.STATUS_TRACKING == "INPUT DATA") {
                                         value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+1+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
-                                        full_value = '{"full":'+JSON.stringify(full)+'}';
+                                        full_value = full_value;
 
                                     }
                                      if (full.STATUS_TRACKING == "VALIDASI DATA") {
                                         value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+1+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
-                                        full_value = '{"full":'+JSON.stringify(full)+'}';
-
+                                        full_value = full_value;
                                     }
                                     else if (full.STATUS_TRACKING == "VERIFIED BY MAKER") {
                                         value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+2+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
-                                        full_value = '{"full":'+JSON.stringify(full)+'}';
+                                        full_value = full_value;
                                     }
                                     else if (full.STATUS_TRACKING == "VERIFIED BY CHECKER") {
                                         value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+3+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
-                                        full_value = '{"full":'+JSON.stringify(full)+'}';
+                                        full_value = full_value;
                                     }
                                     else if (full.STATUS_TRACKING == "VERIFIED BY APPROVER") {
                                         value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+4+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
-                                        full_value = '{"full":'+JSON.stringify(full)+'}';
+                                        full_value = full_value;
                                     }
 
 

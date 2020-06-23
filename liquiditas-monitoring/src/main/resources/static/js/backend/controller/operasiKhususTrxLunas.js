@@ -43,7 +43,7 @@ function getbyId(id) {
         },
         success: function (res) {
             hideLoadingCss()
-            console.log("get by id : ", res);
+            //console.log("get by id : ", res);
             $("#pKodeBank").val(res[0].KODE_BANK);
             $("#pKodeBank").prop('disabled', true);
             $("#pNamaBank").val(res[0].NAMA_BANK);
@@ -133,7 +133,7 @@ function deletedb(idMetallica, idItem){
             pItemId : idItem
         },
         success : (res) => {
-            console.log("get detail : ", res.data);
+            // console.log("get detail : ", res.data);
             alert("Data Berhasil Dihapus");
             hideLoadingCss();
         },
@@ -217,7 +217,7 @@ function getAllData() {
             allData = res;
         },
         error: function (res) {
-            console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
+            alert("Gagal Melakukan Proses,Harap Hubungi Administrator");
         }
     });
 
@@ -337,7 +337,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                     "aTargets": [10],
                     "mRender": function (data, type, full) {
                         var jenis = "OPERASI_KHUSUS";
-                        console.log("Ini Full : "+full);
+                        // console.log("Ini Full : "+full);
                         var ret_value;
                         if(newRoleUser[0] === "ROLE_ADMIN" ){
                             ret_value =
@@ -605,7 +605,7 @@ function setListGlAccount(htmlid, currency){
         },
         error : () => {
             $("#" + htmlid + "").html('<option value="">Pilih Data</option>');
-            console.log("Error");
+            // console.log("Error");
         }
     })
 }
@@ -623,7 +623,7 @@ function setListCashcode(htmlid){
         },
         error : () => {
             $("#" + htmlid + "").html('<option value="">Pilih Data</option>');
-            console.log("Error");
+            // console.log("Error");
         }
     })
 }
@@ -654,7 +654,7 @@ function submit() {
             pIsUpdate: isUpdate
         },
         success: function (res) {
-            console.log("response : ", res);
+            // console.log("response : ", res);
             hideLoadingCss()
             if (res.return == 1) {
                 alert(res.OUT_MESSAGE);
@@ -690,7 +690,7 @@ function upload_server_xls() {
 
     formData.append('file', $('input[type=file]#file-xls')[0].files[0]);
     formData.append('pIdJenisFile', "2");
-    console.log(formData);
+    // console.log(formData);
     $.ajax({
         crossOrigin: true,
         type: "POST",
@@ -703,7 +703,7 @@ function upload_server_xls() {
         processData: false,
         success: function (res) {
             hideLoadingCss("");
-            console.log("res",res);
+            // console.log("res",res);
             if (res.V_RETURN == 0) {
                 alert("sukses");
             } else {
@@ -803,9 +803,9 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
                 if (d.DEBIT_CREDIT_IND === "D") debit = debit + parseInt(d.AMOUNT);
             });
             balance = debit-credit;
-            console.log("Debit : ",debit);
-            console.log("Credit : ", credit);
-            console.log("Ballance : ",balance);
+            // console.log("Debit : ",debit);
+            // console.log("Credit : ", credit);
+            // console.log("Ballance : ",balance);
 
             $("#table-main-detail tfoot").find('td').eq(0).html("Debit : "+ new Intl.NumberFormat().format(debit));
             $("#table-main-detail tfoot").find('td').eq(1).html("Credit : "+ new Intl.NumberFormat().format(credit));
