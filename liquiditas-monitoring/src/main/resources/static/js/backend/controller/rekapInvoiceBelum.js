@@ -4050,20 +4050,19 @@ function checkArray(e) {
 }
 
 function checkGroup(){
-    if (isSame(fullArrayGroup) === true){
-        // Swal.fire("Good!","Good To Group :)","success");
-        // alert("Good To Group :)");
-        // console.log("Group : "+isSame(fullArrayGroup));
-        create_group();
-    } else if(isSame(fullArrayGroup) === 222){
-        Swal.fire({
-            icon : "error",
-            title : "Maaf!",
-            html : '<p>Silahkan Tentukan Metode Pembayaran Terlebih Dahulu</p>',
-        });
-        // alert("No Way, Sorry :(");
-    } else Swal.fire("Maaf", "Tidak bisa melakukan Grouping","error");
-    // // console.log(invoiceCheckedArray);
+    if (fullArrayGroup.length <= 0){
+        Swal.fire("Maaf!", "Silahkan Pilih Data Terlebih Dahulu", "error");
+    }else{
+        if (isSame(fullArrayGroup) === true){
+            create_group();
+        } else if(isSame(fullArrayGroup) === 222){
+            Swal.fire({
+                icon : "error",
+                title : "Maaf!",
+                html : '<p>Silahkan Tentukan Metode Pembayaran Terlebih Dahulu</p>',
+            });
+        } else Swal.fire("Maaf", "Tidak bisa melakukan Grouping","error");
+    }
 }
 
 function isSame(data){
