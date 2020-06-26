@@ -23,7 +23,7 @@ var pIdGroup = "";
 
 $(document).ready(function () {
     initDataTable();
-    $('#exportHeadBtn').show();
+    $('#exportHeadBtn, #exportAllItemBtn').show();
     $('#exportItemBtn').hide();
     $('#tanggal_awal').datepicker({dateFormat: "dd/mm/yy"});
     $('#tanggal_akhir').attr("disabled", "disabled");
@@ -1354,7 +1354,7 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
     showLoadingCss()
     $(".list-data").hide();
     $(".detail-data").show();
-    $('#exportHeadBtn').hide();
+    $('#exportHeadBtn, #exportAllItemBtn').hide();
     $('#exportItemBtn')
         .show()
         .find("button").attr("onclick","exportXlsItem('"+group_id+"')");
@@ -3638,6 +3638,18 @@ function exportXlsItem(group_id) {
     window.open(baseUrl + "api_operator/invoice_group/xls_item/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_bank").val() + "/" +group_id);
 }
 
+function exportAllGroupItemXls() {
+    var tglAwal = "null";
+    if (srcTglAwal != "") {
+        tglAwal = srcTglAwal
+    }
+    var tglAkhir = "null";
+    if (srcTglAkhir != "") {
+        tglAkhir = srcTglAkhir
+    }
+    window.open(baseUrl + "api_operator/invoice_group/xls_all_item/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_bank").val());
+}
+
 function cetakBuktiKasGroupingMultiple(){
     if (fullArrayGroup.length <= 0){
         alert("SIlahkan Pilih data terlebih dahulu")
@@ -3747,7 +3759,7 @@ function ungroup(){
 function back(){
     $(".list-data").show();
     $(".detail-data").hide();
-    $('#exportHeadBtn').show();
+    $('#exportHeadBtn, #exportAllItemBtn').show();
     $('#exportItemBtn')
         .hide()
         .find("button").unbind('click');
