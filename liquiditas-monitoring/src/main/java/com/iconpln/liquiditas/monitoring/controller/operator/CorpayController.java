@@ -1624,12 +1624,11 @@ public class CorpayController {
         }
     }
 
-    @RequestMapping(value = "/xls_verifikasi_tanggal/{pTglAwal}/{pTglAkhir}/{pCurr}/{pCaraBayar}/{pBank}/{pStatus}/{pStatusTracking}", method = RequestMethod.GET)
+    @RequestMapping(value = "/xls_verifikasi_tanggal/{pTglAwal}/{pTglAkhir}/{pCurr}/{pBank}/{pStatus}/{pStatusTracking}", method = RequestMethod.GET)
     public String exportVerifikasiTanggal(
             @PathVariable String pTglAwal,
             @PathVariable String pTglAkhir,
             @PathVariable String pCurr,
-            @PathVariable String pCaraBayar,
             @PathVariable String pBank,
             @PathVariable String pStatus,
             @PathVariable String pStatusTracking,
@@ -1656,7 +1655,7 @@ public class CorpayController {
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
 
-            List<Map<String, Object>> listData = corpayService.getVerifikasiTanggalByStatus(WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pCurr, pCaraBayar, pBank, pStatus, pStatusTracking);
+            List<Map<String, Object>> listData = corpayService.getVerifikasiTanggalByStatus(WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pCurr, pBank, pStatus, pStatusTracking);
 
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
