@@ -1838,6 +1838,41 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         return resultset;
     }
 
+    public List<Map<String, Object>> getAllpembayaranOss() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_all_invoice_backupplan");
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+        System.out.println("ALL INVOICE : "+resultset.toString());
+        AppUtils.getLogger(this).info("data get_all_pembayaran_oss : {}", resultset);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getVerifikasiTanggalByStatus(String idUser, String pTglAwal, String pTglAkhir,  String pCurr, String pBank, String status, String statusTracking) throws SQLException {
+
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pCurr : {}", pCurr);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_verifikasi_tgl_by_status");
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_user_id", idUser);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_currency", pCurr);
+        params.put("p_bank", pBank);
+        params.put("p_status", status);
+        params.put("p_status_tracking", statusTracking);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_verifikasi_tgl_by_status : {} and userid {}", resultset, idUser);
+        return resultset;
+    }
+
 //    public List<Map<String, Object>> getAllpembayaran(String idUser, String pTglAwal, String pTglAkhir,  String pCurr, String pCaraBayar, String pBank, String status, String statusTracking) throws SQLException {
 //
 //        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);

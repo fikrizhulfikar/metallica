@@ -602,6 +602,29 @@ public class InvoiceGroupService {
         return resultset;
     }
 
+    public List<Map<String, Object>> getAllPembayaranItem(String idUser, String pTglAwal, String pTglAkhir, String pBank) throws SQLException {
+
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
+
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_all_item_by_status");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_bank", pBank);
+        params.put("p_user_id", idUser);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_all_item_by_status : {} and userid {}", resultset, idUser);
+        return resultset;
+    }
+
+
+
     public List<Map<String, Object>> getAllpembayaran2(String idUser, String pTglAwal, String pTglAkhir, String pBank, String status, String statusTracking) throws SQLException {
 
         AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);

@@ -30,10 +30,13 @@
         <li class="breadcrumb-item active" style="cursor: default">Invoice Group Verified</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown" id="exportHeadBtn">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls Header</button>
+            </div>
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown" id="exportAllItemBtn">
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportAllGroupItemXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls Item</button>
             </div>
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown" id="exportItemBtn">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary"><i class="fas fa-file-excel"></i>&nbsp; Xls Item</button>
             </div>
         </li>
     </ol>
@@ -80,7 +83,8 @@
                         <table id="table-rekapitulasi" class="table table-bordered table-striped" style="width: 2000px;">
                             <thead style="font-size: 12px">
                             <tr>
-                                <th>NUM</th>
+                                <th>NO</th>
+                                <th>GROUP ID METALLICA</th>
                                 <th>HOUSE BANK</th>
                                 <th>NO REK HOUSE BANK</th>
                                 <th>COMP CODE</th>

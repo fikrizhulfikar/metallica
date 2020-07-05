@@ -129,7 +129,22 @@ public class GeneratedocController {
             dg.addVariable("BANK_BENEF",object.getString("BANK_BENEF"));
             dg.addVariable("ALAMAT_BANK_BENEF", object.getString("ALAMAT_BANK_BENEF"));
             dg.addVariable("NAMA_VENDOR", object.getString("NAMA_VENDOR"));
+            dg.addVariable("ACCOUNT_NAME",object.getString("ACCOUNT_NAME"));
             dg.addVariable("ALAMAT_VENDOR", object.getString("ALAMAT_VENDOR"));
+            dg.addVariable("EMAIL_VENDOR", object.getString("EMAIL_VENDOR"));
+            if (object.getString("JABATAN").equals("MSB")){
+                dg.addVariable("NAMA_APPROVER_SURAT",object.getString("NAMA_COUNTER_SIGNER"));
+                dg.addVariable("DETAIL_APPROVER_SURAT",object.getString("DETAIL_COUNTER_SIGNER"));
+                dg.addVariable("NAMA_COUNTER_SIGNER_SURAT"," ");
+                dg.addVariable("DETAIL_COUNTER_SIGNER_SURAT"," ");
+            }else{
+                dg.addVariable("NAMA_APPROVER_SURAT", object.getString("NAMA_APPROVER"));
+                dg.addVariable("DETAIL_APPROVER_SURAT", object.getString("DETAIL_APPROVER"));
+                dg.addVariable("NAMA_COUNTER_SIGNER_SURAT", object.getString("NAMA_COUNTER_SIGNER"));
+                dg.addVariable("DETAIL_COUNTER_SIGNER_SURAT", object.getString("DETAIL_COUNTER_SIGNER"));
+            }
+            dg.addVariable("HOUSE_BANK", object.getString("HOUSE_BANK"));
+            dg.addVariable("ALAMAT_BANK",object.getString("ALAMAT_BANK"));
             dg.addVariable("NAMA_APPROVER", object.getString("NAMA_APPROVER"));
             dg.addVariable("DETAIL_APPROVER", object.getString("DETAIL_APPROVER"));
             dg.addVariable("NAMA_COUNTER_SIGNER", object.getString("NAMA_COUNTER_SIGNER"));
@@ -255,10 +270,17 @@ public class GeneratedocController {
 
             dg.addVariable("TOTAL_TAGIHAN", numberFormat.format(Double.parseDouble(object.getString("TOTAL_TAGIHAN").replace(",","."))));
             dg.addVariable("ID_GROUP", object.getString("ID_GROUP"));
-            dg.addVariable("NAMA_APPROVER", object.getString("NAMA_APPROVER"));
-            dg.addVariable("DETAIL_APPROVER", object.getString("DETAIL_APPROVER"));
-            dg.addVariable("NAMA_COUNTER_SIGNER", object.getString("NAMA_COUNTER_SIGNER"));
-            dg.addVariable("DETAIL_COUNTER_SIGNER", object.getString("DETAIL_COUNTER_SIGNER"));
+            if (object.getString("JABATAN").equals("MSB")){
+                dg.addVariable("NAMA_APPROVER",object.getString("NAMA_COUNTER_SIGNER"));
+                dg.addVariable("DETAIL_APPROVER",object.getString("DETAIL_COUNTER_SIGNER"));
+                dg.addVariable("NAMA_COUNTER_SIGNER"," ");
+                dg.addVariable("DETAIL_COUNTER_SIGNER"," ");
+            }else{
+                dg.addVariable("NAMA_APPROVER", object.getString("NAMA_APPROVER"));
+                dg.addVariable("DETAIL_APPROVER", object.getString("DETAIL_APPROVER"));
+                dg.addVariable("NAMA_COUNTER_SIGNER", object.getString("NAMA_COUNTER_SIGNER"));
+                dg.addVariable("DETAIL_COUNTER_SIGNER", object.getString("DETAIL_COUNTER_SIGNER"));
+            }
             dg.addVariable("HOUSE_BANK", (object.getString("HOUSE_BANK") == null ? "-" : object.getString("HOUSE_BANK")));
             dg.addVariable("NO_REK_HOUSE_BANK", object.getString("NO_REK_HOUSE_BANK"));
             String amt = object.getString("TOTAL_TAGIHAN").replace(",",".");
@@ -444,13 +466,24 @@ public class GeneratedocController {
             dg.addVariable("BANK_BENEF",object.getString("BANK_BENEF"));
             dg.addVariable("ALAMAT_BANK_BENEF", object.getString("ALAMAT_BANK_BENEF"));
             dg.addVariable("NAMA_VENDOR", object.getString("NAMA_VENDOR"));
+            dg.addVariable("ACCOUNT_NAME",object.getString("ACCOUNT_NAME"));
             dg.addVariable("ALAMAT_VENDOR", object.getString("ALAMAT_VENDOR"));
             dg.addVariable("EMAIL_VENDOR", object.getString("EMAIL_VENDOR"));
+            if (object.getString("JABATAN").equals("MSB")){
+                dg.addVariable("NAMA_APPROVER_SURAT",object.getString("NAMA_COUNTER_SIGNER"));
+                dg.addVariable("DETAIL_APPROVER_SURAT",object.getString("DETAIL_COUNTER_SIGNER"));
+                dg.addVariable("NAMA_COUNTER_SIGNER_SURAT"," ");
+                dg.addVariable("DETAIL_COUNTER_SIGNER_SURAT"," ");
+            }else{
+                dg.addVariable("NAMA_APPROVER_SURAT", object.getString("NAMA_APPROVER"));
+                dg.addVariable("DETAIL_APPROVER_SURAT", object.getString("DETAIL_APPROVER"));
+                dg.addVariable("NAMA_COUNTER_SIGNER_SURAT", object.getString("NAMA_COUNTER_SIGNER"));
+                dg.addVariable("DETAIL_COUNTER_SIGNER_SURAT", object.getString("DETAIL_COUNTER_SIGNER"));
+            }
             dg.addVariable("NAMA_APPROVER", object.getString("NAMA_APPROVER"));
             dg.addVariable("DETAIL_APPROVER", object.getString("DETAIL_APPROVER"));
             dg.addVariable("NAMA_COUNTER_SIGNER", object.getString("NAMA_COUNTER_SIGNER"));
             dg.addVariable("DETAIL_COUNTER_SIGNER", object.getString("DETAIL_COUNTER_SIGNER"));
-
             String amt = conv.toIndoLocale(object.getString("AMOUNT_BAYAR")) ;
             String[] arr = amt.split(",");
             String koma = "";

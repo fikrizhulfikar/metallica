@@ -36,8 +36,7 @@
 <!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>-->
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
 <!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>-->
-                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS','ROLE_DM_LIKUIDITAS','ROLE_VICE_PRESIDENT_OPERATION','ROLE_VICE_PRESIDENT_INVESTMENT','ROLE_KASIR_IDR','ROLE_KASIR', 'ROLE_MANAGER_PAYMENT',
-                'ROLE_MANAGER_OPERATION','ROLE_MANAGER_INVESTMENT_APLN','ROLE_MANAGER_INVESTMENT_SLPMN','ROLE_MANAGER_POWER_PURCHASE','ROLE_MANAGER_PRIMARY_ENERGY','EXECUTIVE_VICE_PRESIDENT')">
+                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="hasAnyAuthority('ROLE_OSS')">
                     <i class="fas fa-plus-square"></i> &nbsp;New Data
                 </button>
             </div>

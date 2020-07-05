@@ -29,7 +29,7 @@ $(document).ready(function () {
     search("load");
     setSelectBank("cmb_bank", "FILTER", "", "", "REKAP");
     setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
-    setSelectMetodeBayar("cmb_cara_pembayaran","");
+    // setSelectMetodeBayar("cmb_cara_pembayaran","");
     setSelectStatusTracking("cmb_status_tracking");
     $('#check_all').change(function() {
             if($(this).is(':checked')){
@@ -193,6 +193,7 @@ function getAllData() {
                     /*"scrollY": "300px",
                     "scrollX": true,*/
                     "scrollCollapse": true,
+                    "lengthMenu": [[10, 25, 50, 100, 200, 400, 600,1000], [10, 25, 50, 100, 200, 400, 600, 1000]],
                     "aoColumnDefs": [
                         {width: 20, targets: 0},
                         {width: 100, targets: 1},
@@ -277,7 +278,7 @@ function getAllData() {
                         },
                         {
                             "sortable": false,
-                            "aTargets": [0,74]
+                            "aTargets": [0,73,74]
                         },
                         {
                             "aTargets": [0],
@@ -769,7 +770,7 @@ function getAllData() {
                                 }else{
                                     verif = '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title="Approve Tanggal" onclick="verifikasi_tanggal(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-check"></i></button>'+'<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-danger" title="Reject" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
                                 }
-                                var ret_value;
+                                var ret_value = "-";
                                 var role = newRoleUser[0];
                                 if(newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT"){
 
@@ -1033,12 +1034,12 @@ function getAllData() {
                                 } else {
                                     api.column(30).visible(false);
                                 }
-                                if (response.CUSTOMER == 1) {
+                                if (response.CUSTOMER_NAME == 1) {
                                     api.column(31).visible(true);
                                 } else {
                                     api.column(31).visible(false);
                                 }
-                                if (response.VENDOR == 1) {
+                                if (response.VENDOR_NAME == 1) {
                                     api.column(32).visible(true);
                                 } else {
                                     api.column(32).visible(false);
@@ -1048,7 +1049,6 @@ function getAllData() {
                                 } else {
                                     api.column(33).visible(false);
                                 }
-
                                 if (response.DUE_ON == 1) {
                                     api.column(34).visible(true);
                                 } else {
@@ -1249,6 +1249,10 @@ function getAllData() {
                                 hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
                             }
                         });
+                        if (newRoleUser[0] !== "ROLE_EXECUTIVE_VICE_PRESIDENT"){
+                            api.column(73).visible(false);
+                            api.column(74).visible(false);
+                        }
                     }
                 }
             );
@@ -1693,3 +1697,14 @@ function isSame(data){
     }
 }
 
+function exportXls() {
+    var tglAwal = "null";
+    if (srcTglAwal != "") {
+        tglAwal = srcTglAwal
+    }
+    var tglAkhir = "null";
+    if (srcTglAkhir != "") {
+        tglAkhir = srcTglAkhir
+    }
+    window.open(baseUrl + "api_operator/rekap_invoice_belum/xls_verifikasi_tanggal/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currecny").val() + "/" + $("#cmb_bank").val() + "/" +null+ "/" +null);
+}

@@ -15,6 +15,8 @@ var srcTglAkhir = "";
 
 $(document).ready(function () {
     initDataTable();
+    $('#exportHeadBtn, #exportAllItemBtn').show();
+    $('#exportItemBtn').hide();
     $('#tanggal_awal').datepicker({dateFormat: "dd/mm/yy"});
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
@@ -332,7 +334,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                 },
                 {
                     "sortable": false,
-                    "aTargets": [0]
+                    "aTargets": [0,13]
                 },
                 {
                     "aTargets": [0],
@@ -344,19 +346,26 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                 {
                     "aTargets": [1],
                     "mRender": function (data, type, full) {
-                        return full.BANK_BYR2;
+                        return full.ID_GROUP;
                     }
 
                 },
                 {
                     "aTargets": [2],
                     "mRender": function (data, type, full) {
-                        return full.NO_REK_HOUSE_BANK;
+                        return full.BANK_BYR2;
                     }
 
                 },
                 {
                     "aTargets": [3],
+                    "mRender": function (data, type, full) {
+                        return full.NO_REK_HOUSE_BANK;
+                    }
+
+                },
+                {
+                    "aTargets": [4],
                     "mRender": function (data, type, full) {
                         return full.COMP_CODE;
                     }
@@ -364,30 +373,23 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                 },
 
                 {
-                    "aTargets": [4],
+                    "aTargets": [5],
                     "mRender": function (data, type, full) {
                         return full.BUS_AREA;
                     }
 
                 },
                 {
-                    "aTargets": [5],
+                    "aTargets": [6],
                     "mRender": function (data, type, full) {
                         return full.TGL_RENCANA_BAYAR;
                     }
 
                 },
                 {
-                    "aTargets": [6],
-                    "mRender": function (data, type, full) {
-                        return full.METODE_PEMBAYARAN;
-                    }
-
-                },
-                {
                     "aTargets": [7],
                     "mRender": function (data, type, full) {
-                        return full.NO_GIRO;
+                        return full.METODE_PEMBAYARAN;
                     }
 
                 },
@@ -401,26 +403,33 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                 {
                     "aTargets": [9],
                     "mRender": function (data, type, full) {
-                        return Intl.NumberFormat().format(full.TOTAL_TAGIHAN);
+                        return full.CURR_BAYAR;
                     }
 
                 },
                 {
                     "aTargets": [10],
                     "mRender": function (data, type, full) {
-                        return full.ASSIGNMENT;
+                        return Intl.NumberFormat().format(full.TOTAL_TAGIHAN);
                     }
 
                 },
                 {
                     "aTargets": [11],
                     "mRender": function (data, type, full) {
-                        return full.SUMBER_DANA;
+                        return full.ASSIGNMENT;
                     }
 
                 },
                 {
                     "aTargets": [12],
+                    "mRender": function (data, type, full) {
+                        return full.SUMBER_DANA;
+                    }
+
+                },
+                {
+                    "aTargets": [13],
                     "mRender": function (data, type, full) {
                         var jenis = "AP INVOICE";
                         // console.log("Ini Full : ", full);
@@ -516,60 +525,60 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                         }
                     }
                 },
-        "initComplete": function(settings, json) {
-            var api = this.api();
-            $.ajax({
-                url: baseUrl + "api_operator/invoice_group/get_column",
-                dataType: 'JSON',
-                type: "GET",
-                success: function (res) {
-                    var response = res.data[0];
-                    if (response.ROW_NUMBER == 1) {
-                        api.column(0).visible(true);
-                    } else {
-                        api.column(0).visible(false);
-                    }
-                    if (response.HOUSE_BANK == 1) {
-                        api.column(1).visible(true);
-                    } else {
-                        api.column(1).visible(false);
-                    }
-                    if (response.NO_REK_HOUSE_BANK == 1) {
-                        api.column(2).visible(true);
-                    } else {
-                        api.column(2).visible(false);
-                    }
-                    if (response.COMP_CODE == 1) {
-                        api.column(3).visible(true);
-                    } else {
-                        api.column(3).visible(false);
-                    }
-                    if (response.BUS_AREA == 1) {
-                        api.column(4).visible(true);
-                    } else {
-                        api.column(4).visible(false);
-                    }
-                    if (response.DUE_ON == 1) {
-                        api.column(5).visible(true);
-                    } else {
-                        api.column(5).visible(false);
-                    }
-                    if (response.TOTAL_TAGIHAN == 1) {
-                        api.column(6).visible(true);
-                    } else {
-                        api.column(6).visible(false);
-                    }
-                    if (response.ASSIGNMENT == 1) {
-                        api.column(7).visible(true);
-                    } else {
-                        api.column(7).visible(false);
-                    }
-                },
-                error: function () {
-                    hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-                }
-            });
-        }
+        // "initComplete": function(settings, json) {
+        //     var api = this.api();
+        //     $.ajax({
+        //         url: baseUrl + "api_operator/invoice_group/get_column",
+        //         dataType: 'JSON',
+        //         type: "GET",
+        //         success: function (res) {
+        //             var response = res.data[0];
+        //             if (response.ROW_NUMBER == 1) {
+        //                 api.column(0).visible(true);
+        //             } else {
+        //                 api.column(0).visible(false);
+        //             }
+        //             if (response.HOUSE_BANK == 1) {
+        //                 api.column(1).visible(true);
+        //             } else {
+        //                 api.column(1).visible(false);
+        //             }
+        //             if (response.NO_REK_HOUSE_BANK == 1) {
+        //                 api.column(2).visible(true);
+        //             } else {
+        //                 api.column(2).visible(false);
+        //             }
+        //             if (response.COMP_CODE == 1) {
+        //                 api.column(3).visible(true);
+        //             } else {
+        //                 api.column(3).visible(false);
+        //             }
+        //             if (response.BUS_AREA == 1) {
+        //                 api.column(4).visible(true);
+        //             } else {
+        //                 api.column(4).visible(false);
+        //             }
+        //             if (response.DUE_ON == 1) {
+        //                 api.column(5).visible(true);
+        //             } else {
+        //                 api.column(5).visible(false);
+        //             }
+        //             if (response.TOTAL_TAGIHAN == 1) {
+        //                 api.column(6).visible(true);
+        //             } else {
+        //                 api.column(6).visible(false);
+        //             }
+        //             if (response.ASSIGNMENT == 1) {
+        //                 api.column(7).visible(true);
+        //             } else {
+        //                 api.column(7).visible(false);
+        //             }
+        //         },
+        //         error: function () {
+        //             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        //         }
+        //     });
+        // }
         },
 
     );
@@ -775,6 +784,10 @@ function getDetails(idGroup) {
     showLoadingCss()
     $(".list-data").hide();
     $(".detail-data").show();
+    $('#exportHeadBtn, #exportAllItemBtn').hide();
+    $('#exportItemBtn')
+        .show()
+        .find("button").attr("onclick","exportXlsItem('"+idGroup+"')");
     hideLoadingCss()
     tableDetailGroupInvoice = $('#table-main-detail').DataTable({
             "serverSide": true,
@@ -1852,12 +1865,40 @@ function exportXls() {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/invoice_group/xls/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_bank").val() + "/" +null+ "/" +null);
+    window.open(baseUrl + "api_operator/invoice_group/xlslunas/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_bank").val() + "/" +null+ "/" +null);
+}
+
+function exportXlsItem(group_id) {
+    var tglAwal = "null";
+    if (srcTglAwal != "") {
+        tglAwal = srcTglAwal
+    }
+    var tglAkhir = "null";
+    if (srcTglAkhir != "") {
+        tglAkhir = srcTglAkhir
+    }
+    window.open(baseUrl + "api_operator/invoice_group/xls_item/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_bank").val() + "/" +group_id);
+}
+
+function exportAllGroupItemXls() {
+    var tglAwal = "null";
+    if (srcTglAwal != "") {
+        tglAwal = srcTglAwal
+    }
+    var tglAkhir = "null";
+    if (srcTglAkhir != "") {
+        tglAkhir = srcTglAkhir
+    }
+    window.open(baseUrl + "api_operator/invoice_group/xls_all_item/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_bank").val());
 }
 
 function back(){
     $(".list-data").show();
     $(".detail-data").hide();
+    $('#exportHeadBtn, #exportAllItemBtn').show();
+    $('#exportItemBtn')
+        .hide()
+        .find("button").unbind('click');
     tableInvoiceGroup.ajax.reload()
     tableDetailGroupInvoice.destroy();
 }

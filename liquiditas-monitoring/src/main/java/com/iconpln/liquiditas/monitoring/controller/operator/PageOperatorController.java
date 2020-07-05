@@ -137,6 +137,9 @@ public class PageOperatorController {
         return "operator/anggaran";
     }
 
+    @RequestMapping("/rekap_invoice_draft")
+    public String rekap_invoice_draft(){return "operator/rekap_invoice_draft";}
+
     @RequestMapping("/rekap_invoice_belum")
     public String rekap_invoice_belum() {
         return "operator/rekap_invoice_belum";
