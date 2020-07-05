@@ -193,6 +193,7 @@ function getAllData() {
                     /*"scrollY": "300px",
                     "scrollX": true,*/
                     "scrollCollapse": true,
+                    "lengthMenu": [[10, 25, 50, 100, 200, 400, 600,1000], [10, 25, 50, 100, 200, 400, 600, 1000]],
                     "aoColumnDefs": [
                         {width: 20, targets: 0},
                         {width: 100, targets: 1},
@@ -1033,12 +1034,12 @@ function getAllData() {
                                 } else {
                                     api.column(30).visible(false);
                                 }
-                                if (response.CUSTOMER == 1) {
+                                if (response.CUSTOMER_NAME == 1) {
                                     api.column(31).visible(true);
                                 } else {
                                     api.column(31).visible(false);
                                 }
-                                if (response.VENDOR == 1) {
+                                if (response.VENDOR_NAME == 1) {
                                     api.column(32).visible(true);
                                 } else {
                                     api.column(32).visible(false);
@@ -1048,7 +1049,6 @@ function getAllData() {
                                 } else {
                                     api.column(33).visible(false);
                                 }
-
                                 if (response.DUE_ON == 1) {
                                     api.column(34).visible(true);
                                 } else {
