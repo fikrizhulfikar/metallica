@@ -1760,12 +1760,14 @@ public class CorpayController {
                 paramDetail.put("SPREAD_VALUE",data.get("SPREAD_VAL"));
                 paramDetail.put("APPROVE_TGL_RENCANA_BAYAR",data.get("APPROVE_TGL_RENCANA_BAYAR"));
                 paramDetail.put("STATUS_TRACKING",data.get("STATUS_TRACKING"));
+                paramDetail.put("STATUS",data.get("STATUS"));
+                paramDetail.put("POSISI", data.get("POSISI"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
 
             XLSTransformer transformer = new XLSTransformer();
-            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/rekap_invoice_belum.xls").getInputStream();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/rekap_all_invoice.xls").getInputStream();
             Workbook workbook = transformer.transformXLS(streamTemplate, param);
             workbook.write(os);
             os.flush();
