@@ -259,21 +259,21 @@ function getAllData() {
                         {
                             "aTargets": [1],
                             "mRender": function (data, type, full) {
-                                return full.COMP_CODE;
+                                return full.KET;
                             }
 
                         },
                         {
                             "aTargets": [2],
                             "mRender": function (data, type, full) {
-                                return full.DOC_NO;
+                                return full.COMP_CODE;
                             }
 
                         },
                         {
                             "aTargets": [3],
                             "mRender": function (data, type, full) {
-                                return full.FISC_YEAR;
+                                return full.DOC_NO;
                             }
 
                         },
@@ -281,160 +281,151 @@ function getAllData() {
                         {
                             "aTargets": [4],
                             "mRender": function (data, type, full) {
-                                return full.DOC_TYPE;
+                                return full.GROUP_ID;
                             }
 
                         },
                         {
                             "aTargets": [5],
                             "mRender": function (data, type, full) {
-                                return full.DOC_DATE2;
+                                return full.OSS_ID;
                             }
 
                         },
                         {
                             "aTargets": [6],
                             "mRender": function (data, type, full) {
-                                return full.POST_DATE2;
+                                return full.FISC_YEAR;
                             }
 
                         },
                         {
                             "aTargets": [7],
                             "mRender": function (data, type, full) {
-                                return full.ENTRY_DATE2;
+                                return full.DOC_TYPE;
                             }
 
                         },
                         {
                             "aTargets": [8],
                             "mRender": function (data, type, full) {
-                                return full.REFERENCE;
+                                return full.DOC_DATE2;
                             }
 
                         },
                         {
                             "aTargets": [9],
                             "mRender": function (data, type, full) {
-                                //return accounting.formatNumber(full.TOTAL_TAGIHAN,2,".",",");
-                                return full.REV_WITH;
-                            }
+                                return full.POST_DATE;
 
+                            }
                         },
                         {
                             "aTargets": [10],
                             "mRender": function (data, type, full) {
-                                return full.REV_YEAR;
+                                return full.ENTRY_DATE2;
                             }
 
                         },
                         {
                             "aTargets": [11],
                             "mRender": function (data, type, full) {
-                                return full.DOC_HDR_TXT;
+                                return full.REFERENCE;
                             }
 
                         },
                         {
                             "aTargets": [12],
                             "mRender": function (data, type, full) {
-                                return full.CURRENCY;
+                                return full.REV_WITH;
                             }
-
                         },
                         {
                             "aTargets": [13],
                             "mRender": function (data, type, full) {
-                                return full.EXCH_RATE;
+                                return full.REV_YEAR;
                             }
 
                         },
                         {
                             "aTargets": [14],
                             "mRender": function (data, type, full) {
-                                return full.REFERENCE_KEY;
+                                return full.DOC_HDR_TXT;
                             }
 
                         },
                         {
                             "aTargets": [15],
                             "mRender": function (data, type, full) {
-                                return full.PMT_IND;
+                                return full.CURRENCY;
                             }
 
                         },
                         {
                             "aTargets": [16],
                             "mRender": function (data, type, full) {
-                                return full.TRANS_TYPE;
+                                return full.CURRENCY;
                             }
 
                         },
                         {
                             "aTargets": [17],
                             "mRender": function (data, type, full) {
-                                return full.SPREAD_VAL;
+                                return full.EXCH_RATE;
                             }
 
                         },
                         {
-//                            "aTargets": [18],
-//                            "visible": false,
-//                            "mRender": function (data, type, full) {
-//                                //return full.TGL_LUNAS;
-//                                return "";
-//                            }
-//                        },
-
                             "aTargets": [18],
                             "mRender": function (data, type, full) {
-                                return full.LINE_ITEM;
+                                return full.REFERENCE_KEY;
                             }
                         },
                         {
                             "aTargets": [19],
                             "mRender": function (data, type, full) {
-                                return full.OI_IND;
+                                return full.PMT_IND;
                             }
                         },
                         {
                             "aTargets": [20],
                             "mRender": function (data, type, full) {
-                                return full.ACCT_TYPE;
+                                return full.TRANS_TYPE;
                             }
                         },
                         {
                             "aTargets": [21],
                             "mRender": function (data, type, full) {
-                                //return accounting.formatNumber(full.NOMINAL_SBLM_PAJAK,2,".",",");
-                                return full.SPEC_GL;
+                                return full.SPREAD_VAL;
+                                //return full.SPEC_GL;
                             }
                         },
                         {
                             "aTargets": [22],
                             "mRender": function (data, type, full) {
                                 //return full.PAJAK + "%";
-                                return full.BUS_AREA;
+                                return full.LINE_ITEM;
+                                //return full.BUS_AREA;
                             }
                         },
                         {
                             "aTargets": [23],
                             "mRender": function (data, type, full) {
-                                //return accounting.formatNumber(full.NOMINAL_STLH_PAJAK,2,".",",");
-                                return full.TPBA;
+                                return full.OI_IND;
+                                //return full.TPBA;
                             }
                         },
                         {
                             "aTargets": [24],
                             "mRender": function (data, type, full) {
-                                return accounting.formatNumber(full.AMT_LC,2,".",",");
+                                return full.ACCT_TYPE;
                                 //return full.AMT_LC;
                             }
                         },
                         {
                             "aTargets": [25],
                             "mRender": function (data, type, full) {
-                                return accounting.formatNumber(full.AMT_TC,2,".",",");
+                                return full.SPEC_GL;
                                 //return full.AMT_TC;
 
                             }
@@ -442,231 +433,294 @@ function getAllData() {
                         {
                             "aTargets": [26],
                             "mRender": function (data, type, full) {
-                                return accounting.formatNumber(full.AMT_WITH_BASE_TC,2,".",",");
+                                return full.BUS_AREA;
                                 //return full.AMT_WITH_BASE_TC;
                             }
                         },
                         {
                             "aTargets": [27],
                             "mRender": function (data, type, full) {
-                                return accounting.formatNumber(full.AMT_WITH_TC,2,".",",");
+                                return full.TPBA;
                                 //return full.AMT_WITH_TC;
                             }
                         },
                         {
-                             "aTargets": [28],
-                             "mRender": function (data, type, full) {
-                              return accounting.formatNumber(full.AMOUNT,2,".",",");
-                              //return full.AMOUNT;
-                              }
+                            "aTargets": [28],
+                            "mRender": function (data, type, full) {
+                                return accounting.formatNumber(full.AMT_LC,2,".",",");
+                                // return full.AMT_LC;
+                            }
                         },
                         {
                             "aTargets": [29],
                             "mRender": function (data, type, full) {
-                                //return accounting.formatNumber(full.NOMINAL_PEMBAYARAN_IDR,2,".",",");
-                                return full.ASSIGNMENT;
+                                return accounting.formatNumber(full.AMT_TC,2,".",",");
+                                // return full.ASSIGNMENT;
                             }
                         },
                         {
                             "aTargets": [30],
                             "mRender": function (data, type, full) {
-                                return full.ITEM_TEXT;
+                                return accounting.formatNumber(full.AMT_WITH_BASE_TC,2,".",",");
                             }
                         },
                         {
                             "aTargets": [31],
                             "mRender": function (data, type, full) {
-                                return full.COST_CTR;
+                                return accounting.formatNumber(full.AMT_WITH_TC,2,".",",");
                             }
                         },
 
                         {
                             "aTargets": [32],
                             "mRender": function (data, type, full) {
-                                return full.GL_ACCT;
+                                return accounting.formatNumber(full.AMOUNT,2,".",",");
                             }
 
                         },
-                         {
+                        {
                             "aTargets": [33],
                             "mRender": function (data, type, full) {
-                             return full.CUSTOMER;
-                             }
+                                return accounting.formatNumber(full.AMOUNT_BAYAR,2,".",",");
+                            }
                         },
                         {
                             "aTargets": [34],
                             "mRender": function (data, type, full) {
-                             return full.VENDOR;
-                             }
+                                return full.ASSIGNMENT;
+                            }
                         },
                         {
-                             "aTargets": [35],
-                             "mRender": function (data, type, full) {
-                               return full.BASE_DATE;
-                              }
+                            "aTargets": [35],
+                            "mRender": function (data, type, full) {
+                                return full.ITEM_TEXT;
+                            }
                         },
                         {
-                              "aTargets": [36],
-                              "mRender": function (data, type, full) {
-                                return full.TERM_PMT;
-                                }
+                            "aTargets": [36],
+                            "mRender": function (data, type, full) {
+                                return full.COST_CTR;
+                            }
                         },
                         {
-                               "aTargets": [37],
-                               "mRender": function (data, type, full) {
-                                   return full.DUE_ON;
-                                     }
+                            "aTargets": [37],
+                            "mRender": function (data, type, full) {
+                                return full.GL_ACCT;
+                            }
                         },
                         {
-                                "aTargets": [38],
-                                "mRender": function (data, type, full) {
-                                    return full.PMT_BLOCK;
-                                        }
+                            "aTargets": [38],
+                            "mRender": function (data, type, full) {
+                                return full.CUSTOMER;
+                            }
                         },
                         {
-                                "aTargets": [39],
-                                "mRender": function (data, type, full) {
-                                     return full.BANK_BYR;
-                                     }
-                          },
+                            "aTargets": [39],
+                            "mRender": function (data, type, full) {
+                                return full.VENDOR;
+                            }
+                        },
                         {
                             "aTargets": [40],
+                            "mRender": function (data, type, full) {
+                                return full.BASE_DATE;
+                            }
+                        },
+                        {
+                            "aTargets": [41],
+                            "mRender": function (data, type, full) {
+                                return full.TERM_PMT;
+                            }
+                        },
+                        {
+                            "aTargets": [42],
+                            "mRender": function (data, type, full) {
+                                return full.DUE_ON;
+                            }
+                        },
+                        {
+                            "aTargets": [43],
+                            "mRender": function (data, type, full) {
+                                return full.PMT_BLOCK;
+                            }
+                        },
+                        {
+                            "aTargets": [44],
+                            "mRender": function (data, type, full) {
+                                return full.HOUSE_BANK;
+                            }
+                        },
+                        {
+                            "aTargets": [45],
                             "mRender": function (data, type, full) {
                                 return full.NO_REK_HOUSE_BANK;
                             }
                         },
                         {
-                                 "aTargets": [41],
-                                 "mRender": function (data, type, full) {
-                                  return full.PRTNR_BANK_TYPE;
-                                    }
-                         },
-                         {
-                             "aTargets": [42],
-                             "mRender": function (data, type, full) {
-                              return full.BANK_KEY;
-                                }
-                         },
-                         {
-                              "aTargets": [43],
-                              "mRender": function (data, type, full) {
-                               return full.BANK_ACCOUNT;
-                                }
-                         },
-                         {
-                               "aTargets": [44],
-                               "mRender": function (data, type, full) {
-                                  return full.ACCOUNT_HOLDER;
-                                    }
-                         },
-                        {
-                                  "aTargets": [45],
-                                  "mRender": function (data, type, full) {
-                                    return full.PO_NUM;
-                                     }
-                        },
-                        {
-                                 "aTargets": [46],
-                                 "mRender": function (data, type, full) {
-                                     return full.PO_ITEM;
-                                     }
-                         },
-                        {
-                                 "aTargets": [47],
-                                 "mRender": function (data, type, full) {
-                                   return full.REF_KEY1;
-                                      }
-                        },
-                         {
-                                  "aTargets": [48],
-                                  "mRender": function (data, type, full) {
-                                     return full.REF_KEY2;
-                                       }
-                         },
-                         {
-                                   "aTargets": [49],
-                                   "mRender": function (data, type, full) {
-                                      return full.REF_KEY3;
-                                         }
-                         },
-                         {
-                                   "aTargets": [50],
-                                   "mRender": function (data, type, full) {
-                                      return full.INT_ORDER;
-                                        }
-                          },
-                         {
-                                    "aTargets": [51],
-                                    "mRender": function (data, type, full) {
-                                       return full.WBS_NUM;
-                                         }
-                         },
-                         {
-                                     "aTargets": [52],
-                                     "mRender": function (data, type, full) {
-                                         return full.CASH_CODE;
-                                            }
-                         },
-                         {
-                                       "aTargets": [53],
-                                       "mRender": function (data, type, full) {
-                                          return full.DR_CR_IND;
-                                              }
-                        },
-                        {
-                           "aTargets": [54],
+                            "aTargets": [46],
                             "mRender": function (data, type, full) {
-                            return full.AMT_WITH_BASE_LC;
-                                }
-                         },
-                         {
+                                return full.PRTNR_BANK_TYPE;
+                            }
+                        },
+                        {
+                            "aTargets": [47],
+                            "mRender": function (data, type, full) {
+                                return full.BANK_KEY;
+                            }
+                        },
+                        {
+                            "aTargets": [48],
+                            "mRender": function (data, type, full) {
+                                return full.BANK_ACCOUNT;
+                            }
+                        },
+                        {
+                            "aTargets": [49],
+                            "mRender": function (data, type, full) {
+                                return full.ACCOUNT_HOLDER;
+                            }
+                        },
+                        {
+                            "aTargets": [50],
+                            "mRender": function (data, type, full) {
+                                return full.NAMA_BENEF;
+                            }
+                        },
+                        {
+                            "aTargets": [51],
+                            "mRender": function (data, type, full) {
+                                return full.NO_REK_BENEF;
+                            }
+                        },
+                        {
+                            "aTargets": [52],
+                            "mRender": function (data, type, full) {
+                                return full.BANK_BENEF;
+                            }
+                        },
+                        {
+                            "aTargets": [53],
+                            "mRender": function (data, type, full) {
+                                return full.PO_NUM;
+                            }
+                        },
+                        {
+                            "aTargets": [54],
+                            "mRender": function (data, type, full) {
+                                return full.PO_ITEM;
+                            }
+                        },
+                        {
                             "aTargets": [55],
                             "mRender": function (data, type, full) {
-                             return full.AMT_WITH_LC;
-                                }
-                         },
-                         {
+                                return full.REF_KEY1;
+                            }
+                        },
+                        {
                             "aTargets": [56],
                             "mRender": function (data, type, full) {
-                                return full.METODE_PEMBAYARAN;
+                                return full.REF_KEY2;
                             }
                         },
                         {
                             "aTargets": [57],
                             "mRender": function (data, type, full) {
-                                return full.NO_GIRO;
+                                return full.REF_KEY3;
                             }
                         },
                         {
                             "aTargets": [58],
                             "mRender": function (data, type, full) {
-                             return full.TGL_RENCANA_BAYAR;
-                                  }
-                         },
-                         {
-                             "aTargets": [59],
-                              "mRender": function (data, type, full) {
-                               return full.SUMBER_DANA;
-                                 }
-                         },
-                         {
-                              "aTargets": [60],
-                              "mRender": function (data, type, full) {
-                              return full.KETERANGAN;
-                                  }
-                         },
-                         {
-                              "aTargets": [61],
-                              "mRender": function (data, type, full) {
-                              return full.STATUS_TRACKING;
-                                    }
-                         },
-                          {
-                              "aTargets": [62],
-                              "mRender": function (data, type, full) {
-                              return full.TGL_SIAP_BAYAR;
-                              }
-                          },
+                                return full.INT_ORDER;
+                            }
+                        },
+                        {
+                            "aTargets": [59],
+                            "mRender": function (data, type, full) {
+                                return full.WBS_NUM;
+                            }
+                        },
+                        {
+                            "aTargets": [60],
+                            "mRender": function (data, type, full) {
+                                return full.CASH_CODE;
+                            }
+                        },
+                        {
+                            "aTargets": [61],
+                            "mRender": function (data, type, full) {
+                                return full.DR_CR_IND;
+                            }
+                        },
+                        {
+                            "aTargets": [62],
+                            "mRender": function (data, type, full) {
+                                return full.PARTIAL_IND;
+                            }
+                        },
+                        {
+                            "aTargets": [63],
+                            "mRender": function (data, type, full) {
+                                return accounting.formatNumber(full.AMT_WITH_BASE_LC,2,".",",");
+                            }
+                        },
+                        {
+                            "aTargets": [64],
+                            "mRender": function (data, type, full) {
+                                return accounting.formatNumber(full.AMT_WITH_LC,2,".",",");
+                            }
+                        },
+                        {
+                            "aTargets": [65],
+                            "mRender": function (data, type, full) {
+                                return full.METODE_PEMBAYARAN;
+                            }
+                        },
+                        {
+                            "aTargets": [66],
+                            "mRender": function (data, type, full) {
+                                return full.NO_GIRO;
+                            }
+                        },
+                        {
+                            "aTargets": [67],
+                            "mRender": function (data, type, full) {
+                                return full.TGL_TAGIHAN_DITERIMA;
+                            }
+                        },
+                        {
+                            "aTargets": [68],
+                            "mRender": function (data, type, full) {
+                                return full.TGL_RENCANA_BAYAR;
+                            }
+                        },
+                        {
+                            "aTargets": [69],
+                            "mRender": function (data, type, full) {
+                                return full.SUMBER_DANA;
+                            }
+                        },
+                        {
+                            "aTargets": [70],
+                            "mRender": function (data, type, full) {
+                                return full.KETERANGAN;
+
+                            }
+                        },
+                        {
+                            "aTargets": [71],
+                            "mRender": function (data, type, full) {
+                                return full.STATUS_TRACKING;
+
+                            }
+                        },
+                        {
+                            "aTargets": [72],
+                            "mRender": function (data, type, full) {
+                                return full.TGL_SIAP_BAYAR;
+
+                            }
+                        },
                         // {
                         //     "aTargets": [62],
                         //     "mRender": function (data, type, full) {
