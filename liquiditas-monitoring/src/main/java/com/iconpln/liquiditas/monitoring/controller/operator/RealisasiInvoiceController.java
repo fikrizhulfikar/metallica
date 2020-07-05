@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -37,6 +39,8 @@ public class RealisasiInvoiceController {
 
     @Autowired
     private ResourceLoader resourceLoader;
+
+    private SimpleDateFormat excelDateFormat = new SimpleDateFormat("dd/mm/yyyy");
 
     @RequestMapping(value = "/get_rekap_lunas", method = RequestMethod.GET)
     public Map listRekapDataBelum(
@@ -697,8 +701,10 @@ public class RealisasiInvoiceController {
             @PathVariable String pStatus,
             HttpServletRequest request,
             HttpServletResponse response
-    ) throws InvalidFormatException {
+    ) throws InvalidFormatException, ParseException {
+        SimpleDateFormat dateParser = new SimpleDateFormat("yyyymmdd");
         try {
+
             String tglAwal = "";
             String tglAkhir = "";
             String caraBayar = (pCaraBayar.equals("null")) ? "ALL" : pCaraBayar;
@@ -824,6 +830,7 @@ public class RealisasiInvoiceController {
                 paramDetail.put("APPROVE_TGL_RENCANA_BAYAR",data.get("APPROVE_TGL_RENCANA_BAYAR"));
                 paramDetail.put("STATUS_TRACKING",data.get("STATUS_TRACKING"));
                 paramDetail.put("TGL_LUNAS", data.get("TGL_LUNAS"));
+                paramDetail.put("NO_GIRO",data.get("NO_GIRO"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
@@ -838,7 +845,6 @@ public class RealisasiInvoiceController {
             e.printStackTrace();
             return "Gagal Export Data :" + e.getMessage();
         }
-
     }
 
     @RequestMapping(value = "/get_total_tagihan", method = RequestMethod.GET)
