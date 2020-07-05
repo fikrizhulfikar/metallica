@@ -692,7 +692,8 @@ public class InvoiceGroupController {
                 paramDetail.put("CONFIRMATION_CODE",data.get("CONFIRMATION_CODE"));
                 paramDetail.put("TGL_ACT_BAYAR",data.get("TGL_ACT_BAYAR"));
                 paramDetail.put("OSS_ID",data.get("OSS_ID"));
-                paramDetail.put("GROUP_ID",data.get("GROUP_ID"));
+                paramDetail.put("GROUP_ID",data.get("ID_GROUP"));
+                paramDetail.put("GROUP_ID_METALLICA",data.get("ID_GROUP_METALLICA"));
                 paramDetail.put("SUMBER_DANA",data.get("SUMBER_DANA"));
                 paramDetail.put("TGL_RENCANA_BAYAR",data.get("TGL_RENCANA_BAYAR"));
                 paramDetail.put("BANK_BYR",data.get("BANK_BYR"));
@@ -707,6 +708,7 @@ public class InvoiceGroupController {
                 paramDetail.put("APPROVE_TGL_RENCANA_BAYAR",data.get("APPROVE_TGL_RENCANA_BAYAR"));
                 paramDetail.put("STATUS_TRACKING",data.get("STATUS_TRACKING"));
                 paramDetail.put("TGL_TAGIHAN_DITERIMA",data.get("TGL_TAGIHAN_DITERIMA"));
+                paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
@@ -841,6 +843,7 @@ public class InvoiceGroupController {
                 paramDetail.put("TGL_ACT_BAYAR",data.get("TGL_ACT_BAYAR"));
                 paramDetail.put("OSS_ID",data.get("OSS_ID"));
                 paramDetail.put("GROUP_ID",data.get("ID_GROUP"));
+                paramDetail.put("GROUP_ID_METALLICA",data.get("ID_GROUP_METALLICA"));
                 paramDetail.put("SUMBER_DANA",data.get("SUMBER_DANA"));
                 paramDetail.put("TGL_RENCANA_BAYAR",data.get("TGL_RENCANA_BAYAR"));
                 paramDetail.put("BANK_BYR",data.get("BANK_BYR"));
@@ -855,6 +858,7 @@ public class InvoiceGroupController {
                 paramDetail.put("APPROVE_TGL_RENCANA_BAYAR",data.get("APPROVE_TGL_RENCANA_BAYAR"));
                 paramDetail.put("STATUS_TRACKING",data.get("STATUS_TRACKING"));
                 paramDetail.put("TGL_TAGIHAN_DITERIMA",data.get("TGL_TAGIHAN_DITERIMA"));
+                paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
@@ -940,7 +944,7 @@ public class InvoiceGroupController {
                 paramDetail.put("AMT_TC",data.get("AMT_TC"));
                 paramDetail.put("AMT_WITH_BASE_TC",data.get("AMT_WITH_BASE_TC"));
                 paramDetail.put("AMT_WITH_TC",data.get("AMT_WITH_TC"));
-                paramDetail.put("AMOUNT",data.get("AMOUNT"));
+                paramDetail.put("AMOUNT",data.get("TOTAL_TAGIHAN"));
                 paramDetail.put("ASSIGNMENT",data.get("ASSIGNMENT"));
                 paramDetail.put("ITEM_TEXT",data.get("ITEM_TEXT"));
                 paramDetail.put("COST_CTR",data.get("COST_CTR"));
@@ -990,7 +994,7 @@ public class InvoiceGroupController {
                 paramDetail.put("CONFIRMATION_CODE",data.get("CONFIRMATION_CODE"));
                 paramDetail.put("TGL_ACT_BAYAR",data.get("TGL_ACT_BAYAR"));
                 paramDetail.put("OSS_ID",data.get("OSS_ID"));
-                paramDetail.put("ID_GROUP",data.get("GROUP_ID"));
+                paramDetail.put("GROUP_ID",data.get("ID_GROUP"));
                 paramDetail.put("SUMBER_DANA",data.get("SUMBER_DANA"));
                 paramDetail.put("TGL_RENCANA_BAYAR",data.get("TGL_RENCANA_BAYAR"));
                 paramDetail.put("BANK_BYR",data.get("BANK_BYR"));
@@ -1004,6 +1008,7 @@ public class InvoiceGroupController {
                 paramDetail.put("VERIFIED_ON",data.get("VERIFIED_ON"));
                 paramDetail.put("APPROVE_TGL_RENCANA_BAYAR",data.get("APPROVE_TGL_RENCANA_BAYAR"));
                 paramDetail.put("STATUS_TRACKING",data.get("STATUS_TRACKING"));
+                paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
@@ -1089,7 +1094,7 @@ public class InvoiceGroupController {
                 paramDetail.put("AMT_TC",data.get("AMT_TC"));
                 paramDetail.put("AMT_WITH_BASE_TC",data.get("AMT_WITH_BASE_TC"));
                 paramDetail.put("AMT_WITH_TC",data.get("AMT_WITH_TC"));
-                paramDetail.put("AMOUNT",data.get("AMOUNT"));
+                paramDetail.put("AMOUNT",data.get("TOTAL_TAGIHAN"));
                 paramDetail.put("ASSIGNMENT",data.get("ASSIGNMENT"));
                 paramDetail.put("ITEM_TEXT",data.get("ITEM_TEXT"));
                 paramDetail.put("COST_CTR",data.get("COST_CTR"));
@@ -1139,10 +1144,10 @@ public class InvoiceGroupController {
                 paramDetail.put("CONFIRMATION_CODE",data.get("CONFIRMATION_CODE"));
                 paramDetail.put("TGL_ACT_BAYAR",data.get("TGL_ACT_BAYAR"));
                 paramDetail.put("OSS_ID",data.get("OSS_ID"));
-                paramDetail.put("ID_GROUP",data.get("GROUP_ID"));
+                paramDetail.put("ID_GROUP",data.get("ID_GROUP"));
                 paramDetail.put("SUMBER_DANA",data.get("SUMBER_DANA"));
                 paramDetail.put("TGL_RENCANA_BAYAR",data.get("TGL_RENCANA_BAYAR"));
-                paramDetail.put("BANK_BYR",data.get("BANK_BYR"));
+                paramDetail.put("BANK_BYR2",data.get("BANK_BYR2"));
                 paramDetail.put("CURR_BAYAR",data.get("CURR_BAYAR"));
                 paramDetail.put("PARTIAL_IND",data.get("PARTIAL_IND"));
                 paramDetail.put("AMOUNT_BAYAR",data.get("AMOUNT_BAYAR"));
@@ -1153,6 +1158,7 @@ public class InvoiceGroupController {
                 paramDetail.put("VERIFIED_ON",data.get("VERIFIED_ON"));
                 paramDetail.put("APPROVE_TGL_RENCANA_BAYAR",data.get("APPROVE_TGL_RENCANA_BAYAR"));
                 paramDetail.put("STATUS_TRACKING",data.get("STATUS_TRACKING"));
+                paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
