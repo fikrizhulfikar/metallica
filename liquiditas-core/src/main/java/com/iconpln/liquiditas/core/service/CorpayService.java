@@ -1838,6 +1838,18 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         return resultset;
     }
 
+    public List<Map<String, Object>> getAllpembayaranOss() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_all_invoice_backupplan");
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+        System.out.println("ALL INVOICE : "+resultset.toString());
+        AppUtils.getLogger(this).info("data get_all_pembayaran_oss : {}", resultset);
+        return resultset;
+    }
+
     public List<Map<String, Object>> getVerifikasiTanggalByStatus(String idUser, String pTglAwal, String pTglAkhir,  String pCurr, String pBank, String status, String statusTracking) throws SQLException {
 
         AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
