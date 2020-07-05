@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +36,8 @@ public class InvoiceSiapBayarController {
 
     @Autowired
     private ResourceLoader resourceLoader;
+
+    private SimpleDateFormat excelDateFormat = new SimpleDateFormat("dd/mm/yyyy");
 
     @GetMapping(path = "/get_invoice_siap_bayar")
     public Map<String, Object> getListInvoiceSiapBayar(
@@ -240,6 +244,7 @@ public class InvoiceSiapBayarController {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws InvalidFormatException {
+        SimpleDateFormat dateParser = new SimpleDateFormat("yyyymmdd");
         try {
             String tglAwal = "";
             String tglAkhir = "";
@@ -254,7 +259,7 @@ public class InvoiceSiapBayarController {
                 tglAkhir = pTglAkhir;
             }
 
-            String title = "INVOICE SUDAH VERIFIKASI";
+            String title = "INVOICE SIAP BAYAR";
             String namaFile = "rekap_invoice_siapbayar.xls";
 
             ServletOutputStream os = response.getOutputStream();
@@ -275,11 +280,11 @@ public class InvoiceSiapBayarController {
                 paramDetail.put("DOC_NO",data.get("DOC_NO"));
                 paramDetail.put("FISC_YEAR",data.get("FISC_YEAR"));
                 paramDetail.put("DOC_TYPE",data.get("DOC_TYPE"));
-                paramDetail.put("DOC_DATE",data.get("DOC_DATE"));
+                paramDetail.put("DOC_DATE",(!data.get("DOC_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("DOC_DATE").toString())) : "-");
                 paramDetail.put("DOC_DATE2",data.get("DOC_DATE2"));
-                paramDetail.put("POST_DATE",data.get("POST_DATE"));
+                paramDetail.put("POST_DATE",(!data.get("POST_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("POST_DATE").toString())) : "-");
                 paramDetail.put("POST_DATE2",data.get("POST_DATE2"));
-                paramDetail.put("ENTRY_DATE",data.get("ENTRY_DATE"));
+                paramDetail.put("ENTRY_DATE",(!data.get("ENTRY_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("ENTRY_DATE").toString())) : "-");
                 paramDetail.put("ENTRY_DATE2",data.get("ENTRY_DATE2"));
                 paramDetail.put("REFERENCE",data.get("REFERENCE"));
                 paramDetail.put("REV_WITH",data.get("REV_WITH"));
@@ -310,7 +315,7 @@ public class InvoiceSiapBayarController {
                 paramDetail.put("CUSTOMER_NAME",data.get("CUSTOMER_NAME"));
                 paramDetail.put("VENDOR",data.get("VENDOR"));
                 paramDetail.put("VENDOR_NAME",data.get("VENDOR_NAME"));
-                paramDetail.put("BASE_DATE",data.get("BASE_DATE"));
+                paramDetail.put("BASE_DATE",(!data.get("BASE_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("BASE_DATE").toString())) : "-");
                 paramDetail.put("TERM_PMT",data.get("TERM_PMT"));
                 paramDetail.put("DUE_ON",data.get("DUE_ON"));
                 paramDetail.put("PMT_BLOCK",data.get("PMT_BLOCK"));
@@ -366,6 +371,8 @@ public class InvoiceSiapBayarController {
                 paramDetail.put("APPROVE_TGL_RENCANA_BAYAR",data.get("APPROVE_TGL_RENCANA_BAYAR"));
                 paramDetail.put("STATUS_TRACKING",data.get("STATUS_TRACKING"));
                 paramDetail.put("TGL_SIAP_BAYAR", data.get("TGL_SIAP_BAYAR"));
+                paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
+                paramDetail.put("SPREAD_VAL",data.get("SPREAD_VAL"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
@@ -376,7 +383,7 @@ public class InvoiceSiapBayarController {
             workbook.write(os);
             os.flush();
             return null;
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
             return "Gagal Export Data :" + e.getMessage();
         }
