@@ -819,6 +819,7 @@ public class InvoiceSudahController {
                 paramDetail.put("AMOUNT_BAYAR",data.get("AMOUNT_BAYAR"));
                 paramDetail.put("BANK_BENEF",data.get("BANK_BENEF"));
                 paramDetail.put("NO_REK_BENEF",data.get("NO_REK_BENEF"));
+                paramDetail.put("TGL_TAGIHAN_DITERIMA",data.get("TGL_TAGIHAN_DITERIMA"));
                 paramDetail.put("NAMA_BENEF",data.get("NAMA_BENEF"));
                 paramDetail.put("VERIFIED_BY",data.get("VERIFIED_BY"));
                 paramDetail.put("VERIFIED_ON",data.get("VERIFIED_ON"));
