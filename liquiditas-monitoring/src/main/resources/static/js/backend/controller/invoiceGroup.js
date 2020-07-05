@@ -703,19 +703,26 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                 {
                     "aTargets": [1],
                     "mRender": function (data, type, full) {
-                        return full.BANK_BYR2;
+                        return full.ID_GROUP;
                     }
 
                 },
                 {
                     "aTargets": [2],
                     "mRender": function (data, type, full) {
-                        return full.NO_REK_HOUSE_BANK;
+                        return full.BANK_BYR2;
                     }
 
                 },
                 {
                     "aTargets": [3],
+                    "mRender": function (data, type, full) {
+                        return full.NO_REK_HOUSE_BANK;
+                    }
+
+                },
+                {
+                    "aTargets": [4],
                     "mRender": function (data, type, full) {
                         return full.COMP_CODE;
                     }
@@ -723,63 +730,63 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                 },
 
                 {
-                    "aTargets": [4],
+                    "aTargets": [5],
                     "mRender": function (data, type, full) {
                         return full.BUS_AREA;
                     }
 
                 },
                 {
-                    "aTargets": [5],
+                    "aTargets": [6],
                     "mRender": function (data, type, full) {
                         return full.TGL_RENCANA_BAYAR;
                     }
 
                 },
                 {
-                    "aTargets": [6],
+                    "aTargets": [7],
                     "mRender": function (data, type, full) {
                         return full.METODE_PEMBAYARAN;
                     }
 
                 },
                 {
-                    "aTargets": [7],
+                    "aTargets": [8],
                     "mRender": function (data, type, full) {
                         return full.NO_GIRO;
                     }
 
                 },
                 {
-                    "aTargets": [8],
+                    "aTargets": [9],
                     "mRender": function (data, type, full) {
                         return full.CURR_BAYAR;
                     }
 
                 },
                 {
-                    "aTargets": [9],
+                    "aTargets": [10],
                     "mRender": function (data, type, full) {
                         return Intl.NumberFormat().format(full.TOTAL_TAGIHAN);
                     }
 
                 },
                 {
-                    "aTargets": [10],
+                    "aTargets": [11],
                     "mRender": function (data, type, full) {
                         return full.ASSIGNMENT;
                     }
 
                 },
                 {
-                    "aTargets": [11],
+                    "aTargets": [12],
                     "mRender": function (data, type, full) {
                         return full.SUMBER_DANA;
                     }
 
                 },
                 {
-                    "aTargets": [12],
+                    "aTargets": [13],
                     "mRender": function (data, type, full) {
                         var jenis = "AP INVOICE";
                         // console.log("Ini Full : ", full);
