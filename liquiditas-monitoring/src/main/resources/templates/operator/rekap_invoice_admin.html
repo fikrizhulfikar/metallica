@@ -30,11 +30,12 @@
 </div>
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" style="cursor: default">Rekap Invoice Belum</li>
+        <li class="breadcrumb-item active" style="cursor: default">Rekap Invoice</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
 <!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>-->
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXlsAll()"><i class="fas fa-file-excel"></i>&nbsp;Xls All Data</button>
 <!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>-->
                 <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS','ROLE_DM_LIKUIDITAS','ROLE_VICE_PRESIDENT_OPERATION','ROLE_VICE_PRESIDENT_INVESTMENT','ROLE_KASIR_IDR','ROLE_KASIR', 'ROLE_MANAGER_PAYMENT',
                 'ROLE_MANAGER_OPERATION','ROLE_MANAGER_INVESTMENT_APLN','ROLE_MANAGER_INVESTMENT_SLPMN','ROLE_MANAGER_POWER_PURCHASE','ROLE_MANAGER_PRIMARY_ENERGY','EXECUTIVE_VICE_PRESIDENT')">
@@ -634,46 +635,49 @@
                         <table id="table-rekapitulasi" class="table table-bordered table-striped">
                             <thead style="font-size: 12px">
                             <tr>
-                                <th>NO.</th>
-                                <th>JENIS</th>
+                                <th>NO</th>
+                                <th>JENIS TAGIHAN</th>
+                                <th>COMPANY CODE</th>
                                 <th>DOCUMENT NO</th>
+                                <th>GROUP ID</th>
+                                <th>OSS ID</th>
+                                <th>FISCAL YEAR</th>
+                                <th>DOCUMENT TYPE</th>
                                 <th>DOCUMENT DATE</th>
+                                <th>POSTING DATE</th>
+                                <th>ENTRY DATE</th>
+                                <th>REFERENCE</th>
                                 <th>REVERSE WITH</th>
                                 <th>REVERSE YEAR</th>
-                                <th>POSTING DATE</th>
-                                <th>BASE DATE</th>
-                                <th>ENTRY DATE</th>
-                                <th>DOCUMENT TYPE</th>
-                                <th>FISCAL YEAR</th>
                                 <th>DOCUMENT HDR TXT</th>
-                                <th>REFERENCE</th>
-                                <th>TGL TERIMA TAGIHAN</th>
-                                <th>COMPANY CODE</th>
-                                <th>BUSINESS AREA</th><!--10-->
                                 <th>CURRENCY</th>
+                                <th>CURRENCY BAYAR</th>
                                 <th>EXCHANGE RATE</th>
-                                <th>LINE ITEM</th>
-                                <th>DEBIT CREDIT INDIKATOR</th>
-                                <th>SPEC GL</th>
-                                <th>GL ACCOUNT</th>
-                                <th>AMOUNT IN TRANSACTION CURRENCY</th>
-                                <th>AMOUNT IN LOCAL CURRENCY</th>
-                                <th>AMOUNT WITHHOLDING BASE TC</th><!--19-->
-                                <th>AMOUNT WITHHOLDING TC</th>
-                                <th>AMOUNT WITHHOLDING BASE LC</th>
-                                <th>AMOUNT WITHHOLDING LC</th>
-                                <th>AMOUNT</th>
-                                <th>ACCOUNT TYPE</th>
-                                <th>ASSIGNMENT</th>
-                                <th>ITEM TEXT</th><!--24-->
-                                <th>CUSTOMER</th>
-                                <th>VENDOR</th>
-                                <th>TERM OF PAYMENT</th>
-                                <th>DUE ON</th>
                                 <th>REFERENCE KEY</th>
-                                <th>PAYMENT INDIKATOR</th><!--29-->
+                                <th>PAYMENT INDIKATOR</th>
                                 <th>TRANSACTION TYPE</th>
                                 <th>SPREAD VALUE</th>
+                                <th>LINE ITEM</th>
+                                <th>OPEN ITEM INDIKATOR</th>
+                                <th>ACCOUNT TYPE</th>
+                                <th>SPEC GL</th>
+                                <th>BUSINESS AREA</th>
+                                <th>TRADING PARTNER BUSINESS AREA</th>
+                                <th>AMOUNT IN LOCAL CURRENCY</th>
+                                <th>AMOUNT IN TRANSACTION CURRENCY</th>
+                                <th>AMOUNT WITH HOLDING BASE TC</th>
+                                <th>AMOUNT WITH HOLDING TC</th>
+                                <th>AMOUNT</th>
+                                <th>AMOUNT BAYAR</th>
+                                <th>ASSIGNMENT</th>
+                                <th>ITEM TEXT</th>
+                                <th>COST CENTER</th>
+                                <th>GL ACCOUNT</th>
+                                <th>CUSTOMER</th>
+                                <th>VENDOR</th>
+                                <th>BASE DATE</th>
+                                <th>TERM OF PAYMENT</th>
+                                <th>DUE ON</th>
                                 <th>PAYMENT BLOCK</th>
                                 <th>HOUSE BANK</th>
                                 <th>NO REK HOUSE BANK</th>
@@ -681,31 +685,26 @@
                                 <th>BANK KEY</th>
                                 <th>BANK ACCOUNT</th>
                                 <th>ACCOUNT HOLDER</th>
-                                <th>COST CENTER</th>
-                                <th>INTERNAL ORDER</th>
-                                <th>WBS NUMBER</th>
-                                <th>CASH CODE</th>
+                                <th>NAMA BENEFICIARY</th>
+                                <th>NO REK BENEFICIARY</th>
+                                <th>BANK BENEFICIARY</th>
                                 <th>PO NUMBER</th>
                                 <th>PO ITEM</th>
                                 <th>REFERENCE KEY 1</th>
                                 <th>REFERENCE KEY 2</th>
                                 <th>REFERENCE KEY 3</th>
-                                <th>OPEN ITEM INDIKATOR</th>
-                                <th>TRADING PARTNER BUSINESS AREA</th>
+                                <th>INTERNAL ORDER</th>
+                                <th>WBS NUMBER</th>
+                                <th>CASH CODE</th>
+                                <th>DEBIT CREDIT INDIKATOR</th>
+                                <th>PARTIAL INDIKATOR</th>
+                                <th>AMOUNT WITH HOLDING BASE LC</th>
+                                <th>AMOUNT WITH HOLDING LC</th>
                                 <th>METODE PEMBAYARAN</th>
                                 <th>NO GIRO</th>
+                                <th>TGL TERIMA TAGIHAN</th>
                                 <th>TGL RENCANA BAYAR</th>
-                                <th>OSS ID</th>
-                                <th>GROUP ID</th>
-<!--                                <th>BANK BAYAR</th>-->
-                                <th>CURRENCY BAYAR</th>
-                                <th>AMOUNT BAYAR</th>
-                                <th>BANK BENEFICIARY</th>
-                                <th>NO REK BENEFICIARY</th>
-                                <th>NAMA BENEFICIARY</th>
-                                <th>TGL ACTUAL BAYAR</th>
                                 <th>SUMBER DANA</th>
-                                <th>PARTIAL INDIKATOR</th>
                                 <th>KETERANGAN</th>
                                 <th>STATUS TRACKING</th>
                                 <th>AKSI</th>
