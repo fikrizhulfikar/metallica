@@ -543,7 +543,7 @@ function getAllData() {
                         {
                             "aTargets": [44],
                             "mRender": function (data, type, full) {
-                                return full.HOUSE_BANK;
+                                return full.BANK_BYR;
                             }
                         },
                         {
