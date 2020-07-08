@@ -653,7 +653,7 @@ function getAllData() {
 
 }
 
-function initDataTable(pTglAwal, pTglAkhir,  pBank) {
+function initDataTable(pTglAwal, pTglAkhir,  pBank, pCaraBayar, pCurr) {
     showLoadingCss();
     $('#table-rekapitulasi tbody').empty();
     $('#table-rekapitulasi').dataTable().fnDestroy();
@@ -1060,6 +1060,8 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                             pTglAwal: pTglAwal,
                             pTglAkhir: pTglAkhir,
                             pBank: pBank,
+                            pCaraBayar : pCaraBayar,
+                            pCurr : pCurr
                         }
                     ,
                     "dataSrc":
@@ -2703,8 +2705,8 @@ function search(state) {
     if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
         alert("Mohon Lengkapi Tgl Akhir");
     } else {
-        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(),$("#cmb_bank").val())
-        getAllData()
+        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(),$("#cmb_bank").val(),$("#cmb_cara_pembayaran").val(),$("#cmb_currecny").val());
+        // getAllData()
         srcTglAwal = $("#tanggal_awal").val()
         srcTglAkhir = $("#tanggal_akhir").val()
     }
