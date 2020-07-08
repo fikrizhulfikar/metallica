@@ -916,6 +916,27 @@ public class CorpayService {
         return result;
     }
 
+    public Map<String, Object> insertEditAllGiro(
+            String comp_code, String doc_no, String fiscal_year, String line_item,
+            String ket, String user_id, String no_giro, String metode_bayar)
+    {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("invoice_edit_all_giro");
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_comp_code",comp_code,OracleTypes.VARCHAR)
+                .addValue("p_doc_no", doc_no, OracleTypes.VARCHAR)
+                .addValue("p_fisc_year", fiscal_year, OracleTypes.VARCHAR)
+                .addValue("p_line_item",line_item, OracleTypes.VARCHAR)
+                .addValue("p_ket", ket, OracleTypes.VARCHAR)
+                .addValue("p_user_id", user_id, OracleTypes.VARCHAR)
+                .addValue("p_no_giro", no_giro, OracleTypes.VARCHAR)
+                .addValue("p_metode_pembayaran", metode_bayar, OracleTypes.VARCHAR)
+                .addValue("out_msg",OracleTypes.VARCHAR);
+        Map<String, Object> result = simpleJdbcCall.execute(params);
+        return result;
+    }
+
     public String getBallance(String in_bank, String in_source, String in_beneficiary) {
 
         SqlParameterSource params = new MapSqlParameterSource()
