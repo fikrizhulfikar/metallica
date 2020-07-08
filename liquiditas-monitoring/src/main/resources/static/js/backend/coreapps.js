@@ -1105,3 +1105,28 @@ function setSelectBankSaldo(idHtml, jenis, idForSelected, form) {
         }
     });
 }
+
+function setSelectFilterBank(idHtml, jenis, idForSelected) {
+    $.ajax({
+        url: baseUrl + "api_master/filter/get_list_filter_bank",
+        dataType: 'JSON',
+        type: "GET",
+        sync :true,
+        success: function (res) {
+            $("#" + idHtml + "").html('');
+            $("#" + idHtml + "").append('<option value="ALL">SEMUA BANK</option>');
+            $.each(res, function (key, val) {
+                $("#" + idHtml + "").append('<option value="' + val.NAMA_BANK + '">' + val.NAMA_BANK + '</option>');
+            });
+//            console.log("jenis pemb : ", idForSelected);
+            if (idForSelected != "") {
+                $("#" + idHtml + "").val(idForSelected).trigger('change');
+            } else {
+                $('#pJenisPemabayaran').val("null").trigger('change');
+            }
+        },
+        error: function () {
+            $("#" + idHtml + "").html('<option value="ALL">SEMUA BANK</option>');
+        }
+    });
+}
