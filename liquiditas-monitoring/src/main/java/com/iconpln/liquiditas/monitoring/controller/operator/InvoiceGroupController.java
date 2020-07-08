@@ -50,6 +50,8 @@ public class InvoiceGroupController {
             @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
             @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
             @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pCaraBayar", defaultValue = "ALL") String pCaraBayar,
+            @RequestParam(value = "pCurr", defaultValue = "ALL") String pCurr,
             @RequestParam(value = "search[value]", defaultValue = "") String pSearch
     ){
         String sortBy = parseColumn(sortIndex);
@@ -59,7 +61,7 @@ public class InvoiceGroupController {
         }
         List<Map<String, Object>> list = new ArrayList<>();
         try {
-            list = invoiceGroupService.getListInvoiceGroupHead(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, WebUtils.getUsernameLogin(), sortBy, sortDir, pSearch);
+            list = invoiceGroupService.getListInvoiceGroupHead(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, WebUtils.getUsernameLogin(), sortBy, sortDir, pSearch, pCaraBayar, pCurr);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -112,6 +114,8 @@ public class InvoiceGroupController {
             @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
             @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
             @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pCaraBayar", defaultValue = "ALL") String pCaraBayar,
+            @RequestParam(value = "pCurr", defaultValue = "ALL") String pCurr,
             @RequestParam(value = "search[value]", defaultValue = "") String pSearch
     ){
         String sortBy = parseColumn(sortIndex);
@@ -121,7 +125,7 @@ public class InvoiceGroupController {
         }
         List<Map<String, Object>> list = new ArrayList<>();
         try {
-            list = invoiceGroupService.getListInvoiceGroupVerifiedHead(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, WebUtils.getUsernameLogin(), sortBy, sortDir, pSearch);
+            list = invoiceGroupService.getListInvoiceGroupVerifiedHead(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, WebUtils.getUsernameLogin(), sortBy, sortDir, pSearch, pCaraBayar, pCurr);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -268,6 +272,8 @@ public class InvoiceGroupController {
             @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
             @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
             @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pCaraBayar", defaultValue = "ALL") String pCaraBayar,
+            @RequestParam(value = "pCurr", defaultValue = "ALL") String pCurr,
             @RequestParam(value = "search[value]", defaultValue = "") String pSearch
     ){
         String sortBy = parseColumn(sortIndex);
@@ -277,7 +283,7 @@ public class InvoiceGroupController {
         }
         List<Map<String, Object>> list = new ArrayList<>();
         try {
-            list = invoiceGroupService.getListInvoiceGroupLunasHead(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, WebUtils.getUsernameLogin(), sortBy, sortDir, pSearch);
+            list = invoiceGroupService.getListInvoiceGroupLunasHead(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, WebUtils.getUsernameLogin(), sortBy, sortDir, pSearch, pCaraBayar, pCurr);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1228,6 +1234,8 @@ public class InvoiceGroupController {
             @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
             @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
             @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pCaraBayar", defaultValue = "ALL") String pCaraBayar,
+            @RequestParam(value = "pCurr", defaultValue = "ALL") String pCurr,
             @RequestParam(value = "search[value]", defaultValue = "") String pSearch
     ){
         String sortBy = parseColumn(sortIndex);
@@ -1237,7 +1245,7 @@ public class InvoiceGroupController {
         }
         List<Map<String, Object>> list = new ArrayList<>();
         try {
-            list = invoiceGroupService.getListInvoiceGroupHeadSiapBayar(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, WebUtils.getUsernameLogin(), sortBy, sortDir, pSearch);
+            list = invoiceGroupService.getListInvoiceGroupHeadSiapBayar(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, WebUtils.getUsernameLogin(), sortBy, sortDir, pSearch, pCaraBayar, pCurr);
         } catch (Exception e) {
             e.printStackTrace();
         }
