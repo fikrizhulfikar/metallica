@@ -14,13 +14,14 @@ var srcTglAwal = "";
 var srcTglAkhir = "";
 
 $(document).ready(function () {
-    initDataTable();
     $('#exportHeadBtn, #exportAllItemBtn').show();
     $('#exportItemBtn').hide();
     $('#tanggal_awal').datepicker({dateFormat: "dd/mm/yy"});
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
-    // setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+    setSelectFilterBank("cmb_bank", "FILTER", "", "", "REKAP");
+    setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+    setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
 
     $('#check_all').change(function() {
         if($(this).is(':checked')){
@@ -297,7 +298,7 @@ function getAllData() {
 
 }
 
-function initDataTable(pTglAwal, pTglAkhir,  pBank) {
+function initDataTable(pTglAwal, pTglAkhir,  pBank,pCaraBayar, pCurr) {
     showLoadingCss();
     $('#table-rekapitulasi tbody').empty();
     $('#table-rekapitulasi').dataTable().fnDestroy();
@@ -583,6 +584,8 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                             pTglAwal: pTglAwal,
                             pTglAkhir: pTglAkhir,
                             pBank: pBank,
+                            pCaraBayar : pCaraBayar,
+                            pCurr : pCurr
                         }
                     ,
                     "dataSrc":
@@ -1785,8 +1788,8 @@ function search(state) {
     if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
         alert("Mohon Lengkapi Tgl Akhir");
     } else {
-        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(),$("#cmb_bank").val())
-        getAllData()
+        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(),$("#cmb_bank").val(),$("#cmb_cara_pembayaran").val(),$("#cmb_currecny").val())
+        // getAllData()
         srcTglAwal = $("#tanggal_awal").val()
         srcTglAkhir = $("#tanggal_akhir").val()
     }
@@ -2038,4 +2041,5 @@ function back(){
         .find("button").unbind('click');
     tableInvoiceGroupVerified.ajax.reload()
     tableDetailGroupInvoiceVerified.destroy();
+    $("#tagihan_item").remove();
 }
