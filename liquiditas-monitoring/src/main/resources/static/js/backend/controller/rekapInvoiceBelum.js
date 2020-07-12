@@ -2204,206 +2204,207 @@ function showColumn() {
             } else {
                 $("#hc31").prop("checked", false);
             }
-            if (response.CUSTOMER_NAME == 1) {
-                $("#hc32").prop("checked", true);
+            if (response.AMOUNT == 1) {
+               $("#hc32").prop("checked", true);
             } else {
                 $("#hc32").prop("checked", false);
             }
-            if (response.VENDOR_NAME == 1) {
-                $("#hc33").prop("checked", true);
+            if (response.AMOUNT_BAYAR == 1) {
+               $("#hc33").prop("checked", true);
             } else {
                 $("#hc33").prop("checked", false);
             }
-            if (response.TERM_PMT == 1) {
-                $("#hc34").prop("checked", true);
+            if (response.ASSIGNMENT == 1) {
+               $("#hc34").prop("checked", true);
             } else {
                 $("#hc34").prop("checked", false);
             }
-            if (response.DUE_ON == 1) {
-                $("#hc35").prop("checked", true);
+            if (response.ITEM_TEXT == 1) {
+               $("#hc35").prop("checked", true);
             } else {
                 $("#hc35").prop("checked", false);
             }
-            if (response.REFERENCE_KEY == 1) {
-                $("#hc36").prop("checked", true);
+
+            if (response.COST_CTR == 1) {
+               $("#hc36").prop("checked", true);
             } else {
                 $("#hc36").prop("checked", false);
             }
-            if (response.PMT_IND == 1) {
-                $("#hc37").prop("checked", true);
+            if (response.GL_ACCT == 1) {
+               $("#hc37").prop("checked", true);
             } else {
                 $("#hc37").prop("checked", false);
             }
-             if (response.TRANS_TYPE == 1) {
-                $("#hc38").prop("checked", true);
+            if (response.CUSTOMER_NAME == 1) {
+               $("#hc38").prop("checked", true);
             } else {
                 $("#hc38").prop("checked", false);
             }
-             if (response.SPREAD_VAL == 1) {
-                $("#hc39").prop("checked", true);
+            if (response.VENDOR_NAME == 1) {
+               $("#hc39").prop("checked", true);
             } else {
                 $("#hc39").prop("checked", false);
             }
-             if (response.PMT_BLOCK == 1) {
-                $("#hc40").prop("checked", true);
+            if (response.BASE_DATE == 1) {
+               $("#hc40").prop("checked", true);
             } else {
                 $("#hc40").prop("checked", false);
             }
-             if (response.HOUSE_BANK == 1) {
-                $("#hc41").prop("checked", true);
+            if (response.TERM_PMT == 1) {
+               $("#hc41").prop("checked", true);
             } else {
                 $("#hc41").prop("checked", false);
             }
-             if (response.NO_REK_HOUSE_BANK == 1) {
-                $("#hc42").prop("checked", true);
+            if (response.DUE_ON == 1) {
+               $("#hc42").prop("checked", true);
             } else {
                 $("#hc42").prop("checked", false);
             }
-             if (response.PRTNR_BANK_TYPE == 1) {
-                $("#hc43").prop("checked", true);
+            if (response.PMT_BLOCK == 1) {
+               $("#hc43").prop("checked", true);
             } else {
                 $("#hc43").prop("checked", false);
             }
-             if (response.BANK_KEY == 1) {
-                $("#hc44").prop("checked", true);
+            if (response.HOUSE_BANK == 1) {
+               $("#hc44").prop("checked", true);
             } else {
                 $("#hc44").prop("checked", false);
             }
+            if (response.NO_REK_HOUSE_BANK == 1) {
+               $("#hc45").prop("checked", true);
+            } else {
+                $("#hc45").prop("checked", false);
+            }
+            if (response.PRTNR_BANK_TYPE == 1) {
+               $("#hc46").prop("checked", true);
+            } else {
+                $("#hc46").prop("checked", false);
+            }
+            if (response.BANK_KEY == 1) {
+               $("#hc47").prop("checked", true);
+            } else {
+                $("#hc47").prop("checked", false);
+            }
             if (response.BANK_ACCOUNT == 1) {
-                 $("#hc45").prop("checked", true);
-             } else {
-                 $("#hc45").prop("checked", false);
-             }
-              if (response.ACCOUNT_HOLDER == 1) {
-                  $("#hc46").prop("checked", true);
-              } else {
-                  $("#hc46").prop("checked", false);
-              }
-               if (response.COST_CTR == 1) {
-                   $("#hc47").prop("checked", true);
-               } else {
-                   $("#hc47").prop("checked", false);
-               }
-                if (response.INT_ORDER == 1) {
-                    $("#hc48").prop("checked", true);
-                } else {
-                    $("#hc48").prop("checked", false);
-                }
-                 if (response.WBS_NUM == 1) {
-                     $("#hc49").prop("checked", true);
-                 } else {
-                     $("#hc49").prop("checked", false);
-                 }
-                  if (response.CASH_CODE == 1) {
-                      $("#hc50").prop("checked", true);
-                  } else {
-                      $("#hc50").prop("checked", false);
-                  }
-               if (response.PO_NUM == 1) {
-                    $("#hc51").prop("checked", true);
-                } else {
-                    $("#hc51").prop("checked", false);
-                }
-                if (response.PO_ITEM == 1) {
-                      $("#hc52").prop("checked", true);
-                  } else {
-                      $("#hc52").prop("checked", false);
-                  }
-                if (response.REF_KEY1 == 1) {
-                    $("#hc53").prop("checked", true);
-                } else {
-                    $("#hc53").prop("checked", false);
-                }
-                if (response.REF_KEY2 == 1) {
-                    $("#hc54").prop("checked", true);
-                } else {
-                    $("#hc54").prop("checked", false);
-                }
-                if (response.REF_KEY3 == 1) {
-                    $("#hc55").prop("checked", true);
-                } else {
-                    $("#hc55").prop("checked", false);
-                }
-                if (response.OI_IND == 1) {
-                    $("#hc56").prop("checked", true);
-                } else {
-                    $("#hc56").prop("checked", false);
-                }
-                if (response.TPBA == 1) {
-                    $("#hc57").prop("checked", true);
-                } else {
-                    $("#hc57").prop("checked", false);
-                }
-                if (response.METODE_PEMBAYARAN == 1) {
-                    $("#hc58").prop("checked", true);
-                } else {
-                    $("#hc58").prop("checked", false);
-                }
-                if (response.NO_GIRO == 1) {
-                    $("#hc59").prop("checked", true);
-                } else {
-                    $("#hc59").prop("checked", false);
-                }
-                if (response.TGL_RENCANA_BAYAR == 1) {
-                    $("#hc60").prop("checked", true);
-                } else {
-                    $("#hc60").prop("checked", false);
-                }
-                if (response.OSS_ID == 1) {
-                    $("#hc61").prop("checked", true);
-                } else {
-                    $("#hc61").prop("checked", false);
-                }
-                if (response.GROUP_ID == 1) {
-                    $("#hc62").prop("checked", true);
-                } else {
-                    $("#hc62").prop("checked", false);
-                }
-                if (response.CURR_BAYAR == 1) {
-                    $("#hc63").prop("checked", true);
-                } else {
-                    $("#hc63").prop("checked", false);
-                }
-                if (response.AMOUNT_BAYAR == 1) {
-                    $("#hc64").prop("checked", true);
-                } else {
-                    $("#hc64").prop("checked", false);
-                }
-                if (response.BANK_BENEF == 1) {
-                    $("#hc65").prop("checked", true);
-                } else {
-                    $("#hc65").prop("checked", false);
-                }
-                 if (response.NO_REK_BENEF == 1) {
-                    $("#hc66").prop("checked", true);
-                } else {
-                    $("#hc66").prop("checked", false);
-                }
-                 if (response.NAMA_BENEF == 1) {
-                    $("#hc67").prop("checked", true);
-                } else {
-                    $("#hc67").prop("checked", false);
-                }
-                 if (response.SUMBER_DANA == 1) {
-                    $("#hc68").prop("checked", true);
-                } else {
-                    $("#hc68").prop("checked", false);
-                }
-                 if (response.PARTIAL_IND == 1) {
-                    $("#hc69").prop("checked", true);
-                } else {
-                    $("#hc69").prop("checked", false);
-                }
-                 if (response.KETERANGAN == 1) {
-                    $("#hc70").prop("checked", true);
-                } else {
-                    $("#hc70").prop("checked", false);
-                }
-                 if (response.STATUS_TRACKING == 1) {
-                    $("#hc71").prop("checked", true);
-                } else {
-                    $("#hc71").prop("checked", false);
-                }
+               $("#hc48").prop("checked", true);
+            } else {
+                $("#hc48").prop("checked", false);
+            }
+            if (response.ACCOUNT_HOLDER == 1) {
+               $("#hc49").prop("checked", true);
+            } else {
+                $("#hc49").prop("checked", false);
+            }
+            if (response.NAMA_BENEF == 1) {
+               $("#hc50").prop("checked", true);
+            } else {
+                $("#hc50").prop("checked", false);
+            }
+            if (response.NO_REK_BENEF == 1) {
+               $("#hc51").prop("checked", true);
+            } else {
+                $("#hc51").prop("checked", false);
+            }
+            if (response.BANK_BENEF == 1) {
+               $("#hc52").prop("checked", true);
+            } else {
+                $("#hc52").prop("checked", false);
+            }
+            if (response.PO_NUM == 1) {
+               $("#hc53").prop("checked", true);
+            } else {
+                $("#hc53").prop("checked", false);
+            }
+            if (response.PO_ITEM == 1) {
+               $("#hc54").prop("checked", true);
+            } else {
+                $("#hc54").prop("checked", false);
+            }
+            if (response.REF_KEY1 == 1) {
+               $("#hc55").prop("checked", true);
+            } else {
+                $("#hc55").prop("checked", false);
+            }
+            if (response.REF_KEY2 == 1) {
+               $("#hc56").prop("checked", true);
+            } else {
+                $("#hc56").prop("checked", false);
+            }
+            if (response.REF_KEY3 == 1) {
+               $("#hc57").prop("checked", true);
+            } else {
+                $("#hc57").prop("checked", false);
+            }
+            if (response.INT_ORDER == 1) {
+               $("#hc58").prop("checked", true);
+            } else {
+                $("#hc58").prop("checked", false);
+            }
+            if (response.WBS_NUM == 1) {
+               $("#hc59").prop("checked", true);
+            } else {
+                $("#hc59").prop("checked", false);
+            }
+            if (response.CASH_CODE == 1) {
+               $("#hc60").prop("checked", true);
+            } else {
+                $("#hc60").prop("checked", false);
+            }
+            if (response.DR_CR_IND == 1) {
+               $("#hc61").prop("checked", true);
+            } else {
+                $("#hc61").prop("checked", false);
+            }
+            if (response.PARTIAL_IND == 1) {
+               $("#hc62").prop("checked", true);
+            } else {
+                $("#hc62").prop("checked", false);
+            }
+            if (response.AMT_WITH_BASE_LC == 1) {
+               $("#hc63").prop("checked", true);
+            } else {
+                $("#hc63").prop("checked", false);
+            }
+            if (response.AMT_WITH_LC == 1) {
+               $("#hc64").prop("checked", true);
+            } else {
+                $("#hc64").prop("checked", false);
+            }
+            if (response.METODE_PEMBAYARAN == 1) {
+               $("#hc65").prop("checked", true);
+            } else {
+                $("#hc65").prop("checked", false);
+            }
+            if (response.NO_GIRO == 1) {
+                $("#hc66").prop("checked", true);
+            } else {
+                $("#hc66").prop("checked", false);
+            }
+            if (response.TGL_TAGIHAN_DITERIMA == 1) {
+                $("#hc67").prop("checked", true);
+            } else {
+                $("#hc67").prop("checked", false);
+            }
+            if (response.TGL_RENCANA_BAYAR == 1) {
+                $("#hc68").prop("checked", true);
+            } else {
+                $("#hc68").prop("checked", false);
+            }
+            if (response.SUMBER_DANA == 1) {
+                $("#hc69").prop("checked", true);
+            } else {
+                $("#hc69").prop("checked", false);
+            }
+            if (response.KETERANGAN == 1) {
+                $("#hc70").prop("checked", true);
+            } else {
+                $("#hc70").prop("checked", false);
+            }
+            if (response.STATUS_TRACKING == 1) {
+                $("#hc71").prop("checked", true);
+            } else {
+                $("#hc71").prop("checked", false);
+            }
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -2489,79 +2490,79 @@ function saveColumn() {
     var data = {
         "nomor" : hc0 === true ? 1 : 0,
         "ket" : hc1 === true ? 1 : 0,
-        "doc_no" : hc2 === true ? 1 : 0,
-        "doc_date2" : hc3 === true ? 1 : 0,
-        "rev_with" : hc4 === true ? 1 : 0,
-        "rev_year" : hc5 === true ? 1 : 0,
-        "post_date2" : hc6 === true ? 1 : 0,
-        "base_date" : hc7 === true ? 1 : 0,
-        "entry_date2" : hc8 === true ? 1 : 0,
-        "doc_type" : hc9 === true ? 1 : 0,
-        "fisc_year" : hc10 === true ? 1 : 0,
-        "doc_hdr_txt" : hc11 === true ? 1 : 0,
-        "reference" : hc12 === true ? 1 : 0,
-        "tgl_tagihan_diterima" : hc13 === true ? 1 : 0,
-        "comp_code" : hc14 === true ? 1 : 0,
-        "bus_area" : hc15 === true ? 1 : 0,
-        "currency" : hc16 === true ? 1 : 0,
+        "comp_code" : hc2 === true ? 1 : 0,
+        "doc_no" : hc3 === true ? 1 : 0,
+        "group_id" : hc4 === true ? 1 : 0,
+        "oss_id" : hc5 === true ? 1 : 0,
+        "fisc_year" : hc6 === true ? 1 : 0,
+        "doc_type" : hc7 === true ? 1 : 0,
+        "doc_date2" : hc8 === true ? 1 : 0,
+        "post_date2" : hc9 === true ? 1 : 0,
+        "entry_date2" : hc10 === true ? 1 : 0,
+        "reference" : hc11 === true ? 1 : 0,
+        "rev_with" : hc12 === true ? 1 : 0,
+        "rev_year" : hc13 === true ? 1 : 0,
+        "doc_hdr_txt" : hc14 === true ? 1 : 0,
+        "currency" : hc15 === true ? 1 : 0,
+        "curr_bayar" : hc16 === true ? 1 : 0,
         "exch_rate" : hc17 === true ? 1 : 0,
-        "line_item" : hc18 === true ? 1 : 0,
-        "dr_cr_ind" : hc19 === true ? 1 : 0,
-        "spec_gl" : hc20 === true ? 1 : 0,
-        "gl_acct" : hc21 === true ? 1 : 0,
-        "amt_tc" : hc22 === true ? 1 : 0,
-        "amt_lc" : hc23 === true ? 1 : 0,
-        "amt_with_base_tc" : hc24 === true ? 1 : 0,
-        "amt_with_tc" : hc25 === true ? 1 : 0,
-        "amt_with_base_lc" : hc26 === true ? 1 : 0,
-        "amt_with_lc" : hc27 === true ? 1 : 0,
-        "amount" : hc28 === true ? 1 : 0,
-        "acct_type" : hc29 === true ? 1 : 0,
-        "assignment" : hc30 === true ? 1 : 0,
-        "item_text" : hc31 === true ? 1 : 0,
-        "customer" : hc32 === true ? 1 : 0,
-        "vendor" : hc33 === true ? 1 : 0,
-        "term_pmt" : hc34 === true ? 1 : 0,
-        "due_on" : hc35 === true ? 1 : 0,
-        "reference_key" : hc36 === true ? 1 : 0,
-        "pmt_ind" : hc37 === true ? 1 : 0,
-        "trans_type" : hc38 === true ? 1 : 0,
-        "spread_val" : hc39 === true ? 1 : 0,
-        "pmt_block" : hc40 === true ? 1 : 0,
-        "house_bank" : hc41 === true ? 1 : 0,
-        "no_rek_house_bank" : hc42 === true ? 1 : 0,
-        "prtnr_bank_type" : hc43 === true ? 1 : 0,
-        "bank_key" : hc44 === true ? 1 : 0,
-        "bank_account" : hc45 === true ? 1 : 0,
-        "account_holder" : hc46 === true ? 1 : 0,
-        "cost_ctr" : hc47 === true ? 1 : 0,
-        "int_order" : hc48 === true ? 1 : 0,
-        "wbs_num" : hc49 === true ? 1 : 0,
-        "cash_code" : hc50 === true ? 1 : 0,
-        "po_num" : hc51 === true ? 1 : 0,
-        "po_item" : hc52 === true ? 1 : 0,
-        "ref_key1" : hc53 === true ? 1 : 0,
-        "ref_key2" : hc54 === true ? 1 : 0,
-        "ref_key3" : hc55 === true ? 1 : 0,
-        "oi_ind" : hc56 === true ? 1 : 0,
-        "tpba" : hc57 === true ? 1 : 0,
-        "metode_pembayaran" : hc58 === true ? 1 : 0,
-        "no_giro" : hc59 === true ? 1 : 0,
-        "tgl_rencana_bayar" : hc60 === true ? 1 : 0,
-        "oss_id" : hc61 === true ? 1 : 0,
-        "group_id" : hc62 === true ? 1 : 0,
-        "bank_byr" : 0,
-        "curr_bayar" : hc63 === true ? 1 : 0,
-        "amount_bayar" : hc64 === true ? 1 : 0,
-        "bank_benef" : hc65 === true ? 1 : 0,
-        "no_rek_benef" : hc66 === true ? 1 : 0,
-        "nama_benef" : hc67 === true ? 1 : 0,
-        "sumber_dana" : hc68 === true ? 1 : 0,
-        "partial_ind" : hc69 === true ? 1 : 0,
+        "reference_key" : hc18 === true ? 1 : 0,
+        "pmt_ind" : hc19 === true ? 1 : 0,
+        "trans_type" : hc20 === true ? 1 : 0,
+        "spread_val" : hc21 === true ? 1 : 0,
+        "line_item" : hc22 === true ? 1 : 0,
+        "oi_ind" : hc23 === true ? 1 : 0,
+        "spec_gl" : hc24 === true ? 1 : 0,
+        "acct_type" : hc25 === true ? 1 : 0,
+        "bus_area" : hc26 === true ? 1 : 0,
+        "tpba" : hc27 === true ? 1 : 0,
+        "amt_lc" : hc28 === true ? 1 : 0,
+        "amt_tc" : hc29 === true ? 1 : 0,
+        "amt_with_base_tc" : hc30 === true ? 1 : 0,
+        "amt_with_tc" : hc31 === true ? 1 : 0,
+        "amount" : hc32 === true ? 1 : 0,
+        "amount_bayar" : hc33 === true ? 1 : 0,
+        "assignment" : hc34 === true ? 1 : 0,
+        "item_text" : hc35 === true ? 1 : 0,
+        "cost_ctr" : hc36 === true ? 1 : 0,
+        "gl_acct" : hc37 === true ? 1 : 0,
+        "customer" : hc38 === true ? 1 : 0,
+        "vendor" : hc39 === true ? 1 : 0,
+        "base_date" : hc40 === true ? 1 : 0,
+        "term_pmt" : hc41 === true ? 1 : 0,
+        "due_on" : hc42 === true ? 1 : 0,
+        "pmt_block" : hc43 === true ? 1 : 0,
+        "house_bank" : hc44 === true ? 1 : 0,
+        "no_rek_house_bank" : hc45 === true ? 1 : 0,
+        "prtnr_bank_type" : hc46 === true ? 1 : 0,
+        "bank_key" : hc47 === true ? 1 : 0,
+        "bank_account" : hc48 === true ? 1 : 0,
+        "account_holder" : hc49 === true ? 1 : 0,
+        "nama_benef" : hc50 === true ? 1 : 0,
+        "no_rek_benef" : hc51 === true ? 1 : 0,
+        "bank_benef" : hc52 === true ? 1 : 0,
+        "po_num" : hc53 === true ? 1 : 0,
+        "po_item" : hc54 === true ? 1 : 0,
+        "ref_key1" : hc55 === true ? 1 : 0,
+        "ref_key2" : hc56 === true ? 1 : 0,
+        "ref_key3" : hc57 === true ? 1 : 0,
+        "int_order" : hc58 === true ? 1 : 0,
+        "wbs_num" : hc59 === true ? 1 : 0,
+        "dr_cr_ind" : hc60 === true ? 1 : 0,
+        "cash_code" : hc61 === true ? 1 : 0,
+        "partial_ind" : hc62 === true ? 1 : 0,
+        "amt_with_base_lc" : hc63 === true ? 1 : 0,
+        "amt_with_lc" : hc64 === true ? 1 : 0,
+        "metode_pembayaran" : hc65 === true ? 1 : 0,
+        "no_giro" : hc66 === true ? 1 : 0,
+        "tgl_tagihan_diterima" : hc67 === true ? 1 : 0,
+        "tgl_rencana_bayar" : hc68 === true ? 1 : 0,
+        "sumber_dana" : hc69 === true ? 1 : 0,
         "keterangan" : hc70 === true ? 1 : 0,
         "status_tracking" : hc71 === true ? 1 : 0,
-        "tgl_act_bayar" : 0,
 
+        "bank_byr" : 0,
+        "tgl_act_bayar" : 0,
         "corp_pmt" : 0,
         "inq_customer_name" : 0,
         "inq_account_number" : 0,
@@ -2729,33 +2730,6 @@ function edit_data2() {
                 hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
             }
         });
-}
-
-function setSelectMetodeBayar(idHtml,idSelectElement){
-    $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/get_metode_bayar",
-        dataType: 'JSON',
-        type: "GET",
-        sync :true,
-
-
-        success: function (res) {
-            // // console.log("Select Hasil : ",res);
-            $("#" + idHtml + "").html('');
-            $.each(res, function (key, val) {
-                $("#" + idHtml + "").append('<option value="' + val.METODE_PEMBAYARAN + '">'+val.METODE_PEMBAYARAN+'</option>');
-            });
-//            // // console.log("jenis pemb : ", idForSelected);
-            if (idSelectElement != "") {
-                $("#" + idHtml + "").val(idSelectElement).trigger('change');
-            } else {
-                $('#pBankPembayaran').val("null").trigger('change');
-            }
-        },
-        error: function () {
-            $("#" + idHtml + "").html('<option value="">Pilih Data</option>');
-        }
-    });
 }
 
 function setSelectBankPembayar(idHtml ,idForSelected) {
@@ -3164,7 +3138,7 @@ function update_status(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pStatusTra
     }
 }
 
-function update_status_giro(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pStatusTracking){
+function update_status_giro(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pStatusTracking, pOssId, pGroupId){
     if (pStatusTracking === 'INPUT DATA'){
         alert('Silahkan Tentukan Metode Pembayaran Terlebih Dahulu');
     }else{
@@ -3182,6 +3156,8 @@ function update_status_giro(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pStat
                     pLineItem: pLineItem,
                     pKet: pKet,
                     pStatusTracking: pStatusTracking,
+                    pOssId : pOssId,
+                    pGroupId : pGroupId
                 },
                 success: function (res) {
                     hideLoadingCss("")
@@ -3984,8 +3960,8 @@ function checkArray(e) {
     //         stack : 1
     //     });
     // }
-    // console.log("Full Array : ", fullArrayGroup);
-    // console.log("invoice array : ",invoiceCheckedArray);
+    console.log("Full Array : ", fullArrayGroup);
+    console.log("invoice array : ",invoiceCheckedArray);
 }
 
 function checkGroup(){
