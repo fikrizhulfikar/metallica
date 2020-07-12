@@ -22,15 +22,14 @@ var srcTglAkhir = "";
 var pIdGroup = "";
 
 $(document).ready(function () {
-    initDataTable();
     $('#exportHeadBtn, #exportAllItemBtn').show();
     $('#exportItemBtn').hide();
     $('#tanggal_awal').datepicker({dateFormat: "dd/mm/yy"});
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
-    setSelectBank("cmb_bank", "FILTER", "", "", "REKAP");
+    setSelectFilterBank("cmb_bank", "FILTER", "", "", "REKAP");
     setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
-    // setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+    setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
 
     $('#check_all').change(function() {
         if($(this).is(':checked')){
@@ -654,7 +653,7 @@ function getAllData() {
 
 }
 
-function initDataTable(pTglAwal, pTglAkhir,  pBank) {
+function initDataTable(pTglAwal, pTglAkhir,  pBank, pCaraBayar, pCurr) {
     showLoadingCss();
     $('#table-rekapitulasi tbody').empty();
     $('#table-rekapitulasi').dataTable().fnDestroy();
@@ -691,7 +690,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                 },
                 {
                     "sortable": false,
-                    "aTargets": [0]
+                    "aTargets": [0,13]
                 },
                 {
                     "aTargets": [0],
@@ -1061,6 +1060,8 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                             pTglAwal: pTglAwal,
                             pTglAkhir: pTglAkhir,
                             pBank: pBank,
+                            pCaraBayar : pCaraBayar,
+                            pCurr : pCurr
                         }
                     ,
                     "dataSrc":
@@ -1149,8 +1150,8 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
     });
 
     $('.dataTables_filter').each(function () {
-        // var html = '';
-        var html =  '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
+        var html = '';
+        // var html =  '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
         if (newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "ROLE_JA_CASH" || newRoleUser[0] == "ROLE_JA_IE"){
             // html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fas fa-trash"></i></button>';
         }
@@ -2689,7 +2690,7 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
     );
             $('.dataTables_filter').each(function () {
                 var html = '';
-                html =  '<button class="btn btn-dtl btn-dribbble btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
+                // html =  '<button class="btn btn-dtl btn-dribbble btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
                 html = html + '<button class="btn btn-dtl btn-primary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Bukti Kas" onclick="cetakBuktiKasGroupingMultiple()"><i class="fas fa-file-alt"></i></button>' ;
                 html = html + '<button class="btn btn-dtl btn-info btn-sm" id="btn-cetak-lampiran" style="margin-left: 10px" type="button" title="Cetak Lampiran" onclick="cetakLampiranGrouping(\''+group_id+'\')"><i class="fas fa-paperclip"></i></button>' ;
                 if (newRoleUser[0] === "ROLE_JA_CASH" || newRoleUser[0] === "ROLE_JA_IE" || newRoleUser[0] === "ROLE_FCL_SETTLEMENT"){
@@ -2704,8 +2705,8 @@ function search(state) {
     if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
         alert("Mohon Lengkapi Tgl Akhir");
     } else {
-        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(),$("#cmb_bank").val())
-        getAllData()
+        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(),$("#cmb_bank").val(),$("#cmb_cara_pembayaran").val(),$("#cmb_currecny").val());
+        // getAllData()
         srcTglAwal = $("#tanggal_awal").val()
         srcTglAkhir = $("#tanggal_akhir").val()
     }
@@ -3609,6 +3610,8 @@ function getTotalTagihan() {
             tgl_awal: $("#tanggal_awal").val(),
             tgl_akhir: $("#tanggal_akhir").val(),
             bank: $("#cmb_bank").val(),
+            currency : $("#cmb_currecny").val(),
+            cara_bayar : $("#cmb_cara_pembayaran").val(),
             search: tempTableSearch
         },
         success: function (res) {

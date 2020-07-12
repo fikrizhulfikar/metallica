@@ -209,13 +209,34 @@ public class CorpayController {
             @RequestParam(value = "pJamBayar", defaultValue = "") String pJamBayar
     ) throws JSONException {
         Map<String,Object> out = new HashMap<>();
-
         JSONArray jsonArray = new JSONArray(pData);
         try {
             for (int index = 0; index < jsonArray.length(); index++){
                 JSONObject object = jsonArray.getJSONObject(index);
                 System.out.println("Jancok! : "+object);
                 out = corpayService.insertMultipleEdit(object.getString("pCompCode"),object.getString("pDocNo"),object.getString("pFiscYear"),object.getString("pLineItem"),object.getString("pKet"),pCashCode, pMetodePembayaran, pJamBayar, WebUtils.getUsernameLogin());
+                System.out.println("BigDecimal : "+out);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return out;
+    }
+
+    @RequestMapping(path = "/insert_multiple_edit_giro")
+    public Map<String, Object> insertMultipleEditDataGiro(
+            @RequestParam(value = "pData", defaultValue = "") String pData,
+            @RequestParam(value = "pNoGiro", defaultValue = "") String pNoGiro,
+            @RequestParam(value = "pMetodePembayaran", defaultValue = "") String pMetodePembayaran
+    ) throws JSONException {
+        Map<String,Object> out = new HashMap<>();
+
+        JSONArray jsonArray = new JSONArray(pData);
+        try {
+            for (int index = 0; index < jsonArray.length(); index++){
+                JSONObject object = jsonArray.getJSONObject(index);
+                System.out.println("Jancok! : "+object);
+                out = corpayService.insertEditAllGiro(object.getString("pCompCode"),object.getString("pDocNo"),object.getString("pFiscYear"),object.getString("pLineItem"),object.getString("pKet"),WebUtils.getUsernameLogin(),pNoGiro,pMetodePembayaran);
                 System.out.println("BigDecimal : "+out);
             }
         }catch (Exception e){

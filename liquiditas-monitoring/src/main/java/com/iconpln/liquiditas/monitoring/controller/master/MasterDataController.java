@@ -374,7 +374,15 @@ public class MasterDataController {
         }
     }
 
-
+    @GetMapping(path = "/filter/get_list_filter_bank")
+    public List<Map<String, Object>> listFilterBank(){
+        try{
+            return masterService.getListFilterBank();
+        }catch (Exception e){
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
 
     @RequestMapping(value = "/jenis_pembayaran/ins_jenis_pembayaran", method = RequestMethod.GET)
     public Map<String,Object> insJenisPembayaran(

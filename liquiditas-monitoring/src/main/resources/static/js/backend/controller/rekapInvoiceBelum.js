@@ -24,12 +24,13 @@ var addedDays = 2;
 var row_selected;
 
 $(document).ready(function () {
-    getAllData();
+    // getAllData();
 //     $( '#pAccountBalance' ).mask('000.000.000.000.000', {reverse: true});
     $('#tanggal_awal').datepicker({dateFormat: 'dd/mm/yy'});
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
-    setSelectBank("cmb_bank", "FILTER", "", "", "REKAP");
+    setSelectFilterBank("cmb_bank", "FILTER", "", "", "REKAP");
+    setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
     setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
 
     $('#check_all').change(function() {
@@ -125,8 +126,8 @@ function search(state) {
         if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
             alert("Mohon Lengkapi Tgl Akhir");
         } else {
-            initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val(), $("#cmb_jenis_pemabayaran").val(), $("#cmb_status_tracking").val())
-            getAllData();
+            initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val(), $("#cmb_cara_pembayaran").val(), $("#cmb_status_tracking").val())
+            // getAllData();
             srcTglAwal = $("#tanggal_awal").val()
             srcTglAkhir = $("#tanggal_akhir").val()
         }
@@ -617,7 +618,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         {
                             "aTargets": [44],
                             "mRender": function (data, type, full) {
-                                return full.HOUSE_BANK;
+                                return full.BANK_BYR;
                             }
                         },
                         {
@@ -1212,77 +1213,79 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                                 } else {
                                     api.column(1).visible(false);
                                 }
-                                if (response.DOC_NO == 1) {
+                                if (response.COMP_CODE == 1) {
                                     api.column(2).visible(true);
                                 } else {
                                     api.column(2).visible(false);
                                 }
-                                if (response.DOC_DATE == 1) {
+                                if (response.DOC_NO == 1) {
                                     api.column(3).visible(true);
                                 } else {
                                     api.column(3).visible(false);
                                 }
-                                if (response.REV_WITH == 1) {
+                                if (response.GROUP_ID == 1) {
                                     api.column(4).visible(true);
                                 } else {
                                     api.column(4).visible(false);
                                 }
-                                if (response.REV_YEAR == 1) {
+                                if (response.OSS_ID == 1) {
                                     api.column(5).visible(true);
                                 } else {
                                     api.column(5).visible(false);
                                 }
-                                if (response.POST_DATE == 1) {
+                                if (response.FISC_YEAR == 1) {
                                     api.column(6).visible(true);
                                 } else {
                                     api.column(6).visible(false);
                                 }
-                                if (response.BASE_DATE == 1) {
+                                if (response.DOC_TYPE == 1) {
                                     api.column(7).visible(true);
                                 } else {
                                     api.column(7).visible(false);
                                 }
-                                if (response.ENTRY_DATE == 1) {
+                                if (response.DOC_DATE == 1) {
                                     api.column(8).visible(true);
                                 } else {
                                     api.column(8).visible(false);
                                 }
-                                if (response.DOC_TYPE == 1) {
+                                if (response.POST_DATE == 1) {
                                     api.column(9).visible(true);
                                 } else {
                                     api.column(9).visible(false);
                                 }
-                                if (response.FISC_YEAR == 1) {
+
+                                if (response.ENTRY_DATE == 1) {
                                     api.column(10).visible(true);
                                 } else {
                                     api.column(10).visible(false);
                                 }
-                                if (response.DOC_HDR_TXT == 1) {
+
+                                if (response.REFERENCE == 1) {
                                     api.column(11).visible(true);
                                 } else {
                                     api.column(11).visible(false);
                                 }
-                                if (response.REFERENCE == 1) {
+                                if (response.REV_WITH == 1) {
                                     api.column(12).visible(true);
                                 } else {
                                     api.column(12).visible(false);
                                 }
-                                if (response.TGL_TAGIHAN_DITERIMA == 1) {
+                                if (response.REV_YEAR == 1) {
                                     api.column(13).visible(true);
                                 } else {
                                     api.column(13).visible(false);
                                 }
-                                if (response.COMP_CODE == 1) {
+                                if (response.DOC_HDR_TXT == 1) {
                                     api.column(14).visible(true);
                                 } else {
                                     api.column(14).visible(false);
                                 }
-                                if (response.BUS_AREA == 1) {
+                                if (response.CURRENCY == 1) {
                                     api.column(15).visible(true);
                                 } else {
                                     api.column(15).visible(false);
                                 }
-                                if (response.CURRENCY == 1) {
+                                if (response.CURR_BAYAR == 1) {
                                     api.column(16).visible(true);
                                 } else {
                                     api.column(16).visible(false);
@@ -1292,267 +1295,263 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                                 } else {
                                     api.column(17).visible(false);
                                 }
-                                if (response.LINE_ITEM == 1) {
-                                    api.column(18).visible(false);
+                                if (response.REFERENCE_KEY == 1) {
+                                    api.column(18).visible(true);
                                 } else {
                                     api.column(18).visible(false);
                                 }
-                                if (response.DR_CR_IND == 1) {
+                                if (response.PMT_IND == 1) {
                                     api.column(19).visible(true);
                                 } else {
                                     api.column(19).visible(false);
                                 }
-                                if (response.SPEC_GL == 1) {
+                                if (response.TRANS_TYPE == 1) {
                                     api.column(20).visible(true);
                                 } else {
                                     api.column(20).visible(false);
                                 }
-                                if (response.GL_ACCT == 1) {
+                                if (response.SPREAD_VAL == 1) {
                                     api.column(21).visible(true);
                                 } else {
                                     api.column(21).visible(false);
                                 }
-                                if (response.AMT_TC == 1) {
+                                if (response.LINE_ITEM == 1) {
                                     api.column(22).visible(true);
                                 } else {
                                     api.column(22).visible(false);
                                 }
-                                if (response.AMT_LC == 1) {
+                                if (response.OI_IND == 1) {
                                     api.column(23).visible(true);
                                 } else {
                                     api.column(23).visible(false);
                                 }
-                                if (response.AMT_WITH_BASE_TC == 1) {
+                                if (response.ACCT_TYPE == 1) {
                                     api.column(24).visible(true);
                                 } else {
                                     api.column(24).visible(false);
                                 }
-                                if (response.AMT_WITH_TC == 1) {
+                                if (response.SPEC_GL == 1) {
                                     api.column(25).visible(true);
                                 } else {
                                     api.column(25).visible(false);
                                 }
-                                if (response.AMT_WITH_BASE_LC == 1) {
+                                if (response.BUS_AREA == 1) {
                                     api.column(26).visible(true);
                                 } else {
                                     api.column(26).visible(false);
                                 }
-                                if (response.AMT_WITH_LC == 1) {
+                                if (response.TPBA == 1) {
                                     api.column(27).visible(true);
                                 } else {
                                     api.column(27).visible(false);
                                 }
-                                if (response.AMOUNT == 1) {
+                                if (response.AMT_LC == 1) {
                                     api.column(28).visible(true);
                                 } else {
                                     api.column(28).visible(false);
                                 }
-                                if (response.ACCT_TYPE == 1) {
+                                if (response.AMT_TC == 1) {
                                     api.column(29).visible(true);
                                 } else {
                                     api.column(29).visible(false);
                                 }
-                                if (response.ASSIGNMENT == 1) {
+                                if (response.AMT_WITH_BASE_TC == 1) {
                                     api.column(30).visible(true);
                                 } else {
                                     api.column(30).visible(false);
                                 }
-                                if (response.ITEM_TEXT == 1) {
+                                if (response.AMT_WITH_TC == 1) {
                                     api.column(31).visible(true);
                                 } else {
                                     api.column(31).visible(false);
                                 }
-                                if (response.CUSTOMER_NAME == 1) {
+                                if (response.AMOUNT == 1) {
                                     api.column(32).visible(true);
                                 } else {
                                     api.column(32).visible(false);
                                 }
-                                if (response.VENDOR_NAME == 1) {
+                                if (response.AMOUNT_BAYAR == 1) {
                                     api.column(33).visible(true);
                                 } else {
                                     api.column(33).visible(false);
                                 }
-                                if (response.TERM_PMT == 1) {
+                                if (response.ASSIGNMENT == 1) {
                                     api.column(34).visible(true);
                                 } else {
                                     api.column(34).visible(false);
                                 }
-                                if (response.DUE_ON == 1) {
+                                if (response.ITEM_TEXT == 1) {
                                     api.column(35).visible(true);
                                 } else {
                                     api.column(35).visible(false);
                                 }
-                                if (response.REFERENCE_KEY == 1) {
+
+                                if (response.COST_CTR == 1) {
                                     api.column(36).visible(true);
                                 } else {
                                     api.column(36).visible(false);
                                 }
-                                if (response.PMT_IND == 1) {
+                                if (response.GL_ACCT == 1) {
                                     api.column(37).visible(true);
                                 } else {
                                     api.column(37).visible(false);
                                 }
-                                if (response.TRANS_TYPE == 1) {
+                                if (response.CUSTOMER_NAME == 1) {
                                     api.column(38).visible(true);
                                 } else {
                                     api.column(38).visible(false);
                                 }
-                                if (response.SPREAD_VAL == 1) {
+                                if (response.VENDOR_NAME == 1) {
                                     api.column(39).visible(true);
                                 } else {
                                     api.column(39).visible(false);
                                 }
-                                if (response.PMT_BLOCK == 1) {
+                                if (response.BASE_DATE == 1) {
                                     api.column(40).visible(true);
                                 } else {
                                     api.column(40).visible(false);
                                 }
-                                if (response.HOUSE_BANK == 1) {
+                                if (response.TERM_PMT == 1) {
                                     api.column(41).visible(true);
                                 } else {
                                     api.column(41).visible(false);
                                 }
-                                if (response.NO_REK_HOUSE_BANK == 1) {
+                                if (response.DUE_ON == 1) {
                                     api.column(42).visible(true);
                                 } else {
                                     api.column(42).visible(false);
                                 }
-                                if (response.PRTNR_BANK_TYPE == 1) {
+                                if (response.PMT_BLOCK == 1) {
                                     api.column(43).visible(true);
                                 } else {
                                     api.column(43).visible(false);
                                 }
-                                if (response.BANK_KEY == 1) {
+                                if (response.HOUSE_BANK == 1) {
                                     api.column(44).visible(true);
                                 } else {
                                     api.column(44).visible(false);
                                 }
-                                if (response.BANK_ACCOUNT == 1) {
+                                if (response.NO_REK_HOUSE_BANK == 1) {
                                     api.column(45).visible(true);
                                 } else {
                                     api.column(45).visible(false);
                                 }
-                                if (response.ACCOUNT_HOLDER == 1) {
+                                if (response.PRTNR_BANK_TYPE == 1) {
                                     api.column(46).visible(true);
                                 } else {
                                     api.column(46).visible(false);
                                 }
-                                if (response.COST_CTR == 1) {
+                                if (response.BANK_KEY == 1) {
                                     api.column(47).visible(true);
                                 } else {
                                     api.column(47).visible(false);
                                 }
-                                if (response.INT_ORDER == 1) {
+                                if (response.BANK_ACCOUNT == 1) {
                                     api.column(48).visible(true);
                                 } else {
                                     api.column(48).visible(false);
                                 }
-                                if (response.WBS_NUM == 1) {
+                                if (response.ACCOUNT_HOLDER == 1) {
                                     api.column(49).visible(true);
                                 } else {
                                     api.column(49).visible(false);
                                 }
-                                if (response.CASH_CODE == 1) {
+                                if (response.NAMA_BENEF == 1) {
                                     api.column(50).visible(true);
                                 } else {
                                     api.column(50).visible(false);
                                 }
-                                if (response.PO_NUM == 1) {
+                                if (response.NO_REK_BENEF == 1) {
                                     api.column(51).visible(true);
                                 } else {
                                     api.column(51).visible(false);
                                 }
-                                if (response.PO_ITEM == 1) {
+                                if (response.BANK_BENEF == 1) {
                                     api.column(52).visible(true);
                                 } else {
                                     api.column(52).visible(false);
                                 }
-                                if (response.REF_KEY1 == 1) {
+                                if (response.PO_NUM == 1) {
                                     api.column(53).visible(true);
                                 } else {
                                     api.column(53).visible(false);
                                 }
-                                if (response.REF_KEY2 == 1) {
+                                if (response.PO_ITEM == 1) {
                                     api.column(54).visible(true);
                                 } else {
                                     api.column(54).visible(false);
                                 }
-                                if (response.REF_KEY3 == 1) {
+                                if (response.REF_KEY1 == 1) {
                                     api.column(55).visible(true);
                                 } else {
                                     api.column(55).visible(false);
                                 }
-                                if (response.OI_IND == 1) {
+                                if (response.REF_KEY2 == 1) {
                                     api.column(56).visible(true);
                                 } else {
                                     api.column(56).visible(false);
                                 }
-                                if (response.TPBA == 1) {
+                                if (response.REF_KEY3 == 1) {
                                     api.column(57).visible(true);
                                 } else {
                                     api.column(57).visible(false);
                                 }
-                                if (response.METODE_PEMBAYARAN == 1) {
+                                if (response.INT_ORDER == 1) {
                                     api.column(58).visible(true);
                                 } else {
                                     api.column(58).visible(false);
                                 }
-                                if (response.TGL_RENCANA_BAYAR == 1) {
+                                if (response.WBS_NUM == 1) {
                                     api.column(59).visible(true);
                                 } else {
                                     api.column(59).visible(false);
                                 }
-                                if (response.OSS_ID == 1) {
+                                if (response.CASH_CODE == 1) {
                                     api.column(60).visible(true);
                                 } else {
                                     api.column(60).visible(false);
                                 }
-                                if (response.GROUP_ID == 1) {
+                                if (response.DR_CR_IND == 1) {
                                     api.column(61).visible(true);
                                 } else {
                                     api.column(61).visible(false);
                                 }
-                                if (response.BANK_BYR == 1) {
+                                if (response.PARTIAL_IND == 1) {
                                     api.column(62).visible(true);
                                 } else {
                                     api.column(62).visible(false);
                                 }
-                                if (response.CURR_BAYAR == 1) {
+                                if (response.AMT_WITH_BASE_LC == 1) {
                                     api.column(63).visible(true);
                                 } else {
                                     api.column(63).visible(false);
                                 }
-                                if (response.AMOUNT_BAYAR == 1) {
+                                if (response.AMT_WITH_LC == 1) {
                                     api.column(64).visible(true);
                                 } else {
                                     api.column(64).visible(false);
                                 }
-                                if (response.BANK_BENEF == 1) {
+                                if (response.METODE_PEMBAYARAN == 1) {
                                     api.column(65).visible(true);
                                 } else {
                                     api.column(65).visible(false);
                                 }
-                                if (response.NO_REK_BENEF == 1) {
+                                if (response.NO_GIRO == 1) {
                                     api.column(66).visible(true);
                                 } else {
                                     api.column(66).visible(false);
                                 }
-                                if (response.NAMA_BENEF == 1) {
+                                if (response.TGL_TAGIHAN_DITERIMA == 1) {
                                     api.column(67).visible(true);
                                 } else {
                                     api.column(67).visible(false);
                                 }
-                                // if (response.TGL_ACT_BAYAR == 1) {
-                                //     api.column(68).visible(true);
-                                // } else {
-                                //     api.column(68).visible(false);
-                                // }
-                                if (response.SUMBER_DANA == 1) {
+                                if (response.TGL_RENCANA_BAYAR == 1) {
                                     api.column(68).visible(true);
                                 } else {
                                     api.column(68).visible(false);
                                 }
-                                 if (response.PARTIAL_IND == 1) {
+                                if (response.SUMBER_DANA == 1) {
                                     api.column(69).visible(true);
                                 } else {
                                     api.column(69).visible(false);
@@ -1562,11 +1561,12 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                                 } else {
                                     api.column(70).visible(false);
                                 }
-                                    if (response.STATUS_TRACKING == 1) {
+                                if (response.STATUS_TRACKING == 1) {
                                     api.column(71).visible(true);
                                 } else {
                                     api.column(71).visible(false);
                                 }
+
                             },
                             error: function () {
                                 hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -2052,356 +2052,359 @@ function showColumn() {
             } else {
                 $("#hc1").prop("checked", false);
             }
-            if (response.DOC_NO == 1) {
+            if (response.COMP_CODE == 1) {
                 $("#hc2").prop("checked", true);
             } else {
                 $("#hc2").prop("checked", false);
             }
-            if (response.DOC_DATE == 1) {
+            if (response.DOC_NO == 1) {
                 $("#hc3").prop("checked", true);
             } else {
                 $("#hc3").prop("checked", false);
             }
-            if (response.REV_WITH == 1) {
+            if (response.GROUP_ID == 1) {
                 $("#hc4").prop("checked", true);
             } else {
                 $("#hc4").prop("checked", false);
             }
-            if (response.REV_YEAR == 1) {
+            if (response.OSS_ID == 1) {
                 $("#hc5").prop("checked", true);
             } else {
                 $("#hc5").prop("checked", false);
             }
-            if (response.POST_DATE == 1) {
+            if (response.FISC_YEAR == 1) {
                 $("#hc6").prop("checked", true);
             } else {
                 $("#hc6").prop("checked", false);
             }
-            if (response.BASE_DATE == 1) {
-                $("#hc7").prop("checked", true);
+            if (response.DOC_TYPE == 1) {
+               $("#hc7").prop("checked", true);
             } else {
                 $("#hc7").prop("checked", false);
             }
-            if (response.ENTRY_DATE == 1) {
-                $("#hc8").prop("checked", true);
+            if (response.DOC_DATE == 1) {
+               $("#hc8").prop("checked", true);
             } else {
                 $("#hc8").prop("checked", false);
             }
-            if (response.DOC_TYPE == 1) {
+            if (response.POST_DATE == 1) {
                 $("#hc9").prop("checked", true);
             } else {
                 $("#hc9").prop("checked", false);
             }
-            if (response.FISC_YEAR == 1) {
+
+            if (response.ENTRY_DATE == 1) {
                 $("#hc10").prop("checked", true);
             } else {
                 $("#hc10").prop("checked", false);
             }
-            if (response.DOC_HDR_TXT == 1) {
+
+            if (response.REFERENCE == 1) {
                 $("#hc11").prop("checked", true);
             } else {
                 $("#hc11").prop("checked", false);
             }
-            if (response.REFERENCE == 1) {
+            if (response.REV_WITH == 1) {
                 $("#hc12").prop("checked", true);
             } else {
                 $("#hc12").prop("checked", false);
             }
-            if (response.TGL_TAGIHAN_DITERIMA == 1) {
+            if (response.REV_YEAR == 1) {
                 $("#hc13").prop("checked", true);
             } else {
                 $("#hc13").prop("checked", false);
             }
-            if (response.COMP_CODE == 1) {
+            if (response.DOC_HDR_TXT == 1) {
                 $("#hc14").prop("checked", true);
             } else {
                 $("#hc14").prop("checked", false);
             }
-            if (response.BUS_AREA == 1) {
+            if (response.CURRENCY == 1) {
                 $("#hc15").prop("checked", true);
             } else {
                 $("#hc15").prop("checked", false);
             }
-            if (response.CURRENCY == 1) {
-                $("#hc16").prop("checked", true);
+            if (response.CURR_BAYAR == 1) {
+               $("#hc16").prop("checked", true);
             } else {
                 $("#hc16").prop("checked", false);
             }
             if (response.EXCH_RATE == 1) {
-                $("#hc17").prop("checked", true);
+               $("#hc17").prop("checked", true);
             } else {
                 $("#hc17").prop("checked", false);
             }
-            if (response.LINE_ITEM == 1) {
-                $("#hc18").prop("checked", true);
+            if (response.REFERENCE_KEY == 1) {
+               $("#hc18").prop("checked", true);
             } else {
                 $("#hc18").prop("checked", false);
             }
-            if (response.DR_CR_IND == 1) {
-                $("#hc19").prop("checked", true);
+            if (response.PMT_IND == 1) {
+               $("#hc19").prop("checked", true);
             } else {
                 $("#hc19").prop("checked", false);
             }
-            if (response.SPEC_GL == 1) {
-                $("#hc20").prop("checked", true);
+            if (response.TRANS_TYPE == 1) {
+               $("#hc20").prop("checked", true);
             } else {
                 $("#hc20").prop("checked", false);
             }
-            if (response.GL_ACCT == 1) {
-                $("#hc21").prop("checked", true);
+            if (response.SPREAD_VAL == 1) {
+               $("#hc21").prop("checked", true);
             } else {
                 $("#hc21").prop("checked", false);
             }
-            if (response.AMT_TC == 1) {
-                $("#hc22").prop("checked", true);
+            if (response.LINE_ITEM == 1) {
+               $("#hc22").prop("checked", true);
             } else {
                 $("#hc22").prop("checked", false);
             }
-            if (response.AMT_LC == 1) {
-                $("#hc23").prop("checked", true);
+            if (response.OI_IND == 1) {
+               $("#hc23").prop("checked", true);
             } else {
                 $("#hc23").prop("checked", false);
             }
-            if (response.AMT_WITH_BASE_TC == 1) {
-                $("#hc24").prop("checked", true);
+            if (response.ACCT_TYPE == 1) {
+               $("#hc24").prop("checked", true);
             } else {
                 $("#hc24").prop("checked", false);
             }
-            if (response.AMT_WITH_TC == 1) {
-                $("#hc25").prop("checked", true);
+            if (response.SPEC_GL == 1) {
+               $("#hc25").prop("checked", true);
             } else {
                 $("#hc25").prop("checked", false);
             }
-             if (response.AMT_WITH_BASE_LC == 1) {
-                $("#hc26").prop("checked", true);
+            if (response.BUS_AREA == 1) {
+               $("#hc26").prop("checked", true);
             } else {
                 $("#hc26").prop("checked", false);
             }
-            if (response.AMT_WITH_LC == 1) {
-                $("#hc27").prop("checked", true);
+            if (response.TPBA == 1) {
+               $("#hc27").prop("checked", true);
             } else {
                 $("#hc27").prop("checked", false);
             }
-            if (response.AMOUNT == 1) {
-                $("#hc28").prop("checked", true);
+            if (response.AMT_LC == 1) {
+               $("#hc28").prop("checked", true);
             } else {
                 $("#hc28").prop("checked", false);
             }
-            if (response.ACCT_TYPE == 1) {
-                $("#hc29").prop("checked", true);
+            if (response.AMT_TC == 1) {
+               $("#hc29").prop("checked", true);
             } else {
                 $("#hc29").prop("checked", false);
             }
-            if (response.ASSIGNMENT == 1) {
-                $("#hc30").prop("checked", true);
+            if (response.AMT_WITH_BASE_TC == 1) {
+               $("#hc30").prop("checked", true);
             } else {
                 $("#hc30").prop("checked", false);
             }
-            if (response.ITEM_TEXT == 1) {
-                $("#hc31").prop("checked", true);
+            if (response.AMT_WITH_TC == 1) {
+               $("#hc31").prop("checked", true);
             } else {
                 $("#hc31").prop("checked", false);
             }
-            if (response.CUSTOMER_NAME == 1) {
-                $("#hc32").prop("checked", true);
+            if (response.AMOUNT == 1) {
+               $("#hc32").prop("checked", true);
             } else {
                 $("#hc32").prop("checked", false);
             }
-            if (response.VENDOR_NAME == 1) {
-                $("#hc33").prop("checked", true);
+            if (response.AMOUNT_BAYAR == 1) {
+               $("#hc33").prop("checked", true);
             } else {
                 $("#hc33").prop("checked", false);
             }
-            if (response.TERM_PMT == 1) {
-                $("#hc34").prop("checked", true);
+            if (response.ASSIGNMENT == 1) {
+               $("#hc34").prop("checked", true);
             } else {
                 $("#hc34").prop("checked", false);
             }
-            if (response.DUE_ON == 1) {
-                $("#hc35").prop("checked", true);
+            if (response.ITEM_TEXT == 1) {
+               $("#hc35").prop("checked", true);
             } else {
                 $("#hc35").prop("checked", false);
             }
-            if (response.REFERENCE_KEY == 1) {
-                $("#hc36").prop("checked", true);
+
+            if (response.COST_CTR == 1) {
+               $("#hc36").prop("checked", true);
             } else {
                 $("#hc36").prop("checked", false);
             }
-            if (response.PMT_IND == 1) {
-                $("#hc37").prop("checked", true);
+            if (response.GL_ACCT == 1) {
+               $("#hc37").prop("checked", true);
             } else {
                 $("#hc37").prop("checked", false);
             }
-             if (response.TRANS_TYPE == 1) {
-                $("#hc38").prop("checked", true);
+            if (response.CUSTOMER_NAME == 1) {
+               $("#hc38").prop("checked", true);
             } else {
                 $("#hc38").prop("checked", false);
             }
-             if (response.SPREAD_VAL == 1) {
-                $("#hc39").prop("checked", true);
+            if (response.VENDOR_NAME == 1) {
+               $("#hc39").prop("checked", true);
             } else {
                 $("#hc39").prop("checked", false);
             }
-             if (response.PMT_BLOCK == 1) {
-                $("#hc40").prop("checked", true);
+            if (response.BASE_DATE == 1) {
+               $("#hc40").prop("checked", true);
             } else {
                 $("#hc40").prop("checked", false);
             }
-             if (response.HOUSE_BANK == 1) {
-                $("#hc41").prop("checked", true);
+            if (response.TERM_PMT == 1) {
+               $("#hc41").prop("checked", true);
             } else {
                 $("#hc41").prop("checked", false);
             }
-             if (response.NO_REK_HOUSE_BANK == 1) {
-                $("#hc42").prop("checked", true);
+            if (response.DUE_ON == 1) {
+               $("#hc42").prop("checked", true);
             } else {
                 $("#hc42").prop("checked", false);
             }
-             if (response.PRTNR_BANK_TYPE == 1) {
-                $("#hc43").prop("checked", true);
+            if (response.PMT_BLOCK == 1) {
+               $("#hc43").prop("checked", true);
             } else {
                 $("#hc43").prop("checked", false);
             }
-             if (response.BANK_KEY == 1) {
-                $("#hc44").prop("checked", true);
+            if (response.HOUSE_BANK == 1) {
+               $("#hc44").prop("checked", true);
             } else {
                 $("#hc44").prop("checked", false);
             }
+            if (response.NO_REK_HOUSE_BANK == 1) {
+               $("#hc45").prop("checked", true);
+            } else {
+                $("#hc45").prop("checked", false);
+            }
+            if (response.PRTNR_BANK_TYPE == 1) {
+               $("#hc46").prop("checked", true);
+            } else {
+                $("#hc46").prop("checked", false);
+            }
+            if (response.BANK_KEY == 1) {
+               $("#hc47").prop("checked", true);
+            } else {
+                $("#hc47").prop("checked", false);
+            }
             if (response.BANK_ACCOUNT == 1) {
-                 $("#hc45").prop("checked", true);
-             } else {
-                 $("#hc45").prop("checked", false);
-             }
-              if (response.ACCOUNT_HOLDER == 1) {
-                  $("#hc46").prop("checked", true);
-              } else {
-                  $("#hc46").prop("checked", false);
-              }
-               if (response.COST_CTR == 1) {
-                   $("#hc47").prop("checked", true);
-               } else {
-                   $("#hc47").prop("checked", false);
-               }
-                if (response.INT_ORDER == 1) {
-                    $("#hc48").prop("checked", true);
-                } else {
-                    $("#hc48").prop("checked", false);
-                }
-                 if (response.WBS_NUM == 1) {
-                     $("#hc49").prop("checked", true);
-                 } else {
-                     $("#hc49").prop("checked", false);
-                 }
-                  if (response.CASH_CODE == 1) {
-                      $("#hc50").prop("checked", true);
-                  } else {
-                      $("#hc50").prop("checked", false);
-                  }
-               if (response.PO_NUM == 1) {
-                    $("#hc51").prop("checked", true);
-                } else {
-                    $("#hc51").prop("checked", false);
-                }
-                if (response.PO_ITEM == 1) {
-                      $("#hc52").prop("checked", true);
-                  } else {
-                      $("#hc52").prop("checked", false);
-                  }
-                if (response.REF_KEY1 == 1) {
-                    $("#hc53").prop("checked", true);
-                } else {
-                    $("#hc53").prop("checked", false);
-                }
-                if (response.REF_KEY2 == 1) {
-                    $("#hc54").prop("checked", true);
-                } else {
-                    $("#hc54").prop("checked", false);
-                }
-                if (response.REF_KEY3 == 1) {
-                    $("#hc55").prop("checked", true);
-                } else {
-                    $("#hc55").prop("checked", false);
-                }
-                if (response.OI_IND == 1) {
-                    $("#hc56").prop("checked", true);
-                } else {
-                    $("#hc56").prop("checked", false);
-                }
-                if (response.TPBA == 1) {
-                    $("#hc57").prop("checked", true);
-                } else {
-                    $("#hc57").prop("checked", false);
-                }
-                if (response.METODE_PEMBAYARAN == 1) {
-                    $("#hc58").prop("checked", true);
-                } else {
-                    $("#hc58").prop("checked", false);
-                }
-                if (response.NO_GIRO == 1) {
-                    $("#hc59").prop("checked", true);
-                } else {
-                    $("#hc59").prop("checked", false);
-                }
-                if (response.TGL_RENCANA_BAYAR == 1) {
-                    $("#hc60").prop("checked", true);
-                } else {
-                    $("#hc60").prop("checked", false);
-                }
-                if (response.OSS_ID == 1) {
-                    $("#hc61").prop("checked", true);
-                } else {
-                    $("#hc61").prop("checked", false);
-                }
-                if (response.GROUP_ID == 1) {
-                    $("#hc62").prop("checked", true);
-                } else {
-                    $("#hc62").prop("checked", false);
-                }
-                if (response.CURR_BAYAR == 1) {
-                    $("#hc63").prop("checked", true);
-                } else {
-                    $("#hc63").prop("checked", false);
-                }
-                if (response.AMOUNT_BAYAR == 1) {
-                    $("#hc64").prop("checked", true);
-                } else {
-                    $("#hc64").prop("checked", false);
-                }
-                if (response.BANK_BENEF == 1) {
-                    $("#hc65").prop("checked", true);
-                } else {
-                    $("#hc65").prop("checked", false);
-                }
-                 if (response.NO_REK_BENEF == 1) {
-                    $("#hc66").prop("checked", true);
-                } else {
-                    $("#hc66").prop("checked", false);
-                }
-                 if (response.NAMA_BENEF == 1) {
-                    $("#hc67").prop("checked", true);
-                } else {
-                    $("#hc67").prop("checked", false);
-                }
-                 if (response.SUMBER_DANA == 1) {
-                    $("#hc68").prop("checked", true);
-                } else {
-                    $("#hc68").prop("checked", false);
-                }
-                 if (response.PARTIAL_IND == 1) {
-                    $("#hc69").prop("checked", true);
-                } else {
-                    $("#hc69").prop("checked", false);
-                }
-                 if (response.KETERANGAN == 1) {
-                    $("#hc70").prop("checked", true);
-                } else {
-                    $("#hc70").prop("checked", false);
-                }
-                 if (response.STATUS_TRACKING == 1) {
-                    $("#hc71").prop("checked", true);
-                } else {
-                    $("#hc71").prop("checked", false);
-                }
+               $("#hc48").prop("checked", true);
+            } else {
+                $("#hc48").prop("checked", false);
+            }
+            if (response.ACCOUNT_HOLDER == 1) {
+               $("#hc49").prop("checked", true);
+            } else {
+                $("#hc49").prop("checked", false);
+            }
+            if (response.NAMA_BENEF == 1) {
+               $("#hc50").prop("checked", true);
+            } else {
+                $("#hc50").prop("checked", false);
+            }
+            if (response.NO_REK_BENEF == 1) {
+               $("#hc51").prop("checked", true);
+            } else {
+                $("#hc51").prop("checked", false);
+            }
+            if (response.BANK_BENEF == 1) {
+               $("#hc52").prop("checked", true);
+            } else {
+                $("#hc52").prop("checked", false);
+            }
+            if (response.PO_NUM == 1) {
+               $("#hc53").prop("checked", true);
+            } else {
+                $("#hc53").prop("checked", false);
+            }
+            if (response.PO_ITEM == 1) {
+               $("#hc54").prop("checked", true);
+            } else {
+                $("#hc54").prop("checked", false);
+            }
+            if (response.REF_KEY1 == 1) {
+               $("#hc55").prop("checked", true);
+            } else {
+                $("#hc55").prop("checked", false);
+            }
+            if (response.REF_KEY2 == 1) {
+               $("#hc56").prop("checked", true);
+            } else {
+                $("#hc56").prop("checked", false);
+            }
+            if (response.REF_KEY3 == 1) {
+               $("#hc57").prop("checked", true);
+            } else {
+                $("#hc57").prop("checked", false);
+            }
+            if (response.INT_ORDER == 1) {
+               $("#hc58").prop("checked", true);
+            } else {
+                $("#hc58").prop("checked", false);
+            }
+            if (response.WBS_NUM == 1) {
+               $("#hc59").prop("checked", true);
+            } else {
+                $("#hc59").prop("checked", false);
+            }
+            if (response.CASH_CODE == 1) {
+               $("#hc60").prop("checked", true);
+            } else {
+                $("#hc60").prop("checked", false);
+            }
+            if (response.DR_CR_IND == 1) {
+               $("#hc61").prop("checked", true);
+            } else {
+                $("#hc61").prop("checked", false);
+            }
+            if (response.PARTIAL_IND == 1) {
+               $("#hc62").prop("checked", true);
+            } else {
+                $("#hc62").prop("checked", false);
+            }
+            if (response.AMT_WITH_BASE_LC == 1) {
+               $("#hc63").prop("checked", true);
+            } else {
+                $("#hc63").prop("checked", false);
+            }
+            if (response.AMT_WITH_LC == 1) {
+               $("#hc64").prop("checked", true);
+            } else {
+                $("#hc64").prop("checked", false);
+            }
+            if (response.METODE_PEMBAYARAN == 1) {
+               $("#hc65").prop("checked", true);
+            } else {
+                $("#hc65").prop("checked", false);
+            }
+            if (response.NO_GIRO == 1) {
+                $("#hc66").prop("checked", true);
+            } else {
+                $("#hc66").prop("checked", false);
+            }
+            if (response.TGL_TAGIHAN_DITERIMA == 1) {
+                $("#hc67").prop("checked", true);
+            } else {
+                $("#hc67").prop("checked", false);
+            }
+            if (response.TGL_RENCANA_BAYAR == 1) {
+                $("#hc68").prop("checked", true);
+            } else {
+                $("#hc68").prop("checked", false);
+            }
+            if (response.SUMBER_DANA == 1) {
+                $("#hc69").prop("checked", true);
+            } else {
+                $("#hc69").prop("checked", false);
+            }
+            if (response.KETERANGAN == 1) {
+                $("#hc70").prop("checked", true);
+            } else {
+                $("#hc70").prop("checked", false);
+            }
+            if (response.STATUS_TRACKING == 1) {
+                $("#hc71").prop("checked", true);
+            } else {
+                $("#hc71").prop("checked", false);
+            }
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -2487,79 +2490,79 @@ function saveColumn() {
     var data = {
         "nomor" : hc0 === true ? 1 : 0,
         "ket" : hc1 === true ? 1 : 0,
-        "doc_no" : hc2 === true ? 1 : 0,
-        "doc_date2" : hc3 === true ? 1 : 0,
-        "rev_with" : hc4 === true ? 1 : 0,
-        "rev_year" : hc5 === true ? 1 : 0,
-        "post_date2" : hc6 === true ? 1 : 0,
-        "base_date" : hc7 === true ? 1 : 0,
-        "entry_date2" : hc8 === true ? 1 : 0,
-        "doc_type" : hc9 === true ? 1 : 0,
-        "fisc_year" : hc10 === true ? 1 : 0,
-        "doc_hdr_txt" : hc11 === true ? 1 : 0,
-        "reference" : hc12 === true ? 1 : 0,
-        "tgl_tagihan_diterima" : hc13 === true ? 1 : 0,
-        "comp_code" : hc14 === true ? 1 : 0,
-        "bus_area" : hc15 === true ? 1 : 0,
-        "currency" : hc16 === true ? 1 : 0,
+        "comp_code" : hc2 === true ? 1 : 0,
+        "doc_no" : hc3 === true ? 1 : 0,
+        "group_id" : hc4 === true ? 1 : 0,
+        "oss_id" : hc5 === true ? 1 : 0,
+        "fisc_year" : hc6 === true ? 1 : 0,
+        "doc_type" : hc7 === true ? 1 : 0,
+        "doc_date2" : hc8 === true ? 1 : 0,
+        "post_date2" : hc9 === true ? 1 : 0,
+        "entry_date2" : hc10 === true ? 1 : 0,
+        "reference" : hc11 === true ? 1 : 0,
+        "rev_with" : hc12 === true ? 1 : 0,
+        "rev_year" : hc13 === true ? 1 : 0,
+        "doc_hdr_txt" : hc14 === true ? 1 : 0,
+        "currency" : hc15 === true ? 1 : 0,
+        "curr_bayar" : hc16 === true ? 1 : 0,
         "exch_rate" : hc17 === true ? 1 : 0,
-        "line_item" : hc18 === true ? 1 : 0,
-        "dr_cr_ind" : hc19 === true ? 1 : 0,
-        "spec_gl" : hc20 === true ? 1 : 0,
-        "gl_acct" : hc21 === true ? 1 : 0,
-        "amt_tc" : hc22 === true ? 1 : 0,
-        "amt_lc" : hc23 === true ? 1 : 0,
-        "amt_with_base_tc" : hc24 === true ? 1 : 0,
-        "amt_with_tc" : hc25 === true ? 1 : 0,
-        "amt_with_base_lc" : hc26 === true ? 1 : 0,
-        "amt_with_lc" : hc27 === true ? 1 : 0,
-        "amount" : hc28 === true ? 1 : 0,
-        "acct_type" : hc29 === true ? 1 : 0,
-        "assignment" : hc30 === true ? 1 : 0,
-        "item_text" : hc31 === true ? 1 : 0,
-        "customer" : hc32 === true ? 1 : 0,
-        "vendor" : hc33 === true ? 1 : 0,
-        "term_pmt" : hc34 === true ? 1 : 0,
-        "due_on" : hc35 === true ? 1 : 0,
-        "reference_key" : hc36 === true ? 1 : 0,
-        "pmt_ind" : hc37 === true ? 1 : 0,
-        "trans_type" : hc38 === true ? 1 : 0,
-        "spread_val" : hc39 === true ? 1 : 0,
-        "pmt_block" : hc40 === true ? 1 : 0,
-        "house_bank" : hc41 === true ? 1 : 0,
-        "no_rek_house_bank" : hc42 === true ? 1 : 0,
-        "prtnr_bank_type" : hc43 === true ? 1 : 0,
-        "bank_key" : hc44 === true ? 1 : 0,
-        "bank_account" : hc45 === true ? 1 : 0,
-        "account_holder" : hc46 === true ? 1 : 0,
-        "cost_ctr" : hc47 === true ? 1 : 0,
-        "int_order" : hc48 === true ? 1 : 0,
-        "wbs_num" : hc49 === true ? 1 : 0,
-        "cash_code" : hc50 === true ? 1 : 0,
-        "po_num" : hc51 === true ? 1 : 0,
-        "po_item" : hc52 === true ? 1 : 0,
-        "ref_key1" : hc53 === true ? 1 : 0,
-        "ref_key2" : hc54 === true ? 1 : 0,
-        "ref_key3" : hc55 === true ? 1 : 0,
-        "oi_ind" : hc56 === true ? 1 : 0,
-        "tpba" : hc57 === true ? 1 : 0,
-        "metode_pembayaran" : hc58 === true ? 1 : 0,
-        "no_giro" : hc59 === true ? 1 : 0,
-        "tgl_rencana_bayar" : hc60 === true ? 1 : 0,
-        "oss_id" : hc61 === true ? 1 : 0,
-        "group_id" : hc62 === true ? 1 : 0,
-        "bank_byr" : 0,
-        "curr_bayar" : hc63 === true ? 1 : 0,
-        "amount_bayar" : hc64 === true ? 1 : 0,
-        "bank_benef" : hc65 === true ? 1 : 0,
-        "no_rek_benef" : hc66 === true ? 1 : 0,
-        "nama_benef" : hc67 === true ? 1 : 0,
-        "sumber_dana" : hc68 === true ? 1 : 0,
-        "partial_ind" : hc69 === true ? 1 : 0,
+        "reference_key" : hc18 === true ? 1 : 0,
+        "pmt_ind" : hc19 === true ? 1 : 0,
+        "trans_type" : hc20 === true ? 1 : 0,
+        "spread_val" : hc21 === true ? 1 : 0,
+        "line_item" : hc22 === true ? 1 : 0,
+        "oi_ind" : hc23 === true ? 1 : 0,
+        "spec_gl" : hc24 === true ? 1 : 0,
+        "acct_type" : hc25 === true ? 1 : 0,
+        "bus_area" : hc26 === true ? 1 : 0,
+        "tpba" : hc27 === true ? 1 : 0,
+        "amt_lc" : hc28 === true ? 1 : 0,
+        "amt_tc" : hc29 === true ? 1 : 0,
+        "amt_with_base_tc" : hc30 === true ? 1 : 0,
+        "amt_with_tc" : hc31 === true ? 1 : 0,
+        "amount" : hc32 === true ? 1 : 0,
+        "amount_bayar" : hc33 === true ? 1 : 0,
+        "assignment" : hc34 === true ? 1 : 0,
+        "item_text" : hc35 === true ? 1 : 0,
+        "cost_ctr" : hc36 === true ? 1 : 0,
+        "gl_acct" : hc37 === true ? 1 : 0,
+        "customer" : hc38 === true ? 1 : 0,
+        "vendor" : hc39 === true ? 1 : 0,
+        "base_date" : hc40 === true ? 1 : 0,
+        "term_pmt" : hc41 === true ? 1 : 0,
+        "due_on" : hc42 === true ? 1 : 0,
+        "pmt_block" : hc43 === true ? 1 : 0,
+        "house_bank" : hc44 === true ? 1 : 0,
+        "no_rek_house_bank" : hc45 === true ? 1 : 0,
+        "prtnr_bank_type" : hc46 === true ? 1 : 0,
+        "bank_key" : hc47 === true ? 1 : 0,
+        "bank_account" : hc48 === true ? 1 : 0,
+        "account_holder" : hc49 === true ? 1 : 0,
+        "nama_benef" : hc50 === true ? 1 : 0,
+        "no_rek_benef" : hc51 === true ? 1 : 0,
+        "bank_benef" : hc52 === true ? 1 : 0,
+        "po_num" : hc53 === true ? 1 : 0,
+        "po_item" : hc54 === true ? 1 : 0,
+        "ref_key1" : hc55 === true ? 1 : 0,
+        "ref_key2" : hc56 === true ? 1 : 0,
+        "ref_key3" : hc57 === true ? 1 : 0,
+        "int_order" : hc58 === true ? 1 : 0,
+        "wbs_num" : hc59 === true ? 1 : 0,
+        "dr_cr_ind" : hc60 === true ? 1 : 0,
+        "cash_code" : hc61 === true ? 1 : 0,
+        "partial_ind" : hc62 === true ? 1 : 0,
+        "amt_with_base_lc" : hc63 === true ? 1 : 0,
+        "amt_with_lc" : hc64 === true ? 1 : 0,
+        "metode_pembayaran" : hc65 === true ? 1 : 0,
+        "no_giro" : hc66 === true ? 1 : 0,
+        "tgl_tagihan_diterima" : hc67 === true ? 1 : 0,
+        "tgl_rencana_bayar" : hc68 === true ? 1 : 0,
+        "sumber_dana" : hc69 === true ? 1 : 0,
         "keterangan" : hc70 === true ? 1 : 0,
         "status_tracking" : hc71 === true ? 1 : 0,
-        "tgl_act_bayar" : 0,
 
+        "bank_byr" : 0,
+        "tgl_act_bayar" : 0,
         "corp_pmt" : 0,
         "inq_customer_name" : 0,
         "inq_account_number" : 0,
@@ -2727,33 +2730,6 @@ function edit_data2() {
                 hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
             }
         });
-}
-
-function setSelectMetodeBayar(idHtml,idSelectElement){
-    $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/get_metode_bayar",
-        dataType: 'JSON',
-        type: "GET",
-        sync :true,
-
-
-        success: function (res) {
-            // // console.log("Select Hasil : ",res);
-            $("#" + idHtml + "").html('');
-            $.each(res, function (key, val) {
-                $("#" + idHtml + "").append('<option value="' + val.METODE_PEMBAYARAN + '">'+val.METODE_PEMBAYARAN+'</option>');
-            });
-//            // // console.log("jenis pemb : ", idForSelected);
-            if (idSelectElement != "") {
-                $("#" + idHtml + "").val(idSelectElement).trigger('change');
-            } else {
-                $('#pBankPembayaran').val("null").trigger('change');
-            }
-        },
-        error: function () {
-            $("#" + idHtml + "").html('<option value="">Pilih Data</option>');
-        }
-    });
 }
 
 function setSelectBankPembayar(idHtml ,idForSelected) {
@@ -3162,7 +3138,7 @@ function update_status(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pStatusTra
     }
 }
 
-function update_status_giro(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pStatusTracking){
+function update_status_giro(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pStatusTracking, pOssId, pGroupId){
     if (pStatusTracking === 'INPUT DATA'){
         alert('Silahkan Tentukan Metode Pembayaran Terlebih Dahulu');
     }else{
@@ -3180,6 +3156,8 @@ function update_status_giro(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pStat
                     pLineItem: pLineItem,
                     pKet: pKet,
                     pStatusTracking: pStatusTracking,
+                    pOssId : pOssId,
+                    pGroupId : pGroupId
                 },
                 success: function (res) {
                     hideLoadingCss("")
@@ -3675,19 +3653,17 @@ function reject_data(pCompCode, pDocNo, pFiscYear, pLineItem, pKet){
     }
 }
 
-function insertMultipleEdit(){
-    let cash_code = $("#pCashCodeMultiple").val()
-    let jam_bayar = $("#pJamBayarMultiple").val()
-    let metode_bayar = $("#pMetodeBayarMultiple").val()
+function insertMultipleEditGiro(){
+    let no_giro = $("#pMultipleNoGiro").val();
+    let metode_bayar = $("#pMetodeBayarMultiple").val();
     $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/insert_multiple_edit",
+        url: baseUrl + "api_operator/rekap_invoice_belum/insert_multiple_edit_giro",
         dataType: 'JSON',
         type: "POST",
         data: {
             pData: JSON.stringify(invoiceCheckedArray),
-            pCashCode: cash_code,
+            pNoGiro: metode_bayar === "GIRO" ? no_giro : "-",
             pMetodePembayaran : metode_bayar,
-            pJamBayar: jam_bayar,
         },
         success: function (res) {
             hideLoadingCss("");
@@ -3761,13 +3737,17 @@ function create_group() {
 
 
 function openMultipleEditForm(){
-    $("#pCashCodeMultiple").val("")
-    $("#pJamBayarMultiple").val("")
-    $("#pMetodeBayarMultiple").val("")
-    $('#multiple-edit-modal').modal({backdrop: 'static', keyboard: false});
-    setSelectCashCode("pCashCodeMultiple","");
-    setSelectMetodeBayar("pMetodeBayarMultiple","");
-    //$('#edit-modal2').modal({backdrop: 'static', keyboard: false});
+    if (invoiceCheckedArray.length <= 0){
+        alert("Silahkan Pilih Data Terlebih Dahulu");
+    }else{
+        $("#pCashCodeMultiple").val("")
+        $("#pJamBayarMultiple").val("")
+        $("#pMetodeBayarMultiple").val("")
+        $('#multiple-edit-modal').modal({backdrop: 'static', keyboard: false});
+        // setSelectCashCode("pCashCodeMultiple","");
+        setSelectMetodeBayar("pMetodeBayarMultiple","");
+        //$('#edit-modal2').modal({backdrop: 'static', keyboard: false});
+    }
 }
 
 function openGetBallance(){
@@ -3980,8 +3960,8 @@ function checkArray(e) {
     //         stack : 1
     //     });
     // }
-    // console.log("Full Array : ", fullArrayGroup);
-    // console.log("invoice array : ",invoiceCheckedArray);
+    console.log("Full Array : ", fullArrayGroup);
+    console.log("invoice array : ",invoiceCheckedArray);
 }
 
 function checkGroup(){
@@ -3996,7 +3976,11 @@ function checkGroup(){
                 title : "Maaf!",
                 html : '<p>Silahkan Tentukan Metode Pembayaran Terlebih Dahulu</p>',
             });
-        } else Swal.fire("Maaf", "Tidak bisa melakukan Grouping","error");
+        } else {
+            Swal.fire("Maaf", "Tidak bisa melakukan Grouping","error");
+            // fullArrayGroup = new Array();
+            // invoiceCheckedArray = new Array();
+        }
     }
 }
 
@@ -4007,7 +3991,8 @@ function isSame(data){
         let bank = data[0].BANK_BYR;
         let hb_rekening = data[0].NO_REK_HOUSE_BANK;
         // let comp_code = data[0].COMP_CODE;
-        let assign = data[0].ASSIGNMENT;
+        let assign_split =  data[0].ASSIGNMENT.toString().toLowerCase().split("-");
+        let assignment = assign_split[0].toString();
         // let bus_area = data[0].BUS_AREA;
         let due_on = data[0].TGL_RENCANA_BAYAR;
         let sumber_dana = data[0].SUMBER_DANA;
@@ -4018,10 +4003,12 @@ function isSame(data){
     // || comp_code != data[x].COMP_CODE
 
         for(let x = 0; x < data.length; x++){
+            let arr_split = data[x].ASSIGNMENT.toString().toLowerCase().split("-");
+            let assg = arr_split[0].toString();
              if (data[x].METODE_PEMBAYARAN === "-"){
                  return 222;
              }
-            if(due_on !== data[x].TGL_RENCANA_BAYAR || bank !== data[x].BANK_BYR || hb_rekening !== data[x].NO_REK_HOUSE_BANK || assign !== data[x].ASSIGNMENT || sumber_dana !== data[x].SUMBER_DANA ||
+            if(due_on !== data[x].TGL_RENCANA_BAYAR || bank !== data[x].BANK_BYR || hb_rekening !== data[x].NO_REK_HOUSE_BANK || assg !== assignment || sumber_dana !== data[x].SUMBER_DANA ||
             inq_name !== data[x].INQ_CUSTOMER_NAME || no_giro !== data[x].NO_GIRO || curr_bayar !== data[x].CURR_BAYAR){
                 return false;
             }
@@ -4152,4 +4139,13 @@ $("#pWaktuPembayaran").change( function(){
     }else{
         $("#pJamBayar").hide();
     }
+});
+
+$("#pMetodeBayarMultiple").change(function () {
+   if ($("#pMetodeBayarMultiple").val() === "GIRO"){
+        $("#pMultipleNoGiro").removeAttr("disabled");
+   }else{
+       $("#pMultipleNoGiro").attr("disabled","disabled");
+       $("#pMultipleNoGiro").val("");
+   }
 });
