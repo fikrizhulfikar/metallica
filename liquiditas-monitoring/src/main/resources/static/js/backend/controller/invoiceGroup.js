@@ -1150,7 +1150,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank, pCaraBayar, pCurr) {
     });
 
     $('.dataTables_filter').each(function () {
-        // var html = '';
+        var html = '';
         // var html =  '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
         if (newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "ROLE_JA_CASH" || newRoleUser[0] == "ROLE_JA_IE"){
             // html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fas fa-trash"></i></button>';
@@ -3610,6 +3610,8 @@ function getTotalTagihan() {
             tgl_awal: $("#tanggal_awal").val(),
             tgl_akhir: $("#tanggal_akhir").val(),
             bank: $("#cmb_bank").val(),
+            currency : $("#cmb_currecny").val(),
+            cara_bayar : $("#cmb_cara_pembayaran").val(),
             search: tempTableSearch
         },
         success: function (res) {
