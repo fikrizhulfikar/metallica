@@ -14,7 +14,6 @@ var srcTglAwal = "";
 var srcTglAkhir = "";
 
 $(document).ready(function () {
-    initDataTable();
     $('#exportHeadBtn, #exportAllItemBtn').show();
     $('#exportItemBtn').hide();
     $('#tanggal_awal').datepicker({dateFormat: "dd/mm/yy"});
@@ -1670,8 +1669,8 @@ function search(state) {
     if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
         alert("Mohon Lengkapi Tgl Akhir");
     } else {
-        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(),$("#cmb_bank").val())
-        getAllData()
+        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(),$("#cmb_bank").val(),$("#cmb_cara_pembayaran").val(),$("#cmb_currecny").val())
+        // getAllData()
         srcTglAwal = $("#tanggal_awal").val()
         srcTglAkhir = $("#tanggal_akhir").val()
     }
