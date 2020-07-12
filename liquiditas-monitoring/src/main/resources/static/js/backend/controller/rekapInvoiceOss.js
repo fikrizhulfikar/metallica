@@ -893,6 +893,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
             /*"scrollY": "300px",
             "scrollX": true,*/
             "scrollCollapse": true,
+            "lengthMenu": [[10, 25, 50, 100, 200, 400, 600, 1000], [10, 25, 50, 100, 200, 400, 600, 1000]],
             "aoColumnDefs": [
                 {width: 20, targets: 0},
                 {width: 100, targets: 1},
