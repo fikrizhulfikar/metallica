@@ -1232,4 +1232,12 @@ public class MasterService {
         return out;
     }
 
+    public List<Map<String, Object>> getListFilterBank(){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_bank_pembayar");
+        List<Map<String, Object>> list = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+        return list;
+    }
+
 }
