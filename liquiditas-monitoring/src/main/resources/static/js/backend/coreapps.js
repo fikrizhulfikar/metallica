@@ -36,7 +36,7 @@ function hideLoadingCss(msg) {
 
 }
 
-function setSelectMetodeBayar(idHtml,idSelectElement){
+function setSelectMetodeBayar(idHtml,idSelectElement,idForSelected){
     $.ajax({
         url: baseUrl + "api_operator/rekap_invoice_belum/get_metode_bayar",
         dataType: 'JSON',
@@ -44,17 +44,16 @@ function setSelectMetodeBayar(idHtml,idSelectElement){
         sync :true,
 
         success: function (res) {
-            console.log("Select Hasil : ",res);
+            // console.log("Select Hasil : ",res);
             $("#" + idHtml + "").html('');
             if (idSelectElement !== ""){
-                $("#" + idHtml + "").append('<option value="ALL" selected="selected">SEMUA METODE BAYAR</option>');
+                $("#" + idHtml + "").append('<option value="ALL">SEMUA METODE BAYAR</option>');
             }
-
             $.each(res, function (key, val) {
                 $("#" + idHtml + "").append('<option value="' + val.ID_METODE + '">'+val.METODE_PEMBAYARAN+'</option>');
             });
 //            // // console.log("jenis pemb : ", idForSelected);
-            if (idSelectElement != "") {
+            if (idForSelected != "") {
                 $("#" + idHtml + "").val(idSelectElement).trigger('change');
             } else {
                 $('#pBankPembayaran').val("null").trigger('change');
@@ -154,7 +153,7 @@ function setSelectCurr(idHtml, jenis, idForSelected, form) {
             }
         },
         error: function () {
-            $("#" + idHtml + "").html('<option value="">Pilih Data</option>');
+            $("#" + idHtml + "").html('<option value="ALL">SELURUH MATA UANG</option>');
         }
     });
 }
