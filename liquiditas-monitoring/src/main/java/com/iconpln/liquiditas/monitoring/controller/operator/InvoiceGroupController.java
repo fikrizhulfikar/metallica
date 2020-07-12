@@ -508,8 +508,35 @@ public class InvoiceGroupController {
     public String getTotalTagihan(@RequestParam(value = "tgl_awal", defaultValue = "") String tglAwal,
                                   @RequestParam(value = "tgl_akhir", defaultValue = "") String tglAkhir,
                                   @RequestParam(value = "bank", defaultValue = "ALL") String bank,
+                                  @RequestParam(value = "currency", defaultValue = "ALL") String curr,
+                                  @RequestParam(value = "cara_bayar", defaultValue = "ALL") String cara_bayar,
                                   @RequestParam(value = "search", defaultValue = "") String search) {
-        BigDecimal result =  invoiceGroupService.getTotalTagihan(tglAwal, tglAkhir, bank, WebUtils.getUsernameLogin(),search);
+        BigDecimal result = invoiceGroupService.getTotalTagihan(tglAwal, tglAkhir, bank, WebUtils.getUsernameLogin(), curr, cara_bayar, search);
+        String formatted = AppUtils.getInstance().formatDecimalCurrency(result);
+        return formatted;
+    }
+
+    @RequestMapping(value = "/get_total_tagihan_group_item", method = RequestMethod.GET)
+    public String getTotalTagihanGroupItem(@RequestParam(value = "tgl_awal", defaultValue = "") String tglAwal,
+                                  @RequestParam(value = "tgl_akhir", defaultValue = "") String tglAkhir,
+                                  @RequestParam(value = "bank", defaultValue = "ALL") String bank,
+                                  @RequestParam(value = "currency", defaultValue = "ALL") String curr,
+                                  @RequestParam(value = "cara_bayar", defaultValue = "ALL") String cara_bayar,
+                                  @RequestParam(value = "group_id") String group_id_metallica,
+                                  @RequestParam(value = "search", defaultValue = "") String search) {
+        BigDecimal result = invoiceGroupService.getTotalTagihanGroupItem(tglAwal, tglAkhir, bank, WebUtils.getUsernameLogin(), curr, cara_bayar, search, group_id_metallica);
+        String formatted = AppUtils.getInstance().formatDecimalCurrency(result);
+        return formatted;
+    }
+
+    @RequestMapping(value = "/get_total_tagihan_lunas", method = RequestMethod.GET)
+    public String getTotalTagihanLunas(@RequestParam(value = "tgl_awal", defaultValue = "") String tglAwal,
+                                  @RequestParam(value = "tgl_akhir", defaultValue = "") String tglAkhir,
+                                  @RequestParam(value = "bank", defaultValue = "ALL") String bank,
+                                  @RequestParam(value = "currency", defaultValue = "ALL") String curr,
+                                  @RequestParam(value = "cara_bayar", defaultValue = "ALL") String cara_bayar,
+                                  @RequestParam(value = "search", defaultValue = "") String search) {
+        BigDecimal result = invoiceGroupService.getTotalTagihanLunas(tglAwal, tglAkhir, bank, WebUtils.getUsernameLogin(), curr, cara_bayar, search);
         String formatted = AppUtils.getInstance().formatDecimalCurrency(result);
         return formatted;
     }
