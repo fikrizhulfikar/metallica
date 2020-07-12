@@ -77,6 +77,124 @@ function detailTracking(compCode, docNo, fiscYear, lineItem, ossId) {
     $('#detail-tracking-modal').modal({backdrop: 'static', keyboard: false});
 }
 
+function getDataTracking(){
+    let search = $("#search-no-tagihan").val().toString();
+    if (search === ""){
+        alert("Silahkan Masukan Kata Kunci Terlebih Dahulu");
+    }else{
+        $("#table-tracking").DataTable().destroy();
+        let table_tracking = $("#table-tracking").DataTable({
+            "ajax" : {
+                "url" : baseUrl + "api_operator/tracking/get_data",
+                "data" : {
+                    pSearch: search,
+                    start : "1",
+                    length : "10000",
+                },
+                "type" : "GET",
+                "dataType" : "json",
+            },
+            "scrollY": "100%",
+            "scrollX": "100%",
+            "scrollCollapse": true,
+            "async" : true,
+            "columns" : [
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return data.COMP_CODE;},
+                    "width" : "50%"
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return data.DOC_NO;},
+                    "width" : "20%"
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return data.FISC_YEAR;}
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return data.LINE_ITEM;}
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return data.DOC_DATE2;}
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return data.POST_DATE2;}
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return data.ENTRY_DATE2;}
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return data.TRANS_TYPE;}
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return data.CURRENCY;}
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return data.EXCH_RATE;}
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return new Intl.NumberFormat().format(data.AMOUNT);}
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return new Intl.NumberFormat().format(data.NOMINAL_DI_BAYAR);}
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return data.ITEM_TEXT;}
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return data.VENDOR_NAME;}
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return data.DUE_ON;}
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return data.TGL_RENCANA_BAYAR;}
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return data.BANK_BYR;}
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return data.BANK_BENEF;}
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return data.GROUP_ID;}
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return data.OSS_ID;}
+                },
+                {
+                    "data" : null,
+                    "render" : (data, type, row) => {return data.POSISI_DATA;}
+                },
+                {
+                    "data" : null,
+                    "render" : (data,type,row) => {return "<button class='btn btn-sm btn-primary' id='btnDetail' style='cursor: pointer; width: 15px; text-align: center;' title='Detail' comp_code='" + data.COMP_CODE + "' doc_no='" + data.DOC_NO + "' fisc_year='" + data.FISC_YEAR + "' line_item='" + data.LINE_ITEM + "' oss_id ='" + data.OSS_ID + "'><i class=\"fa fa-search\"></i></button>";}
+                },
+            ]
+        });
+        $("#all_table").show();
+    }
+}
+
 function processTracking() {
 
     var search = $("#search-no-tagihan").val().toString();
@@ -93,10 +211,12 @@ function processTracking() {
             dataType: 'JSON',
             url: baseUrl + "api_operator/tracking/get_data",
             data: {
-                pSearch: search
+                pSearch: search,
+                start : "1",
+                length : "10",
             },
             success: function (res) {
-                console.log("ini tracking", res);
+                // console.log("ini tracking", res);
                 $("#table-tracking tbody").empty();
                 $.each(res.return, function (key, val) {
                     var newHtml = "<tr>" +
