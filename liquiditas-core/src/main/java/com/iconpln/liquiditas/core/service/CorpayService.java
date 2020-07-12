@@ -455,15 +455,17 @@ public class CorpayService {
         return out;
     }
 
-    public Map<String, Object> getAllTracking(String pSearch) throws SQLException {
+    public List<Map<String, Object>> getAllTracking(String pSearch, String pStart, String pLength) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("get_tracking_level1");
 
         SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("p_search", pSearch);
-        Map<String, Object> out = simpleJdbcCall.execute(in);
+                .addValue("p_search", pSearch)
+                .addValue("p_start", pStart)
+                .addValue("p_length", pLength);
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class,in);
         AppUtils.getLogger(this).info("data get_tracking_level1 : {}", out);
         return out;
     }
