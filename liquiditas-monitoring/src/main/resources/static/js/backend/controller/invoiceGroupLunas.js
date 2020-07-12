@@ -19,7 +19,9 @@ $(document).ready(function () {
     $('#tanggal_awal').datepicker({dateFormat: "dd/mm/yy"});
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
-    // setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+    setSelectFilterBank("cmb_bank", "FILTER", "", "", "REKAP");
+    setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+    setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
 
     $('#check_all').change(function() {
         if($(this).is(':checked')){
@@ -296,7 +298,7 @@ function getAllData() {
 
 }
 
-function initDataTable(pTglAwal, pTglAkhir,  pBank) {
+function initDataTable(pTglAwal, pTglAkhir, pBank, pCaraBayar, pCurr) {
     showLoadingCss();
     $('#table-rekapitulasi tbody').empty();
     $('#table-rekapitulasi').dataTable().fnDestroy();
@@ -466,12 +468,14 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                             pTglAwal: pTglAwal,
                             pTglAkhir: pTglAkhir,
                             pBank: pBank,
+                            pCaraBayar : pCaraBayar,
+                            pCurr : pCurr
                         }
                     ,
                     "dataSrc":
                         function (res) {
                             hideLoadingCss()
-                            getTotalTagihan();
+                            getTotalTagihanLunas();
                             return res.data;
                         }
                 }
@@ -1835,14 +1839,16 @@ function group_payment(){
     }
 }
 
-function getTotalTagihan() {
+function getTotalTagihanLunas() {
     $.ajax({
-        url: baseUrl + "api_operator/invoice_group/get_total_tagihan",
+        url: baseUrl + "api_operator/invoice_group/get_total_tagihan_lunas",
         type: "GET",
         data: {
             tgl_awal: $("#tanggal_awal").val(),
             tgl_akhir: $("#tanggal_akhir").val(),
             bank: $("#cmb_bank").val(),
+            currency : $("#cmb_currecny").val(),
+            cara_bayar : $("#cmb_cara_pembayaran").val(),
             search: tempTableSearch
         },
         success: function (res) {
