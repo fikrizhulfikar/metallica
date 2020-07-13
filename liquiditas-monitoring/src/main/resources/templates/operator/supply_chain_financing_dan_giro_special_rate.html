@@ -1,0 +1,114 @@
+<div th:fragment="stylesheets-backend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        table {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+        }
+        table th {
+            font-size: 12px;
+            vertical-align: middle;
+        }
+        table td {
+            font-size: 12px;
+            text-align: center;
+        }
+<!--        tbody:hover td {-->
+<!--            color: transparent;-->
+<!--            text-shadow: 0 0 3px #aaa;-->
+<!--        }-->
+
+<!--        tbody:hover tr:hover td {-->
+<!--            color: #444;-->
+<!--            text-shadow: 0 1px 0 #fff;-->
+<!--        }-->
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Dashboard Rencana</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div style="overflow-y:auto;">
+                            <table id="table-giro-special-rate" class="table table-bordered">
+                                <thead>
+                                <tr >
+                                    <th style="text-align: center; vertical-align: middle" rowspan="2">BANK</th>
+                                    <th style="text-align: center; vertical-align: middle" rowspan="2">CURRENCY</th>
+                                    <th style="text-align: center; vertical-align: middle" rowspan="2">JASA GIRO</th>
+                                    <th style="text-align: center; vertical-align: middle" rowspan="2">NOMINAL + JASA GIRO</th>
+                                    <th style="text-align: center" colspan="3">TOTAL (EQUIVALENT RUPIAH)</th>
+                                </tr>
+                                <tr >
+                                    <th style="text-align: center;">NOMINAL</th>
+                                    <th style="text-align: center">JASA GIRO</th>
+                                    <th style="text-align: center">NOMINAL + JASA GIRO</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div style="overflow-y:auto;">
+                            <table id="table-supply-chain-financing" class="table table-bordered">
+                                <thead>
+                                <tr >
+                                    <th style="text-align: center">BANK</th>
+                                    <th style="text-align: center">CURRENCY</th>
+                                    <th style="text-align: center">ORIGINAL CURRENCY</th>
+                                    <th style="text-align: center">EQ IDR</th>
+                                    <th style="text-align: center">FEE TRANSAKSI (IDR)</th>
+                                    <th style="text-align: center">CASH COLLATERAL (IDR)</th>
+                                    <th style="text-align: center">JASA GIRO</th>
+                                    <th style="text-align: center">PAJAK YANG DITANGGUNG PLN</th>
+                                    <th style="text-align: center">NET JASA GIRO</th>
+                                    <th style="text-align: center">NET GAIN/(LOSS) TRANSAKSI SCF</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--    modal detail -->
+    <div class="modal fade" id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/supply_chain_financing_dan_giro_special_rate.js"></script>
+    <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
+    <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
+</div>
