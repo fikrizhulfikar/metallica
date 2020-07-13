@@ -157,6 +157,23 @@ public class DashboardService {
         return out;
     }
 
+    public Map<String, Object> getSaldoRekeningValutaAsing() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_VALAS")
+                .withFunctionName("get_layer1_2");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_total", OracleTypes.CURSOR)
+                .addValue("out_pie_usd", OracleTypes.CURSOR)
+                .addValue("out_pie_eur", OracleTypes.CURSOR)
+                .addValue("out_pie_jpy", OracleTypes.CURSOR)
+                .addValue("out_pie_myr", OracleTypes.CURSOR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data get_layer1 : {}", out);
+        return out;
+    }
+
     public Map<String, Object> getDerivatifDeposito() throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -189,6 +206,24 @@ public class DashboardService {
                 .addValue("out_pie_impor", OracleTypes.CURSOR);
         Map<String, Object> out = simpleJdbcCall.execute(in);
         AppUtils.getLogger(this).info("data getSaldoIdrImprest : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> getSaldoRekeningRupiah() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_dashboard_idr")
+                .withFunctionName("get_saldo_idr1");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_total", OracleTypes.CURSOR)
+                .addValue("out_pie_receipt", OracleTypes.CURSOR)
+                .addValue("out_pie_kp", OracleTypes.CURSOR)
+                .addValue("out_pie_operasi", OracleTypes.CURSOR)
+                .addValue("out_pie_investasi", OracleTypes.CURSOR)
+                .addValue("out_pie_impor", OracleTypes.CURSOR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data getSaldoRekeningRupiah : {}", out);
         return out;
     }
 
@@ -461,6 +496,17 @@ public class DashboardService {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_DASHBOARD_CORPAY")
                 .withFunctionName("get_dashboard_rencana_bank");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("ptanggal", tanggal, OracleTypes.VARCHAR)
+                .addValue("out_tanggal", OracleTypes.CURSOR);
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public List<Map<String, Object>> getProyeksiPengadaanKebutuhanValas(String tanggal){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_VALAS")
+                .withFunctionName("get_proyeksi_pengadaan_valas");
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("ptanggal", tanggal, OracleTypes.VARCHAR)
                 .addValue("out_tanggal", OracleTypes.CURSOR);

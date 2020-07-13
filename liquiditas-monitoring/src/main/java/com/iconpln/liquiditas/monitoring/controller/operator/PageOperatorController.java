@@ -227,6 +227,11 @@ public class PageOperatorController {
         return "operator/pembelian_valas_trx";
     }
 
+    @RequestMapping("/proyeksi_pengadaan_valas_trx")
+    public String proyeksi_pengadaan_valas_trx() {
+        return "operator/proyeksi_pengadaan_valas_trx";
+    }
+
     @RequestMapping("/pindah_buku_trx")
     public String pindah_buku_trx() {
         return "operator/pindah_buku_trx";

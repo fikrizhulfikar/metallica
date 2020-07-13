@@ -45,10 +45,32 @@ public class DashboardController {
 
     }
 
+    @RequestMapping(value = "/get_saldo_rekening_valuta_asing", method = RequestMethod.GET)
+    public Map getSaldoRekeningValutaAsing() {
+        try {
+            return dashboardService.getSaldoRekeningValutaAsing();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
     @RequestMapping(value = "/get_idr_imprest", method = RequestMethod.GET)
     public Map getIdrImprst() {
         try {
             return dashboardService.getSaldoIdrImprest();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    @RequestMapping(value = "/get_saldo_rekening_rupiah", method = RequestMethod.GET)
+    public Map getSaldoRekeningRupiah() {
+        try {
+            return dashboardService.getSaldoRekeningRupiah();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
