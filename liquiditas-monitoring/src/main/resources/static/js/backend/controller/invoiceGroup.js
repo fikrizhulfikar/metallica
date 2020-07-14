@@ -4,6 +4,7 @@
 var tableMain;
 var isUpdate = "0";
 var tempTableSearch = "";
+var tempTableItemSearch = "";
 var groupCheckedArray = new Array();
 var fullArrayGroup = new Array();
 var cbParentArray = new Array();
@@ -1378,7 +1379,7 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
     hideLoadingCss()
     tableDetailGroupInvoice = $('#table-main-detail').DataTable({
             "serverSide": true,
-            "oSearch": {"sSearch": tempTableSearch},
+            "oSearch": {"sSearch": tempTableItemSearch},
             "bLengthChange": true,
             "scrollY": "100%",
             "scrollX": "100%",
@@ -2697,17 +2698,23 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                                     }
         }
     );
-            $('.dataTables_filter').each(function () {
-                var html = '';
-                // html =  '<button class="btn btn-dtl btn-dribbble btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
-                html = html + '<button class="btn btn-dtl btn-primary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Bukti Kas" onclick="cetakBuktiKasGroupingMultiple()"><i class="fas fa-file-alt"></i></button>' ;
-                html = html + '<button class="btn btn-dtl btn-info btn-sm" id="btn-cetak-lampiran" style="margin-left: 10px" type="button" title="Cetak Lampiran" onclick="cetakLampiranGrouping(\''+group_id+'\')"><i class="fas fa-paperclip"></i></button>' ;
-                if (newRoleUser[0] === "ROLE_JA_CASH" || newRoleUser[0] === "ROLE_JA_IE" || newRoleUser[0] === "ROLE_FCL_SETTLEMENT" || newRoleUser[0] === "ROLE_ADMIN"){
-                    html = html + '<button class="btn btn-dtl btn-danger btn-sm" id="btn-ungroup" style="margin-left: 10px" type="button" title="Ungroup" onclick="ungroup()"><i class="fas fa-folder-open"></i></button>' ;
-                }
-                html = html + '<button class="btn btn-dtl btn-sm btn-ready" id="btn-siap-bayar-multiple" style="margin-left: 10px" type="button" title="Siap Bayar" onclick="multipleSiapBayarItemGroup()"><i class="fas fa-money-check"></i></button>' ;
-                $(this).append(html);
-            });
+
+    $('.dataTables_length').each(function () {
+        var html = '<label id="tagihan_item" style="margin-left: 250px; cursor:default;">Total Tagihan Item (Rp): <b id="total_tagihan_item">0</b></label>';
+        $(this).append(html);
+    });
+
+    $('.dataTables_filter').each(function () {
+        var html = '';
+        // html =  '<button class="btn btn-dtl btn-dribbble btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
+        html = html + '<button class="btn btn-dtl btn-primary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Bukti Kas" onclick="cetakBuktiKasGroupingMultiple()"><i class="fas fa-file-alt"></i></button>' ;
+        html = html + '<button class="btn btn-dtl btn-info btn-sm" id="btn-cetak-lampiran" style="margin-left: 10px" type="button" title="Cetak Lampiran" onclick="cetakLampiranGrouping(\''+group_id+'\')"><i class="fas fa-paperclip"></i></button>' ;
+        if (newRoleUser[0] === "ROLE_JA_CASH" || newRoleUser[0] === "ROLE_JA_IE" || newRoleUser[0] === "ROLE_FCL_SETTLEMENT" || newRoleUser[0] === "ROLE_ADMIN"){
+            html = html + '<button class="btn btn-dtl btn-danger btn-sm" id="btn-ungroup" style="margin-left: 10px" type="button" title="Ungroup" onclick="ungroup()"><i class="fas fa-folder-open"></i></button>' ;
+        }
+            html = html + '<button class="btn btn-dtl btn-sm btn-ready" id="btn-siap-bayar-multiple" style="margin-left: 10px" type="button" title="Siap Bayar" onclick="multipleSiapBayarItemGroup()"><i class="fas fa-money-check"></i></button>' ;
+        $(this).append(html);
+    });
 }
 
 function search(state) {
