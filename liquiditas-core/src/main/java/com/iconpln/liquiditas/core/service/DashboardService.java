@@ -161,16 +161,23 @@ public class DashboardService {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_DASHBOARD_VALAS")
-                .withFunctionName("get_layer1_2");
+                .withFunctionName("get_rekening_valas");
 
         SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("out_total", OracleTypes.CURSOR)
+                .addValue("out_total_usd", OracleTypes.CURSOR)
+                .addValue("out_total_eur", OracleTypes.CURSOR)
+                .addValue("out_total_jpy", OracleTypes.CURSOR)
+                .addValue("out_total_myr", OracleTypes.CURSOR)
+                .addValue("eq_idr_usd", OracleTypes.CURSOR)
+                .addValue("eq_idr_eur", OracleTypes.CURSOR)
+                .addValue("eq_idr_jpy", OracleTypes.CURSOR)
+                .addValue("eq_idr_myr", OracleTypes.CURSOR)
                 .addValue("out_pie_usd", OracleTypes.CURSOR)
                 .addValue("out_pie_eur", OracleTypes.CURSOR)
                 .addValue("out_pie_jpy", OracleTypes.CURSOR)
                 .addValue("out_pie_myr", OracleTypes.CURSOR);
         Map<String, Object> out = simpleJdbcCall.execute(in);
-        AppUtils.getLogger(this).info("data get_layer1 : {}", out);
+        AppUtils.getLogger(this).info("data get_rekening_valas : {}", out);
         return out;
     }
 
