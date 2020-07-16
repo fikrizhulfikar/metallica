@@ -1550,7 +1550,7 @@ function getDetails(idGroup) {
                     "dataSrc":
                         function (res) {
                             hideLoadingCss()
-                            getTotalTagihan();
+                            getTotalTagihanItem(idGroup);
                             return res.data;
                         }
                 }
@@ -1799,6 +1799,29 @@ function getTotalTagihan() {
 
 }
 
+function getTotalTagihanItem(groupId) {
+    $.ajax({
+        url: baseUrl + "api_operator/invoice_group/get_total_tagihan_group_item",
+        type: "GET",
+        data: {
+            tgl_awal: $("#tanggal_awal").val(),
+            tgl_akhir: $("#tanggal_akhir").val(),
+            bank: $("#cmb_bank").val(),
+            currency : $("#cmb_currecny").val(),
+            cara_bayar : $("#cmb_cara_pembayaran").val(),
+            group_id : groupId,
+            search: tempTableSearch
+        },
+        success: function (res) {
+            $("#total_tagihan_item").html(res);
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+
+}
+
 function exportXls() {
     var tglAwal = "null";
     if (srcTglAwal != "") {
@@ -1816,4 +1839,5 @@ function back(){
     $(".detail-data").hide();
     tableInvoiceGroupSiapBayar.ajax.reload()
     tableDetailGroupInvoiceSiapBayar.destroy();
+    $("#tagihan_item").remove();
 }
