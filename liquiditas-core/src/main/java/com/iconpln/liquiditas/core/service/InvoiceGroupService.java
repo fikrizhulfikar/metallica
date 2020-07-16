@@ -18,6 +18,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -387,6 +388,32 @@ public class InvoiceGroupService {
                 .withCatalogName("pkg_corpay")
                 .withFunctionName("get_total_tagihan_group")
                 .executeFunction(BigDecimal.class, in);
+        return result;
+    }
+
+    public BigDecimal getTotalTagihanLunasItem(
+            String tglAwal,
+            String tglAkhir,
+            String bank,
+            String userId,
+            String currency,
+            String cara_bayar,
+            String group_id,
+            String search
+    ){
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", tglAwal, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", tglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR)
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_curr", currency, OracleTypes.VARCHAR)
+                .addValue("p_cara_bayar", cara_bayar, OracleTypes.VARCHAR)
+                .addValue("p_id_group", group_id, OracleTypes.VARCHAR)
+                .addValue("p_search", search, OracleTypes.VARCHAR);
+        BigDecimal result = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_total_tagihan_group_lunas2")
+                .executeFunction(BigDecimal.class,in);
         return result;
     }
 
