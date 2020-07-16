@@ -335,7 +335,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank,pCaraBayar, pCurr) {
                 },
                 {
                     "sortable": false,
-                    "aTargets": [0, 13]
+                    "aTargets": [0, 14]
                 },
                 {
                     "aTargets": [0],
@@ -431,6 +431,13 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank,pCaraBayar, pCurr) {
                 },
                 {
                     "aTargets": [13],
+                    "mRender": function (data, type, full) {
+                        return full.STATUS_TRACKING;
+                    }
+
+                },
+                {
+                    "aTargets": [14],
                     "mRender": function (data, type, full) {
                         var jenis = "PEMBELIAN_VALAS";
                         console.log("Ini Full : ", full);
