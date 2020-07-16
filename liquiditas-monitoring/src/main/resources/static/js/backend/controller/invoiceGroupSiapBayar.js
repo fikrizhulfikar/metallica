@@ -734,7 +734,7 @@ function getDetails(idGroup) {
     hideLoadingCss()
     tableDetailGroupInvoiceSiapBayar = $('#table-main-detail').DataTable({
             "serverSide": true,
-            "oSearch": {"sSearch": tempTableSearch},
+            "oSearch": {"sSearch": tempTableItemSearch},
             "bLengthChange": true,
             "scrollY": "100%",
             "scrollX": "100%",
