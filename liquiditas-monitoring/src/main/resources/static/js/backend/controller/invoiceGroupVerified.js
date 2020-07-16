@@ -1735,7 +1735,7 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
                     "dataSrc":
                         function (res) {
                             hideLoadingCss()
-                            getTotalTagihan();
+                            getTotalTagihanItem(idGroup);
                             return res.data;
                         }
                 }
@@ -1745,7 +1745,7 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
                     getTotalTagihanItem(idGroup);
                     // $(".dataTables_scrollHeadInner").css({"width":"100%"});
                     // $(".table ").css({"width":"100%"});
-                    tableDetailGroupInvoice.columns.adjust();
+                    tableDetailGroupInvoiceVerified.columns.adjust();
                     var currentPageNumber = this.api().page.info().page;
                     for (x=0;x<cbParentArray.length;x++){
                         if(cbParentArray[x] == currentPageNumber){
@@ -1791,6 +1791,11 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
                 }
         }
     );
+
+    $('.dataTables_length').each(function () {
+        var html = '<label id="tagihan_item" style="margin-left: 250px; cursor:default;">Total Tagihan Item (Rp): <b id="total_tagihan_item">0</b></label>';
+        $(this).append(html);
+    });
 
 
 }
@@ -1977,6 +1982,29 @@ function getTotalTagihan() {
         },
         success: function (res) {
             $("#total_tagihan").html(res);
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+
+}
+
+function getTotalTagihanItem(groupId) {
+    $.ajax({
+        url: baseUrl + "api_operator/invoice_group/get_total_tagihan_group_item",
+        type: "GET",
+        data: {
+            tgl_awal: $("#tanggal_awal").val(),
+            tgl_akhir: $("#tanggal_akhir").val(),
+            bank: $("#cmb_bank").val(),
+            currency : $("#cmb_currecny").val(),
+            cara_bayar : $("#cmb_cara_pembayaran").val(),
+            group_id : groupId,
+            search: tempTableSearch
+        },
+        success: function (res) {
+            $("#total_tagihan_item").replaceWith("<b>"+res+"</b>");
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
