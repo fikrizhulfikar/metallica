@@ -913,7 +913,7 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
     $('#exportHeadBtn, #exportAllItemBtn').hide();
     $('#exportItemBtn')
         .show()
-        .find("button").attr("onclick","exportXlsItem('"+group_id+"')");
+        .find("button").attr("onclick","exportXlsItem('"+idGroup+"')");
     $(".detail-data").show();
     hideLoadingCss()
     tableDetailGroupInvoiceVerified = $('#table-main-detail').DataTable({
