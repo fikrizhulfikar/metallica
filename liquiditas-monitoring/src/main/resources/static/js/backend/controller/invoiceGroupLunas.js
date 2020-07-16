@@ -1616,13 +1616,14 @@ function getDetails(idGroup) {
                     "dataSrc":
                         function (res) {
                             hideLoadingCss()
-                            getTotalTagihan();
+                            getTotalTagihanLunasItem(idGroup);
                             return res.data;
                         }
                 }
             ,
             "drawCallback":
                 function (settings) {
+                    getTotalTagihanLunasItem(idGroup);
                     // $(".dataTables_scrollHeadInner").css({"width":"100%"});
                     // $(".table ").css({"width":"100%"});
                     tableDetailGroupInvoice.columns.adjust();
@@ -1671,6 +1672,11 @@ function getDetails(idGroup) {
                 }
         }
     );
+
+    $('.dataTables_length').each(function () {
+        var html = '<label id="tagihan_item" style="margin-left: 250px; cursor:default;">Total Tagihan Item (Rp): <b id="total_tagihan_item_lunas">0</b></label>';
+        $(this).append(html);
+    });
 
 
 }
@@ -1867,6 +1873,29 @@ function getTotalTagihanLunas() {
 
 }
 
+function getTotalTagihanLunasItem(groupId) {
+    $.ajax({
+        url: baseUrl + "api_operator/invoice_group/get_total_tagihan_lunas_item",
+        type: "GET",
+        data: {
+            tgl_awal: $("#tanggal_awal").val(),
+            tgl_akhir: $("#tanggal_akhir").val(),
+            bank: $("#cmb_bank").val(),
+            currency : $("#cmb_currecny").val(),
+            cara_bayar : $("#cmb_cara_pembayaran").val(),
+            group_id : groupId,
+            search: tempTableSearch
+        },
+        success: function (res) {
+            $("#total_tagihan_item_lunas").replaceWith("<b>"+res+"</b>");
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+
+}
+
 function exportXls() {
     var tglAwal = "null";
     if (srcTglAwal != "") {
@@ -1912,4 +1941,5 @@ function back(){
         .find("button").unbind('click');
     tableInvoiceGroup.ajax.reload()
     tableDetailGroupInvoice.destroy();
+    $("#tagihan_item").remove();
 }
