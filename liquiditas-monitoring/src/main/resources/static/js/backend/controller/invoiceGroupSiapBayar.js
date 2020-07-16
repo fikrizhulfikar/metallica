@@ -4,6 +4,7 @@
 var tableMain;
 var isUpdate = "0";
 var tempTableSearch = "";
+var tempTableItemSearch = "";
 var groupCheckedArray = new Array();
 var fullArrayGroup = new Array();
 var cbParentArray = new Array();
