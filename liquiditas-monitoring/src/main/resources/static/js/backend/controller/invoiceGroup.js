@@ -680,18 +680,18 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank, pCaraBayar, pCurr) {
                 {width: 150, targets: 5},
                 {width: 150, targets: 6},
                 {width: 100, targets: 7},
-                {width: 20, targets: 8},
-                // {width: 100, targets: 35},
-                // {width: 100, targets: 36},
+                {width: 90, targets: 8},
+                {width: 100, targets: 9},
+                {width: 100, targets: 10},
                 {width: "80%", "targets": 0},
                 { className: "datatables_action", "targets": [1,2,3,4,5,6,7,8] },
                 {
                     "bSortable": true,
-                    "aTargets": [1, 2, 3, 4, 5,6,7,8]
+                    "aTargets": [1, 2, 3, 4, 5,6,7,8,9,10,11]
                 },
                 {
                     "sortable": false,
-                    "aTargets": [0,13]
+                    "aTargets": [0,14]
                 },
                 {
                     "aTargets": [0],
@@ -787,6 +787,13 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank, pCaraBayar, pCurr) {
                 },
                 {
                     "aTargets": [13],
+                    "mRender": function (data, type, full) {
+                        return full.STATUS_TRACKING;
+                    }
+
+                },
+                {
+                    "aTargets": [14],
                     "mRender": function (data, type, full) {
                         var jenis = "AP INVOICE";
                         // console.log("Ini Full : ", full);
