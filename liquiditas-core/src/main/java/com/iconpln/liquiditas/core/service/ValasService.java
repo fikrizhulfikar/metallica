@@ -1683,16 +1683,21 @@ public class ValasService {
         System.out.println("pData: "+pData);
         JSONArray jsonArray = new JSONArray(pData);
 
-        for (Object item : jsonArray){
-            JSONObject obj = (JSONObject)item;
-            System.out.println(obj);
-            in = new MapSqlParameterSource()
-                    .addValue("p_kode_bank", obj.get("kdbank"))
-                    .addValue("p_h0", obj.get("potensi_h0"))
-                    .addValue("p_h1", obj.get("potensi_h1"));
-            out = simpleJdbcCall.execute(in);
-            AppUtils.getLogger(this).info("data insSaldoPotensi {}: {}", obj.get("kdbank"), out);
+        try {
+            for (int index = 0; index < jsonArray.length(); index++){
+                JSONObject obj = jsonArray.getJSONObject(index);
+                System.out.println(obj);
+                in = new MapSqlParameterSource()
+                        .addValue("p_kode_bank", obj.get("kdbank"))
+                        .addValue("p_h0", obj.get("potensi_h0"))
+                        .addValue("p_h1", obj.get("potensi_h1"));
+                out = simpleJdbcCall.execute(in);
+                AppUtils.getLogger(this).info("data insSaldoPotensi {}: {}", obj.get("kdbank"), out);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
         return out;
     }
 

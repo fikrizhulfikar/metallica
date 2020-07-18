@@ -13,6 +13,8 @@ import java.util.*;
 import com.iconpln.liquiditas.core.utils.PlsqlUtils;
 import oracle.jdbc.OracleTypes;
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -507,6 +509,41 @@ public class DashboardService {
                 .addValue("ptanggal", tanggal, OracleTypes.VARCHAR)
                 .addValue("out_tanggal", OracleTypes.CURSOR);
         List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        AppUtils.getLogger(this).info("data get_proyeksi_pengadaan_valas : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> insPengadaanValas(String pData) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_VALAS")
+                .withFunctionName("ins_proyeksi_pengadaan_valas");
+        SqlParameterSource in;
+        Map<String, Object> out = null;
+        System.out.println("pData: "+pData);
+        JSONArray jsonArray = new JSONArray(pData);
+
+        try {
+            for (int index = 0; index < jsonArray.length(); index++){
+                JSONObject obj = jsonArray.getJSONObject(index);
+                System.out.println(obj);
+                in = new MapSqlParameterSource()
+                        .addValue("p_kode_currency", obj.get("kdcurrency"))
+                        .addValue("p_kode_bank", obj.get("kdbank"))
+                        .addValue("p_h0", obj.get("potensi_h0"))
+                        .addValue("p_h1", obj.get("potensi_h1"))
+                        .addValue("p_h2", obj.get("potensi_h2"))
+                        .addValue("p_h3", obj.get("potensi_h3"))
+                        .addValue("p_h4", obj.get("potensi_h4"))
+                        .addValue("p_h5", obj.get("potensi_h5"))
+                        .addValue("p_h6", obj.get("potensi_h6"));
+                out = simpleJdbcCall.execute(in);
+                AppUtils.getLogger(this).info("data ins_proyeksi_pengadaan_valas {}: {}", obj.get("kdbank"), out);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         return out;
     }
 

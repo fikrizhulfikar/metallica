@@ -35,65 +35,66 @@ function tableMainDashboard(_date){
 //            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
             {"data": null,"visible": false,"render": (data, type, row) => {return data.CURRENCY;}},
 
-            {"data": null,"render": (data, type, row) => {return data.BANK;}},
-//            {"data": null,"render": (data, type, row) => {if (data.BANK === "TOTAL"){
-//                                                            return '<td> TOTAL '+data.CURRENCY+'</td>';
-//                                                            }else
-//                                                            return '<td>'+data.CURRENCY+'</td>';
-//                                                            }},
-            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D0 == "0" || data.RP_D0 == null){
-                                                              return '<td> - </td>';
+            {"data": null,"render": (data, type, row) => {if (data.BANK == null){
+                                                              return "<td><input id='kdbank_potensi' type='text' value='"+data.BANK+"' disabled></td>";
                                                               } else
-                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+                                                              return "<td><input id='kdbank_potensi' type='text' value='"+data.BANK+"' disabled></td>";
+                                                              },
+                                                              "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                              }},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D0 == "0" || data.RP_D0 == null){
+                                                              return "<td><input id='hnol' type='number' value='"+data.RP_D0+"'></td>";
+                                                              } else
+                                                              return "<td><input id='hnol' type='number' value='"+data.RP_D0+"'></td>";
                                                            },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
             {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D1 == "0" || data.RP_D1 == null){
-                                                              return '<td> - </td>';
+                                                              return "<td><input id='hsatu' type='number' value='"+data.RP_D1+"'></td>";
                                                               } else
-                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
+                                                              return "<td><input id='hsatu' type='number' value='"+data.RP_D1+"'></td>";
                                                            },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
             {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D2 == "0" || data.RP_D2 == null){
-                                                              return '<td> - </td>';
+                                                              return "<td><input id='hdua' type='number' value='"+data.RP_D2+"'></td>";
                                                               } else
-                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
+                                                              return "<td><input id='hdua' type='number' value='"+data.RP_D2+"'></td>";
                                                            },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
             {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D3 == "0" || data.RP_D3 == null){
-                                                              return '<td> - </td>';
+                                                              return "<td><input id='htiga' type='number' value='"+data.RP_D3+"'></td>";
                                                               } else
-                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
+                                                              return "<td><input id='htiga' type='number' value='"+data.RP_D3+"'></td>";
                                                            },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
             {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D4 == "0" || data.RP_D4 == null){
-                                                              return '<td> - </td>';
+                                                              return "<td><input id='hempat' type='number' value='"+data.RP_D4+"'></td>";
                                                               } else
-                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
+                                                              return "<td><input id='hempat' type='number' value='"+data.RP_D4+"'></td>";
                                                            },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
             {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D5 == "0" || data.RP_D5 == null){
-                                                              return '<td> - </td>';
+                                                              return "<td><input id='hlima' type='number' value='"+data.RP_D5+"'></td>";
                                                               } else
-                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
+                                                              return "<td><input id='hlima' type='number' value='"+data.RP_D5+"'></td>";
                                                            },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
             {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D6 == "0" || data.RP_D6 == null){
-                                                              return '<td> - </td>';
+                                                              return "<td><input id='henam' type='number' value='"+data.RP_D6+"'></td>";
                                                               } else
-                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
+                                                              return "<td><input id='henam' type='number' value='"+data.RP_D6+"'></td>";
                                                            },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
             {"data":null,"render" : (data, tyoe, row) => {if (data.RP_TOTAL == "0" || data.RP_TOTAL == null){
-                                                              return '<td> - </td>';
+                                                              return '<td>'+ "<input id='kdcurrency_potensi' type='hidden' value='"+data.CURRENCY+"' disabled>" + new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
                                                               } else
-                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
+                                                              return '<td>'+ "<input id='kdcurrency_potensi' type='hidden' value='"+data.CURRENCY+"' disabled>"+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
                                                            },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
@@ -178,6 +179,59 @@ $(document).ready(function () {
     });
 $("#dash_date").datepicker({dateFormat : "dd/mm/yy"});
 });
+
+function updatePotensi()
+{
+    var row = $("#pembayaran-bank").find('tr'),
+        cells = row.find('td'),
+        btnCell = $(this).parent();
+    var list = [];
+
+    $('#pembayaran-bank > tbody  > tr').each(function() {
+        var cell = $(this).find('td');
+        var map = {};
+        var i = cell.find('input#kdbank_potensi').val();
+        if (i === undefined) { return true; }
+        map.kdcurrency = cell.find('input#kdcurrency_potensi').val();
+        map.kdbank = cell.find('input#kdbank_potensi').val();
+        map.potensi_h0 = cell.find('input#hnol').val();
+        map.potensi_h1 = cell.find('input#hsatu').val();
+        map.potensi_h2 = cell.find('input#hdua').val();
+        map.potensi_h3 = cell.find('input#htiga').val();
+        map.potensi_h4 = cell.find('input#hempat').val();
+        map.potensi_h5 = cell.find('input#hlima').val();
+        map.potensi_h6 = cell.find('input#henam').val();
+        list.push(map)
+    });
+
+    console.log(list);
+
+
+    $.ajax({
+        url: baseUrl + "/api_operator/api_report/ins_pengadaan_valas",
+        dataType: 'JSON',
+        type: "POST",
+        data : {
+            /*pKodeBank: row.find('.kdbank_potensi').html(),
+            pJumlah: row.find('input').val(),*/
+            pData: JSON.stringify(list)
+        },
+        success: function (res) {
+            console.log("res ins potensi : ",res);
+            if(res.return == 1 || res.return == '1'){
+                alert ("Data tersimpan");
+                location.reload();
+            }else{
+                alert ("Data gagal tersimpan");
+            }
+
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+
+};
 
 
 

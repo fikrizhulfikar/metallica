@@ -124,6 +124,18 @@ public class ReportController {
         return mapData;
     }
 
+    @RequestMapping(value = "/ins_pengadaan_valas", method = RequestMethod.POST)
+    public Map insPengadaanValas(
+            @RequestParam(value = "pData", defaultValue = "") String pData
+    ) {
+        try {
+            return dashboardService.insPengadaanValas(pData);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @GetMapping(path = "/jenis_pembayaran")
     public Map listDashboardJenisPembayaran(@RequestParam(value = "tanggal") String tanggal){
         List<Map<String, Object>> list = new ArrayList<>();
