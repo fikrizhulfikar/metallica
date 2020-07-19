@@ -1,0 +1,49 @@
+<div th:fragment="stylesheets-frontend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        th {
+            font-size: 11px;
+            vertical-align: middle
+        }
+
+        td {
+            font-size: 10px;
+        }
+
+        td, th {
+            padding: 2px !important;
+        }
+        .carousel-control{
+            width : 8% !important;
+        }
+    </style>
+</div>
+<div style="margin-top: -15px;min-height: 400px" class="app-body col-md-12" th:fragment="content" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div align="center" class="title"><h5><b>Realisasi Pembayaran - Cashcode (10 Besar)<span></span></b></h5></div>
+            <div align="center" class="title"><h5><b>TGL : <span id="tglcetak">-</span></b></h5></div>
+        </div>
+        <div class="col-md-12" style="padding-top: 15px;">
+            <div class="view-table">
+                <table id="table-imprst-valas" class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th style="background: #91e491" width="4%">NO</th>
+                        <th style="background: #91e491" width="16.666%">VENDOR</th>
+                        <th style="background: #f5926d" width="16.666%">BANK PEMBAYARAN</th>
+                        <th style="background: #c0a4fd" width="16.666%">CURR</th>
+                        <th style="background: #2ccab5" width="16.666%">ORIGINAL CURR</th>
+                        <th style="background: #2ccab5" width="16.666%">EQ IDR</th>
+                        <th style="background: #2ccab5" width="16.666%">CASH CODE</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:fragment="scripts-frontend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <script src="/static/js/frontend/verifikator/saldo_rekening_valuta_asing.js"></script>
+</div>

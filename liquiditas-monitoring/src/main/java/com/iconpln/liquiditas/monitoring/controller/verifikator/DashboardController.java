@@ -56,6 +56,17 @@ public class DashboardController {
 
     }
 
+    @RequestMapping(value = "/get_realisasi_pembayaran_cashcode", method = RequestMethod.GET)
+    public Map getRealisasiPembayaranCashcode() {
+        try {
+            return dashboardService.getRealisasiPembayaranCashcode();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
     @RequestMapping(value = "/get_idr_imprest", method = RequestMethod.GET)
     public Map getIdrImprst() {
         try {
