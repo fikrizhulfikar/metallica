@@ -89,22 +89,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 // ================================================================================================================== end of LDAP LOGIN
 
 // ================================================================================================================== login FROM DATABASE
-                if (authentication.getCredentials() == null) {
-                    logger.debug("Authentication failed: no credentials provided");
-
-                    throw new BadCredentialsException(messages.getMessage(
-                            "AbstractUserDetailsAuthenticationProvider.badCredentials",
-                            "Bad credentials"));
-                }
-                String presentedPassword = authentication.getCredentials().toString();
-                if (!getPasswordEncoder().isPasswordValid(userDetails.getPassword(),
-                        presentedPassword, salt)) {
-                    logger.debug("Authentication failed: password does not match stored value");
-
-                    throw new BadCredentialsException(messages.getMessage(
-                            "AbstractUserDetailsAuthenticationProvider.badCredentials",
-                            "Bad credentials"));
-                }
+//                if (authentication.getCredentials() == null) {
+//                    logger.debug("Authentication failed: no credentials provided");
+//
+//                    throw new BadCredentialsException(messages.getMessage(
+//                            "AbstractUserDetailsAuthenticationProvider.badCredentials",
+//                            "Bad credentials"));
+//                }
+//                String presentedPassword = authentication.getCredentials().toString();
+//                if (!getPasswordEncoder().isPasswordValid(userDetails.getPassword(),
+//                        presentedPassword, salt)) {
+//                    logger.debug("Authentication failed: password does not match stored value");
+//
+//                    throw new BadCredentialsException(messages.getMessage(
+//                            "AbstractUserDetailsAuthenticationProvider.badCredentials",
+//                            "Bad credentials"));
+//                }
 //=================================================================================================================== end of LOGIN FROM DATABASE
             }
         };

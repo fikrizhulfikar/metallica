@@ -1,8 +1,8 @@
 $(document).ready(function () {
 
     tableRealisasiPerVendor();
-    getAllData();
-    search("load");
+//    getAllData();
+//    search("load");
 
     setSelectCashCode("cash_code", "FILTER", "", "REKAP");
     setSelectBankSaldo("bank_filter", "FILTER", "", "REKAP");
