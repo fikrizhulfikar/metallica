@@ -4,8 +4,8 @@ $(document).ready(function () {
 //    getAllData();
 //    search("load");
 
-    setSelectCashCode("cash_code", "FILTER", "", "REKAP");
-    setSelectBankSaldo("bank_filter", "FILTER", "", "REKAP");
+//    setSelectCashCode("cash_code", "FILTER", "", "REKAP");
+//    setSelectBankSaldo("bank_filter", "FILTER", "", "REKAP");
 
     $("#dashboard-carousel").carousel({
         interval : 1000*5,
