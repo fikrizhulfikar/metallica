@@ -4,6 +4,7 @@
 var tableMain;
 var isUpdate = "0";
 var tempTableSearch = "";
+var tempTableItemSearch = "";
 var groupCheckedArray = new Array();
 var fullArrayGroup = new Array();
 var cbParentArray = new Array();
@@ -335,7 +336,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank,pCaraBayar, pCurr) {
                 },
                 {
                     "sortable": false,
-                    "aTargets": [0, 13]
+                    "aTargets": [0, 14]
                 },
                 {
                     "aTargets": [0],
@@ -432,6 +433,13 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank,pCaraBayar, pCurr) {
                 {
                     "aTargets": [13],
                     "mRender": function (data, type, full) {
+                        return full.STATUS_TRACKING;
+                    }
+
+                },
+                {
+                    "aTargets": [14],
+                    "mRender": function (data, type, full) {
                         var jenis = "PEMBELIAN_VALAS";
                         console.log("Ini Full : ", full);
                         var ret_value;
@@ -451,10 +459,10 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank,pCaraBayar, pCurr) {
                         else if(newRoleUser[0] == "ROLE_OSS" ){
                             ret_value =
                                 '<div class="btn-group">' +
-                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
+                                '<button style="width: 15px !important; margin-left: 5px;" class="btn btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
 
                             ret_value = ret_value +
-                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
+                                '<button style="width: 15px !important; margin-left: 5px;" class="btn btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
                                 '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
                                 '</div>';
                         }else {
@@ -465,17 +473,17 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank,pCaraBayar, pCurr) {
                                     '<div class="btn-group">';
                                 if(newRoleUser[0] == "ROLE_ADMIN"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="fas fa-edit"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_METALLICA + '\')"><i class="fa fa-close"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="fas fa-edit"></i></button>'+
+                                        // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        // '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_METALLICA + '\')"><i class="fa fa-close"></i></button>'+
                                         '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_JA_CASH"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="fas fa-edit"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_GROUP + '\')"><i class="fa fa-close"></i></button>'+
@@ -483,8 +491,8 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank,pCaraBayar, pCurr) {
                                 }
                                 if(newRoleUser[0] == "ROLE_JA_IE"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="fas fa-edit"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_GROUP + '\')"><i class="fa fa-close"></i></button>'+
@@ -492,7 +500,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank,pCaraBayar, pCurr) {
                                 }
                                 if(newRoleUser[0] == "ROLE_FCL_SETTLEMENT" || newRoleUser[0] === "ROLE_LOCAL_CURRENCY_LIQUIDITY"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         // '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="fas fa-edit"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
@@ -506,14 +514,14 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank,pCaraBayar, pCurr) {
                                     '<div class="btn-group">';
                                 if(newRoleUser[0] == "ROLE_ADMIN"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }else {
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         '</div>';
                                 }
@@ -525,13 +533,14 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank,pCaraBayar, pCurr) {
                                     '<div class="btn-group">';
                                 if(newRoleUser[0] == "ROLE_ADMIN"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         // '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }else {
                                     ret_value = ret_value +
-                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                    '<button style="width: 15px !important;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                     '</div>';
                                 }
 
@@ -544,13 +553,14 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank,pCaraBayar, pCurr) {
 
                                 if(newRoleUser[0] == "ROLE_ADMIN"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important;" class= "btn btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
+                                        // '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-primary" title="Pelunasan" onclick="updateLunas(\'' +full.ID_GROUP+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
                                         '</div>';
                                 }else {
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         '</div>';
                                 }
 
@@ -559,7 +569,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank,pCaraBayar, pCurr) {
                                 ret_value =
                                     '<div class="btn-group">' +
                                     // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Do Payment" onclick="updateLunas(\'' +full.ID_METALLICA+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
-                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                    '<button style="width: 15px !important;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                     // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DIAZ" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                     // '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_METALLICA + '\')"><i class="fa fa-close"></i></button>'+
                                     '</div>';
@@ -903,12 +913,12 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
     $('#exportHeadBtn, #exportAllItemBtn').hide();
     $('#exportItemBtn')
         .show()
-        .find("button").attr("onclick","exportXlsItem('"+group_id+"')");
+        .find("button").attr("onclick","exportXlsItem('"+idGroup+"')");
     $(".detail-data").show();
     hideLoadingCss()
     tableDetailGroupInvoiceVerified = $('#table-main-detail').DataTable({
             "serverSide": true,
-            "oSearch": {"sSearch": tempTableSearch},
+            "oSearch": {"sSearch": tempTableItemSearch},
             "bLengthChange": true,
             "scrollY": "100%",
             "scrollX": "100%",
@@ -1725,16 +1735,17 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
                     "dataSrc":
                         function (res) {
                             hideLoadingCss()
-                            getTotalTagihan();
+                            getTotalTagihanItem(idGroup);
                             return res.data;
                         }
                 }
             ,
             "drawCallback":
                 function (settings) {
+                    getTotalTagihanItem(idGroup);
                     // $(".dataTables_scrollHeadInner").css({"width":"100%"});
                     // $(".table ").css({"width":"100%"});
-                    tableDetailGroupInvoice.columns.adjust();
+                    tableDetailGroupInvoiceVerified.columns.adjust();
                     var currentPageNumber = this.api().page.info().page;
                     for (x=0;x<cbParentArray.length;x++){
                         if(cbParentArray[x] == currentPageNumber){
@@ -1780,6 +1791,11 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
                 }
         }
     );
+
+    $('.dataTables_length').each(function () {
+        var html = '<label id="tagihan_item" style="margin-left: 250px; cursor:default;">Total Tagihan Item (Rp): <b id="total_tagihan_item">0</b></label>';
+        $(this).append(html);
+    });
 
 
 }
@@ -1966,6 +1982,29 @@ function getTotalTagihan() {
         },
         success: function (res) {
             $("#total_tagihan").html(res);
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+
+}
+
+function getTotalTagihanItem(groupId) {
+    $.ajax({
+        url: baseUrl + "api_operator/invoice_group/get_total_tagihan_group_item",
+        type: "GET",
+        data: {
+            tgl_awal: $("#tanggal_awal").val(),
+            tgl_akhir: $("#tanggal_akhir").val(),
+            bank: $("#cmb_bank").val(),
+            currency : $("#cmb_currecny").val(),
+            cara_bayar : $("#cmb_cara_pembayaran").val(),
+            group_id : groupId,
+            search: tempTableSearch
+        },
+        success: function (res) {
+            $("#total_tagihan_item").replaceWith("<b>"+res+"</b>");
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")

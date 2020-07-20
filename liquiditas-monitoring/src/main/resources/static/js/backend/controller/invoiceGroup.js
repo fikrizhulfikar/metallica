@@ -4,6 +4,7 @@
 var tableMain;
 var isUpdate = "0";
 var tempTableSearch = "";
+var tempTableItemSearch = "";
 var groupCheckedArray = new Array();
 var fullArrayGroup = new Array();
 var cbParentArray = new Array();
@@ -679,18 +680,18 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank, pCaraBayar, pCurr) {
                 {width: 150, targets: 5},
                 {width: 150, targets: 6},
                 {width: 100, targets: 7},
-                {width: 20, targets: 8},
-                // {width: 100, targets: 35},
-                // {width: 100, targets: 36},
+                {width: 90, targets: 8},
+                {width: 100, targets: 9},
+                {width: 100, targets: 10},
                 {width: "80%", "targets": 0},
                 { className: "datatables_action", "targets": [1,2,3,4,5,6,7,8] },
                 {
                     "bSortable": true,
-                    "aTargets": [1, 2, 3, 4, 5,6,7,8]
+                    "aTargets": [1, 2, 3, 4, 5,6,7,8,9,10,11]
                 },
                 {
                     "sortable": false,
-                    "aTargets": [0,13]
+                    "aTargets": [0,14]
                 },
                 {
                     "aTargets": [0],
@@ -786,6 +787,13 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank, pCaraBayar, pCurr) {
                 },
                 {
                     "aTargets": [13],
+                    "mRender": function (data, type, full) {
+                        return full.STATUS_TRACKING;
+                    }
+
+                },
+                {
+                    "aTargets": [14],
                     "mRender": function (data, type, full) {
                         var jenis = "AP INVOICE";
                         // console.log("Ini Full : ", full);
@@ -1378,7 +1386,7 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
     hideLoadingCss()
     tableDetailGroupInvoice = $('#table-main-detail').DataTable({
             "serverSide": true,
-            "oSearch": {"sSearch": tempTableSearch},
+            "oSearch": {"sSearch": tempTableItemSearch},
             "bLengthChange": true,
             "scrollY": "100%",
             "scrollX": "100%",
@@ -2265,13 +2273,14 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                     "dataSrc":
                         function (res) {
                             hideLoadingCss()
-                            getTotalTagihan();
+                            getTotalTagihanItem(group_id);
                             return res.data;
                         }
                 }
             ,
             "drawCallback":
                 function (settings) {
+                    getTotalTagihanItem(group_id);
                     // $(".dataTables_scrollHeadInner").css({"width":"100%"});
                     // $(".table ").css({"width":"100%"});
                     tableDetailGroupInvoice.columns.adjust();
@@ -2697,17 +2706,23 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                                     }
         }
     );
-            $('.dataTables_filter').each(function () {
-                var html = '';
-                // html =  '<button class="btn btn-dtl btn-dribbble btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
-                html = html + '<button class="btn btn-dtl btn-primary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Bukti Kas" onclick="cetakBuktiKasGroupingMultiple()"><i class="fas fa-file-alt"></i></button>' ;
-                html = html + '<button class="btn btn-dtl btn-info btn-sm" id="btn-cetak-lampiran" style="margin-left: 10px" type="button" title="Cetak Lampiran" onclick="cetakLampiranGrouping(\''+group_id+'\')"><i class="fas fa-paperclip"></i></button>' ;
-                if (newRoleUser[0] === "ROLE_JA_CASH" || newRoleUser[0] === "ROLE_JA_IE" || newRoleUser[0] === "ROLE_FCL_SETTLEMENT" || newRoleUser[0] === "ROLE_ADMIN"){
-                    html = html + '<button class="btn btn-dtl btn-danger btn-sm" id="btn-ungroup" style="margin-left: 10px" type="button" title="Ungroup" onclick="ungroup()"><i class="fas fa-folder-open"></i></button>' ;
-                }
-                html = html + '<button class="btn btn-dtl btn-sm btn-ready" id="btn-siap-bayar-multiple" style="margin-left: 10px" type="button" title="Siap Bayar" onclick="multipleSiapBayarItemGroup()"><i class="fas fa-money-check"></i></button>' ;
-                $(this).append(html);
-            });
+
+    $('.dataTables_length').each(function () {
+        var html = '<label id="tagihan_item" style="margin-left: 250px; cursor:default;">Total Tagihan Item (Rp): <b id="total_tagihan_item">0</b></label>';
+        $(this).append(html);
+    });
+
+    $('.dataTables_filter').each(function () {
+        var html = '';
+        // html =  '<button class="btn btn-dtl btn-dribbble btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
+        html = html + '<button class="btn btn-dtl btn-primary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Bukti Kas" onclick="cetakBuktiKasGroupingMultiple()"><i class="fas fa-file-alt"></i></button>' ;
+        html = html + '<button class="btn btn-dtl btn-info btn-sm" id="btn-cetak-lampiran" style="margin-left: 10px" type="button" title="Cetak Lampiran" onclick="cetakLampiranGrouping(\''+group_id+'\')"><i class="fas fa-paperclip"></i></button>' ;
+        if (newRoleUser[0] === "ROLE_JA_CASH" || newRoleUser[0] === "ROLE_JA_IE" || newRoleUser[0] === "ROLE_FCL_SETTLEMENT" || newRoleUser[0] === "ROLE_ADMIN"){
+            html = html + '<button class="btn btn-dtl btn-danger btn-sm" id="btn-ungroup" style="margin-left: 10px" type="button" title="Ungroup" onclick="ungroup()"><i class="fas fa-folder-open"></i></button>' ;
+        }
+            html = html + '<button class="btn btn-dtl btn-sm btn-ready" id="btn-siap-bayar-multiple" style="margin-left: 10px" type="button" title="Siap Bayar" onclick="multipleSiapBayarItemGroup()"><i class="fas fa-money-check"></i></button>' ;
+        $(this).append(html);
+    });
 }
 
 function search(state) {
@@ -3633,6 +3648,29 @@ function getTotalTagihan() {
 
 }
 
+function getTotalTagihanItem(groupId) {
+    $.ajax({
+        url: baseUrl + "api_operator/invoice_group/get_total_tagihan_group_item",
+        type: "GET",
+        data: {
+            tgl_awal: $("#tanggal_awal").val(),
+            tgl_akhir: $("#tanggal_akhir").val(),
+            bank: $("#cmb_bank").val(),
+            currency : $("#cmb_currecny").val(),
+            cara_bayar : $("#cmb_cara_pembayaran").val(),
+            group_id : groupId,
+            search: tempTableItemSearch
+        },
+        success: function (res) {
+            $("#total_tagihan_item").replaceWith("<b>"+res+"</b>");
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+
+}
+
 function exportXls() {
     var tglAwal = "null";
     if (srcTglAwal != "") {
@@ -3785,4 +3823,5 @@ function back(){
     tableInvoiceGroup.ajax.reload()
     tableDetailGroupInvoice.destroy();
     $(".btn-dtl").remove();
+    $("#tagihan_item").remove();
 }

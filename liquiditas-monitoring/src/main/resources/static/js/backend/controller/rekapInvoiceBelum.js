@@ -3992,6 +3992,7 @@ function isSame(data){
         let bank = data[0].BANK_BYR;
         let hb_rekening = data[0].NO_REK_HOUSE_BANK;
         // let comp_code = data[0].COMP_CODE;
+        let assignment_depan = data[0].ASSIGNMENT_DEPAN;
         let assign_split =  data[0].ASSIGNMENT.toString().toLowerCase().split("-");
         let assignment = assign_split[0].toString();
         // let bus_area = data[0].BUS_AREA;
@@ -4009,7 +4010,7 @@ function isSame(data){
              if (data[x].METODE_PEMBAYARAN === "-"){
                  return 222;
              }
-            if(due_on !== data[x].TGL_RENCANA_BAYAR || bank !== data[x].BANK_BYR || hb_rekening !== data[x].NO_REK_HOUSE_BANK || assg !== assignment || sumber_dana !== data[x].SUMBER_DANA ||
+            if(due_on !== data[x].TGL_RENCANA_BAYAR || bank !== data[x].BANK_BYR || hb_rekening !== data[x].NO_REK_HOUSE_BANK || assignment_depan !== data[x].ASSIGNMENT_DEPAN || assg !== assignment || sumber_dana !== data[x].SUMBER_DANA ||
             inq_name !== data[x].INQ_CUSTOMER_NAME || no_giro !== data[x].NO_GIRO || curr_bayar !== data[x].CURR_BAYAR){
                 return false;
             }
