@@ -6,6 +6,7 @@ import com.iconpln.liquiditas.core.utils.AppUtils;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
+import java.sql.Types;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -183,7 +184,15 @@ public class DashboardService {
         return out;
     }
 
-    public Map<String, Object> getRealisasiPembayaranCashcode() throws SQLException {
+    public Map<String, Object> getRealisasiPembayaranCashcode(String pTglAwal, String pTglAkhir, String pBank, String pCashCode) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data getRealisasiPembayaranCashcode search info = " +
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, " +
+                        "pBank : {}, " +
+                        "pCashCode : {}, ",
+
+                pTglAwal, pTglAkhir, pBank, pCashCode);
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_DASHBOARD_CORPAY")
@@ -197,7 +206,11 @@ public class DashboardService {
                 .addValue("eq_idr_usd", OracleTypes.CURSOR)
                 .addValue("eq_idr_eur", OracleTypes.CURSOR)
                 .addValue("eq_idr_jpy", OracleTypes.CURSOR)
-                .addValue("eq_idr_myr", OracleTypes.CURSOR);
+                .addValue("eq_idr_rp", OracleTypes.CURSOR)
+                .addValue("p_tgl_awal", pTglAwal, Types.VARCHAR)
+                .addValue("p_tgl_akhir", pTglAkhir, Types.VARCHAR)
+                .addValue("p_bank", pBank, Types.VARCHAR)
+                .addValue("p_cash_code", pCashCode, Types.VARCHAR);
         Map<String, Object> out = simpleJdbcCall.execute(in);
         AppUtils.getLogger(this).info("data get_cashcode_realisasi : {}", out);
         return out;

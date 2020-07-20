@@ -57,9 +57,12 @@ public class DashboardController {
     }
 
     @RequestMapping(value = "/get_realisasi_pembayaran_cashcode", method = RequestMethod.GET)
-    public Map getRealisasiPembayaranCashcode() {
+    public Map getRealisasiPembayaranCashcode(@RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+                                              @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+                                              @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+                                              @RequestParam(value = "pCashCode", defaultValue = "ALL") String pCashCode) {
         try {
-            return dashboardService.getRealisasiPembayaranCashcode();
+            return dashboardService.getRealisasiPembayaranCashcode(pTglAwal, pTglAkhir, pBank, pCashCode);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

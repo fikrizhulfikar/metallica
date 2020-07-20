@@ -1,10 +1,36 @@
+var srcTglAwal = null;
+var srcTglAkhir = null;
+
 $(document).ready(function () {
     initDataTableImprstValas();
-
+    $('#tanggal_awal').datepicker({dateFormat: 'dd/mm/yy'});
+    $('#tanggal_akhir').attr("disabled", "disabled");
+    search("load");
     setInterval(function () {
         initDataTableImprstValas();
     }, 60000);
 });
+
+$("#tanggal_awal").change(function () {
+    var tglAwalData = $('#tanggal_awal').val();
+    if (tglAwalData == "") {
+        // alert("Tanggal awal belum di tentukan");
+        $('#tanggal_akhir').val("");
+    } else {
+        $('#tanggal_akhir').attr("disabled", false);
+        $('#tanggal_akhir').datepicker({dateFormat: 'dd/mm/yy', minDate: tglAwalData});
+    }
+});
+
+function search(state) {
+        if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
+            alert("Mohon Lengkapi Tgl Akhir");
+        } else {
+            initDataTableImprstValas()
+            srcTglAwal = $("#tanggal_awal").val()
+            srcTglAkhir = $("#tanggal_akhir").val()
+        }
+    }
 
 function initDataTableImprstValas() {
     showLoadingCss()
@@ -12,13 +38,20 @@ function initDataTableImprstValas() {
         url: baseUrl + "api_dashboard/get_realisasi_pembayaran_cashcode",
         dataType: 'JSON',
         type: "GET",
+        data: {
+                    pTglAwal: $("#tanggal_awal").val(),
+                    pTglAkhir: $("#tanggal_akhir").val(),
+                    pBank: $("#cmb_bank").val(),
+                    pCashCode: $("#cmb_cashcode").val(),
+                },
         success: function (res) {
             var data = res.return;
             console.log("response : "+data);
-            $("#tglcetak").html(data[0].TANGGAL);
+
             $('#table-imprst-valas tbody').empty();
             var nomor;
             $.each(data, function (key, val) {
+            $("#tglcetak").html(data[0].TANGGAL);
             nomor = key + 1;
             var vendor;
             if (val.VENDOR_NAME == null) {
@@ -40,8 +73,8 @@ function initDataTableImprstValas() {
 
             var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
                 "<td></td>" + "<td></td>" + "<td></td>" + "<td>TOTAL IDR</td>" +
-                                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_IDR[0].TOTAL_MYR,2,".",",") + "</td>" +
-                                "<td align='right'>" + accounting.formatNumber(res.EQ_IDR_MYR[0].EQ_IDR_MYR,2,".",",") + "</td>" +
+                                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_IDR[0].TOTAL_RP,2,".",",") + "</td>" +
+                                "<td align='right'>" + accounting.formatNumber(res.EQ_IDR_RP[0].EQ_IDR_RP,2,".",",") + "</td>" +
                                 "<td></td>" +
                                 "</tr>";
 
