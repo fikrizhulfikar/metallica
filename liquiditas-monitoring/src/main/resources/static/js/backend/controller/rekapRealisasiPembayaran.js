@@ -49,7 +49,7 @@ $("#tanggal_awal").change(function () {
 
 function getAllData() {
     $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_realisasi/get_rekap_lunas",
+        url: baseUrl + "api_operator/rekap_invoice_realisasi/get_rekap_bayar",
         dataType: 'JSON',
         type: "GET",
         data: {
@@ -99,8 +99,8 @@ function getAllData() {
                 //dataRow.push({text: row["NILAI_TAGIHAN"], alignment: "right"});
                 dataRow.push(row["CURRENCY"]);
                 dataRow.push(row["AMT_TC"]);
-                dataRow.push(row["REV_YEAR"]);
-                dataRow.push(row["DOC_HDR_TXT"]);
+                dataRow.push(row["APPROVER"]);
+                dataRow.push(row["COUNTER"]);
                 body.push(dataRow);
             });
 
@@ -171,7 +171,7 @@ function getAllData() {
                         {
                             "aTargets": [3],
                             "mRender": function (data, type, full) {
-                                return full.VENDOR_NAME;
+                                return full.VENDOR;
                             }
 
                         },
@@ -221,14 +221,14 @@ function getAllData() {
                         {
                             "aTargets": [10],
                             "mRender": function (data, type, full) {
-                                return full.REFERENCE;
+                                return full.APPROVER;
                             }
 
                         },
                         {
                             "aTargets": [11],
                             "mRender": function (data, type, full) {
-                                return full.REFERENCE;
+                                return full.COUNTER;
                             }
 
                         },
@@ -236,7 +236,7 @@ function getAllData() {
                     "ajax":
                         {
                             "url":
-                                baseUrl + "api_operator/rekap_invoice_realisasi/get_rekap_lunas",
+                                baseUrl + "api_operator/rekap_invoice_realisasi/get_rekap_bayar",
                             "type":
                                 "GET",
                             "dataType":
@@ -244,8 +244,16 @@ function getAllData() {
                             "data":
                                 {
                                     pTglAwal: pTglAwal,
-                                    pTglAkhir:
-                                    pTglAkhir
+                                                                        pTglAkhir:
+                                                                        pTglAkhir,
+                                                                        pBank:
+                                                                        pBank,
+                                                                        pCurrency:
+                                                                        pCurrency,
+                                                                        pCaraBayar:
+                                                                        pCaraBayar,
+                                                                        status: $("#cmb_status").val(),
+                                                                        statusTracking: statusTracking
                                 }
                             ,
                             "dataSrc":
@@ -1257,7 +1265,7 @@ function exportXls() {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/rekap_invoice_realisasi/xls/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currecny").val() + "/" + $("#cmb_cara_pembayaran").val() + "/" + $("#cmb_bank").val() + "/" +null+ "/" +null);
+    window.open(baseUrl + "api_operator/rekap_invoice_realisasi/xlsRekap/" + tglAwal + "/" + tglAkhir + "/" + "ALL" + "/" + null + "/" + "ALL" + "/" +null+ "/" +null);
 }
 
 function getTotalTagihan() {
@@ -1343,12 +1351,12 @@ function showColumn() {
             } else {
                 $("#hc9").prop("checked", false);
             }
-            if (response.FISC_YEAR == 1) {
+            if (response.APPROVER == 1) {
                 $("#hc10").prop("checked", true);
             } else {
                 $("#hc10").prop("checked", false);
             }
-            if (response.DOC_HDR_TXT == 1) {
+            if (response.COUNTER == 1) {
                 $("#hc11").prop("checked", true);
             } else {
                 $("#hc11").prop("checked", false);

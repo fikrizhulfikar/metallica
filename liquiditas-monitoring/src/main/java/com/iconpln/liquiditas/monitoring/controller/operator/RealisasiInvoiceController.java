@@ -87,6 +87,51 @@ public class RealisasiInvoiceController {
         return mapData;
     }
 
+    @RequestMapping(value = "/get_rekap_bayar", method = RequestMethod.GET)
+    public Map listRekapBayar(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "10") int length,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
+            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
+            @RequestParam(value = "pCaraBayar", defaultValue = "ALL") String pCaraBayar,
+            @RequestParam(value = "status", defaultValue = "ALL") String pStatus,
+            @RequestParam(value = "statusTracking", defaultValue = "ALL") String pStatusTracking,
+            @RequestParam(value = "search[value]", defaultValue = "") String pSearch
+    ) {
+
+        String sortBy = parseColumn(sortIndex);
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = realisasiInvoiceService.getListRekapPembayaranLunas(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, WebUtils.getUsernameLogin(), sortBy, sortDir, pStatus, pStatusTracking, pSearch);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("draw", draw);
+        mapData.put("data", list);
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
+        return mapData;
+    }
+
     @RequestMapping(value = "/edit_data", method = RequestMethod.GET)
     public List getDataInvoiceBy(
             @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
@@ -687,6 +732,77 @@ public class RealisasiInvoiceController {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    @GetMapping(path = "/xlsRekap/{pTglAwal}/{pTglAkhir}/{pCurr}/{pCaraBayar}/{pBank}/{pStatus}/{pStatusTracking}")
+    public String exportRekap(
+            @PathVariable String pTglAwal,
+            @PathVariable String pTglAkhir,
+            @PathVariable String pCurr,
+            @PathVariable String pStatusTracking,
+            @PathVariable String pBank,
+            @PathVariable String pCaraBayar,
+            @PathVariable String pStatus,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws InvalidFormatException, ParseException {
+        SimpleDateFormat dateParser = new SimpleDateFormat("yyyymmdd");
+        try {
+
+            String tglAwal = "";
+            String tglAkhir = "";
+            String caraBayar = (pCaraBayar.equals("null")) ? "ALL" : pCaraBayar;
+            String status = (pStatus.equals("null")) ? "ALL" : pStatus;
+            String statusTracking = (pStatusTracking.equals("null")) ? "ALL" : pStatusTracking;
+
+            if (!pTglAwal.equals("null")) {
+                tglAwal = pTglAwal;
+            }
+            if (!pTglAkhir.equals("null")) {
+                tglAkhir = pTglAkhir;
+            }
+
+            String title = "REKAPITULASI REALISASI PEMBAYARAN";
+            String namaFile = "rekap_realisasi_pembayaran.xls";
+
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
+
+            List<Map<String, Object>> listData = realisasiInvoiceService.getAllRekapPembayaran(WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pCurr, statusTracking, pBank, caraBayar, status);
+            System.out.println("Ini List Data Excel Cok!"+ listData);
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+
+            param.put("TITLE", title);
+            for (Map data : listData) {
+                Map paramDetail = new HashMap();
+                paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
+                paramDetail.put("DOC_NO",data.get("DOC_NO"));
+                paramDetail.put("METODE_PEMBAYARAN",data.get("METODE_PEMBAYARAN"));
+                paramDetail.put("VENDOR",data.get("VENDOR"));
+                paramDetail.put("HOUSE_BANK",data.get("HOUSE_BANK"));
+                paramDetail.put("NO_REK_HOUSE_BANK",data.get("NO_REK_HOUSE_BANK"));
+                paramDetail.put("BANK_BENEF",data.get("BANK_BENEF"));
+                paramDetail.put("NO_REK_BENEF",data.get("NO_REK_BENEF"));
+                paramDetail.put("CURRENCY",data.get("CURRENCY"));
+                paramDetail.put("AMT_TC",data.get("AMT_TC"));
+                paramDetail.put("APPROVER",data.get("APPROVER"));
+                paramDetail.put("COUNTER",data.get("COUNTER"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/rekap_realisasi_pembayaran.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Gagal Export Data :" + e.getMessage();
         }
     }
 
