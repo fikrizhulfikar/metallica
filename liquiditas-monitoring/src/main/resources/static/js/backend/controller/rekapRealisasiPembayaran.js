@@ -15,7 +15,7 @@ var addedDays = 2;
 
 $(document).ready(function () {
      $( '#pAccountBalance' ).mask('000.000.000.000.000', {reverse: true});
-    $('#tanggal_awal').datepicker({dateFormat: 'dd/mm/yy'});
+    $('#tanggal_awal').datepicker({dateFormat: 'dd-mm-yy'});
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
 });
@@ -27,7 +27,7 @@ $("#tanggal_awal").change(function () {
         $('#tanggal_akhir').val("");
     } else {
         $('#tanggal_akhir').attr("disabled", false);
-        $('#tanggal_akhir').datepicker({dateFormat: 'dd/mm/yy', minDate: tglAwalData});
+        $('#tanggal_akhir').datepicker({dateFormat: 'dd-mm-yy', minDate: tglAwalData});
     }
 });
 
@@ -67,10 +67,10 @@ function getAllData() {
                         console.log("USD : "+dolar);
                         console.log("EUR : "+euro);
                         console.log("JPY : "+yen);
-                        $("#total_per_idr").html(rp);
-                        $("#total_per_usd").html(dolar);
-                        $("#total_per_eur").html(euro);
-                        $("#total_per_jpy").html(yen);
+                        $("#total_per_idr").html(accounting.formatNumber(rp,2,".",","));
+                        $("#total_per_usd").html(accounting.formatNumber(dolar,2,".",","));
+                        $("#total_per_eur").html(accounting.formatNumber(euro,2,".",","));
+                        $("#total_per_jpy").html(accounting.formatNumber(yen,2,".",","));
         },
         error: function (res) {
             console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
@@ -194,7 +194,7 @@ function getAllData() {
                         {
                             "aTargets": [9],
                             "mRender": function (data, type, full) {
-                                return full.AMT_TC;
+                                return accounting.formatNumber(full.AMT_TC,2,".",",");
 
                             }
                         },
@@ -279,7 +279,7 @@ function getAllData() {
             });
 
             $('.dataTables_length').each(function () {
-                var html = '<label style="margin-left: 250px; cursor:default; text-align: center;"><b>REKAPITULASI REALISASI PEMBAYARAN</b><br><b>TANGGAL :</b> <a id="start_date"></a> <b>-</b> <a id="finish_date"></a><br><b>TOTAL IDR </b> <a id="total_per_idr"></a><b>, USD </b> <a id="total_per_usd"></a><b>, EUR </b> <a id="total_per_eur"></a><b>, JPY </b> <a id="total_per_jpy"></a></label>';
+                var html = '<label style="margin-left: 250px; cursor:default; text-align: center;"><b>REKAPITULASI REALISASI PEMBAYARAN</b><br><b>TANGGAL :</b> <a id="start_date"></a><b> s.d </b><a id="finish_date"></a><br><b>TOTAL IDR </b> <a id="total_per_idr"></a><b>, USD </b> <a id="total_per_usd"></a><b>, EUR </b> <a id="total_per_eur"></a><b>, JPY </b> <a id="total_per_jpy"></a></label>';
                 $(this).append(html);
             });
 
