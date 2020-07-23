@@ -17,7 +17,7 @@ var srcTglAkhir = null;
 var addedDays = 2;
 
 $(document).ready(function () {
-    getAllData();
+    //getAllData();
      $( '#pAccountBalance' ).mask('000.000.000.000.000', {reverse: true});
     $('#tanggal_awal').datepicker({dateFormat: 'dd/mm/yy'});
     $('#tanggal_akhir').attr("disabled", "disabled");
@@ -49,7 +49,7 @@ $("#tanggal_awal").change(function () {
 
 function getAllData() {
     $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_realisasi/get_rekap_bayar",
+        url: baseUrl + "api_operator/rekap_invoice_realisasi/get_rekap_currency",
         dataType: 'JSON',
         type: "GET",
         data: {
@@ -62,6 +62,31 @@ function getAllData() {
         },
         success: function (res) {
             allData = res;
+            var data = res.data;
+            var idr = [];
+            var usd = [];
+            var eur = [];
+            var jpy = [];
+                        $.each(data, function (key, val) {
+                           //console.log("AMOUNT : "+val.AMT_TC+" CURRENCY : "+val.CURRENCY);
+                           if ("IDR" == val.CURRENCY) {idr.push(Math.round(val.AMT_TC));}
+                           if ("USD" == val.CURRENCY) {usd.push(Math.round(val.AMT_TC));}
+                           if ("EUR" == val.CURRENCY) {eur.push(Math.round(val.AMT_TC));}
+                           if ("JPY" == val.CURRENCY) {jpy.push(Math.round(val.AMT_TC));}
+
+                        });
+                        for (var i = 0, rp = 0; i < idr.length; rp += idr[i++]);
+                        for (var i = 0, dolar = 0; i < usd.length; dolar += usd[i++]);
+                        for (var i = 0, euro = 0; i < eur.length; euro += eur[i++]);
+                        for (var i = 0, yen = 0; i < jpy.length; yen += jpy[i++]);
+                        console.log("IDR : "+rp);
+                        console.log("USD : "+dolar);
+                        console.log("EUR : "+euro);
+                        console.log("JPY : "+yen);
+                        $("#total_per_idr").html(rp);
+                        $("#total_per_usd").html(dolar);
+                        $("#total_per_eur").html(euro);
+                        $("#total_per_jpy").html(yen);
         },
         error: function (res) {
             console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
@@ -119,7 +144,7 @@ function getAllData() {
                     "scrollY": "100%",
                     "scrollX": "100%",
                     // "order": [3],
-                    "searching": false,
+                    "searching": true,
                     bSortable: true,
                     /*"scrollY": "300px",
                     "scrollX": true,*/
@@ -347,7 +372,7 @@ function getAllData() {
             });
 
             $('.dataTables_length').each(function () {
-                var html = '<label style="margin-left: 250px; cursor:default; text-align: center;"><b>REKAPITULASI REALISASI PEMBAYARAN</b><br><b>TANGGAL :</b> <b id="start_date"></b> - <b id="finish_date"></b></label>';
+                var html = '<label style="margin-left: 250px; cursor:default; text-align: center;"><b>REKAPITULASI REALISASI PEMBAYARAN</b><br><b>TANGGAL :</b> <a id="start_date"></a> <b>-</b> <a id="finish_date"></a><br><b>TOTAL IDR </b> <a id="total_per_idr"></a><b>, USD </b> <a id="total_per_usd"></a><b>, EUR </b> <a id="total_per_eur"></a><b>, JPY </b> <a id="total_per_jpy"></a></label>';
                 $(this).append(html);
             });
 
