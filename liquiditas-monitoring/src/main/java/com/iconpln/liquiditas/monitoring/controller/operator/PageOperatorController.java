@@ -192,6 +192,12 @@ public class PageOperatorController {
     @RequestMapping("/rekap_invoice_oss")
     public String rekap_invoice_oss(){return "operator/rekap_invoice_oss";}
 
+    @RequestMapping("/rekap_invoice_reverse")
+    public String rekap_invoice_reverse(){return "operator/rekap_invoice_reverse";}
+
+    @RequestMapping("/rekap_invoice_salah")
+    public String rekap_invoice_salah(){return "operator/rekap_invoice_salah";}
+
     @RequestMapping("/rekap_invoice_oss_verifikator")
     public String rekap_invoice_verifikator() {
         return "operator/rekap_invoice_oss_verifikator";

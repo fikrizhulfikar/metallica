@@ -22,24 +22,20 @@ var srcTglAkhir = null;
 var addedDays = 2;
 
 $(document).ready(function () {
-    getAllData();
+    // getAllData();
 //     $( '#pAccountBalance' ).mask('000.000.000.000.000', {reverse: true});
     $('#tanggal_awal').datepicker({dateFormat: 'dd/mm/yy'});
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
-    setSelectBank("cmb_bank", "FILTER", "", "", "REKAP");
+    setSelectFilterBank("cmb_bank", "FILTER", "", "", "REKAP");
     setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
-    // setSelectMetodeBayar("cmb_cara_pembayaran","");
-    setSelectStatusTracking("cmb_status_tracking");
     $('#check_all').change(function() {
-            if($(this).is(':checked')){
-                checkColumn(true);
-            } else {
-                checkColumn(false);
-            }
-        });
-
-
+        if($(this).is(':checked')){
+            checkColumn(true);
+        } else {
+            checkColumn(false);
+        }
+    });
 });
 
 
@@ -50,7 +46,7 @@ $("#tanggal_awal").change(function () {
         $('#tanggal_akhir').val("");
     } else {
         $('#tanggal_akhir').attr("disabled", false);
-        $('#tanggal_akhir').datepicker({dateFormat: 'dd/mm/yy', minDate: tglAwalData});
+        $('#tanggal_akhir').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date(tglAwalData)});
     }
 });
 
@@ -82,8 +78,8 @@ function getAllData() {
         if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
             alert("Mohon Lengkapi Tgl Akhir");
         } else {
-            initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val(), $("#cmb_jenis_pemabayaran").val(), $("#cmb_status_tracking").val())
-            getAllData()
+            initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val())
+            // getAllData()
             srcTglAwal = $("#tanggal_awal").val()
             srcTglAkhir = $("#tanggal_akhir").val()
         }
@@ -266,19 +262,17 @@ function getAllData() {
                         {width: 100, targets: 68},
                         {width: 100, targets: 69},
                         {width: 100, targets: 70},
-                        {width: 100, targets: 71},
-                        {width: 100, targets: 72},
                         // {width: 100, targets: 35},
                         // {width: 100, targets: 36},
                         {width: "20%", "targets": 0},
                         { className: "datatables_action", "targets": [9,23,24,25,26,27,28,29] },
                         {
                             "bSortable": true,
-                            "aTargets": [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71]
+                            "aTargets": [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70]
                         },
                         {
                             "sortable": false,
-                            "aTargets": [0,73,74]
+                            "aTargets": [0,71,72]
                         },
                         {
                             "aTargets": [0],
@@ -564,7 +558,7 @@ function getAllData() {
                         {
                                  "aTargets": [40],
                                  "mRender": function (data, type, full) {
-                                  return full.HOUSE_BANK;
+                                  return full.BANK_BYR;
                                     }
                          },
                          {
@@ -687,88 +681,76 @@ function getAllData() {
                              return full.GROUP_ID;
                                  }
                         },
-                         {
-                               "aTargets": [61],
-                               "mRender": function (data, type, full) {
-                               return full.BANK_BYR;
-                                   }
-                          },
                           {
-                             "aTargets": [62],
+                             "aTargets": [61],
                              "mRender": function (data, type, full) {
                              return full.CURR_BAYAR;
                                  }
                         },
                         {
-                             "aTargets": [63],
+                             "aTargets": [62],
                              "mRender": function (data, type, full) {
                              return full.AMOUNT_BAYAR;
                                  }
                         },
                         {
-                             "aTargets": [64],
+                             "aTargets": [63],
                              "mRender": function (data, type, full) {
                              return full.BANK_BENEF;
                                  }
                         },
                         {
-                             "aTargets": [65],
+                             "aTargets": [64],
                              "mRender": function (data, type, full) {
                              return full.NO_REK_BENEF;
                                  }
                         },
                         {
-                             "aTargets": [66],
+                             "aTargets": [65],
                              "mRender": function (data, type, full) {
                              return full.NAMA_BENEF;
                                  }
                         },
-                          {
-                              "aTargets": [67],
-                              "mRender": function (data, type, full) {
-                              return full.TGL_ACT_BAYAR;
-                              }
-                          },
                          {
-                              "aTargets": [68],
+                              "aTargets": [66],
                               "mRender": function (data, type, full) {
                               return full.SUMBER_DANA;
                                     }
                          },
                          {
-                              "aTargets": [69],
+                              "aTargets": [67],
                               "mRender": function (data, type, full) {
                                 return full.KETERANGAN;
                               }
                           },
                          {
-                            "aTargets": [70],
+                            "aTargets": [68],
                             "mRender": function (data, type, full) {
                               return full.TGL_TAGIHAN_DITERIMA;
                             }
                         },
                         {
-                          "aTargets": [71],
+                          "aTargets": [69],
                           "mRender": function (data, type, full) {
                           return full.PARTIAL_IND;
                                 }
                          },
                          {
-                              "aTargets": [72],
+                              "aTargets": [70],
                               "mRender": function (data, type, full) {
                               return full.STATUS_TRACKING;
                                     }
                          },
                         {
-                            "aTargets": [73],
+                            "aTargets": [71],
                             "mRender": function (data, type, full) {
                                 let darr = full.TGL_RENCANA_BAYAR.split("/");
                                 let now = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
                                 let ren_byr = new Date(darr[2],darr[1]-1,darr[0]);
                                 if (ren_byr < now){
-                                    verif = '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-danger" title="Reject" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
+                                    verif = '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-danger" title="Reject" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
                                 }else{
-                                    verif = '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title="Approve Tanggal" onclick="verifikasi_tanggal(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-check"></i></button>'+'<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-danger" title="Reject" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
+                                    verif = '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-reverse-data btn-sm btn-success" title="Approve Tanggal" onclick="verifikasi_tanggal(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-check"></i></button>'+'<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-danger" title="Reject" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
                                 }
                                 var ret_value = "-";
                                 var role = newRoleUser[0];
@@ -781,7 +763,7 @@ function getAllData() {
                             }
                         },
                         {
-                            "aTargets": [74],
+                            "aTargets": [72],
                             "mRender": function (data, type, full) {
                                 var value = new Object();
                                 var full_value = new Object();
@@ -1184,65 +1166,55 @@ function getAllData() {
                                 } else {
                                     api.column(60).visible(false);
                                 }
-                                if (response.BANK_BYR == 1) {
+                                if (response.CURR_BAYAR == 1) {
                                     api.column(61).visible(true);
                                 } else {
                                     api.column(61).visible(false);
                                 }
-                                if (response.CURR_BAYAR == 1) {
+                                if (response.AMOUNT_BAYAR == 1) {
                                     api.column(62).visible(true);
                                 } else {
                                     api.column(62).visible(false);
                                 }
-                                if (response.AMOUNT_BAYAR == 1) {
+                                if (response.BANK_BENEF == 1) {
                                     api.column(63).visible(true);
                                 } else {
                                     api.column(63).visible(false);
                                 }
-                                if (response.BANK_BENEF == 1) {
+                                if (response.NO_REK_BENEF == 1) {
                                     api.column(64).visible(true);
                                 } else {
                                     api.column(64).visible(false);
                                 }
-                                if (response.NO_REK_BENEF == 1) {
+                                if (response.NAMA_BENEF == 1) {
                                     api.column(65).visible(true);
                                 } else {
                                     api.column(65).visible(false);
                                 }
-                                if (response.NAMA_BENEF == 1) {
-                                    api.column(66).visible(true);
-                                } else {
-                                    api.column(66).visible(false);
-                                }
-                                 if (response.TGL_ACT_BAYAR == 1) {
-                                   api.column(67).visible(true);
-                                  } else {
-                                   api.column(67).visible(false);
-                                 }
                                  if (response.SUMBER_DANA == 1) {
-                                  api.column(68).visible(true);
+                                  api.column(66).visible(true);
                                 } else {
-                                  api.column(68).visible(false);
+                                  api.column(66).visible(false);
                                 }
                                 if (response.KETERANGAN == 1) {
-                                    api.column(69).visible(true);
+                                    api.column(67).visible(true);
                                  } else {
-                                    api.column(69).visible(false);
+                                    api.column(67).visible(false);
                                 }
                                 if (response.TGL_TAGIHAN_DITERIMA == 1) {
-                                    api.column(70).visible(true);
+                                    api.column(68).visible(true);
                                  } else {
-                                    api.column(70).visible(false);
+                                    api.column(68).visible(false);
                                 }
                                 if (response.PARTIAL_IND == 1) {
-                                     api.column(71).visible(true);
+                                     api.column(69).visible(true);
                                  } else {
-                                     api.column(71).visible(false);
+                                     api.column(69).visible(false);
                                 }
                                 if (response.STATUS_TRACKING == 1) {
-                                     api.column(72).visible(true);
+                                     api.column(70).visible(true);
                                  } else {
-                                     api.column(72).visible(false);
+                                     api.column(70).visible(false);
                                 }
                             },
                             error: function () {
@@ -1276,14 +1248,14 @@ function getAllData() {
                 var html = '<button class="btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" title="Sembunyikan Kolom" data-toggle="modal" onclick="showColumn()">' +
                     '<i class="fa fa-arrows-alt"></i></button>';
                 /*button reject*/
-                html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="rejectData()">' +
-                    '            <i class="fa fa-ban"></i></button>';
-                html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fas fa-edit"></i></button>';
-                html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fas fa-edit"></i></button>';
-                html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
-                html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
-                html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
-                html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
+                // html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="rejectData()">' +
+                //     '            <i class="fa fa-ban"></i></button>';
+                // html = html + '<button class="btn-edit-data btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="fas fa-edit"></i></button>';
+                // html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fas fa-edit"></i></button>';
+                // html = html + '<button class="btn-edit-data btn-sm btn-success" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
+                // html = html + '<button class="btn-edit-data btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
+                // html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fa fa-close"></i></button>';
+                // html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
                 }
                if(newRoleUser[0] === "ROLE_EXECUTIVE_VICE_PRESIDENT"){
                    html = html + '<button class="btn btn-sm btn-success" id="btn-verified" title="Verifikasi Tanggal" style="margin-left: 10px" type="button" onclick="verifikasi_tanggal_multiple()"><i class="fas fa-check-double"></i></button>';

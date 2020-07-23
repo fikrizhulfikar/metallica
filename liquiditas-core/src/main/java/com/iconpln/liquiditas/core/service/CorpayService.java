@@ -455,15 +455,17 @@ public class CorpayService {
         return out;
     }
 
-    public Map<String, Object> getAllTracking(String pSearch) throws SQLException {
+    public List<Map<String, Object>> getAllTracking(String pSearch, String pStart, String pLength) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("get_tracking_level1");
 
         SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("p_search", pSearch);
-        Map<String, Object> out = simpleJdbcCall.execute(in);
+                .addValue("p_search", pSearch)
+                .addValue("p_start", pStart)
+                .addValue("p_length", pLength);
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class,in);
         AppUtils.getLogger(this).info("data get_tracking_level1 : {}", out);
         return out;
     }
@@ -912,6 +914,27 @@ public class CorpayService {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("invoice_edit_all_data");
+        Map<String, Object> result = simpleJdbcCall.execute(params);
+        return result;
+    }
+
+    public Map<String, Object> insertEditAllGiro(
+            String comp_code, String doc_no, String fiscal_year, String line_item,
+            String ket, String user_id, String no_giro, String metode_bayar)
+    {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("invoice_edit_all_giro");
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_comp_code",comp_code,OracleTypes.VARCHAR)
+                .addValue("p_doc_no", doc_no, OracleTypes.VARCHAR)
+                .addValue("p_fisc_year", fiscal_year, OracleTypes.VARCHAR)
+                .addValue("p_line_item",line_item, OracleTypes.VARCHAR)
+                .addValue("p_ket", ket, OracleTypes.VARCHAR)
+                .addValue("p_user_id", user_id, OracleTypes.VARCHAR)
+                .addValue("p_no_giro", no_giro, OracleTypes.VARCHAR)
+                .addValue("p_metode_pembayaran", metode_bayar, OracleTypes.VARCHAR)
+                .addValue("out_msg",OracleTypes.VARCHAR);
         Map<String, Object> result = simpleJdbcCall.execute(params);
         return result;
     }

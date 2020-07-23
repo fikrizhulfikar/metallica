@@ -4,6 +4,7 @@
 var tableMain;
 var isUpdate = "0";
 var tempTableSearch = "";
+var tempTableItemSearch = "";
 var groupCheckedArray = new Array();
 var fullArrayGroup = new Array();
 var cbParentArray = new Array();
@@ -14,13 +15,14 @@ var srcTglAwal = "";
 var srcTglAkhir = "";
 
 $(document).ready(function () {
-    initDataTable();
     $('#exportHeadBtn, #exportAllItemBtn').show();
     $('#exportItemBtn').hide();
     $('#tanggal_awal').datepicker({dateFormat: "dd/mm/yy"});
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
-    // setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+    setSelectFilterBank("cmb_bank", "FILTER", "", "", "REKAP");
+    setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+    setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
 
     $('#check_all').change(function() {
         if($(this).is(':checked')){
@@ -297,7 +299,7 @@ function getAllData() {
 
 }
 
-function initDataTable(pTglAwal, pTglAkhir,  pBank) {
+function initDataTable(pTglAwal, pTglAkhir, pBank, pCaraBayar, pCurr) {
     showLoadingCss();
     $('#table-rekapitulasi tbody').empty();
     $('#table-rekapitulasi').dataTable().fnDestroy();
@@ -323,18 +325,20 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                 {width: 150, targets: 5},
                 {width: 150, targets: 6},
                 {width: 150, targets: 7},
-                {width: 20, targets: 8},
-                // {width: 100, targets: 35},
-                // {width: 100, targets: 36},
+                {width: 90, targets: 8},
+                {width: 100, targets: 9},
+                {width: 100, targets: 10},
+                {width: 100, targets: 11},
+                {width: 120, targets: 12},
                 {width: "80%", "targets": 0},
                 { className: "datatables_action", "targets": [1,2,3,4,5,6,7,8] },
                 {
                     "bSortable": true,
-                    "aTargets": [1, 2, 3, 4, 5,6,7,8]
+                    "aTargets": [1, 2, 3, 4, 5,6,7,8,9,10,11,12]
                 },
                 {
                     "sortable": false,
-                    "aTargets": [0,13]
+                    "aTargets": [0,14]
                 },
                 {
                     "aTargets": [0],
@@ -431,6 +435,13 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                 {
                     "aTargets": [13],
                     "mRender": function (data, type, full) {
+                        return full.STATUS_TRACKING;
+                    }
+
+                },
+                {
+                    "aTargets": [14],
+                    "mRender": function (data, type, full) {
                         var jenis = "AP INVOICE";
                         // console.log("Ini Full : ", full);
                         var ret_value;
@@ -439,14 +450,10 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                             return "-"
                         }
                         else if(newRoleUser[0] == "ROLE_ADMIN" ){
-                            ret_value = ret_value +
-                                '<div class="btn-group">' +
-                                '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>'+
-                                '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                            ret_value = '<div class="btn-group"><button style="width: 15px !important;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                 '</div>';
                         }else {
-                            ret_value = '<div class="btn-group"><button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                            ret_value = '<div class="btn-group"><button style="width: 15px !important;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                 '</div>';
                         }
                         return ret_value;
@@ -467,12 +474,14 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                             pTglAwal: pTglAwal,
                             pTglAkhir: pTglAkhir,
                             pBank: pBank,
+                            pCaraBayar : pCaraBayar,
+                            pCurr : pCurr
                         }
                     ,
                     "dataSrc":
                         function (res) {
                             hideLoadingCss()
-                            getTotalTagihan();
+                            getTotalTagihanLunas();
                             return res.data;
                         }
                 }
@@ -791,7 +800,7 @@ function getDetails(idGroup) {
     hideLoadingCss()
     tableDetailGroupInvoice = $('#table-main-detail').DataTable({
             "serverSide": true,
-            "oSearch": {"sSearch": tempTableSearch},
+            "oSearch": {"sSearch": tempTableItemSearch},
             "bLengthChange": true,
             "scrollY": "100%",
             "scrollX": "100%",
@@ -1607,19 +1616,20 @@ function getDetails(idGroup) {
                     "dataSrc":
                         function (res) {
                             hideLoadingCss()
-                            getTotalTagihan();
+                            getTotalTagihanLunasItem(idGroup);
                             return res.data;
                         }
                 }
             ,
             "drawCallback":
                 function (settings) {
+                    getTotalTagihanLunasItem(idGroup);
                     // $(".dataTables_scrollHeadInner").css({"width":"100%"});
                     // $(".table ").css({"width":"100%"});
                     tableDetailGroupInvoice.columns.adjust();
                     var currentPageNumber = this.api().page.info().page;
                     for (x=0;x<cbParentArray.length;x++){
-                        if(cbParentArray[x] == currentPageNumber){
+                        if(cbParentArray[x] === currentPageNumber){
                             $("#cbparent").prop('checked', true);
                             break;
                         }
@@ -1663,6 +1673,11 @@ function getDetails(idGroup) {
         }
     );
 
+    $('.dataTables_length').each(function () {
+        var html = '<label id="tagihan_item" style="margin-left: 250px; cursor:default;">Total Tagihan Item (Rp): <b id="total_tagihan_item_lunas">0</b></label>';
+        $(this).append(html);
+    });
+
 
 }
 
@@ -1670,8 +1685,8 @@ function search(state) {
     if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
         alert("Mohon Lengkapi Tgl Akhir");
     } else {
-        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(),$("#cmb_bank").val())
-        getAllData()
+        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(),$("#cmb_bank").val(),$("#cmb_cara_pembayaran").val(),$("#cmb_currecny").val())
+        // getAllData()
         srcTglAwal = $("#tanggal_awal").val()
         srcTglAkhir = $("#tanggal_akhir").val()
     }
@@ -1836,18 +1851,43 @@ function group_payment(){
     }
 }
 
-function getTotalTagihan() {
+function getTotalTagihanLunas() {
     $.ajax({
-        url: baseUrl + "api_operator/invoice_group/get_total_tagihan",
+        url: baseUrl + "api_operator/invoice_group/get_total_tagihan_lunas",
         type: "GET",
         data: {
             tgl_awal: $("#tanggal_awal").val(),
             tgl_akhir: $("#tanggal_akhir").val(),
             bank: $("#cmb_bank").val(),
+            currency : $("#cmb_currecny").val(),
+            cara_bayar : $("#cmb_cara_pembayaran").val(),
             search: tempTableSearch
         },
         success: function (res) {
             $("#total_tagihan").html(res);
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+
+}
+
+function getTotalTagihanLunasItem(groupId) {
+    $.ajax({
+        url: baseUrl + "api_operator/invoice_group/get_total_tagihan_lunas_item",
+        type: "GET",
+        data: {
+            tgl_awal: $("#tanggal_awal").val(),
+            tgl_akhir: $("#tanggal_akhir").val(),
+            bank: $("#cmb_bank").val(),
+            currency : $("#cmb_currecny").val(),
+            cara_bayar : $("#cmb_cara_pembayaran").val(),
+            group_id : groupId,
+            search: tempTableSearch
+        },
+        success: function (res) {
+            $("#total_tagihan_item_lunas").replaceWith("<b>"+res+"</b>");
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -1901,4 +1941,5 @@ function back(){
         .find("button").unbind('click');
     tableInvoiceGroup.ajax.reload()
     tableDetailGroupInvoice.destroy();
+    $("#tagihan_item").remove();
 }
