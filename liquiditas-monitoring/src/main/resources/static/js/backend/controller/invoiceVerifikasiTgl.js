@@ -806,13 +806,14 @@ function getAllData() {
 
                                 function (res) {
                                     hideLoadingCss();
-                                   // getTotalTagihan();
+                                    getTotalTagihan();
                                     return res.data;
                                 }
                         }
                     ,
                     "drawCallback":
                         function (settings) {
+                            getTotalTagihan();
                             // $(".dataTables_scrollHeadInner").css({"width":"100%"});
                             // $(".table ").css({"width":"100%"});
                             table_rekapitulasi.columns.adjust();
@@ -1234,8 +1235,8 @@ function getAllData() {
             });
 
             $('.dataTables_length').each(function () {
-//                var html = '<label style="margin-left: 250px; cursor:default;">Total tagihan (Rp): <b id="total_tagihan">0</b></label>';
-//                $(this).append(html);
+               var html = '<label style="margin-left: 190px; cursor:default;">Total tagihan (Rp): <b id="total_tagihan">0</b></label>';
+               $(this).append(html);
             });
 
             $('.dataTables_filter').each(function () {
@@ -1267,7 +1268,6 @@ function getAllData() {
             table_rekapitulasi.columns.adjust();
             initCbparent();
         }
-
 function  initCbparent() {
     $('#forcbparent').empty();
     $('#forcbparent').append("<input type=\"checkbox\" id='cbparent'> ");
@@ -1288,7 +1288,25 @@ function  initCbparent() {
     });
 }
 
-
+function getTotalTagihan() {
+    $.ajax({
+        url: baseUrl + "api_operator/rekap_invoice_belum/get_total_tagihan_approval_evp",
+        type: "GET",
+        data: {
+            tgl_awal: $("#tanggal_awal").val(),
+            tgl_akhir: $("#tanggal_akhir").val(),
+            currency: $("#cmb_currecny").val(),
+            bank: $("#cmb_bank").val(),
+            search: tempTableSearch
+        },
+        success: function (res) {
+            $("#total_tagihan").html(res);
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
 
 function getBallance2(pBank, pSource, pBeneficiary){
     var stateCrf = confirm("Anda Data Yang Anda Masukan Sudah Benar?");
