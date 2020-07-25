@@ -85,6 +85,8 @@ function getAllData() {
         } else {
             initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val(), $("#cmb_jenis_pemabayaran").val(), $("#cmb_status_tracking").val())
             getAllData()
+            getHeaderGroupInvoice()
+            getHeaderOperasiKhusus()
             srcTglAwal = $("#tanggal_awal").val()
             srcTglAkhir = $("#tanggal_akhir").val()
         }
@@ -104,6 +106,7 @@ function getAllData() {
                     "searching": false,
                     bSortable: true,
                     "scrollCollapse": true,
+                    "lengthMenu": [[10, 25, 50, 100, 200, 400, 600, 1000], [10, 25, 50, 100, 200, 400, 600, 1000]],
                     "aoColumnDefs": [
                         {width: 20, targets: 0},
                         {width: 100, targets: 1},
@@ -244,33 +247,6 @@ function getAllData() {
                                     return res.data;
                                 }
                         }
-                    ,
-                    "initComplete": function(settings, json) {
-                        var api = this.api();
-                        $.ajax({
-                            url: baseUrl + "api_operator/rekap_invoice_realisasi/get_column",
-                            dataType: 'JSON',
-                            type: "GET",
-                            success: function (res) {
-                                var response = res.data[0];
-                                api.column(0).visible(true);
-                                api.column(1).visible(true);
-                                api.column(2).visible(true);
-                                api.column(3).visible(true);
-                                api.column(4).visible(true);
-                                api.column(5).visible(true);
-                                api.column(6).visible(true);
-                                api.column(7).visible(true);
-                                api.column(8).visible(true);
-                                api.column(9).visible(true);
-                                api.column(10).visible(true);
-                                api.column(11).visible(true);
-                            },
-                            error: function () {
-                                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-                            }
-                        });
-                    }
                 }
             );
             table_rekapitulasi.on('search.dt', function () {
@@ -321,3 +297,63 @@ function getTotalTagihan() {
     });
 
 }
+
+function getHeaderGroupInvoice() {
+    $.ajax({
+        url: baseUrl + "api_operator/invoice_group/rekap_invoice_group_lunas_head",
+        dataType: 'JSON',
+        type: "GET",
+        data: {
+            pTglAwal: $("#tanggal_awal").val(),
+            pTglAkhir: $("#tanggal_akhir").val(),
+            pBank: $("#cmb_bank").val(),
+            pCurr: $("#cmb_currecny").val(),
+            pCaraBayar: $("#cmb_cara_pembayaran").val()
+        },
+        success: function (res) {
+            allData = res;
+            var data = res.data;
+            var idgroup = [];
+                        $.each(data, function (key, val) {
+                           //console.log("ID_GROUP : "+val.ID_GROUP);
+                           idgroup.push(val.ID_GROUP);
+
+                        });
+                        console.log("idgroup : "+idgroup);
+        },
+        error: function (res) {
+            console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
+        }
+    });
+
+    }
+
+function getHeaderOperasiKhusus() {
+    $.ajax({
+        url: baseUrl + "api_operator/operasi_khusus_trx/rekap_operasi_khusus_trx_lunas",
+        dataType: 'JSON',
+        type: "GET",
+        data: {
+            pTglAwal: $("#tanggal_awal").val(),
+            pTglAkhir: $("#tanggal_akhir").val(),
+            pCurrency: $("#cmb_currecny").val(),
+            status: $("#cmb_status").val(),
+            statusTracking: $("#cmb_status_tracking").val()
+        },
+        success: function (res) {
+            allData = res;
+            var data = res.data;
+            var headerOpKhusus = [];
+                        $.each(data, function (key, val) {
+                           //console.log("ID_GROUP : "+val.ID_GROUP);
+                           headerOpKhusus.push(val.ID_METALLICA+"-"+val.DOCUMENT_NUMBER+"-"+val.BUSINESS_AREA+"-"+val.COMPANY_CODE+"-"+val.REFERENCE+"-"+val.PMT_PROPOSAL_ID+"-"+val.POSTING_DATE+"-"+val.FISC_YEAR+"-"+val.CURRENCY+"-"+val.EXCHANGE_RATE);
+
+                        });
+                        console.log("headerOpKhusus : "+headerOpKhusus);
+        },
+        error: function (res) {
+            console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
+        }
+    });
+
+    }

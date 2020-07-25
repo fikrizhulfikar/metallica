@@ -501,4 +501,48 @@ public class OperasiKhususTrxService {
 
         return out;
     }
+
+    public List<Map<String, Object>> getRekapOperasiKhususTrxLunas(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir,
+                                                                  String pCurrency, String pUserId, String sortBy,
+                                                                  String sortDir, String status, String statusTracking, String pSearch
+    ) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data rekap search info = " +
+                        "pStart : {}, " +
+                        "pLength : {}, " +
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, " +
+                        "pCurrency : {}, " +
+                        "pUserId : {}," +
+                        "pSortBy : {}," +
+                        "pSortDir : {}," +
+                        "pStatus : {}," +
+                        "pStatusTracking : {}," +
+                        "pSearch : {},",
+
+                pStart, pLength, pTglAwal, pTglAkhir, pCurrency, pUserId, sortBy, sortDir, pSearch);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("operasi_head_lunas_rekap");
+
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_start", pStart, Types.INTEGER)
+                .addValue("p_length", pLength, Types.INTEGER)
+                .addValue("p_tgl_awal", pTglAwal, Types.VARCHAR)
+                .addValue("p_tgl_akhir", pTglAkhir, Types.VARCHAR)
+                .addValue("p_currency", pCurrency, Types.VARCHAR)
+                .addValue("p_user_id", pUserId, Types.VARCHAR)
+                .addValue("p_sort_by", sortBy, Types.VARCHAR)
+                .addValue("p_sort_dir", sortDir, Types.VARCHAR)
+                .addValue("p_status", status, Types.VARCHAR)
+                .addValue("p_status_tracking", statusTracking, Types.VARCHAR)
+                .addValue("p_search", pSearch, Types.VARCHAR);
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data pembelian_valas_trx_lunas_get : {}", resultset);
+//        System.out.println("Pembelian Valas Metallica : "+resultset);
+        return resultset;
+    }
 }
