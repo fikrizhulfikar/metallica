@@ -85,8 +85,6 @@ function getAllData() {
         } else {
             initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val(), $("#cmb_jenis_pemabayaran").val(), $("#cmb_status_tracking").val())
             getAllData()
-            getHeaderGroupInvoice()
-            getHeaderOperasiKhusus()
             srcTglAwal = $("#tanggal_awal").val()
             srcTglAkhir = $("#tanggal_akhir").val()
         }
@@ -297,63 +295,3 @@ function getTotalTagihan() {
     });
 
 }
-
-function getHeaderGroupInvoice() {
-    $.ajax({
-        url: baseUrl + "api_operator/invoice_group/rekap_invoice_group_lunas_head",
-        dataType: 'JSON',
-        type: "GET",
-        data: {
-            pTglAwal: $("#tanggal_awal").val(),
-            pTglAkhir: $("#tanggal_akhir").val(),
-            pBank: $("#cmb_bank").val(),
-            pCurr: $("#cmb_currecny").val(),
-            pCaraBayar: $("#cmb_cara_pembayaran").val()
-        },
-        success: function (res) {
-            allData = res;
-            var data = res.data;
-            var idgroup = [];
-                        $.each(data, function (key, val) {
-                           //console.log("ID_GROUP : "+val.ID_GROUP);
-                           idgroup.push(val.ID_GROUP);
-
-                        });
-                        console.log("idgroup : "+idgroup);
-        },
-        error: function (res) {
-            console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
-        }
-    });
-
-    }
-
-function getHeaderOperasiKhusus() {
-    $.ajax({
-        url: baseUrl + "api_operator/operasi_khusus_trx/rekap_operasi_khusus_trx_lunas",
-        dataType: 'JSON',
-        type: "GET",
-        data: {
-            pTglAwal: $("#tanggal_awal").val(),
-            pTglAkhir: $("#tanggal_akhir").val(),
-            pCurrency: $("#cmb_currecny").val(),
-            status: $("#cmb_status").val(),
-            statusTracking: $("#cmb_status_tracking").val()
-        },
-        success: function (res) {
-            allData = res;
-            var data = res.data;
-            var headerOpKhusus = [];
-                        $.each(data, function (key, val) {
-                           //console.log("ID_GROUP : "+val.ID_GROUP);
-                           headerOpKhusus.push(val.ID_METALLICA+"-"+val.DOCUMENT_NUMBER+"-"+val.BUSINESS_AREA+"-"+val.COMPANY_CODE+"-"+val.REFERENCE+"-"+val.PMT_PROPOSAL_ID+"-"+val.POSTING_DATE+"-"+val.FISC_YEAR+"-"+val.CURRENCY+"-"+val.EXCHANGE_RATE);
-
-                        });
-                        console.log("headerOpKhusus : "+headerOpKhusus);
-        },
-        error: function (res) {
-            console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
-        }
-    });
-
-    }

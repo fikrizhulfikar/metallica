@@ -1524,46 +1524,4 @@ public class InvoiceGroupController {
 //            return null;
 //        }
 //    }
-
-    @RequestMapping(value = "/rekap_invoice_group_lunas_head", method = RequestMethod.GET)
-    public Map rekapInvoiceGroupLunasHead(
-            @RequestParam(value = "draw", defaultValue = "0") int draw,
-            @RequestParam(value = "start", defaultValue = "0") int start,
-            @RequestParam(value = "length", defaultValue = "10") int length,
-            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
-            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
-            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
-            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
-            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
-            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
-            @RequestParam(value = "pCaraBayar", defaultValue = "ALL") String pCaraBayar,
-            @RequestParam(value = "pCurr", defaultValue = "ALL") String pCurr,
-            @RequestParam(value = "search[value]", defaultValue = "") String pSearch
-    ){
-        String sortBy = parseColumn(sortIndex);
-        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
-        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
-            sortDir = "DESC";
-        }
-        List<Map<String, Object>> list = new ArrayList<>();
-        try {
-            list = invoiceGroupService.getRekapInvoiceGroupLunasHead(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, WebUtils.getUsernameLogin(), sortBy, sortDir, pSearch, pCaraBayar, pCurr);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        Map mapData = new HashMap();
-        mapData.put("draw", draw);
-        mapData.put("data", list);
-        AppUtils.getLogger(this).info("size data : {}", list.size());
-        AppUtils.getLogger(this).info("list data : {}", list.toString());
-        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
-            mapData.put("recordsTotal", 0);
-            mapData.put("recordsFiltered", 0);
-        } else {
-            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
-            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
-        }
-        return mapData;
-    }
 }
