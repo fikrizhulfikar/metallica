@@ -323,6 +323,8 @@ $(document).ready(function () {
         $('#tanggal_awal').datepicker({dateFormat: 'dd/mm/yy'});
         $('#tanggal_akhir').attr("disabled", "disabled");
         search("load");
+        selectFilterBank("cmb_bank", "FILTER", "", "", "REKAP");
+        selectFilterCashCode("cmb_cashcode", "FILTER", "", "", "REKAP");
 
     $("#dashboard-carousel").carousel({
         interval : 1000*5,
