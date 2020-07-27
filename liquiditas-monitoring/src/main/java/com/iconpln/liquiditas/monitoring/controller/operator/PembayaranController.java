@@ -751,6 +751,7 @@ public class PembayaranController {
             for (Map data : listData) {
                 Map paramDetail = new HashMap();
                 paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
+                paramDetail.put("OSS_ID", data.get("ID_VALAS"));
                 paramDetail.put("ID_JENIS_PEMBAYARAN", data.get("ID_JENIS_PEMBAYARAN"));
                 paramDetail.put("TGL_JATUH_TEMPO", data.get("TGL_JATUH_TEMPO"));
                 paramDetail.put("ID_VENDOR", data.get("ID_VENDOR"));

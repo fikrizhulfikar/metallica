@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="420d354e-607d-4b43-a77e-007629250d5c" name="Default Changelist" comment="Disable PDFMake js" />
+    <list default="true" id="420d354e-607d-4b43-a77e-007629250d5c" name="Default Changelist" comment="A">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -29,7 +45,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../J. Virtual Cubicle/backend-vc" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -85,12 +101,13 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="96282456-0617-41f3-91de-366e619c18f8" name="Default Changelist" comment="" />
+      <changelist id="420d354e-607d-4b43-a77e-007629250d5c" name="Default Changelist" comment="A" />
       <created>1591834072613</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1591834072613</updated>
       <workItem from="1591834077611" duration="23540000" />
+      <workItem from="1595816428591" duration="2638000" />
     </task>
     <task id="LOCAL-00001" summary="Updated">
       <created>1591845393081</created>

@@ -379,7 +379,7 @@ hideLoadingCss()
 }
 
 function getHrPayable(){
-    var stateCrf = confirm("Anda Yakin Akan Menarik Data Ap Invoice ? (Pastikan Data Sudah Benar)");
+    var stateCrf = confirm("Anda Yakin Akan Menarik Data HR Payable ? (Pastikan Data Sudah Benar)");
     if (stateCrf == true) {
         showLoadingCss();
         $.ajax({

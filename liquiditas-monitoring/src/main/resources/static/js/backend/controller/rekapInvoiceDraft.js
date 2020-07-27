@@ -24,13 +24,13 @@ var addedDays = 2;
 var row_selected;
 
 $(document).ready(function () {
-    // getAllData();
+    getAllData();
 //     $( '#pAccountBalance' ).mask('000.000.000.000.000', {reverse: true});
     $('#tanggal_awal').datepicker({dateFormat: 'dd/mm/yy'});
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
     setSelectFilterBank("cmb_bank", "FILTER", "", "", "REKAP");
-    setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
+    // setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
     setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
 
     $('#check_all').change(function() {
@@ -79,7 +79,7 @@ function getAllData() {
 
 function getTotalTagihan() {
     $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/get_total_tagihan",
+        url: baseUrl + "api_operator/rekap_invoice_draft/get_total_tagihan",
         type: "GET",
         data: {
             tgl_awal: $("#tanggal_awal").val(),
@@ -107,26 +107,14 @@ function exportXls() {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/rekap_invoice_belum/xls/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currecny").val() + "/" + $("#cmb_cara_pembayaran").val() + "/" + $("#cmb_bank").val() + "/" +null+ "/" +null+ "/" +newRoleUser[0]);
-}
-
-function exportXlsAll() {
-    var tglAwal = "null";
-    if (srcTglAwal != "") {
-        tglAwal = srcTglAwal
-    }
-    var tglAkhir = "null";
-    if (srcTglAkhir != "") {
-        tglAkhir = srcTglAkhir
-    }
-    window.open(baseUrl + "api_operator/rekap_invoice_belum/xls_all_invoice");
+    window.open(baseUrl + "api_operator/rekap_invoice_draft/xls/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currecny").val() + "/" + $("#cmb_cara_pembayaran").val() + "/" + $("#cmb_bank").val() + "/" +null+ "/" +null);
 }
 
 function search(state) {
         if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
             alert("Mohon Lengkapi Tgl Akhir");
         } else {
-            initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val(), $("#cmb_cara_pembayaran").val(), $("#cmb_status_tracking").val())
+            initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val(), "ALL", $("#cmb_status_tracking").val())
             // getAllData();
             srcTglAwal = $("#tanggal_awal").val()
             srcTglAkhir = $("#tanggal_akhir").val()
@@ -310,6 +298,8 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         {width: 100, targets: 69},
                         {width: 100, targets: 70},
                         {width: 100, targets: 71},
+                        // {width: 100, targets: 35},
+                        // {width: 100, targets: 36},
                         {width: "20%", "targets": 0},
                         { className: "datatables_action", "targets": [9,23,24,25,26,27,28,29] },
                         {
@@ -318,7 +308,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "sortable": false,
-                            "aTargets": [35, 36, 72, 73]
+                            "aTargets": [35, 36]
                         },
                         {
                             "aTargets": [0],
@@ -337,14 +327,14 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         {
                             "aTargets": [2],
                             "mRender": function (data, type, full) {
-                                return full.COMP_CODE;
+                                return full.DOC_NO;
                             }
 
                         },
                         {
                             "aTargets": [3],
                             "mRender": function (data, type, full) {
-                                return full.DOC_NO;
+                                return full.DOC_DATE2;
                             }
 
                         },
@@ -352,90 +342,91 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         {
                             "aTargets": [4],
                             "mRender": function (data, type, full) {
-                                return full.GROUP_ID;
+                                return full.REV_WITH;
                             }
 
                         },
                         {
                             "aTargets": [5],
                             "mRender": function (data, type, full) {
-                                return full.OSS_ID;
+                                return full.REV_YEAR;
                             }
 
                         },
                         {
                             "aTargets": [6],
                             "mRender": function (data, type, full) {
-                                return full.FISC_YEAR;
+                                return full.POST_DATE2;
                             }
 
                         },
                         {
                             "aTargets": [7],
                             "mRender": function (data, type, full) {
-                                return full.DOC_TYPE;
+                                return full.BASE_DATE;
                             }
 
                         },
                         {
                             "aTargets": [8],
                             "mRender": function (data, type, full) {
-                                return full.DOC_DATE2;
+                                return full.ENTRY_DATE2;
                             }
 
                         },
                         {
                             "aTargets": [9],
                             "mRender": function (data, type, full) {
-                                return full.POST_DATE;
-
+                                //return accounting.formatNumber(full.TOTAL_TAGIHAN,2,".",",");
+                                return full.DOC_TYPE;
                             }
+
                         },
                         {
                             "aTargets": [10],
                             "mRender": function (data, type, full) {
-                                return full.ENTRY_DATE2;
+                                return full.FISC_YEAR;
                             }
 
                         },
                         {
                             "aTargets": [11],
                             "mRender": function (data, type, full) {
-                                return full.REFERENCE;
+                                return full.DOC_HDR_TXT;
                             }
 
                         },
                         {
                             "aTargets": [12],
                             "mRender": function (data, type, full) {
-                                return full.REV_WITH;
-                            }
-                        },
-                        {
-                            "aTargets": [13],
-                            "mRender": function (data, type, full) {
-                                return full.REV_YEAR;
+                                return full.REFERENCE;
                             }
 
                         },
                         {
+                            "aTargets": [13],
+                            "mRender": function (data, type, full) {
+                                return full.TGL_TAGIHAN_DITERIMA;
+                            }
+                        },
+                        {
                             "aTargets": [14],
                             "mRender": function (data, type, full) {
-                                return full.DOC_HDR_TXT;
+                                return full.COMP_CODE;
                             }
 
                         },
                         {
                             "aTargets": [15],
                             "mRender": function (data, type, full) {
-                                return full.CURRENCY;
+                                return full.BUS_AREA;
                             }
 
                         },
                         {
                             "aTargets": [16],
                             "mRender": function (data, type, full) {
-                                return full.CURR_BAYAR;
+                                return full.CURRENCY;
                             }
 
                         },
@@ -449,673 +440,353 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         {
                             "aTargets": [18],
                             "mRender": function (data, type, full) {
-                                return full.REFERENCE_KEY;
+                                return full.LINE_ITEM;
                             }
+
                         },
                         {
                             "aTargets": [19],
-                            "mRender": function (data, type, full) {
-                                return full.PMT_IND;
-                            }
-                        },
-                        {
-                            "aTargets": [20],
-                            "mRender": function (data, type, full) {
-                                return full.TRANS_TYPE;
-                            }
-                        },
-                        {
-                            "aTargets": [21],
-                            "mRender": function (data, type, full) {
-                                return full.SPREAD_VAL;
-                                //return full.SPEC_GL;
-                            }
-                        },
-                        {
-                            "aTargets": [22],
-                            "mRender": function (data, type, full) {
-                                //return full.PAJAK + "%";
-                                return full.LINE_ITEM;
-                                //return full.BUS_AREA;
-                            }
-                        },
-                        {
-                            "aTargets": [23],
-                            "mRender": function (data, type, full) {
-                                return full.OI_IND;
-                                //return full.TPBA;
-                            }
-                        },
-                        {
-                            "aTargets": [24],
-                            "mRender": function (data, type, full) {
-                                return full.ACCT_TYPE;
-                                //return full.AMT_LC;
-                            }
-                        },
-                        {
-                            "aTargets": [25],
-                            "mRender": function (data, type, full) {
-                                return full.SPEC_GL;
-                                //return full.AMT_TC;
-
-                            }
-                        },
-                        {
-                            "aTargets": [26],
-                            "mRender": function (data, type, full) {
-                                return full.BUS_AREA;
-                                //return full.AMT_WITH_BASE_TC;
-                            }
-                        },
-                        {
-                            "aTargets": [27],
-                            "mRender": function (data, type, full) {
-                                return full.TPBA;
-                                //return full.AMT_WITH_TC;
-                            }
-                        },
-                        {
-                            "aTargets": [28],
-                            "mRender": function (data, type, full) {
-                                return accounting.formatNumber(full.AMT_LC,2,".",",");
-                                // return full.AMT_LC;
-                            }
-                        },
-                        {
-                            "aTargets": [29],
-                            "mRender": function (data, type, full) {
-                                return accounting.formatNumber(full.AMT_TC,2,".",",");
-                                // return full.ASSIGNMENT;
-                            }
-                        },
-                        {
-                            "aTargets": [30],
-                            "mRender": function (data, type, full) {
-                                return accounting.formatNumber(full.AMT_WITH_BASE_TC,2,".",",");
-                            }
-                        },
-                        {
-                            "aTargets": [31],
-                            "mRender": function (data, type, full) {
-                                return accounting.formatNumber(full.AMT_WITH_TC,2,".",",");
-                            }
-                        },
-
-                        {
-                            "aTargets": [32],
-                            "mRender": function (data, type, full) {
-                                return accounting.formatNumber(full.AMOUNT,2,".",",");
-                            }
-
-                        },
-                        {
-                            "aTargets": [33],
-                            "mRender": function (data, type, full) {
-                                return accounting.formatNumber(full.AMOUNT_BAYAR,2,".",",");
-                            }
-                        },
-                        {
-                            "aTargets": [34],
-                            "mRender": function (data, type, full) {
-                                return full.ASSIGNMENT;
-                            }
-                        },
-                        {
-                            "aTargets": [35],
-                            "mRender": function (data, type, full) {
-                                return full.ITEM_TEXT;
-                            }
-                        },
-                        {
-                            "aTargets": [36],
-                            "mRender": function (data, type, full) {
-                                return full.COST_CTR;
-                            }
-                        },
-                        {
-                            "aTargets": [37],
-                            "mRender": function (data, type, full) {
-                                return full.GL_ACCT;
-                            }
-                        },
-                        {
-                            "aTargets": [38],
-                            "mRender": function (data, type, full) {
-                                return full.CUSTOMER;
-                            }
-                        },
-                        {
-                            "aTargets": [39],
-                            "mRender": function (data, type, full) {
-                                return full.VENDOR;
-                            }
-                        },
-                        {
-                            "aTargets": [40],
-                            "mRender": function (data, type, full) {
-                                return full.BASE_DATE;
-                            }
-                        },
-                        {
-                            "aTargets": [41],
-                            "mRender": function (data, type, full) {
-                                return full.TERM_PMT;
-                            }
-                        },
-                        {
-                            "aTargets": [42],
-                            "mRender": function (data, type, full) {
-                                return full.DUE_ON;
-                            }
-                        },
-                        {
-                            "aTargets": [43],
-                            "mRender": function (data, type, full) {
-                                return full.PMT_BLOCK;
-                            }
-                        },
-                        {
-                            "aTargets": [44],
-                            "mRender": function (data, type, full) {
-                                return full.BANK_BYR;
-                            }
-                        },
-                        {
-                            "aTargets": [45],
-                            "mRender": function (data, type, full) {
-                                return full.NO_REK_HOUSE_BANK;
-                            }
-                        },
-                        {
-                            "aTargets": [46],
-                            "mRender": function (data, type, full) {
-                                return full.PRTNR_BANK_TYPE;
-                            }
-                        },
-                        {
-                            "aTargets": [47],
-                            "mRender": function (data, type, full) {
-                                return full.BANK_KEY;
-                            }
-                        },
-                        {
-                            "aTargets": [48],
-                            "mRender": function (data, type, full) {
-                                return full.BANK_ACCOUNT;
-                            }
-                        },
-                        {
-                            "aTargets": [49],
-                            "mRender": function (data, type, full) {
-                                return full.ACCOUNT_HOLDER;
-                            }
-                        },
-                        {
-                            "aTargets": [50],
-                            "mRender": function (data, type, full) {
-                                return full.NAMA_BENEF;
-                            }
-                        },
-                        {
-                            "aTargets": [51],
-                            "mRender": function (data, type, full) {
-                                return full.NO_REK_BENEF;
-                            }
-                        },
-                        {
-                            "aTargets": [52],
-                            "mRender": function (data, type, full) {
-                                return full.BANK_BENEF;
-                            }
-                        },
-                        {
-                            "aTargets": [53],
-                            "mRender": function (data, type, full) {
-                                return full.PO_NUM;
-                            }
-                        },
-                        {
-                            "aTargets": [54],
-                            "mRender": function (data, type, full) {
-                                return full.PO_ITEM;
-                            }
-                        },
-                        {
-                            "aTargets": [55],
-                            "mRender": function (data, type, full) {
-                                return full.REF_KEY1;
-                            }
-                        },
-                        {
-                            "aTargets": [56],
-                            "mRender": function (data, type, full) {
-                                return full.REF_KEY2;
-                            }
-                        },
-                        {
-                            "aTargets": [57],
-                            "mRender": function (data, type, full) {
-                                return full.REF_KEY3;
-                            }
-                        },
-                        {
-                            "aTargets": [58],
-                            "mRender": function (data, type, full) {
-                                return full.INT_ORDER;
-                            }
-                        },
-                        {
-                            "aTargets": [59],
-                            "mRender": function (data, type, full) {
-                                return full.WBS_NUM;
-                            }
-                        },
-                        {
-                            "aTargets": [60],
-                            "mRender": function (data, type, full) {
-                                return full.CASH_CODE;
-                            }
-                        },
-                        {
-                            "aTargets": [61],
                             "mRender": function (data, type, full) {
                                 return full.DR_CR_IND;
                             }
                         },
                         {
-                            "aTargets": [62],
+                            "aTargets": [20],
                             "mRender": function (data, type, full) {
-                                return full.PARTIAL_IND;
+                                return full.SPEC_GL;
                             }
                         },
                         {
-                            "aTargets": [63],
+                            "aTargets": [21],
+                            "mRender": function (data, type, full) {
+                                return full.GL_ACCT;
+                            }
+                        },
+                        {
+                            "aTargets": [22],
+                            "mRender": function (data, type, full) {
+                                return accounting.formatNumber(full.AMT_TC,2,".",",");
+                                //return full.SPEC_GL;
+                            }
+                        },
+                        {
+                            "aTargets": [23],
+                            "mRender": function (data, type, full) {
+                                //return full.PAJAK + "%";
+                                return accounting.formatNumber(full.AMT_LC,2,".",",");
+                                //return full.BUS_AREA;
+                            }
+                        },
+                        {
+                            "aTargets": [24],
+                            "mRender": function (data, type, full) {
+                                return accounting.formatNumber(full.AMT_WITH_BASE_TC,2,".",",");
+                                //return full.TPBA;
+                            }
+                        },
+                        {
+                            "aTargets": [25],
+                            "mRender": function (data, type, full) {
+                                return accounting.formatNumber(full.AMT_WITH_TC,2,".",",");
+                                //return full.AMT_LC;
+                            }
+                        },
+                        {
+                            "aTargets": [26],
                             "mRender": function (data, type, full) {
                                 return accounting.formatNumber(full.AMT_WITH_BASE_LC,2,".",",");
+                                //return full.AMT_TC;
+
                             }
                         },
                         {
-                            "aTargets": [64],
+                            "aTargets": [27],
                             "mRender": function (data, type, full) {
                                 return accounting.formatNumber(full.AMT_WITH_LC,2,".",",");
+                                //return full.AMT_WITH_BASE_TC;
                             }
                         },
                         {
-                            "aTargets": [65],
+                            "aTargets": [28],
                             "mRender": function (data, type, full) {
-                                return full.METODE_PEMBAYARAN;
+                                return accounting.formatNumber(full.AMOUNT,2,".",",");
+                                //return full.AMT_WITH_TC;
                             }
                         },
                         {
-                            "aTargets": [66],
+                             "aTargets": [29],
+                             "mRender": function (data, type, full) {
+                              //return accounting.formatNumber(full.AMOUNT,2,".",",");
+                              return full.ACCT_TYPE;
+                              }
+                        },
+                        {
+                            "aTargets": [30],
+                            "mRender": function (data, type, full) {
+                                //return accounting.formatNumber(full.NOMINAL_PEMBAYARAN_IDR,2,".",",");
+                                return full.ASSIGNMENT;
+                            }
+                        },
+                        {
+                            "aTargets": [31],
+                            "mRender": function (data, type, full) {
+                                return full.ITEM_TEXT;
+                            }
+                        },
+                        {
+                            "aTargets": [32],
+                            "mRender": function (data, type, full) {
+                                return full.CUSTOMER;
+                            }
+                        },
+
+                        {
+                            "aTargets": [33],
+                            "mRender": function (data, type, full) {
+                                return full.VENDOR;
+                            }
+
+                        },
+                         {
+                            "aTargets": [34],
+                            "mRender": function (data, type, full) {
+                             return full.TERM_PMT;
+                             }
+                        },
+                        {
+                            "aTargets": [35],
+                            "mRender": function (data, type, full) {
+                             return full.DUE_ON;
+                             }
+                        },
+                        {
+                             "aTargets": [36],
+                             "mRender": function (data, type, full) {
+                               return full.REFERENCE_KEY;
+                              }
+                        },
+                        {
+                              "aTargets": [37],
+                              "mRender": function (data, type, full) {
+                                return full.PMT_IND;
+                                }
+                        },
+                        {
+                               "aTargets": [38],
+                               "mRender": function (data, type, full) {
+                                   return full.TRANS_TYPE;
+                                     }
+                        },
+                        {
+                                "aTargets": [39],
+                                "mRender": function (data, type, full) {
+                                    return full.SPREAD_VAL;
+                                        }
+                        },
+                        {
+                                "aTargets": [40],
+                                "mRender": function (data, type, full) {
+                                     return full.PMT_BLOCK;
+                                     }
+                          },
+                        {
+                                 "aTargets": [41],
+                                 "mRender": function (data, type, full) {
+                                  return full.BANK_BYR;
+                                    }
+                         },
+                         {
+                             "aTargets": [42],
+                             "mRender": function (data, type, full) {
+                              return full.NO_REK_HOUSE_BANK;
+                                }
+                         },
+                         {
+                              "aTargets": [43],
+                              "mRender": function (data, type, full) {
+                               return full.PRTNR_BANK_TYPE;
+                                }
+                         },
+                         {
+                               "aTargets": [44],
+                               "mRender": function (data, type, full) {
+                                  return full.BANK_KEY;
+                                    }
+                         },
+                        {
+                                  "aTargets": [45],
+                                  "mRender": function (data, type, full) {
+                                    return full.BANK_ACCOUNT;
+                                     }
+                        },
+                        {
+                                 "aTargets": [46],
+                                 "mRender": function (data, type, full) {
+                                     return full.ACCOUNT_HOLDER;
+                                     }
+                         },
+                        {
+                                 "aTargets": [47],
+                                 "mRender": function (data, type, full) {
+                                   return full.COST_CTR;
+                                      }
+                        },
+                         {
+                                  "aTargets": [48],
+                                  "mRender": function (data, type, full) {
+                                     return full.INT_ORDER;
+                                       }
+                         },
+                         {
+                                   "aTargets": [49],
+                                   "mRender": function (data, type, full) {
+                                      return full.WBS_NUM;
+                                         }
+                         },
+                         {
+                                   "aTargets": [50],
+                                   "mRender": function (data, type, full) {
+                                      return full.CASH_CODE;
+                                        }
+                          },
+                         {
+                                    "aTargets": [51],
+                                    "mRender": function (data, type, full) {
+                                       return full.PO_NUM;
+                                         }
+                         },
+                         {
+                                     "aTargets": [52],
+                                     "mRender": function (data, type, full) {
+                                         return full.PO_ITEM;
+                                            }
+                         },
+                         {
+                                       "aTargets": [53],
+                                       "mRender": function (data, type, full) {
+                                          return full.REF_KEY1;
+                                              }
+                        },
+                        {
+                           "aTargets": [54],
+                            "mRender": function (data, type, full) {
+                            return full.REF_KEY2;
+                                }
+                         },
+                         {
+                            "aTargets": [55],
+                            "mRender": function (data, type, full) {
+                             return full.REF_KEY3;
+                                }
+                         },
+                         {
+                            "aTargets": [56],
+                            "mRender": function (data, type, full) {
+                            return full.OI_IND;
+                                 }
+                        },
+                        {
+                            "aTargets": [57],
+                            "mRender": function (data, type, full) {
+                             return full.TPBA;
+                                  }
+                         },
+                         {
+                             "aTargets": [58],
+                              "mRender": function (data, type, full) {
+                               return full.METODE_PEMBAYARAN;
+                                 }
+                         },
+                        {
+                            "aTargets": [59],
                             "mRender": function (data, type, full) {
                                 return full.NO_GIRO;
                             }
                         },
-                        {
-                            "aTargets": [67],
-                            "mRender": function (data, type, full) {
-                                return full.TGL_TAGIHAN_DITERIMA;
-                            }
+                         {
+                              "aTargets": [60],
+                              "mRender": function (data, type, full) {
+                              return full.TGL_RENCANA_BAYAR;
+                                  }
+                         },
+                          {
+                               "aTargets": [61],
+                               "mRender": function (data, type, full) {
+                               return full.OSS_ID;
+                                   }
+                          },
+                          {
+                             "aTargets": [62],
+                             "mRender": function (data, type, full) {
+                             return full.GROUP_ID;
+                                 }
+                        },
+                         // {
+                         //       "aTargets": [63],
+                         //       "mRender": function (data, type, full) {
+                         //       return full.BANK_BYR;
+                         //           }
+                         //  },
+                          {
+                             "aTargets": [63],
+                             "mRender": function (data, type, full) {
+                             return full.CURR_BAYAR;
+                                 }
                         },
                         {
-                            "aTargets": [68],
-                            "mRender": function (data, type, full) {
-                                return full.TGL_RENCANA_BAYAR;
-                            }
+                             "aTargets": [64],
+                             "mRender": function (data, type, full) {
+                             return accounting.formatNumber(full.AMOUNT_BAYAR,2,".",",");
+                                 }
                         },
                         {
-                            "aTargets": [69],
-                            "mRender": function (data, type, full) {
-                                return full.SUMBER_DANA;
-                            }
+                             "aTargets": [65],
+                             "mRender": function (data, type, full) {
+                             return full.BANK_BENEF;
+                                 }
                         },
                         {
-                            "aTargets": [70],
-                            "mRender": function (data, type, full) {
+                             "aTargets": [66],
+                             "mRender": function (data, type, full) {
+                             return full.NO_REK_BENEF;
+                                 }
+                        },
+                        {
+                             "aTargets": [67],
+                             "mRender": function (data, type, full) {
+                             return full.NAMA_BENEF;
+                                 }
+                        },
+                         {
+                              "aTargets": [68],
+                              "mRender": function (data, type, full) {
+                              return full.SUMBER_DANA;
+                                    }
+                         },
+                          {
+                               "aTargets": [69],
+                               "mRender": function (data, type, full) {
+                               return full.PARTIAL_IND;
+                                     }
+                          },
+                         {
+                              "aTargets": [70],
+                              "mRender": function (data, type, full) {
                                 return full.KETERANGAN;
-
-                            }
-                        },
-                        {
-                            "aTargets": [71],
-                            "mRender": function (data, type, full) {
+                              }
+                          },
+                         {
+                              "aTargets": [71],
+                              "mRender": function (data, type, full) {
                                 return full.STATUS_TRACKING;
 
-                            }
-                        },
-
-                        {
-                            "aTargets": [72],
-                            "mRender": function (data, type, full) {
-                                var ret_value;
-                                // // console.log("Ini Full :",full);
-                                /*alert('BOOOMB2'+full.STATUS_TRACKING);*/
-                                /*    if(newRoleUser[0].includes("DIVKEU")){
-                                        ret_value =
-                                            '<div class="btn-group">' +
-                                            '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>' +
-                                            '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="far fa-edit"></i></button>' +
-                                            '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                            '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
-                                            '</div>'
-                                    } */
-                                if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
-                                    return "-"
-                                }
-                                else if(newRoleUser[0] == "ROLE_OSS" ){
-                                    ret_value =
-                                        '<div class="btn-group">' +
-                                        '<button style="width: 15px !important;" class="btn btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
-
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                        '<button style="width: 15px !important;" class="btn btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
-                                        '</div>';
-                                }
-                                else if(full.METODE_PEMBAYARAN == 'GIRO' || full.METODE_PEMBAYARAN == 'INTERNETBANKING'){
-                                    if (full.STATUS_TRACKING == "VALIDASI DATA") {
-                                        var role = newRoleUser[0];
-                                        ret_value =
-                                       '<div class="btn-group">';
-
-                                        if(newRoleUser[0] == "ROLE_ADMIN"){
-                                          ret_value = ret_value +
-                                          '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="far fa-edit"></i></button>'+
-                                          '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status_giro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                            '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakBuktiKasSingle(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fas fa-file-alt"></i></button>';
-                                        }
-                                        if(newRoleUser[0] == "ROLE_JA_CASH"){
-                                           ret_value = ret_value +
-                                           '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="far fa-edit"></i></button>'+
-                                           '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status_giro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                           '<button style="width: 15px !important; margin-right: 5px;" class= "btn btn-reverse-data btn-sm btn-danger" title="Reverse SAP" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                           '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakBuktiKasSingle(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fas fa-file-alt"></i></button>';
-                                        }
-                                        if(newRoleUser[0] == "ROLE_JA_IE"){
-                                           ret_value = ret_value +
-                                           '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="far fa-edit"></i></button>'+
-                                           '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status_giro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                           '<button style="width: 15px !important; margin-right: 5px;" class= "btn btn-reverse-data btn-sm btn-danger" title="Reverse SAP" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                            '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakBuktiKasSingle(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fas fa-file-alt"></i></button>';
-                                        }
-                                        if(newRoleUser[0] == "ROLE_CENTRALIZED_RECEIPT"){
-                                            ret_value = ret_value +
-                                                '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="far fa-edit"></i></button>'+
-                                                '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status_giro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                                '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-danger" title="Reverse SAP" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                        }
-                                        '</div>'
-                                    }
-                              else if (full.STATUS_TRACKING == "VERIFIED BY MAKER") {
-                                var role = newRoleUser[0];
-                                ret_value =
-                                '<div class="btn-group">';
-                                 if(newRoleUser[0] == "ROLE_ADMIN"){
-                                      ret_value = ret_value +
-                                      '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified Checker (giro)" onclick="update_status_giro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                      '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse Checker" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                 }
-                                 if(newRoleUser[0] == "ROLE_MSB_INVESTMENT_EXPENDITURE"){
-                                      ret_value = ret_value +
-                                      '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified Checker (giro)" onclick="update_status_giro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                      '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse Checker" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                 }
-                                 if(newRoleUser[0] == "ROLE_MSB_PAYMENT_EXPENDITURE"){
-                                      ret_value = ret_value +
-                                      '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified Checker (giro)" onclick="update_status_giro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                      '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse Checker" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                 }
-                                 if(newRoleUser[0] == "ROLE_MSB_CENTRALIZED_RECEIPT"){
-                                     ret_value = ret_value +
-                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified Checker (giro)" onclick="update_status_giro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                         '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse Checker" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                 }
-                                 '</div>'
-                                 }
-                                 else if (full.STATUS_TRACKING == "VERIFIED BY CHECKER") {
-                                     var role = newRoleUser[0];
-                                     ret_value =
-                                      '<div class="btn-group">';
-                                      if(newRoleUser[0] == "ROLE_ADMIN"){
-                                      ret_value = ret_value +
-                                      '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified APPROVER (giro)" onclick="update_status_giro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                      '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                      }
-                                     if(newRoleUser[0] == "ROLE_MSB_PAYMENT_EXPENDITURE"){
-                                      ret_value = ret_value +
-                                      '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified APPROVER (giro)" onclick="update_status_giro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                      '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                      }
-                                      if(newRoleUser[0] == "ROLE_VP_INVESTMENT_EXPENDITURE"){
-                                          ret_value = ret_value +
-                                              '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified APPROVER (giro)" onclick="update_status_giro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                              '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                      }
-                                      if(newRoleUser[0] == "ROLE_VP_OPERATION_EXPENDITURE"){
-                                          ret_value = ret_value +
-                                              '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified APPROVER (giro)" onclick="update_status_giro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                              '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                      }
-                                      if(newRoleUser[0] == "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY"){
-                                          ret_value = ret_value +
-                                              '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified APPROVER (giro)" onclick="update_status_giro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                              '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                      }
-
-                                        '</div>'
-                                        }
-
-                                        else if (full.STATUS_TRACKING == "VERIFIED BY APPROVER") {
-                                           var role = newRoleUser[0];
-                                           ret_value =
-                                           '<div class="btn-group">';
-                                             if(newRoleUser[0] == "ROLE_ADMIN"){
-                                                  ret_value = ret_value +
-                                                      '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-ready" title="Siap Bayar (Giro)" onclick="updSiapBayarGiro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fas fa-money-check"></i></button>'+
-                                                      // '<button style="width: 15px !important;" class="btn btn-sm btn-primary" title="Lunas (giro)" onclick="updLunasGiro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fas fa-money-check"></i></button>'+
-                                                      '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                             }
-                                             if(newRoleUser[0] == "ROLE_VP_INVESTMENT_EXPENDITURE"){
-                                                   ret_value = ret_value +
-                                                       '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-ready" title="Siap Bayar (Giro)" onclick="updSiapBayarGiro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fas fa-money-check"></i></button>'+
-                                                       // '<button style="width: 15px !important;" class="btn btn-sm btn-primary" title="Lunas (giro)" onclick="updLunasGiro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fas fa-money-check"></i></button>'+
-                                                       '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                             }
-                                             if(newRoleUser[0] == "ROLE_VP_OPERATION_EXPENDITURE"){
-                                                    ret_value = ret_value +
-                                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-ready" title="Siap Bayar (Giro)" onclick="updSiapBayarGiro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fas fa-money-check"></i></button>'+
-                                                        // '<button style="width: 15px !important;" class="btn btn-sm btn-primary" title="Lunas (giro)" onclick="updLunasGiro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fas fa-money-check"></i></button>'+
-                                                        '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                             }
-
-                                            if(newRoleUser[0] == "ROLE_VP_LIQUIDITY_AND_RECEIPT"){
-                                                ret_value = ret_value +
-                                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-ready" title="Siap Bayar (Giro)" onclick="updSiapBayarGiro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fas fa-money-check"></i></button>'+
-                                                        // '<button style="width: 15px !important;" class="btn btn-sm btn-primary" title="Lunas (giro)" onclick="updLunasGiro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fas fa-money-check"></i></button>'+
-                                                        '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                            }
-                                            if (newRoleUser[0] === "ROLE_EXECUTIVE_VICE_PRESIDENT"){
-                                                ret_value = ret_value +
-                                                    '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-ready" title="Siap Bayar (Giro)" onclick="updSiapBayarGiro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fas fa-money-check"></i></button>'+
-                                                    // '<button style="width: 15px !important;" class="btn btn-sm btn-primary" title="Lunas (giro)" onclick="updLunasGiro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fas fa-money-check"></i></button>'+
-                                                    '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                            }
-                                             '</div>'
-                                            }
-                                }
-                                else {
-                                    if (full.STATUS_TRACKING == "INPUT DATA" || full.STATUS_TRACKING == "VALIDASI DATA" ) {
-                                        var role = newRoleUser[0];
-                                        ret_value =
-                                            '<div class="btn-group">';
-                                        if(newRoleUser[0] == "ROLE_ADMIN"){
-                                            ret_value = ret_value +
-                                                       '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="far fa-edit"></i></button>'+
-                                                       '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\',\''+full.INQ_CUSTOMER_NAME+'\',\''+full.INQ_ACCOUNT_NUMBER+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                                       '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-danger" title="Reverse SAP" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                        }
-                                        if(newRoleUser[0] == "ROLE_JA_CASH"){
-                                             ret_value = ret_value +
-                                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="far fa-edit"></i></button>'+
-                                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\',\''+full.INQ_CUSTOMER_NAME+'\',\''+full.INQ_ACCOUNT_NUMBER+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                                         '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-danger" title="Reverse SAP" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                        }
-                                         if(newRoleUser[0] == "ROLE_JA_IE"){
-                                             ret_value = ret_value +
-                                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="far fa-edit"></i></button>'+
-                                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\',\''+full.INQ_CUSTOMER_NAME+'\',\''+full.INQ_ACCOUNT_NUMBER+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                                         '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-danger" title="Reverse SAP" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                         }
-                                        if(newRoleUser[0] == "ROLE_CENTRALIZED_RECEIPT"){
-                                            ret_value = ret_value +
-                                                '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="far fa-edit"></i></button>'+
-                                                '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\',\''+full.INQ_CUSTOMER_NAME+'\',\''+full.INQ_ACCOUNT_NUMBER+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                                '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-danger" title="Reverse SAP" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                        }
-                                        if(newRoleUser[0] == "ROLE_FCL_SETTLEMENT"){
-                                            ret_value = ret_value +
-                                                '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="far fa-edit"></i></button>'+
-                                                '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\',\''+full.INQ_CUSTOMER_NAME+'\',\''+full.INQ_ACCOUNT_NUMBER+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\',\''+full.STATUS_TRACKING+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                                '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-danger" title="Reverse SAP" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                        }
-                                        '</div>'
-
-                                     }
-                                     else   if (full.STATUS_TRACKING == "VERIFIED BY MAKER") {
-                                            var role = newRoleUser[0];
-                                            ret_value =
-                                            '<div class="btn-group">';
-                                                if(newRoleUser[0] == "ROLE_ADMIN"){
-                                                        ret_value = ret_value +
-                                                       '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\', \''+full.INQ_CUSTOMER_NAME+'\',\''+full.INQ_ACCOUNT_NUMBER+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                                       '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse Checker" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                                }
-                                                 if(newRoleUser[0] == "ROLE_MSB_INVESTMENT_EXPENDITURE"){
-                                                        ret_value = ret_value +
-                                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\', \''+full.INQ_CUSTOMER_NAME+'\',\''+full.INQ_ACCOUNT_NUMBER+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                                        '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse Checker" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                                 }
-                                                  if(newRoleUser[0] == "ROLE_MSB_PAYMENT_EXPENDITURE"){
-                                                         ret_value = ret_value +
-                                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\', \''+full.INQ_CUSTOMER_NAME+'\',\''+full.INQ_ACCOUNT_NUMBER+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                                         '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse Checker" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                                  }
-                                            '</div>'
-                                         }
-                                        else if (full.STATUS_TRACKING == "VERIFIED BY CHECKER") {
-                                                var role = newRoleUser[0];
-                                                ret_value =
-                                                '<div class="btn-group">';
-                                                        if(newRoleUser[0] == "ROLE_ADMIN"){
-                                                           ret_value = ret_value +
-                                                           '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\', \''+full.INQ_CUSTOMER_NAME+'\',\''+full.INQ_ACCOUNT_NUMBER+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                                           '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                                        }
-                                                        if(newRoleUser[0] == "ROLE_MSB_PAYMENT_EXPENDITURE"){
-                                                           ret_value = ret_value +
-                                                           '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\', \''+full.INQ_CUSTOMER_NAME+'\',\''+full.INQ_ACCOUNT_NUMBER+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                                           '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                                        }
-                                                        if(newRoleUser[0] == "ROLE_VP_INVESTMENT_EXPENDITURE"){
-                                                           ret_value = ret_value +
-                                                           '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\', \''+full.INQ_CUSTOMER_NAME+'\',\''+full.INQ_ACCOUNT_NUMBER+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                                           '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                                        }
-                                                        if(newRoleUser[0] == "ROLE_VP_OPERATION_EXPENDITURE"){
-                                                            ret_value = ret_value +
-                                                            '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\', \''+full.INQ_CUSTOMER_NAME+'\',\''+full.INQ_ACCOUNT_NUMBER+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                                            '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                                        }
-                                                 '</div>'
-                                          }
-
-                                          else if (full.STATUS_TRACKING == "VERIFIED BY APPROVER") {
-                                               var role = newRoleUser[0];
-                                               ret_value =
-                                               '<div class="btn-group">';
-                                                  if(newRoleUser[0] === "ROLE_ADMIN"){
-                                                    ret_value = ret_value +
-                                                    '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-success" title="Do Payment" onclick="detail_data(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fas fa-money-check"></i></button>'+
-                                                    '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                                    }
-                                                  if(newRoleUser[0] === "ROLE_VP_INVESTMENT_EXPENDITURE"){
-                                                    ret_value = ret_value +
-
-                                                    '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-success" title="Do Payment" onclick="detail_data(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fas fa-money-check"></i></button>'+
-                                                    '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                                  }
-                                                  if(newRoleUser[0] === "ROLE_VP_OPERATION_EXPENDITURE"){
-                                                     ret_value = ret_value +
-                                                      '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-success" title="Do Payment" onclick="detail_data(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fas fa-money-check"></i></button>'+
-                                                      '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                                  }
-                                                  if(newRoleUser[0] === "ROLE_VP_LIQUIDITY_AND_RECEIPT"){
-                                                      ret_value = ret_value +
-                                                          '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-success" title="Do Payment" onclick="detail_data(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fas fa-money-check"></i></button>'+
-                                                          '<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                                  }
-                                                '</div>'
-                                          }
-
-                                    else {
-                                        ret_value =
-                                            '<div class="btn-group">' +
-                                            '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\')"><i class="far fa-edit"></i></button>'+
-                                            '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-warning" title="Verified DIAZ" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\',\''+full.OSS_ID+'\',\''+full.GROUP_ID+'\', \''+full.INQ_CUSTOMER_NAME+'\',\''+full.INQ_ACCOUNT_NUMBER+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                            '<button style="width: 15px !important;" class="btn btn-update-data btn-ms btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>';
-
-                                            '</div>'
-                                    }
-                                }
-                                return ret_value;
-                            }
-
-                        },
-                        {
-                            "aTargets": [73],
-                            "mRender": function (data, type, full) {
-                                var value = new Object();
-                                let json_string = JSON.stringify(full);
-                                var full_value = '{"full":'+json_string.replace(/'/g,"")+'}';
-                                var ret_value = ''
-                                    if (full.STATUS_TRACKING == "INPUT DATA") {
-                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+1+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
-                                        full_value = full_value;
-
-                                    }
-                                     if (full.STATUS_TRACKING == "VALIDASI DATA") {
-                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+1+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
-                                        full_value = full_value;
-                                    }
-                                    else if (full.STATUS_TRACKING == "VERIFIED BY MAKER") {
-                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+2+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
-                                        full_value = full_value;
-                                    }
-                                    else if (full.STATUS_TRACKING == "VERIFIED BY CHECKER") {
-                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+3+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
-                                        full_value = full_value;
-                                    }
-                                    else if (full.STATUS_TRACKING == "VERIFIED BY APPROVER") {
-                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+4+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
-                                        full_value = full_value;
-                                    }
-
-
-                                for (x=0; x<invoiceCheckedArray.length;x++){
-                                    if(JSON.stringify(invoiceCheckedArray[x]) === value){
-                                        return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' data-full='"+full_value+"' onchange='checkArray(this)' id='cbcheckbox' checked>";
-                                    }
-                                }
-                                return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' data-full='"+full_value+"' onchange='checkArray(this)' id='cbcheckbox'>";
-                            }
-                        }
+                              }
+                         },
                     ],
                     "ajax":
                         {
                             "url":
-                                baseUrl + "api_operator/rekap_invoice_belum/get_rekap_invoice",
+                                baseUrl + "api_operator/rekap_invoice_draft/get_rekap_invoice_draft",
                             "type":
                                 "GET",
                             "dataType":
@@ -1213,79 +884,77 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                                 } else {
                                     api.column(1).visible(false);
                                 }
-                                if (response.COMP_CODE == 1) {
+                                if (response.DOC_NO == 1) {
                                     api.column(2).visible(true);
                                 } else {
                                     api.column(2).visible(false);
                                 }
-                                if (response.DOC_NO == 1) {
+                                if (response.DOC_DATE == 1) {
                                     api.column(3).visible(true);
                                 } else {
                                     api.column(3).visible(false);
                                 }
-                                if (response.GROUP_ID == 1) {
+                                if (response.REV_WITH == 1) {
                                     api.column(4).visible(true);
                                 } else {
                                     api.column(4).visible(false);
                                 }
-                                if (response.OSS_ID == 1) {
+                                if (response.REV_YEAR == 1) {
                                     api.column(5).visible(true);
                                 } else {
                                     api.column(5).visible(false);
                                 }
-                                if (response.FISC_YEAR == 1) {
+                                if (response.POST_DATE == 1) {
                                     api.column(6).visible(true);
                                 } else {
                                     api.column(6).visible(false);
                                 }
-                                if (response.DOC_TYPE == 1) {
+                                if (response.BASE_DATE == 1) {
                                     api.column(7).visible(true);
                                 } else {
                                     api.column(7).visible(false);
                                 }
-                                if (response.DOC_DATE == 1) {
+                                if (response.ENTRY_DATE == 1) {
                                     api.column(8).visible(true);
                                 } else {
                                     api.column(8).visible(false);
                                 }
-                                if (response.POST_DATE == 1) {
+                                if (response.DOC_TYPE == 1) {
                                     api.column(9).visible(true);
                                 } else {
                                     api.column(9).visible(false);
                                 }
-
-                                if (response.ENTRY_DATE == 1) {
+                                if (response.FISC_YEAR == 1) {
                                     api.column(10).visible(true);
                                 } else {
                                     api.column(10).visible(false);
                                 }
-
-                                if (response.REFERENCE == 1) {
+                                if (response.DOC_HDR_TXT == 1) {
                                     api.column(11).visible(true);
                                 } else {
                                     api.column(11).visible(false);
                                 }
-                                if (response.REV_WITH == 1) {
+                                if (response.REFERENCE == 1) {
                                     api.column(12).visible(true);
                                 } else {
                                     api.column(12).visible(false);
                                 }
-                                if (response.REV_YEAR == 1) {
+                                if (response.TGL_TAGIHAN_DITERIMA == 1) {
                                     api.column(13).visible(true);
                                 } else {
                                     api.column(13).visible(false);
                                 }
-                                if (response.DOC_HDR_TXT == 1) {
+                                if (response.COMP_CODE == 1) {
                                     api.column(14).visible(true);
                                 } else {
                                     api.column(14).visible(false);
                                 }
-                                if (response.CURRENCY == 1) {
+                                if (response.BUS_AREA == 1) {
                                     api.column(15).visible(true);
                                 } else {
                                     api.column(15).visible(false);
                                 }
-                                if (response.CURR_BAYAR == 1) {
+                                if (response.CURRENCY == 1) {
                                     api.column(16).visible(true);
                                 } else {
                                     api.column(16).visible(false);
@@ -1295,263 +964,267 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                                 } else {
                                     api.column(17).visible(false);
                                 }
-                                if (response.REFERENCE_KEY == 1) {
-                                    api.column(18).visible(true);
+                                if (response.LINE_ITEM == 1) {
+                                    api.column(18).visible(false);
                                 } else {
                                     api.column(18).visible(false);
                                 }
-                                if (response.PMT_IND == 1) {
+                                if (response.DR_CR_IND == 1) {
                                     api.column(19).visible(true);
                                 } else {
                                     api.column(19).visible(false);
                                 }
-                                if (response.TRANS_TYPE == 1) {
+                                if (response.SPEC_GL == 1) {
                                     api.column(20).visible(true);
                                 } else {
                                     api.column(20).visible(false);
                                 }
-                                if (response.SPREAD_VAL == 1) {
+                                if (response.GL_ACCT == 1) {
                                     api.column(21).visible(true);
                                 } else {
                                     api.column(21).visible(false);
                                 }
-                                if (response.LINE_ITEM == 1) {
+                                if (response.AMT_TC == 1) {
                                     api.column(22).visible(true);
                                 } else {
                                     api.column(22).visible(false);
                                 }
-                                if (response.OI_IND == 1) {
+                                if (response.AMT_LC == 1) {
                                     api.column(23).visible(true);
                                 } else {
                                     api.column(23).visible(false);
                                 }
-                                if (response.ACCT_TYPE == 1) {
+                                if (response.AMT_WITH_BASE_TC == 1) {
                                     api.column(24).visible(true);
                                 } else {
                                     api.column(24).visible(false);
                                 }
-                                if (response.SPEC_GL == 1) {
+                                if (response.AMT_WITH_TC == 1) {
                                     api.column(25).visible(true);
                                 } else {
                                     api.column(25).visible(false);
                                 }
-                                if (response.BUS_AREA == 1) {
+                                if (response.AMT_WITH_BASE_LC == 1) {
                                     api.column(26).visible(true);
                                 } else {
                                     api.column(26).visible(false);
                                 }
-                                if (response.TPBA == 1) {
+                                if (response.AMT_WITH_LC == 1) {
                                     api.column(27).visible(true);
                                 } else {
                                     api.column(27).visible(false);
                                 }
-                                if (response.AMT_LC == 1) {
+                                if (response.AMOUNT == 1) {
                                     api.column(28).visible(true);
                                 } else {
                                     api.column(28).visible(false);
                                 }
-                                if (response.AMT_TC == 1) {
+                                if (response.ACCT_TYPE == 1) {
                                     api.column(29).visible(true);
                                 } else {
                                     api.column(29).visible(false);
                                 }
-                                if (response.AMT_WITH_BASE_TC == 1) {
+                                if (response.ASSIGNMENT == 1) {
                                     api.column(30).visible(true);
                                 } else {
                                     api.column(30).visible(false);
                                 }
-                                if (response.AMT_WITH_TC == 1) {
+                                if (response.ITEM_TEXT == 1) {
                                     api.column(31).visible(true);
                                 } else {
                                     api.column(31).visible(false);
                                 }
-                                if (response.AMOUNT == 1) {
+                                if (response.CUSTOMER_NAME == 1) {
                                     api.column(32).visible(true);
                                 } else {
                                     api.column(32).visible(false);
                                 }
-                                if (response.AMOUNT_BAYAR == 1) {
+                                if (response.VENDOR_NAME == 1) {
                                     api.column(33).visible(true);
                                 } else {
                                     api.column(33).visible(false);
                                 }
-                                if (response.ASSIGNMENT == 1) {
+                                if (response.TERM_PMT == 1) {
                                     api.column(34).visible(true);
                                 } else {
                                     api.column(34).visible(false);
                                 }
-                                if (response.ITEM_TEXT == 1) {
+                                if (response.DUE_ON == 1) {
                                     api.column(35).visible(true);
                                 } else {
                                     api.column(35).visible(false);
                                 }
-
-                                if (response.COST_CTR == 1) {
+                                if (response.REFERENCE_KEY == 1) {
                                     api.column(36).visible(true);
                                 } else {
                                     api.column(36).visible(false);
                                 }
-                                if (response.GL_ACCT == 1) {
+                                if (response.PMT_IND == 1) {
                                     api.column(37).visible(true);
                                 } else {
                                     api.column(37).visible(false);
                                 }
-                                if (response.CUSTOMER_NAME == 1) {
+                                if (response.TRANS_TYPE == 1) {
                                     api.column(38).visible(true);
                                 } else {
                                     api.column(38).visible(false);
                                 }
-                                if (response.VENDOR_NAME == 1) {
+                                if (response.SPREAD_VAL == 1) {
                                     api.column(39).visible(true);
                                 } else {
                                     api.column(39).visible(false);
                                 }
-                                if (response.BASE_DATE == 1) {
+                                if (response.PMT_BLOCK == 1) {
                                     api.column(40).visible(true);
                                 } else {
                                     api.column(40).visible(false);
                                 }
-                                if (response.TERM_PMT == 1) {
+                                if (response.HOUSE_BANK == 1) {
                                     api.column(41).visible(true);
                                 } else {
                                     api.column(41).visible(false);
                                 }
-                                if (response.DUE_ON == 1) {
+                                if (response.NO_REK_HOUSE_BANK == 1) {
                                     api.column(42).visible(true);
                                 } else {
                                     api.column(42).visible(false);
                                 }
-                                if (response.PMT_BLOCK == 1) {
+                                if (response.PRTNR_BANK_TYPE == 1) {
                                     api.column(43).visible(true);
                                 } else {
                                     api.column(43).visible(false);
                                 }
-                                if (response.HOUSE_BANK == 1) {
+                                if (response.BANK_KEY == 1) {
                                     api.column(44).visible(true);
                                 } else {
                                     api.column(44).visible(false);
                                 }
-                                if (response.NO_REK_HOUSE_BANK == 1) {
+                                if (response.BANK_ACCOUNT == 1) {
                                     api.column(45).visible(true);
                                 } else {
                                     api.column(45).visible(false);
                                 }
-                                if (response.PRTNR_BANK_TYPE == 1) {
+                                if (response.ACCOUNT_HOLDER == 1) {
                                     api.column(46).visible(true);
                                 } else {
                                     api.column(46).visible(false);
                                 }
-                                if (response.BANK_KEY == 1) {
+                                if (response.COST_CTR == 1) {
                                     api.column(47).visible(true);
                                 } else {
                                     api.column(47).visible(false);
                                 }
-                                if (response.BANK_ACCOUNT == 1) {
+                                if (response.INT_ORDER == 1) {
                                     api.column(48).visible(true);
                                 } else {
                                     api.column(48).visible(false);
                                 }
-                                if (response.ACCOUNT_HOLDER == 1) {
+                                if (response.WBS_NUM == 1) {
                                     api.column(49).visible(true);
                                 } else {
                                     api.column(49).visible(false);
                                 }
-                                if (response.NAMA_BENEF == 1) {
+                                if (response.CASH_CODE == 1) {
                                     api.column(50).visible(true);
                                 } else {
                                     api.column(50).visible(false);
                                 }
-                                if (response.NO_REK_BENEF == 1) {
+                                if (response.PO_NUM == 1) {
                                     api.column(51).visible(true);
                                 } else {
                                     api.column(51).visible(false);
                                 }
-                                if (response.BANK_BENEF == 1) {
+                                if (response.PO_ITEM == 1) {
                                     api.column(52).visible(true);
                                 } else {
                                     api.column(52).visible(false);
                                 }
-                                if (response.PO_NUM == 1) {
+                                if (response.REF_KEY1 == 1) {
                                     api.column(53).visible(true);
                                 } else {
                                     api.column(53).visible(false);
                                 }
-                                if (response.PO_ITEM == 1) {
+                                if (response.REF_KEY2 == 1) {
                                     api.column(54).visible(true);
                                 } else {
                                     api.column(54).visible(false);
                                 }
-                                if (response.REF_KEY1 == 1) {
+                                if (response.REF_KEY3 == 1) {
                                     api.column(55).visible(true);
                                 } else {
                                     api.column(55).visible(false);
                                 }
-                                if (response.REF_KEY2 == 1) {
+                                if (response.OI_IND == 1) {
                                     api.column(56).visible(true);
                                 } else {
                                     api.column(56).visible(false);
                                 }
-                                if (response.REF_KEY3 == 1) {
+                                if (response.TPBA == 1) {
                                     api.column(57).visible(true);
                                 } else {
                                     api.column(57).visible(false);
                                 }
-                                if (response.INT_ORDER == 1) {
+                                if (response.METODE_PEMBAYARAN == 1) {
                                     api.column(58).visible(true);
                                 } else {
                                     api.column(58).visible(false);
                                 }
-                                if (response.WBS_NUM == 1) {
+                                if (response.TGL_RENCANA_BAYAR == 1) {
                                     api.column(59).visible(true);
                                 } else {
                                     api.column(59).visible(false);
                                 }
-                                if (response.CASH_CODE == 1) {
+                                if (response.OSS_ID == 1) {
                                     api.column(60).visible(true);
                                 } else {
                                     api.column(60).visible(false);
                                 }
-                                if (response.DR_CR_IND == 1) {
+                                if (response.GROUP_ID == 1) {
                                     api.column(61).visible(true);
                                 } else {
                                     api.column(61).visible(false);
                                 }
-                                if (response.PARTIAL_IND == 1) {
+                                if (response.BANK_BYR == 1) {
                                     api.column(62).visible(true);
                                 } else {
                                     api.column(62).visible(false);
                                 }
-                                if (response.AMT_WITH_BASE_LC == 1) {
+                                if (response.CURR_BAYAR == 1) {
                                     api.column(63).visible(true);
                                 } else {
                                     api.column(63).visible(false);
                                 }
-                                if (response.AMT_WITH_LC == 1) {
+                                if (response.AMOUNT_BAYAR == 1) {
                                     api.column(64).visible(true);
                                 } else {
                                     api.column(64).visible(false);
                                 }
-                                if (response.METODE_PEMBAYARAN == 1) {
+                                if (response.BANK_BENEF == 1) {
                                     api.column(65).visible(true);
                                 } else {
                                     api.column(65).visible(false);
                                 }
-                                if (response.NO_GIRO == 1) {
+                                if (response.NO_REK_BENEF == 1) {
                                     api.column(66).visible(true);
                                 } else {
                                     api.column(66).visible(false);
                                 }
-                                if (response.TGL_TAGIHAN_DITERIMA == 1) {
+                                if (response.NAMA_BENEF == 1) {
                                     api.column(67).visible(true);
                                 } else {
                                     api.column(67).visible(false);
                                 }
-                                if (response.TGL_RENCANA_BAYAR == 1) {
+                                // if (response.TGL_ACT_BAYAR == 1) {
+                                //     api.column(68).visible(true);
+                                // } else {
+                                //     api.column(68).visible(false);
+                                // }
+                                if (response.SUMBER_DANA == 1) {
                                     api.column(68).visible(true);
                                 } else {
                                     api.column(68).visible(false);
                                 }
-                                if (response.SUMBER_DANA == 1) {
+                                 if (response.PARTIAL_IND == 1) {
                                     api.column(69).visible(true);
                                 } else {
                                     api.column(69).visible(false);
@@ -1561,12 +1234,11 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                                 } else {
                                     api.column(70).visible(false);
                                 }
-                                if (response.STATUS_TRACKING == 1) {
+                                    if (response.STATUS_TRACKING == 1) {
                                     api.column(71).visible(true);
                                 } else {
                                     api.column(71).visible(false);
                                 }
-
                             },
                             error: function () {
                                 hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -1587,66 +1259,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
             $('.dataTables_filter').each(function () {
                  var html = '<button class="btn btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Tampilkan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
-
-                 if(newRoleUser[0] == "ROLE_VERIFIKATOR"){
-                    // html = html + '<button class="btn btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
-//                    html = html + '<button class="btn btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
-                 }
-                 if(newRoleUser[0] == "ROLE_ADMIN"){
-                   // html = html + '<button class="btn btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" title="Sembunyikan Kolom" data-toggle="modal" onclick="showColumn()">' +
-                   //      '<i class="fa fa-arrows-alt"></i></button>';
-                    /*button reject*/
-                    html = html + '<button class="btn btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="far fa-edit"></i></button>';
-                    html = html + '<button class="btn btn-sm btn-primary" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fas fa-folder"></i></button>';
-                    html = html + '<button class="btn btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
-//                    html = html + '<button class="btn btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
-                    html = html + '<button class="btn btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fas fa-trash"></i></button>';
-                    html = html + '<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
-                    html = html + '<button class="btn btn-reverse-sap btn-danger btn-sm" id="btn-reverse-sap" style="margin-left: 10px" type="button" title="Reverse SAP" onclick="multipleReverseSap()"><i class="fas fa-arrow-left"></i></button>';
-                     html = html + '<button class="btn btn-siapbayar btn-ready btn-sm" id="btn-siapbayar" style="margin-left: 5px" type="button" title="Siap Bayar" onclick="siap_bayar_multiple()"><i class="fas fa-money-check"></i></button>' ;
-                 }
-                 else if(newRoleUser[0] == "ROLE_JA_IE"){
-
-                     html = html + '<button class="btn btn-sm btn-primary" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fas fa-folder"></i></button>';
-                     html = html + '<button class="btn btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
-//                     html = html + '<button class="btn btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
-                     html = html + '<button class="btn btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="far fa-edit"></i></button>';
-                     html = html + '<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
-                     html = html + '<button class="btn btn-verified btn-elementary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Dokumen Pegantar" onclick="cetakBuktiKasMultiple()"><i class="fas fa-copy"></i></button>' ;
-                     html = html + '<button class="btn btn-reverse-sap btn-danger btn-sm" id="btn-reverse-sap" style="margin-left: 10px" type="button" title="Reverse SAP" onclick="multipleReverseSap()"><i class="fas fa-arrow-left"></i></button>';
-                 }else if(newRoleUser[0] == "ROLE_JA_CASH"){
-
-                     html = html + '<button class="btn btn-sm btn-primary" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fas fa-folder"></i></button>';
-                     html = html + '<button class="btn btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
-//                     html = html + '<button class="btn btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fas fa-money-check"></i></button>';
-                     html = html + '<button class="btn btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="far fa-edit"></i></button>';
-                     html = html + '<button class="btn btn-verified btn-sm btn-warning" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
-                    html = html + '<button class="btn btn-verified btn-elementary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Dokumen Pengantar" onclick="cetakBuktiKasMultiple()"><i class="fas fa-copy"></i></button>' ;
-                     html = html + '<button class="btn btn-reverse-sap btn-danger btn-sm" id="btn-reverse-sap" style="margin-left: 10px" type="button" title="Reverse SAP" onclick="multipleReverseSap()"><i class="fas fa-arrow-left"></i></button>';
-                 }
-                else {
-                    if (newRoleUser[0] !== "ROLE_OSS"){
-                        html = html + '<button class="btn btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
-                    }
-                    if(
-                        newRoleUser[0] === "ROLE_VP_OPERATION_EXPENDITURE" || newRoleUser[0] === "ROLE_VP_INVESTMENT_EXPENDITURE"
-                        || newRoleUser[0] === "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY" || newRoleUser[0] === "ROLE_MSB_FOREIGN_CURRENCY_LIQUIDITY"
-                    ){
-                        html = html + '<button class="btn btn-siapbayar btn-ready btn-sm" id="btn-siapbayar" style="margin-left: 5px" type="button" title="Siap Bayar" onclick="siap_bayar_multiple()"><i class="fas fa-money-check"></i></button>' ;
-                        html = html + '<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 5px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
-                        html = html + '<button class="btn btn-reverse-sap btn-danger btn-sm" id="btn-reverse-sap" style="margin-left: 10px" type="button" title="Reverse SAP" onclick="multipleReverseSap()"><i class="fas fa-arrow-left"></i></button>';
-                    }else {
-                        html = html + '<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 5px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
-                        html = html + '<button class="btn btn-reverse-sap btn-danger btn-sm" id="btn-reverse-sap" style="margin-left: 10px" type="button" title="Reverse SAP" onclick="multipleReverseSap()"><i class="fas fa-arrow-left"></i></button>';
-                    }
-                }
-               // if(newRoleUser[0] != "ROLE_OSS" && newRoleUser[0] != "ROLE_DIVKEU"){
-               //
-               //
-               // }
-
-
-                $(this).append(html);
+                 $(this).append(html);
             });
 
             table_rekapitulasi.columns.adjust();
@@ -2037,7 +1650,7 @@ function cek_data(pCompCode, pNoDoc, pFiscYear, pLineItem, pSource, pBank,  pBen
 function showColumn() {
     $("#hide_column_modal").modal("show");
     $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/get_column",
+        url: baseUrl + "api_operator/rekap_invoice_draft/get_column",
         dataType: 'JSON',
         type: "GET",
         success: function (res) {
@@ -2053,359 +1666,356 @@ function showColumn() {
             } else {
                 $("#hc1").prop("checked", false);
             }
-            if (response.COMP_CODE == 1) {
+            if (response.DOC_NO == 1) {
                 $("#hc2").prop("checked", true);
             } else {
                 $("#hc2").prop("checked", false);
             }
-            if (response.DOC_NO == 1) {
+            if (response.DOC_DATE == 1) {
                 $("#hc3").prop("checked", true);
             } else {
                 $("#hc3").prop("checked", false);
             }
-            if (response.GROUP_ID == 1) {
+            if (response.REV_WITH == 1) {
                 $("#hc4").prop("checked", true);
             } else {
                 $("#hc4").prop("checked", false);
             }
-            if (response.OSS_ID == 1) {
+            if (response.REV_YEAR == 1) {
                 $("#hc5").prop("checked", true);
             } else {
                 $("#hc5").prop("checked", false);
             }
-            if (response.FISC_YEAR == 1) {
+            if (response.POST_DATE == 1) {
                 $("#hc6").prop("checked", true);
             } else {
                 $("#hc6").prop("checked", false);
             }
-            if (response.DOC_TYPE == 1) {
-               $("#hc7").prop("checked", true);
+            if (response.BASE_DATE == 1) {
+                $("#hc7").prop("checked", true);
             } else {
                 $("#hc7").prop("checked", false);
             }
-            if (response.DOC_DATE == 1) {
-               $("#hc8").prop("checked", true);
+            if (response.ENTRY_DATE == 1) {
+                $("#hc8").prop("checked", true);
             } else {
                 $("#hc8").prop("checked", false);
             }
-            if (response.POST_DATE == 1) {
+            if (response.DOC_TYPE == 1) {
                 $("#hc9").prop("checked", true);
             } else {
                 $("#hc9").prop("checked", false);
             }
-
-            if (response.ENTRY_DATE == 1) {
+            if (response.FISC_YEAR == 1) {
                 $("#hc10").prop("checked", true);
             } else {
                 $("#hc10").prop("checked", false);
             }
-
-            if (response.REFERENCE == 1) {
+            if (response.DOC_HDR_TXT == 1) {
                 $("#hc11").prop("checked", true);
             } else {
                 $("#hc11").prop("checked", false);
             }
-            if (response.REV_WITH == 1) {
+            if (response.REFERENCE == 1) {
                 $("#hc12").prop("checked", true);
             } else {
                 $("#hc12").prop("checked", false);
             }
-            if (response.REV_YEAR == 1) {
+            if (response.TGL_TAGIHAN_DITERIMA == 1) {
                 $("#hc13").prop("checked", true);
             } else {
                 $("#hc13").prop("checked", false);
             }
-            if (response.DOC_HDR_TXT == 1) {
+            if (response.COMP_CODE == 1) {
                 $("#hc14").prop("checked", true);
             } else {
                 $("#hc14").prop("checked", false);
             }
-            if (response.CURRENCY == 1) {
+            if (response.BUS_AREA == 1) {
                 $("#hc15").prop("checked", true);
             } else {
                 $("#hc15").prop("checked", false);
             }
-            if (response.CURR_BAYAR == 1) {
-               $("#hc16").prop("checked", true);
+            if (response.CURRENCY == 1) {
+                $("#hc16").prop("checked", true);
             } else {
                 $("#hc16").prop("checked", false);
             }
             if (response.EXCH_RATE == 1) {
-               $("#hc17").prop("checked", true);
+                $("#hc17").prop("checked", true);
             } else {
                 $("#hc17").prop("checked", false);
             }
-            if (response.REFERENCE_KEY == 1) {
-               $("#hc18").prop("checked", true);
+            if (response.LINE_ITEM == 1) {
+                $("#hc18").prop("checked", true);
             } else {
                 $("#hc18").prop("checked", false);
             }
-            if (response.PMT_IND == 1) {
-               $("#hc19").prop("checked", true);
+            if (response.DR_CR_IND == 1) {
+                $("#hc19").prop("checked", true);
             } else {
                 $("#hc19").prop("checked", false);
             }
-            if (response.TRANS_TYPE == 1) {
-               $("#hc20").prop("checked", true);
+            if (response.SPEC_GL == 1) {
+                $("#hc20").prop("checked", true);
             } else {
                 $("#hc20").prop("checked", false);
             }
-            if (response.SPREAD_VAL == 1) {
-               $("#hc21").prop("checked", true);
+            if (response.GL_ACCT == 1) {
+                $("#hc21").prop("checked", true);
             } else {
                 $("#hc21").prop("checked", false);
             }
-            if (response.LINE_ITEM == 1) {
-               $("#hc22").prop("checked", true);
+            if (response.AMT_TC == 1) {
+                $("#hc22").prop("checked", true);
             } else {
                 $("#hc22").prop("checked", false);
             }
-            if (response.OI_IND == 1) {
-               $("#hc23").prop("checked", true);
+            if (response.AMT_LC == 1) {
+                $("#hc23").prop("checked", true);
             } else {
                 $("#hc23").prop("checked", false);
             }
-            if (response.ACCT_TYPE == 1) {
-               $("#hc24").prop("checked", true);
+            if (response.AMT_WITH_BASE_TC == 1) {
+                $("#hc24").prop("checked", true);
             } else {
                 $("#hc24").prop("checked", false);
             }
-            if (response.SPEC_GL == 1) {
-               $("#hc25").prop("checked", true);
+            if (response.AMT_WITH_TC == 1) {
+                $("#hc25").prop("checked", true);
             } else {
                 $("#hc25").prop("checked", false);
             }
-            if (response.BUS_AREA == 1) {
-               $("#hc26").prop("checked", true);
+             if (response.AMT_WITH_BASE_LC == 1) {
+                $("#hc26").prop("checked", true);
             } else {
                 $("#hc26").prop("checked", false);
             }
-            if (response.TPBA == 1) {
-               $("#hc27").prop("checked", true);
+            if (response.AMT_WITH_LC == 1) {
+                $("#hc27").prop("checked", true);
             } else {
                 $("#hc27").prop("checked", false);
             }
-            if (response.AMT_LC == 1) {
-               $("#hc28").prop("checked", true);
+            if (response.AMOUNT == 1) {
+                $("#hc28").prop("checked", true);
             } else {
                 $("#hc28").prop("checked", false);
             }
-            if (response.AMT_TC == 1) {
-               $("#hc29").prop("checked", true);
+            if (response.ACCT_TYPE == 1) {
+                $("#hc29").prop("checked", true);
             } else {
                 $("#hc29").prop("checked", false);
             }
-            if (response.AMT_WITH_BASE_TC == 1) {
-               $("#hc30").prop("checked", true);
+            if (response.ASSIGNMENT == 1) {
+                $("#hc30").prop("checked", true);
             } else {
                 $("#hc30").prop("checked", false);
             }
-            if (response.AMT_WITH_TC == 1) {
-               $("#hc31").prop("checked", true);
+            if (response.ITEM_TEXT == 1) {
+                $("#hc31").prop("checked", true);
             } else {
                 $("#hc31").prop("checked", false);
             }
-            if (response.AMOUNT == 1) {
-               $("#hc32").prop("checked", true);
+            if (response.CUSTOMER_NAME == 1) {
+                $("#hc32").prop("checked", true);
             } else {
                 $("#hc32").prop("checked", false);
             }
-            if (response.AMOUNT_BAYAR == 1) {
-               $("#hc33").prop("checked", true);
+            if (response.VENDOR_NAME == 1) {
+                $("#hc33").prop("checked", true);
             } else {
                 $("#hc33").prop("checked", false);
             }
-            if (response.ASSIGNMENT == 1) {
-               $("#hc34").prop("checked", true);
+            if (response.TERM_PMT == 1) {
+                $("#hc34").prop("checked", true);
             } else {
                 $("#hc34").prop("checked", false);
             }
-            if (response.ITEM_TEXT == 1) {
-               $("#hc35").prop("checked", true);
+            if (response.DUE_ON == 1) {
+                $("#hc35").prop("checked", true);
             } else {
                 $("#hc35").prop("checked", false);
             }
-
-            if (response.COST_CTR == 1) {
-               $("#hc36").prop("checked", true);
+            if (response.REFERENCE_KEY == 1) {
+                $("#hc36").prop("checked", true);
             } else {
                 $("#hc36").prop("checked", false);
             }
-            if (response.GL_ACCT == 1) {
-               $("#hc37").prop("checked", true);
+            if (response.PMT_IND == 1) {
+                $("#hc37").prop("checked", true);
             } else {
                 $("#hc37").prop("checked", false);
             }
-            if (response.CUSTOMER_NAME == 1) {
-               $("#hc38").prop("checked", true);
+             if (response.TRANS_TYPE == 1) {
+                $("#hc38").prop("checked", true);
             } else {
                 $("#hc38").prop("checked", false);
             }
-            if (response.VENDOR_NAME == 1) {
-               $("#hc39").prop("checked", true);
+             if (response.SPREAD_VAL == 1) {
+                $("#hc39").prop("checked", true);
             } else {
                 $("#hc39").prop("checked", false);
             }
-            if (response.BASE_DATE == 1) {
-               $("#hc40").prop("checked", true);
+             if (response.PMT_BLOCK == 1) {
+                $("#hc40").prop("checked", true);
             } else {
                 $("#hc40").prop("checked", false);
             }
-            if (response.TERM_PMT == 1) {
-               $("#hc41").prop("checked", true);
+             if (response.HOUSE_BANK == 1) {
+                $("#hc41").prop("checked", true);
             } else {
                 $("#hc41").prop("checked", false);
             }
-            if (response.DUE_ON == 1) {
-               $("#hc42").prop("checked", true);
+             if (response.NO_REK_HOUSE_BANK == 1) {
+                $("#hc42").prop("checked", true);
             } else {
                 $("#hc42").prop("checked", false);
             }
-            if (response.PMT_BLOCK == 1) {
-               $("#hc43").prop("checked", true);
+             if (response.PRTNR_BANK_TYPE == 1) {
+                $("#hc43").prop("checked", true);
             } else {
                 $("#hc43").prop("checked", false);
             }
-            if (response.HOUSE_BANK == 1) {
-               $("#hc44").prop("checked", true);
+             if (response.BANK_KEY == 1) {
+                $("#hc44").prop("checked", true);
             } else {
                 $("#hc44").prop("checked", false);
             }
-            if (response.NO_REK_HOUSE_BANK == 1) {
-               $("#hc45").prop("checked", true);
-            } else {
-                $("#hc45").prop("checked", false);
-            }
-            if (response.PRTNR_BANK_TYPE == 1) {
-               $("#hc46").prop("checked", true);
-            } else {
-                $("#hc46").prop("checked", false);
-            }
-            if (response.BANK_KEY == 1) {
-               $("#hc47").prop("checked", true);
-            } else {
-                $("#hc47").prop("checked", false);
-            }
             if (response.BANK_ACCOUNT == 1) {
-               $("#hc48").prop("checked", true);
-            } else {
-                $("#hc48").prop("checked", false);
-            }
-            if (response.ACCOUNT_HOLDER == 1) {
-               $("#hc49").prop("checked", true);
-            } else {
-                $("#hc49").prop("checked", false);
-            }
-            if (response.NAMA_BENEF == 1) {
-               $("#hc50").prop("checked", true);
-            } else {
-                $("#hc50").prop("checked", false);
-            }
-            if (response.NO_REK_BENEF == 1) {
-               $("#hc51").prop("checked", true);
-            } else {
-                $("#hc51").prop("checked", false);
-            }
-            if (response.BANK_BENEF == 1) {
-               $("#hc52").prop("checked", true);
-            } else {
-                $("#hc52").prop("checked", false);
-            }
-            if (response.PO_NUM == 1) {
-               $("#hc53").prop("checked", true);
-            } else {
-                $("#hc53").prop("checked", false);
-            }
-            if (response.PO_ITEM == 1) {
-               $("#hc54").prop("checked", true);
-            } else {
-                $("#hc54").prop("checked", false);
-            }
-            if (response.REF_KEY1 == 1) {
-               $("#hc55").prop("checked", true);
-            } else {
-                $("#hc55").prop("checked", false);
-            }
-            if (response.REF_KEY2 == 1) {
-               $("#hc56").prop("checked", true);
-            } else {
-                $("#hc56").prop("checked", false);
-            }
-            if (response.REF_KEY3 == 1) {
-               $("#hc57").prop("checked", true);
-            } else {
-                $("#hc57").prop("checked", false);
-            }
-            if (response.INT_ORDER == 1) {
-               $("#hc58").prop("checked", true);
-            } else {
-                $("#hc58").prop("checked", false);
-            }
-            if (response.WBS_NUM == 1) {
-               $("#hc59").prop("checked", true);
-            } else {
-                $("#hc59").prop("checked", false);
-            }
-            if (response.CASH_CODE == 1) {
-               $("#hc60").prop("checked", true);
-            } else {
-                $("#hc60").prop("checked", false);
-            }
-            if (response.DR_CR_IND == 1) {
-               $("#hc61").prop("checked", true);
-            } else {
-                $("#hc61").prop("checked", false);
-            }
-            if (response.PARTIAL_IND == 1) {
-               $("#hc62").prop("checked", true);
-            } else {
-                $("#hc62").prop("checked", false);
-            }
-            if (response.AMT_WITH_BASE_LC == 1) {
-               $("#hc63").prop("checked", true);
-            } else {
-                $("#hc63").prop("checked", false);
-            }
-            if (response.AMT_WITH_LC == 1) {
-               $("#hc64").prop("checked", true);
-            } else {
-                $("#hc64").prop("checked", false);
-            }
-            if (response.METODE_PEMBAYARAN == 1) {
-               $("#hc65").prop("checked", true);
-            } else {
-                $("#hc65").prop("checked", false);
-            }
-            if (response.NO_GIRO == 1) {
-                $("#hc66").prop("checked", true);
-            } else {
-                $("#hc66").prop("checked", false);
-            }
-            if (response.TGL_TAGIHAN_DITERIMA == 1) {
-                $("#hc67").prop("checked", true);
-            } else {
-                $("#hc67").prop("checked", false);
-            }
-            if (response.TGL_RENCANA_BAYAR == 1) {
-                $("#hc68").prop("checked", true);
-            } else {
-                $("#hc68").prop("checked", false);
-            }
-            if (response.SUMBER_DANA == 1) {
-                $("#hc69").prop("checked", true);
-            } else {
-                $("#hc69").prop("checked", false);
-            }
-            if (response.KETERANGAN == 1) {
-                $("#hc70").prop("checked", true);
-            } else {
-                $("#hc70").prop("checked", false);
-            }
-            if (response.STATUS_TRACKING == 1) {
-                $("#hc71").prop("checked", true);
-            } else {
-                $("#hc71").prop("checked", false);
-            }
+                 $("#hc45").prop("checked", true);
+             } else {
+                 $("#hc45").prop("checked", false);
+             }
+              if (response.ACCOUNT_HOLDER == 1) {
+                  $("#hc46").prop("checked", true);
+              } else {
+                  $("#hc46").prop("checked", false);
+              }
+               if (response.COST_CTR == 1) {
+                   $("#hc47").prop("checked", true);
+               } else {
+                   $("#hc47").prop("checked", false);
+               }
+                if (response.INT_ORDER == 1) {
+                    $("#hc48").prop("checked", true);
+                } else {
+                    $("#hc48").prop("checked", false);
+                }
+                 if (response.WBS_NUM == 1) {
+                     $("#hc49").prop("checked", true);
+                 } else {
+                     $("#hc49").prop("checked", false);
+                 }
+                  if (response.CASH_CODE == 1) {
+                      $("#hc50").prop("checked", true);
+                  } else {
+                      $("#hc50").prop("checked", false);
+                  }
+               if (response.PO_NUM == 1) {
+                    $("#hc51").prop("checked", true);
+                } else {
+                    $("#hc51").prop("checked", false);
+                }
+                if (response.PO_ITEM == 1) {
+                      $("#hc52").prop("checked", true);
+                  } else {
+                      $("#hc52").prop("checked", false);
+                  }
+                if (response.REF_KEY1 == 1) {
+                    $("#hc53").prop("checked", true);
+                } else {
+                    $("#hc53").prop("checked", false);
+                }
+                if (response.REF_KEY2 == 1) {
+                    $("#hc54").prop("checked", true);
+                } else {
+                    $("#hc54").prop("checked", false);
+                }
+                if (response.REF_KEY3 == 1) {
+                    $("#hc55").prop("checked", true);
+                } else {
+                    $("#hc55").prop("checked", false);
+                }
+                if (response.OI_IND == 1) {
+                    $("#hc56").prop("checked", true);
+                } else {
+                    $("#hc56").prop("checked", false);
+                }
+                if (response.TPBA == 1) {
+                    $("#hc57").prop("checked", true);
+                } else {
+                    $("#hc57").prop("checked", false);
+                }
+                if (response.METODE_PEMBAYARAN == 1) {
+                    $("#hc58").prop("checked", true);
+                } else {
+                    $("#hc58").prop("checked", false);
+                }
+                if (response.NO_GIRO == 1) {
+                    $("#hc59").prop("checked", true);
+                } else {
+                    $("#hc59").prop("checked", false);
+                }
+                if (response.TGL_RENCANA_BAYAR == 1) {
+                    $("#hc60").prop("checked", true);
+                } else {
+                    $("#hc60").prop("checked", false);
+                }
+                if (response.OSS_ID == 1) {
+                    $("#hc61").prop("checked", true);
+                } else {
+                    $("#hc61").prop("checked", false);
+                }
+                if (response.GROUP_ID == 1) {
+                    $("#hc62").prop("checked", true);
+                } else {
+                    $("#hc62").prop("checked", false);
+                }
+                if (response.CURR_BAYAR == 1) {
+                    $("#hc63").prop("checked", true);
+                } else {
+                    $("#hc63").prop("checked", false);
+                }
+                if (response.AMOUNT_BAYAR == 1) {
+                    $("#hc64").prop("checked", true);
+                } else {
+                    $("#hc64").prop("checked", false);
+                }
+                if (response.BANK_BENEF == 1) {
+                    $("#hc65").prop("checked", true);
+                } else {
+                    $("#hc65").prop("checked", false);
+                }
+                 if (response.NO_REK_BENEF == 1) {
+                    $("#hc66").prop("checked", true);
+                } else {
+                    $("#hc66").prop("checked", false);
+                }
+                 if (response.NAMA_BENEF == 1) {
+                    $("#hc67").prop("checked", true);
+                } else {
+                    $("#hc67").prop("checked", false);
+                }
+                 if (response.SUMBER_DANA == 1) {
+                    $("#hc68").prop("checked", true);
+                } else {
+                    $("#hc68").prop("checked", false);
+                }
+                 if (response.PARTIAL_IND == 1) {
+                    $("#hc69").prop("checked", true);
+                } else {
+                    $("#hc69").prop("checked", false);
+                }
+                 if (response.KETERANGAN == 1) {
+                    $("#hc70").prop("checked", true);
+                } else {
+                    $("#hc70").prop("checked", false);
+                }
+                 if (response.STATUS_TRACKING == 1) {
+                    $("#hc71").prop("checked", true);
+                } else {
+                    $("#hc71").prop("checked", false);
+                }
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -2491,79 +2101,79 @@ function saveColumn() {
     var data = {
         "nomor" : hc0 === true ? 1 : 0,
         "ket" : hc1 === true ? 1 : 0,
-        "comp_code" : hc2 === true ? 1 : 0,
-        "doc_no" : hc3 === true ? 1 : 0,
-        "group_id" : hc4 === true ? 1 : 0,
-        "oss_id" : hc5 === true ? 1 : 0,
-        "fisc_year" : hc6 === true ? 1 : 0,
-        "doc_type" : hc7 === true ? 1 : 0,
-        "doc_date2" : hc8 === true ? 1 : 0,
-        "post_date2" : hc9 === true ? 1 : 0,
-        "entry_date2" : hc10 === true ? 1 : 0,
-        "reference" : hc11 === true ? 1 : 0,
-        "rev_with" : hc12 === true ? 1 : 0,
-        "rev_year" : hc13 === true ? 1 : 0,
-        "doc_hdr_txt" : hc14 === true ? 1 : 0,
-        "currency" : hc15 === true ? 1 : 0,
-        "curr_bayar" : hc16 === true ? 1 : 0,
+        "doc_no" : hc2 === true ? 1 : 0,
+        "doc_date2" : hc3 === true ? 1 : 0,
+        "rev_with" : hc4 === true ? 1 : 0,
+        "rev_year" : hc5 === true ? 1 : 0,
+        "post_date2" : hc6 === true ? 1 : 0,
+        "base_date" : hc7 === true ? 1 : 0,
+        "entry_date2" : hc8 === true ? 1 : 0,
+        "doc_type" : hc9 === true ? 1 : 0,
+        "fisc_year" : hc10 === true ? 1 : 0,
+        "doc_hdr_txt" : hc11 === true ? 1 : 0,
+        "reference" : hc12 === true ? 1 : 0,
+        "tgl_tagihan_diterima" : hc13 === true ? 1 : 0,
+        "comp_code" : hc14 === true ? 1 : 0,
+        "bus_area" : hc15 === true ? 1 : 0,
+        "currency" : hc16 === true ? 1 : 0,
         "exch_rate" : hc17 === true ? 1 : 0,
-        "reference_key" : hc18 === true ? 1 : 0,
-        "pmt_ind" : hc19 === true ? 1 : 0,
-        "trans_type" : hc20 === true ? 1 : 0,
-        "spread_val" : hc21 === true ? 1 : 0,
-        "line_item" : hc22 === true ? 1 : 0,
-        "oi_ind" : hc23 === true ? 1 : 0,
-        "spec_gl" : hc24 === true ? 1 : 0,
-        "acct_type" : hc25 === true ? 1 : 0,
-        "bus_area" : hc26 === true ? 1 : 0,
-        "tpba" : hc27 === true ? 1 : 0,
-        "amt_lc" : hc28 === true ? 1 : 0,
-        "amt_tc" : hc29 === true ? 1 : 0,
-        "amt_with_base_tc" : hc30 === true ? 1 : 0,
-        "amt_with_tc" : hc31 === true ? 1 : 0,
-        "amount" : hc32 === true ? 1 : 0,
-        "amount_bayar" : hc33 === true ? 1 : 0,
-        "assignment" : hc34 === true ? 1 : 0,
-        "item_text" : hc35 === true ? 1 : 0,
-        "cost_ctr" : hc36 === true ? 1 : 0,
-        "gl_acct" : hc37 === true ? 1 : 0,
-        "customer" : hc38 === true ? 1 : 0,
-        "vendor" : hc39 === true ? 1 : 0,
-        "base_date" : hc40 === true ? 1 : 0,
-        "term_pmt" : hc41 === true ? 1 : 0,
-        "due_on" : hc42 === true ? 1 : 0,
-        "pmt_block" : hc43 === true ? 1 : 0,
-        "house_bank" : hc44 === true ? 1 : 0,
-        "no_rek_house_bank" : hc45 === true ? 1 : 0,
-        "prtnr_bank_type" : hc46 === true ? 1 : 0,
-        "bank_key" : hc47 === true ? 1 : 0,
-        "bank_account" : hc48 === true ? 1 : 0,
-        "account_holder" : hc49 === true ? 1 : 0,
-        "nama_benef" : hc50 === true ? 1 : 0,
-        "no_rek_benef" : hc51 === true ? 1 : 0,
-        "bank_benef" : hc52 === true ? 1 : 0,
-        "po_num" : hc53 === true ? 1 : 0,
-        "po_item" : hc54 === true ? 1 : 0,
-        "ref_key1" : hc55 === true ? 1 : 0,
-        "ref_key2" : hc56 === true ? 1 : 0,
-        "ref_key3" : hc57 === true ? 1 : 0,
-        "int_order" : hc58 === true ? 1 : 0,
-        "wbs_num" : hc59 === true ? 1 : 0,
-        "dr_cr_ind" : hc60 === true ? 1 : 0,
-        "cash_code" : hc61 === true ? 1 : 0,
-        "partial_ind" : hc62 === true ? 1 : 0,
-        "amt_with_base_lc" : hc63 === true ? 1 : 0,
-        "amt_with_lc" : hc64 === true ? 1 : 0,
-        "metode_pembayaran" : hc65 === true ? 1 : 0,
-        "no_giro" : hc66 === true ? 1 : 0,
-        "tgl_tagihan_diterima" : hc67 === true ? 1 : 0,
-        "tgl_rencana_bayar" : hc68 === true ? 1 : 0,
-        "sumber_dana" : hc69 === true ? 1 : 0,
+        "line_item" : hc18 === true ? 1 : 0,
+        "dr_cr_ind" : hc19 === true ? 1 : 0,
+        "spec_gl" : hc20 === true ? 1 : 0,
+        "gl_acct" : hc21 === true ? 1 : 0,
+        "amt_tc" : hc22 === true ? 1 : 0,
+        "amt_lc" : hc23 === true ? 1 : 0,
+        "amt_with_base_tc" : hc24 === true ? 1 : 0,
+        "amt_with_tc" : hc25 === true ? 1 : 0,
+        "amt_with_base_lc" : hc26 === true ? 1 : 0,
+        "amt_with_lc" : hc27 === true ? 1 : 0,
+        "amount" : hc28 === true ? 1 : 0,
+        "acct_type" : hc29 === true ? 1 : 0,
+        "assignment" : hc30 === true ? 1 : 0,
+        "item_text" : hc31 === true ? 1 : 0,
+        "customer" : hc32 === true ? 1 : 0,
+        "vendor" : hc33 === true ? 1 : 0,
+        "term_pmt" : hc34 === true ? 1 : 0,
+        "due_on" : hc35 === true ? 1 : 0,
+        "reference_key" : hc36 === true ? 1 : 0,
+        "pmt_ind" : hc37 === true ? 1 : 0,
+        "trans_type" : hc38 === true ? 1 : 0,
+        "spread_val" : hc39 === true ? 1 : 0,
+        "pmt_block" : hc40 === true ? 1 : 0,
+        "house_bank" : hc41 === true ? 1 : 0,
+        "no_rek_house_bank" : hc42 === true ? 1 : 0,
+        "prtnr_bank_type" : hc43 === true ? 1 : 0,
+        "bank_key" : hc44 === true ? 1 : 0,
+        "bank_account" : hc45 === true ? 1 : 0,
+        "account_holder" : hc46 === true ? 1 : 0,
+        "cost_ctr" : hc47 === true ? 1 : 0,
+        "int_order" : hc48 === true ? 1 : 0,
+        "wbs_num" : hc49 === true ? 1 : 0,
+        "cash_code" : hc50 === true ? 1 : 0,
+        "po_num" : hc51 === true ? 1 : 0,
+        "po_item" : hc52 === true ? 1 : 0,
+        "ref_key1" : hc53 === true ? 1 : 0,
+        "ref_key2" : hc54 === true ? 1 : 0,
+        "ref_key3" : hc55 === true ? 1 : 0,
+        "oi_ind" : hc56 === true ? 1 : 0,
+        "tpba" : hc57 === true ? 1 : 0,
+        "metode_pembayaran" : hc58 === true ? 1 : 0,
+        "no_giro" : hc59 === true ? 1 : 0,
+        "tgl_rencana_bayar" : hc60 === true ? 1 : 0,
+        "oss_id" : hc61 === true ? 1 : 0,
+        "group_id" : hc62 === true ? 1 : 0,
+        "bank_byr" : 0,
+        "curr_bayar" : hc63 === true ? 1 : 0,
+        "amount_bayar" : hc64 === true ? 1 : 0,
+        "bank_benef" : hc65 === true ? 1 : 0,
+        "no_rek_benef" : hc66 === true ? 1 : 0,
+        "nama_benef" : hc67 === true ? 1 : 0,
+        "sumber_dana" : hc68 === true ? 1 : 0,
+        "partial_ind" : hc69 === true ? 1 : 0,
         "keterangan" : hc70 === true ? 1 : 0,
         "status_tracking" : hc71 === true ? 1 : 0,
-
-        "bank_byr" : 0,
         "tgl_act_bayar" : 0,
+
         "corp_pmt" : 0,
         "inq_customer_name" : 0,
         "inq_account_number" : 0,
@@ -3139,7 +2749,7 @@ function update_status(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pStatusTra
     }
 }
 
-function update_status_giro(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pStatusTracking, pOssId, pGroupId){
+function update_status_giro(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pStatusTracking){
     if (pStatusTracking === 'INPUT DATA'){
         alert('Silahkan Tentukan Metode Pembayaran Terlebih Dahulu');
     }else{
@@ -3157,8 +2767,6 @@ function update_status_giro(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pStat
                     pLineItem: pLineItem,
                     pKet: pKet,
                     pStatusTracking: pStatusTracking,
-                    pOssId : pOssId,
-                    pGroupId : pGroupId
                 },
                 success: function (res) {
                     hideLoadingCss("")
@@ -3654,17 +3262,19 @@ function reject_data(pCompCode, pDocNo, pFiscYear, pLineItem, pKet){
     }
 }
 
-function insertMultipleEditGiro(){
-    let no_giro = $("#pMultipleNoGiro").val();
-    let metode_bayar = $("#pMetodeBayarMultiple").val();
+function insertMultipleEdit(){
+    let cash_code = $("#pCashCodeMultiple").val()
+    let jam_bayar = $("#pJamBayarMultiple").val()
+    let metode_bayar = $("#pMetodeBayarMultiple").val()
     $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/insert_multiple_edit_giro",
+        url: baseUrl + "api_operator/rekap_invoice_belum/insert_multiple_edit",
         dataType: 'JSON',
         type: "POST",
         data: {
             pData: JSON.stringify(invoiceCheckedArray),
-            pNoGiro: metode_bayar === "GIRO" ? no_giro : "-",
+            pCashCode: cash_code,
             pMetodePembayaran : metode_bayar,
+            pJamBayar: jam_bayar,
         },
         success: function (res) {
             hideLoadingCss("");
@@ -3738,17 +3348,13 @@ function create_group() {
 
 
 function openMultipleEditForm(){
-    if (invoiceCheckedArray.length <= 0){
-        alert("Silahkan Pilih Data Terlebih Dahulu");
-    }else{
-        $("#pCashCodeMultiple").val("")
-        $("#pJamBayarMultiple").val("")
-        $("#pMetodeBayarMultiple").val("")
-        $('#multiple-edit-modal').modal({backdrop: 'static', keyboard: false});
-        // setSelectCashCode("pCashCodeMultiple","");
-        setSelectMetodeBayar("pMetodeBayarMultiple","");
-        //$('#edit-modal2').modal({backdrop: 'static', keyboard: false});
-    }
+    $("#pCashCodeMultiple").val("")
+    $("#pJamBayarMultiple").val("")
+    $("#pMetodeBayarMultiple").val("")
+    $('#multiple-edit-modal').modal({backdrop: 'static', keyboard: false});
+    setSelectCashCode("pCashCodeMultiple","");
+    setSelectMetodeBayar("pMetodeBayarMultiple","");
+    //$('#edit-modal2').modal({backdrop: 'static', keyboard: false});
 }
 
 function openGetBallance(){
@@ -3961,8 +3567,8 @@ function checkArray(e) {
     //         stack : 1
     //     });
     // }
-    console.log("Full Array : ", fullArrayGroup);
-    console.log("invoice array : ",invoiceCheckedArray);
+    // console.log("Full Array : ", fullArrayGroup);
+    // console.log("invoice array : ",invoiceCheckedArray);
 }
 
 function checkGroup(){
@@ -3977,11 +3583,7 @@ function checkGroup(){
                 title : "Maaf!",
                 html : '<p>Silahkan Tentukan Metode Pembayaran Terlebih Dahulu</p>',
             });
-        } else {
-            Swal.fire("Maaf", "Tidak bisa melakukan Grouping","error");
-            // fullArrayGroup = new Array();
-            // invoiceCheckedArray = new Array();
-        }
+        } else Swal.fire("Maaf", "Tidak bisa melakukan Grouping","error");
     }
 }
 
@@ -3992,9 +3594,7 @@ function isSame(data){
         let bank = data[0].BANK_BYR;
         let hb_rekening = data[0].NO_REK_HOUSE_BANK;
         // let comp_code = data[0].COMP_CODE;
-        let assignment_depan = data[0].ASSIGNMENT_DEPAN;
-        let assign_split =  data[0].ASSIGNMENT.toString().toLowerCase().split("-");
-        let assignment = assign_split[0].toString();
+        let assign = data[0].ASSIGNMENT;
         // let bus_area = data[0].BUS_AREA;
         let due_on = data[0].TGL_RENCANA_BAYAR;
         let sumber_dana = data[0].SUMBER_DANA;
@@ -4005,12 +3605,10 @@ function isSame(data){
     // || comp_code != data[x].COMP_CODE
 
         for(let x = 0; x < data.length; x++){
-            let arr_split = data[x].ASSIGNMENT.toString().toLowerCase().split("-");
-            let assg = arr_split[0].toString();
              if (data[x].METODE_PEMBAYARAN === "-"){
                  return 222;
              }
-            if(due_on !== data[x].TGL_RENCANA_BAYAR || bank !== data[x].BANK_BYR || hb_rekening !== data[x].NO_REK_HOUSE_BANK || assignment_depan !== data[x].ASSIGNMENT_DEPAN || assg !== assignment || sumber_dana !== data[x].SUMBER_DANA ||
+            if(due_on !== data[x].TGL_RENCANA_BAYAR || bank !== data[x].BANK_BYR || hb_rekening !== data[x].NO_REK_HOUSE_BANK || assign !== data[x].ASSIGNMENT || sumber_dana !== data[x].SUMBER_DANA ||
             inq_name !== data[x].INQ_CUSTOMER_NAME || no_giro !== data[x].NO_GIRO || curr_bayar !== data[x].CURR_BAYAR){
                 return false;
             }
@@ -4141,13 +3739,4 @@ $("#pWaktuPembayaran").change( function(){
     }else{
         $("#pJamBayar").hide();
     }
-});
-
-$("#pMetodeBayarMultiple").change(function () {
-   if ($("#pMetodeBayarMultiple").val() === "GIRO"){
-        $("#pMultipleNoGiro").removeAttr("disabled");
-   }else{
-       $("#pMultipleNoGiro").attr("disabled","disabled");
-       $("#pMultipleNoGiro").val("");
-   }
 });

@@ -1,11 +1,10 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
-import com.iconpln.liquiditas.core.service.InvoiceSiapBayarService;
+import com.iconpln.liquiditas.core.service.InvoiceDraftService;
+import com.iconpln.liquiditas.core.service.InvoiceSalahService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
-import com.iconpln.liquiditas.monitoring.utils.NotificationUtil;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
 import net.sf.jxls.transformer.XLSTransformer;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -14,10 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.text.ParseException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,22 +23,18 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api_operator/invoice_siap_bayar")
-public class InvoiceSiapBayarController {
-
+@RequestMapping(path = "/api_operator/rekap_invoice_salah")
+public class InvoiceSalahController {
     @Autowired
-    private InvoiceSiapBayarService invoiceSiapBayarService;
-
-    @Autowired
-    private NotificationUtil notificationUtil;
+    private InvoiceSalahService invoiceSalahService;
 
     @Autowired
     private ResourceLoader resourceLoader;
 
     private SimpleDateFormat excelDateFormat = new SimpleDateFormat("dd/mm/yyyy");
 
-    @GetMapping(path = "/get_invoice_siap_bayar")
-    public Map<String, Object> getListInvoiceSiapBayar(
+    @GetMapping(path = "/get_rekap_invoice_salah")
+    public Map getInvoiceSalahtList(
             @RequestParam(value = "draw", defaultValue = "0") int draw,
             @RequestParam(value = "start", defaultValue = "0") int start,
             @RequestParam(value = "length", defaultValue = "10") int length,
@@ -55,32 +49,31 @@ public class InvoiceSiapBayarController {
             @RequestParam(value = "status", defaultValue = "ALL") String pStatus,
             @RequestParam(value = "statusTracking", defaultValue = "ALL") String pStatusTracking,
             @RequestParam(value = "search[value]", defaultValue = "") String pSearch
-    ){
+    ) {
         String sortBy = parseColumn(sortIndex);
         sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
         if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
             sortDir = "DESC";
         }
-
         List<Map<String, Object>> list = new ArrayList<>();
         try {
-            list = invoiceSiapBayarService.getListInvoiceSiapBayar(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, WebUtils.getUsernameLogin(), sortBy, sortDir, pStatus, pStatusTracking, pSearch);
-        }catch (Exception e){
+            list = invoiceSalahService.getInvoiceSalahList(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, WebUtils.getUsernameLogin(), sortBy, sortDir, pStatus, pStatusTracking, pSearch);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         Map mapData = new HashMap();
         mapData.put("draw", draw);
         mapData.put("data", list);
-
-        if (list.size() == 0 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null){
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
             mapData.put("recordsTotal", 0);
             mapData.put("recordsFiltered", 0);
-        }else {
+        } else {
             mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
             mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
         }
-
         return mapData;
     }
 
@@ -209,22 +202,11 @@ public class InvoiceSiapBayarController {
         }
     }
 
-    @RequestMapping(value = "/get_saldo", method = RequestMethod.GET)
-    public List<Map<String,Object>> getSaldo(@RequestParam(value = "pBankAccount", defaultValue = "") String pBankAccount) {
-
-        try {
-            return invoiceSiapBayarService.getSaldo(pBankAccount);
-        } catch (Exception e) {
-            AppUtils.getLogger(this).debug(e.getMessage());
-            return null;
-        }
-    }
-
     @RequestMapping(value = "/get_column", method = RequestMethod.GET)
     public Map getColumn() {
         Map data = new HashMap();
         try {
-            data.put("data", invoiceSiapBayarService.getColumn(WebUtils.getUsernameLogin()));
+            data.put("data", invoiceSalahService.getColumn(WebUtils.getUsernameLogin()));
             return data;
         } catch (Exception e) {
             e.printStackTrace();
@@ -232,44 +214,29 @@ public class InvoiceSiapBayarController {
         }
     }
 
-    @GetMapping(path = "/xls/{pTglAwal}/{pTglAkhir}/{pCurr}/{pCaraBayar}/{pBank}/{pStatus}/{pStatusTracking}")
+    @RequestMapping(value = "/xls_invoice_salah", method = RequestMethod.GET)
     public String export(
-            @PathVariable String pTglAwal,
-            @PathVariable String pTglAkhir,
-            @PathVariable String pCurr,
-            @PathVariable String pStatusTracking,
-            @PathVariable String pBank,
-            @PathVariable String pCaraBayar,
-            @PathVariable String pStatus,
             HttpServletRequest request,
-            HttpServletResponse response
-    ) throws InvalidFormatException {
-        SimpleDateFormat dateParser = new SimpleDateFormat("yyyymmdd");
+            HttpServletResponse response) {
         try {
+            SimpleDateFormat dateParser = new SimpleDateFormat("yyyymmdd");
+            String pattern = "###,###.###";
+            DecimalFormat df  = new DecimalFormat(pattern);
             String tglAwal = "";
             String tglAkhir = "";
-            String caraBayar = (pCaraBayar.equals("null")) ? "ALL" : pCaraBayar;
-            String status = (pStatus.equals("null")) ? "ALL" : pStatus;
-            String statusTracking = (pStatusTracking.equals("null")) ? "ALL" : pStatusTracking;
 
-            if (!pTglAwal.equals("null")) {
-                tglAwal = pTglAwal;
-            }
-            if (!pTglAkhir.equals("null")) {
-                tglAkhir = pTglAkhir;
-            }
-
-            String title = "INVOICE SIAP BAYAR";
-            String namaFile = "rekap_invoice_siapbayar.xls";
+            String title = "REKAP INVOICE SALAH/GAGAL";
+            String namaFile = "rekap_invoice_salah.xls";
 
             ServletOutputStream os = response.getOutputStream();
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
 
-            List<Map<String, Object>> listData = invoiceSiapBayarService.getAllPembayaran(WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pCurr, statusTracking, pBank, caraBayar, status);
-            System.out.println("Ini List Data Excel Cok!"+ listData);
+            List<Map<String, Object>> listData = invoiceSalahService.getAllXlsInvoiceSalah();
+
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
+            System.out.println("List_Excel_data : "+listData.toString());
 
             param.put("TITLE", title);
             for (Map data : listData) {
@@ -282,6 +249,7 @@ public class InvoiceSiapBayarController {
                 paramDetail.put("DOC_TYPE",data.get("DOC_TYPE"));
                 paramDetail.put("DOC_DATE",(!data.get("DOC_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("DOC_DATE").toString())) : "-");
                 paramDetail.put("DOC_DATE2",data.get("DOC_DATE2"));
+                paramDetail.put("DESKRIPSI_BANK", data.get("DESKRIPSI_BANK"));
                 paramDetail.put("POST_DATE",(!data.get("POST_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("POST_DATE").toString())) : "-");
                 paramDetail.put("POST_DATE2",data.get("POST_DATE2"));
                 paramDetail.put("ENTRY_DATE",(!data.get("ENTRY_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("ENTRY_DATE").toString())) : "-");
@@ -295,7 +263,7 @@ public class InvoiceSiapBayarController {
                 paramDetail.put("REFERENCE_KEY",data.get("REFERENCE_KEY"));
                 paramDetail.put("PMT_IND",data.get("PMT_IND"));
                 paramDetail.put("TRANS_TYPE",data.get("TRANS_TYPE"));
-                paramDetail.put("SPREAD_VALUE",data.get("SPREAD_VAL"));
+                paramDetail.put("SPREAD_VAL",data.get("SPREAD_VAL"));
                 paramDetail.put("LINE_ITEM",data.get("LINE_ITEM"));
                 paramDetail.put("OI_IND",data.get("OI_IND"));
                 paramDetail.put("ACCT_TYPE",data.get("ACCT_TYPE"));
@@ -303,7 +271,7 @@ public class InvoiceSiapBayarController {
                 paramDetail.put("BUS_AREA",data.get("BUS_AREA"));
                 paramDetail.put("TPBA",data.get("TPBA"));
                 paramDetail.put("AMT_LC",data.get("AMT_LC"));
-                paramDetail.put("AMT_TC",data.get("AMT_TC"));
+                paramDetail.put("AMT_TC", data.get("AMT_TC"));
                 paramDetail.put("AMT_WITH_BASE_TC",data.get("AMT_WITH_BASE_TC"));
                 paramDetail.put("AMT_WITH_TC",data.get("AMT_WITH_TC"));
                 paramDetail.put("AMOUNT",data.get("AMOUNT"));
@@ -320,12 +288,14 @@ public class InvoiceSiapBayarController {
                 paramDetail.put("DUE_ON",data.get("DUE_ON"));
                 paramDetail.put("PMT_BLOCK",data.get("PMT_BLOCK"));
                 paramDetail.put("HOUSE_BANK",data.get("HOUSE_BANK"));
+                paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
                 paramDetail.put("PRTNR_BANK_TYPE",data.get("PRTNR_BANK_TYPE"));
                 paramDetail.put("BANK_KEY",data.get("BANK_KEY"));
                 paramDetail.put("BANK_ACCOUNT",data.get("BANK_ACCOUNT"));
                 paramDetail.put("ACCOUNT_HOLDER",data.get("ACCOUNT_HOLDER"));
                 paramDetail.put("PO_NUM",data.get("PO_NUM"));
                 paramDetail.put("PO_ITEM",data.get("PO_ITEM"));
+                paramDetail.put("PARTIAL_IND", data.get("PARTIAL_IND"));
                 paramDetail.put("REF_KEY1",data.get("REF_KEY1"));
                 paramDetail.put("REF_KEY2",data.get("REF_KEY2"));
                 paramDetail.put("REF_KEY3",data.get("REF_KEY3"));
@@ -340,6 +310,7 @@ public class InvoiceSiapBayarController {
                 paramDetail.put("TGL_VERIFIKASI_CHECKER",data.get("TGL_VERIFIKASI_CHECKER"));
                 paramDetail.put("TGL_VERIFIKASI_APPROVER",data.get("TGL_VERIFIKASI_APPROVER"));
                 paramDetail.put("METODE_PEMBAYARAN",data.get("METODE_PEMBAYARAN"));
+                paramDetail.put("TGL_TAGIHAN_DITERIMA",data.get("TGL_TAGIHAN_DITERIMA"));
                 paramDetail.put("MAKER",data.get("MAKER"));
                 paramDetail.put("CHECKER",data.get("CHECKER"));
                 paramDetail.put("APPROVER",data.get("APPROVER"));
@@ -370,35 +341,50 @@ public class InvoiceSiapBayarController {
                 paramDetail.put("VERIFIED_ON",data.get("VERIFIED_ON"));
                 paramDetail.put("APPROVE_TGL_RENCANA_BAYAR",data.get("APPROVE_TGL_RENCANA_BAYAR"));
                 paramDetail.put("STATUS_TRACKING",data.get("STATUS_TRACKING"));
-                paramDetail.put("TGL_SIAP_BAYAR", data.get("TGL_SIAP_BAYAR"));
-                paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
-                paramDetail.put("SPREAD_VAL",data.get("SPREAD_VAL"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
 
             XLSTransformer transformer = new XLSTransformer();
-            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/rekap_invoice_siapbayar.xls").getInputStream();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/rekap_invoice_salah.xls").getInputStream();
             Workbook workbook = transformer.transformXLS(streamTemplate, param);
             workbook.write(os);
             os.flush();
             return null;
-        } catch (IOException | ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return "Gagal Export Data :" + e.getMessage();
         }
-
     }
 
-    @RequestMapping(value = "/get_total_tagihan", method = RequestMethod.GET)
-    public String getTotalTagihan(@RequestParam(value = "tgl_awal", defaultValue = "") String tglAwal,
-                                  @RequestParam(value = "tgl_akhir", defaultValue = "") String tglAkhir,
-                                  @RequestParam(value = "currency", defaultValue = "ALL") String currency,
-                                  @RequestParam(value = "caraBayar", defaultValue = "ALL") String caraBayar,
-                                  @RequestParam(value = "bank", defaultValue = "ALL") String bank,
-                                  @RequestParam(value = "search", defaultValue = "") String search) {
-        BigDecimal result =  invoiceSiapBayarService.getTotalTagihan(tglAwal, tglAkhir, currency, caraBayar, bank, WebUtils.getUsernameLogin(), search);
-        String formatted = AppUtils.getInstance().formatDecimalCurrency(result);
-        return formatted;
+    @RequestMapping(value = "/reverse_gagal_to_sap", method = RequestMethod.POST)
+    public Map<String, Object> reverseSap(
+            @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
+            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
+            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
+            @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem,
+            @RequestParam(value = "pKet", defaultValue = "") String pKet,
+            @RequestParam(value = "pOssId", defaultValue = "") String pOssId,
+            @RequestParam(value = "pGroupId", defaultValue = "") String pGroupId
+
+    ) {
+        AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
+//        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
+//        AppUtils.getLogger(this).info("pFiscYear edit data: {}", pFiscYear);
+//        AppUtils.getLogger(this).info("pLineItem edit data: {}", pLineItem);
+//        AppUtils.getLogger(this).info("pKet edit data: {}", pKet);
+//        AppUtils.getLogger(this).info("pBankPembayar edit data: {}", pBankPembayar);
+//        AppUtils.getLogger(this).info("pKeterangan edit data: {}", pKeterangan);
+//        AppUtils.getLogger(this).info("pTglRencanaBayar edit data: {}", pTglRencanaBayar);
+//        AppUtils.getLogger(this).info("pSumberDana edit data: {}", pSumberDana);
+//        AppUtils.getLogger(this).info("pMetodePembayaran edit data: {}", pMetodePembayaran);
+        try {
+            Map<String, Object> res = invoiceSalahService.reverseGagalToSap(pCompCode, pDocNo, pFiscYear, pLineItem, pKet,WebUtils.getUsernameLogin(), pOssId, pGroupId);
+
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

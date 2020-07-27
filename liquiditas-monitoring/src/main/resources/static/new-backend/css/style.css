@@ -1992,6 +1992,26 @@ fieldset[disabled] a.btn {
     background-image: none;
     border-color: #bb9900; }
 
+.btn-default {
+  color: #fff;
+  background-color: rgba(255, 156, 73, 0.89);
+  border-color: rgba(255, 156, 73, 0.89); }
+.btn-default:hover {
+  color: #fff;
+  background-color: rgba(214, 123, 65, 0.88);
+  border-color: rgba(214, 123, 65, 0.88); }
+.btn-default:focus, .btn-default.focus {
+  box-shadow: 0 0 0 2px rgba(182, 189, 156, 0.5); }
+.btn-default.disabled, .btn-default:disabled {
+  background-color: rgba(149, 154, 149, 0.79);
+  border-color: #a5a8a8; }
+.btn-default:active, .btn-default.active,
+.show > .btn-default.dropdown-toggle {
+  color: #fff;
+  background-color: #99B898;
+  background-image: none;
+  border-color: #99B898; }
+
 .btn-danger {
   color: #fff;
   background-color: #f86c6b;

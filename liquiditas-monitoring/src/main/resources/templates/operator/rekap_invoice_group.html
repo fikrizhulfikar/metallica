@@ -30,10 +30,13 @@
         <li class="breadcrumb-item active" style="cursor: default">Invoice Group</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown" id="exportHeadBtn">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls Header</button>
+            </div>
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown" id="exportAllItemBtn">
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportAllGroupItemXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls Item</button>
             </div>
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown" id="exportItemBtn">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary"><i class="fas fa-file-excel"></i>&nbsp; Xls Item</button>
             </div>
         </li>
     </ol>
@@ -54,20 +57,34 @@
                         <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>
                     </div>
                     <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Bank </label>
+                        <label class="lbl-src">House Bank </label>
                     </div>
                     <div class="col-md-3" style="padding-right: 0px;">
                         <select name="bank" id="cmb_bank" class="form-control">
                             <option value="">Pilih Data</option>
                         </select>
                     </div>
-                </div>
-                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
-                    <div class="col-md-8"></div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Currency Bayar</label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="bacurrecnynk" id="cmb_currecny" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Metode Bayar</label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="cmb_cara_pembayaran" id="cmb_cara_pembayaran" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
                     <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
                     <div class="col-md-3" style="padding-right: 0px;">
                         <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
                     </div>
+                </div>
                 </div>
             </div>
             <div class="list-data" style="margin-top:25px;">
@@ -77,6 +94,7 @@
                             <thead style="font-size: 12px">
                             <tr>
                                 <th>NO.</th>
+                                <th>ID GROUP METALLICA</th>
                                 <th>HOUSE BANK</th>
                                 <th>NO REK HOUSE BANK</th>
                                 <th>COMP CODE</th>
@@ -88,6 +106,7 @@
                                 <th>TOTAL TAGIHAN</th>
                                 <th>ASSIGNMENT</th>
                                 <th>SUMBER DANA</th>
+                                <th>STATUS TRACKING</th>
                                 <th>AKSI</th>
 <!--                                <th id="forcbparent"></th>-->
                             </tr>
@@ -99,7 +118,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
     <div id="edit-modal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">

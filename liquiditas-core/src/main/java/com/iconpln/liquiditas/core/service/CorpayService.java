@@ -455,15 +455,17 @@ public class CorpayService {
         return out;
     }
 
-    public Map<String, Object> getAllTracking(String pSearch) throws SQLException {
+    public List<Map<String, Object>> getAllTracking(String pSearch, String pStart, String pLength) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("get_tracking_level1");
 
         SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("p_search", pSearch);
-        Map<String, Object> out = simpleJdbcCall.execute(in);
+                .addValue("p_search", pSearch)
+                .addValue("p_start", pStart)
+                .addValue("p_length", pLength);
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class,in);
         AppUtils.getLogger(this).info("data get_tracking_level1 : {}", out);
         return out;
     }
@@ -912,6 +914,27 @@ public class CorpayService {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("invoice_edit_all_data");
+        Map<String, Object> result = simpleJdbcCall.execute(params);
+        return result;
+    }
+
+    public Map<String, Object> insertEditAllGiro(
+            String comp_code, String doc_no, String fiscal_year, String line_item,
+            String ket, String user_id, String no_giro, String metode_bayar)
+    {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("invoice_edit_all_giro");
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_comp_code",comp_code,OracleTypes.VARCHAR)
+                .addValue("p_doc_no", doc_no, OracleTypes.VARCHAR)
+                .addValue("p_fisc_year", fiscal_year, OracleTypes.VARCHAR)
+                .addValue("p_line_item",line_item, OracleTypes.VARCHAR)
+                .addValue("p_ket", ket, OracleTypes.VARCHAR)
+                .addValue("p_user_id", user_id, OracleTypes.VARCHAR)
+                .addValue("p_no_giro", no_giro, OracleTypes.VARCHAR)
+                .addValue("p_metode_pembayaran", metode_bayar, OracleTypes.VARCHAR)
+                .addValue("out_msg",OracleTypes.VARCHAR);
         Map<String, Object> result = simpleJdbcCall.execute(params);
         return result;
     }
@@ -1814,6 +1837,23 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         return result;
     }
 
+    public BigDecimal getTotalTagihanApprovalEvp(String tgl_awal, String tgl_akhir, String currency, String bank,String user_id, String search){
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", tgl_awal, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", tgl_akhir, OracleTypes.VARCHAR)
+                .addValue("p_currency", currency, OracleTypes.VARCHAR)
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_user_id", user_id, OracleTypes.VARCHAR)
+                .addValue("p_search", search, OracleTypes.VARCHAR);
+        getJdbcTemplate().execute("alter session set NLS_NUMERIC_CHARACTERS='.,'");
+
+        BigDecimal result = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_total_tagihan_invoice5")
+                .executeFunction(BigDecimal.class,params);
+        return result;
+    }
+
     public List<Map<String, Object>> getAllpembayaran(String idUser, String pTglAwal, String pTglAkhir,  String pCurr, String pCaraBayar, String pBank, String status, String statusTracking) throws SQLException {
 
         AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
@@ -1835,6 +1875,41 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
 
         AppUtils.getLogger(this).info("data get_all_pembayaran_by_status1 : {} and userid {}", resultset, idUser);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getAllpembayaranOss() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_all_invoice_backupplan");
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+        System.out.println("ALL INVOICE : "+resultset.toString());
+        AppUtils.getLogger(this).info("data get_all_pembayaran_oss : {}", resultset);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getVerifikasiTanggalByStatus(String idUser, String pTglAwal, String pTglAkhir,  String pCurr, String pBank, String status, String statusTracking) throws SQLException {
+
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
+        AppUtils.getLogger(this).debug("PARAM SEARCH pCurr : {}", pCurr);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_verifikasi_tgl_by_status");
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_user_id", idUser);
+        params.put("p_tgl_awal", pTglAwal);
+        params.put("p_tgl_akhir", pTglAkhir);
+        params.put("p_currency", pCurr);
+        params.put("p_bank", pBank);
+        params.put("p_status", status);
+        params.put("p_status_tracking", statusTracking);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_verifikasi_tgl_by_status : {} and userid {}", resultset, idUser);
         return resultset;
     }
 

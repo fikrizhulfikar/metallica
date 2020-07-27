@@ -4,6 +4,7 @@
 var tableMain;
 var isUpdate = "0";
 var tempTableSearch = "";
+var tempTableItemSearch = "";
 var groupCheckedArray = new Array();
 var fullArrayGroup = new Array();
 var cbParentArray = new Array();
@@ -22,15 +23,14 @@ var srcTglAkhir = "";
 var pIdGroup = "";
 
 $(document).ready(function () {
-    initDataTable();
-    $('#exportHeadBtn').show();
+    $('#exportHeadBtn, #exportAllItemBtn').show();
     $('#exportItemBtn').hide();
     $('#tanggal_awal').datepicker({dateFormat: "dd/mm/yy"});
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
-    setSelectBank("cmb_bank", "FILTER", "", "", "REKAP");
+    setSelectFilterBank("cmb_bank", "FILTER", "", "", "REKAP");
     setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
-    // setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+    setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
 
     $('#check_all').change(function() {
         if($(this).is(':checked')){
@@ -654,7 +654,7 @@ function getAllData() {
 
 }
 
-function initDataTable(pTglAwal, pTglAkhir,  pBank) {
+function initDataTable(pTglAwal, pTglAkhir,  pBank, pCaraBayar, pCurr) {
     showLoadingCss();
     $('#table-rekapitulasi tbody').empty();
     $('#table-rekapitulasi').dataTable().fnDestroy();
@@ -680,18 +680,18 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                 {width: 150, targets: 5},
                 {width: 150, targets: 6},
                 {width: 100, targets: 7},
-                {width: 20, targets: 8},
-                // {width: 100, targets: 35},
-                // {width: 100, targets: 36},
+                {width: 90, targets: 8},
+                {width: 100, targets: 9},
+                {width: 100, targets: 10},
                 {width: "80%", "targets": 0},
                 { className: "datatables_action", "targets": [1,2,3,4,5,6,7,8] },
                 {
                     "bSortable": true,
-                    "aTargets": [1, 2, 3, 4, 5,6,7,8]
+                    "aTargets": [1, 2, 3, 4, 5,6,7,8,9,10,11]
                 },
                 {
                     "sortable": false,
-                    "aTargets": [0]
+                    "aTargets": [0,14]
                 },
                 {
                     "aTargets": [0],
@@ -703,19 +703,26 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                 {
                     "aTargets": [1],
                     "mRender": function (data, type, full) {
-                        return full.BANK_BYR2;
+                        return full.ID_GROUP;
                     }
 
                 },
                 {
                     "aTargets": [2],
                     "mRender": function (data, type, full) {
-                        return full.NO_REK_HOUSE_BANK;
+                        return full.BANK_BYR2;
                     }
 
                 },
                 {
                     "aTargets": [3],
+                    "mRender": function (data, type, full) {
+                        return full.NO_REK_HOUSE_BANK;
+                    }
+
+                },
+                {
+                    "aTargets": [4],
                     "mRender": function (data, type, full) {
                         return full.COMP_CODE;
                     }
@@ -723,63 +730,70 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                 },
 
                 {
-                    "aTargets": [4],
+                    "aTargets": [5],
                     "mRender": function (data, type, full) {
                         return full.BUS_AREA;
                     }
 
                 },
                 {
-                    "aTargets": [5],
+                    "aTargets": [6],
                     "mRender": function (data, type, full) {
                         return full.TGL_RENCANA_BAYAR;
                     }
 
                 },
                 {
-                    "aTargets": [6],
+                    "aTargets": [7],
                     "mRender": function (data, type, full) {
                         return full.METODE_PEMBAYARAN;
                     }
 
                 },
                 {
-                    "aTargets": [7],
+                    "aTargets": [8],
                     "mRender": function (data, type, full) {
                         return full.NO_GIRO;
                     }
 
                 },
                 {
-                    "aTargets": [8],
+                    "aTargets": [9],
                     "mRender": function (data, type, full) {
                         return full.CURR_BAYAR;
                     }
 
                 },
                 {
-                    "aTargets": [9],
+                    "aTargets": [10],
                     "mRender": function (data, type, full) {
                         return Intl.NumberFormat().format(full.TOTAL_TAGIHAN);
                     }
 
                 },
                 {
-                    "aTargets": [10],
+                    "aTargets": [11],
                     "mRender": function (data, type, full) {
                         return full.ASSIGNMENT;
                     }
 
                 },
                 {
-                    "aTargets": [11],
+                    "aTargets": [12],
                     "mRender": function (data, type, full) {
                         return full.SUMBER_DANA;
                     }
 
                 },
                 {
-                    "aTargets": [12],
+                    "aTargets": [13],
+                    "mRender": function (data, type, full) {
+                        return full.STATUS_TRACKING;
+                    }
+
+                },
+                {
+                    "aTargets": [14],
                     "mRender": function (data, type, full) {
                         var jenis = "AP INVOICE";
                         // console.log("Ini Full : ", full);
@@ -814,24 +828,25 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                                     '<div class="btn-group">';
                                 if(newRoleUser[0] == "ROLE_ADMIN"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button type="button" style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="fas fa-edit"></i></button>'+
-                                        // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button type="button" style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button type="button" style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_METALLICA + '\')"><i class="fa fa-close"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_JA_CASH"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_GROUP + '\')"><i class="fas fa-trash"></i></button>'+
                                         '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_JA_IE"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_GROUP + '\')"><i class="fa fa-close"></i></button>'+
                                         '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         '</div>';
@@ -851,28 +866,35 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                                     '<div class="btn-group">';
                                 if(newRoleUser[0] == "ROLE_ADMIN"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_CENTRALIZED_RECEIPT"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+'</div>';
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
+                                        '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_PAYMENT_EXPENDITURE"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+'</div>';
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
+                                        '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_INVESTMENT_EXPENDITURE"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+'</div>';
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
+                                        '</div>';
                                 }
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY CHECKER") {
@@ -881,87 +903,87 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                                     '<div class="btn-group">';
                                 if(newRoleUser[0] == "ROLE_ADMIN"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class= "btn btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button type="button" style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_PAYMENT_EXPENDITURE"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_FOREIGN_CURRENCY_LIQUIDITY"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_VP_LIQUIDITY_AND_RECEIPT"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_VP_BUSINESS_MANAGEMENT"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: " class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: " class="btn btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_INVESTMENT_EXPENDITURE_2"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_VP_INVESTMENT_EXPENDITURE"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_PRIMARY_ENERGY_EXPENDITURE"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_VP_OPERATION_EXPENDITURE"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_OPERATION_EXPENDITURE"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_INVESTMENT_EXPENDITURE"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                             }
@@ -972,56 +994,57 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                                     '<div class="btn-group">';
                                 if(newRoleUser[0] == "ROLE_VP_LIQUIDITY_AND_RECEIPT"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_ADMIN"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button type="button" style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_VP_BUSINESS_MANAGEMENT"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_VP_INVESTMENT_EXPENDITURE"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_PLH_EXECUTIVE_VICE_PRESIDENT"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_PAYMENT_EXPENDITURE"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_VP_OPERATION_EXPENDITURE"){
                                     ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrow-left"></i></button>'+
                                         '</div>';
                                 }
                             }
@@ -1029,7 +1052,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                                 ret_value =
                                     '<div class="btn-group">' +
                                     // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Do Payment" onclick="updateLunas(\'' +full.ID_METALLICA+'\',\''+jenis+'\')"><i class="fa fa-credit-card-alt"></i></button>'+
-                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                    '<button style="width: 15px !important;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                     // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DIAZ" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                     // '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_METALLICA + '\')"><i class="fa fa-close"></i></button>'+
                                     '</div>';
@@ -1054,6 +1077,8 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                             pTglAwal: pTglAwal,
                             pTglAkhir: pTglAkhir,
                             pBank: pBank,
+                            pCaraBayar : pCaraBayar,
+                            pCurr : pCurr
                         }
                     ,
                     "dataSrc":
@@ -1142,8 +1167,8 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
     });
 
     $('.dataTables_filter').each(function () {
-        // var html = '';
-        var html =  '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
+        var html = '';
+        // var html =  '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
         if (newRoleUser[0] == "ROLE_ADMIN" || newRoleUser[0] == "ROLE_JA_CASH" || newRoleUser[0] == "ROLE_JA_IE"){
             // html = html + '<button class="btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fas fa-trash"></i></button>';
         }
@@ -1354,14 +1379,14 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
     showLoadingCss()
     $(".list-data").hide();
     $(".detail-data").show();
-    $('#exportHeadBtn').hide();
+    $('#exportHeadBtn, #exportAllItemBtn').hide();
     $('#exportItemBtn')
         .show()
         .find("button").attr("onclick","exportXlsItem('"+group_id+"')");
     hideLoadingCss()
     tableDetailGroupInvoice = $('#table-main-detail').DataTable({
             "serverSide": true,
-            "oSearch": {"sSearch": tempTableSearch},
+            "oSearch": {"sSearch": tempTableItemSearch},
             "bLengthChange": true,
             "scrollY": "100%",
             "scrollX": "100%",
@@ -1951,9 +1976,9 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                                 ret_value =
                                     '<div class="btn-group">';
                                 if(newRoleUser[0] == "ROLE_ADMIN"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="fas fa-edit"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER (giro)" onclick="update_status_giro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>';
+                                    ret_value = "-"
+                                        // '<button style="width: 15px !important; margin-left: 5px;" class="btn btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="fas fa-edit"></i></button>'+
+                                        // '<button style="width: 15px !important;" class="btn btn-edit-data btn-sm btn-warning" title="Verified MAKER (giro)" onclick="update_status_giro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>';
                                 }
                                 if(newRoleUser[0] == "ROLE_JA_CASH"){
                                     ret_value ='-'
@@ -1983,9 +2008,9 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                                 ret_value =
                                     '<div class="btn-group">';
                                 if(newRoleUser[0] == "ROLE_ADMIN"){
-                                    ret_value = ret_value +
-                                        '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker (giro)" onclick="update_status_giro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title="Reverse Checker" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>';
+                                    ret_value = "-"
+                                        // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker (giro)" onclick="update_status_giro(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        // '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title="Reverse Checker" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_INVESTMENT_EXPENDITURE"){
                                     ret_value = '-'
@@ -2248,13 +2273,14 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                     "dataSrc":
                         function (res) {
                             hideLoadingCss()
-                            getTotalTagihan();
+                            getTotalTagihanItem(group_id);
                             return res.data;
                         }
                 }
             ,
             "drawCallback":
                 function (settings) {
+                    getTotalTagihanItem(group_id);
                     // $(".dataTables_scrollHeadInner").css({"width":"100%"});
                     // $(".table ").css({"width":"100%"});
                     tableDetailGroupInvoice.columns.adjust();
@@ -2680,25 +2706,31 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                                     }
         }
     );
-            $('.dataTables_filter').each(function () {
-                var html = '';
-                html =  '<button class="btn btn-dtl btn-dribbble btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
-                html = html + '<button class="btn btn-dtl btn-primary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Bukti Kas" onclick="cetakBuktiKasGroupingMultiple()"><i class="fas fa-file-alt"></i></button>' ;
-                html = html + '<button class="btn btn-dtl btn-info btn-sm" id="btn-cetak-lampiran" style="margin-left: 10px" type="button" title="Cetak Lampiran" onclick="cetakLampiranGrouping(\''+group_id+'\')"><i class="fas fa-paperclip"></i></button>' ;
-                if (newRoleUser[0] === "ROLE_JA_CASH" || newRoleUser[0] === "ROLE_JA_IE" || newRoleUser[0] === "ROLE_FCL_SETTLEMENT"){
-                    html = html + '<button class="btn btn-dtl btn-danger btn-sm" id="btn-ungroup" style="margin-left: 10px" type="button" title="Ungroup" onclick="ungroup()"><i class="fas fa-folder-open"></i></button>' ;
-                }
-                html = html + '<button class="btn btn-dtl btn-sm btn-ready" id="btn-siap-bayar-multiple" style="margin-left: 10px" type="button" title="Siap Bayar" onclick="multipleSiapBayarItemGroup()"><i class="fas fa-money-check"></i></button>' ;
-                $(this).append(html);
-            });
+
+    $('.dataTables_length').each(function () {
+        var html = '<label id="tagihan_item" style="margin-left: 250px; cursor:default;">Total Tagihan Item (Rp): <b id="total_tagihan_item">0</b></label>';
+        $(this).append(html);
+    });
+
+    $('.dataTables_filter').each(function () {
+        var html = '';
+        // html =  '<button class="btn btn-dtl btn-dribbble btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Sembunyikan Kolom" onclick="showColumn()"><i class="fa fa-arrows-alt"></i></button>';
+        html = html + '<button class="btn btn-dtl btn-primary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Bukti Kas" onclick="cetakBuktiKasGroupingMultiple()"><i class="fas fa-file-alt"></i></button>' ;
+        html = html + '<button class="btn btn-dtl btn-info btn-sm" id="btn-cetak-lampiran" style="margin-left: 10px" type="button" title="Cetak Lampiran" onclick="cetakLampiranGrouping(\''+group_id+'\')"><i class="fas fa-paperclip"></i></button>' ;
+        if (newRoleUser[0] === "ROLE_JA_CASH" || newRoleUser[0] === "ROLE_JA_IE" || newRoleUser[0] === "ROLE_FCL_SETTLEMENT" || newRoleUser[0] === "ROLE_ADMIN"){
+            html = html + '<button class="btn btn-dtl btn-danger btn-sm" id="btn-ungroup" style="margin-left: 10px" type="button" title="Ungroup" onclick="ungroup()"><i class="fas fa-folder-open"></i></button>' ;
+        }
+            html = html + '<button class="btn btn-dtl btn-sm btn-ready" id="btn-siap-bayar-multiple" style="margin-left: 10px" type="button" title="Siap Bayar" onclick="multipleSiapBayarItemGroup()"><i class="fas fa-money-check"></i></button>' ;
+        $(this).append(html);
+    });
 }
 
 function search(state) {
     if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
         alert("Mohon Lengkapi Tgl Akhir");
     } else {
-        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(),$("#cmb_bank").val())
-        getAllData()
+        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(),$("#cmb_bank").val(),$("#cmb_cara_pembayaran").val(),$("#cmb_currecny").val());
+        // getAllData()
         srcTglAwal = $("#tanggal_awal").val()
         srcTglAkhir = $("#tanggal_akhir").val()
     }
@@ -3602,10 +3634,35 @@ function getTotalTagihan() {
             tgl_awal: $("#tanggal_awal").val(),
             tgl_akhir: $("#tanggal_akhir").val(),
             bank: $("#cmb_bank").val(),
+            currency : $("#cmb_currecny").val(),
+            cara_bayar : $("#cmb_cara_pembayaran").val(),
             search: tempTableSearch
         },
         success: function (res) {
             $("#total_tagihan").html(res);
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+
+}
+
+function getTotalTagihanItem(groupId) {
+    $.ajax({
+        url: baseUrl + "api_operator/invoice_group/get_total_tagihan_group_item",
+        type: "GET",
+        data: {
+            tgl_awal: $("#tanggal_awal").val(),
+            tgl_akhir: $("#tanggal_akhir").val(),
+            bank: $("#cmb_bank").val(),
+            currency : $("#cmb_currecny").val(),
+            cara_bayar : $("#cmb_cara_pembayaran").val(),
+            group_id : groupId,
+            search: tempTableItemSearch
+        },
+        success: function (res) {
+            $("#total_tagihan_item").replaceWith("<b>"+res+"</b>");
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -3636,6 +3693,18 @@ function exportXlsItem(group_id) {
         tglAkhir = srcTglAkhir
     }
     window.open(baseUrl + "api_operator/invoice_group/xls_item/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_bank").val() + "/" +group_id);
+}
+
+function exportAllGroupItemXls() {
+    var tglAwal = "null";
+    if (srcTglAwal != "") {
+        tglAwal = srcTglAwal
+    }
+    var tglAkhir = "null";
+    if (srcTglAkhir != "") {
+        tglAkhir = srcTglAkhir
+    }
+    window.open(baseUrl + "api_operator/invoice_group/xls_all_item/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_bank").val());
 }
 
 function cetakBuktiKasGroupingMultiple(){
@@ -3747,11 +3816,12 @@ function ungroup(){
 function back(){
     $(".list-data").show();
     $(".detail-data").hide();
-    $('#exportHeadBtn').show();
+    $('#exportHeadBtn, #exportAllItemBtn').show();
     $('#exportItemBtn')
         .hide()
         .find("button").unbind('click');
     tableInvoiceGroup.ajax.reload()
     tableDetailGroupInvoice.destroy();
     $(".btn-dtl").remove();
+    $("#tagihan_item").remove();
 }
