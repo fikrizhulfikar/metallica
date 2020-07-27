@@ -1488,6 +1488,19 @@ public class CorpayController {
         return formatted;
     }
 
+    @GetMapping(value = "/get_total_tagihan_approval_evp")
+    public String getTotalTagihanApprovalEvp(
+            @RequestParam(value = "tgl_awal", defaultValue = "") String tglAwal,
+            @RequestParam(value = "tgl_akhir", defaultValue = "") String tglAkhir,
+            @RequestParam(value = "currency", defaultValue = "ALL") String currency,
+            @RequestParam(value = "bank", defaultValue = "ALL") String bank,
+            @RequestParam(value = "search", defaultValue = "") String search
+    ){
+        BigDecimal total_tagihan = corpayService.getTotalTagihanApprovalEvp(tglAwal, tglAkhir, currency, bank, WebUtils.getUsernameLogin(),search);
+        String formatted = AppUtils.getInstance().formatDecimalCurrency(total_tagihan);
+        return formatted;
+    }
+
     @RequestMapping(value = "/xls/{pTglAwal}/{pTglAkhir}/{pCurr}/{pCaraBayar}/{pBank}/{pStatus}/{pStatusTracking}/{pRole}", method = RequestMethod.GET)
     public String export(
             @PathVariable String pTglAwal,
