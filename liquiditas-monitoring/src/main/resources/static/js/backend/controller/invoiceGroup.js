@@ -2224,12 +2224,10 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                         if (full.STATUS_TRACKING == "INPUT DATA") {
                             value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+1+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
                             full_value = '{"full":'+JSON.stringify(full)+'}';
-
                         }
                         if (full.STATUS_TRACKING == "VALIDASI DATA") {
                             value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+1+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
                             full_value = '{"full":'+JSON.stringify(full)+'}';
-
                         }
                         else if (full.STATUS_TRACKING == "VERIFIED BY MAKER") {
                             value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+2+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
@@ -2247,10 +2245,10 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
 
                         for (x=0; x<invoiceCheckedArray.length;x++){
                             if(JSON.stringify(invoiceCheckedArray[x]) === value){
-                                return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' data-full='"+full_value+"' onchange='checkArray(this)' id='cbcheckbox' checked>";
+                                return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' data-full='"+full_value.replace("'","&quotes;")+"' onchange='checkArray(this)' id='cbcheckbox' checked>";
                             }
                         }
-                        return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' data-full='"+full_value+"' onchange='checkArray(this)' id='cbcheckbox'>";
+                        return ret_value= "<input class='cb' type='checkbox' data-value='"+value+"' data-full='"+full_value.replace("'","&quotes;")+"' onchange='checkArray(this)' id='cbcheckbox'>";
                     }
                 }
             ],
