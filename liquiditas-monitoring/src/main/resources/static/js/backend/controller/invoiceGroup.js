@@ -3786,28 +3786,31 @@ function ungroup(){
     if (fullArrayGroup.length <= 0){
         alert("SIlahkan Pilih data terlebih dahulu")
     } else{
-        showLoadingCss();
-        $.ajax({
-            url : baseUrl + "api_operator/invoice_group/ungroup",
-            data : {
-                pItems : JSON.stringify(fullArrayGroup)
-            },
-            dataType : "JSON",
-            type : "POST",
-            success : (res) => {
-                if (res.return === 1){
-                    alert("Berhasil Ungroup");
-                    tableDetailGroupInvoice.ajax.reload();
+        var oke = confirm("Apakah Anda Yakin Melakukan Ungroup ?");
+        if (oke === true){
+            showLoadingCss();
+            $.ajax({
+                url : baseUrl + "api_operator/invoice_group/ungroup",
+                data : {
+                    pItems : JSON.stringify(fullArrayGroup)
+                },
+                dataType : "JSON",
+                type : "POST",
+                success : (res) => {
+                    if (res.return === 1){
+                        alert("Berhasil Ungroup");
+                        tableDetailGroupInvoice.ajax.reload();
+                        fullArrayGroup = new Array();
+                    }
+                    console.log("Result : ",res);
+                },
+                error : (err) => {
+                    console.log("Error : ",err.error);
                     fullArrayGroup = new Array();
                 }
-                console.log("Result : ",res);
-            },
-            error : (err) => {
-                console.log("Error : ",err.error);
-                fullArrayGroup = new Array();
-            }
-        })
-        hideLoadingCss();
+            })
+            hideLoadingCss();
+        }
     }
 }
 
