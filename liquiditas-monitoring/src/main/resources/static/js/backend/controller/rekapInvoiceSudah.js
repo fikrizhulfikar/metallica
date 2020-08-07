@@ -2241,7 +2241,7 @@ function cetakBuktiKasSingle(comp_code, doc_no, fiscal_year, line_item, ket){
         success : (res) => {
             if (res.createdoc.status === 1){
                 console.log("Result : ",res);
-                alert("Udah");
+                alert("Berhasil Mencetak Dokumen!");
                 window.open(baseUrl+"generate_doc/cetak/downloadfile/laporan_"+doc_no+".docx","_blank");
             }
 
