@@ -395,27 +395,27 @@ function initDataTableImprstValas() {
 
             var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
                 "<td></td>" + "<td></td>" + "<td></td>" + "<td>TOTAL IDR</td>" +
-                                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_IDR[0].TOTAL_RP,2,".",",") + "</td>" +
-                                "<td align='right'>" + accounting.formatNumber(res.EQ_IDR_RP[0].EQ_IDR_RP,2,".",",") + "</td>" +
+                                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_IDR,2,".",",") + "</td>" +
+                                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].EQ_IDR,2,".",",") + "</td>" +
                                 "<td></td>" +
                                 "</tr>";
 
             var total2 = "<tr style='background-color:#67a2d8;color: white'>" +
                             "<td></td>" + "<td></td>" + "<td></td>" + "<td>TOTAL USD</td>" +
-                                            "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_USD[0].TOTAL_USD,2,".",",") + "</td>" +
-                                            "<td align='right'>" + accounting.formatNumber(res.EQ_IDR_USD[0].EQ_IDR_USD,2,".",",") + "</td>" +
+                                            "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_USD,2,".",",") + "</td>" +
+                                            "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].EQ_USD,2,".",",") + "</td>" +
                                             "<td></td>" +
                                             "</tr>";
             var total3 = "<tr style='background-color:#67a2d8;color: white'>" +
                                         "<td></td>" + "<td></td>" + "<td></td>" + "<td>TOTAL EUR</td>" +
-                                                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_EUR[0].TOTAL_EUR,2,".",",") + "</td>" +
-                                                        "<td align='right'>" + accounting.formatNumber(res.EQ_IDR_EUR[0].EQ_IDR_EUR,2,".",",") + "</td>" +
+                                                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_EUR,2,".",",") + "</td>" +
+                                                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].EQ_EUR,2,".",",") + "</td>" +
                                                         "<td></td>" +
                                                         "</tr>";
             var total4 = "<tr style='background-color:#67a2d8;color: white'>" +
                                         "<td></td>" + "<td></td>" + "<td></td>" + "<td>TOTAL JPY</td>" +
-                                                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_JPY[0].TOTAL_JPY,2,".",",") + "</td>" +
-                                                        "<td align='right'>" + accounting.formatNumber(res.EQ_IDR_JPY[0].EQ_IDR_JPY,2,".",",") + "</td>" +
+                                                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_JPY,2,".",",") + "</td>" +
+                                                        "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].EQ_JPY,2,".",",") + "</td>" +
                                                         "<td></td>" +
                                                         "</tr>";
             $('#table-imprst-valas tbody').append(total1);

@@ -60,7 +60,7 @@ public class DashboardController {
     public Map getRealisasiPembayaranCashcode(@RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
                                               @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
                                               @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
-                                              @RequestParam(value = "pCashCode", defaultValue = "ALL") String pCashCode) {
+                                              @RequestParam(value = "pCashCode", defaultValue = "1.11.1") String pCashCode) {
         try {
             return dashboardService.getRealisasiPembayaranCashcode(pTglAwal, pTglAkhir, pBank, pCashCode);
         } catch (Exception e) {

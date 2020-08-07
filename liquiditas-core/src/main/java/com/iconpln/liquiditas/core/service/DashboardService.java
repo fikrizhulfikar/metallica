@@ -199,14 +199,7 @@ public class DashboardService {
                 .withFunctionName("get_cashcode_realisasi");
 
         SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("out_total_usd", OracleTypes.CURSOR)
-                .addValue("out_total_eur", OracleTypes.CURSOR)
-                .addValue("out_total_jpy", OracleTypes.CURSOR)
-                .addValue("out_total_idr", OracleTypes.CURSOR)
-                .addValue("eq_idr_usd", OracleTypes.CURSOR)
-                .addValue("eq_idr_eur", OracleTypes.CURSOR)
-                .addValue("eq_idr_jpy", OracleTypes.CURSOR)
-                .addValue("eq_idr_rp", OracleTypes.CURSOR)
+                .addValue("out_total", OracleTypes.CURSOR)
                 .addValue("p_tgl_awal", pTglAwal, Types.VARCHAR)
                 .addValue("p_tgl_akhir", pTglAkhir, Types.VARCHAR)
                 .addValue("p_bank", pBank, Types.VARCHAR)

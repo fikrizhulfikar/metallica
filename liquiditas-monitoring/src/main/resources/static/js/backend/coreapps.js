@@ -1143,7 +1143,7 @@ function selectFilterCashCode(idHtml, jenis, idForSelected) {
         sync :true,
         success: function (res) {
             $("#" + idHtml + "").html('');
-            $("#" + idHtml + "").append('<option value="ALL">SEMUA CASH CODE</option>');
+            $("#" + idHtml + "").append('<option value="ALL">PILIH CASH CODE</option>');
             $.each(res, function (key, val) {
                 $("#" + idHtml + "").append('<option value="' + val.CASH_CODE + '">' + val.CASH_CODE + '</option>');
             });
