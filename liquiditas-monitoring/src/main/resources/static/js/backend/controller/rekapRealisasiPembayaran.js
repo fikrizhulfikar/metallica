@@ -12,6 +12,10 @@ var cbParentArray = new Array();
 var srcTglAwal = null;
 var srcTglAkhir = null;
 var addedDays = 2;
+var jumlahidr = null;
+var jumlahusd = null;
+var jumlaheur = null;
+var jumlahjpy = null;
 
 $(document).ready(function () {
      $( '#pAccountBalance' ).mask('000.000.000.000.000', {reverse: true});
@@ -71,6 +75,10 @@ function getAllData() {
                         $("#total_per_usd").html(accounting.formatNumber(dolar,2,".",","));
                         $("#total_per_eur").html(accounting.formatNumber(euro,2,".",","));
                         $("#total_per_jpy").html(accounting.formatNumber(yen,2,".",","));
+                        jumlahidr = accounting.formatNumber(rp,2,".",",")
+                        jumlahusd = accounting.formatNumber(dolar,2,".",",")
+                        jumlaheur = accounting.formatNumber(euro,2,".",",")
+                        jumlahjpy = accounting.formatNumber(yen,2,".",",")
         },
         error: function (res) {
             console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
@@ -269,7 +277,7 @@ function exportXls() {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/rekap_invoice_realisasi/xlsRekap/" + tglAwal + "/" + tglAkhir + "/" + "ALL" + "/" + null + "/" + "ALL" + "/" +null+ "/" +null);
+    window.open(baseUrl + "api_operator/rekap_invoice_realisasi/xlsRekap/" + tglAwal + "/" + tglAkhir + "/" + "ALL" + "/" + null + "/" + "ALL" + "/" +null+ "/" + null + "/" + jumlahidr + "/" + jumlahusd + "/" + jumlaheur + "/" + jumlahjpy);
 }
 
 function getTotalTagihan() {

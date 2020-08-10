@@ -780,7 +780,7 @@ public class RealisasiInvoiceController {
         }
     }
 
-    @GetMapping(path = "/xlsRekap/{pTglAwal}/{pTglAkhir}/{pCurr}/{pCaraBayar}/{pBank}/{pStatus}/{pStatusTracking}")
+    @GetMapping(path = "/xlsRekap/{pTglAwal}/{pTglAkhir}/{pCurr}/{pCaraBayar}/{pBank}/{pStatus}/{pStatusTracking}/{idr}/{usd}/{eur}/{jpy}")
     public String exportRekap(
             @PathVariable String pTglAwal,
             @PathVariable String pTglAkhir,
@@ -789,6 +789,10 @@ public class RealisasiInvoiceController {
             @PathVariable String pBank,
             @PathVariable String pCaraBayar,
             @PathVariable String pStatus,
+            @PathVariable String idr,
+            @PathVariable String usd,
+            @PathVariable String eur,
+            @PathVariable String jpy,
             HttpServletRequest request,
             HttpServletResponse response
     ) throws InvalidFormatException, ParseException {
@@ -821,6 +825,12 @@ public class RealisasiInvoiceController {
             List<Map<String, Object>> listDetail = new ArrayList<>();
 
             param.put("TITLE", title);
+            param.put("TGL_AWAL", tglAwal);
+            param.put("TGL_AKHIR", tglAkhir);
+            param.put("IDR", idr);
+            param.put("USD", usd);
+            param.put("EUR", eur);
+            param.put("JPY", jpy);
             for (Map data : listData) {
                 Map paramDetail = new HashMap();
                 paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
