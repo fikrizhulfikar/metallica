@@ -110,7 +110,7 @@ function getAllData() {
                     "scrollY": "100%",
                     "scrollX": "100%",
                     "searching": false,
-                    bSortable: true,
+                    bSortable: false,
                     "scrollCollapse": true,
                     "lengthMenu": [[10, 25, 50, 100, 200, 400, 600, 1000], [10, 25, 50, 100, 200, 400, 600, 1000]],
                     "aoColumnDefs": [
@@ -129,7 +129,7 @@ function getAllData() {
                         {width: "20%", "targets": 0},
                         { className: "datatables_action", "targets": [1, 2, 3, 4, 5, 7, 8, 9, 10, 11] },
                         {
-                            "bSortable": true,
+                            "bSortable": false,
                             "aTargets": [1, 2, 3, 4, 5, 7, 8, 9, 10, 11]
                         },
                         {
