@@ -21,6 +21,11 @@ public class PageVerifikatorController {
         return "verifikator/derivatif_and_deposito";
     }
 
+    @RequestMapping("/page_verifikator/saldo_rekening_valuta_asing")
+    public String saldoRekeningValutaAsing(){
+        return "verifikator/saldo_rekening_valuta_asing";
+    }
+
     @RequestMapping("/page_verifikator/realisasi_pembayaran_valuta_asing")
     public String realisasiPembayaranValutaAsing(){
         return "verifikator/realisasi_pembayaran_valuta_asing";
@@ -49,6 +54,10 @@ public class PageVerifikatorController {
     @RequestMapping("/page_idrverifikator/idr_imprest")
     public String idrImprst(){
         return "verifikatoridr/idr_imprest";
+    }
+    @RequestMapping("/page_idrverifikator/saldo_rekening_rupiah")
+    public String idrSaldoRekening(){
+        return "verifikatoridr/saldo_rekening_rupiah";
     }
 
     @RequestMapping("/page_idrverifikator/idr_subsidi_kmk")

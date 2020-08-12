@@ -1964,4 +1964,77 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         return out;
     }
 
+    public Map<String, Object> getPenjualanTenagaListrik(String p_tgl_awal, String p_tgl_akhir, String p_unit, String p_range) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data getPenjualanTenagaListrik search info = " +
+                        "p_tgl_awal : {}, " +
+                        "p_tgl_akhir : {}, " +
+                        "p_unit : {}, " +
+                        "p_range : {}, ",
+
+                p_tgl_awal, p_tgl_akhir, p_unit, p_range);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_penerimaanptl_perlayanan");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_total", OracleTypes.CURSOR)
+                .addValue("p_tgl_awal", p_tgl_awal, Types.VARCHAR)
+                .addValue("p_tgl_akhir", p_tgl_akhir, Types.VARCHAR)
+                .addValue("p_unit", p_unit, Types.VARCHAR)
+                .addValue("p_range", p_range, Types.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data get_penerimaanptl_perlayanan : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> getPenjualanTenagaListrikBank(String p_tgl_awal, String p_tgl_akhir, String p_bank) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data getPenjualanTenagaListrik search info = " +
+                        "p_tgl_awal : {}, " +
+                        "p_tgl_akhir : {}, " +
+                        "p_bank : {}, ",
+
+                p_tgl_awal, p_tgl_akhir, p_bank);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_penerimaanptl_perbank");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_total", OracleTypes.CURSOR)
+                .addValue("p_tgl_awal", p_tgl_awal, Types.VARCHAR)
+                .addValue("p_tgl_akhir", p_tgl_akhir, Types.VARCHAR)
+                .addValue("p_bank", p_bank, Types.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data get_penerimaanptl_perbank : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> getPenjualanTenagaListrikDist(String p_tgl_awal, String p_tgl_akhir, String p_unit) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data getPenjualanTenagaListrik search info = " +
+                        "p_tgl_awal : {}, " +
+                        "p_tgl_akhir : {}, " +
+                        "p_unit : {}, ",
+
+                p_tgl_awal, p_tgl_akhir, p_unit);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_ptl_perdist");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_total", OracleTypes.CURSOR)
+                .addValue("p_tgl_awal", p_tgl_awal, Types.VARCHAR)
+                .addValue("p_tgl_akhir", p_tgl_akhir, Types.VARCHAR)
+                .addValue("p_unit", p_unit, Types.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data get_ptl_perdist : {}", out);
+        return out;
+    }
 }

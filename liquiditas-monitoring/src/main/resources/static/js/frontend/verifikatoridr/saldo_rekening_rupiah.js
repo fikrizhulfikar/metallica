@@ -1,5 +1,5 @@
 /**
- * Created by israjhaliri on 1/22/18.
+ * Created by adikoesoemah on 8/11/20.
  */
 $(document).ready(function () {
     initDataTable();
@@ -11,7 +11,7 @@ $(document).ready(function () {
 function initDataTable() {
     showLoadingCss()
     $.ajax({
-        url: baseUrl + "api_dashboard/get_idr_imprest",
+        url: baseUrl + "api_dashboard/get_saldo_rekening_rupiah",
         dataType: 'JSON',
         type: "GET",
         success: function (res) {
@@ -23,89 +23,70 @@ function initDataTable() {
                 var str = val.BANK;
                 var html = "<tr>" +
                     "<td>" + str + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(val.IMPREST_TERPUSAT, 2, ".", ",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(val.IMPREST_OPERASI, 2, ".", ",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(val.IMPREST_INVESTASI, 2, ".", ",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(val.IMPOR, 2, ".", ",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.RECEIPT, 2, ".", ",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.IMPREST_KP, 2, ".", ",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.IMPREST_OPERASI, 2, ".", ",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.IMPREST_INVESTASI, 2, ".", ",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.IMPOR, 2, ".", ",") + "</td>" +
                     "</tr>";
-                $('#table-imprst-idr tbody').append(html);
+                $('#table-saldo-idr tbody').append(html);
             });
 
             var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
                 "<td>TOTAL</td>" +
-                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].JML_IMPREST_TERPUSAT, 2, ".", ",") + "</td>" +
-                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].JML_IMPREST_OPERASI, 2, ".", ",") + "</td>" +
-                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].JML_IMPREST_INVESTASI, 2, ".", ",") + "</td>" +
-                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL[0].JML_IMPOR, 2, ".", ",") + "</td>" +
+                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_RECEIPT, 2, ".", ",") + "</td>" +
+                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_IMPREST_KP, 2, ".", ",") + "</td>" +
+                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_IMPREST_OPERASI, 2, ".", ",") + "</td>" +
+                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_IMPREST_INVESTASI, 2, ".", ",") + "</td>" +
+                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_IMPOR, 2, ".", ",") + "</td>" +
                 "</tr>";
 
-            $('#table-imprst-idr tbody').append(total1);
+            $('#table-saldo-idr tbody').append(total1);
 
-            var dataPieTerpusat = [];
-            $.each(res.OUT_PIE_TERPUSAT, function (index, value) {
+            var dataPieSaldo = [];
+            $.each(res.OUT_PIE_IMPREST_KP, function (index, value) {
                 var temp = {
                     label: value.BANK,
-                    value: value.JUMLAH == 0 ? null : value.JUMLAH
+                    value: value.NILAI == 0 ? null : value.NILAI
                 };
-                dataPieTerpusat.push(temp)
+                dataPieSaldo.push(temp)
             });
-            creteChartTerpusat(dataPieTerpusat);
+            creteChartSaldo(dataPieSaldo);
 
-            var dataPieOperasi = [];
-            $.each(res.OUT_PIE_OPERASI, function (index, value) {
+            var dataPieSaldo2 = [];
+            $.each(res.OUT_PIE_RECEIPT, function (index, value) {
                 var temp = {
                     label: value.BANK,
-                    value: value.JUMLAH == 0 ? null : value.JUMLAH
+                    value: value.NILAI == 0 ? null : value.NILAI
                 };
-                dataPieOperasi.push(temp)
+                dataPieSaldo.push(temp)
             });
-            creteChartOperasi(dataPieOperasi);
-
-            var dataPieInvestasi = [];
-            $.each(res.OUT_PIE_INVESTASI, function (index, value) {
-                var temp = {
-                    label: value.BANK,
-                    value: value.JUMLAH == 0 ? null : value.JUMLAH
-                };
-                dataPieInvestasi.push(temp)
-            });
-            creteChartInvestasi(dataPieInvestasi);
-
-            var dataPieImpor = [];
-            $.each(res.OUT_PIE_IMPOR, function (index, value) {
-                var temp = {
-                    label: value.BANK,
-                    value: value.JUMLAH == 0 ? null : value.JUMLAH
-                };
-                dataPieImpor.push(temp)
-            });
-            creteChartImport(dataPieImpor);
+            creteChartSaldo(dataPieSaldo);
 
             hideLoadingCss()
         },
         error: function () {
             hideLoadingCss("");
-            $('#table-imprst-idr tbody').empty();
+            $('#table-saldo-idr tbody').empty();
             var html = "<tr>" +
                 "<td colspan='5' align='center'> No Data </td>" +
                 "</tr>";
-            $('#table-imprst-idr  tbody').append(html);
-
+            $('#table-saldo-idr tbody').append(html);
         }
     });
 }
 
-function creteChartTerpusat(data) {
+function creteChartSaldo(data) {
     FusionCharts.ready(function () {
         var fusioncharts = new FusionCharts({
                 type: 'pie2d',
-                renderAt: 'chart-imprest-terpusat',
-                width: '455',
-                height: '435',
+                renderAt: 'chart-saldo_rekening_rupiah',
+                width: '500',
+                height: '500',
                 dataFormat: 'json',
                 dataSource: {
                     "chart": {
-                        "caption": "IMPREST TERPUSAT",
+                        "caption": "Saldo Rekening Rupiah",
                         "numbersuffix": " %",
                         "exportEnabled": "1",
                         "bgColor": "#77D5D4",
@@ -123,87 +104,3 @@ function creteChartTerpusat(data) {
     });
 }
 
-function creteChartOperasi(data) {
-    FusionCharts.ready(function () {
-        var fusioncharts = new FusionCharts({
-                type: 'pie2d',
-                renderAt: 'chart-imprest-operasi',
-                width: '455',
-                height: '435',
-                dataFormat: 'json',
-                dataSource: {
-                    "chart": {
-                        "caption": "IMPREST OPERASI",
-                        "numbersuffix": " %",
-                        "exportEnabled": "1",
-                        "bgColor": "#77D5D4",
-                        "showLabels": "0",
-                        "isSmartLineSlanted": "0",
-                        "showBorder": "0",
-                        "showLegend": "1",
-                        "baseFontSize": "12"
-                    },
-                    "data": data
-                }
-            }
-        );
-        fusioncharts.render();
-    });
-}
-
-function creteChartInvestasi(data) {
-    FusionCharts.ready(function () {
-        var fusioncharts = new FusionCharts({
-                type: 'pie2d',
-                renderAt: 'chart-imprest-investasi',
-                width: '455',
-                height: '435',
-                dataFormat: 'json',
-                dataSource: {
-                    "chart": {
-                        "caption": "IMPREST INVESTASI",
-                        "numbersuffix": " %",
-                        "exportEnabled": "1",
-                        "bgColor": "#77D5D4",
-                        "showLabels": "0",
-                        "isSmartLineSlanted": "0",
-                        "showBorder": "0",
-                        "showLegend": "1",
-                        "baseFontSize": "12"
-                    },
-                    "data": data
-                }
-            }
-        );
-        fusioncharts.render();
-    });
-}
-
-function creteChartImport(data) {
-    console.log(data);
-    FusionCharts.ready(function () {
-        var fusioncharts = new FusionCharts({
-                type: 'pie2d',
-                renderAt: 'chart-impor',
-                width: '455',
-                height: '435',
-                dataFormat: 'json',
-                dataSource: {
-                    "chart": {
-                        "caption": "IMPOR",
-                        "numbersuffix": " %",
-                        "exportEnabled": "1",
-                        "bgColor": "#77D5D4",
-                        "showLabels": "0",
-                        "isSmartLineSlanted": "0",
-                        "showBorder": "0",
-                        "showLegend": "1",
-                        "baseFontSize": "12"
-                    },
-                    "data": data
-                }
-            }
-        );
-        fusioncharts.render();
-    });
-}

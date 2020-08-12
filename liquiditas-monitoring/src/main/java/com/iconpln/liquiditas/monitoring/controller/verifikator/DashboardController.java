@@ -53,7 +53,6 @@ public class DashboardController {
             e.printStackTrace();
             return null;
         }
-
     }
 
     @RequestMapping(value = "/get_idr_subsidi_kmk", method = RequestMethod.GET)
@@ -665,6 +664,39 @@ public class DashboardController {
     public Map getRealPembayaran2() {
         try {
             return dashboardCorpay.getRealPembayaran2();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_realisasi_pembayaran_cashcode", method = RequestMethod.GET)
+    public Map getRealisasiPembayaranCashcode(@RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+                                              @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+                                              @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+                                              @RequestParam(value = "pCashCode", defaultValue = "ALL") String pCashCode) {
+        try {
+            return dashboardService.getRealisasiPembayaranCashcode(pTglAwal, pTglAkhir, pBank, pCashCode);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_saldo_rekening_valuta_asing", method = RequestMethod.GET)
+    public Map getSaldoRekeningValutaAsing() {
+        try {
+            return dashboardService.getSaldoRekeningValutaAsing();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_saldo_rekening_rupiah", method = RequestMethod.GET)
+    public Map getSaldoRekeningRupiah() {
+        try {
+            return dashboardService.getSaldoRekeningRupiah();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

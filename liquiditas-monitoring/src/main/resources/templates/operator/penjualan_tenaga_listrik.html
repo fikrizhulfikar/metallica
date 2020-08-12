@@ -11,62 +11,7 @@
         }
         table td {
             font-size: 12px;
-            font-weight: bold;
         }
-        .btn {
-            background-color: #ddd;
-            border: none;
-            color: black;
-            padding: 10px 26px;
-            text-align: center;
-            font-size: 15px;
-            cursor: pointer;
-            margin: 2px 2px;
-            transition: 0.3s;
-            border-radius: 10px;
-          }
-
-          .btn:hover {
-            background-color: #3e8e41;
-            color: white;
-          }
-
-          div.a{
-            visibility: visible;
-          }
-
-          div.b{
-            visibility: hidden;
-          }
-          .wrapper {
-                text-align: center;
-            }
-            .wrapper ul {
-                display: inline-block;
-                margin: 0;
-                padding: 0;
-                /* For IE, the outcast */
-                zoom:1;
-                *display: inline;
-            }
-            .wrapper li {
-                float: left;
-                padding: 2px 5px;
-            }
-          /* basic positioning */
-            .legend { list-style: none; align: center;}
-            .legend li { float: left; margin-right: 10px; font-size: 12px;}
-            .legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
-            /* your colors */
-            .legend .one { background-color: #F2726F;}
-            .legend .two { background-color: #77D5D4; }
-            .legend .three { background-color: #62B58F; }
-            .legend .four { background-color: #FFC533; }
-            .legend .five { background-color: #998650; }
-            .legend .six { background-color: #7AC74F; }
-            .legend .seven { background-color: #5ADBFF; }
-            .legend .eight { background-color: #F20F2F; }
-            .legend .nine { background-color: #F4D35E; }
     </style>
 </div>
 <main class="main" th:fragment="content">
@@ -82,10 +27,10 @@
                     <div class="carousel-inner">
                         <input class="carousel-open" type="radio" id="carousel-1" name="carousel" aria-hidden="true" hidden="" checked="checked"/>
                         <div class="carousel-item">
-                            <div class="col-md-12">
+                            <div class="col-md-12" style="margin-top: 20px">
                                 <div class="card">
                                     <div class="card-block">
-                                        <div class="col-md-12 row" style="padding-left: 0px; padding-right: 0px">
+                                        <div class="col-md-12 row" style="margin-top: 25px; padding-left: 0px; padding-right: 0px">
                                             <div class="col-md-1" style="padding-right: 0px;">
                                                 <label class="lbl-src">Tanggal Awal </label>
                                             </div>
@@ -117,13 +62,13 @@
                                             <div class="col-md-5" style="padding-right: 0px;">&nbsp;</div>
                                             <div class="col-md-5" style="padding-right: 0px;">&nbsp;</div>
                                             <div class="col-md-2" style="padding-right: 0px;">
-                                                <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
+                                                <button onclick="search1()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
                                             </div>
                                         </div>
                                         <table id="penerimaan-penjualan-jenis-layanan" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-top: 5px; margin-bottom: 15px">
                                             <thead>
                                             <tr class="header">
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="11%" align="center">NO</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="1%" align="center">NO</th>
                                                 <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">TANGGAL</th>
                                                 <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">POSTPAID</th>
                                                 <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">PREPAID</th>
@@ -141,7 +86,7 @@
                         </div>
                         <input class="carousel-open" type="radio" id="carousel-2" name="carousel" aria-hidden="true" hidden=""/>
                         <div class="carousel-item">
-                            <div class="col-md-12">
+                            <div class="col-md-12" style="margin-top: 20px">
                                 <div class="card">
                                     <div class="card-block">
                                         <div class="col-md-12 row" style="padding-left: 0px; padding-right: 0px">
@@ -204,7 +149,7 @@
                         </div>
                         <input class="carousel-open" type="radio" id="carousel-3" name="carousel" aria-hidden="true" hidden=""/>
                         <div class="carousel-item">
-                            <div class="col-md-12">
+                            <div class="col-md-12" style="margin-top: 20px">
                                 <div class="card">
                                     <div class="card-block">
                                         <div class="col-md-12 row" style="padding-left: 0px; padding-right: 0px">
@@ -231,13 +176,13 @@
                                             <div class="col-md-5" style="padding-right: 0px;">&nbsp;</div>
                                             <div class="col-md-5" style="padding-right: 0px;">&nbsp;</div>
                                             <div class="col-md-2" style="padding-right: 0px;">
-                                                <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
+                                                <button onclick="search3()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
                                             </div>
                                         </div>
                                         <table id="penerimaan-penjualan-bank" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-top: 5px; margin-bottom: 15px">
                                             <thead>
                                             <tr class="header">
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="11%" align="center">NO</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="3%" align="center">NO</th>
                                                 <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">BANK</th>
                                                 <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">POSTPAID</th>
                                                 <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">PREPAID</th>
@@ -255,7 +200,7 @@
                         </div>
                         <input class="carousel-open" type="radio" id="carousel-4" name="carousel" aria-hidden="true" hidden=""/>
                         <div class="carousel-item">
-                            <div class="col-md-12">
+                            <div class="col-md-12" style="margin-top: 20px">
                                 <div class="card">
                                     <div class="card-block">
                                         <div class="col-md-12 row" style="padding-left: 0px; padding-right: 0px">
@@ -272,7 +217,7 @@
                                                 <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir4"/>
                                             </div>
                                             <div class="col-md-1" style="padding-right: 0px;">
-                                                <label class="lbl-src">Cashcode</label>
+                                                <label class="lbl-src">Unit</label>
                                             </div>
                                             <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">
                                                 <select name="bank" id="unit_filter3" class="form-control">
@@ -282,14 +227,14 @@
                                             <div class="col-md-5" style="padding-right: 0px;">&nbsp;</div>
                                             <div class="col-md-5" style="padding-right: 0px;">&nbsp;</div>
                                             <div class="col-md-2" style="padding-right: 0px;">
-                                                <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
+                                                <button onclick="search4()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
                                             </div>
                                         </div>
                                         <table id="penerimaan-penjualan-distribusi" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-top: 5px; margin-bottom: 15px">
                                             <thead>
                                             <tr class="header">
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="11%" align="center">NO</th>
-                                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">BANK</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="3%" align="center">NO</th>
+                                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">DISTRIBUSI</th>
                                                 <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">POSTPAID</th>
                                                 <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">PREPAID</th>
                                                 <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">NON TAGIHAN LISTRIK</th>
@@ -306,7 +251,7 @@
                         </div>
                         <input class="carousel-open" type="radio" id="carousel-5" name="carousel" aria-hidden="true" hidden=""/>
                         <div class="carousel-item">
-                            <div class="col-md-12">
+                            <div class="col-md-12" style="margin-top: 20px">
                                 <div class="card">
                                     <div class="card-block">
                                         <div class="col-md-12 row" style="padding-left: 0px; padding-right: 0px">
@@ -402,7 +347,7 @@
                         </div>
                         <input class="carousel-open" type="radio" id="carousel-6" name="carousel" aria-hidden="true" hidden=""/>
                         <div class="carousel-item">
-                            <div class="col-md-12">
+                            <div class="col-md-12" style="margin-top: 20px">
                                 <div class="card">
                                     <div class="card-block">
                                         <div class="col-md-12 row" style="padding-left: 0px; padding-right: 0px">
@@ -478,70 +423,72 @@
                         </div>
                         <input class="carousel-open" type="radio" id="carousel-7" name="carousel" aria-hidden="true" hidden=""/>
                         <div class="carousel-item">
-                            <div class="col-md-12">
+                            <div class="col-md-12" style="margin-top: 20px">
                                 <div class="card">
-                                    <div class="card-block">
-                                        <div class="col-md-12 row" style="padding-left: 0px; padding-right: 0px">
-                                            <div class="col-md-1" style="padding-right: 0px;">
-                                                <label class="lbl-src">Tanggal Awal </label>
+                                    <div style="overflow-y:auto;">
+                                        <div class="card-block">
+                                            <div class="col-md-12 row" style="padding-left: 0px; padding-right: 0px">
+                                                <div class="col-md-1" style="padding-right: 0px;">
+                                                    <label class="lbl-src">Tanggal Awal </label>
+                                                </div>
+                                                <div class="col-md-2" style="padding-right: 0px;">
+                                                    <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal7"/>
+                                                </div>
+                                                <div class="col-md-1" style="padding-right: 0px;">
+                                                    <label class="lbl-src">Tanggal Akhir </label>
+                                                </div>
+                                                <div class="col-md-2" style="padding-right: 0px;">
+                                                    <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir7"/>
+                                                </div>
+                                                <div class="col-md-1" style="padding-right: 0px;">
+                                                    <label class="lbl-src">Unit</label>
+                                                </div>
+                                                <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">
+                                                    <select name="bank" id="unit_filter5" class="form-control">
+                                                        <option value="">Pilih Data</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-5" style="padding-right: 0px;">&nbsp;</div>
+                                                <div class="col-md-5" style="padding-right: 0px;">&nbsp;</div>
+                                                <div class="col-md-2" style="padding-right: 0px;">
+                                                    <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
+                                                </div>
                                             </div>
-                                            <div class="col-md-2" style="padding-right: 0px;">
-                                                <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal7"/>
-                                            </div>
-                                            <div class="col-md-1" style="padding-right: 0px;">
-                                                <label class="lbl-src">Tanggal Akhir </label>
-                                            </div>
-                                            <div class="col-md-2" style="padding-right: 0px;">
-                                                <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir7"/>
-                                            </div>
-                                            <div class="col-md-1" style="padding-right: 0px;">
-                                                <label class="lbl-src">Unit</label>
-                                            </div>
-                                            <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">
-                                                <select name="bank" id="unit_filter5" class="form-control">
-                                                    <option value="">Pilih Data</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-5" style="padding-right: 0px;">&nbsp;</div>
-                                            <div class="col-md-5" style="padding-right: 0px;">&nbsp;</div>
-                                            <div class="col-md-2" style="padding-right: 0px;">
-                                                <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
-                                            </div>
-                                        </div>
-                                        <table id="saldo-tunggakan" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-top: 5px; margin-bottom: 15px">
-                                            <thead>
-                                            <tr class="header">
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="11%" align="center" rowspan="2">KODE</th>
-                                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center" rowspan="2">WILAYAH/DISTRIBUSI</th>
-                                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center" rowspan="2">SALDO AWAL</th>
-                                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center" colspan="5">PENAMBAHAN</th>
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center" colspan="3">KOREKSI PENAMBAH</th>
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center" colspan="3">KOREKSI PENGURANG</th>
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center" colspan="4">PELUNASAN</th>
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center" rowspan="2">SALDO AKHIR RPTAG</th>
-                                            </tr>
-                                            <tr class="header">
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">SOREK BARU PASCA BAYAR</th>
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">BK</th>
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">PREPAID</th>
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">NONTAGLIS</th>
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">SUB TOTAL</th>
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">DPP BULAN BERJALAN</th>
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">BIAYA KETERLAMBATAN</th>
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">SUB TOTAL</th>
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">DPP BULAN BERJALAN</th>
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">BIAYA KETERLAMBATAN</th>
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">SUB TOTAL</th>
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">PASCA BAYAR</th>
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">PREPAID</th>
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">NONTAGLIS</th>
-                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">SUB TOTAL</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="isi7">
+                                            <table id="saldo-tunggakan" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-top: 5px; margin-bottom: 15px">
+                                                <thead>
+                                                <tr class="header">
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="11%" align="center" rowspan="2">KODE</th>
+                                                    <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center" rowspan="2">WILAYAH/DISTRIBUSI</th>
+                                                    <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center" rowspan="2">SALDO AWAL</th>
+                                                    <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center" colspan="5">PENAMBAHAN</th>
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center" colspan="3">KOREKSI PENAMBAH</th>
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center" colspan="3">KOREKSI PENGURANG</th>
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center" colspan="4">PELUNASAN</th>
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center" rowspan="2">SALDO AKHIR RPTAG</th>
+                                                </tr>
+                                                <tr class="header">
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">SOREK BARU PASCA BAYAR</th>
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">BK</th>
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">PREPAID</th>
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">NONTAGLIS</th>
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">SUB TOTAL</th>
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">DPP BULAN BERJALAN</th>
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">BIAYA KETERLAMBATAN</th>
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">SUB TOTAL</th>
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">DPP BULAN BERJALAN</th>
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">BIAYA KETERLAMBATAN</th>
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">SUB TOTAL</th>
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">PASCA BAYAR</th>
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">PREPAID</th>
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">NONTAGLIS</th>
+                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">SUB TOTAL</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="isi7">
 
-                                            </tbody>
-                                        </table>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -567,7 +514,7 @@
     </div>
 </main>
 <div th:fragment="scripts-backend">
-    <script src="/static/js/backend/controller/rencana_pembayaran_per_mata_uang.js"></script>
+    <script src="/static/js/backend/controller/penjualan_tenaga_listrik.js"></script>
     <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
     <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
 </div>

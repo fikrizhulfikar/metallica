@@ -36,6 +36,10 @@ public class PageOperatorController {
     public String dash_realisasi() { return "operator/dash_realisasi";
     }
 
+    @RequestMapping("/penjualan_tenaga_listrik")
+    public String penjualan_tenaga_listrik() { return "operator/penjualan_tenaga_listrik";
+    }
+
     @RequestMapping("/rekapitulasi_data")
     public String rekap_data() {
         return "operator/rekapitulasi_data";

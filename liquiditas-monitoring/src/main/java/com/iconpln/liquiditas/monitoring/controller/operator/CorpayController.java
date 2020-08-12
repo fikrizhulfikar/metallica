@@ -1986,6 +1986,49 @@ public class CorpayController {
         return mapData;
     }
 
+    @RequestMapping(value = "/penjualan_tenaga_listrik", method = RequestMethod.GET)
+    public Map<String, Object> getPenjualanTenagaListrik(
+            @RequestParam(value = "p_tgl_awal", defaultValue = "") String p_tgl_awal,
+            @RequestParam(value = "p_tgl_akhir", defaultValue = "") String p_tgl_akhir,
+            @RequestParam(value = "p_unit", defaultValue = "ALL") String p_unit,
+            @RequestParam(value = "p_range", defaultValue = "ALL") String p_range
+    ){
+        try {
+            return corpayService.getPenjualanTenagaListrik(p_tgl_awal, p_tgl_akhir, p_unit, p_range);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/penjualan_tenaga_listrik_bank", method = RequestMethod.GET)
+    public Map<String, Object> getPenjualanTenagaListrikBank(
+            @RequestParam(value = "p_tgl_awal", defaultValue = "") String p_tgl_awal,
+            @RequestParam(value = "p_tgl_akhir", defaultValue = "") String p_tgl_akhir,
+            @RequestParam(value = "p_bank", defaultValue = "ALL") String p_bank
+    ){
+        try {
+            return corpayService.getPenjualanTenagaListrikBank(p_tgl_awal, p_tgl_akhir, p_bank);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/penjualan_tenaga_listrik_dist", method = RequestMethod.GET)
+    public Map<String, Object> getPenjualanTenagaListrikDist(
+            @RequestParam(value = "p_tgl_awal", defaultValue = "") String p_tgl_awal,
+            @RequestParam(value = "p_tgl_akhir", defaultValue = "") String p_tgl_akhir,
+            @RequestParam(value = "p_unit", defaultValue = "ALL") String p_unit
+    ){
+        try {
+            return corpayService.getPenjualanTenagaListrikDist(p_tgl_awal, p_tgl_akhir, p_unit);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @GetMapping(path = "/eq_curr")
     public Map eqCurr(
             @RequestParam(value = "bank", defaultValue = "ALL") String bank,

@@ -254,4 +254,32 @@ public class ReportController {
         mapData.put("data", list);
         return mapData;
     }
+
+    @GetMapping(path = "/proyeksi_kebutuhan_pengadaan_valas")
+    public Map listProyeksiKebutuhanPengadaanValas(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getProyeksiPengadaanKebutuhanValas(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @RequestMapping(value = "/ins_pengadaan_valas", method = RequestMethod.POST)
+    public Map insPengadaanValas(
+            @RequestParam(value = "pData", defaultValue = "") String pData
+    ) {
+        try {
+            return dashboardService.insPengadaanValas(pData);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

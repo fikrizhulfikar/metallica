@@ -1,13 +1,13 @@
 $(document).ready(function () {
-//    tableMainDashboard();
-    tableMainDashboard2();
-//    myFunction();
-    getAllData();
-    search("load");
+    initDataTablePenjualanTenagaListrik();
+    initDataTablePenjualanTenagaListrikBank();
+    initDataTablePenjualanTenagaListrikDist();
 
-    setSelectBankSaldo("bank_filter", "FILTER", "", "REKAP");
-    setSelectJenisRekening("jenrek_filter", "FILTER", "", "REKAP");
-    setSelectTipeRekening("tiperek_filter", "FILTER", "", "REKAP");
+    search1("load");
+    search3("load");
+    search4("load");
+    setSelectUnit("unit_filter1", "FILTER", "", "REKAP");
+//    setSelectRange("range_filter1", "FILTER", "", "REKAP");
 
     $("#dashboard-carousel").carousel({
         interval : 1000*5,
@@ -16,111 +16,324 @@ $(document).ready(function () {
 $("#dash_date").datepicker({dateFormat : "dd/mm/yy"});
 });
 
-function tableMainDashboard(bank, jenisRekening, tipeRekening){
+var srcTglAwal = null;
+var srcTglAkhir = null;
 
-    $('#rincian-saldo').dataTable().fnDestroy();
+function initDataTablePenjualanTenagaListrik(p_tgl_awal, p_tgl_akhir, p_unit, p_range) {
+//    showLoadingCss()
+//    let groupColumn = 0;
+//    let tb_penjualan_tenaga_listrik = $("#penerimaan-penjualan-jenis-layanan").DataTable({
+//        "ajax" : {
+//            "url" : baseUrl + "api_operator/rekap_invoice_belum/penjualan_tenaga_listrik",
+//            "data" : {
+//                p_tgl_awal: $("#tanggal_awal1").val(),
+//                p_tgl_akhir: $("#tanggal_akhir1").val(),
+//                p_unit: $("#unit_filter1").val(),
+//                p_range: $("#range_filter1").val()
+//            },
+//            "type" : "GET",
+//            "dataType" : "JSON"
+//        },
+//        "sorting": false,
+//        "searching" : false,
+//        "paging": false,
+//        "bInfo" : false,
+//        "bLengthChange" : false,
+//        "columns" : [
+//            {
+//                "visible" : false,
+//                "data" : "TANGGAL"},
+//            {
+//                "width": "10%",
+//                "data" : "nomor",
+//                "render" : (data) => {
+//                    return data;
+//                },
+//            },
+//            {
+//                "data" : "tanggal",
+//                "render" : (data) => {
+//                    return data;
+//                },
+//            },
+//            {
+//                "data" : "POSTPAID",
+//                "render" : (data) => {
+//                    return '<td>'+ new Intl.NumberFormat().format(data) +'</td>'
+//                },
+//                "createdCell" : (cell)=>{
+//                    $(cell).css({
+//                       "text-align" : "center"
+//                    })
+//                 }
+//            },
+//            {
+//                "data" : "PREPAID",
+//                "render" : (data) => {
+//                    return '<td>'+ new Intl.NumberFormat().format(data) +'</td>'
+//                },
+//                "createdCell" : (cell)=>{
+//                    $(cell).css({
+//                       "text-align" : "center"
+//                    })
+//                }
+//            },
+//            {
+//                "data" : "NTL",
+//                "render" : (data) => {
+//                    return '<td>'+ new Intl.NumberFormat().format(data) +'</td>'
+//                },
+//                "createdCell" : (cell)=>{
+//                    $(cell).css({
+//                        "text-align" : "right"
+//                    })
+//                }
+//            },
+//            {
+//                "data" : "TOTAL",
+//                "render" : (data) => {
+//                    return '<td> Rp. '+ new Intl.NumberFormat().format(data) +'</td>'
+//                },
+//                "createdCell" : (cell)=>{
+//                    $(cell).css({
+//                        "text-align" : "right"
+//                    })
+//                }
+//            },
+//        ]
+//    });
+    $('#tanggal_awal1').datepicker({dateFormat: 'dd/mm/yy'});
+    $('#tanggal_akhir1').attr("disabled", "disabled");
 
-    let rincian_saldo = $("#rincian-saldo").DataTable({
-        "ajax" : {
-            "url": baseUrl + "api_operator/rekap_invoice_belum/rincian_saldo",
-            "data" : {
-                bank: bank,
-                jenisRekening: jenisRekening,
-                tipeRekening: tipeRekening
-            },
-            "type" : "GET",
-            "dataType" : "json",
-            "dataSrc":
-                function (res) {
-                    getTotalTagihan();
-                    return res.data;
-                }
-        },
-        "sorting": false,
-        "searching" : true,
-        "paging": true,
-        "bInfo" : false,
-        "bLengthChange" : true,
-        "columns" : [
-            {"data": null,"render": (data, type, row) => {return '<td>'+data.NO_REKENING+'</td>';}},
-            {"data": null,"render": (data, type, row) => {return '<tr><td>'+data.BANK+'</td></tr>';},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
-            {"data": null,"render": (data, type, row) => {return '<td>'+data.CURRENCY+'</td>';},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
-            {"data": null,"render": (data, type, row) => {return '<td>'+data.JENIS_REKENING+'</td>';}},
-            {"data": null,"render": (data, type, row) => {return '<td>'+data.TIPE_REKENING+'</td>';}},
-            {"data":null,"render" : (data, tyoe, row) => {if (data.CURRENCY === "IDR"){
-                                                              return '<td> Rp '+ new Intl.NumberFormat().format(data.ORIGINAL_CURRENCY)+'</td>';
-                                                              } else if (data.CURRENCY === "USD"){
-                                                              return '<td> $ '+ new Intl.NumberFormat().format(data.ORIGINAL_CURRENCY)+'</td>';
-                                                              } else if (data.CURRENCY === "EUR"){
-                                                              return '<td> € '+ new Intl.NumberFormat().format(data.ORIGINAL_CURRENCY)+'</td>';
-                                                              } else if (data.CURRENCY === "JPY"){
-                                                              return '<td> ¥ '+ new Intl.NumberFormat().format(data.ORIGINAL_CURRENCY)+'</td>';
-                                                              } else
-                                                              return '<td> RM '+ new Intl.NumberFormat().format(data.ORIGINAL_CURRENCY)+'</td>';
-                                                           },
-                                                           "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                           }},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp.'+ new Intl.NumberFormat().format(data.EQ_CURRENCY)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> '+ new Intl.NumberFormat().format(data.PERSEN)+' % </td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-        ],
-    });
-
-   $('.dataTables_length').each(function () {
-        var html = '<label style="margin-left: 200px; cursor:default">Total eq currency : Rp. <b id="total_tagihan"> 0</b></label>';
-        var html2 = '<label style="margin-left: 30px; cursor:default">Total % : <b id="total_percent">0</b> %</label>';
-//        var html3 = '<input style="margin-left: 30px; type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"/>';
-        $(this).append(html, html2);
-    });
-}
-
-//var allData;
-
-function getAllData() {
     $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/rincian_saldo",
+        url: baseUrl + "api_operator/rekap_invoice_belum/penjualan_tenaga_listrik",
         dataType: 'JSON',
         type: "GET",
         data: {
-            bank: $("#bank_filter").val(),
-            jenisRekening: $("#jenrek_filter").val(),
-            tipeRekening: $("#tiperek_filter").val()
+            p_tgl_awal: $("#tanggal_awal1").val(),
+            p_tgl_akhir: $("#tanggal_akhir1").val(),
+            p_unit: $("#unit_filter1").val(),
+            p_range: $("#range_filter1").val(),
         },
         success: function (res) {
-            allData = res;
+            var data = res.return;
+//            console.log("response : "+data);
+
+            $('#penerimaan-penjualan-jenis-layanan tbody').empty();
+            var nomor;
+
+            $.each(data, function (key, val) {
+            $("#tglcetak").html(data[0].TANGGAL);
+            nomor = key + 1;
+                var html = "<tr>" +
+                    "<td align='center'>" + nomor + "</td>" +
+                    "<td> </td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.POSTPAID,2,".",",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.PREPAID,2,".",",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.NTL,2,".",",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
+                    "</tr>";
+                $('#penerimaan-penjualan-jenis-layanan tbody').append(html);
+
+            });
+
+            $('#penerimaan-penjualan-jenis-layanan').DataTable( {
+                searching: false,
+                paging: true
+            });
+
+            var total1 = "<tr style='background-color:#67a2d8;color: white'>" + "<td colspan=2 align='center'>TOTAL IDR</td>" +
+                                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_POSTPAID,2,".",",") + "</td>" +
+                                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_PREPAID,2,".",",") + "</td>" +
+                                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_NTL,2,".",",") + "</td>" +
+                                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].JUMLAH_TOTAL,2,".",",") + "</td>" +
+                                "</tr>";
+
+            $('#penerimaan-penjualan-jenis-layanan tbody').append(total1);
+            hideLoadingCss()
+
         },
-        error: function (res) {
-            console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
+        error: function () {
+            // hideLoadingCss("Gagal Ambil Data IMPRST VALAS");
+            hideLoadingCss();
+            $('#penerimaan-penjualan-jenis-layanan tbody').empty();
+            var html = "<tr>" +
+                "<td colspan='5' align='center'> No Data </td>" +
+                "</tr>";
+            $('#penerimaan-penjualan-jenis-layanan tbody').append(html);
         }
     });
-
 }
 
-function search(state) {
-    if ($("#bank_filter").val() == "" && $("#jenrek_filter").val() == "" && $("#tiperek_filter").val() == "" && state != "load") {
-        alert("Mohon Lengkapi filter yg ingin di cari");
+$("#tanggal_awal1").change(function () {
+    var tglAwalData = $('#tanggal_awal1').val();
+    if (tglAwalData == "") {
+        // alert("Tanggal awal belum di tentukan");
+        $('#tanggal_akhir1').val("");
     } else {
-        tableMainDashboard($("#bank_filter").val(), $("#jenrek_filter").val(), $("#tiperek_filter").val())
-        getAllData()
+        $('#tanggal_akhir1').attr("disabled", false);
+        $('#tanggal_akhir1').datepicker({dateFormat: 'dd/mm/yy', minDate: tglAwalData});
+    }
+});
+
+function search1(state) {
+    if ($("#tanggal_akhir1").val() == "" && state != "load" && $("#tanggal_awal1").val() != "") {
+        alert("Mohon Lengkapi Tgl Akhir");
+    } else {
+        initDataTablePenjualanTenagaListrik()
+        srcTglAwal = $("#tanggal_awal1").val()
+        srcTglAkhir = $("#tanggal_akhir1").val()
     }
 }
 
-function getTotalTagihan() {
+function initDataTablePenjualanTenagaListrikBank(p_tgl_awal, p_tgl_akhir, p_bank) {
+//    showLoadingCss()
+    $('#tanggal_awal3').datepicker({dateFormat: 'dd/mm/yy'});
+    $('#tanggal_akhir3').attr("disabled", "disabled");
     $.ajax({
-        url: baseUrl + "/api_operator/rekap_invoice_belum/eq_curr",
+        url: baseUrl + "api_operator/rekap_invoice_belum/penjualan_tenaga_listrik_bank",
+        dataType: 'JSON',
         type: "GET",
         data: {
-            bank: $("#bank_filter").val(),
-            jenisRekening: $("#jenrek_filter").val(),
-            tipeRekening: $("#tiperek_filter").val()
+            p_tgl_awal: $("#tanggal_awal3").val(),
+            p_tgl_akhir: $("#tanggal_akhir3").val(),
+            p_bank: $("#bank_filter2").val()
         },
         success: function (res) {
-                console.log(res);
-            $("#total_tagihan").html(new Intl.NumberFormat().format(res.data[0].EQ_CURRENCY));
-            $("#total_percent").html(res.data[0].TOTAL_PERSEN);
+            var data = res.return;
+            console.log("response : "+data);
+
+            $('#penerimaan-penjualan-bank tbody').empty();
+            var nomor;
+            $.each(data, function (key, val) {
+            $("#tglcetak").html(data[0].TANGGAL);
+            nomor = key + 1;
+                var html = "<tr>" +
+                    "<td align='center'>" + nomor + "</td>" +
+                    "<td align='center'>" + val.BANK + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.POSTPAID,2,".",",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.PREPAID,2,".",",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.NTL,2,".",",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
+                    "</tr>";
+                $('#penerimaan-penjualan-bank').append(html);
+            });
+
+            var total1 = "<tr style='background-color:#67a2d8;color: white'>" + "<td colspan=2 align='center'>TOTAL IDR</td>" +
+                                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_POSTPAID,2,".",",") + "</td>" +
+                                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_PREPAID,2,".",",") + "</td>" +
+                                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_NTL,2,".",",") + "</td>" +
+                                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].JUMLAH_TOTAL,2,".",",") + "</td>" +
+                                "</tr>";
+
+            $('#penerimaan-penjualan-bank tbody').append(total1);
+            hideLoadingCss()
         },
         error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+            // hideLoadingCss("Gagal Ambil Data IMPRST VALAS");
+            hideLoadingCss();
+            $('#penerimaan-penjualan-bank tbody').empty();
+            var html = "<tr>" +
+                "<td colspan='5' align='center'> No Data </td>" +
+                "</tr>";
+            $('#penerimaan-penjualan-bank tbody').append(html);
         }
     });
+}
 
+$("#tanggal_awal3").change(function () {
+    var tglAwalData = $('#tanggal_awal3').val();
+    if (tglAwalData == "") {
+        // alert("Tanggal awal belum di tentukan");
+        $('#tanggal_akhir3').val("");
+    } else {
+        $('#tanggal_akhir3').attr("disabled", false);
+        $('#tanggal_akhir3').datepicker({dateFormat: 'dd/mm/yy', minDate: tglAwalData});
+    }
+});
+
+function search3(state) {
+    if ($("#tanggal_akhir3").val() == "" && state != "load" && $("#tanggal_awal3").val() != "") {
+        alert("Mohon Lengkapi Tgl Akhir");
+    } else {
+        initDataTablePenjualanTenagaListrikBank()
+        srcTglAwal = $("#tanggal_awal3").val()
+        srcTglAkhir = $("#tanggal_akhir3").val()
+    }
+}
+
+function initDataTablePenjualanTenagaListrikDist(p_tgl_awal, p_tgl_akhir, p_unit) {
+//    showLoadingCss()
+    $('#tanggal_awal4').datepicker({dateFormat: 'dd/mm/yy'});
+    $('#tanggal_akhir4').attr("disabled", "disabled");
+    $.ajax({
+        url: baseUrl + "api_operator/rekap_invoice_belum//penjualan_tenaga_listrik_dist",
+        dataType: 'JSON',
+        type: "GET",
+        data: {
+            p_tgl_awal: $("#tanggal_awal4").val(),
+            p_tgl_akhir: $("#tanggal_akhir4").val(),
+            p_bank: $("#unit_filter3").val()
+        },
+        success: function (res) {
+            var data = res.return;
+            console.log("response : "+data);
+
+            $('#penerimaan-penjualan-distribusi tbody').empty();
+            var nomor;
+            $.each(data, function (key, val) {
+            $("#tglcetak").html(data[0].TANGGAL);
+            nomor = key + 1;
+                var html = "<tr>" +
+                    "<td align='center'>" + nomor + "</td>" +
+                    "<td align='center'>" + val.DISTRIBUSI + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.POSTPAID,2,".",",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.PREPAID,2,".",",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.NTL,2,".",",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
+                    "</tr>";
+                $('#penerimaan-penjualan-distribusi').append(html);
+            });
+
+            var total1 = "<tr style='background-color:#67a2d8;color: white'>" + "<td colspan=2 align='center'>TOTAL IDR</td>" +
+                                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_POSTPAID,2,".",",") + "</td>" +
+                                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_PREPAID,2,".",",") + "</td>" +
+                                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_NTL,2,".",",") + "</td>" +
+                                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].JUMLAH_TOTAL,2,".",",") + "</td>" +
+                                "</tr>";
+
+            $('#penerimaan-penjualan-distribusi tbody').append(total1);
+            hideLoadingCss()
+        },
+        error: function () {
+            // hideLoadingCss("Gagal Ambil Data IMPRST VALAS");
+            hideLoadingCss();
+            $('#penerimaan-penjualan-distribusi tbody').empty();
+            var html = "<tr>" +
+                "<td colspan='5' align='center'> No Data </td>" +
+                "</tr>";
+            $('#penerimaan-penjualan-distribusi tbody').append(html);
+        }
+    });
+}
+
+$("#tanggal_awal4").change(function () {
+    var tglAwalData = $('#tanggal_awal4').val();
+    if (tglAwalData == "") {
+        // alert("Tanggal awal belum di tentukan");
+        $('#tanggal_akhir4').val("");
+    } else {
+        $('#tanggal_akhir4').attr("disabled", false);
+        $('#tanggal_akhir4').datepicker({dateFormat: 'dd/mm/yy', minDate: tglAwalData});
+    }
+});
+
+function search4(state) {
+    if ($("#tanggal_akhir4").val() == "" && state != "load" && $("#tanggal_awal4").val() != "") {
+        alert("Mohon Lengkapi Tgl Akhir");
+    } else {
+        initDataTablePenjualanTenagaListrikDist()
+        srcTglAwal = $("#tanggal_awal4").val()
+        srcTglAkhir = $("#tanggal_akhir4").val()
+    }
 }
