@@ -93,7 +93,7 @@
 <!--            <properties>-->
 <!--                <activatedProperties>production</activatedProperties>-->
 <!--                <db.url>jdbc:oracle:thin:@10.14.158.192:1521:DBTRESRY</db.url>-->
-<!--                <db.username>corpay</db.username>-->
+<!--                <db.username>CORPAY</db.username>-->
 <!--                <db.password>corpay</db.password>-->
 <!--            </properties>-->
 <!--            <activation>-->
