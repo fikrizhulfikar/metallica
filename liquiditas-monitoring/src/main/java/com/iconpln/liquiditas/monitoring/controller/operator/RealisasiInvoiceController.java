@@ -4,6 +4,10 @@ import com.iconpln.liquiditas.core.service.RealisasiInvoiceService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.monitoring.utils.NotificationUtil;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import net.sf.jxls.transformer.XLSTransformer;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -16,13 +20,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by israj on 10/4/2016.
@@ -777,6 +781,122 @@ public class RealisasiInvoiceController {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    @GetMapping(path = "/pdfRekap/{pTglAwal}/{pTglAkhir}/{pCurr}/{pCaraBayar}/{pBank}/{pStatus}/{pStatusTracking}/{idr}/{usd}/{eur}/{jpy}")
+    public String exportPdfRekap(
+            @PathVariable String pTglAwal,
+            @PathVariable String pTglAkhir,
+            @PathVariable String pCurr,
+            @PathVariable String pStatusTracking,
+            @PathVariable String pBank,
+            @PathVariable String pCaraBayar,
+            @PathVariable String pStatus,
+            @PathVariable String idr,
+            @PathVariable String usd,
+            @PathVariable String eur,
+            @PathVariable String jpy,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws InvalidFormatException, ParseException {
+        SimpleDateFormat dateParser = new SimpleDateFormat("yyyymmdd");
+        try {
+
+            String tglAwal = "";
+            String tglAkhir = "";
+            String caraBayar = (pCaraBayar.equals("null")) ? "ALL" : pCaraBayar;
+            String status = (pStatus.equals("null")) ? "ALL" : pStatus;
+            String statusTracking = (pStatusTracking.equals("null")) ? "ALL" : pStatusTracking;
+
+            if (!pTglAwal.equals("null")) {
+                tglAwal = pTglAwal;
+            }
+            if (!pTglAkhir.equals("null")) {
+                tglAkhir = pTglAkhir;
+            }
+
+            List<Map<String, Object>> listData = realisasiInvoiceService.getAllRekapPembayaran(WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pCurr, statusTracking, pBank, caraBayar, status);
+
+            Document document = new Document(PageSize.A3.rotate());
+            File file = new File("pdfFileName.pdf");
+            FileOutputStream pdfFileout = new FileOutputStream(file);
+            PdfWriter.getInstance(document, pdfFileout);
+            document.open();
+            Font fontHeader = new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD);
+            Font fontRow = new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.NORMAL);
+            String[] headers = new String[]{ "NO", "DOC NO", "METODE PEMBAYARAN", "VENDOR",
+                    "BANK PEMBAYARAN", "NOREK BANK PEMBAYARAN", "BANK TUJUAN", "NOREK BANK TUJUAN",
+                    "CURR", "AMT TC", "SIGN", "COUNTER" };
+            PdfPTable table = new PdfPTable(headers.length);
+            for (String header : headers) {
+                PdfPCell cell = new PdfPCell();
+                cell.setGrayFill(0.9f);
+                cell.setPhrase(new Phrase(header.toUpperCase(), fontHeader));
+                table.addCell(cell);
+            }
+            table.completeRow();
+            for (Map data : listData) {
+                Phrase phrase1 = new Phrase(data.get("ROW_NUMBER").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase1));
+                Phrase phrase2 = new Phrase(data.get("DOC_NO").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase2));
+                Phrase phrase3 = new Phrase(data.get("METODE_PEMBAYARAN").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase3));
+                Phrase phrase4 = new Phrase(data.get("VENDOR").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase4));
+                Phrase phrase5 = new Phrase(data.get("HOUSE_BANK").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase5));
+                Phrase phrase6 = new Phrase(data.get("NO_REK_HOUSE_BANK").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase6));
+                Phrase phrase7 = new Phrase(data.get("BANK_BENEF").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase7));
+                Phrase phrase8 = new Phrase(data.get("NO_REK_BENEF").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase8));
+                Phrase phrase9 = new Phrase(data.get("CURRENCY").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase9));
+                Phrase phrase10 = new Phrase(data.get("AMT_TC").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase10));
+                Phrase phrase11 = new Phrase(data.get("APPROVER").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase11));
+                Phrase phrase12 = new Phrase(data.get("COUNTER").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase12));
+                table.completeRow();
+            }
+            Paragraph p = new Paragraph();
+            p.add("REKAPITULASI REALISASI PEMBAYARAN");
+            p.setAlignment(Element.ALIGN_CENTER);
+            Paragraph p2 = new Paragraph();
+            p2.add("TANGGAL : " + tglAwal + " s.d " + tglAkhir);
+            p2.setAlignment(Element.ALIGN_CENTER);
+            Paragraph p3 = new Paragraph();
+            p3.add("TOTAL IDR " + idr + ", USD " + usd + ", EUR " + eur + ", JPY " + jpy);
+            p3.setAlignment(Element.ALIGN_CENTER);
+            Paragraph p4 = new Paragraph();
+            p4.add("________________________________________________________________________");
+            p4.setAlignment(Element.ALIGN_CENTER);
+            document.add(p);
+            document.add(p2);
+            document.add(p3);
+            document.add(p4);
+            document.add(table);
+            document.close();
+
+            response.setContentType("application/pdf");
+            response.setHeader("Content-disposition","attachment;filename="+ "rekap_realisasi_pembayaran.pdf");
+            File f = new File("pdfFileName.pdf");
+            FileInputStream fis = new FileInputStream(f);
+            DataOutputStream os = new DataOutputStream(response.getOutputStream());
+            response.setHeader("Content-Length",String.valueOf(f.length()));
+            byte[] buffer = new byte[1024];
+            int len = 0;
+            while ((len = fis.read(buffer)) >= 0) {
+                os.write(buffer, 0, len);
+            }
+            return null;
+        } catch (IOException | DocumentException e) {
+            e.printStackTrace();
+            return "Gagal Export Data :" + e.getMessage();
         }
     }
 

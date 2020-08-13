@@ -280,6 +280,18 @@ function exportXls() {
     window.open(baseUrl + "api_operator/rekap_invoice_realisasi/xlsRekap/" + tglAwal + "/" + tglAkhir + "/" + "ALL" + "/" + null + "/" + "ALL" + "/" +null+ "/" + null + "/" + jumlahidr + "/" + jumlahusd + "/" + jumlaheur + "/" + jumlahjpy);
 }
 
+function exportPdf() {
+    var tglAwal = "null";
+    if (srcTglAwal != "") {
+        tglAwal = srcTglAwal
+    }
+    var tglAkhir = "null";
+    if (srcTglAkhir != "") {
+        tglAkhir = srcTglAkhir
+    }
+    window.open(baseUrl + "api_operator/rekap_invoice_realisasi/pdfRekap/" + tglAwal + "/" + tglAkhir + "/" + "ALL" + "/" + null + "/" + "ALL" + "/" +null+ "/" + null + "/" + jumlahidr + "/" + jumlahusd + "/" + jumlaheur + "/" + jumlahjpy);
+}
+
 function getTotalTagihan() {
     $.ajax({
         url: baseUrl + "api_operator/rekap_invoice_realisasi/get_total_tagihan",
