@@ -373,6 +373,7 @@ public class InvoiceSiapBayarController {
                 paramDetail.put("TGL_SIAP_BAYAR", data.get("TGL_SIAP_BAYAR"));
                 paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
                 paramDetail.put("SPREAD_VAL",data.get("SPREAD_VAL"));
+                paramDetail.put("TGL_TAGIHAN_DITERIMA", data.get("TGL_TAGIHAN_DITERIMA"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
