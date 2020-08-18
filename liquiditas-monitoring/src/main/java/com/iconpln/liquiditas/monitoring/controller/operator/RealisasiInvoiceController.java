@@ -725,7 +725,7 @@ public class RealisasiInvoiceController {
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
 
-            List<Map<String, Object>> listData = realisasiInvoiceService.getAllPembayaran(WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pCurr, statusTracking, pBank, caraBayar, status);
+            List<Map<String, Object>> listData = realisasiInvoiceService.getAllPembayaran(WebUtils.getUsernameLogin(), tglAwal.replace("-", "/"), tglAkhir.replace("-", "/"), pCurr, statusTracking, pBank, caraBayar, status);
             System.out.println("Ini List Data Excel Cok!"+ listData);
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
@@ -831,6 +831,7 @@ public class RealisasiInvoiceController {
                 paramDetail.put("STATUS_TRACKING",data.get("STATUS_TRACKING"));
                 paramDetail.put("TGL_LUNAS", data.get("TGL_LUNAS"));
                 paramDetail.put("NO_GIRO",data.get("NO_GIRO"));
+                paramDetail.put("TGL_TAGIHAN_DITERIMA",data.get("TGL_TAGIHAN_DITERIMA"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
