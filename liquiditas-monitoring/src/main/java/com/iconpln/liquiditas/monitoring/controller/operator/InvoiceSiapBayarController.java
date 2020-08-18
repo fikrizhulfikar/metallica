@@ -266,7 +266,7 @@ public class InvoiceSiapBayarController {
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
 
-            List<Map<String, Object>> listData = invoiceSiapBayarService.getAllPembayaran(WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pCurr, statusTracking, pBank, caraBayar, status);
+            List<Map<String, Object>> listData = invoiceSiapBayarService.getAllPembayaran(WebUtils.getUsernameLogin(), tglAwal.replace("-", "/"), tglAkhir.replace("-", "/"), pCurr, statusTracking, pBank, caraBayar, status);
             System.out.println("Ini List Data Excel Cok!"+ listData);
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
