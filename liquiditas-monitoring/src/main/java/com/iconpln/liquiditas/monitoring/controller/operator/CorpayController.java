@@ -1740,6 +1740,7 @@ public class CorpayController {
                 paramDetail.put("DUE_ON",data.get("DUE_ON"));
                 paramDetail.put("PMT_BLOCK",data.get("PMT_BLOCK"));
                 paramDetail.put("HOUSE_BANK",data.get("HOUSE_BANK"));
+                paramDetail.put("NAMA_HOUSE_BANK", data.get("NAMA_BANK"));
                 paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
                 paramDetail.put("PRTNR_BANK_TYPE",data.get("PRTNR_BANK_TYPE"));
                 paramDetail.put("BANK_KEY",data.get("BANK_KEY"));
@@ -1754,6 +1755,7 @@ public class CorpayController {
                 paramDetail.put("INT_ORDER",data.get("INT_ORDER"));
                 paramDetail.put("WBS_NUM",data.get("WBS_NUM"));
                 paramDetail.put("CASH_CODE",data.get("CASH_CODE"));
+                paramDetail.put("NAMA_CASHCODE",data.get("NAMA_CASHCODE"));
                 paramDetail.put("AMT_WITH_BASE_LC",data.get("AMT_WITH_BASE_LC"));
                 paramDetail.put("AMT_WITH_LC",data.get("AMT_WITH_LC"));
                 paramDetail.put("DR_CR_IND",data.get("DR_CR_IND"));
@@ -1797,6 +1799,7 @@ public class CorpayController {
                 paramDetail.put("STATUS",data.get("STATUS"));
                 paramDetail.put("POSISI", data.get("POSISI"));
                 paramDetail.put("NOMINAL_DI_BAYAR", data.get("NOMINAL_DI_BAYAR"));
+                paramDetail.put("JENIS_TRANSAKSI", data.get("JENIS"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
