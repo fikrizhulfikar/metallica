@@ -1796,6 +1796,7 @@ public class CorpayController {
                 paramDetail.put("STATUS_TRACKING",data.get("STATUS_TRACKING"));
                 paramDetail.put("STATUS",data.get("STATUS"));
                 paramDetail.put("POSISI", data.get("POSISI"));
+                paramDetail.put("NOMINAL_DI_BAYAR", data.get("NOMINAL_DI_BAYAR"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
