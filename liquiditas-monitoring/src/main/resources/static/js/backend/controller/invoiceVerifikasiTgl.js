@@ -1223,8 +1223,8 @@ function getAllData() {
                             }
                         });
                         if (newRoleUser[0] !== "ROLE_EXECUTIVE_VICE_PRESIDENT"){
-                            api.column(73).visible(false);
-                            api.column(74).visible(false);
+                            api.column(71).visible(false);
+                            api.column(72).visible(false);
                         }
                     }
                 }
@@ -1268,6 +1268,7 @@ function getAllData() {
             table_rekapitulasi.columns.adjust();
             initCbparent();
         }
+
 function  initCbparent() {
     $('#forcbparent').empty();
     $('#forcbparent').append("<input type=\"checkbox\" id='cbparent'> ");
