@@ -1905,7 +1905,7 @@ function exportXls() {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/invoice_group/xlslunas/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_bank").val() + "/" +null+ "/" +null);
+    window.open(baseUrl + "api_operator/invoice_group/xlslunas/" + tglAwal.replace(/\//g,"-") + "/" + tglAkhir.replace(/\//g,"-") + "/" + $("#cmb_bank").val() + "/" +null+ "/" +null);
 }
 
 function exportXlsItem(group_id) {
