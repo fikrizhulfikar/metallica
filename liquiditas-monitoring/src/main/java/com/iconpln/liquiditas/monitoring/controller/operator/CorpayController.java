@@ -1847,7 +1847,7 @@ public class CorpayController {
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
 
-            List<Map<String, Object>> listData = corpayService.getVerifikasiTanggalByStatus(WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pCurr, pBank, pStatus, pStatusTracking);
+            List<Map<String, Object>> listData = corpayService.getVerifikasiTanggalByStatus(WebUtils.getUsernameLogin(), tglAwal.replace("-", "/"), tglAkhir.replace("-", "/"), pCurr, pBank, pStatus, pStatusTracking);
 
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
