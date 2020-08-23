@@ -92,6 +92,51 @@ public class CorpayService {
         return resultset;
     }
 
+    public List<Map<String, Object>> getListRekapInvoiceAdmin(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pCaraBayar, String pUserId, String sortBy, String sortDir, String status, String statusTracking, String pSearch) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data rekap search info = " +
+                        "pStart : {}, " +
+                        "pLength : {}, " +
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, " +
+                        "pBank : {}, " +
+                        "pCurrency : {}, " +
+                        "pCaraBayar : {}," +
+                        "pStatusValas : {}," +
+                        "pUserId : {}," +
+                        "pSortBy : {}," +
+                        "pSortDir : {}," +
+                        "pStatus : {}," +
+                        "pStatusTracking : {}," +
+                        "pSearch : {},",
+
+                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, pUserId, sortBy, sortDir, pSearch);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_rekap_invoice");
+
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_start", pStart, Types.INTEGER)
+                .addValue("p_length", pLength, Types.INTEGER)
+                .addValue("p_tgl_awal", pTglAwal, Types.VARCHAR)
+                .addValue("p_tgl_akhir", pTglAkhir, Types.VARCHAR)
+                .addValue("p_bank", pBank, Types.VARCHAR)
+                .addValue("p_cur", pCurrency, Types.VARCHAR)
+                .addValue("p_cara_bayar", pCaraBayar, Types.VARCHAR)
+                .addValue("p_user_id", pUserId, Types.VARCHAR)
+                .addValue("p_sort_by", sortBy, Types.VARCHAR)
+                .addValue("p_sort_dir", sortDir, Types.VARCHAR)
+                .addValue("p_status", status, Types.VARCHAR)
+                .addValue("p_status_tracking", statusTracking, Types.VARCHAR)
+                .addValue("p_search", pSearch, Types.VARCHAR);
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data invoice_get : {}", resultset);
+        return resultset;
+    }
+
     public List<Map<String, Object>> getListInvoiceLcl(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pCaraBayar, String pUserId, String sortBy, String sortDir, String status, String statusTracking, String pSearch) throws SQLException {
 
         AppUtils.getLogger(this).debug("data rekap search info = " +
