@@ -1882,6 +1882,31 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         return result;
     }
 
+    public BigDecimal getTotalTagihanRekapInvoiceAdmin(String tglAwal,
+                                      String tglAkhir,
+                                      String currency,
+                                      String caraBayar,
+                                      String bank,
+                                      String userId,
+                                      String search) {
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", tglAwal, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", tglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_currency", currency, OracleTypes.VARCHAR)
+                .addValue("p_cara_bayar", caraBayar, OracleTypes.VARCHAR)
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR)
+                .addValue("p_search", search, OracleTypes.VARCHAR);
+
+        getJdbcTemplate().execute("alter session set NLS_NUMERIC_CHARACTERS = '.,'");
+
+        BigDecimal result = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("pkg_corpay")
+                .withFunctionName("get_total_rekap_invoice")
+                .executeFunction(BigDecimal.class, in);
+        return result;
+    }
+
     public BigDecimal getTotalTagihanApprovalEvp(String tgl_awal, String tgl_akhir, String currency, String bank,String user_id, String search){
         SqlParameterSource params = new MapSqlParameterSource()
                 .addValue("p_tgl_awal", tgl_awal, OracleTypes.VARCHAR)
