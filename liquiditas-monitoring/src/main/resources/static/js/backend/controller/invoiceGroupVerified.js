@@ -2044,7 +2044,7 @@ function exportXls() {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/invoice_group/xlsverified/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_bank").val() + "/" +null+ "/" +null);
+    window.open(baseUrl + "api_operator/invoice_group/xlsverified/" + tglAwal.replace(/\//g,"-") + "/" + tglAkhir.replace(/\//g,"-") + "/" + $("#cmb_bank").val() + "/" +null+ "/" +null);
 }
 
 function exportXlsItem(group_id) {
@@ -2056,7 +2056,7 @@ function exportXlsItem(group_id) {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/invoice_group/xls_item/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_bank").val() + "/" +group_id);
+    window.open(baseUrl + "api_operator/invoice_group/xls_item/" + tglAwal.replace(/\//g,"-") + "/" + tglAkhir.replace(/\//g,"-") + "/" + $("#cmb_bank").val() + "/" +group_id);
 }
 
 function exportAllGroupItemXls() {
@@ -2068,7 +2068,7 @@ function exportAllGroupItemXls() {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/invoice_group/xls_all_item/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_bank").val());
+    window.open(baseUrl + "api_operator/invoice_group/xls_all_item/" + tglAwal.replace(/\//g,"-") + "/" + tglAkhir.replace(/\//g,"-") + "/" + $("#cmb_bank").val());
 }
 
 function back(){
