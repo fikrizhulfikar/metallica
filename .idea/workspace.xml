@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="420d354e-607d-4b43-a77e-007629250d5c" name="Default Changelist" comment="A" />
+    <list default="true" id="420d354e-607d-4b43-a77e-007629250d5c" name="Default Changelist" comment="A">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +165,21 @@
       <option name="project" value="LOCAL" />
       <updated>1591912822769</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Ubah idle time dan jetty server post size">
+      <created>1598570229207</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1598570229207</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Ubah idle time dan jetty server post size">
+      <created>1598570851893</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1598570851893</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -189,6 +205,7 @@
     <MESSAGE value="Update Tracking" />
     <MESSAGE value="Modify Function Hit" />
     <MESSAGE value="Updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated" />
+    <MESSAGE value="Ubah idle time dan jetty server post size" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ubah idle time dan jetty server post size" />
   </component>
 </project>
