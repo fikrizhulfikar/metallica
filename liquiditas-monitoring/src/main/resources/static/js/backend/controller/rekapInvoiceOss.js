@@ -1177,7 +1177,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                         if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
                             return "-"
                         }
-                        else if(newRoleUser[0] == "ROLE_OSS" || newRoleUser[0] == "ROLE_VERIFIKATOR" ){
+                        else if(newRoleUser[0] == "ROLE_OSS" || newRoleUser[0] == "ROLE_VERIFIKATOR" || newRoleUser[0] == "ROLE_OSS_DIVKEU"){
                             ret_value =
                                 '<div class="btn-group">' +
                                 '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
@@ -1863,7 +1863,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
         /*button reject*/
         // html = html + '<button class="btn-reject btn-danger btn-sm" style="margin-left: 10px" type="button" title="Reject Data" data-toggle="modal" onclick="rejectData()">' +
         //     '            <i class="fa fa-ban"></i></button>';
-        if(newRoleUser[0] === "ROLE_OSS" || newRoleUser[0] === "ROLE_DIVKEU" || newRoleUser[0] === "ROLE_ADMIN" || newRoleUser[0] === 'ROLE_VERIFIKATOR'){
+        if(newRoleUser[0] === "ROLE_OSS" || newRoleUser[0] === "ROLE_OSS_DIVKEU" || newRoleUser[0] === "ROLE_ADMIN" || newRoleUser[0] === 'ROLE_VERIFIKATOR'){
             // html = html + '<button class="btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
             html = html + '<button class="btn btn-edit-data btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 5px" type="button" onclick="openMultipleEditForm()"><i class="fas fa-edit"></i></button>';
             html = html + '<button class="btn btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 5px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fas fa-trash"></i></button>';
