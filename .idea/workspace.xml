@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="420d354e-607d-4b43-a77e-007629250d5c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/task/EmailTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/task/EmailTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application-production.properties" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application-production.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -179,7 +182,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598570851893</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Ubah konfigurasi smtp">
+      <created>1598957728919</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1598957728919</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -206,6 +216,7 @@
     <MESSAGE value="Modify Function Hit" />
     <MESSAGE value="Updated" />
     <MESSAGE value="Ubah idle time dan jetty server post size" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ubah idle time dan jetty server post size" />
+    <MESSAGE value="Ubah konfigurasi smtp" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ubah konfigurasi smtp" />
   </component>
 </project>
