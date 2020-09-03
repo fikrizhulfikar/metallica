@@ -1676,7 +1676,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                         } else {
                             api.column(0).visible(false);
                         }
-                        if (response.ID_VALAS == 1) {
+                        if (response.OSS_ID == 1) {
                             api.column(1).visible(true);
                         } else {
                             api.column(1).visible(false);
@@ -2338,7 +2338,7 @@ function showColumn() {
             } else {
                 $("#hc0").prop("checked", false);
             }
-            if (response.ID_VALAS == 1) {
+            if (response.OSS_ID == 1) {
                 $("#hc1").prop("checked", true);
             } else {
                 $("#hc1").prop("checked", false);
