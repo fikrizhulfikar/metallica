@@ -509,7 +509,8 @@ public class CorpayController {
                           @RequestParam("confirmation_code") Integer confirmation_code,
                           @RequestParam("verified_by") Integer verified_by,
                           @RequestParam("verified_on") Integer verified_on,
-                          @RequestParam("no_giro") Integer no_giro
+                          @RequestParam("no_giro") Integer no_giro,
+                          @RequestParam("ref_num_bank") Integer ref_num_bank
     ) {
         Map data = new HashMap();
         try {
@@ -595,7 +596,8 @@ public class CorpayController {
                     verified_by,
                     verified_on,
                     tgl_tagihan_diterima,
-                    no_giro
+                    no_giro,
+                    ref_num_bank
             );
             data.put("data", result);
         } catch (Exception e) {
@@ -629,7 +631,8 @@ public class CorpayController {
             @RequestParam(value = "pJamBayar", defaultValue = "") String pJamBayar,
             @RequestParam(value = "pOssId", defaultValue = "") String pOssId,
             @RequestParam(value = "pGroupId", defaultValue = "") String pGroupId,
-            @RequestParam(value = "pNoGiro",defaultValue = "") String pNoGiro
+            @RequestParam(value = "pNoGiro",defaultValue = "") String pNoGiro,
+            @RequestParam(value = "pRefNum", defaultValue = "") String pRefNum
     ) {
         AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
 //        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
@@ -644,7 +647,7 @@ public class CorpayController {
         try {
             Map<String, Object> res = corpayService.updatePembayaran(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pBankPembayar, pKeterangan, pTglRencanaBayar,pSumberDana,
                     pMetodePembayaran,pNoRekHouseBank,pInqCustomerName,pInqAccountNumber,pInqAccountStatus, pKodeBankPenerima, pRetrievalRefNumber,
-                    pCustomerRefNumber, pConfirmationCode, pTglActBayar, pJamBayar, WebUtils.getUsernameLogin(), pOssId, pGroupId, pNoGiro);
+                    pCustomerRefNumber, pConfirmationCode, pTglActBayar, pJamBayar, WebUtils.getUsernameLogin(), pOssId, pGroupId, pNoGiro, pRefNum);
             if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
             }
@@ -1283,7 +1286,7 @@ public class CorpayController {
                         "","", "", json.getString("KETERANGAN"), "",
                         json.getString("GROUP_ID"),pNamaGroup,json.getString("NO_REK_HOUSE_BANK"), json.getString("INQ_CUSTOMER_NAME"), json.getString("INQ_ACCOUNT_NUMBER"),
                         json.getString("REF_KEY3"),json.getString("INT_ORDER"),json.getString("WBS_NUM"), json.getString("CASH_CODE"), json.getString("CONFIRMATION_CODE"),
-                        json.getString("TGL_ACT_BAYAR")
+                        json.getString("TGL_ACT_BAYAR"), json.getString("REF_NUM_BANK")
                 );
                 if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
 
@@ -2143,5 +2146,4 @@ public class CorpayController {
             return null;
         }
     }
-
 }
