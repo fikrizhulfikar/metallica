@@ -1484,6 +1484,31 @@
             </div>
         </div>
     </div>
+    <!--    modal ubah jam bayar corpay-->
+    <div class="modal fade" id="modalJamBayar" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Ubah Jam Bayar Corpay</h5>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="jbJamBayar" class="form-control" placeholder="HH:mm"/>
+                    <input type="hidden" id="jbCompCode"/>
+                    <input type="hidden" id="jbDocNo"/>
+                    <input type="hidden" id="jbFiscYear"/>
+                    <input type="hidden" id="jbLineItem"/>
+                    <input type="hidden" id="jbJenisTransaksi"/>
+                    <input type="hidden" id="jbOssId"/>
+                    <input type="hidden" id="jbGroupId"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveJamBayar()">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <div th:fragment="scripts-backend">
     <script src="/static/js/backend/controller/rekapInvoiceSiapBayar.js"></script>
