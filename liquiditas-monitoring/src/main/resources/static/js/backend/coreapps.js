@@ -5,6 +5,9 @@
 var timeHideLoading = 1600;
 var timeSowFormEdit = 1000;
 var nilaiAnggaran = "";
+// var sso_key = 'METALLICA_TEST'; //<= for server dev
+var sso_key = 'METALLICA' // <= sso for server prod
+// var sso_key = 'METALLICA_DEV'; //<= for localhost
 
 function hideLoading(msg) {
     setTimeout(function () {
