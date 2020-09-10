@@ -37,7 +37,7 @@ public class InvoiceGroupController {
 
     @Autowired
     private ResourceLoader resourceLoader;
-    private SimpleDateFormat excelDateFromat = new SimpleDateFormat("dd/mm/yyyy");
+    private SimpleDateFormat excelDateFormat = new SimpleDateFormat("dd/mm/yyyy");
 
     @RequestMapping(value = "/get_invoice_group_head", method = RequestMethod.GET)
     public Map ListInvoiceGroupHead(
@@ -662,11 +662,12 @@ public class InvoiceGroupController {
                 paramDetail.put("DOC_NO",data.get("DOC_NO"));
                 paramDetail.put("FISC_YEAR",data.get("FISC_YEAR"));
                 paramDetail.put("DOC_TYPE",data.get("DOC_TYPE"));
-                paramDetail.put("DOC_DATE",(!data.get("DOC_DATE").toString().equals("-")) ? excelDateFromat.format(dateParser.parse(data.get("DOC_DATE").toString())) : "-");
+                paramDetail.put("DOC_DATE",(!data.get("DOC_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("DOC_DATE").toString())) : "-");
                 paramDetail.put("DOC_DATE2",data.get("DOC_DATE2"));
-                paramDetail.put("POST_DATE",(!data.get("POST_DATE").toString().equals("-")) ? excelDateFromat.format(dateParser.parse(data.get("POST_DATE").toString())) : "-");
+                paramDetail.put("DESKRIPSI_BANK", data.get("DESKRIPSI_BANK"));
+                paramDetail.put("POST_DATE",(!data.get("POST_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("POST_DATE").toString())) : "-");
                 paramDetail.put("POST_DATE2",data.get("POST_DATE2"));
-                paramDetail.put("ENTRY_DATE", (!data.get("ENTRY_DATE").toString().equals("-")) ? excelDateFromat.format(dateParser.parse(data.get("ENTRY_DATE").toString())) : "-");
+                paramDetail.put("ENTRY_DATE",(!data.get("ENTRY_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("ENTRY_DATE").toString())) : "-");
                 paramDetail.put("ENTRY_DATE2",data.get("ENTRY_DATE2"));
                 paramDetail.put("REFERENCE",data.get("REFERENCE"));
                 paramDetail.put("REV_WITH",data.get("REV_WITH"));
@@ -685,7 +686,7 @@ public class InvoiceGroupController {
                 paramDetail.put("BUS_AREA",data.get("BUS_AREA"));
                 paramDetail.put("TPBA",data.get("TPBA"));
                 paramDetail.put("AMT_LC",data.get("AMT_LC"));
-                paramDetail.put("AMT_TC",data.get("AMT_TC"));
+                paramDetail.put("AMT_TC", data.get("AMT_TC"));
                 paramDetail.put("AMT_WITH_BASE_TC",data.get("AMT_WITH_BASE_TC"));
                 paramDetail.put("AMT_WITH_TC",data.get("AMT_WITH_TC"));
                 paramDetail.put("AMOUNT",data.get("AMOUNT"));
@@ -697,11 +698,13 @@ public class InvoiceGroupController {
                 paramDetail.put("CUSTOMER_NAME",data.get("CUSTOMER_NAME"));
                 paramDetail.put("VENDOR",data.get("VENDOR"));
                 paramDetail.put("VENDOR_NAME",data.get("VENDOR_NAME"));
-                paramDetail.put("BASE_DATE",(!data.get("BASE_DATE").toString().equals("-")) ? excelDateFromat.format(dateParser.parse(data.get("BASE_DATE").toString())) : "-");
+                paramDetail.put("BASE_DATE",(!data.get("BASE_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("BASE_DATE").toString())) : "-");
                 paramDetail.put("TERM_PMT",data.get("TERM_PMT"));
                 paramDetail.put("DUE_ON",data.get("DUE_ON"));
                 paramDetail.put("PMT_BLOCK",data.get("PMT_BLOCK"));
                 paramDetail.put("HOUSE_BANK",data.get("HOUSE_BANK"));
+                paramDetail.put("NAMA_HOUSE_BANK", data.get("NAMA_BANK"));
+                paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
                 paramDetail.put("PRTNR_BANK_TYPE",data.get("PRTNR_BANK_TYPE"));
                 paramDetail.put("BANK_KEY",data.get("BANK_KEY"));
                 paramDetail.put("BANK_ACCOUNT",data.get("BANK_ACCOUNT"));
@@ -714,6 +717,7 @@ public class InvoiceGroupController {
                 paramDetail.put("INT_ORDER",data.get("INT_ORDER"));
                 paramDetail.put("WBS_NUM",data.get("WBS_NUM"));
                 paramDetail.put("CASH_CODE",data.get("CASH_CODE"));
+                paramDetail.put("NAMA_CASHCODE",data.get("NAMA_CASHCODE"));
                 paramDetail.put("AMT_WITH_BASE_LC",data.get("AMT_WITH_BASE_LC"));
                 paramDetail.put("AMT_WITH_LC",data.get("AMT_WITH_LC"));
                 paramDetail.put("DR_CR_IND",data.get("DR_CR_IND"));
@@ -722,6 +726,7 @@ public class InvoiceGroupController {
                 paramDetail.put("TGL_VERIFIKASI_CHECKER",data.get("TGL_VERIFIKASI_CHECKER"));
                 paramDetail.put("TGL_VERIFIKASI_APPROVER",data.get("TGL_VERIFIKASI_APPROVER"));
                 paramDetail.put("METODE_PEMBAYARAN",data.get("METODE_PEMBAYARAN"));
+                paramDetail.put("TGL_TAGIHAN_DITERIMA",data.get("TGL_TAGIHAN_DITERIMA"));
                 paramDetail.put("MAKER",data.get("MAKER"));
                 paramDetail.put("CHECKER",data.get("CHECKER"));
                 paramDetail.put("APPROVER",data.get("APPROVER"));
@@ -738,8 +743,7 @@ public class InvoiceGroupController {
                 paramDetail.put("CONFIRMATION_CODE",data.get("CONFIRMATION_CODE"));
                 paramDetail.put("TGL_ACT_BAYAR",data.get("TGL_ACT_BAYAR"));
                 paramDetail.put("OSS_ID",data.get("OSS_ID"));
-                paramDetail.put("GROUP_ID",data.get("ID_GROUP"));
-                paramDetail.put("GROUP_ID_METALLICA",data.get("ID_GROUP_METALLICA"));
+                paramDetail.put("GROUP_ID",data.get("GROUP_ID"));
                 paramDetail.put("SUMBER_DANA",data.get("SUMBER_DANA"));
                 paramDetail.put("TGL_RENCANA_BAYAR",data.get("TGL_RENCANA_BAYAR"));
                 paramDetail.put("BANK_BYR",data.get("BANK_BYR"));
@@ -751,10 +755,14 @@ public class InvoiceGroupController {
                 paramDetail.put("NAMA_BENEF",data.get("NAMA_BENEF"));
                 paramDetail.put("VERIFIED_BY",data.get("VERIFIED_BY"));
                 paramDetail.put("VERIFIED_ON",data.get("VERIFIED_ON"));
+                paramDetail.put("SPREAD_VALUE",data.get("SPREAD_VAL"));
                 paramDetail.put("APPROVE_TGL_RENCANA_BAYAR",data.get("APPROVE_TGL_RENCANA_BAYAR"));
                 paramDetail.put("STATUS_TRACKING",data.get("STATUS_TRACKING"));
-                paramDetail.put("TGL_TAGIHAN_DITERIMA",data.get("TGL_TAGIHAN_DITERIMA"));
-                paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
+                paramDetail.put("STATUS",data.get("STATUS"));
+                paramDetail.put("POSISI", data.get("POSISI"));
+                paramDetail.put("NOMINAL_DI_BAYAR", data.get("NOMINAL_DI_BAYAR"));
+                paramDetail.put("JENIS_TRANSAKSI", data.get("JENIS"));
+                paramDetail.put("REFERENCE_NUMBER_BANK", data.get("REF_NUM_BANK"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
@@ -812,11 +820,12 @@ public class InvoiceGroupController {
                 paramDetail.put("DOC_NO",data.get("DOC_NO"));
                 paramDetail.put("FISC_YEAR",data.get("FISC_YEAR"));
                 paramDetail.put("DOC_TYPE",data.get("DOC_TYPE"));
-                paramDetail.put("DOC_DATE",(!data.get("DOC_DATE").toString().equals("-")) ? excelDateFromat.format(dateParser.parse(data.get("DOC_DATE").toString())) : "-");
+                paramDetail.put("DOC_DATE",(!data.get("DOC_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("DOC_DATE").toString())) : "-");
                 paramDetail.put("DOC_DATE2",data.get("DOC_DATE2"));
-                paramDetail.put("POST_DATE",(!data.get("POST_DATE").toString().equals("-")) ? excelDateFromat.format(dateParser.parse(data.get("POST_DATE").toString())) : "-");
+                paramDetail.put("DESKRIPSI_BANK", data.get("DESKRIPSI_BANK"));
+                paramDetail.put("POST_DATE",(!data.get("POST_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("POST_DATE").toString())) : "-");
                 paramDetail.put("POST_DATE2",data.get("POST_DATE2"));
-                paramDetail.put("ENTRY_DATE",(!data.get("ENTRY_DATE").toString().equals("-")) ? excelDateFromat.format(dateParser.parse(data.get("ENTRY_DATE").toString())) : "-");
+                paramDetail.put("ENTRY_DATE",(!data.get("ENTRY_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("ENTRY_DATE").toString())) : "-");
                 paramDetail.put("ENTRY_DATE2",data.get("ENTRY_DATE2"));
                 paramDetail.put("REFERENCE",data.get("REFERENCE"));
                 paramDetail.put("REV_WITH",data.get("REV_WITH"));
@@ -835,7 +844,7 @@ public class InvoiceGroupController {
                 paramDetail.put("BUS_AREA",data.get("BUS_AREA"));
                 paramDetail.put("TPBA",data.get("TPBA"));
                 paramDetail.put("AMT_LC",data.get("AMT_LC"));
-                paramDetail.put("AMT_TC",data.get("AMT_TC"));
+                paramDetail.put("AMT_TC", data.get("AMT_TC"));
                 paramDetail.put("AMT_WITH_BASE_TC",data.get("AMT_WITH_BASE_TC"));
                 paramDetail.put("AMT_WITH_TC",data.get("AMT_WITH_TC"));
                 paramDetail.put("AMOUNT",data.get("AMOUNT"));
@@ -847,11 +856,13 @@ public class InvoiceGroupController {
                 paramDetail.put("CUSTOMER_NAME",data.get("CUSTOMER_NAME"));
                 paramDetail.put("VENDOR",data.get("VENDOR"));
                 paramDetail.put("VENDOR_NAME",data.get("VENDOR_NAME"));
-                paramDetail.put("BASE_DATE",(!data.get("BASE_DATE").toString().equals("-")) ? excelDateFromat.format(dateParser.parse(data.get("BASE_DATE").toString())) : "-");
+                paramDetail.put("BASE_DATE",(!data.get("BASE_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("BASE_DATE").toString())) : "-");
                 paramDetail.put("TERM_PMT",data.get("TERM_PMT"));
                 paramDetail.put("DUE_ON",data.get("DUE_ON"));
                 paramDetail.put("PMT_BLOCK",data.get("PMT_BLOCK"));
                 paramDetail.put("HOUSE_BANK",data.get("HOUSE_BANK"));
+                paramDetail.put("NAMA_HOUSE_BANK", data.get("NAMA_BANK"));
+                paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
                 paramDetail.put("PRTNR_BANK_TYPE",data.get("PRTNR_BANK_TYPE"));
                 paramDetail.put("BANK_KEY",data.get("BANK_KEY"));
                 paramDetail.put("BANK_ACCOUNT",data.get("BANK_ACCOUNT"));
@@ -864,6 +875,7 @@ public class InvoiceGroupController {
                 paramDetail.put("INT_ORDER",data.get("INT_ORDER"));
                 paramDetail.put("WBS_NUM",data.get("WBS_NUM"));
                 paramDetail.put("CASH_CODE",data.get("CASH_CODE"));
+                paramDetail.put("NAMA_CASHCODE",data.get("NAMA_CASHCODE"));
                 paramDetail.put("AMT_WITH_BASE_LC",data.get("AMT_WITH_BASE_LC"));
                 paramDetail.put("AMT_WITH_LC",data.get("AMT_WITH_LC"));
                 paramDetail.put("DR_CR_IND",data.get("DR_CR_IND"));
@@ -872,6 +884,7 @@ public class InvoiceGroupController {
                 paramDetail.put("TGL_VERIFIKASI_CHECKER",data.get("TGL_VERIFIKASI_CHECKER"));
                 paramDetail.put("TGL_VERIFIKASI_APPROVER",data.get("TGL_VERIFIKASI_APPROVER"));
                 paramDetail.put("METODE_PEMBAYARAN",data.get("METODE_PEMBAYARAN"));
+                paramDetail.put("TGL_TAGIHAN_DITERIMA",data.get("TGL_TAGIHAN_DITERIMA"));
                 paramDetail.put("MAKER",data.get("MAKER"));
                 paramDetail.put("CHECKER",data.get("CHECKER"));
                 paramDetail.put("APPROVER",data.get("APPROVER"));
@@ -888,8 +901,8 @@ public class InvoiceGroupController {
                 paramDetail.put("CONFIRMATION_CODE",data.get("CONFIRMATION_CODE"));
                 paramDetail.put("TGL_ACT_BAYAR",data.get("TGL_ACT_BAYAR"));
                 paramDetail.put("OSS_ID",data.get("OSS_ID"));
-                paramDetail.put("GROUP_ID",data.get("ID_GROUP"));
-                paramDetail.put("GROUP_ID_METALLICA",data.get("ID_GROUP_METALLICA"));
+                paramDetail.put("GROUP_ID",data.get("GROUP_ID"));
+                paramDetail.put("GROUP_ID_METALLICA", data.get("GROUP_ID_METALLICA"));
                 paramDetail.put("SUMBER_DANA",data.get("SUMBER_DANA"));
                 paramDetail.put("TGL_RENCANA_BAYAR",data.get("TGL_RENCANA_BAYAR"));
                 paramDetail.put("BANK_BYR",data.get("BANK_BYR"));
@@ -901,10 +914,14 @@ public class InvoiceGroupController {
                 paramDetail.put("NAMA_BENEF",data.get("NAMA_BENEF"));
                 paramDetail.put("VERIFIED_BY",data.get("VERIFIED_BY"));
                 paramDetail.put("VERIFIED_ON",data.get("VERIFIED_ON"));
+                paramDetail.put("SPREAD_VALUE",data.get("SPREAD_VAL"));
                 paramDetail.put("APPROVE_TGL_RENCANA_BAYAR",data.get("APPROVE_TGL_RENCANA_BAYAR"));
                 paramDetail.put("STATUS_TRACKING",data.get("STATUS_TRACKING"));
-                paramDetail.put("TGL_TAGIHAN_DITERIMA",data.get("TGL_TAGIHAN_DITERIMA"));
-                paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
+                paramDetail.put("STATUS",data.get("STATUS"));
+                paramDetail.put("POSISI", data.get("POSISI"));
+                paramDetail.put("NOMINAL_DI_BAYAR", data.get("NOMINAL_DI_BAYAR"));
+                paramDetail.put("JENIS_TRANSAKSI", data.get("JENIS"));
+                paramDetail.put("REFERENCE_NUMBER_BANK", data.get("REF_NUM_BANK"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
