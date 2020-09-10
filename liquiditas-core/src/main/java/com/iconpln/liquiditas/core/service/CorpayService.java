@@ -30,6 +30,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * Created by Mr.Diaz on 8/1/17.
@@ -368,7 +369,8 @@ public class CorpayService {
             int verified_by,
             int verified_on,
             int tgl_tagihan_diterima,
-            int no_giro) {
+            int no_giro,
+            int ref_num_bank) {
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_user_id", userId, OracleTypes.VARCHAR)
                 .addValue("p_nomor",nomor, OracleTypes.NUMBER)
@@ -452,7 +454,8 @@ public class CorpayService {
                 .addValue("p_verified_by", verified_by , OracleTypes.NUMBER)
                 .addValue("p_verified_on", verified_on , OracleTypes.NUMBER)
                 .addValue("p_tgl_tagihan_diterima",tgl_tagihan_diterima, OracleTypes.NUMBER)
-                .addValue("p_no_giro", no_giro , OracleTypes.NUMBER);
+                .addValue("p_no_giro", no_giro , OracleTypes.NUMBER)
+                .addValue("p_ref_num_bank", ref_num_bank, OracleTypes.NUMBER);
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -464,7 +467,7 @@ public class CorpayService {
             String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet, String pBankPembayar, String pKeterangan, String pTglRencanaBayar,
             String pSumberDana, String pMetodePembayaran, String pNoRekHouseBank, String pInqCustomerName, String pInqAccountNumber, String pInqAccountStatus,
             String pKodeBankPenerima, String pRetrievalRefNumber, String pCustomerRefNumber, String pConfirmationCode, String pTglActBayar, String pJamBayar,
-            String pUserId, String pOssId, String pGroupId, String pNoGiro) throws SQLException {
+            String pUserId, String pOssId, String pGroupId, String pNoGiro, String pRefNum) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("invoice_edit");
@@ -494,6 +497,7 @@ public class CorpayService {
                 .addValue("p_oss_id", pOssId)
                 .addValue("p_group_id", pGroupId)
                 .addValue("p_no_giro",pNoGiro)
+                .addValue("p_ref_num_bank", pRefNum)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data edit pembayaran : {}", out);
@@ -1105,27 +1109,26 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         String res = null;
     Date date = new Date();
     SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-    String refnum = format.format(date.getTime())+"00";
-
+//    String refnum = format.format(date.getTime())+"00";
        if (pMetodeBayar.equals("INHOUSE")){
            if(!pAmountBayar.isEmpty()){
-               res = doPayment( pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
+               res = doPayment( pBank, pRefNum, pSource, pBeneficiaryAccount, pCurrency,
                        pAmountBayar, pRemark, pFeeType, pConfirmationCode);
            }
            if(pAmountBayar.isEmpty()) {
-               res = doPayment(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
+               res = doPayment(pBank, pRefNum, pSource, pBeneficiaryAccount, pCurrency,
                        pAmount, pRemark, pFeeType, pConfirmationCode);
            }
        }
        if (pMetodeBayar.equals("RTGS")){
            if(!pAmountBayar.isEmpty()) {
-               res = doPaymentRtgs(pBank, refnum, pSource, pBeneficiaryAccount,
+               res = doPaymentRtgs(pBank, pRefNum, pSource, pBeneficiaryAccount,
                        pCurrency, pAmountBayar, pRemark, pBenefEmail,
                        pBenefName, pBenefAddr1, pBenefAddr2, pDestinationBankCode,
                        pFeeType);
            }
            if(pAmountBayar.isEmpty()) {
-               res = doPaymentRtgs(pBank, refnum, pSource, pBeneficiaryAccount,
+               res = doPaymentRtgs(pBank, pRefNum, pSource, pBeneficiaryAccount,
                        pCurrency, pAmount, pRemark, pBenefEmail,
                        pBenefName, pBenefAddr1, pBenefAddr2, pDestinationBankCode,
                        pFeeType);
@@ -1133,25 +1136,25 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
        }
        if (pMetodeBayar.equals("KLIRING")) {
            if(!pAmountBayar.isEmpty()) {
-               res = doPaymentKliring(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
+               res = doPaymentKliring(pBank, pRefNum, pSource, pBeneficiaryAccount, pCurrency,
                        pAmountBayar, pRemark, pBenefEmail, pBenefName,
                        pBenefAddr1, pBenefAddr2, pDestinationBankCode, pFeeType);
            }
            if(pAmountBayar.isEmpty()) {
-               res = doPaymentKliring(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
+               res = doPaymentKliring(pBank, pRefNum, pSource, pBeneficiaryAccount, pCurrency,
                        pAmount, pRemark, pBenefEmail, pBenefName,
                        pBenefAddr1, pBenefAddr2, pDestinationBankCode, pFeeType);
            }
        }
     if (pMetodeBayar.equals("ONLINETRANSFER")) {
         if(!pAmountBayar.isEmpty()) {
-            res = doInterbankPayment(pBank, refnum, pAmountBayar, pBeneficiaryAccount,
+            res = doInterbankPayment(pBank, pRefNum, pAmountBayar, pBeneficiaryAccount,
                     pBenefName, pDestinationBankCode, pDestinationBank,
                     pRetrievalReff, pSource, pCurrency, pCurrency2,
                     pRemark);
         }
         if(pAmountBayar.isEmpty()) {
-            res = doInterbankPayment(pBank, refnum, pAmount, pBeneficiaryAccount,
+            res = doInterbankPayment(pBank, pRefNum, pAmount, pBeneficiaryAccount,
                     pBenefName, pDestinationBankCode, pDestinationBank,
                     pRetrievalReff, pSource, pCurrency, pCurrency2,
                     pRemark);
@@ -1302,6 +1305,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         headerBody.put("confirmationCode", pConfirmationCode);
         JSONObject bodyObject = new JSONObject(headerBody);
         String body = bodyObject.toString();
+        System.out.println("body payment : "+body);
 
         Date newdate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -1337,6 +1341,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
         JSONObject bodyObject = new JSONObject(headerBody);
         String body = bodyObject.toString();
+        System.out.println("rtgs body : "+body);
 
         Date newdate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -1556,7 +1561,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
             String pMetodePembayaran, String pTglRencanaBayar, String pSumberDana, String pMaker, String pChecker, String pApprover,
             String pCounter, String pKeterangan, String pFlagStatus, String pIdGroup, String pNamaGroup, String pNoRekHouseBank, String pInqCustomerName,
             String pInqAcctNumber, String pInqAcctStatus, String pKodeBankPenerima, String pRetrievalRefNum, String pCustRefNum, String pConfirmCode,
-            String pTglActBayar
+            String pTglActBayar, String pRefNumBank
     ) throws SQLException{
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -1647,6 +1652,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
                 .addValue("p_customer_ref_number", pCustRefNum)
                 .addValue("p_confirmation_code", pConfirmCode)
                 .addValue("p_tgl_act_bayar",pTglActBayar)
+                .addValue("p_ref_num_bank", pRefNumBank)
                 .addValue("out_msg",OracleTypes.VARCHAR);
 
         out = simpleJdbcCall.execute(param);
