@@ -17,6 +17,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addViewControllers(ViewControllerRegistry viewControllerRegistry) {
         viewControllerRegistry.addViewController("/").setViewName("login");
+        viewControllerRegistry.addViewController("/redirect").setViewName("redirect");
     }
 
 
