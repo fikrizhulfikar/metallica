@@ -266,7 +266,7 @@ public class InvoiceSiapBayarController {
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
 
-            List<Map<String, Object>> listData = invoiceSiapBayarService.getAllPembayaran(WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pCurr, statusTracking, pBank, caraBayar, status);
+            List<Map<String, Object>> listData = invoiceSiapBayarService.getAllPembayaran(WebUtils.getUsernameLogin(), tglAwal.replace("-", "/"), tglAkhir.replace("-", "/"), pCurr, statusTracking, pBank, caraBayar, status);
             System.out.println("Ini List Data Excel Cok!"+ listData);
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
@@ -373,6 +373,7 @@ public class InvoiceSiapBayarController {
                 paramDetail.put("TGL_SIAP_BAYAR", data.get("TGL_SIAP_BAYAR"));
                 paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
                 paramDetail.put("SPREAD_VAL",data.get("SPREAD_VAL"));
+                paramDetail.put("TGL_TAGIHAN_DITERIMA", data.get("TGL_TAGIHAN_DITERIMA"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);

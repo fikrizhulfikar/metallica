@@ -114,6 +114,8 @@ public class GeneratedocController {
             String rawDate = object.getString("TGL_RENCANA_BAYAR");
             Date tgl_rencana_bayar = new SimpleDateFormat("dd/MM/yyyy").parse(rawDate);
             System.out.println("Object Hasil Select : "+object);
+            Date n_print_date = new Date();
+            SimpleDateFormat print_df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
             dg.addVariable("NO_URUT","1");
             dg.addVariable("COMP_CODE",object.getString("COMP_CODE"));
@@ -165,6 +167,7 @@ public class GeneratedocController {
             dg.addVariable("NOMINAL_TERBILANG", conv.toWords(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",",".")))+koma+conv.toCurrency(object.getString("CURR_BAYAR")));
             dg.addVariable("NO_GIRO", object.getString("NO_GIRO"));
             dg.addVariable("TGL_RENCANA_BAYAR", localFormatter.format(tgl_rencana_bayar));
+            dg.addVariable("TGL_CETAK",print_df.format(n_print_date));
 
             String pathtodownload = "";
             String filenamereal = "laporan";
@@ -206,6 +209,8 @@ public class GeneratedocController {
 //            String no_giro = object.getString("NO_GIRO");
             String rawDate = object.getString("TGL_RENCANA_BAYAR");
             Date tgl_rencana_bayar = new SimpleDateFormat("dd/MM/yyyy").parse(rawDate);
+            Date n_print_date = new Date();
+            SimpleDateFormat print_df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
             dg.addVariable("COMP_CODE",object.getString("COMP_CODE"));
             dg.addVariable("DOC_NO", object.getString("DOC_NO"));
@@ -234,6 +239,7 @@ public class GeneratedocController {
             }
             dg.addVariable("NOMINAL_TERBILANG", conv.toWords(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",",".")))+koma+conv.toCurrency(object.getString("CURR_BAYAR")));
             dg.addVariable("TGL_RENCANA_BAYAR", localFormatter.format(tgl_rencana_bayar));
+            dg.addVariable("TGL_CETAK",print_df.format(n_print_date));
 
             String pathtodownload = "";
             String filenamereal = "laporan";
@@ -267,6 +273,8 @@ public class GeneratedocController {
             String rawDate = object.getString("TGL_RENCANA_BAYAR");
             Date tgl_rencana_bayar = new SimpleDateFormat("dd/MM/yyyy").parse(rawDate);
             System.out.println("Object Hasil Select : "+object);
+            Date n_print_date = new Date();
+            SimpleDateFormat print_df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
             dg.addVariable("TOTAL_TAGIHAN", numberFormat.format(Double.parseDouble(object.getString("TOTAL_TAGIHAN").replace(",","."))));
             dg.addVariable("ID_GROUP", object.getString("ID_GROUP"));
@@ -297,6 +305,8 @@ public class GeneratedocController {
             dg.addVariable("FISCAL_YEAR", object.getString("FISCAL_YEAR"));
             dg.addVariable("CURR_BAYAR", object.getString("CURR_BAYAR"));
             dg.addVariable("TGL_RENCANA_BAYAR", localFormatter.format(tgl_rencana_bayar));
+            dg.addVariable("TGL_CETAK", print_df.format(n_print_date));
+
 
             String pathtodownload = "";
             String filenamereal = "laporan";
@@ -324,6 +334,8 @@ public class GeneratedocController {
         NumberToWordConverter converter = new NumberToWordConverter();
         DocGenerator dg = new DocGenerator();
         System.out.println("Id Groups : "+pIdGroup);
+        Date n_print_date = new Date();
+        SimpleDateFormat print_df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
         Map<String, Object> ini = generateDocService.getLampiranGroup(pIdGroup);
 
@@ -351,6 +363,7 @@ public class GeneratedocController {
         dg.addVariable("DETAIL_APPROVER", object.getString("DETAIL_APPROVER"));
         dg.addVariable("NAMA_COUNTER_SIGNER", object.getString("NAMA_COUNTER_SIGNER"));
         dg.addVariable("DETAIL_COUNTER_SIGNER", object.getString("DETAIL_COUNTER_SIGNER"));
+        dg.addVariable("TGL_CETAK", print_df.format(n_print_date));
 
         DecimalFormat df = (DecimalFormat) numberFormat;
         df.applyPattern(pattern);
@@ -441,6 +454,8 @@ public class GeneratedocController {
             NumberToWordConverter conv = new NumberToWordConverter();
             DocGenerator dg = new DocGenerator();
             System.out.println("Doc Numbers : "+pDocumentNumbers);
+            Date n_print_date = new Date();
+            SimpleDateFormat print_df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
             List<Map<String, Object>> list = generateDocService.getCetakBuktiKasSingle(pCompCode, pDocumentNumbers, pFiscalYear, pLineItem, pKet);
             System.out.println("Hasil Select : "+list);
@@ -506,6 +521,7 @@ public class GeneratedocController {
             dg.addVariable("FISCAL_YEAR", object.getString("FISCAL_YEAR"));
             dg.addVariable("TGL_RENCANA_BAYAR", localFormatter.format(tgl_rencana_bayar));
             dg.addVariable("AMOUNT_BAYAR", numberFormat.format(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",","."))));
+            dg.addVariable("TGL_CETAK",print_df.format(n_print_date));
 
             String pathtodownload = "";
             String filenamereal = "laporan";

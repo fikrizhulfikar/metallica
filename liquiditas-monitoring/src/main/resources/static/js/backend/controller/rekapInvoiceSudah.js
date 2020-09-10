@@ -2201,7 +2201,7 @@ function exportXls() {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/rekap_invoice_sudah/xls/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currecny").val() + "/" + $("#cmb_cara_pembayaran").val() + "/" + $("#cmb_bank").val() + "/" +null+ "/" +null);
+    window.open(baseUrl + "api_operator/rekap_invoice_sudah/xls/" + tglAwal.replace(/\//g,"-") + "/" + tglAkhir.replace(/\//g,"-") + "/" + $("#cmb_currecny").val() + "/" + $("#cmb_cara_pembayaran").val() + "/" + $("#cmb_bank").val() + "/" +null+ "/" +null);
 }
 
 function getTotalTagihan() {
@@ -2241,7 +2241,7 @@ function cetakBuktiKasSingle(comp_code, doc_no, fiscal_year, line_item, ket){
         success : (res) => {
             if (res.createdoc.status === 1){
                 console.log("Result : ",res);
-                alert("Udah");
+                alert("Berhasil Mencetak Dokumen!");
                 window.open(baseUrl+"generate_doc/cetak/downloadfile/laporan_"+doc_no+".docx","_blank");
             }
 
