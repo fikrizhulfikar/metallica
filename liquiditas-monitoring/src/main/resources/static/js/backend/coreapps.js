@@ -8,6 +8,8 @@ var nilaiAnggaran = "";
 // var sso_key = 'METALLICA_TEST'; //<= for server dev
 var sso_key = 'METALLICA' // <= sso for server prod
 // var sso_key = 'METALLICA_DEV'; //<= for localhost
+var sso_url = 'http://10.1.86.13:8070/dms/auth'; // <= prod
+// var sso_url = 'http://10.14.153.156:8070/dms/auth';// <= dev
 
 function hideLoading(msg) {
     setTimeout(function () {
@@ -41,7 +43,7 @@ function createReferenceNumber(){
 
 function doSso(){
     $.ajax({
-        url : "http://10.14.153.146:8070/dms/auth/sso",
+        url : sso_url+"/sso",
         type : "GET",
         beforeSend : (xhr) => {
             xhr.setRequestHeader("App-Source",sso_key);
