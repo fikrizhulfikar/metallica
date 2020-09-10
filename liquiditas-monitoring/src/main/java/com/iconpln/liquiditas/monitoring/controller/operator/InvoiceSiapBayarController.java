@@ -409,4 +409,28 @@ public class InvoiceSiapBayarController {
         String formatted = AppUtils.getInstance().formatDecimalCurrency(result);
         return formatted;
     }
+
+    @RequestMapping(value = "/update_jambayar_corpay", method = RequestMethod.POST)
+    public Map<String, Object> updateJamBayarCorpay(
+            @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
+            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
+            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
+            @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem,
+            @RequestParam(value = "pJenisTransaksi", defaultValue = "") String pJenisTransaksi,
+            @RequestParam(value = "pJambayar", defaultValue = "") String pJamBayar,
+            @RequestParam(value = "pOssId", defaultValue = "") String pOssId,
+            @RequestParam(value = "pGroupId", defaultValue = "Sukses") String pGroupId
+    ) {
+        AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
+        try {
+            Map<String, Object> res = invoiceSiapBayarService.corpayUpdateJamBayar(pCompCode, pDocNo, pFiscYear, pLineItem, pJenisTransaksi, pJamBayar, WebUtils.getUsernameLogin(), pOssId, pGroupId);
+            if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
+
+            }
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
