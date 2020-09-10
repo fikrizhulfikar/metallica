@@ -686,37 +686,43 @@ function getAllData() {
                         {
                             "aTargets": [67],
                             "mRender": function (data, type, full) {
-                                return full.TGL_TAGIHAN_DITERIMA;
+                                return full.REF_NUM_BANK;
                             }
                         },
                         {
                             "aTargets": [68],
                             "mRender": function (data, type, full) {
-                                return full.TGL_RENCANA_BAYAR;
+                                return full.TGL_TAGIHAN_DITERIMA;
                             }
                         },
                         {
                             "aTargets": [69],
                             "mRender": function (data, type, full) {
-                                return full.SUMBER_DANA;
+                                return full.TGL_RENCANA_BAYAR;
                             }
                         },
                         {
                             "aTargets": [70],
+                            "mRender": function (data, type, full) {
+                                return full.SUMBER_DANA;
+                            }
+                        },
+                        {
+                            "aTargets": [71],
                             "mRender": function (data, type, full) {
                                 return full.KETERANGAN;
 
                             }
                         },
                         {
-                            "aTargets": [71],
+                            "aTargets": [72],
                             "mRender": function (data, type, full) {
                                 return full.STATUS_TRACKING;
 
                             }
                         },
                         {
-                            "aTargets": [72],
+                            "aTargets": [73],
                             "mRender": function (data, type, full) {
                                 return full.TGL_LUNAS;
 
@@ -1366,30 +1372,35 @@ function getAllData() {
                                 } else {
                                     api.column(66).visible(false);
                                 }
-                                if (response.TGL_TAGIHAN_DITERIMA == 1) {
+                                if (response.REF_NUM_BANK == 1) {
                                     api.column(67).visible(true);
                                 } else {
                                     api.column(67).visible(false);
                                 }
-                                if (response.TGL_RENCANA_BAYAR == 1) {
+                                if (response.TGL_TAGIHAN_DITERIMA == 1) {
                                     api.column(68).visible(true);
                                 } else {
                                     api.column(68).visible(false);
                                 }
-                                if (response.SUMBER_DANA == 1) {
+                                if (response.TGL_RENCANA_BAYAR == 1) {
                                     api.column(69).visible(true);
                                 } else {
                                     api.column(69).visible(false);
                                 }
-                                if (response.KETERANGAN == 1) {
+                                if (response.SUMBER_DANA == 1) {
                                     api.column(70).visible(true);
                                 } else {
                                     api.column(70).visible(false);
                                 }
-                                if (response.STATUS_TRACKING == 1) {
+                                if (response.KETERANGAN == 1) {
                                     api.column(71).visible(true);
                                 } else {
                                     api.column(71).visible(false);
+                                }
+                                if (response.STATUS_TRACKING == 1) {
+                                    api.column(72).visible(true);
+                                } else {
+                                    api.column(72).visible(false);
                                 }
                             },
                             error: function () {
@@ -2720,6 +2731,11 @@ function showColumn() {
             } else {
                 $("#hc71").prop("checked", false);
             }
+            if (response.REF_NUM_BANK == 1) {
+                $("#hc72").prop("checked", true);
+            } else {
+                $("#hc72").prop("checked", false);
+            }
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -2801,6 +2817,7 @@ function saveColumn() {
     var hc69 = $("#hc69").prop('checked');
     var hc70 = $("#hc70").prop('checked');
     var hc71 = $("#hc71").prop('checked');
+    var hc72 = $("#hc72").prop('checked');
 
     var data = {
         "nomor" : hc0 === true ? 1 : 0,
@@ -2875,6 +2892,7 @@ function saveColumn() {
         "sumber_dana" : hc69 === true ? 1 : 0,
         "keterangan" : hc70 === true ? 1 : 0,
         "status_tracking" : hc71 === true ? 1 : 0,
+        "ref_num_bank" : hc72 === true ? 1 : 0,
 
         "bank_byr" : 0,
         "tgl_act_bayar" : 0,

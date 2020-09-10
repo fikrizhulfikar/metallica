@@ -146,11 +146,81 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                 {width: 100, targets: 3},
                 {width: 100, targets: 4},
                 {width: 100, targets: 5},
+                {width: 100, targets: 6},
+                {width: 100, targets: 7},
+                {width: 100, targets: 8},
+                {width: 100, targets: 9},
+                {width: 100, targets: 10},
+                {width: 100, targets: 11},
+                {width: 100, targets: 12},
+                {width: 100, targets: 13},
+                {width: 100, targets: 14},
+                {width: 100, targets: 15},
+                {width: 100, targets: 16},
+                {width: 100, targets: 17},
+                {width: 100, targets: 18},
+                {width: 100, targets: 19},
+                {width: 100, targets: 20},
+                {width: 100, targets: 21},
+                {width: 100, targets: 22},
+                {width: 100, targets: 23},
+                {width: 100, targets: 24},
+                {width: 100, targets: 25},
+                {width: 100, targets: 26},
+                {width: 100, targets: 27},
+                {width: 100, targets: 28},
+                {width: 100, targets: 29},
+                {width: 100, targets: 30},
+                {width: 100, targets: 31},
+                {width: 100, targets: 32},
+                {width: 100, targets: 33},
+                {width: 100, targets: 34},
+                {width: 100, targets: 35},
+                {width: 100, targets: 36},
+                {width: 100, targets: 37},
+                {width: 100, targets: 38},
+                {width: 100, targets: 39},
+                {width: 100, targets: 40},
+                {width: 100, targets: 41},
+                {width: 100, targets: 42},
+                {width: 100, targets: 43},
+                {width: 100, targets: 44},
+                {width: 100, targets: 45},
+                {width: 100, targets: 46},
+                {width: 100, targets: 47},
+                {width: 100, targets: 48},
+                {width: 100, targets: 49},
+                {width: 100, targets: 50},
+                {width: 100, targets: 51},
+                {width: 100, targets: 52},
+                {width: 100, targets: 53},
+                {width: 100, targets: 54},
+                {width: 100, targets: 55},
+                {width: 100, targets: 56},
+                {width: 100, targets: 57},
+                {width: 100, targets: 58},
+                {width: 100, targets: 59},
+                {width: 100, targets: 60},
+                {width: 100, targets: 61},
+                {width: 100, targets: 62},
+                {width: 100, targets: 63},
+                {width: 100, targets: 64},
+                {width: 100, targets: 65},
+                {width: 100, targets: 66},
+                {width: 100, targets: 67},
+                {width: 100, targets: 68},
+                {width: 100, targets: 69},
+                {width: 100, targets: 70},
+                {width: 100, targets: 71},
+                {width: 100, targets: 72},
+                {width: 100, targets: 73},
+                {width: 100, targets: 74},
+                {width: 100, targets: 75},
                 {width: "20%", "targets": 0},
                 { className: "datatables_action", "targets": [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17] },
                 {
                     "bSortable": true,
-                    "aTargets": [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+                    "aTargets": [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70]
                 },
                 {
                     "sortable": false,
@@ -166,15 +236,16 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                 {
                     "aTargets": [1],
                     "mRender": function (data, type, full) {
-                        return full.COMP_CODE;
+                        return full.KET;
                     }
 
                 },
                 {
                     "aTargets": [2],
                     "mRender": function (data, type, full) {
-                        return full.DOC_DATE;
+                        return full.COMP_CODE;
                     }
+
                 },
                 {
                     "aTargets": [3],
@@ -186,106 +257,506 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                 {
                     "aTargets": [4],
                     "mRender": function (data, type, full) {
-                        return full.FISC_YEAR;
+                        return full.GROUP_ID;
                     }
 
                 },
-
                 {
                     "aTargets": [5],
                     "mRender": function (data, type, full) {
-                        return full.GROUP_ID;
+                        return full.OSS_ID;
                     }
 
                 },
                 {
                     "aTargets": [6],
                     "mRender": function (data, type, full) {
-                        return full.ID_PAYMENT_STATUS;
+                        return full.FISC_YEAR;
                     }
 
                 },
                 {
                     "aTargets": [7],
                     "mRender": function (data, type, full) {
-                        return full.INV_STATUS;
+                        return full.DOC_TYPE;
                     }
 
                 },
                 {
                     "aTargets": [8],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.PMT_AMOUNT,2,".",",");
+                        return full.DOC_DATE2;
                     }
 
                 },
                 {
                     "aTargets": [9],
                     "mRender": function (data, type, full) {
-                        return full.PMT_BUSINESS_AREA;
+                        return full.POST_DATE2;
                     }
 
                 },
                 {
                     "aTargets": [10],
                     "mRender": function (data, type, full) {
-                        return full.PMT_CASH_CODE;
-
+                        return full.ENTRY_DATE2;
                     }
+
                 },
                 {
                     "aTargets": [11],
                     "mRender": function (data, type, full) {
-                        return full.PMT_CURRENCY;
+                        return full.REFERENCE;
                     }
 
                 },
                 {
                     "aTargets": [12],
                     "mRender": function (data, type, full) {
-                        return full.PMT_DATE;
+                        return full.REV_WITH;
                     }
 
                 },
                 {
                     "aTargets": [13],
                     "mRender": function (data, type, full) {
-                        return full.PMT_EXCHANGE_RATE;
+                        return full.REV_YEAR;
                     }
+
                 },
                 {
                     "aTargets": [14],
                     "mRender": function (data, type, full) {
-                        return full.PMT_HOUSE_BANK;
+                        return full.DOC_HDR_TXT;
                     }
 
                 },
                 {
                     "aTargets": [15],
                     "mRender": function (data, type, full) {
-                        return full.PMT_PROPOSAL_ID;
+                        return full.CURRENCY;
                     }
 
                 },
                 {
                     "aTargets": [16],
                     "mRender": function (data, type, full) {
-                        return full.PMT_RESIDUAL_IND;
+                        return full.CURR_BAYAR;
                     }
 
                 },
                 {
                     "aTargets": [17],
                     "mRender": function (data, type, full) {
-                        return full.PMT_SUMBER_DANA;
+                        return full.EXCH_RATE;
                     }
 
                 },
                 {
                     "aTargets": [18],
                     "mRender": function (data, type, full) {
-                        return full.REMARKS;
+                        return full.REFERENCE_KEY;
                     }
+
+                },
+                {
+                    "aTargets": [19],
+                    "mRender": function (data, type, full) {
+                        return full.PMT_IND;
+                    }
+
+                },
+                {
+                    "aTargets": [20],
+                    "mRender": function (data, type, full) {
+                        return full.TRANS_TYPE;
+                    }
+
+                },
+                {
+                    "aTargets": [21],
+                    "mRender": function (data, type, full) {
+                        return full.SPREAD_VAL;
+                    }
+
+                },
+                {
+                    "aTargets": [22],
+                    "mRender": function (data, type, full) {
+                        return full.LINE_ITEM;
+                    }
+
+                },
+                {
+                    "aTargets": [23],
+                    "mRender": function (data, type, full) {
+                        return full.OI_IND;
+                    }
+
+                },
+                {
+                    "aTargets": [24],
+                    "mRender": function (data, type, full) {
+                        return full.ACCT_TYPE;
+                    }
+
+                },
+                {
+                    "aTargets": [25],
+                    "mRender": function (data, type, full) {
+                        return full.SPEC_GL;
+                    }
+
+                },
+                {
+                    "aTargets": [26],
+                    "mRender": function (data, type, full) {
+                        return full.BUS_AREA;
+                    }
+
+                },
+                {
+                    "aTargets": [27],
+                    "mRender": function (data, type, full) {
+                        return full.TPBA;
+                    }
+
+                },
+                {
+                    "aTargets": [28],
+                    "mRender": function (data, type, full) {
+                        return full.AMT_LC;
+                    }
+
+                },
+                {
+                    "aTargets": [29],
+                    "mRender": function (data, type, full) {
+                        return full.AMT_TC;
+                    }
+
+                },
+                {
+                    "aTargets": [30],
+                    "mRender": function (data, type, full) {
+                        return full.AMT_WITH_BASE_TC;
+                    }
+
+                },
+                {
+                    "aTargets": [31],
+                    "mRender": function (data, type, full) {
+                        return full.AMT_WITH_TC;
+                    }
+
+                },
+                {
+                    "aTargets": [32],
+                    "mRender": function (data, type, full) {
+                        return full.AMOUNT;
+                    }
+
+                },
+                {
+                    "aTargets": [33],
+                    "mRender": function (data, type, full) {
+                        return full.AMOUNT_BAYAR;
+                    }
+
+                },
+                {
+                    "aTargets": [34],
+                    "mRender": function (data, type, full) {
+                        return full.ASSIGNMENT;
+                    }
+
+                },
+                {
+                    "aTargets": [35],
+                    "mRender": function (data, type, full) {
+                        return full.ITEM_TEXT;
+                    }
+
+                },
+                {
+                    "aTargets": [36],
+                    "mRender": function (data, type, full) {
+                        return full.COST_CTR;
+                    }
+
+                },
+                {
+                    "aTargets": [37],
+                    "mRender": function (data, type, full) {
+                        return full.GL_ACCT;
+                    }
+
+                },
+                {
+                    "aTargets": [38],
+                    "mRender": function (data, type, full) {
+                        return full.CUSTOMER;
+                    }
+
+                },
+                {
+                    "aTargets": [39],
+                    "mRender": function (data, type, full) {
+                        return full.VENDOR;
+                    }
+
+                },
+                {
+                    "aTargets": [40],
+                    "mRender": function (data, type, full) {
+                        return full.BASE_DATE;
+                    }
+
+                },
+                {
+                    "aTargets": [41],
+                    "mRender": function (data, type, full) {
+                        return full.TERM_PMT;
+                    }
+
+                },
+                {
+                    "aTargets": [42],
+                    "mRender": function (data, type, full) {
+                        return full.DUE_ON;
+                    }
+
+                },
+                {
+                    "aTargets": [43],
+                    "mRender": function (data, type, full) {
+                        return full.PMT_BLOCK;
+                    }
+
+                },
+                {
+                    "aTargets": [44],
+                    "mRender": function (data, type, full) {
+                        return full.BANK_BYR;
+                    }
+
+                },
+                {
+                    "aTargets": [45],
+                    "mRender": function (data, type, full) {
+                        return full.NO_REK_HOUSE_BANK;
+                    }
+
+                },
+                {
+                    "aTargets": [46],
+                    "mRender": function (data, type, full) {
+                        return full.PRTNR_BANK_TYPE;
+                    }
+
+                },
+                {
+                    "aTargets": [47],
+                    "mRender": function (data, type, full) {
+                        return full.BANK_KEY;
+                    }
+
+                },
+                {
+                    "aTargets": [48],
+                    "mRender": function (data, type, full) {
+                        return full.BANK_ACCOUNT;
+                    }
+
+                },
+                {
+                    "aTargets": [49],
+                    "mRender": function (data, type, full) {
+                        return full.ACCOUNT_HOLDER;
+                    }
+
+                },
+                {
+                    "aTargets": [50],
+                    "mRender": function (data, type, full) {
+                        return full.NAMA_BENEF;
+                    }
+
+                },
+                {
+                    "aTargets": [51],
+                    "mRender": function (data, type, full) {
+                        return full.NO_REK_BENEF;
+                    }
+
+                },
+                {
+                    "aTargets": [52],
+                    "mRender": function (data, type, full) {
+                        return full.BANK_BENEF;
+                    }
+
+                },
+                {
+                    "aTargets": [53],
+                    "mRender": function (data, type, full) {
+                        return full.REF_NUM_BANK;
+                    }
+
+                },
+                {
+                    "aTargets": [54],
+                    "mRender": function (data, type, full) {
+                        return full.PO_NUM;
+                    }
+
+                },
+                {
+                    "aTargets": [55],
+                    "mRender": function (data, type, full) {
+                        return full.PO_ITEM;
+                    }
+
+                },
+                {
+                    "aTargets": [56],
+                    "mRender": function (data, type, full) {
+                        return full.REF_KEY1;
+                    }
+
+                },
+                {
+                    "aTargets": [57],
+                    "mRender": function (data, type, full) {
+                        return full.REF_KEY2;
+                    }
+
+                },
+                {
+                    "aTargets": [58],
+                    "mRender": function (data, type, full) {
+                        return full.REF_KEY3;
+                    }
+
+                },
+                {
+                    "aTargets": [59],
+                    "mRender": function (data, type, full) {
+                        return full.INT_ORDER;
+                    }
+
+                },
+                {
+                    "aTargets": [60],
+                    "mRender": function (data, type, full) {
+                        return full.WBS_NUM;
+                    }
+
+                },
+                {
+                    "aTargets": [61],
+                    "mRender": function (data, type, full) {
+                        return full.CASH_CODE;
+                    }
+
+                },
+                {
+                    "aTargets": [62],
+                    "mRender": function (data, type, full) {
+                        return full.DR_CR_IND;
+                    }
+
+                },
+                {
+                    "aTargets": [63],
+                    "mRender": function (data, type, full) {
+                        return full.PARTIAL_IND;
+                    }
+
+                },
+                {
+                    "aTargets": [64],
+                    "mRender": function (data, type, full) {
+                        return full.AMT_WITH_BASE_LC;
+                    }
+
+                },
+                {
+                    "aTargets": [65],
+                    "mRender": function (data, type, full) {
+                        return full.AMT_WITH_LC;
+                    }
+
+                },
+                {
+                    "aTargets": [66],
+                    "mRender": function (data, type, full) {
+                        return full.METODE_PEMBAYARAN;
+                    }
+
+                },
+                {
+                    "aTargets": [67],
+                    "mRender": function (data, type, full) {
+                        return full.NO_GIRO;
+                    }
+
+                },
+                {
+                    "aTargets": [68],
+                    "mRender": function (data, type, full) {
+                        return full.TGL_TAGIHAN_DITERIMA;
+                    }
+
+                },
+                {
+                    "aTargets": [69],
+                    "mRender": function (data, type, full) {
+                        return full.TGL_REVERSE;
+                    }
+
+                },
+                {
+                    "aTargets": [70],
+                    "mRender": function (data, type, full) {
+                        return full.TGL_RENCANA_BAYAR;
+                    }
+
+                },
+                {
+                    "aTargets": [71],
+                    "mRender": function (data, type, full) {
+                        return full.SUMBER_DANA;
+                    }
+
+                },
+                {
+                    "aTargets": [72],
+                    "mRender": function (data, type, full) {
+                        return full.KETERANGAN;
+                    }
+
+                },
+                {
+                    "aTargets": [73],
+                    "mRender": function (data, type, full) {
+                        return full.VERIFIED_BY;
+                    }
+
+                },
+                {
+                    "aTargets": [74],
+                    "mRender": function (data, type, full) {
+                        return full.VERIFIED_ON;
+                    }
+
+                },
+                {
+                    "aTargets": [75],
+                    "mRender": function (data, type, full) {
+                        return full.STATUS_TRACKING;
+                    }
+
                 },
             ],
             "ajax":

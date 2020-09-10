@@ -93,4 +93,62 @@ public class GenerateDocService {
         AppUtils.getLogger(this).debug("get_cetak_bukti_kas_grouping : {}",list);
         return list;
     }
+
+    public List<Map<String, Object>> getCetakLampiranCorpay(String comp_code, String doc_no, String fisc_year, String line_item, String ket){
+        List<Map<String, Object>> list = new ArrayList<>();
+        try{
+            SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                    .withCatalogName("PKG_CORPAY")
+                    .withFunctionName("cetak_bukti_kas_corpay");
+            SqlParameterSource params = new MapSqlParameterSource()
+                    .addValue("p_comp_code", comp_code, OracleTypes.VARCHAR)
+                    .addValue("p_doc_no", doc_no, OracleTypes.VARCHAR)
+                    .addValue("p_fisc_year", fisc_year, OracleTypes.VARCHAR)
+                    .addValue("p_line_item", line_item, OracleTypes.VARCHAR)
+                    .addValue("p_ket", ket, OracleTypes.VARCHAR);
+            list = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        AppUtils.getLogger(this).info("get_rekap_lampiran_corpay : {}",list);
+        return list;
+    }
+
+    public List<Map<String, Object>> cetakBuktiKasGroupingCorpay(String comp_code, String doc_no, String fisc_year, String ket){
+        List<Map<String, Object>> list = new ArrayList<>();
+        try{
+            SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                    .withCatalogName("PKG_CORPAY")
+                    .withFunctionName("bukti_kas_grouping_corpay");
+            SqlParameterSource params = new MapSqlParameterSource()
+                    .addValue("p_comp_code", comp_code, OracleTypes.VARCHAR)
+                    .addValue("p_doc_no", doc_no, OracleTypes.VARCHAR)
+                    .addValue("p_fisc_year", doc_no, OracleTypes.VARCHAR)
+                    .addValue("p_ket", ket, OracleTypes.VARCHAR);
+            list = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+            AppUtils.getLogger(this).debug("params_buktikas_group_corpay : {}", params);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        AppUtils.getLogger(this).debug("list_cetak_buktikas_group_corpay : {}",list);
+        return list;
+    }
+
+    public List<Map<String, Object>> cetakLampiranGropingCorpay(String group_id_metallica){
+        List<Map<String, Object>> list = new ArrayList<>();
+        try{
+            SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                    .withCatalogName("PKG_CORPAY")
+                    .withFunctionName("cetak_bukti_lampiran_corpay");
+            SqlParameterSource params = new MapSqlParameterSource()
+                    .addValue("p_group_id", group_id_metallica, OracleTypes.VARCHAR)
+                    .addValue("out_total", OracleTypes.CURSOR);
+            list = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+            AppUtils.getLogger(this).debug("params_lampiran_group_corpay : {}", params);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        AppUtils.getLogger(this).debug("list_cetak_lampiran_group_corpay : {}",list);
+        return list;
+    }
 }

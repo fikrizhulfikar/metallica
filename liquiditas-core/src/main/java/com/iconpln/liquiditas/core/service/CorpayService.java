@@ -30,6 +30,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * Created by Mr.Diaz on 8/1/17.
@@ -46,6 +47,9 @@ public class CorpayService {
     private JdbcTemplate getJdbcTemplate() {
         return new JdbcTemplate(dataSource);
     }
+
+    private static final String corpay_ip_dev = "10.14.204.15";
+    private static final String corpay_ip_prod = "10.1.80.210";
 
     public List<Map<String, Object>> getListPembayaranBelum(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pCaraBayar, String pUserId, String sortBy, String sortDir, String status, String statusTracking, String pSearch) throws SQLException {
 
@@ -368,7 +372,8 @@ public class CorpayService {
             int verified_by,
             int verified_on,
             int tgl_tagihan_diterima,
-            int no_giro) {
+            int no_giro,
+            int ref_num_bank) {
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_user_id", userId, OracleTypes.VARCHAR)
                 .addValue("p_nomor",nomor, OracleTypes.NUMBER)
@@ -452,7 +457,8 @@ public class CorpayService {
                 .addValue("p_verified_by", verified_by , OracleTypes.NUMBER)
                 .addValue("p_verified_on", verified_on , OracleTypes.NUMBER)
                 .addValue("p_tgl_tagihan_diterima",tgl_tagihan_diterima, OracleTypes.NUMBER)
-                .addValue("p_no_giro", no_giro , OracleTypes.NUMBER);
+                .addValue("p_no_giro", no_giro , OracleTypes.NUMBER)
+                .addValue("p_ref_num_bank", ref_num_bank, OracleTypes.NUMBER);
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -464,7 +470,7 @@ public class CorpayService {
             String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet, String pBankPembayar, String pKeterangan, String pTglRencanaBayar,
             String pSumberDana, String pMetodePembayaran, String pNoRekHouseBank, String pInqCustomerName, String pInqAccountNumber, String pInqAccountStatus,
             String pKodeBankPenerima, String pRetrievalRefNumber, String pCustomerRefNumber, String pConfirmationCode, String pTglActBayar, String pJamBayar,
-            String pUserId, String pOssId, String pGroupId, String pNoGiro) throws SQLException {
+            String pUserId, String pOssId, String pGroupId, String pNoGiro, String pRefNum) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("invoice_edit");
@@ -494,6 +500,7 @@ public class CorpayService {
                 .addValue("p_oss_id", pOssId)
                 .addValue("p_group_id", pGroupId)
                 .addValue("p_no_giro",pNoGiro)
+                .addValue("p_ref_num_bank", pRefNum)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data edit pembayaran : {}", out);
@@ -1045,7 +1052,7 @@ public class CorpayService {
         BufferedReader httpResponseReader = null;
         try {
             // Connect to the web server endpoint
-            URL serverUrl = new URL("http://10.14.204.15:8181/gettoken");
+            URL serverUrl = new URL("http://"+corpay_ip_prod+":8181/gettoken");
             HttpURLConnection urlConnection = (HttpURLConnection) serverUrl.openConnection();
 
             // Set HTTP method as GET
@@ -1076,7 +1083,7 @@ public class CorpayService {
     public String getBallance2(String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = "";
         BufferedReader httpResponseReader = null;
-        HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doGetBalance");
+        HttpPost request = new HttpPost("http://"+corpay_ip_prod+":8181/corpay/doGetBalance");
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
@@ -1105,27 +1112,26 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         String res = null;
     Date date = new Date();
     SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-    String refnum = format.format(date.getTime())+"00";
-
+//    String refnum = format.format(date.getTime())+"00";
        if (pMetodeBayar.equals("INHOUSE")){
            if(!pAmountBayar.isEmpty()){
-               res = doPayment( pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
+               res = doPayment( pBank, pRefNum, pSource, pBeneficiaryAccount, pCurrency,
                        pAmountBayar, pRemark, pFeeType, pConfirmationCode);
            }
            if(pAmountBayar.isEmpty()) {
-               res = doPayment(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
+               res = doPayment(pBank, pRefNum, pSource, pBeneficiaryAccount, pCurrency,
                        pAmount, pRemark, pFeeType, pConfirmationCode);
            }
        }
        if (pMetodeBayar.equals("RTGS")){
            if(!pAmountBayar.isEmpty()) {
-               res = doPaymentRtgs(pBank, refnum, pSource, pBeneficiaryAccount,
+               res = doPaymentRtgs(pBank, pRefNum, pSource, pBeneficiaryAccount,
                        pCurrency, pAmountBayar, pRemark, pBenefEmail,
                        pBenefName, pBenefAddr1, pBenefAddr2, pDestinationBankCode,
                        pFeeType);
            }
            if(pAmountBayar.isEmpty()) {
-               res = doPaymentRtgs(pBank, refnum, pSource, pBeneficiaryAccount,
+               res = doPaymentRtgs(pBank, pRefNum, pSource, pBeneficiaryAccount,
                        pCurrency, pAmount, pRemark, pBenefEmail,
                        pBenefName, pBenefAddr1, pBenefAddr2, pDestinationBankCode,
                        pFeeType);
@@ -1133,25 +1139,25 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
        }
        if (pMetodeBayar.equals("KLIRING")) {
            if(!pAmountBayar.isEmpty()) {
-               res = doPaymentKliring(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
+               res = doPaymentKliring(pBank, pRefNum, pSource, pBeneficiaryAccount, pCurrency,
                        pAmountBayar, pRemark, pBenefEmail, pBenefName,
                        pBenefAddr1, pBenefAddr2, pDestinationBankCode, pFeeType);
            }
            if(pAmountBayar.isEmpty()) {
-               res = doPaymentKliring(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
+               res = doPaymentKliring(pBank, pRefNum, pSource, pBeneficiaryAccount, pCurrency,
                        pAmount, pRemark, pBenefEmail, pBenefName,
                        pBenefAddr1, pBenefAddr2, pDestinationBankCode, pFeeType);
            }
        }
     if (pMetodeBayar.equals("ONLINETRANSFER")) {
         if(!pAmountBayar.isEmpty()) {
-            res = doInterbankPayment(pBank, refnum, pAmountBayar, pBeneficiaryAccount,
+            res = doInterbankPayment(pBank, pRefNum, pAmountBayar, pBeneficiaryAccount,
                     pBenefName, pDestinationBankCode, pDestinationBank,
                     pRetrievalReff, pSource, pCurrency, pCurrency2,
                     pRemark);
         }
         if(pAmountBayar.isEmpty()) {
-            res = doInterbankPayment(pBank, refnum, pAmount, pBeneficiaryAccount,
+            res = doInterbankPayment(pBank, pRefNum, pAmount, pBeneficiaryAccount,
                     pBenefName, pDestinationBankCode, pDestinationBank,
                     pRetrievalReff, pSource, pCurrency, pCurrency2,
                     pRemark);
@@ -1238,7 +1244,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String inqueryInHouse(String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doInquiry");
+        HttpPost request = new HttpPost("http://"+corpay_ip_prod+":8181/corpay/doInquiry");
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
@@ -1260,7 +1266,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String inqueryInterbank(String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doInquiryInterBank");
+        HttpPost request = new HttpPost("http://"+corpay_ip_prod+":8181/corpay/doInquiryInterBank");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp", timestamp);
         request.addHeader("signature", signature);
@@ -1302,6 +1308,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         headerBody.put("confirmationCode", pConfirmationCode);
         JSONObject bodyObject = new JSONObject(headerBody);
         String body = bodyObject.toString();
+        System.out.println("body payment : "+body);
 
         Date newdate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -1337,6 +1344,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
         JSONObject bodyObject = new JSONObject(headerBody);
         String body = bodyObject.toString();
+        System.out.println("rtgs body : "+body);
 
         Date newdate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -1436,7 +1444,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String inhousePayment (String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doPayment");
+        HttpPost request = new HttpPost("http://"+corpay_ip_prod+":8181/corpay/doPayment");
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
@@ -1457,7 +1465,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String inhousePaymentRtgs (String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doPaymentRtgs");
+        HttpPost request = new HttpPost("http://"+corpay_ip_prod+":8181/corpay/doPaymentRtgs");
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
@@ -1478,7 +1486,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String inhousePaymentKliring (String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doPaymentKliring");
+        HttpPost request = new HttpPost("http://"+corpay_ip_prod+":8181/corpay/doPaymentKliring");
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
@@ -1499,7 +1507,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String interbankPayment (String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doPaymentInterBank");
+        HttpPost request = new HttpPost("http://"+corpay_ip_prod+":8181/corpay/doPaymentInterBank");
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
@@ -1520,7 +1528,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String paymentStatus(String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doPaymentStatus");
+        HttpPost request = new HttpPost("http://"+corpay_ip_prod+":8181/corpay/doPaymentStatus");
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
@@ -1556,7 +1564,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
             String pMetodePembayaran, String pTglRencanaBayar, String pSumberDana, String pMaker, String pChecker, String pApprover,
             String pCounter, String pKeterangan, String pFlagStatus, String pIdGroup, String pNamaGroup, String pNoRekHouseBank, String pInqCustomerName,
             String pInqAcctNumber, String pInqAcctStatus, String pKodeBankPenerima, String pRetrievalRefNum, String pCustRefNum, String pConfirmCode,
-            String pTglActBayar
+            String pTglActBayar, String pRefNumBank
     ) throws SQLException{
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -1647,6 +1655,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
                 .addValue("p_customer_ref_number", pCustRefNum)
                 .addValue("p_confirmation_code", pConfirmCode)
                 .addValue("p_tgl_act_bayar",pTglActBayar)
+                .addValue("p_ref_num_bank", pRefNumBank)
                 .addValue("out_msg",OracleTypes.VARCHAR);
 
         out = simpleJdbcCall.execute(param);

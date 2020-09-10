@@ -5,6 +5,11 @@
 var timeHideLoading = 1600;
 var timeSowFormEdit = 1000;
 var nilaiAnggaran = "";
+// var sso_key = 'METALLICA_TEST'; //<= for server dev
+var sso_key = 'METALLICA' // <= sso for server prod
+// var sso_key = 'METALLICA_DEV'; //<= for localhost
+var sso_url = 'http://10.1.86.13:8070/dms/auth'; // <= prod
+// var sso_url = 'http://10.14.153.156:8070/dms/auth';// <= dev
 
 function hideLoading(msg) {
     setTimeout(function () {
@@ -13,6 +18,43 @@ function hideLoading(msg) {
             alert(msg);
         }
     }, timeHideLoading);
+}
+
+function createReferenceNumber(){
+    let reference = null;
+    let date = new Date();
+    var dd = date.getDate();
+    if (dd<10){
+        dd='0'+dd;
+    }
+    let mm = date.getMonth()+1;
+    if (mm<10){
+        mm='0'+mm;
+    }
+    let yyyy = date.getFullYear();
+    let hh = date.getHours();
+    let ii = date.getMinutes();
+    let SS = date.getSeconds();
+    let sss = date.getMilliseconds();
+    let rand = Math.floor(100 + Math.random() * 900);
+    reference = yyyy+mm+dd+hh+ii+SS+sss+rand;
+    return reference;
+}
+
+function doSso(){
+    $.ajax({
+        url : sso_url+"/sso",
+        type : "GET",
+        beforeSend : (xhr) => {
+            xhr.setRequestHeader("App-Source",sso_key);
+        },success : (res) => {
+            if (res.status === 200){
+                window.location.replace(res.data.uri);
+            }
+        },error : (err) => {
+            alert("Something Wrong, Try Again Later!");
+        }
+    })
 }
 
 function showLoadingCss() {
