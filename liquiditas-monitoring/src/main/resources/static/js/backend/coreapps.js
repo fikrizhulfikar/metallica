@@ -18,6 +18,43 @@ function hideLoading(msg) {
     }, timeHideLoading);
 }
 
+function createReferenceNumber(){
+    let reference = null;
+    let date = new Date();
+    var dd = date.getDate();
+    if (dd<10){
+        dd='0'+dd;
+    }
+    let mm = date.getMonth()+1;
+    if (mm<10){
+        mm='0'+mm;
+    }
+    let yyyy = date.getFullYear();
+    let hh = date.getHours();
+    let ii = date.getMinutes();
+    let SS = date.getSeconds();
+    let sss = date.getMilliseconds();
+    let rand = Math.floor(100 + Math.random() * 900);
+    reference = yyyy+mm+dd+hh+ii+SS+sss+rand;
+    return reference;
+}
+
+function doSso(){
+    $.ajax({
+        url : "http://10.14.153.146:8070/dms/auth/sso",
+        type : "GET",
+        beforeSend : (xhr) => {
+            xhr.setRequestHeader("App-Source",sso_key);
+        },success : (res) => {
+            if (res.status === 200){
+                window.location.replace(res.data.uri);
+            }
+        },error : (err) => {
+            alert("Something Wrong, Try Again Later!");
+        }
+    })
+}
+
 function showLoadingCss() {
     $("#loader-div").show();
     $("header").hide();
