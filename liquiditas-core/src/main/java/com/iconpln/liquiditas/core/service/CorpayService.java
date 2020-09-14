@@ -48,8 +48,8 @@ public class CorpayService {
         return new JdbcTemplate(dataSource);
     }
 
-    private static final String corpay_ip_dev = "10.14.204.15";
-    private static final String corpay_ip_prod = "10.1.80.210";
+//    private static final String corpay_ip= "10.14.204.15"; // <= dev/local
+    private static final String corpay_ip = "10.1.80.210"; // <= production
 
     public List<Map<String, Object>> getListPembayaranBelum(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pCaraBayar, String pUserId, String sortBy, String sortDir, String status, String statusTracking, String pSearch) throws SQLException {
 
@@ -1052,7 +1052,7 @@ public class CorpayService {
         BufferedReader httpResponseReader = null;
         try {
             // Connect to the web server endpoint
-            URL serverUrl = new URL("http://"+corpay_ip_prod+":8181/gettoken");
+            URL serverUrl = new URL("http://"+corpay_ip+":8181/gettoken");
             HttpURLConnection urlConnection = (HttpURLConnection) serverUrl.openConnection();
 
             // Set HTTP method as GET
@@ -1083,7 +1083,7 @@ public class CorpayService {
     public String getBallance2(String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = "";
         BufferedReader httpResponseReader = null;
-        HttpPost request = new HttpPost("http://"+corpay_ip_prod+":8181/corpay/doGetBalance");
+        HttpPost request = new HttpPost("http://"+corpay_ip+":8181/corpay/doGetBalance");
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
@@ -1244,7 +1244,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String inqueryInHouse(String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://"+corpay_ip_prod+":8181/corpay/doInquiry");
+        HttpPost request = new HttpPost("http://"+corpay_ip+":8181/corpay/doInquiry");
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
@@ -1266,7 +1266,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String inqueryInterbank(String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://"+corpay_ip_prod+":8181/corpay/doInquiryInterBank");
+        HttpPost request = new HttpPost("http://"+corpay_ip+":8181/corpay/doInquiryInterBank");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp", timestamp);
         request.addHeader("signature", signature);
@@ -1444,7 +1444,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String inhousePayment (String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://"+corpay_ip_prod+":8181/corpay/doPayment");
+        HttpPost request = new HttpPost("http://"+corpay_ip+":8181/corpay/doPayment");
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
@@ -1465,7 +1465,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String inhousePaymentRtgs (String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://"+corpay_ip_prod+":8181/corpay/doPaymentRtgs");
+        HttpPost request = new HttpPost("http://"+corpay_ip+":8181/corpay/doPaymentRtgs");
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
@@ -1486,7 +1486,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String inhousePaymentKliring (String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://"+corpay_ip_prod+":8181/corpay/doPaymentKliring");
+        HttpPost request = new HttpPost("http://"+corpay_ip+":8181/corpay/doPaymentKliring");
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
@@ -1507,7 +1507,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String interbankPayment (String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://"+corpay_ip_prod+":8181/corpay/doPaymentInterBank");
+        HttpPost request = new HttpPost("http://"+corpay_ip+":8181/corpay/doPaymentInterBank");
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
@@ -1528,7 +1528,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
 
     public static String paymentStatus(String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
-        HttpPost request = new HttpPost("http://"+corpay_ip_prod+":8181/corpay/doPaymentStatus");
+        HttpPost request = new HttpPost("http://"+corpay_ip+":8181/corpay/doPaymentStatus");
         request.addHeader("Content-Type","application/json");
         request.addHeader("api-key","s3cr3tk3y");
         request.addHeader("timestamp",timestamp);
