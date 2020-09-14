@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="420d354e-607d-4b43-a77e-007629250d5c" name="Default Changelist" comment="">
+    <list default="true" id="420d354e-607d-4b43-a77e-007629250d5c" name="Default Changelist" comment="U">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -111,6 +112,7 @@
       <updated>1591834072613</updated>
       <workItem from="1591834077611" duration="23540000" />
       <workItem from="1595816428591" duration="2638000" />
+      <workItem from="1599754222102" duration="3144000" />
     </task>
     <task id="LOCAL-00001" summary="Updated">
       <created>1591845393081</created>
