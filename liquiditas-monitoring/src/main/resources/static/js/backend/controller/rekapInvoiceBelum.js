@@ -3352,12 +3352,13 @@ function getPaymentStatus(pBank, pRefNum){
                 if (res.responseMessage == 'Sukses') {
                    alert(res.responseMessage);
                    table_rekapitulasi.ajax.reload();
+                   $("#pStatusPembayaran").val(res.responseMessage);
                    $("#pResponPaymentStatus").val(tes);
-                  }
-                else {
-                        alert(res.responseMessage);
-                        table_rekapitulasi.ajax.reload();
-                         $("#pResponPaymentStatus").val(tes);
+                }else {
+                    alert(res.responseMessage);
+                    table_rekapitulasi.ajax.reload();
+                    $("#pStatusPembayaran").val(res.responseMessage);
+                    $("#pResponPaymentStatus").val(tes);
                  }
             },
             error: function () {
