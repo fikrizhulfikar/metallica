@@ -317,7 +317,7 @@ public class GeneratedocController {
                 dg.addVariable("DETAIL_COUNTER_SIGNER", object.getString("DETAIL_COUNTER_SIGNER"));
             }
             dg.addVariable("HOUSE_BANK", (object.getString("HOUSE_BANK") == null ? "-" : object.getString("HOUSE_BANK")));
-            dg.addVariable("NO_REK_HOUSE_BANK", object.getString("NO_REK_HOUSE_BANK"));
+            dg.addVariable("NO_REK_HOUSE_BANK", (object.getString("NO_REK_HOUSE_BANK") == null) ? "-" : object.getString("NO_REK_HOUSE_BANK"));
             String amt = object.getString("TOTAL_TAGIHAN").replace(",",".");
             String[] arr = amt.split("\\.");
             String koma = "";
