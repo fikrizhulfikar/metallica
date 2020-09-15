@@ -1497,7 +1497,7 @@
                 </div>
                 <div class="modal-footer">
 <!--                    <button type="button" class="btn btn-warning" onclick="save_inquiry()">Inquiry</button>-->
-                    <button type="button" class="btn btn-primary" onclick="validasiToken()">Check Token</button>
+                    <button type="button" id="validasiTokenBtn" class="btn btn-primary" onclick="validasiToken()">Check Token</button>
                     <button type="button" id="btn-payment" class="btn btn-success" onclick="doPayment()">Payment</button>
                     <button type="button" id="btn_siap_corpay" class="btn btn-warning" onclick="siapBayarCorpay()">Siap Bayar</button>
                 </div>
@@ -1539,10 +1539,10 @@
 <!--                                <label for="pAmounts">&nbsp;Amount :</label>-->
 <!--                                <input type="text" class="form-control" id="pAmounts"/>-->
 <!--                            </div>-->
-<!--                            <div class="form-group">-->
-<!--                                <label for="pRespons">&nbsp;Respon :</label>-->
-<!--                                <textarea rows="4" type="text" class="form-control" id="pRespons"></textarea>-->
-<!--                            </div>-->
+                            <div class="form-group">
+                                <label for="pRespons">&nbsp;Respon :</label>
+                                <textarea rows="4" type="text" class="form-control" id="pRespons"></textarea>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -1557,7 +1557,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="getBallance2()">Submit</button>
+                    <button type="button" id="getBalanceBtn" class="btn btn-primary" onclick="getBallance2()">Submit</button>
                 </div>
             </div>
         </div>
@@ -1601,7 +1601,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="getPaymentStatus()">Submit</button>
+                    <button type="button" id="paymentStatusBtn" class="btn btn-primary" onclick="getPaymentStatus()">Submit</button>
                 </div>
             </div>
         </div>
