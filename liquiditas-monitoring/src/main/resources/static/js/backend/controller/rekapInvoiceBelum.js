@@ -3302,7 +3302,6 @@ function getInquiry(pMetodeBayar, pBank, pSource, pAccountNumber,  pBeneficiaryA
                  pDestinationBankCode: $("#pKodeBankPenerima").val(),
             },
             success: function (res) {
-               showLoadingCss();
                 var tes = JSON.stringify(res);
                 console.log("Result Inq : ",res);
                 if (res.responseMessage == 'Sukses') {
@@ -3311,7 +3310,7 @@ function getInquiry(pMetodeBayar, pBank, pSource, pAccountNumber,  pBeneficiaryA
                     }
                    alert(res.responseMessage);
                    table_rekapitulasi.ajax.reload();
-                   $("#pRespon2").val(tes);
+                   $("#pRespon2").val(res.responseMessage);
                    $("#pCustomerName").val(res.data.beneficiaryName);
                    //$("#pCustomerName").val(res.data.destinationAccountName);
                    $("#pAccountNumber").val(res.data.beneficiaryAccount);
@@ -3322,9 +3321,12 @@ function getInquiry(pMetodeBayar, pBank, pSource, pAccountNumber,  pBeneficiaryA
                    $("#pConfirmationCode").val(res.data.confirmationCode);
                   }
                 else {
-                        alert(res.responseMessage);
-                        table_rekapitulasi.ajax.reload();
-                         $("#pRespons2").val(tes);
+                    alert(res.responseMessage+"\n"+res.errorMessage);
+                    table_rekapitulasi.ajax.reload();
+                    console.log(res.errorMessage)
+                    $("#pRespons2").val(res.errorMessage.toString());
+
+
                  }
             },
             error: function () {
@@ -3607,18 +3609,18 @@ function doPayment(pMetodeBayar, pBank, pRefNum, pSource, pBeneficiaryAccount, p
                showLoadingCss();
                 // // console.log(res);
                 var tes = JSON.stringify(res);
-                if (res.responseMessage == 'Sukses') {
+                if (res.responseMessage === 'Sukses') {
                     var pStatus = res.data.responseMessage;
 
                      updLunas(pStatus);
-                     $("#pRespon3").val(tes);
+                     $("#pRespon3").val(res.responseMessage);
                    table_rekapitulasi.ajax.reload();
 
                   }
                 else {
                         alert(res.responseMessage);
                         table_rekapitulasi.ajax.reload();
-                         $("#pRespons3").val(tes);
+                         $("#pRespons3").val(res.errorMessage);
                  }
             },
             error: function () {
