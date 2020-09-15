@@ -1655,7 +1655,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                     html = html + '<button class="btn btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="far fa-edit"></i></button>';
                     html = html + '<button class="btn btn-sm btn-primary" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fas fa-folder"></i></button>';
                     html = html + '<button class="btn btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
-//                    html = html + '<button class="btn btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
+                    html = html + '<button class="btn btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fas fa-question"></i></button>';
                     html = html + '<button class="btn btn-delete btn-danger btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Delete Data" onclick="multipleDelete()"><i class="fas fa-trash"></i></button>';
                     html = html + '<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Approve" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
                     html = html + '<button class="btn btn-reverse-sap btn-danger btn-sm" id="btn-reverse-sap" style="margin-left: 10px" type="button" title="Reverse SAP" onclick="multipleReverseSap()"><i class="fas fa-arrow-left"></i></button>';
@@ -1665,7 +1665,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                      html = html + '<button class="btn btn-sm btn-primary" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fas fa-folder"></i></button>';
                      html = html + '<button class="btn btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
-                     html = html + '<button class="btn btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
+                     html = html + '<button class="btn btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fas fa-question"></i></button>';
                      html = html + '<button class="btn btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="far fa-edit"></i></button>';
                      html = html + '<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Approve" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
                      html = html + '<button class="btn btn-verified btn-elementary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Dokumen Pegantar" onclick="cetakBuktiKasMultiple()"><i class="fas fa-copy"></i></button>' ;
@@ -1674,10 +1674,10 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                      html = html + '<button class="btn btn-sm btn-primary" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fas fa-folder"></i></button>';
                      html = html + '<button class="btn btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
-                     html = html + '<button class="btn btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fas fa-money-check"></i></button>';
+                     html = html + '<button class="btn btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fas fa-question"></i></button>';
                      html = html + '<button class="btn btn-sm btn-info" id="btn-verified" title="Edit Data" style="margin-left: 10px" type="button" onclick="openMultipleEditForm()"><i class="far fa-edit"></i></button>';
                      html = html + '<button class="btn btn-verified btn-sm btn-warning" id="btn-verified" style="margin-left: 10px" type="button" title="Approve" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
-                    html = html + '<button class="btn btn-verified btn-elementary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Dokumen Pengantar" onclick="cetakBuktiKasMultiple()"><i class="fas fa-copy"></i></button>' ;
+                     html = html + '<button class="btn btn-verified btn-elementary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Dokumen Pengantar" onclick="cetakBuktiKasMultiple()"><i class="fas fa-copy"></i></button>' ;
                      html = html + '<button class="btn btn-reverse-sap btn-danger btn-sm" id="btn-reverse-sap" style="margin-left: 10px" type="button" title="Reverse SAP" onclick="multipleReverseSap()"><i class="fas fa-arrow-left"></i></button>';
                  }
                 else {
@@ -1691,13 +1691,16 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         html = html + '<button class="btn btn-siapbayar btn-ready btn-sm" id="btn-siapbayar" style="margin-left: 5px" type="button" title="Siap Bayar" onclick="siap_bayar_multiple()"><i class="fas fa-money-check"></i></button>' ;
                         html = html + '<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 5px" type="button" title="Approve" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
                         html = html + '<button class="btn btn-reverse-sap btn-danger btn-sm" id="btn-reverse-sap" style="margin-left: 10px" type="button" title="Reverse SAP" onclick="multipleReverseSap()"><i class="fas fa-arrow-left"></i></button>';
+                        html = html + '<button class="btn btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fas fa-question"></i></button>';
                     }else if(newRoleUser[0] === "ROLE_EXECUTIVE_VICE_PRESIDENT"){
                         html = html + '<button class="btn btn-siapbayar btn-ready btn-sm" id="btn-siapbayar" style="margin-left: 5px" type="button" title="Siap Bayar" onclick="siap_bayar_multiple()"><i class="fas fa-money-check"></i></button>' ;
                         html = html + '<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 5px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
+                        html = html + '<button class="btn btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fas fa-question"></i></button>';
                     }else {
                         html = html + '<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 5px" type="button" title="Update Data" onclick="update_datas()"><i class="fa fa-arrows-alt"></i></button>' ;
                         html = html + '<button class="btn btn-reverse-sap btn-danger btn-sm" id="btn-reverse-sap" style="margin-left: 10px" type="button" title="Reverse SAP" onclick="multipleReverseSap()"><i class="fas fa-arrow-left"></i></button>';
                         html = html + '<button class="btn btn-verified btn-elementary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Dokumen Pengantar" onclick="cetakBuktiKasMultiple()"><i class="fas fa-copy"></i></button>' ;
+                        html = html + '<button class="btn btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fas fa-question"></i></button>';
                     }
                 }
                 $(this).append(html);
@@ -3250,7 +3253,8 @@ function update_status_giro(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pStat
 function getBallance2(pBank, pSource, pBeneficiary){
     var stateCrf = confirm("Anda Data Yang Anda Masukan Sudah Benar?");
     if (stateCrf == true) {
-        showLoadingCss();
+        $("#getBalanceBtn").attr("disabled",true);
+        $("#getBalanceBtn").html("Memproses...");
         $.ajax({
             url: baseUrl + "api_operator/rekap_invoice_belum/get_Ballance2",
             dataType: 'JSON',
@@ -3261,25 +3265,28 @@ function getBallance2(pBank, pSource, pBeneficiary){
                  pBeneficiary: $("#pSources").val(),
             },
             success: function (res) {
-                showLoadingCss();
                 var tes = JSON.stringify(res);
-                // // console.log(res);
+                console.log(res);
 
-              if (res.responseMessage === 'Sukses') {
+                if (res.responseMessage === 'Sukses') {
                     alert(res.responseMessage);
-                    table_rekapitulasi.ajax.reload();
+                    // table_rekapitulasi.ajax.reload();
                     $("#pAccountNames").val(res.data.accountName);
                     $("#pAccountBalances").val(accounting.formatNumber(res.data.accountBalance,2,".",","));
-                    $("#pRespons").val(tes);
+                    $("#pRespons").val(res.successMessage);
                 }
                 else {
                    alert(res.responseMessage);
-                   table_rekapitulasi.ajax.reload();
-                   $("#pRespons").val(tes);
+                   // table_rekapitulasi.ajax.reload();
+                   $("#pRespons").val(res.errorMessage);
                 }
+                $("#getBalanceBtn").attr("disabled",false);
+                $("#getBalanceBtn").html("Submit");
             },
             error: function () {
                 alert(res.responseMessage);
+                $("#getBalanceBtn").attr("disabled", false);
+                $("#getBalanceBtn").html("Submit");
             }
         });
     }
@@ -3288,7 +3295,8 @@ function getBallance2(pBank, pSource, pBeneficiary){
 function getInquiry(pMetodeBayar, pBank, pSource, pAccountNumber,  pBeneficiaryAccount, pDestinationBankCode){
     var stateCrf = confirm("Anda Yakin Akan Melakukan Inquiry ?");
     if (stateCrf == true) {
-        showLoadingCss();
+        $("#btn-inquiry").attr("disabled",true);
+        $("#btn-inquiry").html("Memproses...");
         $.ajax({
             url: baseUrl + "api_operator/rekap_invoice_belum/inquiry",
             dataType: 'JSON',
@@ -3303,13 +3311,11 @@ function getInquiry(pMetodeBayar, pBank, pSource, pAccountNumber,  pBeneficiaryA
             },
             success: function (res) {
                 var tes = JSON.stringify(res);
-                console.log("Result Inq : ",res);
                 if (res.responseMessage == 'Sukses') {
                     if (res.data.hasOwnProperty('customerReferenceNumber') === false || res.data.customerReferenceNumber === null || res.data.customerReferenceNumber === ""){
                         res.data.customerReferenceNumber = createReferenceNumber();
                     }
                    alert(res.responseMessage);
-                   table_rekapitulasi.ajax.reload();
                    $("#pRespon2").val(res.responseMessage);
                    $("#pCustomerName").val(res.data.beneficiaryName);
                    //$("#pCustomerName").val(res.data.destinationAccountName);
@@ -3321,16 +3327,16 @@ function getInquiry(pMetodeBayar, pBank, pSource, pAccountNumber,  pBeneficiaryA
                    $("#pConfirmationCode").val(res.data.confirmationCode);
                   }
                 else {
-                    alert(res.responseMessage+"\n"+res.errorMessage);
-                    table_rekapitulasi.ajax.reload();
-                    console.log(res.errorMessage)
-                    $("#pRespons2").val(res.errorMessage.toString());
-
-
+                    alert(res.responseMessage);
+                    $("#pRespon2").val(res.errorMessage);
                  }
+                $("#btn-inquiry").attr("disabled", false);
+                $("#btn-inquiry").html("Inquiry");
             },
             error: function () {
-                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+                alert("Gagal Melakukan Proses,Harap Hubungi Administrator");
+                $("#btn-inquiry").attr("disabled", false);
+                $("#btn-inquiry").html("Inquiry");
             }
         });
     }
@@ -3339,7 +3345,8 @@ function getInquiry(pMetodeBayar, pBank, pSource, pAccountNumber,  pBeneficiaryA
 function getPaymentStatus(pBank, pRefNum){
     var stateCrf = confirm("Anda Yakin Akan Melakukan Cek Payment Status ?");
     if (stateCrf == true) {
-        showLoadingCss();
+        $("#paymentStatusBtn").attr("disabled",true);
+        $("#paymentStatusBtn").html("Memproses...");
         $.ajax({
             url: baseUrl + "api_operator/rekap_invoice_belum/payment_status",
             dataType: 'JSON',
@@ -3349,22 +3356,23 @@ function getPaymentStatus(pBank, pRefNum){
                  pRefNum: $("#pRefNum").val(),
             },
             success: function (res) {
-               showLoadingCss();
                 var tes = JSON.stringify(res);
                 if (res.responseMessage == 'Sukses') {
                    alert(res.responseMessage);
-                   table_rekapitulasi.ajax.reload();
                    $("#pStatusPembayaran").val(res.responseMessage);
                    $("#pResponPaymentStatus").val(tes);
                 }else {
                     alert(res.responseMessage);
-                    table_rekapitulasi.ajax.reload();
                     $("#pStatusPembayaran").val(res.responseMessage);
                     $("#pResponPaymentStatus").val(tes);
                  }
+                $("#paymentStatusBtn").attr("disabled",false);
+                $("#paymentStatusBtn").html("Submit");
             },
             error: function () {
-                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
+                $("#paymentStatusBtn").attr("disabled", false);
+                $("#paymentStatusBtn").html("Submit");
             }
         });
     }
@@ -3397,7 +3405,8 @@ function kirimToken(pCompCode, pDocNo){
 }
 
 function validasiToken(pCompCode, pDocNo, pToken){
-        showLoadingCss();
+        $("#validasiTokenBtn").attr("disabled", true);
+        $("#validasiTokenBtn").html("Memvalidasi...");
         $.ajax({
             url: baseUrl + "api_operator/rekap_invoice_belum/validasi_notif",
             dataType: 'JSON',
@@ -3408,7 +3417,6 @@ function validasiToken(pCompCode, pDocNo, pToken){
                 pToken:  $("#pKodeVerifikasi2").val(),
             },
             success: function (res) {
-                hideLoadingCss("")
                 // // console.log(res);
                 if (res.return == 1) {
                   $("#pStatusValidasi2").val(res.OUT_MSG);
@@ -3426,6 +3434,8 @@ function validasiToken(pCompCode, pDocNo, pToken){
                     $("#btn_siap_corpay").hide();
                   $("#pStatusValidasi2").val(res.OUT_MSG);
                 }
+                $("#validasiTokenBtn").attr("disabled", false);
+                $("#validasiTokenBtn").html("Check Token");
             },
             error: function () {
                 hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -3542,7 +3552,8 @@ function updSiapBayarGiro(pCompCode, pDocNo, pFiscYear, pLineItem, pJenisTransak
 function siapBayarCorpay(){
     var stateCrf = confirm("Anda Yakin menjadikan tagihan ini Siap Bayar?");
     if (stateCrf == true) {
-        showLoadingCss();
+        $("#btn_siap_corpay").attr("disabled", true);
+        $("#btn_siap_corpay").html("Memproses");
         $.ajax({
             url: baseUrl + "api_operator/rekap_invoice_belum/update_siap_bayar_giro",
             dataType: 'JSON',
@@ -3565,6 +3576,8 @@ function siapBayarCorpay(){
                 } else {
                     alert(res.OUT_MSG);
                 }
+                $("#btn_siap_corpay").attr("disabled", false);
+                $("#btn_siap_corpay").html("Siap Bayar");
             },
             error: function () {
                 hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
