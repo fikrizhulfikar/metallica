@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="420d354e-607d-4b43-a77e-007629250d5c" name="Default Changelist" comment="U">
+    <list default="true" id="b4cd0f8d-3a8a-47b6-a969-13cce0c7a831" name="Default Changelist" comment="Mengakrifkan kembali tombol cek payment status">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
