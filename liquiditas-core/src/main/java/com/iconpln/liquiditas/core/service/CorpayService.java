@@ -1023,7 +1023,7 @@ public class CorpayService {
         String timestamp = dateFormat.format(newdate.getTime());
 
         System.out.println(timestamp);
-        signature =  createSignature("s3cr3tk3y", body, timestamp);
+        signature =  createSignature("s3cr3tk3y_Ic0n@2020", body, timestamp);
         token = getToken();
         return getBallance2(timestamp, signature, body, token);
     }
@@ -1045,7 +1045,7 @@ public class CorpayService {
     }
 
     public static String getToken(){
-        String usernameColonPassword = "CORPAY:CORPAY@2019";
+        String usernameColonPassword = "CORPAY:C0RP4Y_M3t4LL1C4@2020";
         String basicAuthPayload = "Basic " + Base64.encodeBase64String(usernameColonPassword.getBytes());
         String token = null;
 
@@ -1085,7 +1085,7 @@ public class CorpayService {
         BufferedReader httpResponseReader = null;
         HttpPost request = new HttpPost("http://"+corpay_ip+":8181/corpay/doGetBalance");
         request.addHeader("Content-Type","application/json");
-        request.addHeader("api-key","s3cr3tk3y");
+        request.addHeader("api-key","s3cr3tk3y_Ic0n@2020");
         request.addHeader("timestamp",timestamp);
         request.addHeader("signature",signature);
 
@@ -1213,7 +1213,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         timestamp = dateFormat.format(newdate.getTime());
         String token_str = token.getToken();
-        String signature_str = signature.createSignature("s3cr3tk3y", body, timestamp);
+        String signature_str = signature.createSignature("s3cr3tk3y_Ic0n@2020", body, timestamp);
 
         return inqueryInHouse(timestamp,signature_str, body, token_str);
     }
@@ -1237,7 +1237,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String timestamp = dateFormat.format(newdate.getTime());
         String token_str = token.getToken();
-        String signature_str = signature.createSignature("s3cr3tk3y", body, timestamp);
+        String signature_str = signature.createSignature("s3cr3tk3y_Ic0n@2020", body, timestamp);
         String result = inqueryInterbank(timestamp,signature_str, body, token_str);
         return result;
     }
@@ -1246,7 +1246,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         String result = null;
         HttpPost request = new HttpPost("http://"+corpay_ip+":8181/corpay/doInquiry");
         request.addHeader("Content-Type","application/json");
-        request.addHeader("api-key","s3cr3tk3y");
+        request.addHeader("api-key","s3cr3tk3y_Ic0n@2020");
         request.addHeader("timestamp",timestamp);
         request.addHeader("signature",signature);
         request.addHeader("Authorization","Bearer "+ token);
@@ -1267,7 +1267,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
     public static String inqueryInterbank(String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
         HttpPost request = new HttpPost("http://"+corpay_ip+":8181/corpay/doInquiryInterBank");
-        request.addHeader("api-key","s3cr3tk3y");
+        request.addHeader("api-key","s3cr3tk3y_Ic0n@2020");
         request.addHeader("timestamp", timestamp);
         request.addHeader("signature", signature);
         request.addHeader("Content-Type","application/json");
@@ -1314,7 +1314,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         timestamp = dateFormat.format(newdate.getTime());
         String token_str = token.getToken();
-        String signature_str = signature.createSignature("s3cr3tk3y", body, timestamp);
+        String signature_str = signature.createSignature("s3cr3tk3y_Ic0n@2020", body, timestamp);
         return inhousePayment(timestamp, signature_str, body, token_str);
     }
 
@@ -1350,7 +1350,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         timestamp = dateFormat.format(newdate.getTime());
         String token_str = token.getToken();
-        String signature_str = signature.createSignature("s3cr3tk3y", body, timestamp);
+        String signature_str = signature.createSignature("s3cr3tk3y_Ic0n@2020", body, timestamp);
         return inhousePaymentRtgs(timestamp, signature_str, body, token_str);
     }
 
@@ -1383,7 +1383,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         timestamp = dateFormat.format(newdate.getTime());
         String token_str = token.getToken();
-        String signature_str = signature.createSignature("s3cr3tk3y", body, timestamp);
+        String signature_str = signature.createSignature("s3cr3tk3y_Ic0n@2020", body, timestamp);
         return inhousePaymentKliring(timestamp, signature_str, body, token_str);
     }
 
@@ -1418,7 +1418,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         timestamp = dateFormat.format(newdate.getTime());
         String token_str = token.getToken();
-        String signature_str = signature.createSignature("s3cr3tk3y", body, timestamp);
+        String signature_str = signature.createSignature("s3cr3tk3y_Ic0n@2020", body, timestamp);
         return interbankPayment(timestamp, signature_str, body, token_str);
     }
 
@@ -1438,7 +1438,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         timestamp = dateFormat.format(newdate.getTime());
         String token_str = token.getToken();
-        String signature_str = signature.createSignature("s3cr3tk3y", body, timestamp);
+        String signature_str = signature.createSignature("s3cr3tk3y_Ic0n@2020", body, timestamp);
         return paymentStatus(timestamp,signature_str, body, token_str);
     }
 
@@ -1446,7 +1446,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         String result = null;
         HttpPost request = new HttpPost("http://"+corpay_ip+":8181/corpay/doPayment");
         request.addHeader("Content-Type","application/json");
-        request.addHeader("api-key","s3cr3tk3y");
+        request.addHeader("api-key","s3cr3tk3y_Ic0n@2020");
         request.addHeader("timestamp",timestamp);
         request.addHeader("signature",signature);
         request.addHeader("Authorization","Bearer "+ token);
@@ -1467,7 +1467,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         String result = null;
         HttpPost request = new HttpPost("http://"+corpay_ip+":8181/corpay/doPaymentRtgs");
         request.addHeader("Content-Type","application/json");
-        request.addHeader("api-key","s3cr3tk3y");
+        request.addHeader("api-key","s3cr3tk3y_Ic0n@2020");
         request.addHeader("timestamp",timestamp);
         request.addHeader("signature",signature);
         request.addHeader("Authorization","Bearer "+ token);
@@ -1488,7 +1488,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         String result = null;
         HttpPost request = new HttpPost("http://"+corpay_ip+":8181/corpay/doPaymentKliring");
         request.addHeader("Content-Type","application/json");
-        request.addHeader("api-key","s3cr3tk3y");
+        request.addHeader("api-key","s3cr3tk3y_Ic0n@2020");
         request.addHeader("timestamp",timestamp);
         request.addHeader("signature",signature);
         request.addHeader("Authorization","Bearer "+ token);
@@ -1509,7 +1509,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         String result = null;
         HttpPost request = new HttpPost("http://"+corpay_ip+":8181/corpay/doPaymentInterBank");
         request.addHeader("Content-Type","application/json");
-        request.addHeader("api-key","s3cr3tk3y");
+        request.addHeader("api-key","s3cr3tk3y_Ic0n@2020");
         request.addHeader("timestamp",timestamp);
         request.addHeader("signature",signature);
         request.addHeader("Authorization","Bearer "+ token);
@@ -1530,7 +1530,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         String result = null;
         HttpPost request = new HttpPost("http://"+corpay_ip+":8181/corpay/doPaymentStatus");
         request.addHeader("Content-Type","application/json");
-        request.addHeader("api-key","s3cr3tk3y");
+        request.addHeader("api-key","s3cr3tk3y_Ic0n@2020");
         request.addHeader("timestamp",timestamp);
         request.addHeader("signature",signature);
         request.addHeader("Authorization","Bearer "+ token);
