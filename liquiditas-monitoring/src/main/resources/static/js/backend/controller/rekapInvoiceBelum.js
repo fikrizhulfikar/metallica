@@ -3464,7 +3464,6 @@ function updLunas(pStatus){
             },
             success: function (res) {
                 hideLoadingCss("")
-
                 if (res.return == 1) {
                   alert(res.OUT_MSG);
                   $('#detail-modal').modal('hide');
@@ -3623,14 +3622,14 @@ function doPayment(pMetodeBayar, pBank, pRefNum, pSource, pBeneficiaryAccount, p
                 var tes = JSON.stringify(res);
                 if (res.responseMessage === 'Sukses') {
                     var pStatus = res.data.responseMessage;
-                    alert(res.data.successMessage);
+                    alert(res.data.responseMessage);
                     updLunas(pStatus);
                     // $("#pRespon3").val(res.responseMessage);
                     // table_rekapitulasi.ajax.reload();
                 } else {
                     alert(res.responseMessage);
                     // table_rekapitulasi.ajax.reload();
-                    $("#pRespons3").val(res.errorMessage);
+                    $("#pRespon3").val(res.errorMessage);
                 }
 
                 $("#btn-payment").prop("disabled", false);
