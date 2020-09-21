@@ -3591,7 +3591,8 @@ function doPayment(pMetodeBayar, pBank, pRefNum, pSource, pBeneficiaryAccount, p
                     pFeeType){
     var stateCrf = confirm("Anda Yakin Akan Melakukan Pembayaran ? (Pastikan Data Sudah Benar)");
     if (stateCrf == true) {
-        showLoadingCss();
+        $("#btn-payment").prop("disabled", true);
+        $("#btn-payment").html("Memproses...");
         $.ajax({
             url: baseUrl + "api_operator/rekap_invoice_belum/do_payment",
             dataType: 'JSON',
@@ -3616,28 +3617,29 @@ function doPayment(pMetodeBayar, pBank, pRefNum, pSource, pBeneficiaryAccount, p
                  pRetrievalReff : $("#pRetrieval2").val() ,
                  pDestinationBankCode : $("#pKodeBankPenerima2").val(),
                  pConfirmationCode : $("#pConfirmationCode2").val(),
-
             },
             success: function (res) {
-               showLoadingCss();
                 // // console.log(res);
                 var tes = JSON.stringify(res);
                 if (res.responseMessage === 'Sukses') {
                     var pStatus = res.data.responseMessage;
+                    alert(res.data.successMessage);
+                    updLunas(pStatus);
+                    // $("#pRespon3").val(res.responseMessage);
+                    // table_rekapitulasi.ajax.reload();
+                } else {
+                    alert(res.responseMessage);
+                    // table_rekapitulasi.ajax.reload();
+                    $("#pRespons3").val(res.errorMessage);
+                }
 
-                     updLunas(pStatus);
-                     $("#pRespon3").val(res.responseMessage);
-                   table_rekapitulasi.ajax.reload();
-
-                  }
-                else {
-                        alert(res.responseMessage);
-                        table_rekapitulasi.ajax.reload();
-                         $("#pRespons3").val(res.errorMessage);
-                 }
+                $("#btn-payment").prop("disabled", false);
+                $("#btn-payment").html("Payment");
             },
             error: function () {
-                hideLoadingCss("Sukses")
+                alert("Gagal Melakukan Proses,Harap Hubungi Administrator");
+                $("#btn-payment").prop("disabled", false);
+                $("#btn-payment").html("Payment");
             }
         });
     }
