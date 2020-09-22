@@ -47,20 +47,18 @@ import java.util.zip.ZipOutputStream;
 @RestController
 @RequestMapping(path = "/generate_doc/cetak")
 public class GeneratedocController {
-    private static final String TAG = GeneratedocController.class.getName();
 
     @Autowired
     private DataSource dataSource;
 
-    public JdbcTemplate getJdbcTemplate(){ return new JdbcTemplate(dataSource);}
+    private JdbcTemplate getJdbcTemplate(){ return new JdbcTemplate(dataSource);}
 
     @Autowired
     private GenerateDocService generateDocService;
 
-    boolean isgeneratedoc = true;
-    SimpleDateFormat formatdb = new SimpleDateFormat("yyyyMMdd");
-    SimpleDateFormat localFormatter = new SimpleDateFormat("dd MMMM yyyy", new Locale("id"));
-    NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("in","ID"));
+    private boolean isgeneratedoc = true;
+    private SimpleDateFormat localFormatter = new SimpleDateFormat("dd MMMM yyyy", new Locale("id"));
+    private NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("in","ID"));
     private String pattern = "###,###.00";
 
     public GeneratedocController() throws SQLException {
