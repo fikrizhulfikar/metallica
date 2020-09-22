@@ -425,9 +425,8 @@ public class GeneratedocController {
 //                String curr_bayar = (String) (p.get("CURR_BAYAR") == null ? "-" : p.get("CURR_BAYAR"));
                 DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
                 decimalFormat.applyPattern(pattern);
-                String amount = decimalFormat.format(Double.parseDouble(p.get("AMOUNT_BAYAR").toString().replace(",",".")));
+                String amount_bayar = decimalFormat.format(Double.parseDouble(p.get("AMOUNT_BAYAR").toString().replace(",",".")));
 
-                String amount_bayar = amount ;
                 String no_benef = (String) (p.get("NO_REK_BENEF") == null ? "-" : p.get("NO_REK_BENEF"));
                 String alamat_bank_benef = (String) (p.get("ALAMAT_BANK_BENEF") == null ? "-" : p.get("ALAMAT_BANK_BENEF"));
                 String nama_vendor = (String) (p.get("VENDOR_NAME") == null ? "-" : p.get("VENDOR_NAME"));
