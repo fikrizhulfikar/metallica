@@ -870,16 +870,16 @@ public class RealisasiInvoiceController {
             p2.add("TANGGAL : " + tglAwal + " s.d " + tglAkhir);
             p2.setAlignment(Element.ALIGN_CENTER);
             Paragraph p3 = new Paragraph();
-            p3.add("TOTAL IDR " + idr + ", USD " + usd + ", EUR " + eur + ", JPY " + jpy);
-            p3.setAlignment(Element.ALIGN_CENTER);
+            p3.add("IDR " + idr + ", USD " + usd + ", EUR " + eur + ", JPY " + jpy);
+            p3.setAlignment(Element.ALIGN_LEFT);
             Paragraph p4 = new Paragraph();
             p4.add("________________________________________________________________________");
             p4.setAlignment(Element.ALIGN_CENTER);
             document.add(p);
             document.add(p2);
-            document.add(p3);
             document.add(p4);
             document.add(table);
+            document.add(p3);
             document.close();
 
             response.setContentType("application/pdf");
