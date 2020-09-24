@@ -1,9 +1,8 @@
 package com.iconpln.liquiditas.monitoring.controller.xmldoc;
 
+import com.iconpln.liquiditas.core.alt.AltException;
 import com.iconpln.liquiditas.core.service.GenerateDocService;
 import com.iconpln.liquiditas.core.xmldoc.DocGenerator;
-import com.iconpln.liquiditas.core.alt.AltException;
-import oracle.jdbc.OracleTypes;
 import org.apache.chemistry.opencmis.commons.impl.json.parser.JSONParseException;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,13 +30,12 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.*;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Date;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -49,20 +47,18 @@ import java.util.zip.ZipOutputStream;
 @RestController
 @RequestMapping(path = "/generate_doc/cetak")
 public class GeneratedocController {
-    private static final String TAG = GeneratedocController.class.getName();
 
     @Autowired
     private DataSource dataSource;
 
-    public JdbcTemplate getJdbcTemplate(){ return new JdbcTemplate(dataSource);}
+    private JdbcTemplate getJdbcTemplate(){ return new JdbcTemplate(dataSource);}
 
     @Autowired
     private GenerateDocService generateDocService;
 
-    boolean isgeneratedoc = true;
-    SimpleDateFormat formatdb = new SimpleDateFormat("yyyyMMdd");
-    SimpleDateFormat localFormatter = new SimpleDateFormat("dd MMMM yyyy", new Locale("id"));
-    NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("in","ID"));
+    private boolean isgeneratedoc = true;
+    private SimpleDateFormat localFormatter = new SimpleDateFormat("dd MMMM yyyy", new Locale("id"));
+    private NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("in","ID"));
     private String pattern = "###,###.00";
 
     public GeneratedocController() throws SQLException {
@@ -92,28 +88,48 @@ public class GeneratedocController {
         if (!isgeneratedoc) aksiNonaktif();
         NumberToWordConverter conv = new NumberToWordConverter();
         JSONArray jsonArray = new JSONArray(pDocumentNumbers);
+        String filename = "";
+        List<Map<String, Object>> list = new ArrayList<>();
         for (int index = 0; index < jsonArray.length(); index++){
             JSONObject jsonObject = jsonArray.getJSONObject(index);
-            String filename = "uploadcorpay/temp/laporan_"+jsonObject.getString("pDocNo");
+            if (jsonObject.getString("metode_pembayaran").equals("GIRO") || jsonObject.getString("metode_pembayaran").equals("INTERNETBANKING")){
+                filename = "uploadcorpay/temp/laporan_"+jsonObject.getString("pDocNo");
+            }else{
+                filename = "uploadcorpay/temp/laporan_corpay_"+jsonObject.getString("pDocNo");
+            }
+
             DocGenerator dg = new DocGenerator();
             System.out.println("Doc Numbers : "+pDocumentNumbers);
 
-            SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                    .withCatalogName("PKG_CORPAY")
-                    .withFunctionName("cetak_bukti_kas");
-            SqlParameterSource param = new MapSqlParameterSource()
-                    .addValue("p_comp_code",jsonObject.getString("pCompCode"))
-                    .addValue("p_doc_no", jsonObject.getString("pDocNo"))
-                    .addValue("p_fisc_year", jsonObject.getString("pFiscYear"))
-                    .addValue("p_line_item", jsonObject.getString("pLineItem"))
-                    .addValue("p_ket",jsonObject.getString("pKet"));
-            List<Map<String, Object>> list = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class,param);
+            if (jsonObject.getString("metode_pembayaran").equals("GIRO") || jsonObject.getString("metode_pembayaran").equals("INTERNETBANKING")){
+                SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                        .withCatalogName("PKG_CORPAY")
+                        .withFunctionName("cetak_bukti_kas");
+                SqlParameterSource param = new MapSqlParameterSource()
+                        .addValue("p_comp_code",jsonObject.getString("pCompCode"))
+                        .addValue("p_doc_no", jsonObject.getString("pDocNo"))
+                        .addValue("p_fisc_year", jsonObject.getString("pFiscYear"))
+                        .addValue("p_line_item", jsonObject.getString("pLineItem"))
+                        .addValue("p_ket",jsonObject.getString("pKet"));
+                list = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class,param);
+            }else {
+                list = generateDocService.getCetakLampiranCorpay(jsonObject.getString("pCompCode"), jsonObject.getString("pDocNo"), jsonObject.getString("pFiscYear"), jsonObject.getString("pLineItem"),jsonObject.getString("pKet"));
+
+            }
+
             System.out.println("Hasil Select : "+list);
             JSONObject object = new JSONObject(list.get(0));
             String no_giro = object.getString("NO_GIRO");
             String rawDate = object.getString("TGL_RENCANA_BAYAR");
             Date tgl_rencana_bayar = new SimpleDateFormat("dd/MM/yyyy").parse(rawDate);
             System.out.println("Object Hasil Select : "+object);
+            Date n_print_date = new Date();
+            SimpleDateFormat print_df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+            dg.addVariable("FISCAL_YEAR", object.getString("FISCAL_YEAR"));
+            dg.addVariable("METODE_PEMBAYARAN", (object.getString("METODE_PEMBAYARAN") == null) ? "-" : object.getString("METODE_PEMBAYARAN"));
+            dg.addVariable("ALAMAT_HOUSE_BANK", (object.getString("ALAMAT_BANK") == null) ? "-" : object.getString("ALAMAT_BANK"));
+            dg.addVariable("REF_NUM", (object.getString("REF_NUM_BANK") == null) ? "-" : object.getString("REF_NUM_BANK"));
 
             dg.addVariable("NO_URUT","1");
             dg.addVariable("COMP_CODE",object.getString("COMP_CODE"));
@@ -165,6 +181,7 @@ public class GeneratedocController {
             dg.addVariable("NOMINAL_TERBILANG", conv.toWords(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",",".")))+koma+conv.toCurrency(object.getString("CURR_BAYAR")));
             dg.addVariable("NO_GIRO", object.getString("NO_GIRO"));
             dg.addVariable("TGL_RENCANA_BAYAR", localFormatter.format(tgl_rencana_bayar));
+            dg.addVariable("TGL_CETAK",print_df.format(n_print_date));
 
             String pathtodownload = "";
             String filenamereal = "laporan";
@@ -172,10 +189,12 @@ public class GeneratedocController {
 
             String resultId = null;
             try {
-                if(!no_giro.equals("-")) {
+                if(jsonObject.getString("metode_pembayaran").equals("GIRO")) {
                     dg.createDocFromTemplate("template_laporan_giro", filename);
-                }else{
+                }else if (jsonObject.getString("metode_pembayaran").equals("INTERNETBANKING")){
                     dg.createDocFromTemplate("template_laporan_cms", filename);
+                }else{
+                    dg.createDocFromTemplate("template_pembayaran_corpay", filename);
                 }
             } catch (Exception e) {
                 throw new AltException("Tidak dapat membuat dokumen. " + e.getMessage());
@@ -192,20 +211,26 @@ public class GeneratedocController {
         if (!isgeneratedoc) aksiNonaktif();
         NumberToWordConverter conv = new NumberToWordConverter();
         JSONArray jsonArray = new JSONArray(pDocumentNumbers);
+        List<Map<String, Object>> list = new ArrayList<>();
         for (int index = 0; index < jsonArray.length(); index++){
             JSONObject jsonObject = jsonArray.getJSONObject(index);
             String filename = "uploadcorpay/temp/laporan_bkg"+jsonObject.getString("DOC_NO");
             DocGenerator dg = new DocGenerator();
             System.out.println("Doc Numbers : "+pDocumentNumbers);
             System.out.println("Object Loop : "+jsonObject);
-
-            List<Map<String, Object>> list = generateDocService.getCetakBuktiKasGrouping(jsonObject.getString("COMP_CODE"), jsonObject.getString("DOC_NO"), jsonObject.getString("FISC_YEAR"), jsonObject.getString("KET"));
+            if (jsonObject.getString("METODE_PEMBAYARAN").equals("GIRO") || jsonObject.getString("METODE_PEMBAYARAN").equals("interetbanking")){
+                list = generateDocService.getCetakBuktiKasGrouping(jsonObject.getString("COMP_CODE"), jsonObject.getString("DOC_NO"), jsonObject.getString("FISC_YEAR"), jsonObject.getString("KET"));
+            }else{
+                list = generateDocService.cetakBuktiKasGroupingCorpay(jsonObject.getString("COMP_CODE"), jsonObject.getString("DOC_NO"), jsonObject.getString("FISC_YEAR"), jsonObject.getString("KET"));
+            }
             System.out.println("Hasil Select : "+list);
             JSONObject object = new JSONObject(list.get(0));
             System.out.println("Object Hasil Select : "+object);
 //            String no_giro = object.getString("NO_GIRO");
             String rawDate = object.getString("TGL_RENCANA_BAYAR");
             Date tgl_rencana_bayar = new SimpleDateFormat("dd/MM/yyyy").parse(rawDate);
+            Date n_print_date = new Date();
+            SimpleDateFormat print_df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
             dg.addVariable("COMP_CODE",object.getString("COMP_CODE"));
             dg.addVariable("DOC_NO", object.getString("DOC_NO"));
@@ -234,6 +259,7 @@ public class GeneratedocController {
             }
             dg.addVariable("NOMINAL_TERBILANG", conv.toWords(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",",".")))+koma+conv.toCurrency(object.getString("CURR_BAYAR")));
             dg.addVariable("TGL_RENCANA_BAYAR", localFormatter.format(tgl_rencana_bayar));
+            dg.addVariable("TGL_CETAK",print_df.format(n_print_date));
 
             String pathtodownload = "";
             String filenamereal = "laporan";
@@ -252,21 +278,28 @@ public class GeneratedocController {
     }
 
     @RequestMapping(path = "/surat_group")
-    public Map suratnGroup(@RequestParam("pIdGroup") String pIdGroup) throws AltException, JSONException, ParseException, IOException, JSONParseException {
+    public Map suratnGroup(@RequestParam("pIdGroup") String pIdGroup, @RequestParam("pMetodePembayaran") String pMetodePembayaran) throws AltException, JSONException, ParseException, IOException, JSONParseException {
         Map out = new HashMap();
+        List<Map<String, Object>> list = new ArrayList<>();
         if (!isgeneratedoc) aksiNonaktif();
-            String filename = "uploadcorpay/temp/surat_group_"+pIdGroup;
+            String filename = null;
             NumberToWordConverter conv = new NumberToWordConverter();
             DocGenerator dg = new DocGenerator();
             System.out.println("Id Groups : "+pIdGroup);
-
-            List<Map<String, Object>> list = generateDocService.getCetakSuratGrouping(pIdGroup);
+            list = generateDocService.getCetakSuratGrouping(pIdGroup);
+            if (pMetodePembayaran.equals("GIRO") || pMetodePembayaran.equals("INTERNETBANKING")){
+                filename = "uploadcorpay/temp/surat_group_"+pIdGroup;
+            }else {
+                filename = "uploadcorpay/temp/surat_group_corpay_"+pIdGroup;
+            }
             System.out.println("Hasil Select : "+list);
             JSONObject object = new JSONObject(list.get(0));
             String no_giro = object.getString("NO_GIRO");
             String rawDate = object.getString("TGL_RENCANA_BAYAR");
             Date tgl_rencana_bayar = new SimpleDateFormat("dd/MM/yyyy").parse(rawDate);
             System.out.println("Object Hasil Select : "+object);
+            Date n_print_date = new Date();
+            SimpleDateFormat print_df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
             dg.addVariable("TOTAL_TAGIHAN", numberFormat.format(Double.parseDouble(object.getString("TOTAL_TAGIHAN").replace(",","."))));
             dg.addVariable("ID_GROUP", object.getString("ID_GROUP"));
@@ -282,7 +315,7 @@ public class GeneratedocController {
                 dg.addVariable("DETAIL_COUNTER_SIGNER", object.getString("DETAIL_COUNTER_SIGNER"));
             }
             dg.addVariable("HOUSE_BANK", (object.getString("HOUSE_BANK") == null ? "-" : object.getString("HOUSE_BANK")));
-            dg.addVariable("NO_REK_HOUSE_BANK", object.getString("NO_REK_HOUSE_BANK"));
+            dg.addVariable("NO_REK_HOUSE_BANK", (object.getString("NO_REK_HOUSE_BANK") == null) ? "-" : object.getString("NO_REK_HOUSE_BANK"));
             String amt = object.getString("TOTAL_TAGIHAN").replace(",",".");
             String[] arr = amt.split("\\.");
             String koma = "";
@@ -297,15 +330,19 @@ public class GeneratedocController {
             dg.addVariable("FISCAL_YEAR", object.getString("FISCAL_YEAR"));
             dg.addVariable("CURR_BAYAR", object.getString("CURR_BAYAR"));
             dg.addVariable("TGL_RENCANA_BAYAR", localFormatter.format(tgl_rencana_bayar));
+            dg.addVariable("TGL_CETAK", print_df.format(n_print_date));
+
 
             String pathtodownload = "";
             String filenamereal = "laporan";
             System.err.println();
             try {
-                if (!no_giro.equals("-")){
+                if (pMetodePembayaran.equals("GIRO")){
                     dg.createDocFromTemplate("template_surat_giro_group", filename);
-                }else{
+                }else if (pMetodePembayaran.equals("INTERNETBANKING")){
                     dg.createDocFromTemplate("template_surat_cms_group", filename);
+                }else{
+                    dg.createDocFromTemplate("template_surat_corpay_group", filename);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -324,6 +361,8 @@ public class GeneratedocController {
         NumberToWordConverter converter = new NumberToWordConverter();
         DocGenerator dg = new DocGenerator();
         System.out.println("Id Groups : "+pIdGroup);
+        Date n_print_date = new Date();
+        SimpleDateFormat print_df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
         Map<String, Object> ini = generateDocService.getLampiranGroup(pIdGroup);
 
@@ -351,6 +390,7 @@ public class GeneratedocController {
         dg.addVariable("DETAIL_APPROVER", object.getString("DETAIL_APPROVER"));
         dg.addVariable("NAMA_COUNTER_SIGNER", object.getString("NAMA_COUNTER_SIGNER"));
         dg.addVariable("DETAIL_COUNTER_SIGNER", object.getString("DETAIL_COUNTER_SIGNER"));
+        dg.addVariable("TGL_CETAK", print_df.format(n_print_date));
 
         DecimalFormat df = (DecimalFormat) numberFormat;
         df.applyPattern(pattern);
@@ -383,9 +423,8 @@ public class GeneratedocController {
 //                String curr_bayar = (String) (p.get("CURR_BAYAR") == null ? "-" : p.get("CURR_BAYAR"));
                 DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
                 decimalFormat.applyPattern(pattern);
-                String amount = decimalFormat.format(Double.parseDouble(p.get("AMOUNT_BAYAR").toString().replace(",",".")));
+                String amount_bayar = decimalFormat.format(Double.parseDouble(p.get("AMOUNT_BAYAR").toString().replace(",",".")));
 
-                String amount_bayar = amount ;
                 String no_benef = (String) (p.get("NO_REK_BENEF") == null ? "-" : p.get("NO_REK_BENEF"));
                 String alamat_bank_benef = (String) (p.get("ALAMAT_BANK_BENEF") == null ? "-" : p.get("ALAMAT_BANK_BENEF"));
                 String nama_vendor = (String) (p.get("VENDOR_NAME") == null ? "-" : p.get("VENDOR_NAME"));
@@ -433,7 +472,8 @@ public class GeneratedocController {
             @RequestParam("pCompCode") String pCompCode,
             @RequestParam("pFiscYear") String pFiscalYear,
             @RequestParam("pLineItem") String pLineItem,
-            @RequestParam("pKet") String pKet
+            @RequestParam("pKet") String pKet,
+            @RequestParam("pMetodeBayar") String pMetodeBayar
     ) throws AltException, SQLException, JSONException, ParseException, IOException, JSONParseException {
         Map out = new HashMap();
         if (!isgeneratedoc) aksiNonaktif();
@@ -441,6 +481,8 @@ public class GeneratedocController {
             NumberToWordConverter conv = new NumberToWordConverter();
             DocGenerator dg = new DocGenerator();
             System.out.println("Doc Numbers : "+pDocumentNumbers);
+            Date n_print_date = new Date();
+            SimpleDateFormat print_df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
             List<Map<String, Object>> list = generateDocService.getCetakBuktiKasSingle(pCompCode, pDocumentNumbers, pFiscalYear, pLineItem, pKet);
             System.out.println("Hasil Select : "+list);
@@ -506,6 +548,7 @@ public class GeneratedocController {
             dg.addVariable("FISCAL_YEAR", object.getString("FISCAL_YEAR"));
             dg.addVariable("TGL_RENCANA_BAYAR", localFormatter.format(tgl_rencana_bayar));
             dg.addVariable("AMOUNT_BAYAR", numberFormat.format(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",","."))));
+            dg.addVariable("TGL_CETAK",print_df.format(n_print_date));
 
             String pathtodownload = "";
             String filenamereal = "laporan";
@@ -513,9 +556,9 @@ public class GeneratedocController {
 
             String resultId = null;
             try {
-                if(!no_giro.equals("-")) {
+                if(pMetodeBayar.equals("GIRO")) {
                     dg.createDocFromTemplate("template_laporan_giro", filename);
-                }else{
+                }else if (pMetodeBayar.equals("INTERNETBANKING")){
                     dg.createDocFromTemplate("template_laporan_cms", filename);
                 }
                 System.out.println("Berhasil Generate Doc");
@@ -525,6 +568,128 @@ public class GeneratedocController {
 //            return checkfile(filename + ".docx");
             System.out.println("Check File :"+filename);
             out.put("createdoc",checkfile(filename + ".docx")) ;
+        return out;
+    }
+
+    @RequestMapping(path = "/cetak_lampiran_corpay_single")
+    public Map cetakLampiranCorpay(
+            @RequestParam("pDocNumbers") String pDocumentNumbers,
+            @RequestParam("pCompCode") String pCompCode,
+            @RequestParam("pFiscYear") String pFiscalYear,
+            @RequestParam("pLineItem") String pLineItem,
+            @RequestParam("pKet") String pKet,
+            @RequestParam("pMetodeBayar") String pMetodeBayar
+    ) throws JSONException, ParseException, IOException, JSONParseException, AltException {
+        String filename = "uploadcorpay/temp/laporan_corpay_"+pDocumentNumbers;
+        NumberToWordConverter conv = new NumberToWordConverter();
+        DocGenerator dg = new DocGenerator();
+        System.out.println("Doc Numbers : "+pDocumentNumbers);
+        Date n_print_date = new Date();
+        SimpleDateFormat print_df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Map out = new HashMap();
+
+        List<Map<String, Object>> list =  generateDocService.getCetakLampiranCorpay(pCompCode, pDocumentNumbers, pFiscalYear, pLineItem,pKet);
+        JSONObject object = new JSONObject(list.get(0));
+        String rawDate = object.getString("TGL_RENCANA_BAYAR");
+        Date tgl_rencana_bayar = new SimpleDateFormat("dd/MM/yyyy").parse(rawDate);
+        System.out.println("Hasil List Corpay : "+list);
+
+        dg.addVariable("NO_URUT", "1");
+        dg.addVariable("ID_GROUP",object.getString("ID_GROUP"));
+        dg.addVariable("HOUSE_BANK", object.getString("HOUSE_BANK"));
+        dg.addVariable("NO_REK_HOUSE_BANK", object.getString("NO_REK_HOUSE_BANK"));
+        dg.addVariable("NAMA_VENDOR",object.getString("NAMA_VENDOR"));
+        dg.addVariable("ALAMAT_VENDOR", object.getString("ALAMAT_VENDOR"));
+        dg.addVariable("ITEM_TEXT",object.getString("ITEM_TEXT"));
+        dg.addVariable("DOC_NO",object.getString("DOCUMENT_NUMBER"));
+        dg.addVariable("CURR_BAYAR",object.getString("CURR_BAYAR"));
+        dg.addVariable("DETAIL_COUNTER_SIGNER",object.getString("DETAIL_COUNTER_SIGNER"));
+        dg.addVariable("NAMA_COUNTER_SIGNER", object.getString("NAMA_COUNTER_SIGNER"));
+        dg.addVariable("DETAIL_APPROVER", object.getString("DETAIL_APPROVER"));
+        dg.addVariable("NAMA_APPROVER",object.getString("NAMA_APPROVER"));
+        dg.addVariable("ALAMAT_HOUSE_BANK", object.getString("ALAMAT_BANK"));
+        dg.addVariable("FISCAL_YEAR",object.getString("FISCAL_YEAR"));
+        dg.addVariable("METODE_PEMBAYARAN", object.getString("METODE_PEMBAYARAN"));
+        if (object.getString("JABATAN").equals("MSB")){
+            dg.addVariable("NAMA_APPROVER_SURAT",object.getString("NAMA_COUNTER_SIGNER"));
+            dg.addVariable("DETAIL_APPROVER_SURAT",object.getString("DETAIL_COUNTER_SIGNER"));
+            dg.addVariable("NAMA_COUNTER_SIGNER_SURAT"," ");
+            dg.addVariable("DETAIL_COUNTER_SIGNER_SURAT"," ");
+        }else{
+            dg.addVariable("NAMA_APPROVER_SURAT", object.getString("NAMA_APPROVER"));
+            dg.addVariable("DETAIL_APPROVER_SURAT", object.getString("DETAIL_APPROVER"));
+            dg.addVariable("NAMA_COUNTER_SIGNER_SURAT", object.getString("NAMA_COUNTER_SIGNER"));
+            dg.addVariable("DETAIL_COUNTER_SIGNER_SURAT", object.getString("DETAIL_COUNTER_SIGNER"));
+        }
+
+        dg.addVariable("REF_NUM",(object.getString("REF_NUM_BANK") == null) ? "-" : object.getString("REF_NUM_BANK"));
+        dg.addVariable("BANK_BENEF",object.getString("BANK_BENEF"));
+        dg.addVariable("ACCOUNT_NAME",object.getString("ACCOUNT_NAME"));
+        dg.addVariable("NO_REK_BENEF",object.getString("NO_REK_BENEF"));
+        String amt = conv.toIndoLocale(object.getString("AMOUNT_BAYAR")) ;
+        String[] arr = amt.split(",");
+        String koma = "";
+        if (arr.length > 1){
+            if (arr[1].equals("00")){
+                koma = "";
+                koma = koma + conv.toWords(Double.parseDouble(arr[1]));
+            }else{
+                koma = "TITIK ";
+                koma = koma + conv.toWords(Double.parseDouble(arr[1]));
+            }
+        }
+        dg.addVariable("NOMINAL_TERBILANG", conv.toWords(Double.parseDouble(amt.replace(",",".")))+koma+conv.toCurrency(object.getString("CURR_BAYAR")));
+        dg.addVariable("TGL_RENCANA_BAYAR", localFormatter.format(tgl_rencana_bayar));
+        dg.addVariable("AMOUNT_BAYAR", numberFormat.format(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",","."))));
+        dg.addVariable("ALAMAT_BANK_BENEF", object.getString("ALAMAT_BANK_BENEF"));
+        dg.addVariable("EMAIL_VENDOR", object.getString("EMAIL_VENDOR"));
+        dg.addVariable("TGL_CETAK",print_df.format(n_print_date));
+        try {
+            dg.createDocFromTemplate("template_pembayaran_corpay",filename);
+            out.put("success", true);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        out.put("createdoc",checkfile(filename + ".docx")) ;
+        return out;
+    }
+
+    @RequestMapping(path = "/cetak_struk_corpay")
+    public Map cetakStrukCorpaySingle(
+            @RequestParam("pCompCode") String pCompCode,
+            @RequestParam("pDocNo") String pDocNo,
+            @RequestParam("pFiscalYear") String pFiscalYear,
+            @RequestParam("pLineItem") String pLineItem,
+            @RequestParam("pKet") String pKet
+    ) throws JSONException, AltException{
+        String filename = "uploadcorpay/temp/corpay_lunas_"+pDocNo;
+        DocGenerator dg = new DocGenerator();
+        Map out = new HashMap();
+        List<Map<String, Object>> list = generateDocService.cetakStrukCorpay(pCompCode, pDocNo, pFiscalYear, pLineItem, pKet);
+        JSONObject object = new JSONObject(list.get(0));
+        dg.addVariable("TRX_STATUS", object.getString("TRX_STATUS"));
+        dg.addVariable("REF_NUM_BANK", object.getString("REF_NUM_BANK"));
+        dg.addVariable("FROM_ACCOUNT", object.getString("FROM_ACCOUNT"));
+        dg.addVariable("AMOUNT", object.getString("AMOUNT"));
+        dg.addVariable("TRANSACTION_PURPOSE", object.getString("TRANSACTION_PURPOSE"));
+        dg.addVariable("REMARKS", object.getString("REMARKS"));
+        dg.addVariable("FINALIZE_PAYMENT_FLAG", object.getString("FINALIZE_PAYMENT_FLAG"));
+        dg.addVariable("BENEF_REFERENCE_NO", object.getString("BENEF_REFERENCE_NO"));
+        dg.addVariable("TO_ACCOUNT", object.getString("NO_REK_BENEF")+"/"+object.getString("NAMA_BENEF"));
+        dg.addVariable("TO_ACCOUNT_TYPE", object.getString("TO_ACCOUNT_TYPE"));
+        dg.addVariable("NOTIFICATION_FLAG", object.getString("NOTIFICATION_FLAG"));
+        dg.addVariable("REMITTER_REFERENCE_NO", object.getString("REMITTER_REFERENCE_NO"));
+        dg.addVariable("EMAIL_BENEF", object.getString("EMAIL_BENEF"));
+        dg.addVariable("TGL_PAYMENT", object.getString("TGL_LUNAS"));
+        dg.addVariable("PAYMENT_MODE", "SCHEDULED");
+        dg.addVariable("METODE_PEMBAYARAN", object.getString("METODE_PEMBAYARAN"));
+        dg.addVariable("INSTRUCTION_MODE", object.getString("INSTRUCTION_MODE"));
+        try {
+            dg.createDocFromTemplate("template_struk_corpay",filename);
+        }catch (Exception err){
+            err.printStackTrace();
+        }
+        out.put("createdoc",checkfile(filename + ".docx")) ;
         return out;
     }
 

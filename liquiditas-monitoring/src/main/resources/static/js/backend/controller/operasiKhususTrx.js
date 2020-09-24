@@ -1648,7 +1648,7 @@ function setListCompCode(idhtml){
         dataType : "JSON",
         success : response => {
             console.log("Company Code : ",response);
-            $("#"+idhtml+"").html();
+            $("#"+idhtml+"").html('<option value="">Pilih Data</option>');
             $.each(response, (key,val) => {
                 $("#"+idhtml+"").append('<option value="' + val.COMPANY_CODE + '">'+val.COMPANY_CODE+' - '+val.COMPANY_NAME+'</option>')
             });

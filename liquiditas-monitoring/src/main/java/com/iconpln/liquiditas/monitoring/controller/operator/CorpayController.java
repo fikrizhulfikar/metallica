@@ -89,6 +89,51 @@ public class CorpayController {
         return mapData;
     }
 
+    @RequestMapping(value = "/get_rekap_invoice_admin", method = RequestMethod.GET)
+    public Map listRekapInvoiceAdmin(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "10") int length,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
+            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
+            @RequestParam(value = "pCaraBayar", defaultValue = "ALL") String pCaraBayar,
+            @RequestParam(value = "status", defaultValue = "ALL") String pStatus,
+            @RequestParam(value = "statusTracking", defaultValue = "ALL") String pStatusTracking,
+            @RequestParam(value = "search[value]", defaultValue = "") String pSearch
+    ) {
+
+        String sortBy = parseColumn(sortIndex);
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = corpayService.getListRekapInvoiceAdmin(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, WebUtils.getUsernameLogin(), sortBy, sortDir, pStatus, pStatusTracking, pSearch);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("draw", draw);
+        mapData.put("data", list);
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
+        return mapData;
+    }
+
     @RequestMapping(value = "/get_invoice_lcl", method = RequestMethod.GET)
     public Map listRekapDataLcl(
             @RequestParam(value = "draw", defaultValue = "0") int draw,
@@ -464,7 +509,8 @@ public class CorpayController {
                           @RequestParam("confirmation_code") Integer confirmation_code,
                           @RequestParam("verified_by") Integer verified_by,
                           @RequestParam("verified_on") Integer verified_on,
-                          @RequestParam("no_giro") Integer no_giro
+                          @RequestParam("no_giro") Integer no_giro,
+                          @RequestParam("ref_num_bank") Integer ref_num_bank
     ) {
         Map data = new HashMap();
         try {
@@ -550,7 +596,8 @@ public class CorpayController {
                     verified_by,
                     verified_on,
                     tgl_tagihan_diterima,
-                    no_giro
+                    no_giro,
+                    ref_num_bank
             );
             data.put("data", result);
         } catch (Exception e) {
@@ -584,7 +631,8 @@ public class CorpayController {
             @RequestParam(value = "pJamBayar", defaultValue = "") String pJamBayar,
             @RequestParam(value = "pOssId", defaultValue = "") String pOssId,
             @RequestParam(value = "pGroupId", defaultValue = "") String pGroupId,
-            @RequestParam(value = "pNoGiro",defaultValue = "") String pNoGiro
+            @RequestParam(value = "pNoGiro",defaultValue = "") String pNoGiro,
+            @RequestParam(value = "pRefNum", defaultValue = "") String pRefNum
     ) {
         AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
 //        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
@@ -599,7 +647,7 @@ public class CorpayController {
         try {
             Map<String, Object> res = corpayService.updatePembayaran(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pBankPembayar, pKeterangan, pTglRencanaBayar,pSumberDana,
                     pMetodePembayaran,pNoRekHouseBank,pInqCustomerName,pInqAccountNumber,pInqAccountStatus, pKodeBankPenerima, pRetrievalRefNumber,
-                    pCustomerRefNumber, pConfirmationCode, pTglActBayar, pJamBayar, WebUtils.getUsernameLogin(), pOssId, pGroupId, pNoGiro);
+                    pCustomerRefNumber, pConfirmationCode, pTglActBayar, pJamBayar, WebUtils.getUsernameLogin(), pOssId, pGroupId, pNoGiro, pRefNum);
             if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
             }
@@ -1238,7 +1286,7 @@ public class CorpayController {
                         "","", "", json.getString("KETERANGAN"), "",
                         json.getString("GROUP_ID"),pNamaGroup,json.getString("NO_REK_HOUSE_BANK"), json.getString("INQ_CUSTOMER_NAME"), json.getString("INQ_ACCOUNT_NUMBER"),
                         json.getString("REF_KEY3"),json.getString("INT_ORDER"),json.getString("WBS_NUM"), json.getString("CASH_CODE"), json.getString("CONFIRMATION_CODE"),
-                        json.getString("TGL_ACT_BAYAR")
+                        json.getString("TGL_ACT_BAYAR"), json.getString("REF_NUM_BANK")
                 );
                 if (((BigDecimal) out.get("return")).equals(BigDecimal.ONE)) {
 
@@ -1488,6 +1536,31 @@ public class CorpayController {
         return formatted;
     }
 
+    @RequestMapping(value = "/get_total_tagihan_rekap_invoice", method = RequestMethod.GET)
+    public String getTotalTagihanRekapInvoiceAdmin(@RequestParam(value = "tgl_awal", defaultValue = "") String tglAwal,
+                                  @RequestParam(value = "tgl_akhir", defaultValue = "") String tglAkhir,
+                                  @RequestParam(value = "currency", defaultValue = "ALL") String currency,
+                                  @RequestParam(value = "caraBayar", defaultValue = "ALL") String caraBayar,
+                                  @RequestParam(value = "bank", defaultValue = "ALL") String bank,
+                                  @RequestParam(value = "search", defaultValue = "") String search) {
+        BigDecimal result =  corpayService.getTotalTagihanRekapInvoiceAdmin(tglAwal, tglAkhir, currency, caraBayar, bank, WebUtils.getUsernameLogin(), search);
+        String formatted = AppUtils.getInstance().formatDecimalCurrency(result);
+        return formatted;
+    }
+
+    @GetMapping(value = "/get_total_tagihan_approval_evp")
+    public String getTotalTagihanApprovalEvp(
+            @RequestParam(value = "tgl_awal", defaultValue = "") String tglAwal,
+            @RequestParam(value = "tgl_akhir", defaultValue = "") String tglAkhir,
+            @RequestParam(value = "currency", defaultValue = "ALL") String currency,
+            @RequestParam(value = "bank", defaultValue = "ALL") String bank,
+            @RequestParam(value = "search", defaultValue = "") String search
+    ){
+        BigDecimal total_tagihan = corpayService.getTotalTagihanApprovalEvp(tglAwal, tglAkhir, currency, bank, WebUtils.getUsernameLogin(),search);
+        String formatted = AppUtils.getInstance().formatDecimalCurrency(total_tagihan);
+        return formatted;
+    }
+
     @RequestMapping(value = "/xls/{pTglAwal}/{pTglAkhir}/{pCurr}/{pCaraBayar}/{pBank}/{pStatus}/{pStatusTracking}/{pRole}", method = RequestMethod.GET)
     public String export(
             @PathVariable String pTglAwal,
@@ -1529,7 +1602,7 @@ public class CorpayController {
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
 
-            List<Map<String, Object>> listData = corpayService.getAllpembayaran(WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pCurr, pCaraBayar, pBank, pStatus, pStatusTracking);
+            List<Map<String, Object>> listData = corpayService.getAllpembayaran(WebUtils.getUsernameLogin(), tglAwal.replace("-", "/"), tglAkhir.replace("-", "/"), pCurr, pCaraBayar, pBank, pStatus, pStatusTracking);
 
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
@@ -1585,6 +1658,7 @@ public class CorpayController {
                 paramDetail.put("DUE_ON",data.get("DUE_ON"));
                 paramDetail.put("PMT_BLOCK",data.get("PMT_BLOCK"));
                 paramDetail.put("HOUSE_BANK",data.get("HOUSE_BANK"));
+                paramDetail.put("NAMA_HOUSE_BANK", data.get("NAMA_BANK"));
                 paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
                 paramDetail.put("PRTNR_BANK_TYPE",data.get("PRTNR_BANK_TYPE"));
                 paramDetail.put("BANK_KEY",data.get("BANK_KEY"));
@@ -1592,13 +1666,13 @@ public class CorpayController {
                 paramDetail.put("ACCOUNT_HOLDER",data.get("ACCOUNT_HOLDER"));
                 paramDetail.put("PO_NUM",data.get("PO_NUM"));
                 paramDetail.put("PO_ITEM",data.get("PO_ITEM"));
-                paramDetail.put("PARTIAL_IND", data.get("PARTIAL_IND"));
                 paramDetail.put("REF_KEY1",data.get("REF_KEY1"));
                 paramDetail.put("REF_KEY2",data.get("REF_KEY2"));
                 paramDetail.put("REF_KEY3",data.get("REF_KEY3"));
                 paramDetail.put("INT_ORDER",data.get("INT_ORDER"));
                 paramDetail.put("WBS_NUM",data.get("WBS_NUM"));
                 paramDetail.put("CASH_CODE",data.get("CASH_CODE"));
+                paramDetail.put("NAMA_CASHCODE",data.get("NAMA_CASHCODE"));
                 paramDetail.put("AMT_WITH_BASE_LC",data.get("AMT_WITH_BASE_LC"));
                 paramDetail.put("AMT_WITH_LC",data.get("AMT_WITH_LC"));
                 paramDetail.put("DR_CR_IND",data.get("DR_CR_IND"));
@@ -1639,6 +1713,11 @@ public class CorpayController {
                 paramDetail.put("SPREAD_VALUE",data.get("SPREAD_VAL"));
                 paramDetail.put("APPROVE_TGL_RENCANA_BAYAR",data.get("APPROVE_TGL_RENCANA_BAYAR"));
                 paramDetail.put("STATUS_TRACKING",data.get("STATUS_TRACKING"));
+                paramDetail.put("STATUS",data.get("STATUS"));
+                paramDetail.put("POSISI", data.get("POSISI"));
+                paramDetail.put("NOMINAL_DI_BAYAR", data.get("NOMINAL_DI_BAYAR"));
+                paramDetail.put("JENIS_TRANSAKSI", data.get("JENIS"));
+                paramDetail.put("REFERENCE_NUMBER_BANK", data.get("REF_NUM_BANK"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
@@ -1727,6 +1806,7 @@ public class CorpayController {
                 paramDetail.put("DUE_ON",data.get("DUE_ON"));
                 paramDetail.put("PMT_BLOCK",data.get("PMT_BLOCK"));
                 paramDetail.put("HOUSE_BANK",data.get("HOUSE_BANK"));
+                paramDetail.put("NAMA_HOUSE_BANK", data.get("NAMA_BANK"));
                 paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
                 paramDetail.put("PRTNR_BANK_TYPE",data.get("PRTNR_BANK_TYPE"));
                 paramDetail.put("BANK_KEY",data.get("BANK_KEY"));
@@ -1734,13 +1814,13 @@ public class CorpayController {
                 paramDetail.put("ACCOUNT_HOLDER",data.get("ACCOUNT_HOLDER"));
                 paramDetail.put("PO_NUM",data.get("PO_NUM"));
                 paramDetail.put("PO_ITEM",data.get("PO_ITEM"));
-                paramDetail.put("PARTIAL_IND", data.get("PARTIAL_IND"));
                 paramDetail.put("REF_KEY1",data.get("REF_KEY1"));
                 paramDetail.put("REF_KEY2",data.get("REF_KEY2"));
                 paramDetail.put("REF_KEY3",data.get("REF_KEY3"));
                 paramDetail.put("INT_ORDER",data.get("INT_ORDER"));
                 paramDetail.put("WBS_NUM",data.get("WBS_NUM"));
                 paramDetail.put("CASH_CODE",data.get("CASH_CODE"));
+                paramDetail.put("NAMA_CASHCODE",data.get("NAMA_CASHCODE"));
                 paramDetail.put("AMT_WITH_BASE_LC",data.get("AMT_WITH_BASE_LC"));
                 paramDetail.put("AMT_WITH_LC",data.get("AMT_WITH_LC"));
                 paramDetail.put("DR_CR_IND",data.get("DR_CR_IND"));
@@ -1783,6 +1863,9 @@ public class CorpayController {
                 paramDetail.put("STATUS_TRACKING",data.get("STATUS_TRACKING"));
                 paramDetail.put("STATUS",data.get("STATUS"));
                 paramDetail.put("POSISI", data.get("POSISI"));
+                paramDetail.put("NOMINAL_DI_BAYAR", data.get("NOMINAL_DI_BAYAR"));
+                paramDetail.put("JENIS_TRANSAKSI", data.get("JENIS"));
+                paramDetail.put("REFERENCE_NUMBER_BANK", data.get("REF_NUM_BANK"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
@@ -1830,7 +1913,7 @@ public class CorpayController {
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
 
-            List<Map<String, Object>> listData = corpayService.getVerifikasiTanggalByStatus(WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pCurr, pBank, pStatus, pStatusTracking);
+            List<Map<String, Object>> listData = corpayService.getVerifikasiTanggalByStatus(WebUtils.getUsernameLogin(), tglAwal.replace("-", "/"), tglAkhir.replace("-", "/"), pCurr, pBank, pStatus, pStatusTracking);
 
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
@@ -1861,6 +1944,7 @@ public class CorpayController {
                 paramDetail.put("REFERENCE_KEY",data.get("REFERENCE_KEY"));
                 paramDetail.put("PMT_IND",data.get("PMT_IND"));
                 paramDetail.put("TRANS_TYPE",data.get("TRANS_TYPE"));
+                paramDetail.put("SPREAD_VAL",data.get("SPREAD_VAL"));
                 paramDetail.put("LINE_ITEM",data.get("LINE_ITEM"));
                 paramDetail.put("OI_IND",data.get("OI_IND"));
                 paramDetail.put("ACCT_TYPE",data.get("ACCT_TYPE"));
@@ -1885,6 +1969,7 @@ public class CorpayController {
                 paramDetail.put("DUE_ON",data.get("DUE_ON"));
                 paramDetail.put("PMT_BLOCK",data.get("PMT_BLOCK"));
                 paramDetail.put("HOUSE_BANK",data.get("HOUSE_BANK"));
+                paramDetail.put("NAMA_HOUSE_BANK", data.get("NAMA_BANK"));
                 paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
                 paramDetail.put("PRTNR_BANK_TYPE",data.get("PRTNR_BANK_TYPE"));
                 paramDetail.put("BANK_KEY",data.get("BANK_KEY"));
@@ -1899,6 +1984,7 @@ public class CorpayController {
                 paramDetail.put("INT_ORDER",data.get("INT_ORDER"));
                 paramDetail.put("WBS_NUM",data.get("WBS_NUM"));
                 paramDetail.put("CASH_CODE",data.get("CASH_CODE"));
+                paramDetail.put("NAMA_CASHCODE",data.get("NAMA_CASHCODE"));
                 paramDetail.put("AMT_WITH_BASE_LC",data.get("AMT_WITH_BASE_LC"));
                 paramDetail.put("AMT_WITH_LC",data.get("AMT_WITH_LC"));
                 paramDetail.put("DR_CR_IND",data.get("DR_CR_IND"));
@@ -1930,15 +2016,19 @@ public class CorpayController {
                 paramDetail.put("BANK_BYR",data.get("BANK_BYR"));
                 paramDetail.put("CURR_BAYAR",data.get("CURR_BAYAR"));
                 paramDetail.put("PARTIAL_IND",data.get("PARTIAL_IND"));
-                paramDetail.put("AMOUNT_BAYAR",data.get("AMOUNT_BAYAR").toString().replace(".",","));
+                paramDetail.put("AMOUNT_BAYAR",data.get("AMOUNT_BAYAR"));
                 paramDetail.put("BANK_BENEF",data.get("BANK_BENEF"));
                 paramDetail.put("NO_REK_BENEF",data.get("NO_REK_BENEF"));
-                paramDetail.put("SPREAD_VALUE",data.get("SPREAD_VAL"));
                 paramDetail.put("NAMA_BENEF",data.get("NAMA_BENEF"));
                 paramDetail.put("VERIFIED_BY",data.get("VERIFIED_BY"));
                 paramDetail.put("VERIFIED_ON",data.get("VERIFIED_ON"));
+                paramDetail.put("SPREAD_VALUE",data.get("SPREAD_VAL"));
                 paramDetail.put("APPROVE_TGL_RENCANA_BAYAR",data.get("APPROVE_TGL_RENCANA_BAYAR"));
                 paramDetail.put("STATUS_TRACKING",data.get("STATUS_TRACKING"));
+                paramDetail.put("STATUS",data.get("STATUS"));
+                paramDetail.put("POSISI", data.get("POSISI"));
+                paramDetail.put("NOMINAL_DI_BAYAR", data.get("NOMINAL_DI_BAYAR"));
+                paramDetail.put("JENIS_TRANSAKSI", data.get("JENIS"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
@@ -2056,5 +2146,4 @@ public class CorpayController {
             return null;
         }
     }
-
 }

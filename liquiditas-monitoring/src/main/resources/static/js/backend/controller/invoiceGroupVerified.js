@@ -1400,83 +1400,83 @@ function getDetails(idGroup, pTglAwal, pTglAkhir,  pBank) {
                 {
                     "aTargets": [59],
                     "mRender": function (data, type, full) {
-                        return full.TGL_RENCANA_BAYAR;
+                        return full.REF_NUM_BANK;
                     }
                 },
                 {
                     "aTargets": [60],
                     "mRender": function (data, type, full) {
-                        return full.OSS_ID;
+                        return full.TGL_RENCANA_BAYAR;
                     }
                 },
                 {
                     "aTargets": [61],
                     "mRender": function (data, type, full) {
-                        return full.ID_GROUP;
+                        return full.OSS_ID;
                     }
                 },
-                // {
-                //     "aTargets": [62],
-                //     "mRender": function (data, type, full) {
-                //         return full.BANK_BYR;
-                //     }
-                // },
                 {
                     "aTargets": [62],
                     "mRender": function (data, type, full) {
-                        return full.CURR_BAYAR;
+                        return full.ID_GROUP;
                     }
                 },
                 {
                     "aTargets": [63],
                     "mRender": function (data, type, full) {
-                        return full.AMOUNT_BAYAR;
+                        return full.CURR_BAYAR;
                     }
                 },
                 {
                     "aTargets": [64],
                     "mRender": function (data, type, full) {
-                        return full.BANK_BENEF;
+                        return full.AMOUNT_BAYAR;
                     }
                 },
                 {
                     "aTargets": [65],
                     "mRender": function (data, type, full) {
-                        return full.NO_REK_BENEF;
+                        return full.BANK_BENEF;
                     }
                 },
                 {
                     "aTargets": [66],
                     "mRender": function (data, type, full) {
-                        return full.NAMA_BENEF;
+                        return full.NO_REK_BENEF;
                     }
                 },
                 {
                     "aTargets": [67],
                     "mRender": function (data, type, full) {
-                        return full.TGL_ACT_BAYAR;
+                        return full.NAMA_BENEF;
                     }
                 },
                 {
                     "aTargets": [68],
                     "mRender": function (data, type, full) {
-                        return full.SUMBER_DANA;
+                        return full.TGL_ACT_BAYAR;
                     }
                 },
                 {
                     "aTargets": [69],
                     "mRender": function (data, type, full) {
-                        return full.KETERANGAN;
+                        return full.SUMBER_DANA;
                     }
                 },
                 {
                     "aTargets": [70],
                     "mRender": function (data, type, full) {
-                        return full.STATUS_TRACKING;
+                        return full.KETERANGAN;
                     }
                 },
                 {
                     "aTargets": [71],
+                    "mRender": function (data, type, full) {
+                        return full.STATUS_TRACKING;
+                    }
+                },
+                {
+                    "aTargets": [72],
                     "mRender": function (data, type, full) {
                         var ret_value;
                         /*alert('BOOOMB2'+full.STATUS_TRACKING);*/
@@ -2044,7 +2044,7 @@ function exportXls() {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/invoice_group/xlsverified/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_bank").val() + "/" +null+ "/" +null);
+    window.open(baseUrl + "api_operator/invoice_group/xlsverified/" + tglAwal.replace(/\//g,"-") + "/" + tglAkhir.replace(/\//g,"-") + "/" + $("#cmb_bank").val() + "/" +null+ "/" +null);
 }
 
 function exportXlsItem(group_id) {
@@ -2056,7 +2056,7 @@ function exportXlsItem(group_id) {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/invoice_group/xls_item/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_bank").val() + "/" +group_id);
+    window.open(baseUrl + "api_operator/invoice_group/xls_item/" + tglAwal.replace(/\//g,"-") + "/" + tglAkhir.replace(/\//g,"-") + "/" + $("#cmb_bank").val() + "/" +group_id);
 }
 
 function exportAllGroupItemXls() {
@@ -2068,7 +2068,7 @@ function exportAllGroupItemXls() {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/invoice_group/xls_all_item/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_bank").val());
+    window.open(baseUrl + "api_operator/invoice_group/xls_all_item/" + tglAwal.replace(/\//g,"-") + "/" + tglAkhir.replace(/\//g,"-") + "/" + $("#cmb_bank").val());
 }
 
 function back(){

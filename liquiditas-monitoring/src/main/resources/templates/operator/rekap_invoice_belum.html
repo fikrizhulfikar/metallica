@@ -30,7 +30,7 @@
 </div>
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" style="cursor: default">Invoice Belum Verifikasi</li>
+        <li class="breadcrumb-item active" style="cursor: default">Invoice Belum Diapprove</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
@@ -552,6 +552,10 @@
                             <input class="form-check-input checkbox-toggle" type="checkbox" id="hc71" data-column="71"/>
                             <label class="form-check-label" for="hc71">STATUS TRACKING</label>
                         </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc72" data-column="72"/>
+                            <label class="form-check-label" for="hc72">REFERENCE NUMBER BANK</label>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -682,6 +686,7 @@
                                 <th>AMOUNT WITH HOLDING LC</th>
                                 <th>METODE PEMBAYARAN</th>
                                 <th>NO GIRO</th>
+                                <th>REFERENCE NUMBER BANK</th>
                                 <th>TGL TERIMA TAGIHAN</th>
                                 <th>TGL RENCANA BAYAR</th>
                                 <th>SUMBER DANA</th>
@@ -1051,24 +1056,30 @@
                             <div class="form-group" id="jamBayar">
                                 <label for="pJamBayar"><span style="color: red;">*</span>&nbsp;Jam Bayar :</label>
                                 <select class="form-control" id="pJamBayar" required="required">
-                                    <option value="07:00-07:30">07:00-07:30</option>
-                                    <option value="07:30-08:00">07:30-08:00</option>
-                                    <option value="08:00-08:30">08:00-08:30</option>
-                                    <option value="08:30-09:00">08:30-09:00</option>
-                                    <option value="09:00-09:30">09:00-09:30</option>
-                                    <option value="09:30-10:00">09:30-10:00</option>
-                                    <option value="10:00-10:30">10:00-10:30</option>
-                                    <option value="10:30-11:00">10:30-11:00</option>
-                                    <option value="11:00-11:30">11:00-11:30</option>
-                                    <option value="11:30-12:00">11:30-12:00</option>
-                                    <option value="12:00-12:30">12:00-12:30</option>
-                                    <option value="12:30-13:00">12:30-13:00</option>
-                                    <option value="13:00-13:30">13:00-13:30</option>
-                                    <option value="13:30-14:00">13:30-14:00</option>
-                                    <option value="14:00-14:30">14:00-14:30</option>
-                                    <option value="14:30-15:00">14:30-15:00</option>
-                                    <option value="15:00-15:30">15:00-15:30</option>
-                                    <option value="15:30-16:00">15:30-16:00</option>
+                                    <option value="IMMEDIATE">IMMEDIATE PAYMENT</option>
+                                    <option value="07:00">07:00</option>
+                                    <option value="07:30">07:30</option>
+                                    <option value="08:00">08:00</option>
+                                    <option value="08:30">08:30</option>
+                                    <option value="09:00">09:00</option>
+                                    <option value="09:30">09:30</option>
+                                    <option value="10:00">10:00</option>
+                                    <option value="10:30">10:30</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="11:30">11:30</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="12:30">12:30</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="13:30">13:30</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="14:30">14:30</option>
+                                    <option value="15:00">15:00</option>
+                                    <option value="15:30">15:30</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="16:30">16:30</option>
+                                    <option value="17:00">17:00</option>
+                                    <option value="17:30">17:30</option>
+                                    <option value="18:00">18:00</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -1422,6 +1433,10 @@
                                 <input type="text" class="form-control" id="pTglRencanaBayar2" disabled="disabled"  style="background-color: #CFD8DC"/>
                             </div>
                             <div class="form-group">
+                                <label for="pJamBayar2"><span style="color: red">*)</span>&nbsp;Jam Bayar:</label>
+                                <input type="text" class="form-control" id="pJamBayar2" disabled="disabled"  style="background-color: #CFD8DC"/>
+                            </div>
+                            <div class="form-group">
                                 <label for="pTglActBayar2"><span style="color: red">*)</span>&nbsp;Tanggal Actual Bayar:</label>
                                 <input type="text" class="form-control" id="pTglActBayar2" disabled="disabled"  style="background-color: #CFD8DC"/>
                             </div>
@@ -1482,8 +1497,9 @@
                 </div>
                 <div class="modal-footer">
 <!--                    <button type="button" class="btn btn-warning" onclick="save_inquiry()">Inquiry</button>-->
-                    <button type="button" class="btn btn-primary" onclick="validasiToken()">Check Token</button>
+                    <button type="button" id="validasiTokenBtn" class="btn btn-primary" onclick="validasiToken()">Check Token</button>
                     <button type="button" id="btn-payment" class="btn btn-success" onclick="doPayment()">Payment</button>
+                    <button type="button" id="btn_siap_corpay" class="btn btn-warning" onclick="siapBayarCorpay()">Siap Bayar</button>
                 </div>
             </div>
         </div>
@@ -1531,17 +1547,17 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="pAccountNames">&nbsp;Account Name :</label>
-                                <input type="text" class="form-control" id="pAccountNames"/>
+                                <input type="text" class="form-control" id="pAccountNames" readonly="readonly"/>
                             </div>
                             <div class="form-group">
                                 <label for="pAccountBalances">&nbsp;Saldo :</label>
-                                <input type="number" class="form-control" id="pAccountBalances"/>
+                                <input type="text" class="form-control" id="pAccountBalances" readonly="readonly"/>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="getBallance2()">Submit</button>
+                    <button type="button" id="getBalanceBtn" class="btn btn-primary" onclick="getBallance2()">Submit</button>
                 </div>
             </div>
         </div>
@@ -1571,21 +1587,21 @@
                                 <label for="pRefNum"><span style="color: red">*)</span> Reference Number :</label>
                                 <input type="text" class="form-control" id="pRefNum"/>
                             </div>
+                        </div>
+                        <div class="col-md-6">
+<!--                            <div class="form-group">-->
+<!--                                <label for="pResponPaymentStatus">&nbsp;Respon :</label>-->
+<!--                                <input type="text" class="form-control" id="pResponPaymentStatus"/>-->
+<!--                            </div>-->
                             <div class="form-group">
                                 <label for="pStatusPembayaran">&nbsp;Status Pembayaran :</label>
                                 <input type="text" class="form-control" id="pStatusPembayaran"/>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="pResponPaymentStatus">&nbsp;Respon :</label>
-                                <input type="text" class="form-control" id="pResponPaymentStatus"/>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="getPaymentStatus()">Submit</button>
+                    <button type="button" id="paymentStatusBtn" class="btn btn-primary" onclick="getPaymentStatus()">Submit</button>
                 </div>
             </div>
         </div>
