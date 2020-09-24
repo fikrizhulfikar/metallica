@@ -1112,26 +1112,26 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         String res = null;
     Date date = new Date();
     SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-//    String refnum = format.format(date.getTime())+"00";
+    String refnum = format.format(date.getTime())+"00";
        if (pMetodeBayar.equals("INHOUSE")){
            if(!pAmountBayar.isEmpty()){
-               res = doPayment( pBank, pRefNum, pSource, pBeneficiaryAccount, pCurrency,
+               res = doPayment( pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
                        pAmountBayar, pRemark, pFeeType, pConfirmationCode);
            }
            if(pAmountBayar.isEmpty()) {
-               res = doPayment(pBank, pRefNum, pSource, pBeneficiaryAccount, pCurrency,
+               res = doPayment(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
                        pAmount, pRemark, pFeeType, pConfirmationCode);
            }
        }
        if (pMetodeBayar.equals("RTGS")){
            if(!pAmountBayar.isEmpty()) {
-               res = doPaymentRtgs(pBank, pRefNum, pSource, pBeneficiaryAccount,
+               res = doPaymentRtgs(pBank, refnum, pSource, pBeneficiaryAccount,
                        pCurrency, pAmountBayar, pRemark, pBenefEmail,
                        pBenefName, pBenefAddr1, pBenefAddr2, pDestinationBankCode,
                        pFeeType);
            }
            if(pAmountBayar.isEmpty()) {
-               res = doPaymentRtgs(pBank, pRefNum, pSource, pBeneficiaryAccount,
+               res = doPaymentRtgs(pBank, refnum, pSource, pBeneficiaryAccount,
                        pCurrency, pAmount, pRemark, pBenefEmail,
                        pBenefName, pBenefAddr1, pBenefAddr2, pDestinationBankCode,
                        pFeeType);
@@ -1139,25 +1139,25 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
        }
        if (pMetodeBayar.equals("KLIRING")) {
            if(!pAmountBayar.isEmpty()) {
-               res = doPaymentKliring(pBank, pRefNum, pSource, pBeneficiaryAccount, pCurrency,
+               res = doPaymentKliring(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
                        pAmountBayar, pRemark, pBenefEmail, pBenefName,
                        pBenefAddr1, pBenefAddr2, pDestinationBankCode, pFeeType);
            }
            if(pAmountBayar.isEmpty()) {
-               res = doPaymentKliring(pBank, pRefNum, pSource, pBeneficiaryAccount, pCurrency,
+               res = doPaymentKliring(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
                        pAmount, pRemark, pBenefEmail, pBenefName,
                        pBenefAddr1, pBenefAddr2, pDestinationBankCode, pFeeType);
            }
        }
     if (pMetodeBayar.equals("ONLINETRANSFER")) {
         if(!pAmountBayar.isEmpty()) {
-            res = doInterbankPayment(pBank, pRefNum, pAmountBayar, pBeneficiaryAccount,
+            res = doInterbankPayment(pBank, refnum, pAmountBayar, pBeneficiaryAccount,
                     pBenefName, pDestinationBankCode, pDestinationBank,
                     pRetrievalReff, pSource, pCurrency, pCurrency2,
                     pRemark);
         }
         if(pAmountBayar.isEmpty()) {
-            res = doInterbankPayment(pBank, pRefNum, pAmount, pBeneficiaryAccount,
+            res = doInterbankPayment(pBank, refnum, pAmount, pBeneficiaryAccount,
                     pBenefName, pDestinationBankCode, pDestinationBank,
                     pRetrievalReff, pSource, pCurrency, pCurrency2,
                     pRemark);
