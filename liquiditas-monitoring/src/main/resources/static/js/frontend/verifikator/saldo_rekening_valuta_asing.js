@@ -88,7 +88,7 @@ function initDataTableImprstValas() {
             creteChartUSDImprstValas(dataPieUSD);
             creteChartJPYImprstValas(dataPieJPY);
             creteChartEURImprstValas(dataPieEUR);
-            //creteChartMYRImprstValas(dataPieMYR);
+            creteChartMYRImprstValas(dataPieMYR);
             hideLoadingCss()
         },
         error: function () {
