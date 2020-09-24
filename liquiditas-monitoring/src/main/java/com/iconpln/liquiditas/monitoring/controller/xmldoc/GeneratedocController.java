@@ -47,20 +47,18 @@ import java.util.zip.ZipOutputStream;
 @RestController
 @RequestMapping(path = "/generate_doc/cetak")
 public class GeneratedocController {
-    private static final String TAG = GeneratedocController.class.getName();
 
     @Autowired
     private DataSource dataSource;
 
-    public JdbcTemplate getJdbcTemplate(){ return new JdbcTemplate(dataSource);}
+    private JdbcTemplate getJdbcTemplate(){ return new JdbcTemplate(dataSource);}
 
     @Autowired
     private GenerateDocService generateDocService;
 
-    boolean isgeneratedoc = true;
-    SimpleDateFormat formatdb = new SimpleDateFormat("yyyyMMdd");
-    SimpleDateFormat localFormatter = new SimpleDateFormat("dd MMMM yyyy", new Locale("id"));
-    NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("in","ID"));
+    private boolean isgeneratedoc = true;
+    private SimpleDateFormat localFormatter = new SimpleDateFormat("dd MMMM yyyy", new Locale("id"));
+    private NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("in","ID"));
     private String pattern = "###,###.00";
 
     public GeneratedocController() throws SQLException {
@@ -425,9 +423,8 @@ public class GeneratedocController {
 //                String curr_bayar = (String) (p.get("CURR_BAYAR") == null ? "-" : p.get("CURR_BAYAR"));
                 DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
                 decimalFormat.applyPattern(pattern);
-                String amount = decimalFormat.format(Double.parseDouble(p.get("AMOUNT_BAYAR").toString().replace(",",".")));
+                String amount_bayar = decimalFormat.format(Double.parseDouble(p.get("AMOUNT_BAYAR").toString().replace(",",".")));
 
-                String amount_bayar = amount ;
                 String no_benef = (String) (p.get("NO_REK_BENEF") == null ? "-" : p.get("NO_REK_BENEF"));
                 String alamat_bank_benef = (String) (p.get("ALAMAT_BANK_BENEF") == null ? "-" : p.get("ALAMAT_BANK_BENEF"));
                 String nama_vendor = (String) (p.get("VENDOR_NAME") == null ? "-" : p.get("VENDOR_NAME"));
@@ -652,6 +649,45 @@ public class GeneratedocController {
             out.put("success", true);
         } catch (Exception e){
             e.printStackTrace();
+        }
+        out.put("createdoc",checkfile(filename + ".docx")) ;
+        return out;
+    }
+
+    @RequestMapping(path = "/cetak_struk_corpay")
+    public Map cetakStrukCorpaySingle(
+            @RequestParam("pCompCode") String pCompCode,
+            @RequestParam("pDocNo") String pDocNo,
+            @RequestParam("pFiscalYear") String pFiscalYear,
+            @RequestParam("pLineItem") String pLineItem,
+            @RequestParam("pKet") String pKet
+    ) throws JSONException, AltException{
+        String filename = "uploadcorpay/temp/corpay_lunas_"+pDocNo;
+        DocGenerator dg = new DocGenerator();
+        Map out = new HashMap();
+        List<Map<String, Object>> list = generateDocService.cetakStrukCorpay(pCompCode, pDocNo, pFiscalYear, pLineItem, pKet);
+        JSONObject object = new JSONObject(list.get(0));
+        dg.addVariable("TRX_STATUS", object.getString("TRX_STATUS"));
+        dg.addVariable("REF_NUM_BANK", object.getString("REF_NUM_BANK"));
+        dg.addVariable("FROM_ACCOUNT", object.getString("FROM_ACCOUNT"));
+        dg.addVariable("AMOUNT", object.getString("AMOUNT"));
+        dg.addVariable("TRANSACTION_PURPOSE", object.getString("TRANSACTION_PURPOSE"));
+        dg.addVariable("REMARKS", object.getString("REMARKS"));
+        dg.addVariable("FINALIZE_PAYMENT_FLAG", object.getString("FINALIZE_PAYMENT_FLAG"));
+        dg.addVariable("BENEF_REFERENCE_NO", object.getString("BENEF_REFERENCE_NO"));
+        dg.addVariable("TO_ACCOUNT", object.getString("NO_REK_BENEF")+"/"+object.getString("NAMA_BENEF"));
+        dg.addVariable("TO_ACCOUNT_TYPE", object.getString("TO_ACCOUNT_TYPE"));
+        dg.addVariable("NOTIFICATION_FLAG", object.getString("NOTIFICATION_FLAG"));
+        dg.addVariable("REMITTER_REFERENCE_NO", object.getString("REMITTER_REFERENCE_NO"));
+        dg.addVariable("EMAIL_BENEF", object.getString("EMAIL_BENEF"));
+        dg.addVariable("TGL_PAYMENT", object.getString("TGL_LUNAS"));
+        dg.addVariable("PAYMENT_MODE", "SCHEDULED");
+        dg.addVariable("METODE_PEMBAYARAN", object.getString("METODE_PEMBAYARAN"));
+        dg.addVariable("INSTRUCTION_MODE", object.getString("INSTRUCTION_MODE"));
+        try {
+            dg.createDocFromTemplate("template_struk_corpay",filename);
+        }catch (Exception err){
+            err.printStackTrace();
         }
         out.put("createdoc",checkfile(filename + ".docx")) ;
         return out;

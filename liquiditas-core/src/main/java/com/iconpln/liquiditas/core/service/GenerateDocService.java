@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
+@Repository
 public class GenerateDocService {
     @Autowired
     DataSource dataSource;
@@ -149,6 +149,27 @@ public class GenerateDocService {
             e.printStackTrace();
         }
         AppUtils.getLogger(this).debug("list_cetak_lampiran_group_corpay : {}",list);
+        return list;
+    }
+
+    public List<Map<String, Object>> cetakStrukCorpay(String comp_code, String doc_no, String fiscal_year, String line_item, String ket){
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                    .withCatalogName("PKG_CORPAY")
+                    .withFunctionName("cetak_bukti_pelunasan");
+            SqlParameterSource params = new MapSqlParameterSource()
+                    .addValue("p_comp_code", comp_code, OracleTypes.VARCHAR)
+                    .addValue("p_doc_no", doc_no, OracleTypes.VARCHAR)
+                    .addValue("p_fisc_year", fiscal_year, OracleTypes.VARCHAR)
+                    .addValue("p_line_item", line_item, OracleTypes.VARCHAR)
+                    .addValue("p_ket", ket, OracleTypes.VARCHAR);
+            list = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+            AppUtils.getLogger(this).debug("params_struk_corpay : {}", params);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        AppUtils.getLogger(this).debug("list_cetak_struk_corpay : {}",list);
         return list;
     }
 }

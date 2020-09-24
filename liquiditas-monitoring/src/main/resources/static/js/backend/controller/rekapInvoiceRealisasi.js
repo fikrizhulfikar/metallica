@@ -248,7 +248,7 @@ function getAllData() {
                         },
                         {
                             "sortable": false,
-                            "aTargets": [0,35, 36]
+                            "aTargets": [0,35, 36, 74]
                         },
                         {
                             "aTargets": [0],
@@ -728,131 +728,19 @@ function getAllData() {
 
                             }
                         },
-                        // {
-                        //     "aTargets": [62],
-                        //     "mRender": function (data, type, full) {
-                        //         var ret_value;
-                        //         /*alert('BOOOMB2'+full.STATUS_TRACKING);*/
-                        //         /*    if(newRoleUser[0].includes("DIVKEU")){
-                        //                 ret_value =
-                        //                     '<div class="btn-group">' +
-                        //                     '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>' +
-                        //                     '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-edit"></i></button>' +
-                        //                     '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                        //                     '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-trash"></i></button>' +
-                        //                     '</div>'
-                        //             } */
-                        //         if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
-                        //             return "-"
-                        //         }
-                        //         else if(newRoleUser[0] == "ROLE_OSS" ){
-                        //             ret_value =
-                        //                 '<div class="btn-group">' +
-                        //                 '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>';
-                        //
-                        //             ret_value = ret_value +
-                        //                 '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                        //                 '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-trash"></i></button>' +
-                        //                 '</div>';
-                        //         }else {
-                        //
-                        //             if (full.STATUS_TRACKING == "INPUT DATA") {
-                        //                 var role = newRoleUser[0];
-                        //                 ret_value =
-                        //                     '<div class="btn-group">';
-                        //                 if(newRoleUser[0] == "ROLE_ADMIN"){
-                        //                     ret_value = ret_value +
-                        //                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="fas fa-edit"></i></button>'+
-                        //                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\',\''+full.INQ_CUSTOMER_NAME+'\',\''+full.INQ_ACCOUNT_NUMBER+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                        //                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-danger" title="Reject Data" onclick="reject_data(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-ban"></i></button>';
-                        //                 }
-                        //                 if(newRoleUser[0] == "ROLE_JA_CASH"){
-                        //                      ret_value = ret_value +
-                        //                                  '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="fas fa-edit"></i></button>'+
-                        //                                  '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\',\''+full.INQ_CUSTOMER_NAME+'\',\''+full.INQ_ACCOUNT_NUMBER+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                        //                                  '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-danger" title="Reject Data" onclick="reject_data(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-ban"></i></button>';
-                        //                 }
-                        //                  if(newRoleUser[0] == "ROLE_JA_IE"){
-                        //                      ret_value = ret_value +
-                        //                                  '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="fas fa-edit"></i></button>'+
-                        //                                  '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\',\''+full.INQ_CUSTOMER_NAME+'\',\''+full.INQ_ACCOUNT_NUMBER+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                        //                                  '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-danger" title="Reject Data" onclick="reject_data(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-ban"></i></button>';
-                        //                  }
-                        //                 '</div>'
-                        //
-                        //              }
-                        //              else   if (full.STATUS_TRACKING == "VERIFIED BY MAKER") {
-                        //                     var role = newRoleUser[0];
-                        //                     ret_value =
-                        //                     '<div class="btn-group">';
-                        //                         if(newRoleUser[0] == "ROLE_ADMIN"){
-                        //                                 ret_value = ret_value +
-                        //                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                        //                                '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title="Reverse Checker" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                        //                                '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-danger" title="Reject Data" onclick="reject_data(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-ban"></i></button>';
-                        //                         }
-                        //                          if(newRoleUser[0] == "ROLE_MSB_INVESTMENT_EXPENDITURE"){
-                        //                                 ret_value = ret_value +
-                        //                                 '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                        //                                 '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title="Reverse Checker" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                        //                                 '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-danger" title="Reject Data" onclick="reject_data(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-ban"></i></button>';
-                        //                          }
-                        //                     '</div>'
-                        //                  }
-                        //                 else if (full.STATUS_TRACKING == "VERIFIED BY CHECKER") {
-                        //                         var role = newRoleUser[0];
-                        //                         ret_value =
-                        //                         '<div class="btn-group">';
-                        //                                 if(newRoleUser[0] == "ROLE_ADMIN"){
-                        //                                    ret_value = ret_value +
-                        //                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                        //                                    '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                        //                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-danger" title="Reject Data" onclick="reject_data(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-ban"></i></button>';
-                        //                                 }
-                        //                                 if(newRoleUser[0] == "ROLE_MSB_PAYMENT_EXPENDITURE"){
-                        //                                    ret_value = ret_value +
-                        //                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                        //                                    '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                        //                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-danger" title="Reject Data" onclick="reject_data(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-ban"></i></button>';
-                        //                                 }
-                        //                          '</div>'
-                        //                   }
-                        //
-                        //                   else if (full.STATUS_TRACKING == "VERIFIED BY APPROVER") {
-                        //                        var role = newRoleUser[0];
-                        //                        ret_value =
-                        //                        '<div class="btn-group">';
-                        //                           if(newRoleUser[0] == "ROLE_ADMIN"){
-                        //                             ret_value = ret_value +
-                        //
-                        //                             '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Do Payment" onclick="detail_data(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\')"><i class="fa fa-money"></i></button>'+
-                        //                             '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                        //                             '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-danger" title="Reject Data" onclick="reject_data(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-ban"></i></button>';
-                        //                             }
-                        //                             if(newRoleUser[0] == "ROLE_VP_INVESTMENT_EXPENDITURE"){
-                        //                             ret_value = ret_value +
-                        //
-                        //                             '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-success" title="Do Payment" onclick="detail_data(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\')"><i class="fa fa-money"></i></button>'+
-                        //                             '<button style="width: 15px !important;" class= "btn-reverse-data btn-sm btn-success" title="Reverse APPROVER" onclick="reverse_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                        //                             '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-danger" title="Reject Data" onclick="reject_data(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-ban"></i></button>';
-                        //                           }
-                        //                         '</div>'
-                        //                   }
-                        //
-                        //             else {
-                        //                 ret_value =
-                        //                     '<div class="btn-group">' +
-                        //                     '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\')"><i class="fas fa-edit"></i></button>'+
-                        //                     '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-warning" title="Verified DIAZ" onclick="update_status(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                        //                     '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>';
-                        //
-                        //                     '</div>'
-                        //             }
-                        //         }
-                        //         return ret_value;
-                        //     }
-                        //
-                        // },
+                        {
+                            "aTargets": [74],
+                            "mRender": function (data, type, full) {
+                                var ret_value;
+                                if (full.METODE_PEMBAYARAN === 'GIRO' || full.METODE_PEMBAYARAN === 'INTERNETBANKING') {
+                                    ret_value = '-';
+                                }else{
+                                    ret_value ='<button type="button" class="btn btn-sm btn-elementary" onclick="cetakStrukLunas(this,\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.KET+'\')"><i class="fas fa-receipt"></i></button>'
+                                }
+                                return ret_value;
+                            }
+
+                        },
                         // {
                         //     "aTargets": [63],
                         //     "mRender": function (data, type, full) {
@@ -2919,4 +2807,35 @@ function saveColumn() {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
         }
     });
+}
+
+function cetakStrukLunas(button, comp_code, doc_no, fiscal_year, line_item, ket){
+    $(button).find('i').remove();
+    $(button).html($('<i/>',{class:'fas fa-circle-notch fa-spin'})).prop("disabled",true);
+    $.ajax({
+        url : baseUrl + "generate_doc/cetak/cetak_struk_corpay",
+        dataType : "JSON",
+        type : "POST",
+        data : {
+            pCompCode : comp_code,
+            pDocNo : doc_no,
+            pFiscalYear : fiscal_year,
+            pLineItem : line_item,
+            pKet : ket,
+        },
+        success : (res) => {
+            if (res.createdoc.status === 1){
+                // console.log("Result : ",res);
+                alert("Berhasil Membuat Dokumen. Click 'Ok' untuk mengunduh.");
+                window.open(baseUrl+"generate_doc/cetak/downloadfile/corpay_lunas_"+doc_no+".docx","_blank");
+            }
+            $(button).find('i').remove();
+            $(button).html($('<i/>',{class:'fas fa-receipt'})).prop("disabled",false);
+        },
+        error : (err) => {
+            alert(err);
+            $(button).find('i').remove();
+            $(button).html($('<i/>',{class:'fas fa-receipt'})).prop("disabled",false);
+        }
+    })
 }
