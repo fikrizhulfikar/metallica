@@ -1,9 +1,6 @@
 package com.iconpln.liquiditas.core.service;
 
-import com.iconpln.liquiditas.core.domain.Placement;
-import com.iconpln.liquiditas.core.domain.PlacementAwal;
-import com.iconpln.liquiditas.core.domain.RekapPembayaran;
-import com.iconpln.liquiditas.core.domain.SumberPlacement;
+import com.iconpln.liquiditas.core.domain.*;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.core.utils.PlsqlUtils;
 import oracle.jdbc.OracleTypes;
@@ -1884,6 +1881,19 @@ public class ValasService {
         }
     }
 
+    public List<Map<String, Object>> getEmailUsers() {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_LMETALLICA_NOTIFICATION")
+                .withFunctionName("get_email_all_user");
+        try {
+            List<Map<String, Object>> out = simpleJdbcCall.executeFunction(ArrayList.class);
+            return out;
+        } catch (Exception e) {
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
     public List<RekapPembayaran> getRekapPembayaranByEmail(String email) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_LMETALLICA_NOTIFICATION")
@@ -1892,6 +1902,7 @@ public class ValasService {
                 .addValue("p_email", email);
         try {
             List<Map<String, Object>> out = simpleJdbcCall.executeFunction(ArrayList.class, in);
+            System.out.println("Aneh : "+out);
             List<RekapPembayaran> rekapPembayarans = new ArrayList<>();
             out.stream().forEach(data -> {
                 RekapPembayaran rekapPembayaran = new RekapPembayaran();
@@ -1963,11 +1974,24 @@ public class ValasService {
                 }
                 rekapPembayarans.add(rekapPembayaran);
             });
+            System.out.println("Aneh Dua : "+rekapPembayarans);
             return rekapPembayarans;
         } catch (Exception e) {
             AppUtils.getLogger(this).debug("Error: {} ", e.getMessage());
             return new ArrayList<>();
         }
+    }
+
+    public List<Map<String, Object>> getRekapPembayaranAllInvoiceByEmail(String email){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_LMETALLICA_NOTIFICATION")
+                .withFunctionName("get_rekap_all_invoice");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_email", email);
+        List<Map<String, Object>> out = simpleJdbcCall.executeFunction(ArrayList.class, in);
+        System.out.println("Annisa : "+out);
+        return out;
+//        List<RekapPembayaranAllInvoice> rekapPembayaranAllInvoices = new ArrayList<>();
     }
 
     public List<Map<String, Object>> getDerivatifCcsPss(int pStart, int pLength, String pTglAwal, String pTglAkhir, String pBank, String pTenor, String pSortBy, String pSortDir, String pSearch) throws SQLException {
