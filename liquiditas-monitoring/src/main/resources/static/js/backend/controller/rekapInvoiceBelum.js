@@ -3618,11 +3618,9 @@ function doPayment(pMetodeBayar, pBank, pRefNum, pSource, pBeneficiaryAccount, p
                  pConfirmationCode : $("#pConfirmationCode2").val(),
             },
             success: function (res) {
-                // // console.log(res);
-                var tes = JSON.stringify(res);
                 if (res.responseMessage === 'Sukses') {
-                    var pStatus = res.data.responseMessage;
-                    alert(res.data.responseMessage);
+                    var pStatus = res.responseMessage;
+                    alert(res.responseMessage);
                     updLunas(pStatus);
                     // $("#pRespon3").val(res.responseMessage);
                     // table_rekapitulasi.ajax.reload();
@@ -3635,7 +3633,7 @@ function doPayment(pMetodeBayar, pBank, pRefNum, pSource, pBeneficiaryAccount, p
                 $("#btn-payment").prop("disabled", false);
                 $("#btn-payment").html("Payment");
             },
-            error: function () {
+            error: function (error) {
                 alert("Gagal Melakukan Proses,Harap Hubungi Administrator");
                 $("#btn-payment").prop("disabled", false);
                 $("#btn-payment").html("Payment");
