@@ -680,7 +680,7 @@ public class GeneratedocController {
         dg.addVariable("NOTIFICATION_FLAG", object.getString("NOTIFICATION_FLAG"));
         dg.addVariable("REMITTER_REFERENCE_NO", object.getString("REMITTER_REFERENCE_NO"));
         dg.addVariable("EMAIL_BENEF", object.getString("EMAIL_BENEF"));
-        dg.addVariable("TGL_PAYMENT", object.getString("TGL_LUNAS"));
+        dg.addVariable("TGL_PAYMENT", object.getString("TGL_LUNAS")+" "+object.getString("JAM_BAYAR"));
         dg.addVariable("PAYMENT_MODE", "SCHEDULED");
         dg.addVariable("METODE_PEMBAYARAN", object.getString("METODE_PEMBAYARAN"));
         dg.addVariable("INSTRUCTION_MODE", object.getString("INSTRUCTION_MODE"));
