@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2cac0c3f-6544-482b-a948-e678ee5fc06a" name="Default Changelist" comment="">
+    <list default="true" id="40f2fe43-7556-40a5-b132-a72e6aa0708b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -198,7 +198,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600956713054</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="menambahkan titik koma">
+      <created>1601307606369</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1601307606369</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -227,6 +234,7 @@
     <MESSAGE value="Ubah idle time dan jetty server post size" />
     <MESSAGE value="Ubah konfigurasi smtp" />
     <MESSAGE value="Ubah proses refnum bank menjadi di belakang" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ubah proses refnum bank menjadi di belakang" />
+    <MESSAGE value="menambahkan titik koma" />
+    <option name="LAST_COMMIT_MESSAGE" value="menambahkan titik koma" />
   </component>
 </project>
