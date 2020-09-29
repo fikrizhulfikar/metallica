@@ -3305,7 +3305,7 @@ function getBallance2(pBank, pSource, pBeneficiary){
                 $("#getBalanceBtn").html("Submit");
             },
             error: function (err) {
-                alert(res.responseMessage);
+                alert(err.responseMessage);
                 $("#getBalanceBtn").attr("disabled", false);
                 $("#getBalanceBtn").html("Submit");
             }
