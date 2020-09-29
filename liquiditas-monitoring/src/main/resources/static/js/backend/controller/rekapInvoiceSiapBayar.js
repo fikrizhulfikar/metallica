@@ -783,7 +783,7 @@ function getAllData() {
                         {
                             "aTargets": [80],
                             "mRender": function (data, type, full) {
-                                var ret_value;
+                                var ret_value = '-';
                                 if (full.FLAG_TOMBOL === "1") {
                                     ret_value =
                                         '<div class="btn-group">' +
