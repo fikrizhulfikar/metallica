@@ -3283,8 +3283,8 @@ function getBallance2(pBank, pSource, pBeneficiary){
                 $("#getBalanceBtn").attr("disabled",false);
                 $("#getBalanceBtn").html("Submit");
             },
-            error: function () {
-                alert(res.responseMessage);
+            error: function (err) {
+                alert(err.responseMessage);
                 $("#getBalanceBtn").attr("disabled", false);
                 $("#getBalanceBtn").html("Submit");
             }
@@ -3444,7 +3444,8 @@ function validasiToken(pCompCode, pDocNo, pToken){
 
 }
 
-function updLunas(pStatus){
+function updLunas(pStatus, pReferenceNumber){
+    let reference = (pReferenceNumber === undefined) ? '-' : pReferenceNumber;
     var stateCrf = confirm("Anda Yakin Akan Melunasi Tagihan Ini?");
     if (stateCrf == true) {
         showLoadingCss();
@@ -3461,6 +3462,7 @@ function updLunas(pStatus){
                  pStatus: pStatus,
                  pOssId: $("#pOssId2").val(),
                  pGroupId:$("#pGroupId2").val(),
+                 pRefNumBank : reference,
             },
             success: function (res) {
                 hideLoadingCss("")
@@ -3621,12 +3623,9 @@ function doPayment(pMetodeBayar, pBank, pRefNum, pSource, pBeneficiaryAccount, p
                 if (res.responseMessage === 'Sukses') {
                     var pStatus = res.responseMessage;
                     alert(res.responseMessage);
-                    updLunas(pStatus);
-                    // $("#pRespon3").val(res.responseMessage);
-                    // table_rekapitulasi.ajax.reload();
+                    updLunas(pStatus, res.data.customerReferenceNumber);
                 } else {
                     alert(res.responseMessage);
-                    // table_rekapitulasi.ajax.reload();
                     $("#pRespon3").val(res.errorMessage);
                 }
 
