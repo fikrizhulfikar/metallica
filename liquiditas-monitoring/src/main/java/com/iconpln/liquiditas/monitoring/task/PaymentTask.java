@@ -54,6 +54,7 @@ public class PaymentTask {
                 System.out.println(result);
                 JSONObject json = new JSONObject(result);
                 if (json.getString("responseMessage").equals("Sukses")){
+                    invoice.put("REF_NUM_BANK",json.getString("customerReferenceNumber"));
                     listLunas.add(invoice);
                 }else{
                     invoice.put("RESPONSE_CODE",json.getString("responseCode"));
@@ -66,7 +67,7 @@ public class PaymentTask {
                         corpayJobPaymentService.corpayLunas(
                             invoiceLunas.get("COMP_CODE").toString(),invoiceLunas.get("DOC_NO").toString(),invoiceLunas.get("FISC_YEAR").toString(),
                             invoiceLunas.get("LINE_ITEM").toString(),invoiceLunas.get("KET").toString(), "JOB PAYMENT", "", invoiceLunas.get("OSS_ID").toString(),
-                            invoiceLunas.get("GROUP_ID").toString()
+                            invoiceLunas.get("GROUP_ID").toString(),invoiceLunas.get("REF_NUM_BANK").toString()
                         );
                 }
             }
