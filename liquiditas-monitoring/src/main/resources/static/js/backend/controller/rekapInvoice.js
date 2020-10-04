@@ -3270,3 +3270,45 @@ $("#pMetodeBayarMultiple").change(function () {
         $("#pMultipleNoGiro").val("");
     }
 });
+
+function getBallance2(pBank, pSource, pBeneficiary){
+    var stateCrf = confirm("Anda Data Yang Anda Masukan Sudah Benar?");
+    if (stateCrf == true) {
+        $("#getBalanceBtn").attr("disabled",true);
+        $("#getBalanceBtn").html("Memproses...");
+        $.ajax({
+            url: baseUrl + "api_operator/rekap_invoice_belum/get_Ballance2",
+            dataType: 'JSON',
+            type: "POST",
+            data: {
+                pBank: $("#pBanks").val(),
+                pSource: $("#pSources").val(),
+                pBeneficiary: $("#pSources").val(),
+            },
+            success: function (res) {
+                var tes = JSON.stringify(res);
+                console.log(res);
+
+                if (res.responseMessage === 'Sukses') {
+                    alert(res.responseMessage);
+                    // table_rekapitulasi.ajax.reload();
+                    $("#pAccountNames").val(res.data.accountName);
+                    $("#pAccountBalances").val(accounting.formatNumber(res.data.accountBalance,2,".",","));
+                    $("#pRespons").val(res.successMessage);
+                }
+                else {
+                    alert(res.responseMessage);
+                    // table_rekapitulasi.ajax.reload();
+                    $("#pRespons").val(res.errorMessage);
+                }
+                $("#getBalanceBtn").attr("disabled",false);
+                $("#getBalanceBtn").html("Submit");
+            },
+            error: function (err) {
+                alert(err.responseMessage);
+                $("#getBalanceBtn").attr("disabled", false);
+                $("#getBalanceBtn").html("Submit");
+            }
+        });
+    }
+}

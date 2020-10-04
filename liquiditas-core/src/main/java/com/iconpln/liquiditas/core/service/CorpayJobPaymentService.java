@@ -33,7 +33,7 @@ public class CorpayJobPaymentService {
 
     public Map<String, Object> corpayLunas(
             String comp_code, String doc_no, String fiscal_year, String line_item, String jenis_transaksi,
-            String user_id, String status, String oss_id, String group_id
+            String user_id, String status, String oss_id, String group_id, String ref_num_bank
 
     ){
         Map<String, Object> out = new HashMap<>();
@@ -50,6 +50,7 @@ public class CorpayJobPaymentService {
                 .addValue("p_status", status)
                 .addValue("p_oss_id", oss_id)
                 .addValue("p_group_id",group_id)
+                .addValue("p_ref_num_bank",ref_num_bank)
                 .addValue("out_msg", OracleTypes.VARCHAR);
 
         out =  simpleJdbcCall.execute(param);
