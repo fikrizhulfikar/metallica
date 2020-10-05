@@ -1157,3 +1157,41 @@ function setSelectFilterBank(idHtml, jenis, idForSelected) {
         }
     });
 }
+
+function selectFilterBank(idHtml, jenis, idForSelected) {
+    $.ajax({
+        url: baseUrl + "api_master/filter/list_filter_bank",
+        dataType: 'JSON',
+        type: "GET",
+        sync :true,
+        success: function (res) {
+            $("#" + idHtml + "").html('');
+            $("#" + idHtml + "").append('<option value="ALL">SEMUA BANK</option>');
+            $.each(res, function (key, val) {
+                $("#" + idHtml + "").append('<option value="' + val.BANK_BENEF + '">' + val.BANK_BENEF + '</option>');
+            });
+        },
+        error: function () {
+            $("#" + idHtml + "").html('<option value="ALL">SEMUA BANK</option>');
+        }
+    });
+}
+
+function selectFilterCashCode(idHtml, jenis, idForSelected) {
+    $.ajax({
+        url: baseUrl + "api_master/filter/list_filter_cashcode",
+        dataType: 'JSON',
+        type: "GET",
+        sync :true,
+        success: function (res) {
+            $("#" + idHtml + "").html('');
+            $("#" + idHtml + "").append('<option value="ALL">PILIH CASH CODE</option>');
+            $.each(res, function (key, val) {
+                $("#" + idHtml + "").append('<option value="' + val.CASH_CODE + '">' + val.CASH_CODE + '</option>');
+            });
+        },
+        error: function () {
+            $("#" + idHtml + "").html('<option value="ALL">SEMUA CASH CODE</option>');
+        }
+    });
+}

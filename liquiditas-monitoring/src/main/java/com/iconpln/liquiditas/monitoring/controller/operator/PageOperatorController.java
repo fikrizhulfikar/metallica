@@ -181,6 +181,11 @@ public class PageOperatorController {
         return "operator/rekap_invoice_reject";
     }
 
+    @RequestMapping("/rekap_realisasi_pembayaran")
+    public String rekap_realisasi_pembayaran() {
+        return "operator/rekap_realisasi_pembayaran";
+    }
+
     @RequestMapping("/rekap_invoice_admin")
     public String rekap_invoice_admin() {return "operator/rekap_invoice_admin"; }
 
@@ -231,6 +236,11 @@ public class PageOperatorController {
     @RequestMapping("/pembelian_valas_trx")
     public String pembelian_valas_trx() {
         return "operator/pembelian_valas_trx";
+    }
+
+    @RequestMapping("/proyeksi_pengadaan_valas_trx")
+    public String proyeksi_pengadaan_valas_trx() {
+        return "operator/proyeksi_pengadaan_valas_trx";
     }
 
     @RequestMapping("/pindah_buku_trx")
