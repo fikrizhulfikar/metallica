@@ -26,28 +26,33 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title">Form Realisasi Pembayaran</h5>
+<!--                    <h5 class="modal-title">NOTA PEMINDAHBUKUAN LCL</h5>-->
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="pStatusInvoice">Status Invoice</label>
-                        <select id="pStatusInvoice" class="form-control" required="required">
-                            <option value=""></option>
-                            <option id="option-input" value="1">INPUT DATA</option>
-                            <option id="option-siap" value="2">SIAP BAYAR</option>
-                            <option id="option-lunas" value="3">LUNAS</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="pKeteranganStatus">Keterangan:</label>
-                        <input type="text" class="form-control" id="pKeteranganStatus" required="required"/>
-                    </div>
+                    <table id="table-imprest-pusat" class="table table-bordered">
+                        <thead>
+                        <tr >
+                            <th style="text-align: center; vertical-align: middle" rowspan="2">BANK</th>
+                            <th style="text-align: center; vertical-align: middle" rowspan="2">SISA SALDO</th>
+                            <th style="text-align: center; vertical-align: middle" colspan="4">PLACEMENT - USD</th>
+                            <th style="text-align: center; vertical-align: middle" rowspan="2">TOTAL</th>
+                        </tr>
+                        <tr >
+                            <th style="text-align: center">MANDIRI</th>
+                            <th style="text-align: center">BRI</th>
+                            <th style="text-align: center">BNI</th>
+                            <th style="text-align: center">BUKOPIN</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="update_status()">Submit</button>
+                    <button type="button" class="btn btn-primary" onclick="update_status()">Set</button>
+                    <button type="button" class="btn btn-primary" onclick="update_status()">Cancel</button>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -56,28 +61,121 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title">Form Realisasi Pembayaran</h5>
+<!--                    <h5 class="modal-title">Form Realisasi Pembayaran</h5>-->
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="pStatusInvoice">Status Invoice</label>
-                        <select id="pStatusInvoice" class="form-control" required="required">
-                            <option value=""></option>
-                            <option id="option-input" value="1">INPUT DATA</option>
-                            <option id="option-siap" value="2">SIAP BAYAR</option>
-                            <option id="option-lunas" value="3">LUNAS</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="pKeteranganStatus">Keterangan:</label>
-                        <input type="text" class="form-control" id="pKeteranganStatus" required="required"/>
-                    </div>
+                    <table id="table-impor" class="table table-bordered">
+                        <thead>
+                        <tr >
+                            <th style="text-align: center; vertical-align: middle" rowspan="2">BANK</th>
+                            <th style="text-align: center; vertical-align: middle" rowspan="2">SISA SALDO</th>
+                            <th style="text-align: center; vertical-align: middle" colspan="4">PLACEMENT - EUR</th>
+                            <th style="text-align: center; vertical-align: middle" rowspan="2">TOTAL</th>
+                        </tr>
+                        <tr >
+                            <th style="text-align: center">MANDIRI</th>
+                            <th style="text-align: center">BRI</th>
+                            <th style="text-align: center">BNI</th>
+                            <th style="text-align: center">BUKOPIN</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="update_status()">Submit</button>
+                    <button type="button" class="btn btn-primary" onclick="update_status()">Set</button>
+                    <button type="button" class="btn btn-primary" onclick="update_status()">Cancel</button>
                 </div>
             </div>
+        </div>
+    </div>
 
+    <div id="set-c" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <!--                    <h5 class="modal-title">Form Realisasi Pembayaran</h5>-->
+                </div>
+                <div class="modal-body">
+                    <table id="table-imprest-operasi-terpusat" class="table table-bordered">
+                        <thead>
+                        <tr >
+                            <th style="text-align: center; vertical-align: middle" rowspan="2">BANK</th>
+                            <th style="text-align: center; vertical-align: middle" rowspan="2">SISA SALDO</th>
+                            <th style="text-align: center; vertical-align: middle" colspan="4">PLACEMENT - JPY</th>
+                            <th style="text-align: center; vertical-align: middle" rowspan="2">TOTAL</th>
+                        </tr>
+                        <tr >
+                            <th style="text-align: center">MANDIRI</th>
+                            <th style="text-align: center">BRI</th>
+                            <th style="text-align: center">BNI</th>
+                            <th style="text-align: center">BUKOPIN</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="update_status()">Set</button>
+                    <button type="button" class="btn btn-primary" onclick="update_status()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="set-d" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">NOTA PEMINDAHANBUKUAN FCL</h5>
+                </div>
+                <div class="modal-body">
+                    <table id="table-pemindahbukuan" class="table table-bordered">
+                        <thead>
+                        <tr >
+                            <th style="text-align: center; vertical-align: middle" colspan="3">DARI (RUPIAH)</th>
+                            <th style="text-align: center; vertical-align: middle" colspan="6">KEPADA (RUPIAH)</th>
+                        </tr>
+                        <tr >
+                            <th style="text-align: center">BANK</th>
+                            <th style="text-align: center">NAMA REKENING</th>
+                            <th style="text-align: center">NO REKENING</th>
+                            <th style="text-align: center">BANK</th>
+                            <th style="text-align: center">NAMA REKENING</th>
+                            <th style="text-align: center">NO REKENING</th>
+                            <th style="text-align: center">NOMINAL</th>
+                            <th style="text-align: center">NO SAP</th>
+                            <th style="text-align: center">KETERANGAN</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                    <table id="table-rekap-placement" class="table table-bordered">
+                        <thead>
+                        <tr >
+                            <th style="text-align: center; vertical-align: middle" rowspan="2" colspan="2">BANK</th>
+                            <th style="text-align: center; vertical-align: middle" rowspan="2">SALDO AKHIR IMPREST VALAS HARI H</th>
+                            <th style="text-align: center; vertical-align: middle" colspan="4">REKAP PLACEMENT</th>
+                            <th style="text-align: center; vertical-align: middle" rowspan="2">SALDO AKHIR IMPREST VALAS SETELAH PLACEMENT</th>
+                        </tr>
+                        <tr >
+                            <th style="text-align: center">MANDIRI</th>
+                            <th style="text-align: center">BRI</th>
+                            <th style="text-align: center">BNI</th>
+                            <th style="text-align: center">BUKOPIN</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -86,7 +184,7 @@
             <div class="col-md-12" style="margin-top: 20px">
                 <div class="card">
                     <div class="card-block" >
-                        <div align="center" class="title" style="margin-bottom: 10px"><h6><b>REKAP PLACEMENT LCL</b></h6></div>
+                        <div align="center" class="title" style="margin-bottom: 10px"><h6><b>REKAP PLACEMENT FCL</b></h6></div>
                         <div align="center" class="title" style="margin-bottom: 10px"><h6><b>TGL : </b></h6></div>
                         <div style="overflow-y:auto;">
                             <div class="col-md-12 row" style="margin-top: 25px; margin-bottom: 25px; padding-left: 0px; padding-right: 0px">
@@ -100,7 +198,7 @@
                                     <label class="lbl-src">Sesi</label>
                                 </div>
                                 <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">
-                                    <select name="bank" id="range_filter" class="form-control">
+                                    <select name="bank" id="sesi_filter" class="form-control">
                                         <option value="">Pilih Data</option>
                                     </select>
                                 </div>
@@ -112,20 +210,16 @@
                             <table id="table-rekap-placement-lcl" class="table table-bordered">
                                 <thead>
                                 <tr >
-                                    <th style="text-align: center; vertical-align: middle" rowspan="2">BANK</th>
-                                    <th style="text-align: center; vertical-align: middle" rowspan="2">SALDO AWAL RECEIPT</th>
-                                    <th style="text-align: center; vertical-align: middle" colspan="8">REKAP PLACEMENT</th>
-                                    <th style="text-align: center; vertical-align: middle" rowspan="2">SALDO AKHIR RECEIPT</th>
+                                    <th style="text-align: center; vertical-align: middle" colspan="2" rowspan="2">BANK</th>
+                                    <th style="text-align: center; vertical-align: middle" rowspan="2">SALDO AKHIR IMPREST VALAS HARI</th>
+                                    <th style="text-align: center; vertical-align: middle" colspan="4">REKAP PLACEMENT</th>
+                                    <th style="text-align: center; vertical-align: middle" rowspan="2">SALDO AKHIR IMPREST VALAS SETELAH</th>
                                 </tr>
                                 <tr >
-                                    <th style="text-align: center;">IMPREST KANTOR PUSAT</th>
-                                    <th style="text-align: center">IMPOR</th>
-                                    <th style="text-align: center">IMPREST OPERASI TERPUSAT</th>
-                                    <th style="text-align: center">IMPREST INVESTASI TERPUSAT</th>
-                                    <th style="text-align: center">SETTLEMENT</th>
-                                    <th style="text-align: center">PROYEKSI PENGADAAN VALAS</th>
-                                    <th style="text-align: center">RECEIPT PLACEMENT</th>
-                                    <th style="text-align: center">GIRO SPECIAL RATE</th>
+                                    <th style="text-align: center;">MANDIRI</th>
+                                    <th style="text-align: center">BRI</th>
+                                    <th style="text-align: center">BNI</th>
+                                    <th style="text-align: center">BUKOPIN</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -140,7 +234,7 @@
             <div class="col-md-12" style="margin-top: 20px">
                 <div class="card">
                     <div class="card-block" >
-                        <div align="center" class="title" style="margin-bottom: 10px"><h6><b>KEBUTUHAN PLACEMENT LCL</b></h6></div>
+                        <div align="center" class="title" style="margin-bottom: 10px"><h6><b>KEBUTUHAN PLACEMENT FCL</b></h6></div>
                         <div align="center" class="title" style="margin-bottom: 10px"><h6><b>TGL : </b></h6></div>
                         <div style="overflow-y:auto;">
                             <table id="rupiah" class="table table-rencana-realisasi table-condensed table-bordered" width="100%">
@@ -150,8 +244,7 @@
                                 <tr width="12%">
                                     <!--                                id="header-tanggal1"<td style="background-color: #F4D35E" width="5%">NO</td>-->
                                     <!--                                                    <th style="background: #F4D35E" width="10%">BANK</th>-->
-                                    <th style=" text-align: center;" width="9%">JENIS REKENING</th>
-                                    <th style=" text-align: center;" width="7%">KETERANGAN</th>
+                                    <th style=" text-align: center;" width="9%" colspan="2">TIPE KEBUTUHAN</th>
                                     <th id="tgl1b" style="vertical-align: middle !important; text-align: center;"  ></th>
                                     <th id="tgl2b" style="vertical-align: middle !important; text-align: center;"  ></th>
                                     <th id="tgl3b" style="vertical-align: middle !important; text-align: center;"  ></th>
@@ -159,7 +252,6 @@
                                     <th id="tgl5b" style="vertical-align: middle !important; text-align: center;"  ></th>
                                     <th id="tgl6b" style="vertical-align: middle !important; text-align: center;"  ></th>
                                     <!--                                                    <th id="tgl7" style="background: #F4D35E;vertical-align: middle !important; text-align: center;"  ></th>-->
-                                    <th style="vertical-align: middle !important; text-align: center;" width="10%" >TOTAL</th>
                                     <th style="vertical-align: middle !important; text-align: center;" width="10%" >AKSI</th>
                                 </tr>
 <!--                                </tr>-->
@@ -179,17 +271,17 @@
                     <div class="card-block" >
                         <div class="col-md-12 row" style="margin-top: 25px; margin-bottom: 25px; padding-left: 0px; padding-right: 0px">
                             <div class="col-md-4">
-                                <button onclick="search1()" class="btn btn-primary" style="width:100%; border-radius: 3px">Lihat Dokumen Placement</button>
+                                <button id="lihat-dokumen" class="btn btn-primary" onclick="openLihatDokumen()" style="width:100%; border-radius: 3px">Lihat Dokumen Placement</button>
                             </div>
                             <div class="col-md-2" style="padding-right: 0px;">&nbsp;</div>
                             <div class="col-md-2" style="padding-right: 0px;">
                                 <label class="lbl-src">Disusun Oleh :</label>
-                                <label class="lbl-src">Staff LCL</label>
+                                <label class="lbl-src">Staff FCL</label>
                                 <button onclick="search1()" class="btn btn-primary" style="width:100%; border-radius: 3px">Approve</button>
                             </div>
                             <div class="col-md-2" style="padding-right: 0px;">
                                 <label class="lbl-src">Diverifikasi Oleh :</label>
-                                <label class="lbl-src">MSB LCL</label>
+                                <label class="lbl-src">MSB FCL</label>
                                 <button onclick="search1()" class="btn btn-primary" style="width:100%; border-radius: 3px">Approve</button>
                             </div>
                             <div class="col-md-2" style="padding-right: 0px;">
@@ -205,7 +297,7 @@
     </div>
 </main>
 <div th:fragment="scripts-backend">
-    <script src="/static/js/backend/controller/placement_lcl.js"></script>
+    <script src="/static/js/backend/controller/placement_fcl.js"></script>
     <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
     <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
 </div>

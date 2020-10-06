@@ -75,20 +75,20 @@ function initDataTableImprstValas() {
             });
 
             var dataPieMYR = [];
-                        $.each(res.OUT_PIE_MYR, function (index, value) {
-                            var dataPieTemp = {
-                                label: value.ID_BANK,
-                                value: value.NILAI == 0 ? null : value.NILAI
-                            };
-                            dataPieMYR.push(dataPieTemp)
-                        });
+            $.each(res.OUT_PIE_MYR, function (index, value) {
+                var dataPieTemp = {
+                    label: value.ID_BANK,
+                    value: value.NILAI == 0 ? null : value.NILAI
+                };
+                dataPieMYR.push(dataPieTemp)
+            });
 
             console.log("");
 
-            creteChartUSDImprstValas(dataPieUSD);
-            creteChartJPYImprstValas(dataPieJPY);
-            creteChartEURImprstValas(dataPieEUR);
-            //creteChartMYRImprstValas(dataPieMYR);
+            createChartUSDImprstValas(dataPieUSD);
+            createChartJPYImprstValas(dataPieJPY);
+            createChartEURImprstValas(dataPieEUR);
+            createChartMYRImprstValas(dataPieMYR);
             hideLoadingCss()
         },
         error: function () {
@@ -103,7 +103,7 @@ function initDataTableImprstValas() {
     });
 }
 
-function creteChartUSDImprstValas(data) {
+function createChartUSDImprstValas(data) {
     console.log(data);
     FusionCharts.ready(function () {
         var fusioncharts = new FusionCharts({
@@ -132,7 +132,7 @@ function creteChartUSDImprstValas(data) {
     });
 }
 
-function creteChartEURImprstValas(data) {
+function createChartEURImprstValas(data) {
     console.log(data);
     FusionCharts.ready(function () {
         var fusioncharts = new FusionCharts({
@@ -161,7 +161,7 @@ function creteChartEURImprstValas(data) {
     });
 }
 
-function creteChartJPYImprstValas(data) {
+function createChartJPYImprstValas(data) {
     console.log(data);
     FusionCharts.ready(function () {
         var fusioncharts = new FusionCharts({
@@ -190,7 +190,7 @@ function creteChartJPYImprstValas(data) {
     });
 }
 
- function creteChartMYRImprstValas(data) {
+ function createChartMYRImprstValas(data) {
      console.log(data);
      FusionCharts.ready(function () {
          var fusioncharts = new FusionCharts({

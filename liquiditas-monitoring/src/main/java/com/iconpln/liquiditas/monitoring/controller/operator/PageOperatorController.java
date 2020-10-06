@@ -24,6 +24,10 @@ public class PageOperatorController {
     public String pengelolaan_likuiditas() { return "operator/pengelolaan_likuiditas";
     }
 
+    @RequestMapping("//dashboard_penerimaan")
+    public String dashboard_penerimaan() { return "operator/dash_penerimaan";
+    }
+
     @RequestMapping("/dashboard")
     public String dashboard() { return "operator/dashboard2";
     }
@@ -36,8 +40,24 @@ public class PageOperatorController {
     public String dash_realisasi() { return "operator/dash_realisasi";
     }
 
+    @RequestMapping("/rekap_realisasi_pembayaran")
+    public String rekap_realisasi_pembayaran() { return "operator/rekap_realisasi_pembayaran";
+    }
+
     @RequestMapping("/penjualan_tenaga_listrik")
     public String penjualan_tenaga_listrik() { return "operator/penjualan_tenaga_listrik";
+    }
+
+    @RequestMapping("/placement_lcl")
+    public String placement_lcl() { return "operator/placement_lcl";
+    }
+
+    @RequestMapping("/placement_fcl")
+    public String placement_fcl() { return "operator/placement_fcl";
+    }
+
+    @RequestMapping("/penerimaan_operasi")
+    public String penerimaan_operasi() { return "operator/penerimaan_operasi";
     }
 
     @RequestMapping("/rekapitulasi_data")
@@ -229,6 +249,11 @@ public class PageOperatorController {
     @RequestMapping("/pembelian_valas_trx")
     public String pembelian_valas_trx() {
         return "operator/pembelian_valas_trx";
+    }
+
+    @RequestMapping("/proyeksi_pengadaan_valas_trx")
+    public String proyeksi_pengadaan_valas_trx() {
+        return "operator/proyeksi_pengadaan_valas_trx";
     }
 
     @RequestMapping("/pindah_buku_trx")

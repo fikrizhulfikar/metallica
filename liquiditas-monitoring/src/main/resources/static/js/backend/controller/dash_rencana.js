@@ -130,7 +130,7 @@ function tableMainDashboard(_date){
             var rows = api.rows({page:'current'}).nodes();
             var last = null;
             let array = api.column(groupColumn, {page:'current'}).data();
-//            console.log(array[20])
+            console.log(array)
 
             api.column(groupColumn, {page:'current'}).data().each(function (group, i){
             if (last !== group.BANK){

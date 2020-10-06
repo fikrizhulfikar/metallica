@@ -20,88 +20,7 @@ var srcTglAwal = null;
 var srcTglAkhir = null;
 
 function initDataTablePenjualanTenagaListrik(p_tgl_awal, p_tgl_akhir, p_unit, p_range) {
-//    showLoadingCss()
-//    let groupColumn = 0;
-//    let tb_penjualan_tenaga_listrik = $("#penerimaan-penjualan-jenis-layanan").DataTable({
-//        "ajax" : {
-//            "url" : baseUrl + "api_operator/rekap_invoice_belum/penjualan_tenaga_listrik",
-//            "data" : {
-//                p_tgl_awal: $("#tanggal_awal1").val(),
-//                p_tgl_akhir: $("#tanggal_akhir1").val(),
-//                p_unit: $("#unit_filter1").val(),
-//                p_range: $("#range_filter1").val()
-//            },
-//            "type" : "GET",
-//            "dataType" : "JSON"
-//        },
-//        "sorting": false,
-//        "searching" : false,
-//        "paging": false,
-//        "bInfo" : false,
-//        "bLengthChange" : false,
-//        "columns" : [
-//            {
-//                "visible" : false,
-//                "data" : "TANGGAL"},
-//            {
-//                "width": "10%",
-//                "data" : "nomor",
-//                "render" : (data) => {
-//                    return data;
-//                },
-//            },
-//            {
-//                "data" : "tanggal",
-//                "render" : (data) => {
-//                    return data;
-//                },
-//            },
-//            {
-//                "data" : "POSTPAID",
-//                "render" : (data) => {
-//                    return '<td>'+ new Intl.NumberFormat().format(data) +'</td>'
-//                },
-//                "createdCell" : (cell)=>{
-//                    $(cell).css({
-//                       "text-align" : "center"
-//                    })
-//                 }
-//            },
-//            {
-//                "data" : "PREPAID",
-//                "render" : (data) => {
-//                    return '<td>'+ new Intl.NumberFormat().format(data) +'</td>'
-//                },
-//                "createdCell" : (cell)=>{
-//                    $(cell).css({
-//                       "text-align" : "center"
-//                    })
-//                }
-//            },
-//            {
-//                "data" : "NTL",
-//                "render" : (data) => {
-//                    return '<td>'+ new Intl.NumberFormat().format(data) +'</td>'
-//                },
-//                "createdCell" : (cell)=>{
-//                    $(cell).css({
-//                        "text-align" : "right"
-//                    })
-//                }
-//            },
-//            {
-//                "data" : "TOTAL",
-//                "render" : (data) => {
-//                    return '<td> Rp. '+ new Intl.NumberFormat().format(data) +'</td>'
-//                },
-//                "createdCell" : (cell)=>{
-//                    $(cell).css({
-//                        "text-align" : "right"
-//                    })
-//                }
-//            },
-//        ]
-//    });
+
     $('#tanggal_awal1').datepicker({dateFormat: 'dd/mm/yy'});
     $('#tanggal_akhir1').attr("disabled", "disabled");
 
@@ -113,7 +32,7 @@ function initDataTablePenjualanTenagaListrik(p_tgl_awal, p_tgl_akhir, p_unit, p_
             p_tgl_awal: $("#tanggal_awal1").val(),
             p_tgl_akhir: $("#tanggal_akhir1").val(),
             p_unit: $("#unit_filter1").val(),
-            p_range: $("#range_filter1").val(),
+//            p_range: $("#range_filter1").val(),
         },
         success: function (res) {
             var data = res.return;
@@ -267,7 +186,7 @@ function initDataTablePenjualanTenagaListrikDist(p_tgl_awal, p_tgl_akhir, p_unit
     $('#tanggal_awal4').datepicker({dateFormat: 'dd/mm/yy'});
     $('#tanggal_akhir4').attr("disabled", "disabled");
     $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum//penjualan_tenaga_listrik_dist",
+        url: baseUrl + "api_operator/rekap_invoice_belum/penjualan_tenaga_listrik_dist",
         dataType: 'JSON',
         type: "GET",
         data: {

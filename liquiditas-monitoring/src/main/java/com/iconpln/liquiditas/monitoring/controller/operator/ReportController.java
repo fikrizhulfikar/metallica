@@ -282,4 +282,36 @@ public class ReportController {
             return null;
         }
     }
+
+    @GetMapping(path = "/valuta_asing")
+    public Map listDashboardPenerimaanOperasiValutaAsing(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardPenerimaanOperasiValutaAsing(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @GetMapping(path = "/rupiah")
+    public Map listDashboardPenerimaanOperasiRupiah(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardPenerimaanOperasiRupiah(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
 }

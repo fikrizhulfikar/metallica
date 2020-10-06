@@ -43,58 +43,58 @@ function tableMainDashboard(_date){
                                                               "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                               }},
             {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D0 == "0" || data.RP_D0 == null){
-                                                              return "<td><input id='hnol' type='number' value='"+data.RP_D0+"'></td>";
+                                                              return "<td><input style='text-align:right;' id='hnol' type='number' value='"+data.RP_D0+"'></td>";
                                                               } else
-                                                              return "<td><input id='hnol' type='number' value='"+data.RP_D0+"'></td>";
+                                                              return "<td><input style='text-align:right;' id='hnol' type='number' value='"+data.RP_D0+"'></td>";
                                                            },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
             {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D1 == "0" || data.RP_D1 == null){
-                                                              return "<td><input id='hsatu' type='number' value='"+data.RP_D1+"'></td>";
+                                                              return "<td><input style='text-align:right;' id='hsatu' type='number' value='"+data.RP_D1+"'></td>";
                                                               } else
-                                                              return "<td><input id='hsatu' type='number' value='"+data.RP_D1+"'></td>";
+                                                              return "<td><input style='text-align:right;' id='hsatu' type='number' value='"+data.RP_D1+"'></td>";
                                                            },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
             {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D2 == "0" || data.RP_D2 == null){
-                                                              return "<td><input id='hdua' type='number' value='"+data.RP_D2+"'></td>";
+                                                              return "<td><input style='text-align:right;' id='hdua' type='number' value='"+data.RP_D2+"'></td>";
                                                               } else
-                                                              return "<td><input id='hdua' type='number' value='"+data.RP_D2+"'></td>";
+                                                              return "<td><input style='text-align:right;' id='hdua' type='number' value='"+data.RP_D2+"'></td>";
                                                            },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
             {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D3 == "0" || data.RP_D3 == null){
-                                                              return "<td><input id='htiga' type='number' value='"+data.RP_D3+"'></td>";
+                                                              return "<td><input style='text-align:right;' id='htiga' type='number' value='"+data.RP_D3+"'></td>";
                                                               } else
-                                                              return "<td><input id='htiga' type='number' value='"+data.RP_D3+"'></td>";
+                                                              return "<td><input style='text-align:right;' id='htiga' type='number' value='"+data.RP_D3+"'></td>";
                                                            },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
             {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D4 == "0" || data.RP_D4 == null){
-                                                              return "<td><input id='hempat' type='number' value='"+data.RP_D4+"'></td>";
+                                                              return "<td><input style='text-align:right;' id='hempat' type='number' value='"+data.RP_D4+"'></td>";
                                                               } else
-                                                              return "<td><input id='hempat' type='number' value='"+data.RP_D4+"'></td>";
+                                                              return "<td><input style='text-align:right;' id='hempat' type='number' value='"+data.RP_D4+"'></td>";
                                                            },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
             {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D5 == "0" || data.RP_D5 == null){
-                                                              return "<td><input id='hlima' type='number' value='"+data.RP_D5+"'></td>";
+                                                              return "<td><input style='text-align:right;' id='hlima' type='number' value='"+data.RP_D5+"'></td>";
                                                               } else
-                                                              return "<td><input id='hlima' type='number' value='"+data.RP_D5+"'></td>";
+                                                              return "<td><input style='text-align:right;' id='hlima' type='number' value='"+data.RP_D5+"'></td>";
                                                            },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
             {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D6 == "0" || data.RP_D6 == null){
-                                                              return "<td><input id='henam' type='number' value='"+data.RP_D6+"'></td>";
+                                                              return "<td><input style='text-align:right;' id='henam' type='number' value='"+data.RP_D6+"'></td>";
                                                               } else
-                                                              return "<td><input id='henam' type='number' value='"+data.RP_D6+"'></td>";
+                                                              return "<td><input style='text-align:right;' id='henam' type='number' value='"+data.RP_D6+"'></td>";
                                                            },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},
             {"data":null,"render" : (data, tyoe, row) => {if (data.RP_TOTAL == "0" || data.RP_TOTAL == null){
-                                                              return '<td>'+ "<input id='kdcurrency_potensi' type='hidden' value='"+data.CURRENCY+"' disabled>" + new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
+                                                              return '<td>'+ "<input style='text-align:right;' id='kdcurrency_potensi' type='hidden' value='"+data.CURRENCY+"' disabled>" + new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
                                                               } else
-                                                              return '<td>'+ "<input id='kdcurrency_potensi' type='hidden' value='"+data.CURRENCY+"' disabled>"+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
+                                                              return '<td>'+ "<input style='text-align:right;' id='kdcurrency_potensi' type='hidden' value='"+data.CURRENCY+"' disabled>"+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
                                                            },
                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
                                                          }},

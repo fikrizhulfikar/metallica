@@ -227,7 +227,6 @@
                     <button type="button" class="btn btn-primary" onclick="ins_data()">Submit</button>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -386,67 +385,42 @@
             <div id="filter">
                 <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;">
                     <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Tanggal Awal </label>
+                        <label class="lbl-src">Tanggal</label>
                     </div>
-                    <div class="col-md-3" style="padding-right: 0px;">
+                    <div class="col-md-2" style="padding-right: 0px;">
                         <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal"/>
                     </div>
                     <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Tanggal Akhir </label>
+                        <label class="lbl-src">Sesi</label>
                     </div>
                     <div class="col-md-3" style="padding-right: 0px;">
-                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>
-                    </div>
-                    <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Bank </label>
-                    </div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="bank" id="cmb_bank" class="form-control">
+                        <select name="bank" id="cmb_sesi" class="form-control">
                             <option value="">Pilih Data</option>
                         </select>
                     </div>
+                    <div class="col-md-3" style="padding-right: 0px;">&nbsp;</div>
+                    <div class="col-md-2" style="padding-right: 0px;">
+                        <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Load</button>
+                    </div>
+<!--                    <div class="col-md-1" style="padding-right: 0px;">-->
+<!--                        <label class="lbl-src">Tanggal Akhir </label>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-3" style="padding-right: 0px;">-->
+<!--                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>-->
+<!--                    </div>-->
                 </div>
-                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
-                    <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Currency </label>
-                    </div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="bacurrecnynk" id="cmb_currecny" class="form-control">
-                            <option value="">Pilih Data</option>
-                        </select>
-                    </div>
-                    <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Jenis Pembayaran </label>
-                    </div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="jenis_pemabayaran" id="cmb_jenis_pemabayaran" class="form-control">
-                            <option value="">Pilih Data</option>
-                        </select>
-                    </div>
-                    <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
-                    </div>
-                </div>
-                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
-                    <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Status </label>
-                    </div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="status" id="cmb_status" class="form-control">
-                            <option value="">PILIH STATUS</option>
-                        </select>
-                    </div>
+<!--                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">-->
+<!--                    <div class="col-md-1" style="padding-right: 0px;">-->
+<!--                        <label class="lbl-src">Currency </label>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-3" style="padding-right: 0px;">-->
+<!--                        <select name="bacurrecnynk" id="cmb_currecny" class="form-control">-->
+<!--                            <option value="">Pilih Data</option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-4" style="padding-right: 0px;">&nbsp;</div>-->
 
-                    <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Status Tracking</label>
-                    </div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="status_tracking" id="cmb_status_tracking" class="form-control">
-                            <option value="">PILIH STATUS TRACKING</option>
-                        </select>
-                    </div>
-                </div>
+<!--                </div>-->
             </div>
             <div class="list-data" style="margin-top:25px;">
                 <div class="panel panel-default">
@@ -454,21 +428,21 @@
                         <table id="table-rekapitulasi" class="table table-bordered table-striped">
                             <thead style="font-size: 12px">
                             <tr>
-                                <th>NO.</th>
-                                <th>JENIS TAGIHAN</th>
-                                <th>ID OSS</th>
-                                <th>JENIS PEMBAYARAN</th>
-                                <th>JATUH TEMPO</th>
-                                <th>VENDOR / PENGEMBANG / PEMASOK / LOAN</th>
-                                <th>CURRENCY</th><!--5-->
-                                <th>NILAI TAGIHAN</th>
+                                <th>TIPE KEBUTUHAN</th>
+                                <th>BANK</th>
+                                <th></th>
+                                <th>IMPOR</th>
+                                <th>IMPREST OPERASI TERPUSAT</th>
+                                <th>IMPREST INVESTASI TERPUSAT</th>
+                                <th>SETTLEMENT</th><!--5-->
+                                <th>PROYEKSI PENGADAAN VALAS</th>
                                 <!--<th>STATUS TAGIHAN</th>-->
-                                <th>NAMA KONTRAK/ LOAN/ UNIT PENERIMA/ PEMBANGKIT</th>
-                                <th>BANK TUJUAN PEMBAYARAN</th>
-                                <th>BANK PEMBAYAR</th>
-                                <th>TGL. TERIMA TAGIHAN</th><!--10-->
-                                <th>TGL. TAGIHAN</th>
-                                <th>NO. TAGIHAN</th>
+                                <th>JASA GIRO</th>
+                                <th>PAJAK (%)</th>
+                                <th>PAJAK (NOMINAL)</th>
+                                <th>NETT JASA GIRO</th><!--10-->
+                                <th>POKOK+JASA GIRO</th>
+                                <th>AKSI</th>
                                 <th>TGL. NOTA DINAS PEMBAYARAN</th>
                                 <th>NO. NOTA DINAS PEMBAYARAN</th>
                                 <th>TGL PEMBAYARAN</th><!--15-->
@@ -623,6 +597,6 @@
     </div>
 </main>
 <div th:fragment="scripts-backend">
-    <script src="/static/js/backend/controller/rekapAdmin.js"></script>
+    <script src="/static/js/backend/controller/giro_special_rate.js"></script>
     <!--<script src="static/js/jquery.mask.min.js"></script>-->
 </div>

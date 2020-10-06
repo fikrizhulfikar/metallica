@@ -1,6 +1,5 @@
 $(document).ready(function () {
     tableMainDashboard();
-    tableRencanaPerVendor();
 
     $("#dashboard-carousel").carousel({
         interval : 1000*5,
@@ -73,256 +72,256 @@ function tableMainDashboard(_date){
     $("#tgl4h").html(incDate(date, 3));
     $("#tgl5h").html(incDate(date, 4));
     $("#tgl6h").html(incDate(date, 5));
-//    $("#tgl7c").html(incDate(date, 6));
 
-//    let ren_pem_usd = $("#rencana-pembayaran-usd").DataTable({
-//        "ajax" : {
-//            "url": baseUrl + " ",
-//            "data" : {
-//                "tanggal" : current_full_date,
-//            },
-//            "type" : "GET",
-//            "dataType" : "json",
-//        },
-//        "sorting": false,
-//        "searching" : false,
-//        "paging": false,
-//        "bInfo" : false,
-//        "bLengthChange" : false,
-//        "columns" : [
-////            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
-//            {"data": null,"visible": false,"render": (data, type, row) => {return data.BANK;}},
-//            {"data": null,"render": (data, type, row) => {return data.CURRENCY;}},
-////            {"data": null,"render": (data, type, row) => {if (data.BANK === "TOTAL"){
-////                                                            return '<td> TOTAL '+data.CURRENCY+'</td>';
-////                                                            }else
-////                                                            return '<td>'+data.CURRENCY+'</td>';
-////                                                            }},
-//            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D0 == "0" || data.RP_D0 == null){
-//                                                              return '<td> - </td>';
-//                                                              } else
-//                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
-//                                                           },
-//                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-//                                                         }},
-//            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D1 == "0" || data.RP_D1 == null){
-//                                                              return '<td> - </td>';
-//                                                              } else
-//                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
-//                                                           },
-//                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-//                                                         }},
-//            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D2 == "0" || data.RP_D2 == null){
-//                                                              return '<td> - </td>';
-//                                                              } else
-//                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
-//                                                           },
-//                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-//                                                         }},
-//            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D3 == "0" || data.RP_D3 == null){
-//                                                              return '<td> - </td>';
-//                                                              } else
-//                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
-//                                                           },
-//                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-//                                                         }},
-//            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D4 == "0" || data.RP_D4 == null){
-//                                                              return '<td> - </td>';
-//                                                              } else
-//                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
-//                                                           },
-//                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-//                                                         }},
-//            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D5 == "0" || data.RP_D5 == null){
-//                                                              return '<td> - </td>';
-//                                                              } else
-//                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
-//                                                           },
-//                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-//                                                         }},
-//            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D6 == "0" || data.RP_D6 == null){
-//                                                              return '<td> - </td>';
-//                                                              } else
-//                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
-//                                                           },
-//                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-//                                                         }},
-//            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_TOTAL == "0" || data.RP_TOTAL == null){
-//                                                              return '<td> - </td>';
-//                                                              } else
-//                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-//                                                           },
-//                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-//                                                         }},
-//        ],
-//
-//         "createdRow" : function (row, data, dataIndex){
-//
-//            if ((data["BANK"] === "TOTAL")){
-//                $(row).css({
-//                    "background-color": "#F4D35E",
-//                    "text-align": "center",
-//                    "font-weight": "bold",
-//                });
-////                $('td', row).eq(0).attr("colspan","2");
-//             };
-//         },
-//
-//         "drawCallback" : function (settings){
-//            let groupColumn = 0;
-//            var api = this.api();
-//            var rows = api.rows({page:'current'}).nodes();
-//            var last = null;
-//            let array = api.column(groupColumn, {page:'current'}).data();
-////            console.log(array[20])
-//
-//            api.column(groupColumn, {page:'current'}).data().each(function (group, i){
-//            if (last !== group.BANK){
-//                let count = 1;
-//
-//                for (let j=i; j<array.length; j++){
-//                    let first = array[i].BANK;
-//                    if (first !== array[j].BANK) break;
-//                    count+= 1;
-//                }
-//                if ((group.BANK === "TOTAL")){
-//                    $(rows).eq(i).before(
-//                        '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold; background-color: #F4D35E">'+group.BANK+'</td></tr>'
-//                    );
-//                }else
-//                    $(rows).eq(i).before(
-//                        '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold;">'+group.BANK+'</td></tr>'
-//                    );
-////                console.log(array)
-//                last = group.BANK;
-//                }
-//            });
-//         }
-//    });
-//    let ren_pem_eur = $("#rencana-pembayaran-eur").DataTable({
-//        "ajax" : {
-//            "url": baseUrl + " ",
-//            "data" : {
-//                "tanggal" : current_full_date,
-//            },
-//            "type" : "GET",
-//            "dataType" : "json",
-//        },
-//        "sorting": false,
-//        "searching" : false,
-//        "paging": false,
-//        "bInfo" : false,
-//        "bLengthChange" : false,
-//        "columns" : [
-////            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
-//            {"data": null,"visible": false,"render": (data, type, row) => {return data.BANK;}},
-//            {"data": null,"render": (data, type, row) => {return data.CURRENCY;}},
-////            {"data": null,"render": (data, type, row) => {if (data.BANK === "TOTAL"){
-////                                                            return '<td> TOTAL '+data.CURRENCY+'</td>';
-////                                                            }else
-////                                                            return '<td>'+data.CURRENCY+'</td>';
-////                                                            }},
-//            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D0 == "0" || data.RP_D0 == null){
-//                                                              return '<td> - </td>';
-//                                                              } else
-//                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
-//                                                           },
-//                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-//                                                         }},
-//            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D1 == "0" || data.RP_D1 == null){
-//                                                              return '<td> - </td>';
-//                                                              } else
-//                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
-//                                                           },
-//                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-//                                                         }},
-//            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D2 == "0" || data.RP_D2 == null){
-//                                                              return '<td> - </td>';
-//                                                              } else
-//                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
-//                                                           },
-//                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-//                                                         }},
-//            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D3 == "0" || data.RP_D3 == null){
-//                                                              return '<td> - </td>';
-//                                                              } else
-//                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
-//                                                           },
-//                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-//                                                         }},
-//            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D4 == "0" || data.RP_D4 == null){
-//                                                              return '<td> - </td>';
-//                                                              } else
-//                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
-//                                                           },
-//                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-//                                                         }},
-//            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D5 == "0" || data.RP_D5 == null){
-//                                                              return '<td> - </td>';
-//                                                              } else
-//                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
-//                                                           },
-//                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-//                                                         }},
-//            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D6 == "0" || data.RP_D6 == null){
-//                                                              return '<td> - </td>';
-//                                                              } else
-//                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
-//                                                           },
-//                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-//                                                         }},
-//            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_TOTAL == "0" || data.RP_TOTAL == null){
-//                                                              return '<td> - </td>';
-//                                                              } else
-//                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-//                                                           },
-//                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-//                                                         }},
-//        ],
-//
-//         "createdRow" : function (row, data, dataIndex){
-//
-//            if ((data["BANK"] === "TOTAL")){
-//                $(row).css({
-//                    "background-color": "#F4D35E",
-//                    "text-align": "center",
-//                    "font-weight": "bold",
-//                });
-////                $('td', row).eq(0).attr("colspan","2");
-//             };
-//         },
-//
-//         "drawCallback" : function (settings){
-//            let groupColumn = 0;
-//            var api = this.api();
-//            var rows = api.rows({page:'current'}).nodes();
-//            var last = null;
-//            let array = api.column(groupColumn, {page:'current'}).data();
-////            console.log(array[20])
-//
-//            api.column(groupColumn, {page:'current'}).data().each(function (group, i){
-//            if (last !== group.BANK){
-//                let count = 1;
-//
-//                for (let j=i; j<array.length; j++){
-//                    let first = array[i].BANK;
-//                    if (first !== array[j].BANK) break;
-//                    count+= 1;
-//                }
-//                if ((group.BANK === "TOTAL")){
-//                    $(rows).eq(i).before(
-//                        '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold; background-color: #F4D35E">'+group.BANK+'</td></tr>'
-//                    );
-//                }else
-//                    $(rows).eq(i).before(
-//                        '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold;">'+group.BANK+'</td></tr>'
-//                    );
-////                console.log(array)
-//                last = group.BANK;
-//                }
-//            });
-//         }
-//    });
+    let valuta_asing = $("#valuta-asing").DataTable({
+        "ajax" : {
+            "url": baseUrl + "api_operator/api_report/valuta_asing",
+            "data" : {
+                "tanggal" : current_full_date,
+            },
+            "type" : "GET",
+            "dataType" : "json",
+        },
+        "sorting": false,
+        "searching" : false,
+        "paging": false,
+        "bInfo" : false,
+        "bLengthChange" : false,
+        "columns" : [
+//            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
+            {"data": null,"visible": false,"render": (data, type, row) => {return data.BANK;}},
+            {"data": null,"render": (data, type, row) => {return data.CURRENCY;}},
+//            {"data": null,"render": (data, type, row) => {if (data.BANK === "TOTAL"){
+//                                                            return '<td> TOTAL '+data.CURRENCY+'</td>';
+//                                                            }else
+//                                                            return '<td>'+data.CURRENCY+'</td>';
+//                                                            }},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D0 == "0" || data.RP_D0 == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+                                                           },
+                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                         }},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D1 == "0" || data.RP_D1 == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
+                                                           },
+                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                         }},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D2 == "0" || data.RP_D2 == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
+                                                           },
+                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                         }},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D3 == "0" || data.RP_D3 == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
+                                                           },
+                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                         }},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D4 == "0" || data.RP_D4 == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
+                                                           },
+                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                         }},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D5 == "0" || data.RP_D5 == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
+                                                           },
+                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                         }},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D6 == "0" || data.RP_D6 == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
+                                                           },
+                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                         }},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.RP_TOTAL == "0" || data.RP_TOTAL == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
+                                                           },
+                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                         }},
+        ],
+
+         "createdRow" : function (row, data, dataIndex){
+
+            if ((data["BANK"] === "TOTAL")){
+                $(row).css({
+                    "background-color": "#F4D35E",
+                    "text-align": "center",
+                    "font-weight": "bold",
+                });
+//                $('td', row).eq(0).attr("colspan","2");
+             };
+         },
+
+         "drawCallback" : function (settings){
+            let groupColumn = 0;
+            var api = this.api();
+            var rows = api.rows({page:'current'}).nodes();
+            var last = null;
+            let array = api.column(groupColumn, {page:'current'}).data();
+//            console.log(array[20])
+
+            api.column(groupColumn, {page:'current'}).data().each(function (group, i){
+            if (last !== group.BANK){
+                let count = 1;
+
+                for (let j=i; j<array.length; j++){
+                    let first = array[i].BANK;
+                    if (first !== array[j].BANK) break;
+                    count+= 1;
+                }
+                if ((group.BANK === "TOTAL")){
+                    $(rows).eq(i).before(
+                        '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold; background-color: #F4D35E">'+group.BANK+'</td></tr>'
+                    );
+                }else
+                    $(rows).eq(i).before(
+                        '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold;">'+group.BANK+'</td></tr>'
+                    );
+//                console.log(array)
+                last = group.BANK;
+                }
+            });
+         }
+    });
+
+    let rupiah = $("#rupiah").DataTable({
+            "ajax" : {
+                "url": baseUrl + "api_operator/api_report/rupiah",
+                "data" : {
+                    "tanggal" : current_full_date,
+                },
+                "type" : "GET",
+                "dataType" : "json",
+            },
+            "sorting": false,
+            "searching" : false,
+            "paging": false,
+            "bInfo" : false,
+            "bLengthChange" : false,
+            "columns" : [
+    //            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
+                {"data": null,"visible": false,"render": (data, type, row) => {return data.KETERANGAN;}},
+                {"data": null,"render": (data, type, row) => {return data.KETERANGAN;}},
+    //            {"data": null,"render": (data, type, row) => {if (data.BANK === "TOTAL"){
+    //                                                            return '<td> TOTAL '+data.CURRENCY+'</td>';
+    //                                                            }else
+    //                                                            return '<td>'+data.CURRENCY+'</td>';
+    //                                                            }},
+                {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D0 == "0" || data.RP_D0 == null){
+                                                                  return '<td> - </td>';
+                                                                  } else
+                                                                  return '<td>'+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+                                                               },
+                                                             "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                             }},
+                {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D1 == "0" || data.RP_D1 == null){
+                                                                  return '<td> - </td>';
+                                                                  } else
+                                                                  return '<td>'+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
+                                                               },
+                                                             "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                             }},
+                {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D2 == "0" || data.RP_D2 == null){
+                                                                  return '<td> - </td>';
+                                                                  } else
+                                                                  return '<td>'+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
+                                                               },
+                                                             "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                             }},
+                {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D3 == "0" || data.RP_D3 == null){
+                                                                  return '<td> - </td>';
+                                                                  } else
+                                                                  return '<td>'+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
+                                                               },
+                                                             "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                             }},
+                {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D4 == "0" || data.RP_D4 == null){
+                                                                  return '<td> - </td>';
+                                                                  } else
+                                                                  return '<td>'+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
+                                                               },
+                                                             "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                             }},
+                {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D5 == "0" || data.RP_D5 == null){
+                                                                  return '<td> - </td>';
+                                                                  } else
+                                                                  return '<td>'+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
+                                                               },
+                                                             "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                             }},
+                {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D6 == "0" || data.RP_D6 == null){
+                                                                  return '<td> - </td>';
+                                                                  } else
+                                                                  return '<td>'+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
+                                                               },
+                                                             "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                             }},
+                {"data":null,"render" : (data, tyoe, row) => {if (data.RP_TOTAL == "0" || data.RP_TOTAL == null){
+                                                                  return '<td> - </td>';
+                                                                  } else
+                                                                  return '<td>'+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
+                                                               },
+                                                             "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                             }},
+            ],
+
+             "createdRow" : function (row, data, dataIndex){
+
+                if ((data["BANK"] === "TOTAL")){
+                    $(row).css({
+                        "background-color": "#F4D35E",
+                        "text-align": "center",
+                        "font-weight": "bold",
+                    });
+    //                $('td', row).eq(0).attr("colspan","2");
+                 };
+             },
+
+             "drawCallback" : function (settings){
+                let groupColumn = 0;
+                var api = this.api();
+                var rows = api.rows({page:'current'}).nodes();
+                var last = null;
+                let array = api.column(groupColumn, {page:'current'}).data();
+    //            console.log(array[20])
+
+                api.column(groupColumn, {page:'current'}).data().each(function (group, i){
+                if (last !== group.BANK){
+                    let count = 1;
+
+                    for (let j=i; j<array.length; j++){
+                        let first = array[i].BANK;
+                        if (first !== array[j].BANK) break;
+                        count+= 1;
+                    }
+                    if ((group.BANK === "TOTAL")){
+                        $(rows).eq(i).before(
+                            '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold; background-color: #F4D35E">'+group.BANK+'</td></tr>'
+                        );
+                    }else
+                        $(rows).eq(i).before(
+                            '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold;">'+group.BANK+'</td></tr>'
+                        );
+    //                console.log(array)
+                    last = group.BANK;
+                    }
+                });
+             }
+        });
 //    let ren_pem_jpy = $("#rencana-pembayaran-jpy").DataTable({
 //        "ajax" : {
 //            "url": baseUrl + " ",

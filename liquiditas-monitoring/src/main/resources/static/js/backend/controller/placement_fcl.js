@@ -1,7 +1,8 @@
+var tempTableSearch = "";
 $(document).ready(function () {
     initDataTablePlacement();
-    tableMainDashboard();
-
+    initDataTablePlacement3();
+//    tableMainDashboard();
 
     $("#dashboard-carousel").carousel({
         interval : 1000*5,
@@ -11,15 +12,16 @@ $("#dash_date").datepicker({dateFormat : "dd/mm/yy"});
 });
 
 function initDataTablePlacement(p_tgl_awal, p_sesi) {
-//    showLoadingCss()
+showLoadingCss();
     $('#tanggal_awal1').datepicker({dateFormat: 'dd/mm/yy'});
+    $('#sesi_filter').attr("disabled", "disabled");
     $.ajax({
-        url: baseUrl + "/api_operator/rekap_invoice_belum/rekap_placement_lcl",
+        url: baseUrl + "api_operator/rekap_invoice_belum/rekap_placement_fcl",
         dataType: 'JSON',
         type: "GET",
         data: {
             p_tgl_awal: $("#tanggal_awal1").val(),
-            p_sesi: $("#range_filter").val()
+            p_sesi: $("#sesi_filter").val()
         },
         success: function (res) {
             var data = res.return;
@@ -29,36 +31,76 @@ function initDataTablePlacement(p_tgl_awal, p_sesi) {
             var nomor;
             $.each(data, function (key, val) {
             $("#tglcetak").html(data[0].TANGGAL);
-            nomor = key + 1;
+//            nomor = key + 1;
+            if (val["BANK"] === "BUKOPIN"){
                 var html = "<tr>" +
-                    "<td align='center'>" + nomor + "</td>" +
-                    "<td align='center'>" + val.DISTRIBUSI + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.POSTPAID,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.PREPAID,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.NTL,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.TOTAL,2,".",",") + "</td>" +
+                    "<td align='center' style='background: #78d5d4; border-bottom: 1px solid transparent !important; font-weight: bold; color:#78d5d4'>" + val.TIPE + "</td>" +
+                    "<td align='center' style='background: #5dbcd2'>" + val.BANK + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AWAL,2,".",",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.MANDIRI,2,".",",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.BRI,2,".",",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.BNI,2,".",",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.BUKOPIN,2,".",",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AKHIR,2,".",",") + "</td>" +
                     "</tr>";
-                $('#penerimaan-penjualan-distribusi').append(html);
+            } else if (val["BANK"] === "BRI"){
+               var html = "<tr>" +
+                   "<td align='center' style='background: #78d5d4; border-top: 1px solid transparent !important; border-bottom: 1px solid transparent !important; font-weight: bold ; color:#78d5d4'>" + val.TIPE + "</td>" +
+                   "<td align='center' style='background: #5dbcd2'>" + val.BANK + "</td>" +
+                   "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AWAL,2,".",",") + "</td>" +
+                   "<td align='right'> Rp " + accounting.formatNumber(val.MANDIRI,2,".",",") + "</td>" +
+                   "<td align='right'> Rp " + accounting.formatNumber(val.BRI,2,".",",") + "</td>" +
+                   "<td align='right'> Rp " + accounting.formatNumber(val.BNI,2,".",",") + "</td>" +
+                   "<td align='right'> Rp " + accounting.formatNumber(val.BUKOPIN,2,".",",") + "</td>" +
+                   "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AKHIR,2,".",",") + "</td>" +
+                   "</tr>";
+           } else if (val["BANK"] === "MANDIRI"){
+                var html = "<tr>" +
+                    "<td align='center' style='background: #78d5d4; border-bottom: 1px solid transparent !important; font-weight: bold'>" + val.TIPE + "</td>" +
+                    "<td align='center' style='background: #5dbcd2'>" + val.BANK + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AWAL,2,".",",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.MANDIRI,2,".",",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.BRI,2,".",",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.BNI,2,".",",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.BUKOPIN,2,".",",") + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AKHIR,2,".",",") + "</td>" +
+                    "</tr>";
+            } else if (val["BANK"] === "BNI"){
+                 var html = "<tr>" +
+                     "<td align='center' style='background: #78d5d4; border-top: 1px solid transparent !important; border-bottom: 1px solid transparent !important; font-weight: bold; color:#78d5d4'>" + val.TIPE + "</td>" +
+                     "<td align='center' style='background: #5dbcd2'>" + val.BANK + "</td>" +
+                     "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AWAL,2,".",",") + "</td>" +
+                     "<td align='right'> Rp " + accounting.formatNumber(val.MANDIRI,2,".",",") + "</td>" +
+                     "<td align='right'> Rp " + accounting.formatNumber(val.BRI,2,".",",") + "</td>" +
+                     "<td align='right'> Rp " + accounting.formatNumber(val.BNI,2,".",",") + "</td>" +
+                     "<td align='right'> Rp " + accounting.formatNumber(val.BUKOPIN,2,".",",") + "</td>" +
+                     "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AKHIR,2,".",",") + "</td>" +
+                     "</tr>";
+             } else if (val["BANK"] === "TOTAL"){
+                  var html = "<tr>" +
+                      "<td align='center' style='background: #78d5d4; border-top: 1px solid transparent !important; font-weight: bold; color:#78d5d4'>" + val.TIPE + "</td>" +
+                      "<td align='center' style='background: #5dbcd2'>" + val.BANK + "</td>" +
+                      "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.SALDO_AWAL,2,".",",") + "</td>" +
+                      "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.MANDIRI,2,".",",") + "</td>" +
+                      "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.BRI,2,".",",") + "</td>" +
+                      "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.BNI,2,".",",") + "</td>" +
+                      "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.BUKOPIN,2,".",",") + "</td>" +
+                      "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.SALDO_AKHIR,2,".",",") + "</td>" +
+                      "</tr>";
+              }
+                $('#table-rekap-placement-lcl').append(html);
             });
 
-            var total1 = "<tr style='background-color:#67a2d8;color: white'>" + "<td colspan=2 align='center'>TOTAL IDR</td>" +
-                                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_POSTPAID,2,".",",") + "</td>" +
-                                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_PREPAID,2,".",",") + "</td>" +
-                                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_NTL,2,".",",") + "</td>" +
-                                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].JUMLAH_TOTAL,2,".",",") + "</td>" +
-                                "</tr>";
-
-            $('#penerimaan-penjualan-distribusi tbody').append(total1);
             hideLoadingCss()
         },
         error: function () {
             // hideLoadingCss("Gagal Ambil Data IMPRST VALAS");
             hideLoadingCss();
-            $('#penerimaan-penjualan-distribusi tbody').empty();
+            $('#table-rekap-placement-lcl tbody').empty();
             var html = "<tr>" +
                 "<td colspan='5' align='center'> No Data </td>" +
                 "</tr>";
-            $('#penerimaan-penjualan-distribusi tbody').append(html);
+            $('#table-rekap-placement-lcl tbody').append(html);
         }
     });
 }
@@ -206,6 +248,119 @@ function tableMainDashboard(_date){
         });
 }
 
+function initDataTablePlacement3() {
+    showLoadingCss();
+//    $('#tanggal_awal1').datepicker({dateFormat: 'dd/mm/yy'});
+//    $('#sesi_filter').attr("disabled", "disabled");
+    $.ajax({
+        url: baseUrl + "api_operator/rekap_invoice_belum/get_pemindahan_buku_fcl",
+        dataType: 'JSON',
+        type: "GET",
+        success: function (res) {
+            var data = res.return;
+            console.log("response : "+data);
+
+            $('#table-pemindahbukuan tbody').empty();
+            var nomor;
+            $.each(data, function (key, val) {
+            $("#tglcetak").html(data[0].TANGGAL);
+//            nomor = key + 1;
+            if (val["BANK"] === "TOTAL"){
+                var html = "<tr>" +
+                    "<td align='center' style='background: #5dbcd2'>" + val.BANK + "</td>" +
+                    "<td align='right' style='background: #5dbcd2'> </td>" +
+                    "<td align='right' style='background: #5dbcd2'> </td>" +
+                    "<td align='center' style='background: #5dbcd2'> </td>" +
+                    "<td align='right' style='background: #5dbcd2'> </td>" +
+                    "<td align='right' style='background: #5dbcd2'> </td>" +
+                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.NOMINAL,2,".",",") + "</td>" +
+                    "<td align='right' style='background: #5dbcd2'> </td>" +
+                    "<td align='right' style='background: #5dbcd2'> </td>" +
+                    "</tr>";
+            } else {
+                var html = "<tr>" +
+                    "<td align='center'>" + val.BANK + "</td>" +
+                    "<td align='right'>" + val.NAMA_REKENING + "</td>" +
+                    "<td align='right'>" + val.NO_REKENING + "</td>" +
+                    "<td align='right'>" + val.KEPADA_BANK + "</td>" +
+                    "<td align='right'>" + val.NAMA_REKENING + "</td>" +
+                    "<td align='right'>" + val.NO_REKENING + "</td>" +
+                    "<td align='right'> Rp " + accounting.formatNumber(val.NOMINAL,2,".",",") + "</td>" +
+                    "<td align='right'>" + val.NO_SAP + "</td>" +
+                    "<td align='right'> " + val.KETERANGAN + "</td>" +
+                    "</tr>";
+            }
+                $('#table-pemindahbukuan').append(html);
+            });
+
+            hideLoadingCss()
+        },
+        error: function () {
+            // hideLoadingCss("Gagal Ambil Data IMPRST VALAS");
+            hideLoadingCss();
+            $('#table-pemindahbukuan tbody').empty();
+            var html = "<tr>" +
+                "<td colspan='11' align='center'> No Data </td>" +
+                "</tr>";
+            $('#table-pemindahbukuan tbody').append(html);
+        }
+    });
+
+//    $.ajax({
+//        url: baseUrl + "api_operator/rekap_invoice_belum/get_pengadaan_valas",
+//        dataType: 'JSON',
+//        type: "GET",
+//        success: function (res) {
+//            var data = res.return;
+//            console.log("response : "+data);
+//
+//            $('#table-rekap-placement-lcl tbody').empty();
+//            var nomor;
+//            $.each(data, function (key, val) {
+//            $("#tglcetak").html(data[0].TANGGAL);
+////            nomor = key + 1;
+//           if (val["BANK"] === "TOTAL"){
+//                var html = "<tr>" +
+//                    "<td align='center' style='background: #5dbcd2'>" + val.BANK + "</td>" +
+//                    "<td align='right' style='background: #5dbcd2'> </td>" +
+//                    "<td align='right' style='background: #5dbcd2'> </td>" +
+//                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.NOMINAL,2,".",",") + "</td>" +
+//                    "<td align='center' style='background: #5dbcd2'> </td>" +
+//                    "<td align='right' style='background: #5dbcd2'> </td>" +
+//                    "<td align='right' style='background: #5dbcd2'> </td>" +
+//                    "<td align='right' style='background: #5dbcd2'> </td>" +
+//                    "<td align='right' style='background: #5dbcd2'> </td>" +
+//                    "</tr>";
+//            } else {
+//                var html = "<tr>" +
+//                    "<td align='center'>" + val.BANK + "</td>" +
+//                    "<td align='right'>" + val.NAMA_REKENING + "</td>" +
+//                    "<td align='right'>" + val.NO_REKENING + "</td>" +
+//                    "<td align='right'> Rp " + accounting.formatNumber(val.NOMINAL,2,".",",") + "</td>" +
+//                    "<td align='right'>" + val.BANK + "</td>" +
+//                    "<td align='right'>" + val.NAMA_REKENING + "</td>" +
+//                    "<td align='right'>" + val.NO_REKENING + "</td>" +
+//                    "<td align='right'>" + val.NO_SAP + "</td>" +
+//                    "<td align='right'> " + val.KETERANGAN + "</td>" +
+//                    "</tr>";
+//            }
+//                $('#table-pengadaan-valas').append(html);
+//            });
+//
+//            hideLoadingCss()
+//        },
+//        error: function () {
+//            // hideLoadingCss("Gagal Ambil Data IMPRST VALAS");
+//            hideLoadingCss();
+//            $('#table-pengadaan-valas tbody').empty();
+//            var html = "<tr>" +
+//                "<td colspan='9' align='center'> No Data </td>" +
+//                "</tr>";
+//            $('#table-pengadaan-valas tbody').append(html);
+//        }
+//    });
+}
+
 function dateToString(date) {
     return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 }
@@ -226,4 +381,12 @@ function stringToDate(_date) {
     month -= 1;
     var formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
     return formatedDate;
+}
+
+function openLihatDokumen(){
+//    setSelectBank("pNewBankPembayar", "", "PEMBAYAR", "", "REKAP");
+//    $("#pNewTglJatuhTempo").val("");
+//    $("#pNewBankPembayar").val("")
+//    $('#pNewTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
+    $('#set-d').modal({backdrop: 'static', keyboard: false});
 }

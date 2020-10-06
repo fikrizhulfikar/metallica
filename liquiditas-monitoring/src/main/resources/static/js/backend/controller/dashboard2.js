@@ -1113,6 +1113,7 @@ function creteChartKompSaldo(data) {
     var tes = JSON.stringify(data);
     var maxval1 = data[1].maxvalue + data[0].maxvalue;
     var maxval2 = data[2].maxvalue + data[1].maxvalue;
+    console.log('WARNA :'+ tes);
     FusionCharts.ready(function () {
         var fusioncharts = new FusionCharts({
                 type: 'angulargauge',

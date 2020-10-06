@@ -693,10 +693,60 @@ public class DashboardController {
         }
     }
 
+    @RequestMapping(value = "/get_outstanding_produk_derivatif", method = RequestMethod.GET)
+    public Map getOutstandingProdukDerivatif() {
+        try {
+            return dashboardService.getOutstandingProdukDerivatif();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @RequestMapping(value = "/get_saldo_rekening_rupiah", method = RequestMethod.GET)
     public Map getSaldoRekeningRupiah() {
         try {
             return dashboardService.getSaldoRekeningRupiah();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_saldo_rekening_rupiah2", method = RequestMethod.GET)
+    public Map getSaldoRekeningRupiah2() {
+        try {
+            return dashboardService.getSaldoRekeningRupiah2();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_saldo_rekening_rupiah3", method = RequestMethod.GET)
+    public Map getSaldoRekeningRupiah3() {
+        try {
+            return dashboardService.getSaldoRekeningRupiah3();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_giro_special_rate", method = RequestMethod.GET)
+    public Map getGiroSpecialRate() {
+        try {
+            return dashboardService.getGiroSpecialRate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_supply_chain_financing", method = RequestMethod.GET)
+    public Map getSupplyChainFinancing() {
+        try {
+            return dashboardService.getSupplyChainFinancing();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

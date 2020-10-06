@@ -414,7 +414,14 @@
                             <option value="">Pilih Data</option>
                         </select>
                     </div>
-                    <div class="col-md-4" style="padding-right: 0px;">&nbsp;</div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Jenis Pembayaran </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="jenis_pemabayaran" id="cmb_jenis_pemabayaran" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
                     <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
                     <div class="col-md-3" style="padding-right: 0px;">
                         <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
@@ -427,33 +434,33 @@
                         <table id="table-rekapitulasi" class="table table-bordered table-striped">
                             <thead style="font-size: 12px">
                             <tr>
-                                <th>NAMA BANK</th>
-                                <th>PRODUK</th>
-                                <th>NOMINAL</th>
-                                <th>INTEREST RATE</th>
-                                <th>TGL PENEMPATAN</th>
-                                <th>TGL JATUH TEMPO</th>
-                                <th>JUMLAH HARI</th><!--5-->
-                                <th>KURS</th>
+                                <th>NO</th>
+                                <th>BANK</th>
+                                <th>TANGGAL TRANSAKSI</th>
+                                <th>TANGGAL JATUH TEMPO</th>
+                                <th>TENOR</th>
+                                <th>VENDOR</th>
+                                <th>JENIS PEMBAYARAN</th><!--5-->
+                                <th>CURR</th>
                                 <!--<th>STATUS TAGIHAN</th>-->
-                                <th>JASA GIRO</th>
-                                <th>PAJAK (%)</th>
-                                <th>PAJAK (NOMINAL)</th>
-                                <th>NETT JASA GIRO</th><!--10-->
-                                <th>POKOK+JASA GIRO</th>
-                                <th>AKSI</th>
-                                <th>TGL. NOTA DINAS PEMBAYARAN</th>
-                                <th>NO. NOTA DINAS PEMBAYARAN</th>
-                                <th>TGL PEMBAYARAN</th><!--15-->
-                                <th>COUNTDOWN</th>
-                                <th>STATUS</th>
-                                <th>TIPE TRANSAKSI</th>
+                                <th>ORI CURR</th>
+                                <th>KURS</th>
+                                <th>EQ IDR</th>
+                                <th>FEE TRANSAKSI(%)</th><!--10-->
+                                <th>FEE TRANSAKSI(IDR)</th>
+                                <th>CASH COLLATERAL(%)</th>
+                                <th>CASH COLLATERAL(IDR)</th>
+                                <th>RATE JASA GIRO</th>
+                                <th>JASA GIRO</th><!--15-->
+                                <th>PAJAK(%)</th>
+                                <th>PAJAK YANG DITANGGUNG PLN</th>
+                                <th>NET JASA GIRO</th>
                                 <!--<th>KETERANGAN</th>-->
-                                <th>NOMINAL SBLM PAJAK</th><!--19-->
-                                <th>PAJAK</th>
-                                <th>NOMINAL STLH PAJAK</th>
-                                <th>NOMINAL UNDERLYING</th>
-                                <th>NOMINAL TANPA UNDERLYING</th>
+                                <th>NET GAIN/(LOSS) TRANSAKSI SCF</th><!--19-->
+                                <th>DOKUMENT PENDUKUNG</th>
+                                <th>COPY INVOICE & LEMBAR VERIFIKASI</th>
+                                <th>DOKUMEN LAIN (JIKA ADA)</th>
+                                <th>AKSI</th>
                                 <th>KURS JISDOR</th><!--24-->
                                 <th>SPREAD</th>
                                 <th>KURS TRANSAKSI</th>
@@ -596,6 +603,6 @@
     </div>
 </main>
 <div th:fragment="scripts-backend">
-    <script src="/static/js/backend/controller/giro_special_rate.js"></script>
+    <script src="/static/js/backend/controller/supply_chain_financing.js"></script>
     <!--<script src="static/js/jquery.mask.min.js"></script>-->
 </div>
