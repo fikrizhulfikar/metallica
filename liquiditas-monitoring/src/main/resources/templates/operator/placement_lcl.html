@@ -1,0 +1,561 @@
+<div th:fragment="stylesheets-backend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        table {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+        }
+        table th {
+            font-size: 13px;
+            vertical-align: middle;
+            text-align: center;
+            font-weight: bold;
+        }
+        table td {
+            font-size: 12px;
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+        .responsive-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Dashboard Management</li>
+        <div align="right" style="color:#778899" class="title"><h7>Tanggal : <span id="tglcetak"></span></h7></div>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12" style="margin-top: -25px; margin-bottom: 25px; min-height: 555px;">
+                <div class="carousel">
+                    <div class="carousel-inner">
+                        <input class="carousel-open" type="radio" id="carousel-1" name="carousel" aria-hidden="true" hidden="" checked="checked"/>
+                        <div class="carousel-item">
+                            <div class="col-md-12" style="margin-top: 20px">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div align="center" class="title" style="margin-bottom: 10px"><h5><b>PENERIMAAN PENJUALAN TENAGA LISTRIK - PER JENIS LAYANAN</b></h5></div>
+                                        <div class="col-md-12 row" style="margin-top: 25px; padding-left: 0px; padding-right: 0px">
+                                            <div class="col-md-1" style="padding-right: 0px;">
+                                                <label class="lbl-src">Tanggal Awal </label>
+                                            </div>
+                                            <div class="col-md-2" style="padding-right: 0px;">
+                                                <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal1"/>
+                                            </div>
+                                            <div class="col-md-1" style="padding-right: 0px;">
+                                                <label class="lbl-src">Tanggal Akhir </label>
+                                            </div>
+                                            <div class="col-md-2" style="padding-right: 0px;">
+                                                <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir1"/>
+                                            </div>
+                                            <div class="col-md-1" style="padding-right: 0px;">
+                                                <label class="lbl-src">Unit</label>
+                                            </div>
+                                            <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">
+                                                <select name="bank" id="unit_filter1" class="form-control">
+                                                    <option value="">Pilih Data</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-1" style="padding-right: 0px; ">
+                                                <label class="lbl-src">Range</label>
+                                            </div>
+                                            <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">
+                                                <select name="bank" id="range_filter" class="form-control">
+                                                    <option value="0">harian</option>
+                                                    <option value="1">bulan</option>
+                                                    <option value="2">tahun</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-5" style="padding-right: 0px;">&nbsp;</div>
+                                            <div class="col-md-5" style="padding-right: 0px;">&nbsp;</div>
+                                            <div class="col-md-2" style="padding-right: 0px;">
+                                                <button onclick="search1()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
+                                            </div>
+                                        </div>
+                                        <table id="penerimaan-penjualan-jenis-layanan" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-top: 5px; margin-bottom: 15px">
+                                            <thead>
+<!--                                            <tr>-->
+<!--                                                <th colspan="11" style="vertical-align: middle; text-align: center; background-color: #F4D35E;">PENERIMAAN PENJUALAN TENAGA LISTRIK - PER JENIS LAYANAN</th>-->
+                                            <tr class="header">
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="1%" align="center">NO</th>
+                                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">TANGGAL</th>
+                                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">POSTPAID</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">PREPAID</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">NON TAGIHAN LISTRIK</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">TOTAL</th>
+                                            </tr>
+<!--                                            </tr>-->
+                                            </thead>
+                                            <tbody id="isi1">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input class="carousel-open" type="radio" id="carousel-2" name="carousel" aria-hidden="true" hidden=""/>
+                        <div class="carousel-item">
+                            <div class="col-md-12" style="margin-top: 20px">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div align="center" class="title" style="margin-bottom: 10px"><h5><b>PENERIMAAN PENJUALAN TENAGA LISTRIK - PER UNSUR (HARI/ DSITRIBUSI)</b></h5></div>
+                                        <div class="container">
+                                            <iframe class="responsive-iframe" src=" "></iframe>
+                                        </div>
+<!--                                        <div class="col-md-12 row" style="padding-left: 0px; padding-right: 0px">-->
+<!--                                            <div class="col-md-1" style="padding-right: 0px;">-->
+<!--                                                <label class="lbl-src">Tanggal Awal </label>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-2" style="padding-right: 0px;">-->
+<!--                                                <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal2"/>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-1" style="padding-right: 0px;">-->
+<!--                                                <label class="lbl-src">Tanggal Akhir </label>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-2" style="padding-right: 0px;">-->
+<!--                                                <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir2"/>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-1" style="padding-right: 0px;">-->
+<!--                                                <label class="lbl-src">Unit</label>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">-->
+<!--                                                <select name="bank" id="unit_filter2" class="form-control">-->
+<!--                                                    <option value="">Pilih Data</option>-->
+<!--                                                </select>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-5" style="padding-right: 0px;">&nbsp;</div>-->
+<!--                                            <div class="col-md-5" style="padding-right: 0px;">&nbsp;</div>-->
+<!--                                            <div class="col-md-2" style="padding-right: 0px;">-->
+<!--                                                <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <table id="penerimaan-penjualan-unsur" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-top: 5px; margin-bottom: 15px">-->
+<!--                                            <thead>-->
+<!--                                            <tr class="header">-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="11%" align="center">DISTRIBUSI</th>-->
+<!--                                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">PENJUALAN TENAGA LISTRIK</th>-->
+<!--                                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">BP</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">UJL</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">PEMUNGUTAN UTANG (PPNR3, BEA MATERAI, PPJ)</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">PENERIMAAN LAIN-LAIN</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">TOTAL PENERIMAAN</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">TOTAL PENERIMAAN DILUAR PAJAK-PAJAK</th>-->
+<!--                                            </tr>-->
+<!--                                            <tr class="header">-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="11%" align="center">1</th>-->
+<!--                                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">2</th>-->
+<!--                                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">3</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">4</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">5</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">6</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">7=2+3+4+5+6</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">8=2+3+4+6</th>-->
+<!--                                            </tr>-->
+<!--                                            </thead>-->
+<!--                                            <tbody id="isi2">-->
+
+<!--                                            </tbody>-->
+<!--                                        </table>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input class="carousel-open" type="radio" id="carousel-3" name="carousel" aria-hidden="true" hidden=""/>
+                        <div class="carousel-item">
+                            <div class="col-md-12" style="margin-top: 20px">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div align="center" class="title" style="margin-bottom: 10px"><h5><b>PENERIMAAN PENJUALAN TENAGA LISTRIK - PER BANK</b></h5></div>
+                                        <div class="col-md-12 row" style="padding-left: 0px; padding-right: 0px">
+                                            <div class="col-md-1" style="padding-right: 0px;">
+                                                <label class="lbl-src">Tanggal Awal </label>
+                                            </div>
+                                            <div class="col-md-2" style="padding-right: 0px;">
+                                                <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal3"/>
+                                            </div>
+                                            <div class="col-md-1" style="padding-right: 0px;">
+                                                <label class="lbl-src">Tanggal Akhir </label>
+                                            </div>
+                                            <div class="col-md-2" style="padding-right: 0px;">
+                                                <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir3"/>
+                                            </div>
+                                            <div class="col-md-1" style="padding-right: 0px; ">
+                                                <label class="lbl-src">Bank</label>
+                                            </div>
+                                            <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">
+                                                <select name="bank" id="bank_filter2" class="form-control">
+                                                    <option value="">Pilih Data</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-1" style="padding-right: 0px;"></div>
+                                            <div class="col-md-2" style="padding-right: 0px;">
+                                                <button onclick="search3()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
+                                            </div>
+                                        </div>
+                                        <table id="penerimaan-penjualan-bank" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-top: 5px; margin-bottom: 15px">
+                                            <thead>
+<!--                                            <tr>-->
+<!--                                                <th colspan="11" style="vertical-align: middle; text-align: center; background-color: #F4D35E;">PENERIMAAN PENJUALAN TENAGA LISTRIK - PER BANK</th>-->
+                                            <tr class="header">
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="3%" align="center">NO</th>
+                                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">BANK</th>
+                                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">POSTPAID</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">PREPAID</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">NON TAGIHAN LISTRIK</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">TOTAL</th>
+                                            </tr>
+<!--                                            </tr>-->
+                                            </thead>
+                                            <tbody id="isi3">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input class="carousel-open" type="radio" id="carousel-4" name="carousel" aria-hidden="true" hidden=""/>
+                        <div class="carousel-item">
+                            <div class="col-md-12" style="margin-top: 20px">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div align="center" class="title" style="margin-bottom: 10px"><h5><b>PENERIMAAN PENJUALAN TENAGA LISTRIK - PER DISTRIBUSI</b></h5></div>
+                                        <div class="col-md-12 row" style="padding-left: 0px; padding-right: 0px">
+                                            <div class="col-md-1" style="padding-right: 0px;">
+                                                <label class="lbl-src">Tanggal Awal </label>
+                                            </div>
+                                            <div class="col-md-2" style="padding-right: 0px;">
+                                                <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal4"/>
+                                            </div>
+                                            <div class="col-md-1" style="padding-right: 0px;">
+                                                <label class="lbl-src">Tanggal Akhir </label>
+                                            </div>
+                                            <div class="col-md-2" style="padding-right: 0px;">
+                                                <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir4"/>
+                                            </div>
+                                            <div class="col-md-1" style="padding-right: 0px;">
+                                                <label class="lbl-src">Unit</label>
+                                            </div>
+                                            <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">
+                                                <select name="bank" id="unit_filter3" class="form-control">
+                                                    <option value="">Pilih Data</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-1" style="padding-right: 0px;"></div>
+                                            <div class="col-md-2" style="padding-right: 0px;">
+                                                <button onclick="search4()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
+                                            </div>
+                                        </div>
+                                        <table id="penerimaan-penjualan-distribusi" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-top: 5px; margin-bottom: 15px">
+                                            <thead>
+<!--                                            <tr>-->
+<!--                                                <th colspan="11" style="vertical-align: middle; text-align: center; background-color: #F4D35E;">PENERIMAAN PENJUALAN TENAGA LISTRIK - PER DISTRIBUSI</th>-->
+                                            <tr class="header">
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="3%" align="center">NO</th>
+                                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">DISTRIBUSI</th>
+                                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">POSTPAID</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">PREPAID</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">NON TAGIHAN LISTRIK</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">TOTAL</th>
+                                            </tr>
+<!--                                            </tr>-->
+                                            </thead>
+                                            <tbody id="isi4">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input class="carousel-open" type="radio" id="carousel-5" name="carousel" aria-hidden="true" hidden=""/>
+                        <div class="carousel-item">
+                            <div class="col-md-12" style="margin-top: 20px">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div align="center" class="title" style="margin-bottom: 10px"><h5><b>PENERIMAAN PENJUALAN TENAGA LISTRIK - PER CHANNEL</b></h5></div>
+                                        <div class="container">
+                                            <iframe class="responsive-iframe" src=" "></iframe>
+                                        </div>
+<!--                                        <div class="col-md-12 row" style="padding-left: 0px; padding-right: 0px">-->
+<!--                                            <div class="col-md-1" style="padding-right: 0px;">-->
+<!--                                                <label class="lbl-src">Tanggal Awal </label>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-2" style="padding-right: 0px;">-->
+<!--                                                <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal5"/>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-1" style="padding-right: 0px;">-->
+<!--                                                <label class="lbl-src">Tanggal Akhir </label>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-2" style="padding-right: 0px;">-->
+<!--                                                <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir5"/>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-1" style="padding-right: 0px;">-->
+<!--                                                <label class="lbl-src">Range</label>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">-->
+<!--                                                <select name="bank" id="range_filter2" class="form-control">-->
+<!--                                                    <option value="">Pilih Data</option>-->
+<!--                                                </select>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-1" style="padding-right: 0px; ">-->
+<!--                                                <label class="lbl-src">Collection Agen</label>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">-->
+<!--                                                <select name="bank" id="collection_agen_filter" class="form-control">-->
+<!--                                                    <option value="">Pilih Data</option>-->
+<!--                                                </select>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-1" style="padding-right: 0px; ">-->
+<!--                                                <label class="lbl-src">Layanan</label>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">-->
+<!--                                                <select name="bank" id="layanan_filter" class="form-control">-->
+<!--                                                    <option value="">Pilih Data</option>-->
+<!--                                                </select>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-1" style="padding-right: 0px; ">-->
+<!--                                                <label class="lbl-src">Lembar/Rupiah</label>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">-->
+<!--                                                <select name="bank" id="lembar_filter" class="form-control">-->
+<!--                                                    <option value="">Pilih Data</option>-->
+<!--                                                </select>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-5" style="padding-right: 0px;">&nbsp;</div>-->
+<!--                                            <div class="col-md-5" style="padding-right: 0px;">&nbsp;</div>-->
+<!--                                            <div class="col-md-2" style="padding-right: 0px;">-->
+<!--                                                <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <table id="penerimaan-penjualan-chanel" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-top: 5px; margin-bottom: 15px">-->
+<!--                                            <thead>-->
+<!--                                            <tr class="header">-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="11%" align="center" rowspan="2">NO</th>-->
+<!--                                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center" rowspan="2">COLLECTING AGENT</th>-->
+<!--                                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center" rowspan="2">JENIS TRANSAKSI</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">TELLER</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">ATM</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">AUTO DEBET/GIRALISASI</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">INTERNET BANKING</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">KIOSK (KELILING)</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">PHONE BANKING</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">MOBILE BANKING</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">EDC</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">ADM</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center" rowspan="2">TOTAL DELIVERY CHANEL</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center" rowspan="2">TOTAL POS</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center" rowspan="2">TOTAL ICON GATEWAY</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center" rowspan="2">TOTAL MERCHANT</th>-->
+<!--                                            </tr>-->
+<!--                                            <tr class="header">-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">6610</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">6011</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">6013</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">6014</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">6015</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">6016</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">6017</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">6018</th>-->
+<!--                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">6019</th>-->
+<!--                                            </tr>-->
+<!--                                            </thead>-->
+<!--                                            <tbody id="isi5">-->
+
+<!--                                            </tbody>-->
+<!--                                        </table>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input class="carousel-open" type="radio" id="carousel-6" name="carousel" aria-hidden="true" hidden=""/>
+                        <div class="carousel-item">
+                            <div class="col-md-12" style="margin-top: 20px">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div align="center" class="title" style="margin-bottom: 10px"><h5><b>ESTIMASI PENERIMAAN PENJUALAN TENAGA LISTRIK - H+0/H+1</b></h5></div>
+                                        <div class="col-md-12 row" style="padding-left: 0px; padding-right: 0px">
+                                            <div class="col-md-1" style="padding-right: 0px;">
+                                                <label class="lbl-src">Tanggal Awal </label>
+                                            </div>
+                                            <div class="col-md-2" style="padding-right: 0px;">
+                                                <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal6"/>
+                                            </div>
+                                            <div class="col-md-1" style="padding-right: 0px;">
+                                                <label class="lbl-src">Tanggal Akhir </label>
+                                            </div>
+                                            <div class="col-md-2" style="padding-right: 0px;">
+                                                <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir6"/>
+                                            </div>
+                                            <div class="col-md-1" style="padding-right: 0px;">
+                                                <label class="lbl-src">Range</label>
+                                            </div>
+                                            <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">
+                                                <select name="bank" id="range_filter3" class="form-control">
+                                                    <option value="">Pilih Data</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-1" style="padding-right: 0px; ">
+                                                <label class="lbl-src">Unit</label>
+                                            </div>
+                                            <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">
+                                                <select name="bank" id="unit_filter4" class="form-control">
+                                                    <option value="">Pilih Data</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-1" style="padding-right: 0px; ">
+                                                <label class="lbl-src">Indikator Pertumbuhan</label>
+                                            </div>
+                                            <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">
+                                                <select name="bank" id="indikator_pertumbuhan_filter" class="form-control">
+                                                    <option value="">Pilih Data</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-7" style="padding-right: 0px;">&nbsp;</div>
+<!--                                            <div class="col-md-3" style="padding-right: 0px;">&nbsp;</div>-->
+                                            <div class="col-md-2" style="padding-right: 0px;">
+                                                <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
+                                            </div>
+                                        </div>
+                                        <table id="estimasi-penerimaan-penjualan" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-top: 5px; margin-bottom: 15px">
+                                            <thead>
+                                            <tr class="header">
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="11%" align="center" rowspan="2">NO</th>
+                                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center" rowspan="2">TANGGAL</th>
+                                                <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center" colspan="4">ESTIMASI PENERIMAAN H+1</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center" colspan="4">ESTIMASI PENERIMAAN H+0</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center" rowspan="2">TOTAL</th>
+                                            </tr>
+                                            <tr class="header">
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">POSTPAID</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">PREPAID</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">NON TAGIHAN LISTRIK</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">SUB TOTAL</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">POSTPAID</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">PREPAID</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">NON TAGIHAN LISTRIK</th>
+                                                <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">SUB TOTAL</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="isi6">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input class="carousel-open" type="radio" id="carousel-7" name="carousel" aria-hidden="true" hidden=""/>
+                        <div class="carousel-item">
+                            <div class="col-md-12" style="margin-top: 20px">
+                                <div class="card">
+                                    <div style="overflow-y:auto;">
+                                        <div class="card-block">
+                                            <div align="center" class="title" style="margin-bottom: 10px"><h5><b>DATA SALDO TUNGGAKAN P2APST</b></h5></div>
+                                            <div class="container">
+                                                <iframe class="responsive-iframe" src=" "></iframe>
+                                            </div>
+<!--                                            <div class="col-md-12 row" style="padding-left: 0px; padding-right: 0px">-->
+<!--                                                <div class="col-md-1" style="padding-right: 0px;">-->
+<!--                                                    <label class="lbl-src">Tanggal Awal </label>-->
+<!--                                                </div>-->
+<!--                                                <div class="col-md-2" style="padding-right: 0px;">-->
+<!--                                                    <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal7"/>-->
+<!--                                                </div>-->
+<!--                                                <div class="col-md-1" style="padding-right: 0px;">-->
+<!--                                                    <label class="lbl-src">Tanggal Akhir </label>-->
+<!--                                                </div>-->
+<!--                                                <div class="col-md-2" style="padding-right: 0px;">-->
+<!--                                                    <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir7"/>-->
+<!--                                                </div>-->
+<!--                                                <div class="col-md-1" style="padding-right: 0px;">-->
+<!--                                                    <label class="lbl-src">Unit</label>-->
+<!--                                                </div>-->
+<!--                                                <div class="col-md-2" style="padding-right: 0px; margin-bottom: 20px">-->
+<!--                                                    <select name="bank" id="unit_filter5" class="form-control">-->
+<!--                                                        <option value="">Pilih Data</option>-->
+<!--                                                    </select>-->
+<!--                                                </div>-->
+<!--                                                <div class="col-md-5" style="padding-right: 0px;">&nbsp;</div>-->
+<!--                                                <div class="col-md-5" style="padding-right: 0px;">&nbsp;</div>-->
+<!--                                                <div class="col-md-2" style="padding-right: 0px;">-->
+<!--                                                    <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <table id="saldo-tunggakan" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-top: 5px; margin-bottom: 15px">-->
+<!--                                                <thead>-->
+<!--                                                <tr class="header">-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="11%" align="center" rowspan="2">KODE</th>-->
+<!--                                                    <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center" rowspan="2">WILAYAH/DISTRIBUSI</th>-->
+<!--                                                    <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center" rowspan="2">SALDO AWAL</th>-->
+<!--                                                    <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center" colspan="5">PENAMBAHAN</th>-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center" colspan="3">KOREKSI PENAMBAH</th>-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center" colspan="3">KOREKSI PENGURANG</th>-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center" colspan="4">PELUNASAN</th>-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center" rowspan="2">SALDO AKHIR RPTAG</th>-->
+<!--                                                </tr>-->
+<!--                                                <tr class="header">-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">SOREK BARU PASCA BAYAR</th>-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">BK</th>-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">PREPAID</th>-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">NONTAGLIS</th>-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">SUB TOTAL</th>-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">DPP BULAN BERJALAN</th>-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">BIAYA KETERLAMBATAN</th>-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">SUB TOTAL</th>-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">DPP BULAN BERJALAN</th>-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">BIAYA KETERLAMBATAN</th>-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">SUB TOTAL</th>-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">PASCA BAYAR</th>-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">PREPAID</th>-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">NONTAGLIS</th>-->
+<!--                                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">SUB TOTAL</th>-->
+<!--                                                </tr>-->
+<!--                                                </thead>-->
+<!--                                                <tbody id="isi7">-->
+
+<!--                                                </tbody>-->
+<!--                                            </table>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <label for="carousel-7" class="carousel-control prev control-1">‹</label>
+                        <label for="carousel-2" class="carousel-control next control-1">›</label>
+                        <label for="carousel-1" class="carousel-control prev control-2">‹</label>
+                        <label for="carousel-3" class="carousel-control next control-2">›</label>
+                        <label for="carousel-2" class="carousel-control prev control-3">‹</label>
+                        <label for="carousel-4" class="carousel-control next control-3">›</label>
+                        <label for="carousel-3" class="carousel-control prev control-4">‹</label>
+                        <label for="carousel-5" class="carousel-control next control-4">›</label>
+                        <label for="carousel-4" class="carousel-control prev control-5">‹</label>
+                        <label for="carousel-6" class="carousel-control next control-5">›</label>
+                        <label for="carousel-5" class="carousel-control prev control-6">‹</label>
+                        <label for="carousel-7" class="carousel-control next control-6">›</label>
+                        <label for="carousel-6" class="carousel-control prev control-7">‹</label>
+                        <label for="carousel-1" class="carousel-control next control-7">›</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/penjualan_tenaga_listrik.js"></script>
+    <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
+    <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
+</div>
