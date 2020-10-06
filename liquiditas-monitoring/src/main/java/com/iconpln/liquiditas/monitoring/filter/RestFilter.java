@@ -49,6 +49,7 @@ public class RestFilter implements Filter {
 
             List<Map<String, Object>> menus = userService.loadMenu(currentPrincipalName);
             List<Map<String, Object>> menuDashOperasional = new ArrayList<>();
+            List<Map<String, Object>> menuPenerimaanPenjualan = new ArrayList<>();
             List<Map<String, Object>> menuDerivatif = new ArrayList<>();
             List<Map<String, Object>> menuInvoice = new ArrayList<>();
             List<Map<String, Object>> menuInvoiceGrouping = new ArrayList<>();
@@ -57,6 +58,8 @@ public class RestFilter implements Filter {
             List<Map<String, Object>> menuOperasiKhusus = new ArrayList<>();
             List<Map<String, Object>> menuMaster = new ArrayList<>();
             List<Map<String, Object>> menuPotensi = new ArrayList<>();
+            List<Map<String, Object>> menuPlacement = new ArrayList<>();
+            List<Map<String, Object>> menuDataPindahBuku = new ArrayList<>();
             List<Map<String, Object>> menuRekapData = new ArrayList<>();
 
             if (menus == null) {
@@ -74,6 +77,15 @@ public class RestFilter implements Filter {
                         }
                         if(menus.get(i).get("root_id").equals("mnuDashOperasional")){
                             menuDashOperasional.add(menus.get(i));
+                        }
+                        if(menus.get(i).get("root_id").equals("mnuPenerimaanPenjualan")){
+                            menuPenerimaanPenjualan.add(menus.get(i));
+                        }
+                        if(menus.get(i).get("root_id").equals("mnuPlacement")){
+                            menuPlacement.add(menus.get(i));
+                        }
+                        if(menus.get(i).get("root_id").equals("mnuDataPindahBuku")){
+                            menuDataPindahBuku.add(menus.get(i));
                         }
                         if(menus.get(i).get("root_id").equals("mnuInvoiceGrouping")){
                             menuInvoiceGrouping.add(menus.get(i));
@@ -101,6 +113,7 @@ public class RestFilter implements Filter {
                 session.setAttribute("menus", menus);
                 session.setAttribute("derivatif", menuDerivatif);
                 session.setAttribute("dashoperasional", menuDashOperasional);
+                session.setAttribute("penerimaanpenjualan", menuPenerimaanPenjualan);
                 session.setAttribute("invoice", menuInvoice);
                 session.setAttribute("invoicegrouping", menuInvoiceGrouping);
                 session.setAttribute("pembelianvalas", menuPembelianValas);
@@ -108,6 +121,8 @@ public class RestFilter implements Filter {
                 session.setAttribute("operasikhusus", menuOperasiKhusus);
                 session.setAttribute("master", menuMaster);
                 session.setAttribute("potensi", menuPotensi);
+                session.setAttribute("placement", menuPlacement);
+                session.setAttribute("datapindahbuku", menuDataPindahBuku);
                 session.setAttribute("rekap_data", menuRekapData);
 
                 System.out.println("SERVLET SESSION MENU : " + session.getAttribute("menus"));
@@ -141,3 +156,4 @@ public class RestFilter implements Filter {
     }
 
 }
+

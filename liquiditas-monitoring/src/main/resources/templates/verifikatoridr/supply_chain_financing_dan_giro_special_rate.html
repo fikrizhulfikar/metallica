@@ -1,0 +1,80 @@
+<div th:fragment="stylesheets-frontend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        th {
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        td {
+            font-size: 12px;
+            width:1%;
+        }
+
+        td, th {
+            padding: 5px !important;
+        }
+
+        .carousel-control {
+            width: 8% !important;
+        }
+    </style>
+</div>
+<div style="margin-top: -15px;min-height: 400px" class="app-body col-md-12" th:fragment="content"
+     xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div align="center" class="title">
+                <h5>
+                    <b>GIRO SPECIAL RATE TGL : <span id="tglcetak">-</span></b>
+                </h5>
+            </div>
+        </div>
+        <div class="col-md-12" style="padding-top: 15px;">
+            <div class="view-table">
+                <table id="table-giro-special-rate" class="table table-bordered">
+                    <thead>
+                    <tr >
+                        <th style="background-color: #67a2d8; text-align: center; vertical-align: middle" rowspan="2">BANK</th>
+                        <th style="background-color: #67a2d8; text-align: center; vertical-align: middle" rowspan="2">CURRENCY</th>
+                        <th style="background-color: #67a2d8; text-align: center; vertical-align: middle" rowspan="2">JASA GIRO</th>
+                        <th style="background-color: #67a2d8; text-align: center; vertical-align: middle" rowspan="2">NOMINAL + JASA GIRO</th>
+                        <th style="background-color: #67a2d8; text-align: center" colspan="3">TOTAL (EQUIVALENT RUPIAH)</th>
+                    </tr>
+                    <tr >
+                        <th style="background-color: #67a2d8; text-align: center;">NOMINAL</th>
+                        <th style="background-color: #67a2d8; text-align: center">JASA GIRO</th>
+                        <th style="background-color: #67a2d8; text-align: center">NOMINAL + JASA GIRO</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-12" style="padding-top: 15px;">
+            <div class="view-table">
+                <table id="table-supply-chain-financing" class="table table-bordered">
+                    <thead>
+                    <tr >
+                        <th style="background-color: #67a2d8; text-align: center">BANK</th>
+                        <th style="background-color: #67a2d8; text-align: center">CURRENCY</th>
+                        <th style="background-color: #67a2d8; text-align: center">ORIGINAL CURRENCY</th>
+                        <th style="background-color: #67a2d8; text-align: center">EQ IDR</th>
+                        <th style="background-color: #67a2d8; text-align: center">FEE TRANSAKSI (IDR)</th>
+                        <th style="background-color: #67a2d8; text-align: center">CASH COLLATERAL (IDR)</th>
+                        <th style="background-color: #67a2d8; text-align: center">JASA GIRO</th>
+                        <th style="background-color: #67a2d8; text-align: center">PAJAK YANG DITANGGUNG PLN</th>
+                        <th style="background-color: #67a2d8; text-align: center">NET JASA GIRO</th>
+                        <th style="background-color: #67a2d8; text-align: center">NET GAIN/(LOSS) TRANSAKSI SCF</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:fragment="scripts-frontend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <script src="/static/js/frontend/verifikatoridr/supply_chain_financing_dan_giro_special_rate.js"></script>
+</div>

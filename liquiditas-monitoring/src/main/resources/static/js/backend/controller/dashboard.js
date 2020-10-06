@@ -1368,6 +1368,8 @@ function creteChartKompSaldo(data) {
     var label2 = (data[0].maxvalue + data[1].maxvalue)/2;
     var label3 = (data[1].maxvalue + data[2].maxvalue)/2;
     var label4 = (data[2].maxvalue + data[3].maxvalue)/2;
+    var tes = JSON.stringify(data);
+    console.log('WARNA :'+ tes);
     FusionCharts.ready(function () {
         var fusioncharts = new FusionCharts({
                 type: 'angulargauge',

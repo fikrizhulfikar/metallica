@@ -1986,6 +1986,49 @@ public class CorpayController {
         return mapData;
     }
 
+    @RequestMapping(value = "/penjualan_tenaga_listrik", method = RequestMethod.GET)
+    public Map<String, Object> getPenjualanTenagaListrik(
+            @RequestParam(value = "p_tgl_awal", defaultValue = "") String p_tgl_awal,
+            @RequestParam(value = "p_tgl_akhir", defaultValue = "") String p_tgl_akhir,
+            @RequestParam(value = "p_unit", defaultValue = "ALL") String p_unit,
+            @RequestParam(value = "p_range", defaultValue = "ALL") String p_range
+    ){
+        try {
+            return corpayService.getPenjualanTenagaListrik(p_tgl_awal, p_tgl_akhir, p_unit, p_range);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/penjualan_tenaga_listrik_bank", method = RequestMethod.GET)
+    public Map<String, Object> getPenjualanTenagaListrikBank(
+            @RequestParam(value = "p_tgl_awal", defaultValue = "") String p_tgl_awal,
+            @RequestParam(value = "p_tgl_akhir", defaultValue = "") String p_tgl_akhir,
+            @RequestParam(value = "p_bank", defaultValue = "ALL") String p_bank
+    ){
+        try {
+            return corpayService.getPenjualanTenagaListrikBank(p_tgl_awal, p_tgl_akhir, p_bank);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/penjualan_tenaga_listrik_dist", method = RequestMethod.GET)
+    public Map<String, Object> getPenjualanTenagaListrikDist(
+            @RequestParam(value = "p_tgl_awal", defaultValue = "") String p_tgl_awal,
+            @RequestParam(value = "p_tgl_akhir", defaultValue = "") String p_tgl_akhir,
+            @RequestParam(value = "p_unit", defaultValue = "ALL") String p_unit
+    ){
+        try {
+            return corpayService.getPenjualanTenagaListrikDist(p_tgl_awal, p_tgl_akhir, p_unit);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @GetMapping(path = "/eq_curr")
     public Map eqCurr(
             @RequestParam(value = "bank", defaultValue = "ALL") String bank,
@@ -2032,6 +2075,195 @@ public class CorpayController {
             return corpayService.getTipeRekening();
         } catch (Exception e) {
             AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/rekap_placement_lcl", method = RequestMethod.GET)
+    public Map<String, Object> getPlacementLCL(
+            @RequestParam(value = "p_tgl_awal", defaultValue = "") String p_tgl_awal,
+            @RequestParam(value = "p_sesi", defaultValue = "ALL") String p_sesi
+    ){
+        try {
+            return corpayService.getPlacementLCL(p_tgl_awal, p_sesi);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+//    @RequestMapping(value = "/detail_rekap_placement_lcl", method = RequestMethod.GET)
+//    public Map<String, Object> getDPlacementLCL(
+//            @RequestParam(value = "p_tgl_awal", defaultValue = "") String p_tgl_awal,
+//            @RequestParam(value = "p_sesi", defaultValue = "ALL") String p_sesi
+//    ){
+//        try {
+//            return corpayService.getDPlacementLCL(p_tgl_awal, p_sesi);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
+
+    @GetMapping(path = "/detail_rekap_placement_lcl")
+    public Map getDPlacementLCL(
+            @RequestParam(value = "p_tgl_awal") String p_tgl_awal,
+            @RequestParam(value = "p_sesi") String p_sesi
+            ){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = corpayService.getDPlacementLCL(p_tgl_awal, p_sesi);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @RequestMapping(value = "/ins_rekap_placement_lcl", method = RequestMethod.GET)
+    public Map getInsPlacementLCL(
+            @RequestParam(value = "pData", defaultValue = "") String pData
+    ) {
+        try {
+            return corpayService.getInsPlacementLCL(pData);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/doc_rekap_placement_lcl", method = RequestMethod.GET)
+    public Map<String, Object> getDocPlacementLCL(
+            @RequestParam(value = "p_tgl_awal", defaultValue = "") String p_tgl_awal,
+            @RequestParam(value = "p_sesi", defaultValue = "ALL") String p_sesi
+    ){
+        try {
+            return corpayService.getDocPlacementLCL(p_tgl_awal, p_sesi);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/rekap_placement_fcl", method = RequestMethod.GET)
+    public Map<String, Object> getPlacementFCL(
+            @RequestParam(value = "p_tgl_awal", defaultValue = "") String p_tgl_awal,
+            @RequestParam(value = "p_sesi", defaultValue = "ALL") String p_sesi
+    ){
+        try {
+            return corpayService.getPlacementFCL(p_tgl_awal, p_sesi);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_pemindahan_buku", method = RequestMethod.GET)
+    public Map<String, Object> getPemindahBukuan(
+            @RequestParam(value = "p_tgl_awal", defaultValue = "") String p_tgl_awal,
+            @RequestParam(value = "p_sesi", defaultValue = "ALL") String p_sesi
+    ){
+        try {
+            return corpayService.getPemindahBukuan(p_tgl_awal, p_sesi);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_settlement_valas", method = RequestMethod.GET)
+    public Map<String, Object> getSettlementValas(
+            @RequestParam(value = "p_tgl_awal", defaultValue = "") String p_tgl_awal,
+            @RequestParam(value = "p_sesi", defaultValue = "ALL") String p_sesi
+    ){
+        try {
+            return corpayService.getSettlementValas(p_tgl_awal, p_sesi);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_pengadaan_valas", method = RequestMethod.GET)
+    public Map<String, Object> getPengadaanValas(
+            @RequestParam(value = "p_tgl_awal", defaultValue = "") String p_tgl_awal,
+            @RequestParam(value = "p_sesi", defaultValue = "ALL") String p_sesi
+    ){
+        try {
+            return corpayService.getPengadaanValas(p_tgl_awal, p_sesi);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_pemindahan_buku_fcl", method = RequestMethod.GET)
+    public Map<String, Object> getPemindahBukuanFCL(
+            @RequestParam(value = "p_tgl_awal", defaultValue = "") String p_tgl_awal,
+            @RequestParam(value = "p_sesi", defaultValue = "ALL") String p_sesi
+    ){
+        try {
+            return corpayService.getPemindahBukuanFCL(p_tgl_awal, p_sesi);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/approve_staff_lcl", method = RequestMethod.POST)
+    public Map<String, Object> getStaffLCL(
+//            @RequestParam(value = "pStaffLcl", defaultValue = "") String pStaffLcl,
+            @RequestParam(value = "pSesi", defaultValue = "") String pSesi
+    ) {
+//        AppUtils.getLogger(this).info("pStaffLcl edit data: {}", pStaffLcl);
+        AppUtils.getLogger(this).info("pSesi edit data: {}", pSesi);
+        try {
+            Map<String, Object> res = corpayService.getStaffLCL(WebUtils.getUsernameLogin(), pSesi
+            );
+
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/approve_msb_lcl", method = RequestMethod.POST)
+    public Map<String, Object> getMSBLCL(
+            @RequestParam(value = "pStaffLcl", defaultValue = "") String pStaffLcl,
+            @RequestParam(value = "pSesi", defaultValue = "") String pSesi
+    ) {
+        AppUtils.getLogger(this).info("pStaffLcl edit data: {}", pStaffLcl);
+        AppUtils.getLogger(this).info("pSesi edit data: {}", pSesi);
+        try {
+            Map<String, Object> res = corpayService.getStaffLCL(WebUtils.getUsernameLogin(), pSesi
+            );
+
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/approve_vp_lcl", method = RequestMethod.POST)
+    public Map<String, Object> getVPLCL(
+            @RequestParam(value = "pStaffLcl", defaultValue = "") String pStaffLcl,
+            @RequestParam(value = "pSesi", defaultValue = "") String pSesi
+    ) {
+        AppUtils.getLogger(this).info("pStaffLcl edit data: {}", pStaffLcl);
+        AppUtils.getLogger(this).info("pSesi edit data: {}", pSesi);
+        try {
+            Map<String, Object> res = corpayService.getStaffLCL(WebUtils.getUsernameLogin(), pSesi
+            );
+
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }

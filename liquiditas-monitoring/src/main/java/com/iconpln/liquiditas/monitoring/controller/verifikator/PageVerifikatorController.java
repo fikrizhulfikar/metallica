@@ -13,12 +13,17 @@ public class PageVerifikatorController {
 
     @RequestMapping("/page_verifikator/imprst_valas_and_global_bond")
     public String imprstGlobalBond(){
-        return "verifikator/imprst_valas_and_global_bond";
+        return "verifikator/outstanding_produk_derivatif_dan_deposito";
     }
 
     @RequestMapping("/page_verifikator/derivatif_and_deposito")
     public String derivatifDeposito(){
         return "verifikator/derivatif_and_deposito";
+    }
+
+    @RequestMapping("/page_verifikator/saldo_rekening_valuta_asing")
+    public String saldoRekeningValutaAsing(){
+        return "verifikator/saldo_rekening_valuta_asing";
     }
 
     @RequestMapping("/page_verifikator/realisasi_pembayaran_valuta_asing")
@@ -37,9 +42,9 @@ public class PageVerifikatorController {
     }
 
     @RequestMapping("/page_verifikator/rencana_bayar_valuta_asing_mingguan_eur_others")
-    public String rencanaBayarValutaAsingMingguanEurOthers(){
-        return "verifikator/rencana_bayar_valuta_asing_mingguan_eur_others";
+    public String rencanaBayarValutaAsingMingguanEurOthers(){ return "verifikator/rencana_bayar_valuta_asing_mingguan_eur_others";
     }
+
     @RequestMapping("/screensaver")
     public String screensaver(){
         return "screensaver";
@@ -47,8 +52,16 @@ public class PageVerifikatorController {
 
 //    idr
     @RequestMapping("/page_idrverifikator/idr_imprest")
-    public String idrImprst(){
-        return "verifikatoridr/idr_imprest";
+    public String idrImprst(){return "verifikatoridr/idr_imprest";
+    }
+
+    @RequestMapping("/page_idrverifikator/supply_chain_financing_giro_special_rate")
+    public String idrSupplyChainGiroSpecial(){return "verifikatoridr/supply_chain_financing_dan_giro_special_rate";
+    }
+
+    @RequestMapping("/page_idrverifikator/saldo_rekening_rupiah")
+    public String idrSaldoRekening(){
+        return "verifikatoridr/saldo_rekening_rupiah";
     }
 
     @RequestMapping("/page_idrverifikator/idr_subsidi_kmk")
@@ -68,7 +81,7 @@ public class PageVerifikatorController {
 
     @RequestMapping("/page_idrverifikator/rencana_bayar_equivalen_rupiah")
     public String idrRencanaBayarEquivalenRupiah(){
-        return "verifikatoridr/rencana_bayar_equivalen_rupiah";
+        return "verifikatoridr/saldo_rekening_rupiah";
     }
 
     @RequestMapping("/page_idrverifikator/realisasi_placement_equivalen_rupiah")
