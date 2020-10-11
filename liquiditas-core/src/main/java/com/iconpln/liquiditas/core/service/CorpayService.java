@@ -563,7 +563,7 @@ public class CorpayService {
 
     public Map<String, Object> updateLunas(
             String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pJenisTransaksi,
-            String pUserId, String pStatus, String pOssId, String pGroupId
+            String pUserId, String pStatus, String pOssId, String pGroupId, String pRefNumBank
     ) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -579,6 +579,7 @@ public class CorpayService {
                 .addValue("p_status", pStatus)
                 .addValue("p_oss_id", pOssId)
                 .addValue("p_group_id", pGroupId)
+                .addValue("p_ref_num_bank", pRefNumBank)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("update data lunas : {}", out);
