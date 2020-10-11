@@ -700,7 +700,8 @@ public class CorpayController {
             @RequestParam(value = "pJenisTransaksi", defaultValue = "") String pJenisTransaksi,
             @RequestParam(value = "pStatus", defaultValue = "Sukses") String pStatus,
             @RequestParam(value = "pOssId", defaultValue = "") String pOssId,
-            @RequestParam(value = "pGroupId", defaultValue = "Sukses") String pGroupId
+            @RequestParam(value = "pGroupId", defaultValue = "Sukses") String pGroupId,
+            @RequestParam(value = "pRefNumBank", defaultValue = "-") String pRefNumBank
     ) {
         AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
 //        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
@@ -713,7 +714,7 @@ public class CorpayController {
 //        AppUtils.getLogger(this).info("pSumberDana edit data: {}", pSumberDana);
 //        AppUtils.getLogger(this).info("pMetodePembayaran edit data: {}", pMetodePembayaran);
         try {
-            Map<String, Object> res = corpayService.updateLunas(pCompCode, pDocNo, pFiscYear, pLineItem, pJenisTransaksi, WebUtils.getUsernameLogin(), pStatus, pOssId, pGroupId);
+            Map<String, Object> res = corpayService.updateLunas(pCompCode, pDocNo, pFiscYear, pLineItem, pJenisTransaksi, WebUtils.getUsernameLogin(), pStatus, pOssId, pGroupId, pRefNumBank);
             if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
             }
