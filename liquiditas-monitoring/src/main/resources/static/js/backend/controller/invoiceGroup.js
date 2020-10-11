@@ -831,7 +831,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank, pCaraBayar, pCurr) {
                                         '<button type="button" style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.COMP_CODE + '\',\'' + full.DOC_NO + '\',\'' + full.FISC_YEAR + '\',\'' + full.LINE_ITEM + '\',\''+full.NO_REK_HOUSE_BANK+'\',\''+full.HOUSE_BANK+'\',\''+full.BANK_ACCOUNT+'\')"><i class="fas fa-edit"></i></button>'+
                                         '<button type="button" style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_METALLICA+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
-                                        '<button type="button" style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
+                                        '<button type="button" style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\',\'' + full.METODE_PEMBAYARAN + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_METALLICA + '\')"><i class="fa fa-close"></i></button>'+
                                         '</div>';
                                 }
@@ -840,7 +840,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank, pCaraBayar, pCurr) {
                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_GROUP + '\')"><i class="fas fa-trash"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\',\'' + full.METODE_PEMBAYARAN + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_JA_IE"){
@@ -848,7 +848,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank, pCaraBayar, pCurr) {
                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn-edit-data btn-sm btn-warning" title="Verified MAKER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         // '<button style="width: 15px !important;" class="btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_GROUP + '\')"><i class="fa fa-close"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\',\'' + full.METODE_PEMBAYARAN + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_FCL_SETTLEMENT" || newRoleUser[0] === "ROLE_LOCAL_CURRENCY_LIQUIDITY"){
@@ -869,7 +869,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank, pCaraBayar, pCurr) {
                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '<button style="width: 15px !important;" class="btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class="btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\',\'' + full.METODE_PEMBAYARAN + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_CENTRALIZED_RECEIPT"){
@@ -877,7 +877,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank, pCaraBayar, pCurr) {
                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\',\'' + full.METODE_PEMBAYARAN + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_PAYMENT_EXPENDITURE"){
@@ -885,7 +885,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank, pCaraBayar, pCurr) {
                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\',\'' + full.METODE_PEMBAYARAN + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_INVESTMENT_EXPENDITURE"){
@@ -893,7 +893,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank, pCaraBayar, pCurr) {
                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
+                                        '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\',\'' + full.METODE_PEMBAYARAN + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         '</div>';
                                 }
                             }
@@ -906,7 +906,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank, pCaraBayar, pCurr) {
                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
                                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified APPROVER" onclick="update_status(\'' +full.ID_GROUP+'\',\''+3+'\')"><i class="fa fa-arrows-alt"></i></button>'+
                                         '<button style="width: 15px !important; margin-right: 5px;" class= "btn btn-reverse-data btn-sm btn-default" title="Reverse APPROVER" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrow-left"></i></button>'+
-                                        '<button type="button" style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\')"><i class="fas fa-file-alt"></i></button>'+
+                                        '<button type="button" style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\',\'' + full.METODE_PEMBAYARAN + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         '</div>';
                                 }
                                 if(newRoleUser[0] == "ROLE_MSB_PAYMENT_EXPENDITURE"){
@@ -1868,83 +1868,83 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                 {
                     "aTargets": [59],
                     "mRender": function (data, type, full) {
-                        return full.TGL_RENCANA_BAYAR;
+                        return full.REF_NUM_BANK;
                     }
                 },
                 {
                     "aTargets": [60],
                     "mRender": function (data, type, full) {
-                        return full.OSS_ID;
+                        return full.TGL_RENCANA_BAYAR;
                     }
                 },
                 {
                     "aTargets": [61],
                     "mRender": function (data, type, full) {
-                        return full.ID_GROUP;
+                        return full.OSS_ID;
                     }
                 },
-                // {
-                //     "aTargets": [62],
-                //     "mRender": function (data, type, full) {
-                //         return full.BANK_BYR;
-                //     }
-                // },
                 {
                     "aTargets": [62],
                     "mRender": function (data, type, full) {
-                        return full.CURR_BAYAR;
+                        return full.ID_GROUP;
                     }
                 },
                 {
                     "aTargets": [63],
                     "mRender": function (data, type, full) {
-                        return full.AMOUNT_BAYAR;
+                        return full.CURR_BAYAR;
                     }
                 },
                 {
                     "aTargets": [64],
                     "mRender": function (data, type, full) {
-                        return full.BANK_BENEF;
+                        return full.AMOUNT_BAYAR;
                     }
                 },
                 {
                     "aTargets": [65],
                     "mRender": function (data, type, full) {
-                        return full.NO_REK_BENEF;
+                        return full.BANK_BENEF;
                     }
                 },
                 {
                     "aTargets": [66],
                     "mRender": function (data, type, full) {
-                        return full.NAMA_BENEF;
+                        return full.NO_REK_BENEF;
                     }
                 },
                 {
                     "aTargets": [67],
                     "mRender": function (data, type, full) {
-                        return full.TGL_ACT_BAYAR;
+                        return full.NAMA_BENEF;
                     }
                 },
                 {
                     "aTargets": [68],
                     "mRender": function (data, type, full) {
-                        return full.SUMBER_DANA;
+                        return full.TGL_ACT_BAYAR;
                     }
                 },
                 {
                     "aTargets": [69],
                     "mRender": function (data, type, full) {
-                        return full.KETERANGAN;
+                        return full.SUMBER_DANA;
                     }
                 },
                 {
                     "aTargets": [70],
                     "mRender": function (data, type, full) {
-                        return full.STATUS_TRACKING;
+                        return full.KETERANGAN;
                     }
                 },
                 {
                     "aTargets": [71],
+                    "mRender": function (data, type, full) {
+                        return full.STATUS_TRACKING;
+                    }
+                },
+                {
+                    "aTargets": [72],
                     "mRender": function (data, type, full) {
                         var ret_value;
                         /*alert('BOOOMB2'+full.STATUS_TRACKING);*/
@@ -2216,7 +2216,7 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
 
                 },
                 {
-                    "aTargets": [72],
+                    "aTargets": [73],
                     "mRender": function (data, type, full) {
                         var value = new Object();
                         var full_value = new Object();
@@ -3737,19 +3737,25 @@ function cetakBuktiKasGroupingMultiple(){
     }
 }
 
-function cetakSuratGroup(id_group){
+function cetakSuratGroup(id_group, metode_pembayaran){
     $.ajax({
         url : baseUrl + "generate_doc/cetak/surat_group",
         data : {
             pIdGroup : id_group,
+            pMetodePembayaran : metode_pembayaran,
         },
         dataType : "JSON",
         type : "POST",
         success : (res) => {
             if (res.result.status === 1){
                 console.log("Result : ",res);
-                alert("Berhasil Mencetak Dokumen");
-                window.open(baseUrl+"generate_doc/cetak/downloadfile/surat_group_"+id_group+".docx","_blank");
+                alert("Berhasil Mencetak Dokumen. Klik 'Ok' untuk mengunduh");
+                if (metode_pembayaran === "GIRO" || metode_pembayaran === "INTERNETBANKING"){
+                    window.open(baseUrl+"generate_doc/cetak/downloadfile/surat_group_"+id_group+".docx","_blank");
+                }else{
+                    window.open(baseUrl+"generate_doc/cetak/downloadfile/surat_group_corpay_"+id_group+".docx","_blank");
+                }
+
             }
 
         },

@@ -1961,8 +1961,8 @@ fieldset[disabled] a.btn {
   box-shadow: 0 0 0 2px rgba(54, 184, 174, 0.5);
 }
 .btn-ready.disabled, .btn-elementary:disabled {
-  background-color: #49f2fa;
-  border-color: #49f2fa;
+  background-color: rgba(17, 80, 65, 0.61);
+  border-color: rgba(17, 65, 44, 0.54);
 }
 .btn-ready:active, .btn-ready.active,
 .show > .btn-ready.dropdown-toggle {

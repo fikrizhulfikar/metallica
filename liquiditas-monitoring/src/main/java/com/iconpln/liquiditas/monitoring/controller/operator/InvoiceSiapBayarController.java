@@ -282,6 +282,7 @@ public class InvoiceSiapBayarController {
                 paramDetail.put("DOC_TYPE",data.get("DOC_TYPE"));
                 paramDetail.put("DOC_DATE",(!data.get("DOC_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("DOC_DATE").toString())) : "-");
                 paramDetail.put("DOC_DATE2",data.get("DOC_DATE2"));
+                paramDetail.put("DESKRIPSI_BANK", data.get("DESKRIPSI_BANK"));
                 paramDetail.put("POST_DATE",(!data.get("POST_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("POST_DATE").toString())) : "-");
                 paramDetail.put("POST_DATE2",data.get("POST_DATE2"));
                 paramDetail.put("ENTRY_DATE",(!data.get("ENTRY_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("ENTRY_DATE").toString())) : "-");
@@ -295,7 +296,7 @@ public class InvoiceSiapBayarController {
                 paramDetail.put("REFERENCE_KEY",data.get("REFERENCE_KEY"));
                 paramDetail.put("PMT_IND",data.get("PMT_IND"));
                 paramDetail.put("TRANS_TYPE",data.get("TRANS_TYPE"));
-                paramDetail.put("SPREAD_VALUE",data.get("SPREAD_VAL"));
+                paramDetail.put("SPREAD_VAL",data.get("SPREAD_VAL"));
                 paramDetail.put("LINE_ITEM",data.get("LINE_ITEM"));
                 paramDetail.put("OI_IND",data.get("OI_IND"));
                 paramDetail.put("ACCT_TYPE",data.get("ACCT_TYPE"));
@@ -303,7 +304,7 @@ public class InvoiceSiapBayarController {
                 paramDetail.put("BUS_AREA",data.get("BUS_AREA"));
                 paramDetail.put("TPBA",data.get("TPBA"));
                 paramDetail.put("AMT_LC",data.get("AMT_LC"));
-                paramDetail.put("AMT_TC",data.get("AMT_TC"));
+                paramDetail.put("AMT_TC", data.get("AMT_TC"));
                 paramDetail.put("AMT_WITH_BASE_TC",data.get("AMT_WITH_BASE_TC"));
                 paramDetail.put("AMT_WITH_TC",data.get("AMT_WITH_TC"));
                 paramDetail.put("AMOUNT",data.get("AMOUNT"));
@@ -320,6 +321,8 @@ public class InvoiceSiapBayarController {
                 paramDetail.put("DUE_ON",data.get("DUE_ON"));
                 paramDetail.put("PMT_BLOCK",data.get("PMT_BLOCK"));
                 paramDetail.put("HOUSE_BANK",data.get("HOUSE_BANK"));
+                paramDetail.put("NAMA_HOUSE_BANK", data.get("NAMA_BANK"));
+                paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
                 paramDetail.put("PRTNR_BANK_TYPE",data.get("PRTNR_BANK_TYPE"));
                 paramDetail.put("BANK_KEY",data.get("BANK_KEY"));
                 paramDetail.put("BANK_ACCOUNT",data.get("BANK_ACCOUNT"));
@@ -332,6 +335,7 @@ public class InvoiceSiapBayarController {
                 paramDetail.put("INT_ORDER",data.get("INT_ORDER"));
                 paramDetail.put("WBS_NUM",data.get("WBS_NUM"));
                 paramDetail.put("CASH_CODE",data.get("CASH_CODE"));
+                paramDetail.put("NAMA_CASHCODE",data.get("NAMA_CASHCODE"));
                 paramDetail.put("AMT_WITH_BASE_LC",data.get("AMT_WITH_BASE_LC"));
                 paramDetail.put("AMT_WITH_LC",data.get("AMT_WITH_LC"));
                 paramDetail.put("DR_CR_IND",data.get("DR_CR_IND"));
@@ -340,6 +344,7 @@ public class InvoiceSiapBayarController {
                 paramDetail.put("TGL_VERIFIKASI_CHECKER",data.get("TGL_VERIFIKASI_CHECKER"));
                 paramDetail.put("TGL_VERIFIKASI_APPROVER",data.get("TGL_VERIFIKASI_APPROVER"));
                 paramDetail.put("METODE_PEMBAYARAN",data.get("METODE_PEMBAYARAN"));
+                paramDetail.put("TGL_TAGIHAN_DITERIMA",data.get("TGL_TAGIHAN_DITERIMA"));
                 paramDetail.put("MAKER",data.get("MAKER"));
                 paramDetail.put("CHECKER",data.get("CHECKER"));
                 paramDetail.put("APPROVER",data.get("APPROVER"));
@@ -368,12 +373,14 @@ public class InvoiceSiapBayarController {
                 paramDetail.put("NAMA_BENEF",data.get("NAMA_BENEF"));
                 paramDetail.put("VERIFIED_BY",data.get("VERIFIED_BY"));
                 paramDetail.put("VERIFIED_ON",data.get("VERIFIED_ON"));
+                paramDetail.put("SPREAD_VALUE",data.get("SPREAD_VAL"));
                 paramDetail.put("APPROVE_TGL_RENCANA_BAYAR",data.get("APPROVE_TGL_RENCANA_BAYAR"));
                 paramDetail.put("STATUS_TRACKING",data.get("STATUS_TRACKING"));
-                paramDetail.put("TGL_SIAP_BAYAR", data.get("TGL_SIAP_BAYAR"));
-                paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
-                paramDetail.put("SPREAD_VAL",data.get("SPREAD_VAL"));
-                paramDetail.put("TGL_TAGIHAN_DITERIMA", data.get("TGL_TAGIHAN_DITERIMA"));
+                paramDetail.put("STATUS",data.get("STATUS"));
+                paramDetail.put("POSISI", data.get("POSISI"));
+                paramDetail.put("NOMINAL_DI_BAYAR", data.get("NOMINAL_DI_BAYAR"));
+                paramDetail.put("JENIS_TRANSAKSI", data.get("JENIS"));
+                paramDetail.put("REFERENCE_NUMBER_BANK", data.get("REF_NUM_BANK"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
@@ -401,5 +408,29 @@ public class InvoiceSiapBayarController {
         BigDecimal result =  invoiceSiapBayarService.getTotalTagihan(tglAwal, tglAkhir, currency, caraBayar, bank, WebUtils.getUsernameLogin(), search);
         String formatted = AppUtils.getInstance().formatDecimalCurrency(result);
         return formatted;
+    }
+
+    @RequestMapping(value = "/update_jambayar_corpay", method = RequestMethod.POST)
+    public Map<String, Object> updateJamBayarCorpay(
+            @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
+            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
+            @RequestParam(value = "pFiscYear", defaultValue = "") String pFiscYear,
+            @RequestParam(value = "pLineItem", defaultValue = "") String pLineItem,
+            @RequestParam(value = "pJenisTransaksi", defaultValue = "") String pJenisTransaksi,
+            @RequestParam(value = "pJambayar", defaultValue = "") String pJamBayar,
+            @RequestParam(value = "pOssId", defaultValue = "") String pOssId,
+            @RequestParam(value = "pGroupId", defaultValue = "Sukses") String pGroupId
+    ) {
+        AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
+        try {
+            Map<String, Object> res = invoiceSiapBayarService.corpayUpdateJamBayar(pCompCode, pDocNo, pFiscYear, pLineItem, pJenisTransaksi, pJamBayar, WebUtils.getUsernameLogin(), pOssId, pGroupId);
+            if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
+
+            }
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

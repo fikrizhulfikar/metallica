@@ -882,6 +882,7 @@ function getDetails(idGroup) {
                 {width: 100, targets: 68},
                 {width: 100, targets: 69},
                 {width: 100, targets: 70},
+                {width: 100, targets: 71},
                 // {width: 100, targets: 71},
                 { className: "datatables_action", "targets": [9,23,24,25,26,27,28,29] },
                 {
@@ -1282,77 +1283,77 @@ function getDetails(idGroup) {
                 {
                     "aTargets": [59],
                     "mRender": function (data, type, full) {
-                        return full.TGL_RENCANA_BAYAR;
+                        return full.REF_NUM_BANK;
                     }
                 },
                 {
                     "aTargets": [60],
                     "mRender": function (data, type, full) {
-                        return full.OSS_ID;
+                        return full.TGL_RENCANA_BAYAR;
                     }
                 },
                 {
                     "aTargets": [61],
                     "mRender": function (data, type, full) {
-                        return full.GROUP_ID;
+                        return full.OSS_ID;
                     }
                 },
-                // {
-                //     "aTargets": [62],
-                //     "mRender": function (data, type, full) {
-                //         return full.BANK_BYR;
-                //     }
-                // },
                 {
                     "aTargets": [62],
                     "mRender": function (data, type, full) {
-                        return full.CURR_BAYAR;
+                        return full.GROUP_ID;
                     }
                 },
                 {
                     "aTargets": [63],
                     "mRender": function (data, type, full) {
-                        return full.AMOUNT_BAYAR;
+                        return full.CURR_BAYAR;
                     }
                 },
                 {
                     "aTargets": [64],
                     "mRender": function (data, type, full) {
-                        return full.BANK_BENEF;
+                        return full.AMOUNT_BAYAR;
                     }
                 },
                 {
                     "aTargets": [65],
                     "mRender": function (data, type, full) {
-                        return full.NO_REK_BENEF;
+                        return full.BANK_BENEF;
                     }
                 },
                 {
                     "aTargets": [66],
                     "mRender": function (data, type, full) {
-                        return full.NAMA_BENEF;
+                        return full.NO_REK_BENEF;
                     }
                 },
                 {
                     "aTargets": [67],
                     "mRender": function (data, type, full) {
-                        return full.TGL_ACT_BAYAR;
+                        return full.NAMA_BENEF;
                     }
                 },
                 {
                     "aTargets": [68],
                     "mRender": function (data, type, full) {
-                        return full.SUMBER_DANA;
+                        return full.TGL_ACT_BAYAR;
                     }
                 },
                 {
                     "aTargets": [69],
                     "mRender": function (data, type, full) {
-                        return full.KETERANGAN;
+                        return full.SUMBER_DANA;
                     }
                 },
                 {
                     "aTargets": [70],
+                    "mRender": function (data, type, full) {
+                        return full.KETERANGAN;
+                    }
+                },
+                {
+                    "aTargets": [71],
                     "mRender": function (data, type, full) {
                         return full.STATUS_TRACKING;
                     }

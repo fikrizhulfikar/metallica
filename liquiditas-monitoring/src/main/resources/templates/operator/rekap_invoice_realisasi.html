@@ -30,7 +30,7 @@
 </div>
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" style="cursor: default">Rekap Invoice Sudah Dibayar</li>
+        <li class="breadcrumb-item active" style="cursor: default">Invoice Lunas</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
 <!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>-->
@@ -196,7 +196,7 @@
                             </div>
                             <!---->
                             <div class="form-group" style="margin-top: 40px">
-                                <label for="pJenisPemabayaran">Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label><br/>
+                                <label>Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label><br/>
                                 <label>Gunakan titik (.) untuk koma (,)</label>
                             </div>
                         </div>
@@ -556,6 +556,10 @@
                             <input class="form-check-input checkbox-toggle" type="checkbox" id="hc71" data-column="71"/>
                             <label class="form-check-label" for="hc71">STATUS TRACKING</label>
                         </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc72" data-column="72"/>
+                            <label class="form-check-label" for="hc72">REFERENCE NUMBER BANK</label>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -686,12 +690,14 @@
                                 <th>AMOUNT WITH HOLDING LC</th>
                                 <th>METODE PEMBAYARAN</th>
                                 <th>NO GIRO</th>
+                                <th>REFERENCE NUMBER BANK</th>
                                 <th>TGL TERIMA TAGIHAN</th>
                                 <th>TGL RENCANA BAYAR</th>
                                 <th>SUMBER DANA</th>
                                 <th>KETERANGAN</th>
                                 <th>STATUS TRACKING</th>
                                 <th>TGL LUNAS</th>
+                                <th>AKSI</th>
 <!--                                <th>AKSI</th>-->
 <!--                                <th id="forcbparent"></th>-->
                             </tr>

@@ -94,4 +94,9 @@ public class PageMasterController {
     public String vendor(){
         return "operator/master_vendor";
     }
+
+    @RequestMapping("/vendor_oss")
+    public String vendorOss(){return "operator/vendor_oss";}
+
+
 }
