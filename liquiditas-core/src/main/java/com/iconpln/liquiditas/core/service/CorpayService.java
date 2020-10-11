@@ -1113,10 +1113,10 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         String res = null;
     Date date = new Date();
     SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-//    String refnum = format.format(date.getTime())+"00";
+    String refnum = format.format(date.getTime())+"00";
        if (pMetodeBayar.equals("INHOUSE")){
            if(!pAmountBayar.isEmpty()){
-               res = doPayment( pBank, pRefNum, pSource, pBeneficiaryAccount, pCurrency,
+               res = doPayment( pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
                        pAmountBayar, pRemark, pFeeType, pConfirmationCode);
            }
            if(pAmountBayar.isEmpty()) {
@@ -1140,7 +1140,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
        }
        if (pMetodeBayar.equals("KLIRING")) {
            if(!pAmountBayar.isEmpty()) {
-               res = doPaymentKliring(pBank, pRefNum, pSource, pBeneficiaryAccount, pCurrency,
+               res = doPaymentKliring(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
                        pAmountBayar, pRemark, pBenefEmail, pBenefName,
                        pBenefAddr1, pBenefAddr2, pDestinationBankCode, pFeeType);
            }
@@ -1501,7 +1501,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
             CloseableHttpResponse response = httpClient.execute(request);
             result = EntityUtils.toString(response.getEntity());
         }catch (Exception e){
-            //log.warning(e.getMessage());
+//            e.printStackTrace();
         }
         return result;
     }
