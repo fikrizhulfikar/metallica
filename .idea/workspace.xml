@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="82e82556-d703-4089-b65a-45176b30416b" name="Default Changelist" comment="Modifikasi button get balance, inquiry, cek payment status, validasi token, dan payment">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/CorpayService.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/CorpayService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/login.html" afterDir="false" />
-    </list>
+    <list default="true" id="956e2362-dfab-4fb3-b9ce-53813f5c44f9" name="Default Changelist" comment="Disable button action rekap invoice untuk role admin dan lcl" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
