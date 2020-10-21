@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -44,19 +45,20 @@ public class UploadSaldoService {
                 int totalCell = sheet.getRow(1).getLastCellNum();
                 if (!isRowEmpty(rrow, totalCell)){
                     for (int cellNum = 0; cellNum < totalCell; cellNum++){
-                        System.out.println("Cell Number : "+cellNum);
                         if (rrow.getCell(cellNum).getCellTypeEnum() == CellType.NUMERIC) {
                             if (DateUtil.isCellDateFormatted(rrow.getCell(cellNum))) {
                                 list.add(rrow.getCell(cellNum).toString());
                             } else if(cellNum == 1){
                                 rrow.getCell(cellNum).setCellType(CellType.STRING);
                                 list.add(rrow.getCell(cellNum).toString());
-                            } else list.add(String.valueOf(rrow.getCell(cellNum).toString()));
+                            } else{
+                                list.add(new BigDecimal(rrow.getCell(cellNum).getNumericCellValue()).toPlainString());
+                            }
                         } else {
                             list.add(rrow.getCell(cellNum).getStringCellValue());
                         }
                     }
-                    AppUtils.getLogger(this).info("list bos : {}",list);
+//                    AppUtils.getLogger(this).info("list bos : {}",list);
                     if (x > 0){
                         statement.registerOutParameter(1, OracleTypes.VARCHAR);
                         statement.setString(2,list.get(0));
