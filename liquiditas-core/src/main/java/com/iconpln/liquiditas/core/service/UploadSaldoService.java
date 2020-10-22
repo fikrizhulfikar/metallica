@@ -4,8 +4,14 @@ import com.iconpln.liquiditas.core.utils.AppUtils;
 import oracle.jdbc.OracleTypes;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -18,17 +24,16 @@ import java.util.*;
 @Repository
 public class UploadSaldoService {
 
+    @Autowired
+    DataSource dataSource;
+
+    private JdbcTemplate getJdbcTemplate(){ return new JdbcTemplate(dataSource);}
+
     public Map uploadSaldoBank(InputStream path) throws ClassNotFoundException, SQLException, IOException, InvalidFormatException {
-        Class.forName("oracle.jdbc.OracleDriver");
-        String oracleUrl = "jdbc:oracle:thin:@10.14.152.5:1598:CISQA";
-        Connection con = DriverManager.getConnection(oracleUrl, "CORPAY", "corpay");
-        CallableStatement statement =  con.prepareCall("{?=call PKG_CORPAY2.ins_saldo_bank(?,?,?,?,?,?,?,?)}");
-        System.out.println("Connected to Oracle database.....");
         Map out = new HashMap<>();
         Workbook workbook = null;
         Iterator<Row> rowIterator = null;
         Row row = null;
-        String result = null;
         try {
             try {
                 workbook = WorkbookFactory.create(path);
@@ -60,25 +65,25 @@ public class UploadSaldoService {
                     }
 //                    AppUtils.getLogger(this).info("list bos : {}",list);
                     if (x > 0){
-                        statement.registerOutParameter(1, OracleTypes.VARCHAR);
-                        statement.setString(2,list.get(0));
-                        statement.setString(3,list.get(1));
-                        statement.setString(4,list.get(2));
-                        statement.setString(5,list.get(3));
-                        statement.setString(6,list.get(4));
-                        statement.setString(7,list.get(5));
-                        statement.setString(8,list.get(6));
-                        statement.setString(9,list.get(7));
-                        statement.execute();
-                        result = statement.getString(1);
+                        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                                .withCatalogName("PKG_CORPAY2")
+                                .withFunctionName("ins_saldo_bank");
+                        SqlParameterSource params = new MapSqlParameterSource()
+                                .addValue("p_bank",list.get(0))
+                                .addValue("p_account",list.get(1))
+                                .addValue("p_currency",list.get(2))
+                                .addValue("p_tanggal",list.get(3))
+                                .addValue("p_debit",list.get(4))
+                                .addValue("p_kredit",list.get(5))
+                                .addValue("p_saldo",list.get(6))
+                                .addValue("p_create_time",list.get(7))
+                                .addValue("out_msg", OracleTypes.VARCHAR);
+                       out = jdbcCall.execute(params);
                     }
                     list.clear();
                     x++;
                 }
             }
-
-            assert false;
-            out.put("result",result);
         }catch (Exception e){
             e.printStackTrace();
         }
