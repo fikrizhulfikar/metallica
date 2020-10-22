@@ -1,6 +1,5 @@
 package com.iconpln.liquiditas.core.service;
 
-import com.iconpln.liquiditas.core.utils.AppUtils;
 import oracle.jdbc.OracleTypes;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
@@ -15,9 +14,6 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.*;
 
