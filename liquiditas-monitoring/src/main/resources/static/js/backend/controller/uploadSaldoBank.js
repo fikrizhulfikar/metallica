@@ -39,7 +39,7 @@ function upload_server_xls() {
         success: function (res) {
             hideLoadingCss("");
             console.log(res);
-            if (res.result === "1") {
+            if (res.return === "1") {
                 alert("Sukses Mengunggah Saldo");
                 // table_rekapitulasi.ajax.reload();
                 // search("load");
