@@ -1,0 +1,133 @@
+<div th:fragment="stylesheets-backend">
+    <style>
+        button{ cursor: pointer
+        }
+        .table td {
+            padding-right: 0.75rem;
+            padding-left: 0.75rem;
+            vertical-align: middle;
+        }
+        h6, h5, .card-title, .title-top, .title-bottom{
+            margin-bottom: 0em;
+        }
+        .title-bottom{
+            margin-top: 0em;
+        }
+        .title-top{
+            margin-top: 0.5em;
+        }
+        .title-bottom, .title-top{
+            text-align: center;
+        }
+        .row-top, .row-bottom{
+            margin-bottom: 0.5rem;
+        }
+
+        .table-left{
+            margin-left: 0.65rem;
+        }
+        .table-right{
+            margin-right: 0.75rem;
+            margin-bottom: 0.2rem;
+        }
+        .note{
+            margin-left: 0.75rem;
+            margin-bottom: 1em;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Dashboard Pak Iskandar</li>
+    </ol>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">DASHBOARD RENCANA</h5>
+                        <small>Divisi Treasury, PT. PLN (Persero)</small>
+                    </div>
+                    <div class="card-body">
+                        <div class="row row-top">
+                            <div class="col-md-12">
+                                <div class="title-top">
+                                    <small>SALDO AWAL</small>
+                                    <h5 id="saldo_awal_rencana">0,0</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <table class="table table-left" id="table_rencana_left">
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="table table-right" id="table_rencana_right">
+
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row row-bottom">
+                            <div class="col-md-12">
+                                <div class="title-bottom">
+                                    <small>SALDO AKHIR</small>
+                                    <h5 id="saldo_akhir_rencana">0.0</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="note">
+                            <small><i>*Dropping imprest ke unit belum entry di metallica, data berdasarkan permintaan dropping mingguan.</i></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">DASHBOARD Realisasi</h5>
+                        <small>Divisi Treasury, PT. PLN (Persero)</small>
+                    </div>
+                    <div class="card-body">
+                        <div class="row row-top">
+                            <div class="col-md-12">
+                                <div class="title-top">
+                                    <small>SALDO AWAL</small>
+                                    <h5 id="saldo_awal_realisasi">0,0</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <table class="table table-left" id="table_realisasi_left">
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="table table-right" id="table_realisasi_right">
+
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row row-bottom">
+                            <div class="col-md-12">
+                                <div class="title-bottom">
+                                    <small>SALDO AKHIR</small>
+                                    <h5 id="saldo_akhir_realisasi">0.0</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="note">
+                            <small><i>*Dropping imprest ke unit belum entry di metallica, data berdasarkan permintaan dropping mingguan.</i></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/financialTalk.js"></script>
+    <!--<script src="static/js/jquery.mask.min.js"></script>-->
+</div>
