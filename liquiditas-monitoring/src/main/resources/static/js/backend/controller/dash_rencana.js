@@ -462,7 +462,7 @@ function tableRencanaPerVendor(_date){
             if (cok !== data.TANGGAL){
                 let index = 0;
             }
-            if (data["NOURUT"] === 99){
+            if (data["NOURUT"] === 999){
                 $(row).css({
                     "background-color" : "#F4D35E",
                     "color" : "black",
