@@ -34,11 +34,11 @@ function getDataRencana(){
         processData: false,
         success : (res) => {
             if (res.OUT_SALDO_AWAL.length > 0){
-                let saldo_awal = Intl.NumberFormat().format(res.OUT_SALDO_AWAL[0].RP);
+                let saldo_awal = new Intl.NumberFormat('id-ID', {style : 'currency', currency: 'IDR'}).format(res.OUT_SALDO_AWAL[0].RP);
                 $("#saldo_awal_rencana").html(saldo_awal);
             }
             if (res.OUT_SALDO_AKHIR.length > 0){
-                let saldo_akhir = Intl.NumberFormat().format(res.OUT_SALDO_AKHIR[0].RP);
+                let saldo_akhir = new Intl.NumberFormat('id-ID', {style : 'currency', currency: 'IDR'}).format(res.OUT_SALDO_AKHIR[0].RP);
                 $("#saldo_akhir_rencana").html(saldo_akhir);
             }
             if (res.OUT_PENERIMAAN.length > 0){
@@ -47,11 +47,11 @@ function getDataRencana(){
                     let build = '<tr>';
                     if (index === 0){
                         build = build + '<td><h6><b>'+value.URAIAN+'</b></h6></td>\n' +
-                            '                                        <td><b>'+Intl.NumberFormat().format(value.RP)+'</b></td>\n' +
+                            '                                        <td style="text-align: right;"><b>'+ new Intl.NumberFormat('id-ID', {style : 'currency', currency: 'IDR'}).format(value.RP)+'</b></td>\n' +
                             '                                    </tr>'
                     }else{
                         build = build + '<td><span><i class="'+value.ICON+'"></i></span>&nbsp;'+value.URAIAN+'</td>\n'+
-                        '<td>'+Intl.NumberFormat().format(value.RP)+'</td></tr>';
+                        '<td style="text-align: right;">'+new Intl.NumberFormat('id-ID', {style : 'currency', currency: 'IDR'}).format(value.RP)+'</td></tr>';
                     }
                     $("#table_rencana_left").append(build);
                 });
@@ -62,11 +62,11 @@ function getDataRencana(){
                     let build = '<tr>';
                     if (index === 0){
                         build = build + '<td><h6><b>'+value.URAIAN+'</b></h6></td>\n' +
-                            '                                        <td><b>'+Intl.NumberFormat().format(value.RP)+'</b></td>\n' +
+                            '                                        <td style="text-align: right;"><b>'+new Intl.NumberFormat('id-ID', {style : 'currency', currency: 'IDR'}).format(value.RP)+'</b></td>\n' +
                             '                                    </tr>'
                     }else{
                         build = build + '<td><span><i class="'+value.ICON+'"></i></span>&nbsp;'+value.URAIAN+'</td>\n'+
-                            '<td>'+Intl.NumberFormat().format(value.RP)+'</td></tr>';
+                            '<td style="text-align: right;">'+new Intl.NumberFormat('id-ID', {style : 'currency', currency: 'IDR'}).format(value.RP)+'</td></tr>';
                     }
                     $("#table_rencana_right").append(build);
                 });
@@ -90,11 +90,11 @@ function getDataRealisasi(){
         processData: false,
         success : (res) => {
             if (res.OUT_SALDO_AWAL.length > 0){
-                let saldo_awal = Intl.NumberFormat().format(res.OUT_SALDO_AWAL[0].RP);
+                let saldo_awal = new Intl.NumberFormat('id-ID', {style : 'currency', currency: 'IDR'}).format(res.OUT_SALDO_AWAL[0].RP);
                 $("#saldo_awal_realisasi").html(saldo_awal);
             }
             if (res.OUT_SALDO_AKHIR.length > 0){
-                let saldo_akhir = Intl.NumberFormat().format(res.OUT_SALDO_AKHIR[0].RP);
+                let saldo_akhir = new Intl.NumberFormat('id-ID', {style : 'currency', currency: 'IDR'}).format(res.OUT_SALDO_AKHIR[0].RP);
                 $("#saldo_akhir_realisasi").html(saldo_akhir);
             }
             if (res.OUT_PENERIMAAN.length > 0){
@@ -103,11 +103,11 @@ function getDataRealisasi(){
                     let build = '<tr>';
                     if (index === 0){
                         build = build + '<td><h6><b>'+value.URAIAN+'</b></h6></td>\n' +
-                            '                                        <td><b>'+Intl.NumberFormat().format(value.RP)+'</b></td>\n' +
+                            '                                        <td style="text-align: right;"><b>'+new Intl.NumberFormat('id-ID', {style : 'currency', currency: 'IDR'}).format(value.RP)+'</b></td>\n' +
                             '                                    </tr>'
                     }else{
                         build = build + '<td><span><i class="'+value.ICON+'"></i></span>&nbsp;'+value.URAIAN+'</td>\n'+
-                            '<td>'+Intl.NumberFormat().format(value.RP)+'</td></tr>';
+                            '<td style="text-align: right;">'+new Intl.NumberFormat('id-ID', {style : 'currency', currency: 'IDR'}).format(value.RP)+'</td></tr>';
                     }
                     $("#table_realisasi_left").append(build);
                 });
@@ -118,11 +118,11 @@ function getDataRealisasi(){
                     let build = '<tr>';
                     if (index === 0){
                         build = build + '<td><h6><b>'+value.URAIAN+'</b></h6></td>\n' +
-                            '                                        <td><b>'+Intl.NumberFormat().format(value.RP)+'</b></td>\n' +
+                            '                                        <td style="text-align: right;"><b>'+new Intl.NumberFormat('id-ID', {style : 'currency', currency: 'IDR'}).format(value.RP)+'</b></td>\n' +
                             '                                    </tr>'
                     }else{
                         build = build + '<td><span><i class="'+value.ICON+'"></i></span>&nbsp;'+value.URAIAN+'</td>\n'+
-                            '<td>'+Intl.NumberFormat().format(value.RP)+'</td></tr>';
+                            '<td style="text-align: right;">'+new Intl.NumberFormat('id-ID', {style : 'currency', currency: 'IDR'}).format(value.RP)+'</td></tr>';
                     }
                     $("#table_realisasi_right").append(build);
                 });
