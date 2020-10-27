@@ -67,6 +67,38 @@
         .legend .seven { background-color: #5ADBFF; }
         .legend .eight { background-color: #F20F2F; }
         .legend .nine { background-color: #F4D35E; }
+
+        h6, h5, .card-title, .title-top, .title-bottom{
+            margin-bottom: 0em;
+        }
+        .title-bottom{
+            margin-top: 0em;
+        }
+        .title-top{
+            margin-top: 0.5em;
+        }
+        .title-bottom, .title-top{
+            text-align: center;
+        }
+        .row-top, .row-bottom{
+            margin-bottom: 0.5rem;
+        }
+
+        .table-left{
+            margin-left: 0.65rem;
+            box-shadow: none !important;
+            width: 98%;
+        }
+        .table-right{
+            margin-right: 0.75rem;
+            margin-bottom: 0.2rem;
+            box-shadow: none !important;
+            width: 98%;
+        }
+        .note{
+            margin-left: 0.75rem;
+            margin-bottom: 1em;
+        }
     </style>
 </div>
 <main class="main" th:fragment="content">
@@ -178,11 +210,20 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input class="carousel-open" type="radio" id="carousel-3" name="carousel" aria-hidden="true" hidden=""/>
+                        <div class="carousel-item">
+                            <div class="col-md-12" style="margin-top: 20px;">
+                                <div class="card">
+                                    <div class="card-block">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h5 class="card-title">DASHBOARD Realisasi</h5>
+                                                        <h5 class="card-title">DASHBOARD REALISASI</h5>
                                                         <small>Divisi Treasury, PT. PLN (Persero)</small>
                                                     </div>
                                                     <div class="card-body">
@@ -224,7 +265,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input class="carousel-open" type="radio" id="carousel-3" name="carousel" aria-hidden="true" hidden=""/>
+                        <input class="carousel-open" type="radio" id="carousel-4" name="carousel" aria-hidden="true" hidden=""/>
                         <div class="carousel-item">
                             <div class="col-md-12" align="center" style="margin-top: 20px">
                                 <div class="card">
@@ -261,7 +302,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input class="carousel-open" type="radio" id="carousel-4" name="carousel" aria-hidden="true" hidden=""/>
+                        <input class="carousel-open" type="radio" id="carousel-5" name="carousel" aria-hidden="true" hidden=""/>
                         <div class="carousel-item">
                             <div class="col-md-12" align="center" style="margin-top: 20px">
                                 <div class="card">
@@ -287,7 +328,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input class="carousel-open" type="radio" id="carousel-5" name="carousel" aria-hidden="true" hidden=""/>
+                        <input class="carousel-open" type="radio" id="carousel-6" name="carousel" aria-hidden="true" hidden=""/>
                         <div class="carousel-item">
                             <div class="col-md-12" style="margin-top: 20px">
                                 <div class="card">
@@ -300,7 +341,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input class="carousel-open" type="radio" id="carousel-6" name="carousel" aria-hidden="true" hidden=""/>
+                        <input class="carousel-open" type="radio" id="carousel-7" name="carousel" aria-hidden="true" hidden=""/>
                         <div class="carousel-item">
                             <div class="col-md-12" style="margin-top: 20px">
                                 <div class="card">
@@ -330,7 +371,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input class="carousel-open" type="radio" id="carousel-7" name="carousel" aria-hidden="true" hidden=""/>
+                        <input class="carousel-open" type="radio" id="carousel-8" name="carousel" aria-hidden="true" hidden=""/>
                         <div class="carousel-item">
                             <div class="col-md-12" style="margin-top: 20px">
                                 <div class="card">
@@ -397,6 +438,7 @@
 </main>
 <div th:fragment="scripts-backend">
     <script src="/static/js/backend/controller/dashboard.js"></script>
+    <script src="/static/js/backend/controller/financialTalk.js"></script>
     <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
     <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
     <script type="text/javascript">
