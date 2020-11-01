@@ -76,7 +76,7 @@
         }
         .title-top{
             margin-top: 0.5em;
-            margin-bottom: 0.5em;
+            /*margin-bottom: 0.5em;*/
         }
         .title-bottom, .title-top{
             text-align: center;
@@ -96,9 +96,14 @@
             box-shadow: none !important;
             width: 98%;
         }
+
+        .table-left td, .table-right td{
+            padding: 0.45rem;
+        }
         .note{
             margin-left: 0.75rem;
             margin-bottom: 1em;
+            margin-top: 1rem;
         }
         .realisasi-header{
             background-color: #b4e2aa !important;
@@ -173,47 +178,82 @@
                         <input class="carousel-open" type="radio" id="carousel-2" name="carousel" aria-hidden="true" hidden=""/>
                         <div class="carousel-item">
                             <div class="col-md-12" style="margin-top: 20px">
-                                <div class="card">
-                                    <div class="card-block">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="card">
-                                                    <div class="card-header rencana-header">
-                                                        <h5 class="card-title">DASHBOARD RENCANA</h5>
-                                                        <small>Divisi Treasury, PT. PLN (Persero)</small>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div class="row row-top">
-                                                            <div class="col-md-12">
-                                                                <div class="title-top">
-                                                                    <h7>SALDO AWAL</h7>
-                                                                    <h5 id="saldo_awal_rencana">0,0</h5>
-                                                                </div>
-                                                            </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-header rencana-header">
+                                                <h5 class="card-title">DASHBOARD RENCANA</h5>
+                                                <small>Divisi Treasury, PT. PLN (Persero)</small>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row row-top">
+                                                    <div class="col-md-12">
+                                                        <div class="title-top">
+                                                            <h7>SALDO AWAL</h7>
+                                                            <h5 id="saldo_awal_rencana">0,0</h5>
                                                         </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <table class="table table-left" id="table_rencana_left">
-                                                                </table>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <table class="table table-right" id="table_rencana_right">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <table class="table table-left" id="table_rencana_left">
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <table class="table table-right" id="table_rencana_right">
 
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row row-bottom">
-                                                            <div class="col-md-12">
-                                                                <div class="title-bottom">
-                                                                    <h7>SALDO AKHIR</h7>
-                                                                    <h5 id="saldo_akhir_rencana">0.0</h5>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="note">
-                                                            <small><i>*Dropping imprest ke unit belum entry di metallica, data berdasarkan permintaan dropping mingguan.</i></small>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="row row-bottom">
+                                                    <div class="col-md-12">
+                                                        <div class="title-bottom">
+                                                            <h7>SALDO AKHIR</h7>
+                                                            <h5 id="saldo_akhir_rencana">0.0</h5>
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-header realisasi-header">
+                                                <h5 class="card-title">DASHBOARD REALISASI</h5>
+                                                <small>Divisi Treasury, PT. PLN (Persero)</small>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row row-top">
+                                                    <div class="col-md-12">
+                                                        <div class="title-top">
+                                                            <h7>SALDO AWAL</h7>
+                                                            <h5 id="saldo_awal_realisasi">0,0</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <table class="table table-left" id="table_realisasi_left">
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <table class="table table-right" id="table_realisasi_right">
+
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="row row-bottom">
+                                                    <div class="col-md-12">
+                                                        <div class="title-bottom">
+                                                            <h7>SALDO AKHIR</h7>
+                                                            <h5 id="saldo_akhir_realisasi">0.0</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="note">
+                                                    <small><i>*Rencana Pinjaman, Subsidi, dan Dropping Unit belum entry di Metallica, data berdasarkan permintaan dropping mingguan.</i></small>
                                                 </div>
                                             </div>
                                         </div>
@@ -226,48 +266,7 @@
                             <div class="col-md-12" style="margin-top: 20px;">
                                 <div class="card">
                                     <div class="card-block">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="card">
-                                                    <div class="card-header realisasi-header">
-                                                        <h5 class="card-title">DASHBOARD REALISASI</h5>
-                                                        <small>Divisi Treasury, PT. PLN (Persero)</small>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div class="row row-top">
-                                                            <div class="col-md-12">
-                                                                <div class="title-top">
-                                                                    <small>SALDO AWAL</small>
-                                                                    <h5 id="saldo_awal_realisasi">0,0</h5>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <table class="table table-left" id="table_realisasi_left">
-                                                                </table>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <table class="table table-right" id="table_realisasi_right">
 
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row row-bottom">
-                                                            <div class="col-md-12">
-                                                                <div class="title-bottom">
-                                                                    <small>SALDO AKHIR</small>
-                                                                    <h5 id="saldo_akhir_realisasi">0.0</h5>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="note">
-                                                            <small><i>*Dropping imprest ke unit belum entry di metallica, data berdasarkan permintaan dropping mingguan.</i></small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
