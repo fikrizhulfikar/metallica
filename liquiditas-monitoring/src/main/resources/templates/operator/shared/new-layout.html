@@ -72,6 +72,35 @@
             vertical-align: middle !important;
             text-align: center !important;
         }
+        #spinner {
+            width: 40px;
+            height: 40px;
+            background-color: #00a0b7;
+
+            margin-top: 22.5%;
+            -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+            animation: sk-rotateplane 1.2s infinite ease-in-out;
+        }
+
+        @-webkit-keyframes sk-rotateplane {
+            0% { -webkit-transform: perspective(120px) }
+            50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+            100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+        }
+
+        @keyframes sk-rotateplane {
+            0% {
+                transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+                -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg)
+            } 50% {
+                  transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+                  -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg)
+              } 100% {
+                    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+                    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+                }
+        }
+
         #loader {
             border: 16px solid #f3f3f3;
             border-radius: 50%;
@@ -99,7 +128,7 @@
 
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
-<div style="display: none" class="col-md-12" id="loader-div" align="center"><div id="loader"></div></div>
+<div style="display: none" class="col-md-12" id="loader-div" align="center"><div id="spinner"></div></div>
 <header th:replace="operator/shared/new-header :: header-param" class="app-header navbar">
 </header>
 
