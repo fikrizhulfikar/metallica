@@ -28,6 +28,14 @@ public class UploadSaldoController {
             ) throws IOException, InvalidFormatException, SQLException, ClassNotFoundException {
         InputStream inputStream = file.getInputStream();
         return uploadSaldoService.uploadSaldoBank(inputStream);
+    }
 
+    @RequestMapping(path = "/upload_psd")
+    public Map uploadPsd(
+            @RequestParam(value = "file") MultipartFile file,
+            HttpServletResponse response
+    ) throws IOException, InvalidFormatException, SQLException, ClassNotFoundException {
+                InputStream inputStream = file.getInputStream();
+                return uploadSaldoService.uploadPsd(inputStream);
     }
 }
