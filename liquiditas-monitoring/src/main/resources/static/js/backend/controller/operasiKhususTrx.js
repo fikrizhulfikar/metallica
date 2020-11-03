@@ -1259,7 +1259,7 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
             {
                 "data" : null,
                 "render" : function (data2, type, row ) {
-                    let number2 = parseInt(data2.REAL_AMOUNT);
+                    let number2 = parseInt(data2.AMOUNT*data2.EXCHANGE_RATE);
                     return Intl.NumberFormat().format(number2);
                 }
             },
