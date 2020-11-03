@@ -54,3 +54,41 @@ function upload_server_xls() {
         }
     });
 }
+
+function upload_server_psd(){
+    let form2 = $('form')[0];
+    let formdata2 = new FormData(form2);
+
+    formdata2.append('file',$('input[type=file]#file-xls-psd')[0].files[0]);
+    fileSize = $('input[type=file]#file-xls-psd')[0].files[0].size / 1000;
+    $('#file-xls-psd').val('');
+
+    showLoadingCss()
+    $.ajax({
+        url : baseUrl + "api_master/upload_saldo_bank/upload_psd",
+        crossOrigin: true,
+        data: formdata2,
+        dataType : "JSON",
+        type : "POST",
+        enctype: "multipart/form-data",
+        cache : false,
+        contentType : false,
+        processData: false,
+        success : (res) => {
+            hideLoadingCss("");
+            console.log(res);
+            if (res.return === "1") {
+                alert("Sukses Mengunggah Nilai Pinjaman, Subsidi, dan Dropping");
+                // table_rekapitulasi.ajax.reload();
+                // search("load");
+            } else {
+                alert("Terdapat kesalahan pada data");
+                // window.location = "../api_operator/pembayaran/download/"+obj["ID_UPLOAD"];
+                // search("load");
+            }
+        },
+        error : (err) => {
+            hideLoadingCss("Gagal Melakukan Proses, Harap Hubungi Administrator");
+        }
+    })
+}
