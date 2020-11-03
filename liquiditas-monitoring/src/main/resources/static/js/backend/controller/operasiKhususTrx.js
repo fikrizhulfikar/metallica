@@ -143,7 +143,7 @@ function AddToTable() {
     var cost_ctr = $("#pDetailCostCtr").val();
     var sumber_dana = $("#pDetailSumberDana").val();
     var real_amount = $("#pDetailAmount").val().toString();
-    let very_real_amount = parseInt(real_amount.replace(/,/g,""))
+    let very_real_amount = parseInt(real_amount.replace(/,/g,""));
 
     // console.log("Real Amount : ",very_real_amount);
     var flag = 0;
@@ -153,6 +153,9 @@ function AddToTable() {
 
     if (drcrind === "" || glaccount === "" || amt === "" ||  cash_code === "" || remarks === "") {
         Swal.fire("Maaf!","Mohon Lengkapi Data", "warning");
+        return;
+    }if(cost_ctr.length < 10){
+        Swal.fire("Maaf!", "Cost Center harus berisikan 10 (sepuluh) digit angka.","warning");
         return;
     } else {
         let rowNode = tblOperasiKhususDetail.row
@@ -1292,7 +1295,15 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
         "drawCallback" : function (settings) {
             let api = this.api();
             let rows = parseInt(api.rows().count())+1;
-            $("#pDetailLineNo").val(rows.toString().padStart(3,"0"));
+            let maxLineItem = parseInt(api
+                .column(6)
+                .data()
+                .sort((a,b) => {return a-b})
+                .reverse()[0]);
+            maxLineItem = isNaN(maxLineItem) ? '001' : maxLineItem+1;
+            console.log("Line Item : ",maxLineItem);
+            $("#pDetailLineNo").val(maxLineItem.toString().padStart(3,"0"));
+            // rows.toString().padStart(3,"0")
         },
         "footerCallback" : function (tfoot, data, start, end, display) {
             let api = this.api();
