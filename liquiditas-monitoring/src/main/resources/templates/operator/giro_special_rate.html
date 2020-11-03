@@ -1,0 +1,296 @@
+<div th:fragment="stylesheets-backend">
+    <style>
+        button{ cursor: pointer
+        }
+        .table td {
+            padding-right: 0.75rem;
+            padding-bottom: 0.25rem;
+            padding-left: 0.75rem;
+            padding-top: 0.25rem;
+        }
+        div.dataTables_wrapper div.dataTables_paginate {
+            float: right !important;
+            text-align: left !important;
+            padding-left: 3px;
+            padding-right: 75px;
+        }
+
+        .lbl-src {
+            font-size: 12px;
+        }
+
+        .panel-custom {
+            overflow-x: hidden !important;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter {
+            text-align: right !important;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Giro Special Rate</li>
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')">
+                    <i class="fas fa-plus-square"></i> &nbsp;New Data
+                </button>
+            </div>
+        </li>
+    </ol>
+    <div id="edit-rekap-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Giro Special Rate</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pJenisTagihan"><span style="color: red">*)</span>&nbsp;Jenis Tagihan:</label>
+                                <select id="pJenisTagihan" class="form-control" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTipeTransaksi"><span style="color: red">*)</span>&nbsp;Tipe
+                                    Transaksi:</label>
+                                <select id="pTipeTransaksi" class="form-control" required="required">
+                                    <option value="1">OPERASI</option>
+                                    <option value="2">INVESTASI</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label><span style="color: red">*)</span>&nbsp;Jenis Dokumen:</label>
+                                <div class="form-check">
+                                    <input type="radio" value="HR PAYABLE" id="hrpayableradio" name="pJenisDokumen"/> <span>HR Payable</span>
+                                    <input type="radio" value="AP INVOICE" id="apinvoiceradio" name="pJenisDokumen"/> <span>AP Invoice</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="pJenisPemabayaran"><span style="color: red">*)</span>&nbsp;Jenis
+                                    Pembayaran:</label>
+                                <select id="pJenisPemabayaran" class="form-control"
+                                        onChange="selectJenisPembayaran(this.value);" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglJatuhTempo">Tanggal Jatuh
+                                    Tempo:</label>
+                                <input type="text" class="form-control" id="pTglJatuhTempo" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pVendor"><span style="color: red">*)</span>&nbsp;Vendor/Pengembang/Pemasok/Loan:</label>
+                                <select id="pVendor" class="form-control" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCurrecny"><span style="color: red">*)</span>&nbsp;Currency:</label>
+                                <select id="pCurrecny" class="form-control" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNilaiTagihan"><span style="color: red">*)</span>&nbsp;Nilai
+                                    Tagihan:</label>
+                                <input type="number" class="form-control" id="pNilaiTagihan" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pBankTujuan"><span style="color: red">*)</span>&nbsp;Bank Tujuan
+                                    Pembayaran:</label>
+                                <select id="pBankTujuan" class="form-control" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+
+                            <!---->
+                            <div class="form-group">
+                                <label for="pNominalSebelumPajak">&nbsp;Nominal Sebelum Pajak:</label>
+                                <input type="text" class="form-control" id="pNominalSebelumPajak" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPajak">&nbsp;Pajak (%):</label>
+                                <input type="text" class="form-control" id="pPajak"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNominalSetelahPajak">&nbsp;Nominal Setelah Pajak:</label>
+                                <input type="text" class="form-control" id="pNominalSetelahPajak" disabled="disabled" style="background-color: white"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNominalUnderlying">&nbsp;Nominal Underlying:</label>
+                                <input type="text" class="form-control" id="pNominalUnderlying"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNominalTanpaUnderlying">&nbsp;Nominal Tanpa Underlying:</label>
+                                <input type="text" class="form-control" id="pNominalTanpaUnderlying"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pKursJisdor">&nbsp;Kurs Jisdor:</label>
+                                <input type="text" class="form-control" id="pKursJisdor"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pSpread">&nbsp;Spread:</label>
+                                <input type="text" class="form-control" id="pSpread" required="required"/>
+                            </div>
+                            <!---->
+                            <div class="form-group" style="margin-top: 40px">
+                                <label for="pJenisPemabayaran">Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label><br/>
+                                <label>Gunakan titik (.) untuk koma (,)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pBankPembayar"><span style="color: red">*)</span>&nbsp;Bank
+                                    Pembayar:</label>
+                                <select id="pBankPembayar" class="form-control" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pUnitPenerima"><span style="color: red">*)</span>&nbsp;Nama
+                                    Kontrak/Loan/Unit
+                                    Penerima/Pembangkit:</label>
+                                <select id="pUnitPenerima" class="form-control" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglTerimaInvoice"><span style="color: red">*)</span>&nbsp;Tanggal Tagihan
+                                    Diterima:</label>
+                                <input type="text" class="form-control" id="pTglTerimaInvoice"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglTagihan">Tanggal Tagihan:</label>
+                                <input type="text" class="form-control" id="pTglTagihan"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoTagihan">No Tagihan:</label>
+                                <input type="text" class="form-control" list="data-no-tagihan" autocomplete="on" name="pNoTagihan"
+                                       id="pNoTagihan"/>
+                                <datalist id="data-no-tagihan"></datalist>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoNotaDinas">No Nota Dinas:</label>
+                                <input type="text" class="form-control" id="pNoNotaDinas"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglNotaDinas">Tanggal Nota Dinas:</label>
+                                <input type="text" class="form-control" id="pTglNotaDinas"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pKeterangan">Keterangan:</label>
+                                <input type="text" class="form-control" id="pKeterangan" list="data-keterangan"/>
+                                <datalist id="data-keterangan"></datalist>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="ins_data()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+            <div id="filter">
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;">
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Tanggal Awal </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal"/>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Tanggal Akhir </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Bank </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="bank" id="cmb_bank" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Currency </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="bacurrecnynk" id="cmb_currecny" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
+                    </div>
+                </div>
+            </div>
+            <div class="list-data" style="margin-top:25px;">
+                <div class="panel panel-default">
+                    <div class="panel-body panel-custom">
+                        <table id="table-rekapitulasi" class="table table-bordered table-striped">
+                            <thead style="font-size: 12px">
+                            <tr>
+                                <th>NO.</th>
+                                <th>OSS ID</th>
+                                <th>JENIS TAGIHAN</th>
+                                <th>JENIS PEMBAYARAN</th>
+                                <th>JATUH TEMPO</th>
+                                <th>VENDOR / PENGEMBANG / PEMASOK / LOAN</th>
+                                <th>CURRENCY</th><!--5-->
+                                <th>NILAI TAGIHAN</th>
+                                <th>NAMA KONTRAK/ LOAN/ UNIT PENERIMA/ PEMBANGKIT</th>
+                                <th>BANK TUJUAN PEMBAYARAN</th>
+                                <th>BANK PEMBAYAR</th>
+                                <th>TGL. TERIMA TAGIHAN</th><!--10-->
+                                <th>TGL. TAGIHAN</th>
+                                <th>NO. TAGIHAN</th>
+                                <th>TGL. NOTA DINAS PEMBAYARAN</th>
+                                <th>NO. NOTA DINAS PEMBAYARAN</th>
+                                <th>TGL PEMBAYARAN</th><!--15-->
+                                <th>COUNTDOWN</th>
+                                <th>STATUS</th>
+                                <th>TIPE TRANSAKSI</th>
+                                <th>NOMINAL SBLM PAJAK</th>
+                                <th>PAJAK</th><!--20-->
+                                <th>NOMINAL STLH PAJAK</th>
+                                <th>NOMINAL UNDERLYING</th>
+                                <th>NOMINAL TANPA UNDERLYING</th>
+                                <th>KURS JISDOR</th>
+                                <th>SPREAD</th>
+                                <th>KURS TRANSAKSI</th>
+                                <th>NOMINAL PEMBAYARAN IDR</th>
+                                <th>CREATE DATE</th>
+                                <th>UPDATE DATE</th>
+                                <th>STATUS TAGIHAN</th>
+                                <th>KETERANGAN</th>
+                                <th>AKSI</th>
+                                <th id="forcbparent"></th>
+                            </tr>
+                            </thead>
+                            <tbody style="font-size: 12px">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/giroSpecialRate.js"></script>
+</div>

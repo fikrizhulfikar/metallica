@@ -192,6 +192,9 @@ public class PageOperatorController {
     @RequestMapping("/rekap_invoice_oss")
     public String rekap_invoice_oss(){return "operator/rekap_invoice_oss";}
 
+    @RequestMapping("/giro_special_rate")
+    public String giro_special_rate(){return "operator/giro_special_rate";}
+
     @RequestMapping("/rekap_invoice_reverse")
     public String rekap_invoice_reverse(){return "operator/rekap_invoice_reverse";}
 
