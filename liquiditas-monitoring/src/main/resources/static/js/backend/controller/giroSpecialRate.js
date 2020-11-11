@@ -148,11 +148,11 @@ function delete_data(id) {
     if (stateCrf == true) {
         showLoadingCss()
         $.ajax({
-            url: baseUrl + "api_operator/pembayaran/delete_data",
+            url: baseUrl + "api_operator/pembayaran/delete_giro",
             dataType: 'JSON',
             type: "POST",
             data: {
-                pIdValas: id
+                pIdGiro: id
             },
             success: function (res) {
                 hideLoadingCss("")
@@ -360,32 +360,9 @@ function search(state) {
         alert("Mohon Lengkapi Tgl Akhir");
     } else {
         initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val())
-        getAllData()
         srcTglAwal = $("#tanggal_awal").val()
         srcTglAkhir = $("#tanggal_akhir").val()
     }
-}
-
-function getAllData() {
-    $.ajax({
-        url: baseUrl + "api_operator/pembayaran/get_all_pembayaran",
-        dataType: 'JSON',
-        type: "GET",
-        data: {
-            pStatusValas: "0",
-            pTglAwal: $("#tanggal_awal").val(),
-            pTglAkhir: $("#tanggal_akhir").val(),
-            pBank: $("#cmb_bank").val(),
-            pCurr: $("#cmb_currecny").val(),
-            pPembayaran: $("#cmb_jenis_pemabayaran").val()
-        },
-        success: function (res) {
-            allData = res;
-        },
-        error: function (res) {
-            console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
-        }
-    });
 }
 
 function show_modal(id) {
@@ -443,21 +420,21 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency) {
                 {
                     "aTargets": [1],
                     "mRender": function (data, type, full) {
-                        return full.ID_VALAS;
+                        return full.BANK;
                     }
 
                 },
                 {
                     "aTargets": [2],
                     "mRender": function (data, type, full) {
-                        return full.JENIS_TAGIHAN;
+                        return full.CURRENCY;
                     }
 
                 },
                 {
                     "aTargets": [3],
                     "mRender": function (data, type, full) {
-                        return full.ID_JENIS_PEMBAYARAN;
+                        return full.PRODUK;
                     }
 
                 },
@@ -465,70 +442,70 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency) {
                 {
                     "aTargets": [4],
                     "mRender": function (data, type, full) {
-                        return full.TGL_JATUH_TEMPO;
+                        return full.NOMINAL;
                     }
 
                 },
                 {
                     "aTargets": [5],
                     "mRender": function (data, type, full) {
-                        return full.ID_VENDOR;
+                        return full.INTEREST;
                     }
 
                 },
                 {
                     "aTargets": [6],
                     "mRender": function (data, type, full) {
-                        return full.CURRENCY;
+                        return full.TGL_PENEMPATAN;
                     }
 
                 },
                 {
                     "aTargets": [7],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.TOTAL_TAGIHAN,2,".",",");
+                        return full.JATUH_TEMPO;
                     }
 
                 },
                 {
                     "aTargets": [8],
                     "mRender": function (data, type, full) {
-                        return full.ID_UNIT;
+                        return full.JUMLAH_HARI;
                     }
 
                 },
                 {
                     "aTargets": [9],
                     "mRender": function (data, type, full) {
-                        return full.KODE_BANK_TUJUAN;
+                        return full.JASA_GIRO;
                     }
 
                 },
                 {
                     "aTargets": [10],
                     "mRender": function (data, type, full) {
-                        return full.KODE_BANK_PEMBAYAR;
+                        return full.PAJAK;
                     }
 
                 },
                 {
                     "aTargets": [11],
                     "mRender": function (data, type, full) {
-                        return full.TGL_TERIMA_INVOICE;
+                        return full.PAJAK_NOMINAL;
                     }
 
                 },
                 {
                     "aTargets": [12],
                     "mRender": function (data, type, full) {
-                        return full.TGL_TAGIHAN;
+                        return full.NET_JASA_GIRO;
                     }
 
                 },
                 {
                     "aTargets": [13],
                     "mRender": function (data, type, full) {
-                        return full.NO_TAGIHAN;
+                        return full.POKOK_JASA_GIRO;
                     }
 
                 },
@@ -537,8 +514,8 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency) {
                     "mRender": function (data, type, full) {
                            var ret_value;
                          ret_value =
-                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-edit"></i></button>'+
-                         '<button style="width: 15px !important;" class="btn btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-trash"></i></button>' ;
+                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_GIRO + '\')"><i class="fas fa-edit"></i></button>'+
+                         '<button style="width: 15px !important;" class="btn btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_GIRO + '\')"><i class="fas fa-trash"></i></button>' ;
                          return ret_value;
                     }
 
@@ -547,7 +524,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency) {
             "ajax":
                 {
                     "url":
-                        baseUrl + "api_operator/pembayaran/rekap_belum",
+                        baseUrl + "api_operator/pembayaran/giro",
                     "type":
                         "GET",
                     "dataType":

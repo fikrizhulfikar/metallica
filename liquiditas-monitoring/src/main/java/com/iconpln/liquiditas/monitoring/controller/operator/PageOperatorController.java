@@ -52,6 +52,11 @@ public class PageOperatorController {
         return "operator/rekap_belum";
     }
 
+    @RequestMapping("/giro")
+    public String giro() {
+        return "operator/giro";
+    }
+
     @RequestMapping("/rekap_sudah")
     public String rekapDataSudahVerifikasi() {
         return "operator/rekap_sudah";
