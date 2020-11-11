@@ -359,7 +359,7 @@ function search(state) {
     if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
         alert("Mohon Lengkapi Tgl Akhir");
     } else {
-        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val(), $("#cmb_jenis_pemabayaran").val(), $("#cmb_status_tracking").val())
+        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val())
         getAllData()
         srcTglAwal = $("#tanggal_awal").val()
         srcTglAkhir = $("#tanggal_akhir").val()
@@ -393,7 +393,7 @@ function show_modal(id) {
     $('#edit-reverse-modal').modal({backdrop: 'static', keyboard: false});
 }
 
-function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statusTracking) {
+function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency) {
     showLoadingCss();
     $('#table-rekapitulasi tbody').empty();
     $('#table-rekapitulasi').dataTable().fnDestroy();
@@ -560,11 +560,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                             pBank:
                             pBank,
                             pCurrency:
-                            pCurrency,
-                            pPembayaran:
-                            pPembayaran,
-                            status: $("#cmb_status").val(),
-                            statusTracking: statusTracking
+                            pCurrency
                         }
                     ,
                     "dataSrc":
@@ -575,91 +571,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                             return res.data;
                         }
                 }
-            ,
-            "initComplete": function(settings, json) {
-                var api = this.api();
-                $.ajax({
-                    url: baseUrl + "api_operator/pembayaran/get_column",
-                    dataType: 'JSON',
-                    type: "GET",
-                    success: function (res) {
-                        var response = res.data[0];
-                        if (response.NOMOR == 1) {
-                            api.column(0).visible(true);
-                        } else {
-                            api.column(0).visible(false);
-                        }
-                        if (response.OSS_ID == 1) {
-                            api.column(1).visible(true);
-                        } else {
-                            api.column(1).visible(false);
-                        }
-                        if (response.JENIS_TAGIHAN == 1) {
-                            api.column(2).visible(true);
-                        } else {
-                            api.column(2).visible(false);
-                        }
-                        if (response.JENIS_PEMBAYARAN == 1) {
-                            api.column(3).visible(true);
-                        } else {
-                            api.column(3).visible(false);
-                        }
-                        if (response.JATUH_TEMPO == 1) {
-                            api.column(4).visible(true);
-                        } else {
-                            api.column(4).visible(false);
-                        }
-                        if (response.VENDOR == 1) {
-                            api.column(5).visible(true);
-                        } else {
-                            api.column(5).visible(false);
-                        }
-                        if (response.CURRENCY == 1) {
-                            api.column(6).visible(true);
-                        } else {
-                            api.column(6).visible(false);
-                        }
-                        if (response.NILAI_TAGIHAN == 1) {
-                            api.column(7).visible(true);
-                        } else {
-                            api.column(7).visible(false);
-                        }
-                        if (response.NAMA_KONTRAK == 1) {
-                            api.column(8).visible(true);
-                        } else {
-                            api.column(8).visible(false);
-                        }
-                        if (response.BANK_TUJUAN == 1) {
-                            api.column(9).visible(true);
-                        } else {
-                            api.column(9).visible(false);
-                        }
-                        if (response.BANK_PEMBAYAR == 1) {
-                            api.column(10).visible(true);
-                        } else {
-                            api.column(10).visible(false);
-                        }
-                        if (response.TGL_TERIMA_TAGIHAN == 1) {
-                            api.column(11).visible(true);
-                        } else {
-                            api.column(11).visible(false);
-                        }
-                        if (response.TGL_TAGIHAN == 1) {
-                            api.column(12).visible(true);
-                        } else {
-                            api.column(12).visible(false);
-                        }
-                        if (response.NO_TAGIHAN == 1) {
-                            api.column(13).visible(true);
-                        } else {
-                            api.column(13).visible(false);
-                        }
-                    },
-                    error: function () {
-                        hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-                    }
-                });
-            }
         }
     );
     table_rekapitulasi.on('search.dt', function () {
