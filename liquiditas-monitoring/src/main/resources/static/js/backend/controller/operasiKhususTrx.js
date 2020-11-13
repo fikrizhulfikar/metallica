@@ -154,8 +154,8 @@ function AddToTable() {
     if (drcrind === "" || glaccount === "" || amt === "" ||  cash_code === "" || remarks === "") {
         Swal.fire("Maaf!","Mohon Lengkapi Data", "warning");
         return;
-    }if(cost_ctr.length < 10){
-        Swal.fire("Maaf!", "Cost Center harus berisikan 10 (sepuluh) digit angka.","warning");
+    }if(cost_ctr.length > 10){
+        Swal.fire("Maaf!", "Cost Center harus berisikan maksimal 10 (sepuluh) digit angka.","warning");
         return;
     } else {
         let rowNode = tblOperasiKhususDetail.row
@@ -470,7 +470,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                 "aTargets": [1, 2, 3, 4, 5, 7, 8, 9, 10,11]
             },
             {
-                "sortable": false,
+                "bSortable": false,
                 "aTargets": [0,11,12,13,14]
             },
             {
