@@ -316,13 +316,14 @@ function update_datas() {
         cancelButtonColor : "#d33",
         confirmButtonText : "Ya"
     }).then(result => {
+    // else if (!checkedArray.every(isBalance)){
+    //         Swal.fire("Maaf","Balance tidak sama dengan 0", "error");
+    //     }
         if (result.value){
             if(checkedArray.length === 0){
                 Swal.fire("Maaf", "Silahkan Pilih Data Terlebih Dahulu", "warning");
             }else if (checkedArray.every(checkTrackingVerifikasi) === false){
                 Swal.fire("Maaf!", "Tidak dapat melakukan verifikasi tagihan", "error");
-            }else if (!checkedArray.every(isBalance)){
-                Swal.fire("Maaf","Balance tidak sama dengan 0", "error");
             }else{
                 showLoadingCss();
                 $.ajax({
@@ -372,7 +373,7 @@ function exportXls() {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/operasi_khusus_trx/xls/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currecny").val());
+    window.open(baseUrl + "api_operator/operasi_khusus_trx/xls/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currency").val());
 }
 
 function multi_upd_lunas() {
