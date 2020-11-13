@@ -600,6 +600,7 @@ public class OperasiKhususTrxController {
                 paramDetail.put("PMT_PROPOSAL_ID", data.get("PMT_PROPOSAL_ID"));
                 paramDetail.put("TOTAL_TAGIHAN", data.get("TOTAL_TAGIHAN"));
                 paramDetail.put("STATUS_TRACKING", data.get("STATUS_TRACKING"));
+                paramDetail.put("TGL_RENCANA_BAYAR", data.get("TGL_RENCANA_BAYAR"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
@@ -665,13 +666,14 @@ public class OperasiKhususTrxController {
                 paramDetail.put("PMT_PROPOSAL_ID", data.get("PMT_PROPOSAL_ID"));
                 paramDetail.put("TOTAL_TAGIHAN", data.get("TOTAL_TAGIHAN"));
                 paramDetail.put("STATUS_TRACKING", data.get("STATUS_TRACKING"));
+                paramDetail.put("TGL_RENCANA_BAYAR", data.get("TGL_RENCANA_BAYAR"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
 
 
             XLSTransformer transformer = new XLSTransformer();
-            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/pembelian_valas.xls").getInputStream();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/operasi_khusus_verified.xls").getInputStream();
             Workbook workbook = transformer.transformXLS(streamTemplate, param);
             workbook.write(os);
             os.flush();
@@ -730,13 +732,14 @@ public class OperasiKhususTrxController {
                 paramDetail.put("PMT_PROPOSAL_ID", data.get("PMT_PROPOSAL_ID"));
                 paramDetail.put("TOTAL_TAGIHAN", data.get("TOTAL_TAGIHAN"));
                 paramDetail.put("STATUS_TRACKING", data.get("STATUS_TRACKING"));
+                paramDetail.put("TGL_RENCANA_BAYAR", data.get("TGL_RENCANA_BAYAR"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
 
 
             XLSTransformer transformer = new XLSTransformer();
-            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/pembelian_valas.xls").getInputStream();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/operasi_khusus_lunas.xls").getInputStream();
             Workbook workbook = transformer.transformXLS(streamTemplate, param);
             workbook.write(os);
             os.flush();
