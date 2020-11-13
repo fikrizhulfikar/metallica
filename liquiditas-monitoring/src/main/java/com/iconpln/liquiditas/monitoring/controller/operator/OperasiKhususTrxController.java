@@ -122,6 +122,7 @@ public class OperasiKhususTrxController {
             @RequestParam(value = "pIdMetallica", defaultValue = "") String pIdMetallica,
             @RequestParam(value = "pDocDate", defaultValue = "") String pDocDate,
             @RequestParam(value = "pPostDate", defaultValue = "") String pPostDate,
+            @RequestParam(value = "pTglRencanaBayar", defaultValue = "") String pTglRencanaBayar,
             @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
             @RequestParam(value = "pReference", defaultValue = "") String pReference,
             @RequestParam(value = "pCompCode", defaultValue = "") String pCompCode,
@@ -144,11 +145,12 @@ public class OperasiKhususTrxController {
         AppUtils.getLogger(this).debug("pPostDate : {}", pPostDate);
         AppUtils.getLogger(this).debug("pExchangeRate : {}", pExchangeRate);
         AppUtils.getLogger(this).debug("pFiscYear : {}", pFiscYear);
+        AppUtils.getLogger(this).debug("pTglRencanaBayar : {}", pTglRencanaBayar);
 
         try {
             String messege = "";
             boolean isUpdate = false;
-            Map<String, Object> res  = operasiKhususTrxService.insOperasiKhusus(pIdMetallica, pDocDate, pPostDate, pDocNo, pReference, pCompCode, pBusArea, pCurrency, pDocHdrTxt, WebUtils.getUsernameLogin(), pExchangeRate, pFiscYear, pSumberDana);
+            Map<String, Object> res  = operasiKhususTrxService.insOperasiKhusus(pIdMetallica, pDocDate, pPostDate, pDocNo, pReference, pCompCode, pBusArea, pCurrency, pDocHdrTxt, WebUtils.getUsernameLogin(), pExchangeRate, pFiscYear, pSumberDana, pTglRencanaBayar);
 
             return res;
         }catch (Exception e){
