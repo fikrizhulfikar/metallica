@@ -1,5 +1,6 @@
 package com.iconpln.liquiditas.core.service;
 
+import com.iconpln.liquiditas.core.utils.AppUtils;
 import oracle.jdbc.OracleTypes;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
@@ -75,6 +76,60 @@ public class UploadSaldoService {
                                 .addValue("p_create_time",list.get(7))
                                 .addValue("out_msg", OracleTypes.VARCHAR);
                        out = jdbcCall.execute(params);
+                    }
+                    list.clear();
+                    x++;
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return out;
+    }
+
+    // Upload Dropping, Subsidi, dan Pinjaman
+    public Map uploadPsd(InputStream path) throws ClassNotFoundException, SQLException, IOException, InvalidFormatException {
+        Map out = new HashMap<>();
+        Workbook workbook = null;
+        Iterator<Row> rowIterator = null;
+        Row row = null;
+        try {
+            try {
+                workbook = WorkbookFactory.create(path);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            Sheet sheet = workbook.getSheetAt(0);
+            rowIterator = sheet.iterator();
+            List<String> list = new ArrayList<>();
+            int x = 0;
+            while(rowIterator.hasNext()){
+                row = rowIterator.next();
+                Row rrow = sheet.getRow(row.getRowNum());
+                int totalCell = sheet.getRow(1).getLastCellNum();
+                if (!isRowEmpty(rrow, totalCell)){
+                    for (int cellNum = 0; cellNum < totalCell; cellNum++){
+                        if (rrow.getCell(cellNum).getCellTypeEnum() == CellType.NUMERIC) {
+                            if (DateUtil.isCellDateFormatted(rrow.getCell(cellNum))) {
+                                list.add(rrow.getCell(cellNum).toString());
+                            }else{
+                                list.add(new BigDecimal(rrow.getCell(cellNum).getNumericCellValue()).toPlainString());
+                            }
+                        } else {
+                            list.add(rrow.getCell(cellNum).getStringCellValue());
+                        }
+                    }
+
+                    if (x > 0){
+                        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                                .withCatalogName("PKG_CORPAY2")
+                                .withFunctionName("ins_transaksi_non_invoice");
+                        SqlParameterSource params = new MapSqlParameterSource()
+                                .addValue("p_tanggal",list.get(0))
+                                .addValue("p_jenis",list.get(1))
+                                .addValue("p_keterangan",list.get(2))
+                                .addValue("p_nominal",list.get(3));
+                        out = jdbcCall.execute(params);
                     }
                     list.clear();
                     x++;
