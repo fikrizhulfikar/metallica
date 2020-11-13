@@ -286,55 +286,62 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                 {
                     "aTargets": [3],
                     "mRender": function (data, type, full) {
+                        return full.TGL_RENCANA_BAYAR;
+                    }
+
+                },
+                {
+                    "aTargets": [4],
+                    "mRender": function (data, type, full) {
                         return full.DOCUMENT_NUMBER;
                     }
 
                 },
 
                 {
-                    "aTargets": [4],
+                    "aTargets": [5],
                     "mRender": function (data, type, full) {
                         return full.REFERENCE;
                     }
 
                 },
                 {
-                    "aTargets": [5],
+                    "aTargets": [6],
                     "mRender": function (data, type, full) {
                         return full.COMPANY_CODE;
                     }
 
                 },
                 {
-                    "aTargets": [6],
+                    "aTargets": [7],
                     "mRender": function (data, type, full) {
                         return full.BUSINESS_AREA;
                     }
 
                 },
                 {
-                    "aTargets": [7],
+                    "aTargets": [8],
                     "mRender": function (data, type, full) {
                         return full.CURRENCY;
                     }
 
                 },
                 {
-                    "aTargets": [8],
+                    "aTargets": [9],
                     "mRender": function (data, type, full) {
                         return full.DOC_HDR_TXT;
                     }
 
                 },
                 {
-                    "aTargets" : [9],
+                    "aTargets" : [10],
                     "mRender" : (data, type, full) => {
                         return full.STATUS_TRACKING;
                     }
                 },
 
                 {
-                    "aTargets": [10],
+                    "aTargets": [11],
                     "mRender": function (data, type, full) {
                         var jenis = "OPERASI_KHUSUS";
                         // console.log("Ini Full : "+full);
