@@ -215,6 +215,12 @@ function openFormNew() {
     $("#pJenisPemabayaran").select2("val", "");
     $("#pUnitPenerima").select2("val", "");
     $("#pVendor").select2("val", "");
+    $("#hrpayableradio")
+        .prop('checked', false)
+        .attr('disabled',false);
+    $("#apinvoiceradio")
+        .prop('checked', false)
+        .attr('disabled',false);
 
     var date = new Date();
     if(newRoleUser[0].replace(" ", "")!= "ROLE_ADMIN"){
