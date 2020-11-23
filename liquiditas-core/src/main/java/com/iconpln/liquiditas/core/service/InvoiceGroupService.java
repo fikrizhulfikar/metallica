@@ -1149,5 +1149,4 @@ public class InvoiceGroupService {
                 .withFunctionName("group_save_column");
         return simpleJdbcCall.executeFunction(String.class, in);
     }
-
 }
