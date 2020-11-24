@@ -1347,4 +1347,41 @@ public class PembayaranController {
         }
     }
 
+    @RequestMapping(value = "/edit_giro", method = RequestMethod.GET)
+    public List editGiro(
+            @RequestParam(value = "pIdGiro", defaultValue = "") String pId
+    ) {
+        AppUtils.getLogger(this).info("pId edit data: {}", pId);
+        try {
+            return valasService.editGiroService(pId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    @RequestMapping(value = "/ins_data_giro", method = RequestMethod.POST)
+    public Map<String, Object> insDataGiro(
+            @RequestParam(value = "pIdGiro", defaultValue = "") String pIdGiro,
+            @RequestParam(value = "pTglJatuhTempo", defaultValue = "") String pTglJatuhTempo,
+            @RequestParam(value = "pTglPenempatan", defaultValue = "") String pTglPenempatan,
+            @RequestParam(value = "pCurr", defaultValue = "") String pCurr,
+            @RequestParam(value = "pBankTujuan", defaultValue = "") String pBankTujuan,
+            @RequestParam(value = "pPajak", defaultValue = "") String pPajak,
+            @RequestParam(value = "pInterest", defaultValue = "") String pInterest,
+            @RequestParam(value = "pNominal", defaultValue = "") String pNominal,
+            @RequestParam(value = "pProduk", defaultValue = "") String pProduk
+
+    ) {
+        try {
+            Map<String, Object> res = valasService.insPembayaranGiro(pIdGiro, pTglJatuhTempo, pTglPenempatan, pCurr,
+                    pBankTujuan, pPajak, pInterest, pNominal, pProduk);
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

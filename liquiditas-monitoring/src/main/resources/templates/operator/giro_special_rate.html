@@ -50,45 +50,27 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="pJenisTagihan"><span style="color: red">*)</span>&nbsp;Jenis Tagihan:</label>
-                                <select id="pJenisTagihan" class="form-control" required="required">
-                                    <option value="">Pilih Data</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="pTipeTransaksi"><span style="color: red">*)</span>&nbsp;Tipe
-                                    Transaksi:</label>
-                                <select id="pTipeTransaksi" class="form-control" required="required">
-                                    <option value="1">OPERASI</option>
-                                    <option value="2">INVESTASI</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label><span style="color: red">*)</span>&nbsp;Jenis Dokumen:</label>
-                                <div class="form-check">
-                                    <input type="radio" value="HR PAYABLE" id="hrpayableradio" name="pJenisDokumen"/> <span>HR Payable</span>
-                                    <input type="radio" value="AP INVOICE" id="apinvoiceradio" name="pJenisDokumen"/> <span>AP Invoice</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="pJenisPemabayaran"><span style="color: red">*)</span>&nbsp;Jenis
+                                <label for="pBankTujuan"><span style="color: red">*)</span>&nbsp;Bank Tujuan
                                     Pembayaran:</label>
-                                <select id="pJenisPemabayaran" class="form-control"
-                                        onChange="selectJenisPembayaran(this.value);" required="required">
+                                <select id="pBankTujuan" class="form-control" required="required">
                                     <option value="">Pilih Data</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="pTglJatuhTempo">Tanggal Jatuh
+                                <label for="pTglJatuhTempo"><span style="color: red">*)</span>Tanggal Jatuh
                                     Tempo:</label>
                                 <input type="text" class="form-control" id="pTglJatuhTempo" required="required"/>
                             </div>
                             <div class="form-group">
-                                <label for="pVendor"><span style="color: red">*)</span>&nbsp;Vendor/Pengembang/Pemasok/Loan:</label>
-                                <select id="pVendor" class="form-control" required="required">
-                                    <option value="">Pilih Data</option>
-                                </select>
+                                <label for="pTglPenempatan"><span style="color: red">*)</span>Tanggal Penempatan:</label>
+                                <input type="text" class="form-control" id="pTglPenempatan" required="required"/>
                             </div>
+                            <div class="form-group" style="margin-top: 40px">
+                                <label for="pCurrecny">Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label><br/>
+                                <label>Gunakan titik (.) untuk koma (,)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="pCurrecny"><span style="color: red">*)</span>&nbsp;Currency:</label>
                                 <select id="pCurrecny" class="form-control" required="required">
@@ -96,96 +78,20 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="pNilaiTagihan"><span style="color: red">*)</span>&nbsp;Nilai
-                                    Tagihan:</label>
-                                <input type="number" class="form-control" id="pNilaiTagihan" required="required"/>
+                                <label for="pPajak"><span style="color: red">*)</span>&nbsp;Pajak (%):</label>
+                                <input type="text" class="form-control" id="pPajak" required="required"/>
                             </div>
                             <div class="form-group">
-                                <label for="pBankTujuan"><span style="color: red">*)</span>&nbsp;Bank Tujuan
-                                    Pembayaran:</label>
-                                <select id="pBankTujuan" class="form-control" required="required">
-                                    <option value="">Pilih Data</option>
-                                </select>
-                            </div>
-
-                            <!---->
-                            <div class="form-group">
-                                <label for="pNominalSebelumPajak">&nbsp;Nominal Sebelum Pajak:</label>
-                                <input type="text" class="form-control" id="pNominalSebelumPajak" required="required"/>
+                                <label for="pInterest"><span style="color: red">*)</span>&nbsp;Interest (%):</label>
+                                <input type="text" class="form-control" id="pInterest" required="required"/>
                             </div>
                             <div class="form-group">
-                                <label for="pPajak">&nbsp;Pajak (%):</label>
-                                <input type="text" class="form-control" id="pPajak"/>
+                                <label for="pNominal"><span style="color: red">*)</span>&nbsp;Nominal:</label>
+                                <input type="text" class="form-control" id="pNominal"/>
                             </div>
                             <div class="form-group">
-                                <label for="pNominalSetelahPajak">&nbsp;Nominal Setelah Pajak:</label>
-                                <input type="text" class="form-control" id="pNominalSetelahPajak" disabled="disabled" style="background-color: white"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pNominalUnderlying">&nbsp;Nominal Underlying:</label>
-                                <input type="text" class="form-control" id="pNominalUnderlying"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pNominalTanpaUnderlying">&nbsp;Nominal Tanpa Underlying:</label>
-                                <input type="text" class="form-control" id="pNominalTanpaUnderlying"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pKursJisdor">&nbsp;Kurs Jisdor:</label>
-                                <input type="text" class="form-control" id="pKursJisdor"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pSpread">&nbsp;Spread:</label>
-                                <input type="text" class="form-control" id="pSpread" required="required"/>
-                            </div>
-                            <!---->
-                            <div class="form-group" style="margin-top: 40px">
-                                <label for="pJenisPemabayaran">Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label><br/>
-                                <label>Gunakan titik (.) untuk koma (,)</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="pBankPembayar"><span style="color: red">*)</span>&nbsp;Bank
-                                    Pembayar:</label>
-                                <select id="pBankPembayar" class="form-control" required="required">
-                                    <option value="">Pilih Data</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="pUnitPenerima"><span style="color: red">*)</span>&nbsp;Nama
-                                    Kontrak/Loan/Unit
-                                    Penerima/Pembangkit:</label>
-                                <select id="pUnitPenerima" class="form-control" required="required">
-                                    <option value="">Pilih Data</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="pTglTerimaInvoice"><span style="color: red">*)</span>&nbsp;Tanggal Tagihan
-                                    Diterima:</label>
-                                <input type="text" class="form-control" id="pTglTerimaInvoice"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pTglTagihan">Tanggal Tagihan:</label>
-                                <input type="text" class="form-control" id="pTglTagihan"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pNoTagihan">No Tagihan:</label>
-                                <input type="text" class="form-control" list="data-no-tagihan" autocomplete="on" name="pNoTagihan"
-                                       id="pNoTagihan"/>
-                                <datalist id="data-no-tagihan"></datalist>
-                            </div>
-                            <div class="form-group">
-                                <label for="pNoNotaDinas">No Nota Dinas:</label>
-                                <input type="text" class="form-control" id="pNoNotaDinas"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pTglNotaDinas">Tanggal Nota Dinas:</label>
-                                <input type="text" class="form-control" id="pTglNotaDinas"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pKeterangan">Keterangan:</label>
-                                <input type="text" class="form-control" id="pKeterangan" list="data-keterangan"/>
-                                <datalist id="data-keterangan"></datalist>
+                                <label for="pProduk"><span style="color: red">*)</span>&nbsp;Produk:</label>
+                                <input type="text" class="form-control" id="pProduk"/>
                             </div>
                         </div>
                     </div>

@@ -1,5 +1,5 @@
 var table_rekapitulasi;
-var idValas = "";
+var idGiro = "";
 var allData;
 var tempVendor = "";
 var tempCurrency = "";
@@ -95,49 +95,22 @@ function selectStatus(value) {
 }
 
 function openFormNew() {
-
-    idValas = "";
     $("#pTglJatuhTempo").val("");
-    $("#pNilaiTagihan").val("");
-    $("#pNoTagihan").val("");
-    $("#pTglTagihan").val("");
-    $("#pNoNotaDinas").val("");
-    $("#pTglNotaDinas").val("");
-    $("#pTglTerimaInvoice").val("");
-    $("#pKeterangan").val("");
+    $("#pTglPenempatan").val("");
     $("#pCurrecny").val("");
-    $("#pBankPembayar").val("");
-    $("#pTipeTransaksi").val("");
-    $("#pNominalSebelumPajak").val("");
-    $("#pNominalUnderlying").val("");
     $("#pPajak").val("");
-    $("#pNominalTanpaUnderlying").val("");
-    $("#pKursJisdor").val("");
-    $("#pSpread").val("");
+    $("#pInterest").val("");
+    $("#pNominal").val("");
     $("#pBankTujuan").select2("val", "");
-    $("#pJenisPemabayaran").select2("val", "");
-    $("#pUnitPenerima").select2("val", "");
-    $("#pVendor").select2("val", "");
 
     var date = new Date();
-    if(newRoleUser[0].replace(" ", "")!= "ROLE_ADMIN"){
-        date.setDate(date.getDate() + addedDays);
-    }
+    date.setDate(date.getDate() + addedDays);
 
-    $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
-
-    $('#pTglTagihan').datepicker({dateFormat: 'dd/mm/yy'});
-    $('#pTglNotaDinas').datepicker({dateFormat: 'dd/mm/yy'});
-    setSelectJenisPembayaran("pJenisPemabayaran", "", "");
+    $('#pTglJatuhTempo').datepicker({dateFormat: 'mm/dd/yy', minDate: date});
+    $('#pTglPenempatan').datepicker({dateFormat: 'mm/dd/yy'});
     setSelectCurr("pCurrecny", "", "", "REKAP");
     setSelectBank2("pBankTujuan", "", "TUJUAN", "", "REKAP");
-    setSelectBank("pBankPembayar", "", "PEMBAYAR", "", "REKAP");
-
-
     $('#pTglJatuhTempo').prop('disabled', false);
-    if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
-        $('#pTglJatuhTempo').prop('disabled', true);
-    }
 
     $('#edit-rekap-modal').modal({backdrop: 'static', keyboard: false});
 
@@ -172,102 +145,32 @@ function delete_data(id) {
 }
 
 function ins_data() {
-    var no_ta = $("#pNoTagihan").val().toString();
-    var old_data = localStorage.getItem("real_no_tagihan_RD");
-    var all_val = [];
-    let jenis_dok = $("input[name='pJenisDokumen']:checked").val();
-
-    if (old_data == null) {
-        localStorage.removeItem("real_no_tagihan_RD");
-        localStorage.removeItem("NT");
-        localStorage.setItem("NT", no_ta);
-        all_val.push(no_ta);
-        localStorage.setItem("real_no_tagihan_RD", all_val);
-
-    }
-    else {
-        localStorage.setItem("NT", no_ta);
-
-        all_val.push(old_data);
-        all_val.push(no_ta);
-        var c = old_data.split(",");
-        for (var i = 0; i < c.length; i++) {
-            if (no_ta !== c[i]) {
-                localStorage.setItem("real_no_tagihan_RD", all_val);
-            }
-        }
-    }
-
-    var ket = $("#pKeterangan").val().toString();
-    var all_ket = [];
-    var ket_lama = localStorage.getItem("real_ket");
-
-    if (ket_lama == null) {
-        localStorage.removeItem("real_ket");
-        localStorage.removeItem("KET");
-        localStorage.setItem("KET", ket);
-
-        all_ket.push(ket);
-        localStorage.setItem("real_ket", all_ket);
-    }
-    else {
-        localStorage.setItem("KET", ket);
-
-        var status = true;
-        var list_keterangan_lama = ket_lama.split(",");
-        for (var i = 0; i < list_keterangan_lama.length; i++) {
-            if (ket === list_keterangan_lama[i]) {
-                status = false
-            }
-        }
-        if (status == true) {
-            list_keterangan_lama.push(ket);
-        }
-        localStorage.setItem("real_ket", list_keterangan_lama);
-    }
-
     showLoadingCss();
     $.ajax({
-        url: baseUrl + "api_operator/pembayaran/ins_data",
+        url: baseUrl + "api_operator/pembayaran/ins_data_giro",
         dataType: 'JSON',
         type: "POST",
         data: {
-            pIdValas: idValas,
-            pJenisPembayaran: $("#pJenisPemabayaran").val(),
+            pIdGiro: idGiro,
             pTglJatuhTempo: $("#pTglJatuhTempo").val(),
-            pVendor: $("#pVendor").val(),
+            pTglPenempatan: $("#pTglPenempatan").val(),
             pCurr: $("#pCurrecny").val(),
-            pNilaiTagihan: $("#pNilaiTagihan").val(),
             pBankTujuan: $("#pBankTujuan").val(),
-            pBankPembayar: $("#pBankPembayar").val(),
-            pUnitPenerima: $("#pUnitPenerima").val(),
-            pNoTagihan: $("#pNoTagihan").val(),
-            pTglTagihan: $("#pTglTagihan").val(),
-            pNoNotdin: $("#pNoNotaDinas").val(),
-            pTglNotdin: $("#pTglNotaDinas").val(),
-            pStatusValas: $("#pStatus").val(),
-            pKeterangan: $("#pKeterangan").val(),
-            pTipeTransaksi: $("#pTipeTransaksi").val(),
-            pTglTerimaInvoice: $("#pTglTerimaInvoice").val(),
-            pNominalSblmPajak: $("#pNominalSebelumPajak").val(),
-            pNominalUnderlying: $("#pNominalUnderlying").val(),
             pPajak: $("#pPajak").val(),
-            pNominalTanpaUnderlying: $("#pNominalTanpaUnderlying").val(),
-            pKursJisdor: $("#pKursJisdor").val(),
-            pSpread: $("#pSpread").val(),
-            pJenisTagihan: $("#pJenisTagihan").val(),
-            pJenisDokumen: jenis_dok
+            pInterest: $("#pInterest").val(),
+            pNominal: $("#pNominal").val(),
+            pProduk: $("#pProduk").val()
         },
         success: function (res) {
             hideLoadingCss("")
             var result = res.return.split(";")[0];
             if (result == 1 || result == '1') {
-                alert(res.OUT_MSG);
+                alert("Data Berhasil Disimpan");
                 search("load");
                 $('#edit-rekap-modal').modal('hide');
                 table_rekapitulasi.ajax.reload();
             } else {
-                alert(res.OUT_MSG);
+                alert("Data Gagal Disimpan");
             }
         },
         error: function () {
@@ -279,72 +182,26 @@ function ins_data() {
 function edit_data(id) {
     showLoadingCss()
     $.ajax({
-        url: baseUrl + "api_operator/pembayaran/edit_data",
+        url: baseUrl + "api_operator/pembayaran/edit_giro",
         dataType: 'JSON',
         type: "GET",
         data: {
-            pIdValas: id
+            pIdGiro: id
         },
         success: function (res) {
             hideLoadingCss("")
-            idValas = id;
-            $("#pTglJatuhTempo").val("");
-            $("#pNilaiTagihan").val("");
-            $("#pNoTagihan").val("");
-            $("#pTglTagihan").val("");
-            $("#pNoNotaDinas").val("");
-            $("#pTglNotaDinas").val("");
-            $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
-            $('#pTglTagihan').datepicker({dateFormat: 'dd/mm/yy'});
-            $('#pTglNotaDinas').datepicker({dateFormat: 'dd/mm/yy'});
 
-            tempVendor = res[0].ID_VENDOR;
-            tempSubPosAnggaran = res[0].KODE_POS_ANGGARAN;
-            tempUnit = res[0].ID_UNIT;
-
-            setSelectJenisPembayaran("pJenisPemabayaran", "", res[0].ID_JENIS_PEMBAYARAN);
             setSelectCurr("pCurrecny", "", res[0].CURRENCY, "REKAP");
-            setSelectBank2("pBankTujuan", "", "TUJUAN", res[0].KODE_BANK_TUJUAN, "REKAP");
-            setSelectBank("pBankPembayar", "", "PEMBAYAR", res[0].KODE_BANK_PEMBAYAR, "REKAP");
-            setSelectVendor("pLVNamaVendor","",res[0].NAMA_VENDOR);
-            $("#pTglJatuhTempo").val(res[0].TGL_JATUH_TEMPO);
-            $("#pNilaiTagihan").val(res[0].TOTAL_TAGIHAN);
-            $("#pNoTagihan").val(res[0].NO_TAGIHAN);
-            $("#pTglTagihan").val(res[0].TGL_TAGIHAN);
-            $("#pNoNotaDinas").val(res[0].NO_NOTDIN);
-            $("#pTglNotaDinas").val(res[0].TGL_NOTDIN);
-            $("#pKeterangan").val(res[0].DESKRIPSI);
-            $("#pStatus").val(res[0].STATUS_VALAS);
-            $("#pTipeTransaksi").val(res[0].TIPE_TRANSAKSI);
-            $("#pTglTerimaInvoice").val(res[0].TGL_TERIMA_INVOICE);
-            $("#pNominalSebelumPajak").val(res[0].NOMINAL_SBLM_PAJAK);
-            $("#pNominalUnderlying").val(res[0].NOMINAL_UNDERLYING);
+            setSelectBank("pBankTujuan", "", "PEMBAYAR", res[0].BANK, "REKAP");
+            $("#pTglJatuhTempo").val(res[0].JATUH_TEMPO);
+            $("#pTglPenempatan").val(res[0].TGL_PENEMPATAN);
             $("#pPajak").val(res[0].PAJAK);
-            $("#pNominalTanpaUnderlying").val(res[0].NOMINAL_TANPA_UNDERLYING);
-            $("#pKursJisdor").val(res[0].KURS_JISDOR);
-            $("#pSpread").val(res[0].SPREAD);
-            $("#pJenisTagihan").val(res[0].JENIS_TAGIHAN.toLowerCase());
-            if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
-                $('#pTglJatuhTempo').prop('disabled', true);
-            }
-            if(res[0].JENIS_TRANSAKSI === 'AP INVOICE'){
-                $("#hrpayableradio").prop('checked',false)
-                $("#apinvoiceradio").prop('checked',true)
-            }else{
-                $("#hrpayableradio").prop('checked',true)
-                $("#apinvoiceradio").prop('checked',false)
-            }
-            $("#hrpayableradio").attr('disabled',true)
-            $("#apinvoiceradio").attr('disabled',true)
-            setTimeout(function () {
-                $("#pVendor").select2({
-                    width: "100%"
-                });
-                $("#pUnitPenerima").select2({
-                    width: "100%"
-                });
+            $("#pInterest").val(res[0].INTEREST);
+            $("#pNominal").val(res[0].NOMINAL);
+            $("#pProduk").val(res[0].PRODUK);
 
-                $('#edit-rekap-modal').modal({backdrop: 'static', keyboard: false});
+            setTimeout(function () {
+               $('#edit-rekap-modal').modal({backdrop: 'static', keyboard: false});
             }, timeSowFormEdit);
             hideLoadingCss()
 
@@ -366,7 +223,7 @@ function search(state) {
 }
 
 function show_modal(id) {
-    idValas = id;
+    idGiro = id;
     $('#edit-reverse-modal').modal({backdrop: 'static', keyboard: false});
 }
 
