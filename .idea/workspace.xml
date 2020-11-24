@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c1432616-f44a-456c-b349-daf6be464567" name="Default Changelist" comment="Menambah" />
+    <list default="true" id="c1432616-f44a-456c-b349-daf6be464567" name="Default Changelist" comment="Menambah">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,7 +205,14 @@
       <option name="project" value="LOCAL" />
       <updated>1601307606369</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Menambahkan tombol approval untuk role msb investment expenditure ii">
+      <created>1606205674880</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1606205674880</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -233,6 +242,7 @@
     <MESSAGE value="Ubah konfigurasi smtp" />
     <MESSAGE value="Ubah proses refnum bank menjadi di belakang" />
     <MESSAGE value="menambahkan titik koma" />
-    <option name="LAST_COMMIT_MESSAGE" value="menambahkan titik koma" />
+    <MESSAGE value="Menambahkan tombol approval untuk role msb investment expenditure ii" />
+    <option name="LAST_COMMIT_MESSAGE" value="Menambahkan tombol approval untuk role msb investment expenditure ii" />
   </component>
 </project>
