@@ -702,4 +702,13 @@ public class DashboardService {
         result = simpleJdbcCall.execute(param);
         return result;
     }
+
+    public List<Map<String, Object>> getDashboardDeposito(){
+        List<Map<String, Object>> result;
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_dashboard_deposito");
+        result = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+        return result;
+    }
 }
