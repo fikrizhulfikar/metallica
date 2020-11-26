@@ -1,5 +1,6 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
+import com.iconpln.liquiditas.core.service.DashboardService;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
 import com.iconpln.liquiditas.core.service.ValasService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
@@ -32,6 +33,9 @@ public class DepositoController {
 
     @Autowired
     ValasService valasService;
+
+    @Autowired
+    DashboardService dashboardService;
 
     @Autowired
     private ResourceLoader resourceLoader;
@@ -329,6 +333,21 @@ public class DepositoController {
                 return "STATUS";
             default:
                 return "BANK_CONTERPARTY";
+        }
+    }
+
+    @RequestMapping(value = "/get_dashboar_deposito", method = RequestMethod.GET)
+    public Map getDashDeposito(
+    ) {
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = dashboardService.getDashboardDeposito();
+            Map dataMap = new HashMap();
+            dataMap.put("data",list);
+            return  dataMap;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
