@@ -285,4 +285,7 @@ public class PageOperatorController {
 
     @RequestMapping("/financial_talk")
     public String financial_talk(){return "dashboardcorpay/financial_talk";}
+
+    @RequestMapping("/dashboard_deposito")
+    public String dashboard_deposito(){return "operator/dashboard_deposito";}
 }
