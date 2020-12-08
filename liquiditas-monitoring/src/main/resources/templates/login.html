@@ -12,9 +12,24 @@
     <link href="/static/css/common/util.css" rel="stylesheet"/>
     <link rel="icon" href="/static/images/tab-icon.png"/>
     <style>
+        @font-face {
+            font-family: 'myriadpro';
+            src:url("static/fonts/myriad-pro-light.otf") format('otf');
+        }
+
         body{
             background: white !important;
-            font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif !important;
+            font-family: myriadpro,"Segoe UI", sans-serif !important;
+        }
+        .navbar-default{
+            height: 90px;
+            width: 70%;
+            margin-bottom: 0;
+            border: 0px;
+            position: relative;
+            top: -4.4em;
+            background: url("static/images/login/header.png") no-repeat;
+            background-size: 100%;
         }
         #load {
             position: absolute;
@@ -49,6 +64,8 @@
     <div style="display: none" id="loader-div"><div id="loader"></div></div>
 </div>
 <div class="app-body">
+<!--    <nav class="navbar navbar-default">-->
+<!--    </nav>-->
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
@@ -57,8 +74,8 @@
 						<!--<i></i>-->
 					<img src="../static/images/lg-login.png" height="130" width="130"/>
                     </span>
-                    <span class="login100-form-title p-b-26" style="margin-top: -25px; font-family: cursive">
-						L'Metallica
+                    <span class="login100-form-title p-b-26 login-title" style="margin-top: -25px;">
+						<b style="font-family: 'Segoe UI', sans-serif">L'METALLICA</b>
 					</span>
 <!--                    <div align="center" th:if="${param.error}">-->
 <!--                        <p style="color: orangered; margin-bottom: 10px">Invalid username and password.</p>-->
@@ -90,7 +107,7 @@
 <!--                    </div>-->
                 </form>
                 <form action="">
-                    <input type="button" style="margin-top: 6px; width: 100%" onclick="doSso()" class="btn btn-lg btn-primary" value="LOGIN SSO"/>
+                    <button type="button" style="margin-top: 6px; width: 100%; font-family: 'Segoe UI', sans-serif" onclick="doSso()" class="btn btn-lg btn-primary">LOGIN IAM PLN</button>
                 </form>
             </div>
         </div>

@@ -272,4 +272,7 @@ public class PageOperatorController {
     public String operasi_khusus_trx_lunas() {
         return "operator/operasi_khusus_trx_lunas";
     }
+
+    @RequestMapping("/financial_talk")
+    public String financial_talk(){return "dashboardcorpay/financial_talk";}
 }

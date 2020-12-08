@@ -140,11 +140,13 @@ function update_status(pIdGroup, pStatus) {
 }
 
 function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pketerangan) {
+    console.log("User Role : ",newRoleUser[0]);
     showLoadingCss()
     $('#table-main tbody').empty();
     $('#table-main').dataTable().fnDestroy();
     tableMain = $('#table-main').DataTable({
         "serverSide": true,
+        "scrollX" : true,
         "aoColumnDefs": [
             {
                 "bSortable": false,
@@ -154,9 +156,19 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pketeranga
                 "aTargets": [8],
                 "sClass": "datatables-action-center",
                 "mRender": function (data, type, full) {
-                    var ret_value =
-                        '<button style="width: 15px !important;" class="btn btn-info" title="Edit Data" onclick="getbyId(\'' + full.USERNAME + '\')"><i class="fas fa-edit"></i></button>'+
-                        '<button style="width: 15px !important;" class="btn btn-danger" title="Update" onclick="update_status(\'' + full.ID_GROUP2 + '\',\''+full.STATUS+'\')"><i class="fas fa-edit"></i></button>';
+                    let id_group = full.ID_GROUP2.toString();
+                    let role = id_group.substr(0,id_group.indexOf("_"));
+                    let icon = (full.STATUS === "AVAILABLE") ?'<i class="fas fa-toggle-on">' : '<i class="fas fa-toggle-off">';
+                    let mtch_role = ["MSB", "EXECUTIVE","VP"];
+                    if (mtch_role.includes(role)){
+                        var ret_value =
+                            '<button style="width: 15px !important;" class="btn btn-sm btn-info" title="Edit Data" onclick="getbyId(\'' + full.USERNAME + '\')"><i class="fas fa-edit"></i></button>'+
+                            '<button style="width: 15px !important; margin-left: 5px;" class="btn btn-sm btn-danger" title="Update" onclick="update_status(\'' + full.ID_GROUP2 + '\',\''+full.STATUS+'\')">'+icon+'</i></button>';
+                    }else{
+                        var ret_value =
+                            '<button style="width: 15px !important;" class="btn btn-sm btn-info" title="Edit Data" onclick="getbyId(\'' + full.USERNAME + '\')"><i class="fas fa-edit"></i></button>';
+                    }
+                    mtch_role = [];
                     return ret_value;
                 }
 

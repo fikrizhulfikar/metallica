@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c1432616-f44a-456c-b349-daf6be464567" name="Default Changelist" comment="Menambahkan inisiasi variabl3" />
+    <list default="true" id="c1432616-f44a-456c-b349-daf6be464567" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/login.html" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +106,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="531df8bf-5395-4f4a-9df5-cff6d7f8a6bf" name="Default Changelist" comment="Ubah function get email users" />
+      <changelist id="c1432616-f44a-456c-b349-daf6be464567" name="Default Changelist" comment="" />
       <created>1591834072613</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -111,6 +115,7 @@
       <workItem from="1595816428591" duration="2638000" />
       <workItem from="1599754222102" duration="3144000" />
       <workItem from="1600995465817" duration="591000" />
+      <workItem from="1606699328843" duration="622000" />
     </task>
     <task id="LOCAL-00001" summary="Updated">
       <created>1591845393081</created>
@@ -203,7 +208,42 @@
       <option name="project" value="LOCAL" />
       <updated>1601307606369</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Menambahkan tombol approval untuk role msb investment expenditure ii">
+      <created>1606205674880</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1606205674880</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Log">
+      <created>1606468186965</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1606468186965</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Fix bug, disable revere to sap for msb,vp, and evp in approval flow (after verified by maker)">
+      <created>1606471145015</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1606471145015</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Log">
+      <created>1606471177724</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1606471177724</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Log">
+      <created>1606699928627</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1606699928627</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -233,6 +273,9 @@
     <MESSAGE value="Ubah konfigurasi smtp" />
     <MESSAGE value="Ubah proses refnum bank menjadi di belakang" />
     <MESSAGE value="menambahkan titik koma" />
-    <option name="LAST_COMMIT_MESSAGE" value="menambahkan titik koma" />
+    <MESSAGE value="Menambahkan tombol approval untuk role msb investment expenditure ii" />
+    <MESSAGE value="Fix bug, disable revere to sap for msb,vp, and evp in approval flow (after verified by maker)" />
+    <MESSAGE value="Log" />
+    <option name="LAST_COMMIT_MESSAGE" value="Log" />
   </component>
 </project>

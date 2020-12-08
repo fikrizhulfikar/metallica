@@ -896,6 +896,14 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank, pCaraBayar, pCurr) {
                                         '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\',\'' + full.METODE_PEMBAYARAN + '\')"><i class="fas fa-file-alt"></i></button>'+
                                         '</div>';
                                 }
+                                if(newRoleUser[0] == "ROLE_MSB_INVESTMENT_EXPENDITURE_II"){
+                                    ret_value = ret_value +
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_GROUP+'\')"><i class="fa fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-warning" title="Verified Checker" onclick="update_status(\'' +full.ID_GROUP+'\',\''+2+'\')"><i class="fa fa-arrows-alt"></i></button>'+
+                                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-reverse-data btn-sm btn-default" title="Reverse Checker" onclick="reverse_status(\'' +full.ID_GROUP+'\',\''+1+'\')"><i class="fa fa-arrow-left"></i></button>'+
+                                        '<button style="width: 15px !important;" class= "btn btn-pengantar btn-sm btn-elementary" title="Cetak Dokumen Pengantar" onclick="cetakSuratGroup(\'' + full.ID_GROUP + '\',\'' + full.METODE_PEMBAYARAN + '\')"><i class="fas fa-file-alt"></i></button>'+
+                                        '</div>';
+                                }
                             }
                             else if (full.STATUS_TRACKING == "VERIFIED BY CHECKER") {
                                 var role = newRoleUser[0];

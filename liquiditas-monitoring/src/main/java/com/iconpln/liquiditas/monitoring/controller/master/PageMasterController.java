@@ -98,5 +98,8 @@ public class PageMasterController {
     @RequestMapping("/vendor_oss")
     public String vendorOss(){return "operator/vendor_oss";}
 
+    @RequestMapping("/upload_saldo_bank")
+    public String uploadSaldoBank(){return "operator/upload_saldo_bank";}
+
 
 }
