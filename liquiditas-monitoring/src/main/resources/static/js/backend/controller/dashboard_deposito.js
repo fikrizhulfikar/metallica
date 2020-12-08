@@ -19,9 +19,9 @@ function getDashDeposito(){
             {"data": null,"orderable": false,"visible": false,"render": (data, type, row) => {return data.URAIAN;}},
             {"data": null,"orderable": false,"visible": false,"render": (data, type, row) => {return data.BANK;}},
             {"data": null,"orderable": false,"render": (data, type, row) => {return data.CURRENCY;}},
-            {"data":null,"orderable": false,"render" : (data, tyoe, row) => {return 'Rp '+ new Intl.NumberFormat().format(data.NOMINAL)},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"orderable": false,"render" : (data, tyoe, row) => {return 'Rp '+ new Intl.NumberFormat().format(data.BUNGA)},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"orderable": false,"render" : (data, tyoe, row) => {return 'Rp '+ new Intl.NumberFormat().format(data.POKOK_BUNGA)},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"orderable": false,"render" : (data, tyoe, row) => {return new Intl.NumberFormat('id-ID').format(data.NOMINAL)},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"orderable": false,"render" : (data, tyoe, row) => {return new Intl.NumberFormat('id-ID').format(data.BUNGA)},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"orderable": false,"render" : (data, tyoe, row) => {return new Intl.NumberFormat('id-ID').format(data.POKOK_BUNGA)},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
         ],
 
         "createdRow" : function (row, data, dataIndex){
