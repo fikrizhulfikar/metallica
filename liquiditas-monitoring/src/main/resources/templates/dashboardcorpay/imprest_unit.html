@@ -1,0 +1,279 @@
+<div th:fragment="stylesheets-backend">
+    <style>
+        button{ cursor: pointer
+        }
+        .table td {
+            padding-right: 0.75rem;
+            padding-bottom: 0.25rem;
+            padding-left: 0.75rem;
+            padding-top: 0.25rem;
+        }
+        .table tr th {
+            vertical-align: middle;
+            text-align: center;
+            /*padding: 2.2px 18px !important;*/
+        }
+        div.dataTables_wrapper div.dataTables_paginate {
+            float: right !important;
+            text-align: left !important;
+            padding-left: 0px;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter {
+            text-align: right !important;
+        }
+
+        .lbl-src{
+            font-size: 12px;
+        }
+        .panel-custom {
+            overflow-x: hidden !important;
+        }
+
+        .md-stepper-horizontal {
+            display:table;
+            width:80%;
+            margin:0 auto;
+        }
+        .md-stepper-horizontal .md-step {
+            display:table-cell;
+            position:relative;
+            padding:15px;
+        }
+        .md-stepper-horizontal .md-step:active {
+            border-radius: 15% / 75%;
+        }
+        .md-stepper-horizontal .md-step:first-child:active {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        .md-stepper-horizontal .md-step:last-child:active {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        .md-stepper-horizontal .md-step:hover .md-step-circle {
+            background-color:#757575;
+        }
+        .md-stepper-horizontal .md-step:first-child .md-step-bar-left,
+        .md-stepper-horizontal .md-step:last-child .md-step-bar-right {
+            display:none;
+        }
+        .md-stepper-horizontal .md-step .md-step-circle {
+            width:30px;
+            height:30px;
+            margin:0 auto;
+            background-color:#999999;
+            border-radius: 50%;
+            text-align: center;
+            line-height:30px;
+            font-size: 16px;
+            font-weight: 600;
+            color:#FFFFFF;
+        }
+        .md-stepper-horizontal.green .md-step.active .md-step-circle {
+            background-color:#00AE4D;
+        }
+        .md-stepper-horizontal.orange .md-step.active .md-step-circle {
+            background-color:#F96302;
+        }
+        .md-stepper-horizontal .md-step.active .md-step-circle {
+            background-color: rgb(33,150,243);
+        }
+        .md-stepper-horizontal .md-step.done .md-step-circle:before {
+            font-family:'FontAwesome';
+            font-weight:100;
+            content: "\f00c";
+        }
+        .md-stepper-horizontal .md-step.done .md-step-circle *,
+        .md-stepper-horizontal .md-step.editable .md-step-circle * {
+            display:none;
+        }
+        .md-stepper-horizontal .md-step.editable .md-step-circle {
+            -moz-transform: scaleX(-1);
+            -o-transform: scaleX(-1);
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+        }
+        .md-stepper-horizontal .md-step.editable .md-step-circle:before {
+            font-family:'FontAwesome';
+            font-weight:100;
+            content: "\f040";
+        }
+        .md-stepper-horizontal .md-step .md-step-title {
+            margin-top:3px;
+            font-size:16px;
+            font-weight:600;
+        }
+        .md-stepper-horizontal .md-step .md-step-title,
+        .md-stepper-horizontal .md-step .md-step-optional {
+            text-align: center;
+            color:rgba(0,0,0,.26);
+        }
+        .md-stepper-horizontal .md-step.active .md-step-title {
+            font-weight: 600;
+            color:rgba(0,0,0,.87);
+        }
+        .md-stepper-horizontal .md-step.active.done .md-step-title,
+        .md-stepper-horizontal .md-step.active.editable .md-step-title {
+            font-weight:600;
+        }
+        .md-stepper-horizontal .md-step .md-step-optional {
+            font-size:12px;
+        }
+        .md-stepper-horizontal .md-step.active .md-step-optional {
+            color:rgba(0,0,0,.54);
+        }
+        .md-stepper-horizontal .md-step .md-step-bar-left,
+        .md-stepper-horizontal .md-step .md-step-bar-right {
+            position:absolute;
+            top:36px;
+            height:1px;
+            border-top:1px solid #DDDDDD;
+        }
+        .md-stepper-horizontal .md-step .md-step-bar-right {
+            right:0;
+            left:50%;
+            margin-left:20px;
+        }
+        .md-stepper-horizontal .md-step .md-step-bar-left {
+            left:0;
+            right:50%;
+            margin-right:20px;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Kebutuhan Imprest Unit</li>
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()" ><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
+            </div>
+        </li>
+    </ol>
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+            <div align="center">
+                <h5><b>KEBUTUHAN IMPREST UNIT</b></h5>
+                <h6 id="tgl_imprest">ini diisi tanggal</h6>
+            </div>
+            <div align="center">
+                <div class="md-stepper-horizontal orange">
+                    <div id="staff_pe" class="md-step done" style="width: 31.33%;">
+                        <div class="md-step-circle"><span>1</span></div>
+                        <div class="md-step-title">STAFF PE</div>
+                        <div class="md-step-bar-left"></div>
+                        <div class="md-step-bar-right"></div>
+                    </div>
+                    <div id="msb_pe" class="md-step done">
+                        <div class="md-step-circle"><span>2</span></div>
+                        <div class="md-step-title">MSB PE</div>
+                        <div class="md-step-bar-left"></div>
+                        <div class="md-step-bar-right"></div>
+                    </div>
+                    <div id="vp_pe" class="md-step done">
+                        <div class="md-step-circle"><span>4</span></div>
+                        <div class="md-step-title">VP PE</div>
+                        <div class="md-step-bar-left"></div>
+                        <div class="md-step-bar-right"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="filter" style="margin-top: 50px;">
+                <div class="col-md-12 row" style="padding-left: 7.5px;margin-right: 0;">
+                    <div class="col-md-1" style="padding-right: 0px;"><label class="lbl-src">Periode Imprest Unit</label></div>
+                    <div class="col-md-2" style="padding-right: 0px;">
+                        <input type="text" style="border-radius: 5px" class="form-control" id="periode_dropping"/>
+                    </div>
+                    <div class="col-md-9" style="padding-right: 0;">
+                        <button class="btn btn-sm btn-primary" onclick="search('search')"><i class="fas fa-search"></i></button>
+                        <div class="dataTables_filter float-right" id="button_action">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-data">
+                <div class="panel panel-default">
+                    <div class="panel-body panel-custom" style="padding-top: 0 !important;">
+                        <table id="table_imprest_unit" class="table table-bordered table-striped" style="margin-left: 0px; width: 100%;">
+                            <thead>
+                            <tr>
+                                <th rowspan="2">NO</th>
+                                <th rowspan="2">NAMA UNIT</th>
+                                <th rowspan="2">NAMA BANK</th>
+                                <th colspan="2">INVESTASI</th>
+                                <th rowspan="2">OPERASI</th>
+                            </tr>
+                            <tr>
+                                <th>NON RUTIN</th>
+                                <th>RUTIN</th>
+                            </tr>
+                            </thead>
+                            <tbody style="font-size: 12px">
+                            </tbody>
+                            <tfoot>
+                                <tr style="font-size: 12px;">
+                                    <td colspan="2" rowspan="4" style="vertical-align: middle; text-align: center;"><h6>TOTAL</h6></td>
+                                    <td >MANDIRI</td>
+                                    <td style="text-align: right;" id="t_mandiri_non"></td>
+                                    <td style="text-align: right;" id="t_mandiri_inv"></td>
+                                    <td style="text-align: right;" id="t_mandiri_ops"></td>
+                                </tr>
+                                <tr style="font-size: 12px;">
+                                    <td>BRI</td>
+                                    <td style="text-align: right;" id="t_bri_non"></td>
+                                    <td style="text-align: right;" id="t_bri_inv"></td>
+                                    <td style="text-align: right;" id="t_bri_ops"></td>
+                                </tr>
+                                <tr style="font-size: 12px;">
+                                    <td>BNI</td>
+                                    <td style="text-align: right;" id="t_bni_non"></td>
+                                    <td style="text-align: right;" id="t_bni_inv"></td>
+                                    <td style="text-align: right;" id="t_bni_ops"></td>
+                                </tr>
+                                <tr style="font-size: 12px;">
+                                    <td>BUKOPIN</td>
+                                    <td style="text-align: right;" id="t_bukopin_non"></td>
+                                    <td style="text-align: right;" id="t_bukopin_inv"></td>
+                                    <td style="text-align: right;" id="t_bukopin_ops"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-upload-xls" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title_modal_upload_xls">UPLOAD FILE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="input_file_xls">
+                    <div class="form-group">
+                        <label class="form-control-label">UPLOAD FILE XLS |
+                            <a th:href="@{/api_operator/kebutuhan_imprest_unit/template}" id="btn-download-template-data-pembayaran">
+                                Download Template
+                            </a></label>
+                        <input type="file" class="form-control" id="file-xls"
+                               accept="application/vnd.ms-excel"/>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal" onclick="upload_server_xls()">Selesai</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/imprestUnit.js"></script>
+</div>

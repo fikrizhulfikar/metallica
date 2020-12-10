@@ -288,4 +288,7 @@ public class PageOperatorController {
 
     @RequestMapping("/dashboard_deposito")
     public String dashboard_deposito(){return "operator/dashboard_deposito";}
+
+    @RequestMapping("/kebutuhan_imprest_unit")
+    public String dashboard_dropping_imprest_unit(){return "dashboardcorpay/imprest_unit";}
 }
