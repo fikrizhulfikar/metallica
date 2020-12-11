@@ -1860,6 +1860,8 @@ function edit_data(pCompCode, pNoDoc, pFiscYear, pLineItem,pSource, pBank,  pBen
             $('#pTglDueOn').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
             $('#pPostDate').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
             $('#pBaseline').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
+            $('#pExchRateDeals3').val(res[0].KURS_YG_DITENTUKAN);
+            $('#pExchRateDeals3').mask('000,000,000,000,000',{reverse : true});
 
             if(res[0].METODE_PEMBAYARAN === "GIRO" || res[0].METODE_PEMBAYARAN === "INTERNETBANKING"){
                 $("#btn-inquiry").hide();
@@ -3072,7 +3074,7 @@ function update_pembayaran() {
         alert("Maaf, NO GIRO harus diisi untuk Jenis Pembayaran GIRO.");
     }
 
-    showLoadingCss()
+    showLoadingCss();
     $.ajax({
         url: baseUrl + "api_operator/rekap_invoice_belum/update_pembayaran",
         dataType: 'JSON',
@@ -3102,6 +3104,7 @@ function update_pembayaran() {
             pGroupId : $("#pGroupId").val(),
             pNoGiro : ($("#pMetodePembayaran").val() === 'GIRO') ? $('#pNoGiro').val().trim() : "-",
             pRefNum : $("#pCusRefNum").val(),
+            pExchRateDeals : $("#pExchRateDeals3").val() === "-" ? "" : $("#pExchRateDeals3").val().toString().replace(/,/g,"") ,
         },
         success: function (res) {
             //// // console.log("COBA DIAZ :",res);
@@ -3154,7 +3157,7 @@ function update_pembayaran2() {
         },
         success: function (res) {
             //// // console.log("COBA DIAZ :",res);
-                    hideLoadingCss("")
+                    hideLoadingCss("");
                     //var result = res.return.split(";")[0];
                     //var result = res;
                     if (res.return == 1) {
