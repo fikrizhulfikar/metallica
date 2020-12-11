@@ -470,7 +470,7 @@ public class CorpayService {
             String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet, String pBankPembayar, String pKeterangan, String pTglRencanaBayar,
             String pSumberDana, String pMetodePembayaran, String pNoRekHouseBank, String pInqCustomerName, String pInqAccountNumber, String pInqAccountStatus,
             String pKodeBankPenerima, String pRetrievalRefNumber, String pCustomerRefNumber, String pConfirmationCode, String pTglActBayar, String pJamBayar,
-            String pUserId, String pOssId, String pGroupId, String pNoGiro, String pRefNum) throws SQLException {
+            String pUserId, String pOssId, String pGroupId, String pNoGiro, String pRefNum, String pExchRateDeals) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("invoice_edit");
@@ -501,6 +501,7 @@ public class CorpayService {
                 .addValue("p_group_id", pGroupId)
                 .addValue("p_no_giro",pNoGiro)
                 .addValue("p_ref_num_bank", pRefNum)
+                .addValue("p_kurs",pExchRateDeals)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data edit pembayaran : {}", out);
