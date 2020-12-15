@@ -3897,6 +3897,10 @@ function checkValidasiData(val){
     return val.metode_pembayaran !== "-";
 }
 
+function checkMetodeBayar(val){
+    return (val.metode_pembayaran === 'INTERNETBANKING' || val.metode_pembayaran === 'GIRO') ;
+}
+
 function siap_bayar_multiple(){
     Swal.fire({
         title : "Yakin?",
@@ -3912,6 +3916,8 @@ function siap_bayar_multiple(){
                 Swal.fire("Maaf","Silahkan Pilih Data Terlebih Dahulu", "warning");
             }else if(invoiceCheckedArray.every(checkSiapBayarGiro) === false){
                 Swal.fire("Maaf", "Anda tidak dapat melunasi tagihan ini","warning");
+            }else if(invoiceCheckedArray.every(checkMetodeBayar) === false){
+                Swal.fire("Maaf", "Multiple Siap Bayar hanya bisa dilakukan untuk metode bayar GIRO dan INTERNET BANKING","warning");
             }else{
                 showLoadingCss();
                 $.ajax({
