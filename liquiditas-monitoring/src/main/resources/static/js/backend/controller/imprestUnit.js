@@ -193,10 +193,10 @@ function initDataTable() {
                                 t_bri += intVal(a) + intVal(b.INVESTASI_NON_RUTIN);
                             }
                         }, 0);
-                    document.getElementById('t_mandiri_non').innerHTML = accounting.formatNumber(t_mandiri.toString(), 2, '.', ',');
-                    document.getElementById('t_bukopin_non').innerHTML = accounting.formatNumber(t_bukopin.toString(), 2, '.', ',');
-                    document.getElementById('t_bni_non').innerHTML = accounting.formatNumber(t_bni.toString(), 2, '.', ',');
-                    document.getElementById('t_bri_non').innerHTML = accounting.formatNumber(t_bri.toString(), 2, '.', ',');
+                    document.getElementById('t_mandiri_non').innerHTML = "<b>"+accounting.formatNumber(t_mandiri.toString(), 2, '.', ',')+"</b>";
+                    document.getElementById('t_bukopin_non').innerHTML = "<b>"+accounting.formatNumber(t_bukopin.toString(), 2, '.', ',')+"</b>";
+                    document.getElementById('t_bni_non').innerHTML = "<b>"+accounting.formatNumber(t_bni.toString(), 2, '.', ',')+"</b>";
+                    document.getElementById('t_bri_non').innerHTML = "<b>"+accounting.formatNumber(t_bri.toString(), 2, '.', ',')+"</b>";
                     api.column(4)
                         .data()
                         .reduce(function (a, b) {
@@ -214,10 +214,10 @@ function initDataTable() {
                                 t_bri_inv += intVal(a) + intVal(b.INVESTASI_RUTIN);
                             }
                         }, 0);
-                    document.getElementById('t_mandiri_inv').innerHTML = accounting.formatNumber(t_mandiri_inv.toString(), 2, '.', ',');
-                    document.getElementById('t_bukopin_inv').innerHTML = accounting.formatNumber(t_bukopin_inv.toString(), 2, '.', ',');
-                    document.getElementById('t_bni_inv').innerHTML = accounting.formatNumber(t_bni_inv.toString(), 2, '.', ',');
-                    document.getElementById('t_bri_inv').innerHTML = accounting.formatNumber(t_bri_inv.toString(), 2, '.', ',');
+                    document.getElementById('t_mandiri_inv').innerHTML = "<b>"+accounting.formatNumber(t_mandiri_inv.toString(), 2, '.', ',')+"</b>";
+                    document.getElementById('t_bukopin_inv').innerHTML = "<b>"+accounting.formatNumber(t_bukopin_inv.toString(), 2, '.', ',')+"</b>";
+                    document.getElementById('t_bni_inv').innerHTML = "<b>"+accounting.formatNumber(t_bni_inv.toString(), 2, '.', ',')+"</b>";
+                    document.getElementById('t_bri_inv').innerHTML = "<b>"+accounting.formatNumber(t_bri_inv.toString(), 2, '.', ',')+"</b>";
                     api.column(5)
                         .data()
                         .reduce(function (a, b) {
@@ -235,10 +235,19 @@ function initDataTable() {
                                 t_bri_ops += intVal(a) + intVal(b.OPERASI);
                             }
                         }, 0);
-                    document.getElementById('t_mandiri_ops').innerHTML = accounting.formatNumber(t_mandiri_ops.toString(), 2, '.', ',');
-                    document.getElementById('t_bukopin_ops').innerHTML = accounting.formatNumber(t_bukopin_ops.toString(), 2, '.', ',');
-                    document.getElementById('t_bni_ops').innerHTML = accounting.formatNumber(t_bni_ops.toString(), 2, '.', ',');
-                    document.getElementById('t_bri_ops').innerHTML = accounting.formatNumber(t_bri_ops.toString(), 2, '.', ',');
+                    document.getElementById('t_mandiri_ops').innerHTML = "<b>"+accounting.formatNumber(t_mandiri_ops.toString(), 2, '.', ',')+"</b>";
+                    document.getElementById('t_bukopin_ops').innerHTML = "<b>"+accounting.formatNumber(t_bukopin_ops.toString(), 2, '.', ',')+"</b>";
+                    document.getElementById('t_bni_ops').innerHTML = "<b>"+accounting.formatNumber(t_bni_ops.toString(), 2, '.', ',')+"</b>";
+                    document.getElementById('t_bri_ops').innerHTML = "<b>"+accounting.formatNumber(t_bri_ops.toString(), 2, '.', ',')+"</b>";
+
+                    document.getElementById("tot_man_inv").innerText = accounting.formatNumber(parseFloat(t_mandiri_inv) + parseFloat(t_mandiri),2,'.',',') ;
+                    document.getElementById("tot_man").innerText = accounting.formatNumber(parseFloat(t_mandiri_ops),2,'.',',') ;
+                    document.getElementById("tot_bni_inv").innerText = accounting.formatNumber(parseFloat(t_bni_inv) + parseFloat(t_bni),2,'.',',') ;
+                    document.getElementById("tot_bni").innerText = accounting.formatNumber(parseFloat(t_bni),2,'.',',') ;
+                    document.getElementById("tot_bri_inv").innerText = accounting.formatNumber(parseFloat(t_bri_inv) + parseFloat(t_bri),2,'.',',') ;
+                    document.getElementById("tot_bri").innerText = accounting.formatNumber(parseFloat(t_bri_ops),2,'.',',') ;
+                    document.getElementById("tot_buk_inv").innerText = accounting.formatNumber(parseFloat(t_bukopin_inv) + parseFloat(t_bukopin),2,'.',',') ;
+                    document.getElementById("tot_buk").innerText = accounting.formatNumber(parseFloat(t_bukopin_ops),2,'.',',') ;
                 },
             "drawCallback" : (setting, json)=> {
                 let node = document.getElementById("button_action");
@@ -251,7 +260,7 @@ function initDataTable() {
 
                 let elements = document.getElementsByClassName('md-step');
                 Array.prototype.forEach.call(elements,el => {
-                    console.log(document.getElementById(el.id).classList.remove("active"));
+                    document.getElementById(el.id).classList.remove("active");
                 });
 
                 if (localStorage.getItem("imprest_approval_status") === "VERIFIKASI STAFF"){
