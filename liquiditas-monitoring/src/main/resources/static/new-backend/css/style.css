@@ -8908,3 +8908,8 @@ div.buttons {
 }
 
 div.dataTables_filter input { width: 150px }
+
+.c-vr {
+  width: 1px;
+  background-color: rgba(0,0,21,.2);
+}
