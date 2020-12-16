@@ -147,8 +147,7 @@
         <li class="breadcrumb-item active" style="cursor: default">Kebutuhan Imprest Unit</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()" ><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="fas fa-file-pdf"></i> &nbsp;Pdf</button>
             </div>
         </li>
     </ol>
@@ -180,67 +179,99 @@
                     </div>
                 </div>
             </div>
-            <div id="filter" style="margin-top: 50px;">
-                <div class="col-md-12 row" style="padding-left: 7.5px;margin-right: 0;">
-                    <div class="col-md-1" style="padding-right: 0px;"><label class="lbl-src">Periode Imprest Unit</label></div>
-                    <div class="col-md-2" style="padding-right: 0px;">
-                        <input type="text" style="border-radius: 5px" class="form-control" id="periode_dropping"/>
-                    </div>
-                    <div class="col-md-9" style="padding-right: 0;">
-                        <button class="btn btn-sm btn-primary" onclick="search('search')"><i class="fas fa-search"></i></button>
-                        <div class="dataTables_filter float-right" id="button_action">
 
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header" style="margin-bottom: 0.5rem;">
+                        <div class="col-md-12 row" id="filter" style="margin-left: 0rem;">
+                            <div class="col-md-12 row" style="padding-left: 7.5px;margin-right: 0;">
+                                <div class="col-md-5" style="padding-right: 0px;">
+                                    <form class="form-inline" style="margin-bottom: 0rem;">
+                                        <div class="form-group">
+                                            <label>PERIODE </label>
+                                            <input type="text" style="border-radius: 5px; margin: 0 1em 0" class="form-control" id="periode_dropping"/>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-primary" onclick="search('search')"><i class="fas fa-search"></i></button>
+                                    </form>
+                                </div>
+                                <div class="col-md-7" style="padding-right: 0;">
+                                    <div class="dataTables_filter float-right" id="button_action" style="padding-top: 0.45rem;">
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="list-data">
-                <div class="panel panel-default">
-                    <div class="panel-body panel-custom" style="padding-top: 0 !important;">
-                        <table id="table_imprest_unit" class="table table-bordered table-striped" style="margin-left: 0px; width: 100%;">
+                    <div class="card-block" style="padding-top: 0 !important;">
+                        <table id="table_imprest_unit" class="table table-striped" style="margin-left: 0px; width: 100%;">
                             <thead>
                             <tr>
                                 <th rowspan="2">NO</th>
                                 <th rowspan="2">NAMA UNIT</th>
                                 <th rowspan="2">NAMA BANK</th>
-                                <th colspan="2">INVESTASI</th>
-                                <th rowspan="2">OPERASI</th>
+                                <th style="background-color: #ffc671;" colspan="2">INVESTASI</th>
+                                <th style="background-color: #97d48f;" rowspan="2">OPERASI</th>
                             </tr>
                             <tr>
-                                <th>NON RUTIN</th>
-                                <th>RUTIN</th>
+                                <th style="background-color: #ffc671;">NON RUTIN</th>
+                                <th style="background-color: #ffc671;">RUTIN</th>
                             </tr>
                             </thead>
                             <tbody style="font-size: 12px">
                             </tbody>
-                            <tfoot>
-                                <tr style="font-size: 12px;">
-                                    <td colspan="2" rowspan="4" style="vertical-align: middle; text-align: center;"><h6>TOTAL</h6></td>
-                                    <td >MANDIRI</td>
-                                    <td style="text-align: right;" id="t_mandiri_non"></td>
-                                    <td style="text-align: right;" id="t_mandiri_inv"></td>
-                                    <td style="text-align: right;" id="t_mandiri_ops"></td>
-                                </tr>
-                                <tr style="font-size: 12px;">
-                                    <td>BRI</td>
-                                    <td style="text-align: right;" id="t_bri_non"></td>
-                                    <td style="text-align: right;" id="t_bri_inv"></td>
-                                    <td style="text-align: right;" id="t_bri_ops"></td>
-                                </tr>
-                                <tr style="font-size: 12px;">
-                                    <td>BNI</td>
-                                    <td style="text-align: right;" id="t_bni_non"></td>
-                                    <td style="text-align: right;" id="t_bni_inv"></td>
-                                    <td style="text-align: right;" id="t_bni_ops"></td>
-                                </tr>
-                                <tr style="font-size: 12px;">
-                                    <td>BUKOPIN</td>
-                                    <td style="text-align: right;" id="t_bukopin_non"></td>
-                                    <td style="text-align: right;" id="t_bukopin_inv"></td>
-                                    <td style="text-align: right;" id="t_bukopin_ops"></td>
-                                </tr>
-                            </tfoot>
+                            <tr style="font-size: 12px; background-color: #b1cae0;">
+                                <td colspan="2" rowspan="4" style="vertical-align: middle; background-color: #ffffff !important; text-align: center;"><h6><b>TOTAL</b></h6></td>
+                                <td ><b>MANDIRI</b></td>
+                                <td style="text-align: right; background-color: #ffc672;" id="t_mandiri_non"></td>
+                                <td style="text-align: right; background-color: #ffc672;" id="t_mandiri_inv"></td>
+                                <td style="text-align: right; background-color: #97d48f;" id="t_mandiri_ops"></td>
+                            </tr>
+                            <tr style="font-size: 12px; background-color: #b1cae0;">
+                                <td><b>BRI</b></td>
+                                <td style="text-align: right; background-color: #ffc672;" id="t_bri_non"></td>
+                                <td style="text-align: right; background-color: #ffc672;" id="t_bri_inv"></td>
+                                <td style="text-align: right; background-color: #97d48f;" id="t_bri_ops"></td>
+                            </tr>
+                            <tr style="font-size: 12px; background-color: #b1cae0;">
+                                <td><b>BNI</b></td>
+                                <td style="text-align: right; background-color: #ffc672;" id="t_bni_non"></td>
+                                <td style="text-align: right; background-color: #ffc672;" id="t_bni_inv"></td>
+                                <td style="text-align: right; background-color: #97d48f;" id="t_bni_ops"></td>
+                            </tr>
+                            <tr style="font-size: 12px; background-color: #b1cae0;">
+                                <td><b>BUKOPIN</b></td>
+                                <td style="text-align: right; background-color: #ffc672;" id="t_bukopin_non"></td>
+                                <td style="text-align: right; background-color: #ffc672;" id="t_bukopin_inv"></td>
+                                <td style="text-align: right; background-color: #97d48f;" id="t_bukopin_ops"></td>
+                            </tr>
                         </table>
+                    </div>
+                    <div class="card-footer" style="background-color: #ffffff !important">
+                        <div class="row text-center">
+                            <div class="col">
+                                <div class="text-fuchsia"><h6>MANDIRI</h6></div>
+                                <b id="tot_man_inv" style="color: #ec991e;">23,293,940</b> <br/>
+                                <b id="tot_man" style="color: #3b942f;">23,293,940</b>
+                            </div>
+                            <div class="c-vr"></div>
+                            <div class="col">
+                                <div class="text-fuchsia"><h6>BRI</h6></div>
+                                <b id="tot_bri_inv" style="color: #ec991e;">23,293,940</b><br/>
+                                <b id="tot_bri" style="color: #3b942f;">23,293,940</b>
+                            </div>
+                            <div class="c-vr"></div>
+                            <div class="col">
+                                <div class="text-fuchsia"><h6>BNI</h6></div>
+                                <b id="tot_bni_inv" style="color: #ec991e;">23,293,940</b><br/>
+                                <b id="tot_bni" style="color: #3b942f;">23,293,940</b>
+                            </div>
+                            <div class="c-vr"></div>
+                            <div class="col">
+                                <div class="text-fuchsia"><h6>BUKOPIN</h6></div>
+                                <b id="tot_buk_inv" style="color: #ec991e;">23,293,940</b><br/>
+                                <b id="tot_buk" style="color: #3b942f;">23,293,940</b>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
