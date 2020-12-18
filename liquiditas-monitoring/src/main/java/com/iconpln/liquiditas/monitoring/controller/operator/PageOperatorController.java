@@ -52,6 +52,11 @@ public class PageOperatorController {
         return "operator/rekap_belum";
     }
 
+    @RequestMapping("/giro")
+    public String giro() {
+        return "operator/giro";
+    }
+
     @RequestMapping("/rekap_sudah")
     public String rekapDataSudahVerifikasi() {
         return "operator/rekap_sudah";
@@ -191,6 +196,9 @@ public class PageOperatorController {
 
     @RequestMapping("/rekap_invoice_oss")
     public String rekap_invoice_oss(){return "operator/rekap_invoice_oss";}
+
+    @RequestMapping("/giro_special_rate")
+    public String giro_special_rate(){return "operator/giro_special_rate";}
 
     @RequestMapping("/rekap_invoice_reverse")
     public String rekap_invoice_reverse(){return "operator/rekap_invoice_reverse";}

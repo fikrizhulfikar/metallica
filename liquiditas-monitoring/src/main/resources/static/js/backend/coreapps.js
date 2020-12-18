@@ -1187,7 +1187,7 @@ function selectFilterCashCode(idHtml, jenis, idForSelected) {
             $("#" + idHtml + "").html('');
             $("#" + idHtml + "").append('<option value="ALL">PILIH CASH CODE</option>');
             $.each(res, function (key, val) {
-                $("#" + idHtml + "").append('<option value="' + val.CASH_CODE + '">' + val.CASH_CODE + '</option>');
+                $("#" + idHtml + "").append('<option value="' + val.CASH_CODE + '">' + val.CASH_DESCRIPTION + '</option>');
             });
         },
         error: function () {
