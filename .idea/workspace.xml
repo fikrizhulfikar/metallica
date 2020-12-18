@@ -1,37 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c1432616-f44a-456c-b349-daf6be464567" name="Default Changelist" comment="Menambahkan inisiasi variabl3">
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/proyeksi_kebutuhan_pengadaan_valas.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapRealisasiPembayaran.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/frontend/verifikator/saldo_rekening_valuta_asing.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/proyeksi_pengadaan_valas_trx.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/rekap_realisasi_pembayaran.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/report/rekap_realisasi_pembayaran.xls" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/verifikator/saldo_rekening_valuta_asing.html" afterDir="false" />
+    <list default="true" id="c1432616-f44a-456c-b349-daf6be464567" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/maven.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/maven.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/CorpayService.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/CorpayService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/DashboardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/DashboardService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/InvoiceGroupService.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/InvoiceGroupService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/MasterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/MasterService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/RealisasiInvoiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/RealisasiInvoiceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/ValasService.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/ValasService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/master/MasterDataController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/master/MasterDataController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/CorpayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/CorpayController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/InvoiceGroupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/InvoiceGroupController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/PageOperatorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/PageOperatorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/RealisasiInvoiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/RealisasiInvoiceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/ReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/ReportController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/verifikator/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/verifikator/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/verifikator/PageVerifikatorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/verifikator/PageVerifikatorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/xmldoc/GeneratedocController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/xmldoc/GeneratedocController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/dash_realisasi.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/dash_realisasi.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapInvoice.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapInvoice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapInvoiceBelum.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapInvoiceBelum.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapInvoiceRealisasi.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapInvoiceRealisasi.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/PlacementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/PlacementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/coreapps.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/coreapps.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/dash_realisasi.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/dash_realisasi.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/jQuery-Mask-Plugin-master/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/jQuery-Mask-Plugin-master/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-scheduler/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-scheduler/pom.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -52,6 +32,13 @@
     </option>
     <expand />
     <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -77,16 +64,18 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../J. Virtual Cubicle/backend-vc" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\java\com\iconpln\liquiditas\monitoring\controller\operator" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\operator" />
       <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\backend\controller" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\operator" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\report" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\images" />
+      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\fonts" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -102,6 +91,32 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.ApplicationMonitoring">
+    <configuration name="CallProcTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.iconpln.liquiditas.core.CallProcTest" />
+      <module name="liquiditas-core" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.iconpln.liquiditas.core.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestXx" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.iconpln.liquiditas.core.TestXx" />
+      <module name="liquiditas-core" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.iconpln.liquiditas.core.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ApplicationMonitoring" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="liquiditas-monitoring" />
       <extension name="coverage">
@@ -125,6 +140,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.ApplicationMonitoring" />
+        <item itemvalue="Application.TestXx" />
+        <item itemvalue="Application.CallProcTest" />
       </list>
     </recent_temporary>
   </component>
@@ -133,7 +150,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="420d354e-607d-4b43-a77e-007629250d5c" name="Default Changelist" comment="A" />
+      <changelist id="c1432616-f44a-456c-b349-daf6be464567" name="Default Changelist" comment="Menambahkan function upload subsidi, pinjaman, dan dropping" />
       <created>1591834072613</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -141,85 +158,366 @@
       <workItem from="1591834077611" duration="23540000" />
       <workItem from="1595816428591" duration="2638000" />
       <workItem from="1599754222102" duration="3144000" />
+      <workItem from="1600995465817" duration="591000" />
+      <workItem from="1603675597847" duration="34622000" />
+      <workItem from="1604232712518" duration="2393000" />
+      <workItem from="1604462278036" duration="16321000" />
+      <workItem from="1604625217808" duration="41808000" />
+      <workItem from="1605055994408" duration="15472000" />
+      <workItem from="1605145428511" duration="7128000" />
+      <workItem from="1605228218643" duration="12551000" />
+      <workItem from="1605661708636" duration="2077000" />
+      <workItem from="1605834734756" duration="1466000" />
+      <workItem from="1606352799652" duration="5830000" />
+      <workItem from="1607562473085" duration="4422000" />
+      <workItem from="1607647324570" duration="12438000" />
+      <workItem from="1607908696734" duration="25192000" />
+      <workItem from="1608079625905" duration="18045000" />
     </task>
-    <task id="LOCAL-00001" summary="Updated">
-      <created>1591845393081</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
+    <task id="LOCAL-00057" summary="Menambahkan teks posisi terakhir pada detail tracking">
+      <created>1606101106628</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
       <option name="project" value="LOCAL" />
-      <updated>1591845393081</updated>
+      <updated>1606101106628</updated>
     </task>
-    <task id="LOCAL-00002" summary="Add Param Head/Item to Split Head and Item">
-      <created>1591888661070</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
+    <task id="LOCAL-00058" summary="Menambahkan parameter reference number">
+      <created>1606101190855</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
       <option name="project" value="LOCAL" />
-      <updated>1591888661070</updated>
+      <updated>1606101190855</updated>
     </task>
-    <task id="LOCAL-00003" summary="Add Param Header and Item">
-      <created>1591888699556</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
+    <task id="LOCAL-00059" summary="Menambah parameter reference number bank">
+      <created>1606112757358</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
       <option name="project" value="LOCAL" />
-      <updated>1591888699556</updated>
+      <updated>1606112757358</updated>
     </task>
-    <task id="LOCAL-00004" summary="Fix Reverse Button">
-      <created>1591888746775</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
+    <task id="LOCAL-00060" summary="Modifikasi ukuran bedge">
+      <created>1606112809962</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
       <option name="project" value="LOCAL" />
-      <updated>1591888746775</updated>
+      <updated>1606112809962</updated>
     </task>
-    <task id="LOCAL-00005" summary="Update Tracking">
-      <created>1591888792733</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
+    <task id="LOCAL-00061" summary="No Changes">
+      <created>1606116320516</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
       <option name="project" value="LOCAL" />
-      <updated>1591888792733</updated>
+      <updated>1606116320516</updated>
     </task>
-    <task id="LOCAL-00006" summary="Modify Function Hit">
-      <created>1591888855125</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
+    <task id="LOCAL-00062" summary="Add proyeksi kebutuhan pengadaan .js dan .html">
+      <created>1606116428991</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
       <option name="project" value="LOCAL" />
-      <updated>1591888855125</updated>
+      <updated>1606116428991</updated>
     </task>
-    <task id="LOCAL-00007" summary="Updated">
-      <created>1591888875820</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
+    <task id="LOCAL-00063" summary="Menaambah button cetak all rekap invoice">
+      <created>1606116854020</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
       <option name="project" value="LOCAL" />
-      <updated>1591888875820</updated>
+      <updated>1606116854020</updated>
     </task>
-    <task id="LOCAL-00008" summary="Updated">
-      <created>1591912822769</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
+    <task id="LOCAL-00064" summary="Menambahkan cetak all rekap invoice">
+      <created>1606116895069</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
       <option name="project" value="LOCAL" />
-      <updated>1591912822769</updated>
+      <updated>1606116895069</updated>
     </task>
-    <task id="LOCAL-00009" summary="Ubah idle time dan jetty server post size">
-      <created>1598570229207</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
+    <task id="LOCAL-00065" summary="Add function cetak all rekap invoice">
+      <created>1606117530947</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
       <option name="project" value="LOCAL" />
-      <updated>1598570229207</updated>
+      <updated>1606117530947</updated>
     </task>
-    <task id="LOCAL-00010" summary="Ubah idle time dan jetty server post size">
-      <created>1598570851893</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
+    <task id="LOCAL-00066" summary="Add function getAllTransaksi">
+      <created>1606117643316</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
       <option name="project" value="LOCAL" />
-      <updated>1598570851893</updated>
+      <updated>1606117643316</updated>
     </task>
-    <task id="LOCAL-00011" summary="Ubah konfigurasi smtp">
-      <created>1598957728919</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
+    <task id="LOCAL-00067" summary="Disable password input">
+      <created>1606117688362</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
       <option name="project" value="LOCAL" />
-      <updated>1598957728919</updated>
+      <updated>1606117688362</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00068" summary="Update button title">
+      <created>1606118930920</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1606118930920</updated>
+    </task>
+    <task id="LOCAL-00069" summary="No changes">
+      <created>1606120320819</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1606120320819</updated>
+    </task>
+    <task id="LOCAL-00070" summary="Ubah tipe file download">
+      <created>1606121221117</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1606121221117</updated>
+    </task>
+    <task id="LOCAL-00071" summary="Dashboard Fintalk (merge-uat)">
+      <created>1607389854702</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1607389854703</updated>
+    </task>
+    <task id="LOCAL-00072" summary="Ubah panek ke card">
+      <created>1607399568884</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1607399568884</updated>
+    </task>
+    <task id="LOCAL-00073" summary="Ubah format angka sesuai local (ID)">
+      <created>1607399620846</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1607399620846</updated>
+    </task>
+    <task id="LOCAL-00074" summary="Menambahkan fitur cetak struk corpay (merge)">
+      <created>1607399710283</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1607399710284</updated>
+    </task>
+    <task id="LOCAL-00075" summary="Menambah function filter cashcode dan bank (merge)">
+      <created>1607400276213</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1607400276213</updated>
+    </task>
+    <task id="LOCAL-00076" summary="Menambahkan function filter bank dan cashcode (merge)">
+      <created>1607400318885</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1607400318885</updated>
+    </task>
+    <task id="LOCAL-00077" summary="Menambahkan menu dashboard deposito">
+      <created>1607400360913</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1607400360913</updated>
+    </task>
+    <task id="LOCAL-00078" summary="Merge">
+      <created>1607400419393</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1607400419393</updated>
+    </task>
+    <task id="LOCAL-00079" summary="Operator dashboard deposito">
+      <created>1607400457221</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1607400457222</updated>
+    </task>
+    <task id="LOCAL-00080" summary="Merge">
+      <created>1607400473811</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1607400473811</updated>
+    </task>
+    <task id="LOCAL-00081" summary="Merge">
+      <created>1607400569625</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1607400569625</updated>
+    </task>
+    <task id="LOCAL-00082" summary="Merge">
+      <created>1607400610572</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1607400610572</updated>
+    </task>
+    <task id="LOCAL-00083" summary="Ubah Icon pada tombol verifikasi">
+      <created>1607401103919</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1607401103919</updated>
+    </task>
+    <task id="LOCAL-00084" summary="Ubah disabled property ke readonly">
+      <created>1607401324828</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1607401324829</updated>
+    </task>
+    <task id="LOCAL-00085" summary="Menambahkan file js rekap realisasi pembayaran">
+      <created>1607401387158</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1607401387158</updated>
+    </task>
+    <task id="LOCAL-00086" summary="Merge">
+      <created>1607401409907</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1607401409907</updated>
+    </task>
+    <task id="LOCAL-00087" summary="Merge">
+      <created>1607401426139</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1607401426139</updated>
+    </task>
+    <task id="LOCAL-00088" summary="Merge">
+      <created>1607401438896</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1607401438896</updated>
+    </task>
+    <task id="LOCAL-00089" summary="Merge">
+      <created>1607401485687</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1607401485687</updated>
+    </task>
+    <task id="LOCAL-00090" summary="Menambahkan template rekap realisasi pembayaran">
+      <created>1607417627262</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1607417627262</updated>
+    </task>
+    <task id="LOCAL-00091" summary="menambahkan menu rekap realisasi invoice">
+      <created>1607417758960</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1607417758961</updated>
+    </task>
+    <task id="LOCAL-00092" summary="Template rekap semua invoice">
+      <created>1607417963522</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1607417963522</updated>
+    </task>
+    <task id="LOCAL-00093" summary="Penambahan function dashboard imprest valas (merge)">
+      <created>1607562945257</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1607562945258</updated>
+    </task>
+    <task id="LOCAL-00094" summary="Menambah function (merge)">
+      <created>1607562995272</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1607562995273</updated>
+    </task>
+    <task id="LOCAL-00095" summary="Merge">
+      <created>1607563024478</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1607563024478</updated>
+    </task>
+    <task id="LOCAL-00096" summary="Menambahkan input exchange rate berdasarkan kesepakatan">
+      <created>1607673162112</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1607673162114</updated>
+    </task>
+    <task id="LOCAL-00097" summary="Menambahkan paramter exchange kesepakatan">
+      <created>1607673218778</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1607673218778</updated>
+    </task>
+    <task id="LOCAL-00098" summary="Menambahkan param exchange rate kesepakatan">
+      <created>1607673308235</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1607673308235</updated>
+    </task>
+    <task id="LOCAL-00099" summary="menambahkan parameter p_kurs">
+      <created>1607673346021</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1607673346021</updated>
+    </task>
+    <task id="LOCAL-00100" summary="Fix bugs, disable sorting pada kolom checklist">
+      <created>1607928727627</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1607928727628</updated>
+    </task>
+    <task id="LOCAL-00101" summary="Bug Fix, menambahkan function pengecekan metode bayar pada multiple siap bayar">
+      <created>1607998722898</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1607998722899</updated>
+    </task>
+    <task id="LOCAL-00102" summary="Menambahkan resume total perbank">
+      <created>1608103182594</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1608103182595</updated>
+    </task>
+    <task id="LOCAL-00103" summary="Menambahkan resume total perbank">
+      <created>1608103261551</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1608103261551</updated>
+    </task>
+    <task id="LOCAL-00104" summary="Menambahkan css garis vertical pembatas">
+      <created>1608103475705</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1608103475705</updated>
+    </task>
+    <task id="LOCAL-00105" summary="Fix bug, menambahkan indikator mandatori pada form input">
+      <created>1608280751220</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1608280751220</updated>
+    </task>
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -239,14 +537,31 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add Param Head/Item to Split Head and Item" />
-    <MESSAGE value="Add Param Header and Item" />
-    <MESSAGE value="Fix Reverse Button" />
-    <MESSAGE value="Update Tracking" />
-    <MESSAGE value="Modify Function Hit" />
-    <MESSAGE value="Updated" />
-    <MESSAGE value="Ubah idle time dan jetty server post size" />
-    <MESSAGE value="Ubah konfigurasi smtp" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ubah konfigurasi smtp" />
+    <MESSAGE value="Menambahkan fitur cetak struk corpay" />
+    <MESSAGE value="Menambahkan fitur cetak struk corpay (merge)" />
+    <MESSAGE value="Menambah function filter cashcode dan bank (merge)" />
+    <MESSAGE value="Menambahkan function filter bank dan cashcode (merge)" />
+    <MESSAGE value="Menambahkan menu dashboard deposito" />
+    <MESSAGE value="Operator dashboard deposito" />
+    <MESSAGE value="Ubah Icon pada tombol verifikasi" />
+    <MESSAGE value="Ubah disabled property ke readonly" />
+    <MESSAGE value="Menambahkan file js rekap realisasi pembayaran" />
+    <MESSAGE value="Menambahkan template rekap realisasi pembayaran" />
+    <MESSAGE value="menambahkan menu rekap realisasi invoice" />
+    <MESSAGE value="Template rekap semua invoice" />
+    <MESSAGE value="Penambahan function dashboard imprest valas (merge)" />
+    <MESSAGE value="Menambah function (merge)" />
+    <MESSAGE value="Merge" />
+    <MESSAGE value="Menambahkan file html kebutuhan imprest/dropping unit" />
+    <MESSAGE value="Menambahkan input exchange rate berdasarkan kesepakatan" />
+    <MESSAGE value="Menambahkan paramter exchange kesepakatan" />
+    <MESSAGE value="Menambahkan param exchange rate kesepakatan" />
+    <MESSAGE value="menambahkan parameter p_kurs" />
+    <MESSAGE value="Fix bugs, disable sorting pada kolom checklist" />
+    <MESSAGE value="Bug Fix, menambahkan function pengecekan metode bayar pada multiple siap bayar" />
+    <MESSAGE value="Menambahkan resume total perbank" />
+    <MESSAGE value="Menambahkan css garis vertical pembatas" />
+    <MESSAGE value="Fix bug, menambahkan indikator mandatori pada form input" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix bug, menambahkan indikator mandatori pada form input" />
   </component>
 </project>
