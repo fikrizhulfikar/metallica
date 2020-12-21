@@ -820,7 +820,7 @@ function saveMain(time){
 function exportXls(idJenis) {
     // console.log("export:"+idJenis);
     if(idJenis != "0"){
-        window.open(baseUrl + "api_operator/placement/xls_detail?idJenis="+idJenis);
+        window.open(baseUrl + "api_operator/placement/xls_detail/"+idJenis);
     }
     else {
         window.open(baseUrl + "api_operator/placement/xls");
