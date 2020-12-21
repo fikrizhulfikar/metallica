@@ -28,6 +28,19 @@
                         </a>
                     </li>
                 </ul>
+<!--                Deposito-->
+                <a th:if="${menu.id == 'mnuDeposito'}" class="nav-link nav-dropdown-toggle" href="#">
+                    <i th:class="${menu.icon_style}" style="width: 25px;"></i>
+                    <span th:text="${menu.text}"></span>
+                </a>
+                <ul th:if="${menu.id == 'mnuDeposito'}" class="nav-dropdown-items">
+                    <li th:each="deposito : ${session.deposito}" class="nav-item">
+                        <a class="nav-link" style="font-size: 13px;" th:href="@{${deposito.form_id}}">
+                            <span style="margin-left:15px;" th:text="${deposito.text}"></span>
+                        </a>
+                    </li>
+                </ul>
+<!--                    ======-->
                 <a th:if="${menu.id == 'mnuTransaksiInvoice'}" class="nav-link nav-dropdown-toggle" href="#">
                     <i th:class="${menu.icon_style}" style="width: 25px;"></i> <span th:text="${menu.text}"></span>
                 </a>

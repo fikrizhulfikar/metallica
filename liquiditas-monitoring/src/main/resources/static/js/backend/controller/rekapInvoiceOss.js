@@ -173,6 +173,8 @@ function duplicate_data(id) {
             $("#pSpread").val(res[0].SPREAD);
             $("#pJenisTagihan").val(res[0].JENIS_TAGIHAN.toLowerCase());
             $('#pTglJatuhTempo').prop('disabled', false);
+            $("#hrpayableradio").attr('disabled',false);
+            $("#apinvoiceradio").attr('disabled',false);
             if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
                 $('#pTglJatuhTempo').prop('disabled', true);
             }
@@ -215,6 +217,12 @@ function openFormNew() {
     $("#pJenisPemabayaran").select2("val", "");
     $("#pUnitPenerima").select2("val", "");
     $("#pVendor").select2("val", "");
+    $("#hrpayableradio")
+        .prop('checked', false)
+        .attr('disabled',false);
+    $("#apinvoiceradio")
+        .prop('checked', false)
+        .attr('disabled',false);
 
     var date = new Date();
     if(newRoleUser[0].replace(" ", "")!= "ROLE_ADMIN"){
@@ -474,8 +482,8 @@ function edit_data(id) {
                 $("#hrpayableradio").prop('checked',true)
                 $("#apinvoiceradio").prop('checked',false)
             }
-            $("#hrpayableradio").attr('disabled',true)
-            $("#apinvoiceradio").attr('disabled',true)
+            $("#hrpayableradio").attr('readonly',true)
+            $("#apinvoiceradio").attr('readonly',true)
             setTimeout(function () {
                 $("#pVendor").select2({
                     width: "100%"

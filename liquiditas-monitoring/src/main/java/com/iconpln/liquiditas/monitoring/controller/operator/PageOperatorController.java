@@ -290,4 +290,13 @@ public class PageOperatorController {
     public String operasi_khusus_trx_lunas() {
         return "operator/operasi_khusus_trx_lunas";
     }
+
+    @RequestMapping("/financial_talk")
+    public String financial_talk(){return "dashboardcorpay/financial_talk";}
+
+    @RequestMapping("/dashboard_deposito")
+    public String dashboard_deposito(){return "operator/dashboard_deposito";}
+
+    @RequestMapping("/kebutuhan_imprest_unit")
+    public String dashboard_dropping_imprest_unit(){return "dashboardcorpay/imprest_unit";}
 }

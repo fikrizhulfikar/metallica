@@ -470,7 +470,7 @@ public class CorpayService {
             String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet, String pBankPembayar, String pKeterangan, String pTglRencanaBayar,
             String pSumberDana, String pMetodePembayaran, String pNoRekHouseBank, String pInqCustomerName, String pInqAccountNumber, String pInqAccountStatus,
             String pKodeBankPenerima, String pRetrievalRefNumber, String pCustomerRefNumber, String pConfirmationCode, String pTglActBayar, String pJamBayar,
-            String pUserId, String pOssId, String pGroupId, String pNoGiro, String pRefNum) throws SQLException {
+            String pUserId, String pOssId, String pGroupId, String pNoGiro, String pRefNum, String pExchRateDeals) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("invoice_edit");
@@ -501,6 +501,7 @@ public class CorpayService {
                 .addValue("p_group_id", pGroupId)
                 .addValue("p_no_giro",pNoGiro)
                 .addValue("p_ref_num_bank", pRefNum)
+                .addValue("p_kurs",pExchRateDeals)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data edit pembayaran : {}", out);
@@ -563,7 +564,7 @@ public class CorpayService {
 
     public Map<String, Object> updateLunas(
             String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pJenisTransaksi,
-            String pUserId, String pStatus, String pOssId, String pGroupId
+            String pUserId, String pStatus, String pOssId, String pGroupId, String pRefNumBank
     ) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -579,6 +580,7 @@ public class CorpayService {
                 .addValue("p_status", pStatus)
                 .addValue("p_oss_id", pOssId)
                 .addValue("p_group_id", pGroupId)
+                .addValue("p_ref_num_bank", pRefNumBank)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("update data lunas : {}", out);
@@ -1112,26 +1114,26 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         String res = null;
     Date date = new Date();
     SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-//    String refnum = format.format(date.getTime())+"00";
+    String refnum = format.format(date.getTime())+"00";
        if (pMetodeBayar.equals("INHOUSE")){
            if(!pAmountBayar.isEmpty()){
-               res = doPayment( pBank, pRefNum, pSource, pBeneficiaryAccount, pCurrency,
+               res = doPayment( pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
                        pAmountBayar, pRemark, pFeeType, pConfirmationCode);
            }
            if(pAmountBayar.isEmpty()) {
-               res = doPayment(pBank, pRefNum, pSource, pBeneficiaryAccount, pCurrency,
+               res = doPayment(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
                        pAmount, pRemark, pFeeType, pConfirmationCode);
            }
        }
        if (pMetodeBayar.equals("RTGS")){
            if(!pAmountBayar.isEmpty()) {
-               res = doPaymentRtgs(pBank, pRefNum, pSource, pBeneficiaryAccount,
+               res = doPaymentRtgs(pBank, refnum, pSource, pBeneficiaryAccount,
                        pCurrency, pAmountBayar, pRemark, pBenefEmail,
                        pBenefName, pBenefAddr1, pBenefAddr2, pDestinationBankCode,
                        pFeeType);
            }
            if(pAmountBayar.isEmpty()) {
-               res = doPaymentRtgs(pBank, pRefNum, pSource, pBeneficiaryAccount,
+               res = doPaymentRtgs(pBank, refnum, pSource, pBeneficiaryAccount,
                        pCurrency, pAmount, pRemark, pBenefEmail,
                        pBenefName, pBenefAddr1, pBenefAddr2, pDestinationBankCode,
                        pFeeType);
@@ -1139,25 +1141,25 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
        }
        if (pMetodeBayar.equals("KLIRING")) {
            if(!pAmountBayar.isEmpty()) {
-               res = doPaymentKliring(pBank, pRefNum, pSource, pBeneficiaryAccount, pCurrency,
+               res = doPaymentKliring(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
                        pAmountBayar, pRemark, pBenefEmail, pBenefName,
                        pBenefAddr1, pBenefAddr2, pDestinationBankCode, pFeeType);
            }
            if(pAmountBayar.isEmpty()) {
-               res = doPaymentKliring(pBank, pRefNum, pSource, pBeneficiaryAccount, pCurrency,
+               res = doPaymentKliring(pBank, refnum, pSource, pBeneficiaryAccount, pCurrency,
                        pAmount, pRemark, pBenefEmail, pBenefName,
                        pBenefAddr1, pBenefAddr2, pDestinationBankCode, pFeeType);
            }
        }
     if (pMetodeBayar.equals("ONLINETRANSFER")) {
         if(!pAmountBayar.isEmpty()) {
-            res = doInterbankPayment(pBank, pRefNum, pAmountBayar, pBeneficiaryAccount,
+            res = doInterbankPayment(pBank, refnum, pAmountBayar, pBeneficiaryAccount,
                     pBenefName, pDestinationBankCode, pDestinationBank,
                     pRetrievalReff, pSource, pCurrency, pCurrency2,
                     pRemark);
         }
         if(pAmountBayar.isEmpty()) {
-            res = doInterbankPayment(pBank, pRefNum, pAmount, pBeneficiaryAccount,
+            res = doInterbankPayment(pBank, refnum, pAmount, pBeneficiaryAccount,
                     pBenefName, pDestinationBankCode, pDestinationBank,
                     pRetrievalReff, pSource, pCurrency, pCurrency2,
                     pRemark);
@@ -1500,7 +1502,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
             CloseableHttpResponse response = httpClient.execute(request);
             result = EntityUtils.toString(response.getEntity());
         }catch (Exception e){
-            //log.warning(e.getMessage());
+//            e.printStackTrace();
         }
         return result;
     }
