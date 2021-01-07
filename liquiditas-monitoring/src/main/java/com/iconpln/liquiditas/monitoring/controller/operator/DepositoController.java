@@ -49,10 +49,10 @@ public class DepositoController {
             @RequestParam(value = "pNominal", defaultValue = "") String pNominal,
             @RequestParam(value = "pInterest", defaultValue = "") String pInterest,
             @RequestParam(value = "pTglpenempatan", defaultValue = "") String pTglpenempatan,
-            @RequestParam(value = "pTenor", defaultValue = "") String pTenor,
+            @RequestParam(value = "pTenor", defaultValue = "12341234") String pTenor,
             @RequestParam(value = "pTglJatuhTempo", defaultValue = "") String pTglJatuhTempo,
             @RequestParam(value = "pKeterangan", defaultValue = "") String pKeterangan,
-            @RequestParam(value = "pStatusDeposito", defaultValue = "") String pStatusDeposito
+            @RequestParam(value = "pStatusDeposito", defaultValue = "1") String pStatusDeposito
     ) {
         try {
             return valasService.insDeposito(pIdDeposito, pBank, pCurr, pNoAccount,
