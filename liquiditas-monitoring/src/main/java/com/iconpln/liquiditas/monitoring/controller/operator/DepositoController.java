@@ -203,10 +203,10 @@ public class DepositoController {
                 paramDetail.put("TGL_PENEMPATAN", data.get("TGL_PENEMPATAN"));
                 paramDetail.put("TGL_JATUH_TEMPO", data.get("TGL_JATUH_TEMPO"));
                 paramDetail.put("TENOR", data.get("TENOR"));
-                paramDetail.put("JUMLAH_HARI", data.get("JUMLAH_HARI"));
+                paramDetail.put("JUMLAH_HARI", Integer.parseInt(data.get("JUMLAH_HARI").toString()));
                 paramDetail.put("BUNGA", data.get("BUNGA"));
                 paramDetail.put("POKOK_BUNGA", data.get("POKOK_BUNGA"));
-                paramDetail.put("COUNT_DOWN", data.get("COUNT_DOWN"));
+                paramDetail.put("COUNT_DOWN", Integer.parseInt(data.get("COUNT_DOWN").toString()));
                 paramDetail.put("KETERANGAN", data.get("KETERANGAN"));
                 String sts = (String) data.get("STATUS_DEPOSITO");
                 if (sts == "1" || sts.equals("1")) {
