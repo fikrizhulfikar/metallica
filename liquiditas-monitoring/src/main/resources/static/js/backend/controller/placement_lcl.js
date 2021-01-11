@@ -2,23 +2,31 @@ var tempTableSearch = "";
 var kebutuhanPlacement;
 var lcl_today = null;
 var tanggal = new Date();
+var time = tanggal.getHours();
 var tempTableSearch = "";
 var sesi = "";
 
 $(document).ready(function () {
-    initDataTablePlacement();
-    initDataTablePlacement2();
-    var date = new Date();
-    var newDate = date.toJSON().slice(0, 10).replace(new RegExp("-", 'g'), "/").split("/").reverse().join("/")
-    $("#tglcetak1").html(newDate);
-    $("#tglcetak2").html(newDate);
-    $("#tglApprove").html(newDate);
     let dd = String(tanggal.getDate()).padStart(2,'0');
     let mm = String(tanggal.getMonth() + 1).padStart(2,'0');
     let yyyy = tanggal.getFullYear();
 
     tanggal = dd+'/'+mm+'/'+yyyy;
-    $('#tglcetak2').html(tanggal)
+
+    initDataTablePlacement();
+    initDataTablePlacement2();
+
+    if (time <= "14"){
+        sesi = 1;
+    } else if (time >= "14"){
+        sesi = 2;
+    }
+
+    $("#tglcetak1").html(tanggal);
+    $("#sesicetak1").html(sesi);
+    $("#tglcetak2").html(tanggal);
+    $("#sesicetak2").html(sesi);
+    $("#tglApprove").html(tanggal);
     $('#tanggal_awal1').datepicker({dateFormat: 'dd/mm/yy'});
 //    setSelectSesi("sesi_filter", "FILTER", "", "REKAP");
     search("load");
@@ -35,9 +43,10 @@ function dateToString(date) {
     return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 }
 
-function incDate(date, days) {
-    date = new Date(date.getTime() + (86400000 * days));
+function incDate(tanggal, days) {
+    date = new Date(tanggal.getTime() + (86400000 * days));
     return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+
 }
 
 function stringToDate(_date) {
@@ -72,14 +81,17 @@ function search(state) {
         sesi = ss;
 
         console.log("Ini data : " + tanggal + " " + sesi);
+        $('#tglcetak1').html(tgl);
+        $('#sesicetak1').html(ss);
         $('#tglcetak2').html(tgl);
+        $('#sesicetak2').html(ss);
         initDataTablePlacement(tanggal, sesi);
         initDataTablePlacement2(tanggal, sesi);
-        lcl_today = $("#tanggal_awal1").val();
+//        lcl_today = $("#tanggal_awal1").val();
     } else {
         initDataTablePlacement(tanggal, sesi);
         initDataTablePlacement2(tanggal, sesi);
-        lcl_today = $("#tanggal_awal1").val();
+//        lcl_today = $("#tanggal_awal1").val();
     }
 }
 
@@ -125,21 +137,19 @@ function initDataTablePlacement(tanggal, sesi) {
 function initDataTablePlacement2(){
     let date = new Date();
 
-//    var datestring = dateToString(date);
-//    $("#tgl1b").html(datestring);
-//    $("#tgl2b").html(incDate(date, 1));
-//    $("#tgl3b").html(incDate(date, 2));
-//    $("#tgl4b").html(incDate(date, 3));
-//    $("#tgl5b").html(incDate(date, 4));
-//    $("#tgl6b").html(incDate(date, 5));
-
 //    console.log("Ini tanggal : " + tanggal);
     $("#tgl1b").html(tanggal);
+//    var dt = $.datepicker.parseDate('yy-mm-dd', '2011-02-25');
+//    tanggal.setDate(tanggal.getDate() + 1)
+//    console.log("Ini tanggal 2 : " + tanggal);
+//    var dtNew = $.datepicker.formatDate('yy-mm-dd', dt);
+//    console.log("Ini tanggal 3 : " + dtNew);
     $("#tgl2b").html(incDate(date, 1));
     $("#tgl3b").html(incDate(date, 2));
     $("#tgl4b").html(incDate(date, 3));
     $("#tgl5b").html(incDate(date, 4));
     $("#tgl6b").html(incDate(date, 5));
+//    console.log("Ini tanggal 2 : " + incDate(tanggal, 1));
 
     showLoadingCss();
     $('#kebutuhan-placement tbody').empty();
