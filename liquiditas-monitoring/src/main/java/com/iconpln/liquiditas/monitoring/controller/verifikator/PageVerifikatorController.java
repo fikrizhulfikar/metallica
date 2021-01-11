@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class PageVerifikatorController {
 
-    @RequestMapping("/page_verifikator/imprst_valas_and_global_bond")
-    public String imprstGlobalBond(){
-        return "verifikator/outstanding_produk_derivatif_dan_deposito";
-    }
+//    @RequestMapping("/page_verifikator/imprst_valas_and_global_bond")
+//    public String imprstGlobalBond(){
+//        return "operator/dashboard_valas";
+//    }
 
     @RequestMapping("/page_verifikator/derivatif_and_deposito")
     public String derivatifDeposito(){
@@ -51,9 +51,9 @@ public class PageVerifikatorController {
     }
 
 //    idr
-    @RequestMapping("/page_idrverifikator/idr_imprest")
-    public String idrImprst(){return "verifikatoridr/idr_imprest";
-    }
+//    @RequestMapping("/page_idrverifikator/idr_imprest")
+//    public String idrImprst(){return "verifikatoridr/idr_imprest";
+//    }
 
     @RequestMapping("/page_idrverifikator/supply_chain_financing_giro_special_rate")
     public String idrSupplyChainGiroSpecial(){return "verifikatoridr/supply_chain_financing_dan_giro_special_rate";

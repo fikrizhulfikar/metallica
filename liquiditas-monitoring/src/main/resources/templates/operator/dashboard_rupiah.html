@@ -74,24 +74,38 @@
             <div class="col-md-12" style="margin-top: -25px; margin-bottom: 25px; min-height: 555px;">
                 <div class="carousel">
                     <div class="carousel-inner">
+<!--                        <input class="carousel-open" type="radio" id="carousel-1" name="carousel" aria-hidden="true" hidden="" checked="checked"/>-->
+<!--                        <div class="carousel-item">-->
+<!--                            <div class="col-md-12" style="margin-top: 20px">-->
+<!--                                <div class="card">-->
+<!--                                    <div class="card-block" >-->
+
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <input class="carousel-open" type="radio" id="carousel-1" name="carousel" aria-hidden="true" hidden="" checked="checked"/>
                         <div class="carousel-item">
                             <div class="col-md-12" style="margin-top: 20px">
                                 <div class="card">
-                                    <div class="card-block" >
-                                        <div class="col-md-12">
-                                            <div align="center" class="title"><h5><b>SALDO REKENING VALUTA ASING<span></span></b></h5></div>
-                                        </div>
-                                        <div class="col-md-12" style="padding-top: 15px;">
-                                            <div class="view-table">
-                                                <table id="table-imprst-valas" class="table table-rencana-realisasi table-condensed table-bordered">
+                                    <div class="card-block">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div align="center"><h5><b>GIRO SPECIAL RATE</b></h5></div>
+                                                <table id="table-giro-special-rate" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-bottom: 5px">
                                                     <thead>
-                                                    <tr>
-                                                        <th style="background-color: #67a2d8" width="16.666%">BANK</th>
-                                                        <th style="background: #91e491" width="16.666%">USD</th>
-                                                        <th style="background: #f5926d" width="16.666%">JPY</th>
-                                                        <th style="background: #c0a4fd" width="16.666%">EUR</th>
-                                                        <th style="background: #2ccab5" width="16.666%">MYR</th>
+                                                    <tr >
+                                                        <th style="background-color: #67a2d8; text-align: center; vertical-align: middle" rowspan="2">BANK</th>
+                                                        <th style="background-color: #67a2d8; text-align: center; vertical-align: middle" rowspan="2">CURRENCY</th>
+                                                        <th style="background-color: #67a2d8; text-align: center; vertical-align: middle" rowspan="2">NOMINAL</th>
+                                                        <th style="background-color: #67a2d8; text-align: center; vertical-align: middle" rowspan="2">JASA GIRO</th>
+                                                        <th style="background-color: #67a2d8; text-align: center; vertical-align: middle" rowspan="2">NOMINAL + JASA GIRO</th>
+                                                        <th style="background-color: #67a2d8; text-align: center" colspan="3">TOTAL (EQUIVALENT RUPIAH)</th>
+                                                    </tr>
+                                                    <tr >
+                                                        <th style="background-color: #67a2d8; text-align: center;">NOMINAL</th>
+                                                        <th style="background-color: #67a2d8; text-align: center">JASA GIRO</th>
+                                                        <th style="background-color: #67a2d8; text-align: center">NOMINAL + JASA GIRO</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -99,25 +113,30 @@
                                                 </table>
                                             </div>
                                         </div>
-                                        <div class="col-md-12" style="margin-top: 50px" align="center">
-                                            <div id="chart-USD-imprst-valas" class="a" style="height: 35rem; width: 100%;"></div>
-                                            <div id="chart-EUR-imprst-valas" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
-                                            <div id="chart-JPY-imprst-valas" class="c" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
-                                            <div id="chart-MYR-imprst-valas" class="d" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
-                                        </div>
-                                        <div class="col-md-12" align="center" style="margin-top: -100px">
-                                            <button class="btn" onclick="renHari()">
-                                                USD
-                                            </button>
-                                            <button class="btn" onclick="renMinggu()">
-                                                EUR
-                                            </button>
-                                            <button class="btn" onclick="renBulan()">
-                                                JPY
-                                            </button>
-                                            <button class="btn" onclick="renTahun()">
-                                                MYR
-                                            </button>
+                                        <div class="row">
+                                            <div class="col-md-12" style="margin-top: 20px">
+                                                <div align="center"><h5><b>SUPPLY CHAIN FINANCING</b></h5></div>
+                                                <div style="overflow-y:auto;">
+                                                    <table id="table-supply-chain-financing" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-bottom: 5px">
+                                                        <thead>
+                                                        <tr >
+                                                            <th style="background-color: #67a2d8; text-align: center">BANK</th>
+                                                            <th style="background-color: #67a2d8; text-align: center">CURRENCY</th>
+                                                            <th style="background-color: #67a2d8; text-align: center">ORIGINAL CURRENCY</th>
+                                                            <th style="background-color: #67a2d8; text-align: center">EQ IDR</th>
+                                                            <th style="background-color: #67a2d8; text-align: center">FEE TRANSAKSI (IDR)</th>
+                                                            <th style="background-color: #67a2d8; text-align: center">CASH COLLATERAL (IDR)</th>
+                                                            <th style="background-color: #67a2d8; text-align: center">JASA GIRO</th>
+                                                            <th style="background-color: #67a2d8; text-align: center">PAJAK YANG DITANGGUNG PLN</th>
+                                                            <th style="background-color: #67a2d8; text-align: center">NET JASA GIRO</th>
+                                                            <th style="background-color: #67a2d8; text-align: center">NET GAIN/(LOSS) TRANSAKSI SCF</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -125,94 +144,249 @@
                         </div>
                         <input class="carousel-open" type="radio" id="carousel-2" name="carousel" aria-hidden="true" hidden=""/>
                         <div class="carousel-item">
-                            <div class="col-md-12" style="margin-top: 20px">
+                            <div class="col-md-12" align="center" style="margin-top: 20px">
                                 <div class="card">
                                     <div class="card-block">
-                                        <div class="col-md-12">
-                                            <div align="center" class="title"><h5><b>SALDO REKENING VALUTA ASING<span></span></b></h5></div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="card-block">
+                                                        <div style="overflow-y:auto;">
+                                                            <div align="center"><h5><b>Rencana Pembayaran Imprest - Kantor Pusat (Rupiah)</b></h5></div>
+                                                            <table id="main-rupiah" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-bottom: 5px">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th rowspan="2" style="vertical-align: middle; text-align: center;">BANK</th>
+                                                                    <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
+                                                                    <th rowspan="2">KODE</th>
+                                                                    <th colspan="6" style="text-align: center; vertical-align: middle;">TANGGAL</th>
+                                                                    <th rowspan="2" style="vertical-align: middle; text-align: center;">TOTAL</th>
+                                                                </tr>
+                                                                <tr id="header-tanggal" style="vertical-align: middle !important;text-align: center">
+                                                                    <th id="tgl1a" ></th>
+                                                                    <th id="tgl2a" ></th>
+                                                                    <th id="tgl3a" ></th>
+                                                                    <th id="tgl4a" ></th>
+                                                                    <th id="tgl5a" ></th>
+                                                                    <th id="tgl6a" ></th>
+
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-md-12" style="padding-top: 15px;">
-                                            <div class="view-table">
-                                                <table id="table-derivatif-deposit" class="table table-rencana-realisasi table-condensed table-bordered">
-                                                    <thead>
-                                                    <tr >
-                                                        <th style="vertical-align: middle; text-align: center;" rowspan="2">BANK</th>
-                                                        <th style="vertical-align: middle; text-align: center;" colspan="4">DERIVATIF</th>
-                                                        <th style="vertical-align: middle; text-align: center;" rowspan="2">DEPOSITO</th>
-                                                    </tr>
-                                                    <tr >
-                                                        <th style="vertical-align: middle; text-align: center;">FORWARD</th>
-                                                        <th style="vertical-align: middle; text-align: center;">SWAP</th>
-                                                        <th style="vertical-align: middle; text-align: center;">CSO</th>
-                                                        <th style="vertical-align: middle; text-align: center;">DNDF</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    </tbody>
-                                                </table>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="card-block">
+                                                        <div style="overflow-y:auto;">
+                                                            <div align="center"><h5><b>Rencana Pembayaran Impor (Rupiah)</b></h5></div>
+                                                            <table id="main-rupiah2" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-bottom: 5px">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th rowspan="2" style="vertical-align: middle; text-align: center;">BANK</th>
+                                                                    <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
+                                                                    <th rowspan="2">KODE</th>
+                                                                    <th colspan="6" style="text-align: center; vertical-align: middle;">TANGGAL</th>
+                                                                    <th rowspan="2" style="vertical-align: middle; text-align: center;">TOTAL</th>
+                                                                </tr>
+                                                                <tr id="header-tanggal2" style="vertical-align: middle !important;text-align: center">
+                                                                    <th id="tgl1b" ></th>
+                                                                    <th id="tgl2b" ></th>
+                                                                    <th id="tgl3b" ></th>
+                                                                    <th id="tgl4b" ></th>
+                                                                    <th id="tgl5b" ></th>
+                                                                    <th id="tgl6b" ></th>
+
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="card-block">
+                                                        <div style="overflow-y:auto;">
+                                                            <div align="center"><h5><b>Rencana Pembayaran Imprest Operasi Terpusat  (Rupiah)</b></h5></div>
+                                                            <table id="main-rupiah3" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-bottom: 5px">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th rowspan="2" style="vertical-align: middle; text-align: center;">BANK</th>
+                                                                    <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
+                                                                    <th rowspan="2">KODE</th>
+                                                                    <th colspan="6" style="text-align: center; vertical-align: middle;">TANGGAL</th>
+                                                                    <th rowspan="2" style="vertical-align: middle; text-align: center;">TOTAL</th>
+                                                                </tr>
+                                                                <tr id="header-tanggal3" style="vertical-align: middle !important;text-align: center">
+                                                                    <th id="tgl1c" ></th>
+                                                                    <th id="tgl2c" ></th>
+                                                                    <th id="tgl3c" ></th>
+                                                                    <th id="tgl4c" ></th>
+                                                                    <th id="tgl5c" ></th>
+                                                                    <th id="tgl6c" ></th>
+
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="card-block">
+                                                        <div align="center"><h5><b>Rencana Pembayaran Imprest Investasi Terpusat (Rupiah)</b></h5></div>
+                                                        <table id="main-rupiah4" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-bottom: 5px">
+                                                            <thead>
+                                                            <tr>
+                                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">BANK</th>
+                                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
+                                                                <th rowspan="2">KODE</th>
+                                                                <th colspan="6" style="text-align: center; vertical-align: middle;">TANGGAL</th>
+                                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">TOTAL</th>
+                                                            </tr>
+                                                            <tr id="header-tanggal4" style="vertical-align: middle !important;text-align: center">
+                                                                <th id="tgl1d" ></th>
+                                                                <th id="tgl2d" ></th>
+                                                                <th id="tgl3d" ></th>
+                                                                <th id="tgl4d" ></th>
+                                                                <th id="tgl5d" ></th>
+                                                                <th id="tgl6d" ></th>
+
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="card-block">
+                                                        <div align="center"><h5><b>Settlement</b></h5></div>
+                                                        <table id="main-rupiah5" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-bottom: 5px">
+                                                            <thead>
+                                                            <tr>
+                                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">BANK</th>
+                                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
+                                                                <th rowspan="2">KODE</th>
+                                                                <th colspan="6" style="text-align: center; vertical-align: middle;">TANGGAL</th>
+                                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">TOTAL</th>
+                                                            </tr>
+                                                            <tr id="header-tanggal5" style="vertical-align: middle !important;text-align: center">
+                                                                <th id="tgl1e" ></th>
+                                                                <th id="tgl2e" ></th>
+                                                                <th id="tgl3e" ></th>
+                                                                <th id="tgl4e" ></th>
+                                                                <th id="tgl5e" ></th>
+                                                                <th id="tgl6e" ></th>
+
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="card-block">
+                                                        <div align="center"><h5><b>Proyeksi Pengadaan Valas</b></h5></div>
+                                                        <table id="main-rupiah6" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-bottom: 5px">
+                                                            <thead>
+                                                            <tr>
+                                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">BANK</th>
+                                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
+                                                                <th rowspan="2">KODE</th>
+                                                                <th colspan="6" style="text-align: center; vertical-align: middle;">TANGGAL</th>
+                                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">TOTAL</th>
+                                                            </tr>
+                                                            <tr id="header-tanggal6" style="vertical-align: middle !important;text-align: center">
+                                                                <th id="tgl1f" ></th>
+                                                                <th id="tgl2f" ></th>
+                                                                <th id="tgl3f" ></th>
+                                                                <th id="tgl4f" ></th>
+                                                                <th id="tgl5f" ></th>
+                                                                <th id="tgl6f" ></th>
+
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="card-block">
+                                                        <div align="center"><h5><b>Rencana Pembayaran Equivalent Rupiah</b></h5></div>
+                                                        <table id="main-rupiah7" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-bottom: 5px">
+                                                            <thead>
+                                                            <tr>
+                                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">BANK</th>
+                                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
+                                                                <th rowspan="2">KODE</th>
+                                                                <th colspan="6" style="text-align: center; vertical-align: middle;">TANGGAL</th>
+                                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">TOTAL</th>
+                                                            </tr>
+                                                            <tr id="header-tanggal7" style="vertical-align: middle !important;text-align: center">
+                                                                <th id="tgl1g" ></th>
+                                                                <th id="tgl2g" ></th>
+                                                                <th id="tgl3g" ></th>
+                                                                <th id="tgl4g" ></th>
+                                                                <th id="tgl5g" ></th>
+                                                                <th id="tgl6g" ></th>
+
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <input class="carousel-open" type="radio" id="carousel-3" name="carousel" aria-hidden="true" hidden=""/>
-                        <div class="carousel-item">
-                            <div class="col-md-12" align="center" style="margin-top: 20px">
-                                <div class="card">
-                                    <div class="card-block">
-                                        <div align="center"><h5><b>Rencana Pembayaran USD/EUR/JPY</b></h5></div>
-                                        <table id="main-valas" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-bottom: 5px">
-                                            <thead>
-                                            <tr>
-                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">BANK</th>
-                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
-                                                <th rowspan="2">KODE</th>
-                                                <th colspan="6" style="text-align: center; vertical-align: middle;">TANGGAL</th>
-                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">TOTAL</th>
-                                            </tr>
-                                            <tr id="header-tanggal" style="vertical-align: middle !important;text-align: center">
-                                                <th id="tgl1a" ></th>
-                                                <th id="tgl2a" ></th>
-                                                <th id="tgl3a" ></th>
-                                                <th id="tgl4a" ></th>
-                                                <th id="tgl5a" ></th>
-                                                <th id="tgl6a" ></th>
-
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
-                                        </table>
-                                        <div align="center" style="margin-top: 10px"><h5><b>Rencana Pembayaran Exotic Currency</b></h5></div>
-                                        <table id="main-valas2" class="table table-rencana-realisasi table-condensed table-bordered" width="100%">
-                                            <thead>
-                                            <tr>
-                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">BANK</th>
-                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
-                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">MYR</th>
-                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">AUD</th>
-                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">GBP</th>
-                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">VAD</th>
-                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">SGD</th>
-                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">BLA</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <label for="carousel-3" class="carousel-control prev control-1">‹</label>
+                        <label for="carousel-2" class="carousel-control prev control-1">‹</label>
                         <label for="carousel-2" class="carousel-control next control-1">›</label>
                         <label for="carousel-1" class="carousel-control prev control-2">‹</label>
-                        <label for="carousel-3" class="carousel-control next control-2">›</label>
-                        <label for="carousel-2" class="carousel-control prev control-3">‹</label>
-                        <label for="carousel-1" class="carousel-control next control-3">›</label>
+                        <label for="carousel-1" class="carousel-control next control-2">›</label>
+<!--                        <label for="carousel-2" class="carousel-control prev control-3">‹</label>-->
+<!--                        <label for="carousel-1" class="carousel-control next control-3">›</label>-->
                     </div>
                 </div>
             </div>
@@ -235,7 +409,7 @@
     </div>
 </main>
 <div th:fragment="scripts-backend">
-    <script src="/static/js/backend/controller/dashboard_valas.js"></script>
+    <script src="/static/js/backend/controller/dashboard_rupiah.js"></script>
     <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
     <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
     <script type="text/javascript">

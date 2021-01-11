@@ -6,7 +6,7 @@ $(document).ready(function () {
 
     setInterval(function () {
          initDataTable();
-    }, 60000);
+    }, 120000);
 });
 
 function initDataTable() {
@@ -31,6 +31,17 @@ function initDataTable() {
                     "</tr>";
                 $('#table-saldo-idr tbody').append(html);
             });
+
+//            var total6 = "<tr style='background-color:#67a2d8;color: white'>" +
+//                "<td> TOTAL </td>" +
+//                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_RECEIPT, 2, ".", ",") + "</td>" +
+//                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_IMPREST_KP, 2, ".", ",") + "</td>" +
+//                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_IMPREST_OPERASI, 2, ".", ",") + "</td>" +
+//                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_IMPREST_INVESTASI, 2, ".", ",") + "</td>" +
+//                "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_IMPOR, 2, ".", ",") + "</td>" +
+//                "</tr>";
+//
+//            $('#table-saldo-idr tbody').append(total6);
 
             var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
                 "<td align='right'> Rp " + accounting.formatNumber(res.OUT_TOTAL[0].TOTAL_RECEIPT, 2, ".", ",") + "</td>" +
@@ -88,11 +99,8 @@ function initDataTable() {
             dataType: 'JSON',
             type: "GET",
             success: function (res) {
-             var data = res.return;
-             var data2 = res.OUT_BAR_CASHCODE;
-    //            var tes = JSON.stringify(res.return);
-    //             var tes2 = JSON.stringify(data2);
-    //             console.log('CUKKK :'+tes2)
+//             var data = res.return;
+             var data2 = res.OUT_DATA;
              $("#tglcetak").html(data[0].TANGGAL);
 
              var dataChartRenPembayaran = [];
@@ -119,8 +127,7 @@ function initDataTable() {
                  };
                  dataChartRenPembayaran.push(dataPieTemp)
              });
-
-             rencanaPembayaranBarLine(dataChartRenPembayaran);
+             chartProyeksiPenerimaan(dataChartRenPembayaran);
             }
     });
 
@@ -129,6 +136,55 @@ function initDataTable() {
             dataType: 'JSON',
             type: "GET",
             success: function (res) {
+
+            var dataGiroSpecial = [];
+            $.each(data, function (index, value) {
+                 var dataPieTemp = {
+                     {
+                     seriesname : value.AKUMULASI_NOMINAL,
+                     data : [
+                         {
+                             value: value.HS
+                         },
+                         {
+                             value: value.H1
+                         },
+                         {
+                             value: value.H2
+                         },
+                         {
+                             value: value.WEEKLY
+                         },
+                         {
+                             value: value.MONTHLY
+                         }
+                     ]
+                     },
+                     {
+                      seriesname : value.NOMINAL_BULAN_BERJALAN,
+                      data : [
+                          {
+                              value: value.HS
+                          },
+                          {
+                              value: value.H1
+                          },
+                          {
+                              value: value.H2
+                          },
+                          {
+                              value: value.WEEKLY
+                          },
+                          {
+                              value: value.MONTHLY
+                          }
+                      ]
+                      }
+                 };
+                 dataGiroSpecial.push(dataPieTemp)
+            });
+            chartGiroSpecial(dataGiroSpecial);
+
             var dataPieSaldo1 = [];
             $.each(res.OUT_JASA_GIRO, function (index, value) {
                 var temp = {
@@ -230,6 +286,122 @@ function createChartAkumulasiJasaGiro(data) {
             }
         );
         fusioncharts.render();
+    });
+}
+
+function chartProyeksiPenerimaan(data){
+    let date = new Date();
+//    var datestring = dateToString(date);
+//var tes = JSON.stringify(coba);
+//console.log("Tes : " + tes)
+    FusionCharts.ready(function () {
+        let chart = new FusionCharts({
+            type: "mscolumn2d",
+            renderAt: "chart-proyeksi-penerimaan",
+            id: "chart",
+            width: "100%",
+            height: "100%",
+            dataFormat: "json",
+            dataSource: {
+               chart : {
+                   caption : "Proyeksi Penerimaan",
+                   showSum : "1",
+                   numberprefix : "Rp ",
+                   theme : "fusion",
+                   numDivLines : "5",
+                   divLineColor: "#6699cc",
+                   divLineAlpha: "60",
+                   divLineDashed: "0",
+                   bgColor: "#BBEAEA",
+                   showLegend: "0",
+                   crosslinecolor: "#ABD6D6",
+                   numberScaleValue: "1000, 1000, 1000, 1000",
+                   numberScaleUnit: "Rb, Jt, M, T"
+               },
+               categories : [
+                   {
+                       category : [
+                          {
+                              label : "USD"
+                          },
+                          {
+                              label : "EUR"
+                          },
+                          {
+                              label : "JPY"
+                          }
+                      ]
+                   }
+               ]
+           },
+            events:{
+              "rendered": function (eventObj, dataObj) {
+//              var mydatasource = chart.getJSONData();
+//              console.log(mydatasource)
+                }
+            }
+        }).render();
+    });
+}
+
+function chartGiroSpecial(data){
+    let date = new Date();
+//    var datestring = dateToString(date);
+//var tes = JSON.stringify(coba);
+//console.log("Tes : " + tes)
+    FusionCharts.ready(function () {
+        let chart = new FusionCharts({
+            type: "mscolumn2d",
+            renderAt: "chart-penempatan",
+            id: "chart",
+            width: "100%",
+            height: "100%",
+            dataFormat: "json",
+            dataSource: {
+               chart : {
+                   caption : "Nominal Penempatan Giro Special Rate (Optimasi Dana)",
+                   showSum : "1",
+                   numberprefix : "Rp ",
+                   theme : "fusion",
+                   numDivLines : "5",
+                   divLineColor: "#6699cc",
+                   divLineAlpha: "60",
+                   divLineDashed: "0",
+                   bgColor: "#BBEAEA",
+                   showLegend: "0",
+                   crosslinecolor: "#ABD6D6",
+                   numberScaleValue: "1000, 1000, 1000, 1000",
+                   numberScaleUnit: "Rb, Jt, M, T"
+               },
+               categories : [
+                   {
+                       category : [
+                          {
+                              label : "Mandiri"
+                          },
+                          {
+                              label : "BRI"
+                          },
+                          {
+                              label : "BNI"
+                          },
+                          {
+                              label : "BUKOPIN"
+                          },
+                          {
+                              label : "BTN"
+                          },
+                      ]
+                   }
+               ]
+           },
+            events:{
+              "rendered": function (eventObj, dataObj) {
+//              var mydatasource = chart.getJSONData();
+//              console.log(mydatasource)
+                }
+            }
+        }).render();
     });
 }
 

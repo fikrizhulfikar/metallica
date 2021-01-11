@@ -38,6 +38,14 @@
           div.b{
             visibility: hidden;
           }
+
+          div.c{
+            visibility: hidden;
+          }
+
+          div.d{
+            visibility: hidden;
+          }
           .wrapper {
                 text-align: center;
             }
@@ -53,25 +61,11 @@
                 float: left;
                 padding: 2px 5px;
             }
-          /* basic positioning */
-            .legend { list-style: none; align: center;}
-            .legend li { float: left; margin-right: 10px; font-size: 12px;}
-            .legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
-            /* your colors */
-            .legend .one { background-color: #F2726F;}
-            .legend .two { background-color: #77D5D4; }
-            .legend .three { background-color: #62B58F; }
-            .legend .four { background-color: #FFC533; }
-            .legend .five { background-color: #998650; }
-            .legend .six { background-color: #7AC74F; }
-            .legend .seven { background-color: #5ADBFF; }
-            .legend .eight { background-color: #F20F2F; }
-            .legend .nine { background-color: #F4D35E; }
     </style>
 </div>
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" style="cursor: default">Dashboard Management</li>
+        <li class="breadcrumb-item active" style="cursor: default">Dashboard Valas</li>
         <div align="right" style="color:#778899" class="title"><h7>Tanggal : <span id="tglcetak"></span></h7></div>
     </ol>
 
@@ -85,48 +79,46 @@
                             <div class="col-md-12" style="margin-top: 20px">
                                 <div class="card">
                                     <div class="card-block" >
-                                        <div align="center"><h5><b>Rencana Pembayaran</b></h5></div>
-                                        <table id="main-rencana" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-bottom: 5px">
-                                            <thead>
-                                            <tr>
-                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
-                                                <th rowspan="2">KODE</th>
-                                                <th colspan="5" style="text-align: center; vertical-align: middle;">TANGGAL</th>
-                                            </tr>
-                                            <tr id="header-tanggal" style="vertical-align: middle !important;text-align: center">
-                                                <th id="tgl1a" ></th>
-                                                <th id="tgl2a" ></th>
-                                                <th id="tgl3a" ></th>
-                                                <th id="tgl4a" ></th>
-                                                <th id="tgl5a" ></th>
-
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
-                                        </table>
-                                        <div align="center" style="margin-top: 10px"><h5><b>Realisasi Pembayaran</b></h5></div>
-                                        <table id="main-realisasi" class="table table-rencana-realisasi table-condensed table-bordered" width="100%">
-                                            <thead>
-                                            <tr>
-                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
-                                                <th rowspan="2">KODE</th>
-                                                <th colspan="5" style="text-align: center; vertical-align: middle;">TANGGAL</th>
-                                            </tr>
-                                            <tr id="header_tanggal_realisasi">
-                                                <th id="tgl1b" ></th>
-                                                <th id="tgl2b" ></th>
-                                                <th id="tgl3b" ></th>
-                                                <th id="tgl4b" ></th>
-                                                <th id="tgl5b" ></th>
-
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
-                                        </table>
+                                        <div class="col-md-12">
+                                            <div align="center" class="title"><h5><b>SALDO REKENING VALUTA ASING<span></span></b></h5></div>
+                                        </div>
+                                        <div class="col-md-12" style="padding-top: 15px;">
+                                            <div class="view-table">
+                                                <table id="table-imprst-valas" class="table table-rencana-realisasi table-condensed table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th style="vertical-align: middle; text-align: center;" width="16.666%">BANK</th>
+                                                        <th style="vertical-align: middle; text-align: center;" width="16.666%">USD</th>
+                                                        <th style="vertical-align: middle; text-align: center;" width="16.666%">JPY</th>
+                                                        <th style="vertical-align: middle; text-align: center;" width="16.666%">EUR</th>
+                                                        <th style="vertical-align: middle; text-align: center;" width="16.666%">MYR</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12" style="margin-top: 50px" align="center">
+                                            <div id="chart-USD-imprst-valas" class="a" style="height: 35rem; width: 100%;"></div>
+                                            <div id="chart-EUR-imprst-valas" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                            <div id="chart-JPY-imprst-valas" class="c" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                            <div id="chart-MYR-imprst-valas" class="d" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                        </div>
+                                        <div class="col-md-12" align="center" style="margin-top: -100px">
+                                            <button class="btn" onclick="renHari()">
+                                                USD
+                                            </button>
+                                            <button class="btn" onclick="renMinggu()">
+                                                EUR
+                                            </button>
+                                            <button class="btn" onclick="renBulan()">
+                                                JPY
+                                            </button>
+                                            <button class="btn" onclick="renTahun()">
+                                                MYR
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -136,88 +128,71 @@
                             <div class="col-md-12" style="margin-top: 20px">
                                 <div class="card">
                                     <div class="card-block">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5 class="card-title">DASHBOARD RENCANA</h5>
-                                                        <small>Divisi Treasury, PT. PLN (Persero)</small>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div class="row row-top">
-                                                            <div class="col-md-12">
-                                                                <div class="title-top">
-                                                                    <small>SALDO AWAL</small>
-                                                                    <h5 id="saldo_awal_rencana">0,0</h5>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <table class="table table-left" id="table_rencana_left">
-                                                                </table>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <table class="table table-right" id="table_rencana_right">
-
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row row-bottom">
-                                                            <div class="col-md-12">
-                                                                <div class="title-bottom">
-                                                                    <small>SALDO AKHIR</small>
-                                                                    <h5 id="saldo_akhir_rencana">0.0</h5>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="note">
-                                                            <small><i>*Dropping imprest ke unit belum entry di metallica, data berdasarkan permintaan dropping mingguan.</i></small>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        <div class="col-md-12">
+                                            <div align="center" class="title"><h5><b>SALDO REKENING VALUTA ASING<span></span></b></h5></div>
+                                        </div>
+                                        <div class="col-md-12" style="padding-top: 15px;">
+                                            <div class="view-table">
+                                                <table id="table-derivatif-deposit" class="table table-rencana-realisasi table-condensed table-bordered">
+                                                    <thead>
+                                                    <tr >
+                                                        <th style="vertical-align: middle; text-align: center;" rowspan="2">BANK</th>
+                                                        <th style="vertical-align: middle; text-align: center;" colspan="4">DERIVATIF</th>
+                                                        <th style="vertical-align: middle; text-align: center;" rowspan="2">DEPOSITO</th>
+                                                    </tr>
+                                                    <tr >
+                                                        <th style="vertical-align: middle; text-align: center;">FORWARD</th>
+                                                        <th style="vertical-align: middle; text-align: center;">SWAP</th>
+                                                        <th style="vertical-align: middle; text-align: center;">CSO</th>
+                                                        <th style="vertical-align: middle; text-align: center;">DNDF</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5 class="card-title">DASHBOARD Realisasi</h5>
-                                                        <small>Divisi Treasury, PT. PLN (Persero)</small>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div class="row row-top">
-                                                            <div class="col-md-12">
-                                                                <div class="title-top">
-                                                                    <small>SALDO AWAL</small>
-                                                                    <h5 id="saldo_awal_realisasi">0,0</h5>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <table class="table table-left" id="table_realisasi_left">
-                                                                </table>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <table class="table table-right" id="table_realisasi_right">
+                                        <div class="col-md-12" style="margin-top: 50px" align="center">
+                                            <div class="col-md-6" style="margin-top: 50px" align="center">
+                                                <div id="chart-derivatif-mandiri" class="a" style="height: 35rem; width: 100%;"></div>
+                                                <div id="chart-derivatif-bri" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                                <div id="chart-derivatif-bni" class="c" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                                <div id="chart-derivatif-bukopin" class="d" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                            </div>
+                                            <div class="col-md-6" align="center" style="margin-top: -100px">
+                                                <button class="btn" onclick="derMandiri()">
+                                                    Mandiri
+                                                </button>
+                                                <button class="btn" onclick="derBri()">
+                                                    BRI
+                                                </button>
+                                                <button class="btn" onclick="derBni()">
+                                                    BNI
+                                                </button>
+                                                <button class="btn" onclick="derBukopin()">
+                                                    Bukopin
+                                                </button>
+                                            </div>
 
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row row-bottom">
-                                                            <div class="col-md-12">
-                                                                <div class="title-bottom">
-                                                                    <small>SALDO AKHIR</small>
-                                                                    <h5 id="saldo_akhir_realisasi">0.0</h5>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="note">
-                                                            <small><i>*Dropping imprest ke unit belum entry di metallica, data berdasarkan permintaan dropping mingguan.</i></small>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            <div class="col-md-6" style="margin-top: 50px" align="center">
+                                                <div id="chart-deposito-mandiri" class="a" style="height: 35rem; width: 100%;"></div>
+                                                <div id="chart-deposito-bri" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                                <div id="chart-deposito-bni" class="c" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                                <div id="chart-deposito-bukopin" class="d" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
+                                            </div>
+                                            <div class="col-md-6" align="center" style="margin-top: -100px">
+                                                <button class="btn" onclick="depMandiri()">
+                                                    Mandiri
+                                                </button>
+                                                <button class="btn" onclick="depBri()">
+                                                    BRI
+                                                </button>
+                                                <button class="btn" onclick="depBni()">
+                                                    BNI
+                                                </button>
+                                                <button class="btn" onclick="depBukopin()">
+                                                    Bukopin
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -229,151 +204,107 @@
                             <div class="col-md-12" align="center" style="margin-top: 20px">
                                 <div class="card">
                                     <div class="card-block">
-                                        <div class="col-md-12" style="padding-top: 0px;">
-                                            <!--                                            <div><h6><b>2A</b></h6></div>-->
-                                            <div align="center" id="chart-komposisi-saldo" style="margin-top: -19px"></div>
-                                            <div class="wrapper" style="margin-top: 5px">
-                                                <ul align="center" class="legend">
-                                                    <li><span class="one"></span> REKENING IMPREST</li>
-                                                    <li><span class="two"></span> REKENING OPERASIONAL LAINNYA</li>
-                                                    <li><span class="three"></span> REKENING RESTRICTED</li>
-                                                    <li><span class="four"></span> DEPOSITO</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2"></div>
-                                        <div class="col-md-8" style="padding-top: 15px;">
-                                            <div class="view-table">
-                                                <table id="table-komposisi-saldo" class="table table-bordered">
-                                                    <thead>
-                                                    <tr>
-                                                        <th style="background-color: #67a2d8; text-align: center;" width="16.666%">JENIS REKENING</th>
-                                                        <th style="background: #67a2d8; text-align: center;" width="16.666%">TOTAL</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2"></div>
+                                        <div align="center"><h5><b>Rencana Pembayaran USD</b></h5></div>
+                                        <table id="main-valas" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-bottom: 5px">
+                                            <thead>
+                                            <tr>
+                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">BANK</th>
+                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
+                                                <th rowspan="2">KODE</th>
+                                                <th colspan="6" style="text-align: center; vertical-align: middle;">TANGGAL</th>
+                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">TOTAL</th>
+                                            </tr>
+                                            <tr id="header-tanggal" style="vertical-align: middle !important;text-align: center">
+                                                <th id="tgl1a" ></th>
+                                                <th id="tgl2a" ></th>
+                                                <th id="tgl3a" ></th>
+                                                <th id="tgl4a" ></th>
+                                                <th id="tgl5a" ></th>
+                                                <th id="tgl6a" ></th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                        <div align="center" style="margin-top: 30px"><h5><b>Rencana Pembayaran EUR</b></h5></div>
+                                        <table id="main-valas2" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-bottom: 5px">
+                                            <thead>
+                                            <tr>
+                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">BANK</th>
+                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
+                                                <th rowspan="2">KODE</th>
+                                                <th colspan="6" style="text-align: center; vertical-align: middle;">TANGGAL</th>
+                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">TOTAL</th>
+                                            </tr>
+                                            <tr id="header-tanggal2" style="vertical-align: middle !important;text-align: center">
+                                                <th id="tgl1b" ></th>
+                                                <th id="tgl2b" ></th>
+                                                <th id="tgl3b" ></th>
+                                                <th id="tgl4b" ></th>
+                                                <th id="tgl5b" ></th>
+                                                <th id="tgl6b" ></th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                        <div align="center" style="margin-top: 30px"><h5><b>Rencana Pembayaran JPY</b></h5></div>
+                                        <table id="main-valas3" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-bottom: 5px">
+                                            <thead>
+                                            <tr>
+                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">BANK</th>
+                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">KETERANGAN</th>
+                                                <th rowspan="2">KODE</th>
+                                                <th colspan="6" style="text-align: center; vertical-align: middle;">TANGGAL</th>
+                                                <th rowspan="2" style="vertical-align: middle; text-align: center;">TOTAL</th>
+                                            </tr>
+                                            <tr id="header-tanggal3" style="vertical-align: middle !important;text-align: center">
+                                                <th id="tgl1c" ></th>
+                                                <th id="tgl2c" ></th>
+                                                <th id="tgl3c" ></th>
+                                                <th id="tgl4c" ></th>
+                                                <th id="tgl5c" ></th>
+                                                <th id="tgl6c" ></th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                        <div align="center" style="margin-top: 30px"><h5><b>Rencana Pembayaran Exotic Currency</b></h5></div>
+                                        <table id="main-valas4" class="table table-rencana-realisasi table-condensed table-bordered" width="100%">
+                                            <thead>
+                                            <tr>
+                                                <th style="vertical-align: middle; text-align: center;">BANK</th>
+                                                <th style="vertical-align: middle; text-align: center;">KETERANGAN</th>
+                                                <th style="vertical-align: middle; text-align: center;">MYR</th>
+                                                <th style="vertical-align: middle; text-align: center;">AUD</th>
+                                                <th style="vertical-align: middle; text-align: center;">GBP</th>
+                                                <th style="vertical-align: middle; text-align: center;">VAD</th>
+                                                <th style="vertical-align: middle; text-align: center;">SGD</th>
+                                                <th style="vertical-align: middle; text-align: center;">BLA</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <input class="carousel-open" type="radio" id="carousel-4" name="carousel" aria-hidden="true" hidden=""/>
-                        <div class="carousel-item">
-                            <div class="col-md-12" align="center" style="margin-top: 20px">
-                                <div class="card">
-                                    <div class="card-block">
-                                        <div class="col-md-12" style="margin-top: 30px; margin-bottom: 30px">
-                                            <!--                                            <div><h6><b>3A</b></h6></div>-->
-                                            <div align="center" id="chart-rencana-pembayaran1"></div>
-                                            <div class="wrapper" style="margin-top: 10px">
-                                                <ul class="legend">
-                                                    <li><span class="five"></span> RENCANA PEMBAYARAN PRIMER (0-2 HARI)</li>
-                                                    <li><span class="six"></span> RENCANA PEMBAYARAN SEKUNDER (3-10 HARI)</li>
-                                                    <li><span class="seven"></span> RENCANA PEMBAYARAN TERSIER (11-30 HARI)</li>
-                                                </ul>
-                                            </div>
-                                            <div class="wrapper" style="margin-top: 10px">
-                                                <ul class="legend">
-                                                    <li><span class="nine"></span> IMPREST</li>
-                                                    <li><span class="eight"></span> RECEIPT</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <input class="carousel-open" type="radio" id="carousel-5" name="carousel" aria-hidden="true" hidden=""/>
-                        <div class="carousel-item">
-                            <div class="col-md-12" style="margin-top: 20px">
-                                <div class="card">
-                                    <div class="card-block">
-                                        <div class="col-md-12" style="padding-top: 0px;">
-                                            <!--                                            <div><h6><b>4A</b></h6></div>-->
-                                            <div id="chart-container" style="height: 35rem; width: 100%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <input class="carousel-open" type="radio" id="carousel-6" name="carousel" aria-hidden="true" hidden=""/>
-                        <div class="carousel-item">
-                            <div class="col-md-12" style="margin-top: 20px">
-                                <div class="card">
-                                    <div class="card-block">
-                                        <div class="col-md-12" style="padding-top: 0px;">
-                                            <!--                                            <div><h6><b>3B</b></h6></div>-->
-                                            <div id="column-rencana-pembayaran"  class="a" style="height: 35rem; width: 100%;"></div>
-                                            <div id="column-rencana-pembayaran2" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
-                                            <div id="column-rencana-pembayaran3" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
-                                            <div id="column-rencana-pembayaran4" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
-                                        </div>
-                                        <div class="col-md-12" align="center">
-                                            <button class="btn" onclick="renHari()">
-                                                Hari
-                                            </button>
-                                            <button class="btn" onclick="renMinggu()">
-                                                Minggu
-                                            </button>
-                                            <button class="btn" onclick="renBulan()">
-                                                Bulan
-                                            </button>
-                                            <button class="btn" onclick="renTahun()">
-                                                Tahun
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <input class="carousel-open" type="radio" id="carousel-7" name="carousel" aria-hidden="true" hidden=""/>
-                        <div class="carousel-item">
-                            <div class="col-md-12" style="margin-top: 20px">
-                                <div class="card">
-                                    <div class="card-block">
-                                        <div class="col-md-12" style="padding-top: 0px;">
-                                            <!--                                            <div><h6><b>3B</b></h6></div>-->
-                                            <div id="column-realisasi-pembayaran"  class="a" style="height: 35rem; width: 100%;"></div>
-                                            <div id="column-realisasi-pembayaran2" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
-                                            <div id="column-realisasi-pembayaran3" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
-                                            <div id="column-realisasi-pembayaran4" class="b" style="height: 35rem; width: 100%; margin-top: -560px;"></div>
-                                        </div>
-                                        <div class="col-md-12" align="center">
-                                            <button class="btn" onclick="realHari()">
-                                                Hari
-                                            </button>
-                                            <button class="btn" onclick="realMinggu()">
-                                                Minggu
-                                            </button>
-                                            <button class="btn" onclick="realBulan()">
-                                                Bulan
-                                            </button>
-                                            <button class="btn" onclick="realTahun()">
-                                                Tahun
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <label for="carousel-7" class="carousel-control prev control-1">‹</label>
+                        <label for="carousel-3" class="carousel-control prev control-1">‹</label>
                         <label for="carousel-2" class="carousel-control next control-1">›</label>
                         <label for="carousel-1" class="carousel-control prev control-2">‹</label>
                         <label for="carousel-3" class="carousel-control next control-2">›</label>
                         <label for="carousel-2" class="carousel-control prev control-3">‹</label>
-                        <label for="carousel-4" class="carousel-control next control-3">›</label>
-                        <label for="carousel-3" class="carousel-control prev control-4">‹</label>
-                        <label for="carousel-5" class="carousel-control next control-4">›</label>
-                        <label for="carousel-4" class="carousel-control prev control-5">‹</label>
-                        <label for="carousel-6" class="carousel-control next control-5">›</label>
-                        <label for="carousel-5" class="carousel-control prev control-6">‹</label>
-                        <label for="carousel-7" class="carousel-control next control-6">›</label>
-                        <label for="carousel-6" class="carousel-control prev control-7">‹</label>
-                        <label for="carousel-1" class="carousel-control next control-7">›</label>
+                        <label for="carousel-1" class="carousel-control next control-3">›</label>
                     </div>
                 </div>
             </div>
@@ -396,96 +327,140 @@
     </div>
 </main>
 <div th:fragment="scripts-backend">
-    <script src="/static/js/backend/controller/dashboard.js"></script>
+    <script src="/static/js/backend/controller/dashboard_valas.js"></script>
     <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
     <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
     <script type="text/javascript">
 
 		function renHari() {
-			element = document.querySelector('#column-rencana-pembayaran');
+			element = document.querySelector('#chart-USD-imprst-valas');
 			element.style.visibility = 'visible';
-            element = document.querySelector('#column-rencana-pembayaran2');
+            element = document.querySelector('#chart-EUR-imprst-valas');
 			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-rencana-pembayaran3');
+            element = document.querySelector('#chart-JPY-imprst-valas');
 			element.style.visibility = 'hidden';
-			element = document.querySelector('#column-rencana-pembayaran4');
+			element = document.querySelector('#chart-MYR-imprst-valas');
 			element.style.visibility = 'hidden';
 		}
 
 		function renMinggu() {
-			element = document.querySelector('#column-rencana-pembayaran2');
+			element = document.querySelector('#chart-EUR-imprst-valas');
 			element.style.visibility = 'visible';
-            element = document.querySelector('#column-rencana-pembayaran');
+            element = document.querySelector('#chart-USD-imprst-valas');
 			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-rencana-pembayaran3');
+            element = document.querySelector('#chart-JPY-imprst-valas');
 			element.style.visibility = 'hidden';
-			element = document.querySelector('#column-rencana-pembayaran4');
+			element = document.querySelector('#chart-MYR-imprst-valas');
 			element.style.visibility = 'hidden';
 		}
 
 		function renBulan() {
-			element = document.querySelector('#column-rencana-pembayaran3');
+			element = document.querySelector('#chart-JPY-imprst-valas');
 			element.style.visibility = 'visible';
-            element = document.querySelector('#column-rencana-pembayaran2');
+            element = document.querySelector('#chart-EUR-imprst-valas');
 			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-rencana-pembayaran');
+            element = document.querySelector('#chart-USD-imprst-valas');
 			element.style.visibility = 'hidden';
-			element = document.querySelector('#column-rencana-pembayaran4');
+			element = document.querySelector('#chart-MYR-imprst-valas');
 			element.style.visibility = 'hidden';
 		}
 
         function renTahun() {
-            element = document.querySelector('#column-rencana-pembayaran4');
+            element = document.querySelector('#chart-MYR-imprst-valas');
 			element.style.visibility = 'visible';
-			element = document.querySelector('#column-rencana-pembayaran3');
+			element = document.querySelector('#chart-JPY-imprst-valas');
 			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-rencana-pembayaran2');
+            element = document.querySelector('#chart-EUR-imprst-valas');
 			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-rencana-pembayaran');
+            element = document.querySelector('#chart-USD-imprst-valas');
 			element.style.visibility = 'hidden';
 		}
 
-		function realHari() {
-			element = document.querySelector('#column-realisasi-pembayaran');
+		function derMandiri() {
+			element = document.querySelector('#chart-derivatif-mandiri');
 			element.style.visibility = 'visible';
-            element = document.querySelector('#column-realisasi-pembayaran2');
+            element = document.querySelector('#chart-derivatif-bri');
 			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-realisasi-pembayaran3');
+            element = document.querySelector('#chart-derivatif-bni');
 			element.style.visibility = 'hidden';
-			element = document.querySelector('#column-realisasi-pembayaran4');
+			element = document.querySelector('#chart-derivatif-bukopin');
 			element.style.visibility = 'hidden';
 		}
 
-		function realMinggu() {
-			element = document.querySelector('#column-realisasi-pembayaran2');
+		function derBri() {
+			element = document.querySelector('#chart-derivatif-bri');
 			element.style.visibility = 'visible';
-            element = document.querySelector('#column-realisasi-pembayaran');
+            element = document.querySelector('#chart-derivatif-mandiri');
 			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-realisasi-pembayaran3');
+            element = document.querySelector('#chart-derivatif-bni');
 			element.style.visibility = 'hidden';
-			element = document.querySelector('#column-realisasi-pembayaran4');
+			element = document.querySelector('#chart-derivatif-bukopin');
 			element.style.visibility = 'hidden';
 		}
 
-		function realBulan() {
-			element = document.querySelector('#column-realisasi-pembayaran3');
+		function derBni() {
+			element = document.querySelector('#chart-derivatif-bni');
 			element.style.visibility = 'visible';
-            element = document.querySelector('#column-realisasi-pembayaran2');
+            element = document.querySelector('#chart-derivatif-bri');
 			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-realisasi-pembayaran');
+            element = document.querySelector('#chart-derivatif-mandiri');
 			element.style.visibility = 'hidden';
-			element = document.querySelector('#column-realisasi-pembayaran4');
+			element = document.querySelector('#chart-derivatif-bukopin');
 			element.style.visibility = 'hidden';
 		}
 
-        function realTahun() {
-            element = document.querySelector('#column-realisasi-pembayaran4');
+        function derBukopin() {
+            element = document.querySelector('#chart-derivatif-bukopin');
 			element.style.visibility = 'visible';
-			element = document.querySelector('#column-realisasi-pembayaran3');
+			element = document.querySelector('#chart-derivatif-bni');
 			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-realisasi-pembayaran2');
+            element = document.querySelector('#chart-derivatif-bri');
 			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-realisasi-pembayaran');
+            element = document.querySelector('#chart-derivatif-mandiri');
+			element.style.visibility = 'hidden';
+		}
+
+		function depMandiri() {
+			element = document.querySelector('#chart-deposito-mandiri');
+			element.style.visibility = 'visible';
+            element = document.querySelector('#chart-deposito-bri');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#chart-deposito-bni');
+			element.style.visibility = 'hidden';
+			element = document.querySelector('#chart-deposito-bukopin');
+			element.style.visibility = 'hidden';
+		}
+
+		function depBri() {
+			element = document.querySelector('#chart-deposito-bri');
+			element.style.visibility = 'visible';
+            element = document.querySelector('#chart-deposito-mandiri');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#chart-deposito-bni');
+			element.style.visibility = 'hidden';
+			element = document.querySelector('#chart-deposito-bukopin');
+			element.style.visibility = 'hidden';
+		}
+
+		function depBni() {
+			element = document.querySelector('#chart-deposito-bni');
+			element.style.visibility = 'visible';
+            element = document.querySelector('#chart-deposito-bri');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#chart-deposito-mandiri');
+			element.style.visibility = 'hidden';
+			element = document.querySelector('#chart-deposito-bukopin');
+			element.style.visibility = 'hidden';
+		}
+
+        function depBukopin() {
+            element = document.querySelector('#chart-deposito-bukopin');
+			element.style.visibility = 'visible';
+			element = document.querySelector('#chart-deposito-bni');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#chart-deposito-bri');
+			element.style.visibility = 'hidden';
+            element = document.querySelector('#chart-deposito-mandiri');
 			element.style.visibility = 'hidden';
 		}
 	</script>

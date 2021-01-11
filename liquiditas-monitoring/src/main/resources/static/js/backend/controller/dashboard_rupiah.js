@@ -166,10 +166,58 @@ function tableMainDashboard(_date, tanggal, kode, bank){
             const regexHead = RegExp("([A-Z])\\..");
             const regexChild1 = RegExp("([A-Z])\\.[(0-9)]");
 
-            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"])) {
+            if(data['KODE'] === null){
                 $(row).css({
-                    "color": "white",
-                    "background-color": "#16a085",
+                    "color": "#FFFFFF",
+                    "background-color": "#FFFFFF",
+                    "-webkit-touch-callout": "none",
+                    "-webkit-user-select": "none",
+                    "-khtml-user-select": "none",
+                    "-moz-user-select": "none",
+                    "-ms-user-select": "none",
+                    "user-select": "none",
+                });
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "MANDIRI") {
+                $(row).css({
+                    "background-color": "#E9D758",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BRI") {
+                $(row).css({
+                    "background-color": "#FF8552",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BNI") {
+                $(row).css({
+                    "background-color": "#A1CDF1",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BUKOPIN") {
+                $(row).css({
+                    "background-color": "#16A085",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "TOTAL") {
+                $(row).css({
+                    "background-color": "#77D5D4",
                     "cursor": "pointer",
                 });
                 $(row).addClass("parent");
@@ -187,408 +235,844 @@ function tableMainDashboard(_date, tanggal, kode, bank){
         }
     });
 
-//    let rupiah2 = $("#main-rupiah2").DataTable({
-//        "ajax" : {
-//            "url": baseUrl + "api_operator/api_report/dash_rupiah2",
-//            "data" : {
-//                "tanggal" : current_full_date,
-//            },
-//            "type" : "GET",
-//            "dataType" : "json",
-//        },
-//        "sorting": false,
-//        "searching" : false,
-//        "paging": false,
-//        "bInfo" : false,
-//        "bLengthChange" : false,
-//        "columns" : [
-//            {"data": null,"render": (data, type, row) => {if (data.ISHEADER == "0"){
-//                        return '<td > </td>';
-//                    } else if (data.KETERANGAN.trim() == "SALDO AWAL" || data.KETERANGAN.trim() == "PENERIMAAN OPERASI" || data.KETERANGAN.trim() == "PENERIMAAN PENDANAAN" || data.KETERANGAN.trim() == "PENGELUARAN TRANSAKSI VALAS" || data.KETERANGAN.trim() == "PENGELUARAN" || data.KETERANGAN.trim() == "SALDO AKHIR"){
-//                        return '<td > </td>';
-//                    } else
-//                        return '<td >'+data.BANK+'</td>';
-//                 },
-//                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
-//            {"data": null,"render": (data, type, row) => {return '<td >'+data.KETERANGAN+'</td>';
-//                },
-//                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","left");}},
-//            {"data": "ISHEADER","visible":false},
-//            {"data":null,
-//                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
-//                },
-//                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,
-//                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'
-//                },
-//                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,
-//                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'
-//                },
-//                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,
-//                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'
-//                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,
-//                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'
-//                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,
-//                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
-//                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data": null,"render": (data, type, row) => {return '<td >'+data.TOTAL+'</td>';
-//                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
-//        ],
-//        "createdRow" : function (row, data, dataIndex){
-//            const regexHead = RegExp("([A-Z])\\..");
-//            const regexChild1 = RegExp("([A-Z])\\.[(0-9)]");
-//
-//            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"])) {
-//                $(row).css({
-//                    "color": "white",
-//                    "background-color": "#16a085",
-//                    "cursor": "pointer",
-//                });
-//                $(row).addClass("parent");
-//                $(row).attr("onclick", "showChild(this)");
-//            }
-//
-//            if (data["ISHEADER"] === 0 && regexChild1.test(data["KODE"])){
-//                $(row).addClass("child");
-//                $(row).hide();
-//            }
-//        },
-//        "initComplete" : (settings, json) => {
-//            let parent = $(".grand-parent").nextUntil(".grand-parent");
-//            parent.hide();
-//        }
-//    });
-//
-//    let rupiah3 = $("#main-rupiah3").DataTable({
-//        "ajax" : {
-//            "url": baseUrl + "api_operator/api_report/dash_rupiah3",
-//            "data" : {
-//                "tanggal" : current_full_date,
-//            },
-//            "type" : "GET",
-//            "dataType" : "json",
-//        },
-//        "sorting": false,
-//        "searching" : false,
-//        "paging": false,
-//        "bInfo" : false,
-//        "bLengthChange" : false,
-//        "columns" : [
-//            {"data": null,"render": (data, type, row) => {if (data.ISHEADER == "0"){
-//                        return '<td > </td>';
-//                    } else if (data.KETERANGAN.trim() == "SALDO AWAL" || data.KETERANGAN.trim() == "PENERIMAAN OPERASI" || data.KETERANGAN.trim() == "PENERIMAAN PENDANAAN" || data.KETERANGAN.trim() == "PENGELUARAN TRANSAKSI VALAS" || data.KETERANGAN.trim() == "PENGELUARAN" || data.KETERANGAN.trim() == "SALDO AKHIR"){
-//                        return '<td > </td>';
-//                    } else
-//                        return '<td >'+data.BANK+'</td>';
-//                 },
-//                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
-//            {"data": null,"render": (data, type, row) => {return '<td >'+data.KETERANGAN+'</td>';
-//                },
-//                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","left");}},
-//            {"data": "ISHEADER","visible":false},
-//            {"data":null,
-//                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
-//                },
-//                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,
-//                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'
-//                },
-//                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,
-//                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'
-//                },
-//                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,
-//                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'
-//                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,
-//                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'
-//                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,
-//                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
-//                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data": null,"render": (data, type, row) => {return '<td >'+data.TOTAL+'</td>';
-//                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
-//        ],
-//        "createdRow" : function (row, data, dataIndex){
-//            const regexHead = RegExp("([A-Z])\\..");
-//            const regexChild1 = RegExp("([A-Z])\\.[(0-9)]");
-//
-//            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"])) {
-//                $(row).css({
-//                    "color": "white",
-//                    "background-color": "#16a085",
-//                    "cursor": "pointer",
-//                });
-//                $(row).addClass("parent");
-//                $(row).attr("onclick", "showChild(this)");
-//            }
-//
-//            if (data["ISHEADER"] === 0 && regexChild1.test(data["KODE"])){
-//                $(row).addClass("child");
-//                $(row).hide();
-//            }
-//        },
-//        "initComplete" : (settings, json) => {
-//            let parent = $(".grand-parent").nextUntil(".grand-parent");
-//            parent.hide();
-//        }
-//    });
-//
-//    let rupiah4 = $("#main-rupiah4").DataTable({
-//        "ajax" : {
-//            "url": baseUrl + "api_operator/api_report/dash_rupiah4",
-//            "data" : {
-//                "tanggal" : current_full_date,
-//            },
-//            "type" : "GET",
-//            "dataType" : "json",
-//        },
-//        "sorting": false,
-//        "searching" : false,
-//        "paging": false,
-//        "bInfo" : false,
-//        "bLengthChange" : false,
-//        "columns" : [
-//            {"data": null,"render": (data, type, row) => {if (data.ISHEADER == "0"){
-//                        return '<td > </td>';
-//                    } else if (data.KETERANGAN.trim() == "SALDO AWAL" || data.KETERANGAN.trim() == "PENERIMAAN OPERASI" || data.KETERANGAN.trim() == "PENERIMAAN PENDANAAN" || data.KETERANGAN.trim() == "PENGELUARAN TRANSAKSI VALAS" || data.KETERANGAN.trim() == "PENGELUARAN" || data.KETERANGAN.trim() == "SALDO AKHIR"){
-//                        return '<td > </td>';
-//                    } else
-//                        return '<td >'+data.BANK+'</td>';
-//                 },
-//                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
-//            {"data": null,"render": (data, type, row) => {return '<td >'+data.KETERANGAN+'</td>';
-//                },
-//                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","left");}},
-//            {"data": "ISHEADER","visible":false},
-//            {"data":null,
-//                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
-//                },
-//                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,
-//                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'
-//                },
-//                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,
-//                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'
-//                },
-//                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,
-//                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'
-//                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,
-//                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'
-//                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data":null,
-//                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
-//                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-//            {"data": null,"render": (data, type, row) => {return '<td >'+data.TOTAL+'</td>';
-//                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
-//        ],
-//        "createdRow" : function (row, data, dataIndex){
-//            const regexHead = RegExp("([A-Z])\\..");
-//            const regexChild1 = RegExp("([A-Z])\\.[(0-9)]");
-//
-//            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"])) {
-//                $(row).css({
-//                    "color": "white",
-//                    "background-color": "#16a085",
-//                    "cursor": "pointer",
-//                });
-//                $(row).addClass("parent");
-//                $(row).attr("onclick", "showChild(this)");
-//            }
-//
-//            if (data["ISHEADER"] === 0 && regexChild1.test(data["KODE"])){
-//                $(row).addClass("child");
-//                $(row).hide();
-//            }
-//        },
-//        "initComplete" : (settings, json) => {
-//            let parent = $(".grand-parent").nextUntil(".grand-parent");
-//            parent.hide();
-//        }
-//    });
+    let rupiah2 = $("#main-rupiah2").DataTable({
+        "ajax" : {
+            "url": baseUrl + "api_operator/api_report/dash_rupiah2",
+            "data" : {
+                "tanggal" : current_full_date,
+            },
+            "type" : "GET",
+            "dataType" : "json",
+        },
+        "sorting": false,
+        "searching" : false,
+        "paging": false,
+        "bInfo" : false,
+        "bLengthChange" : false,
+        "columns" : [
+            {"data": null,"render": (data, type, row) => {if (data.ISHEADER == "0"){
+                        return '<td > </td>';
+                    } else
+                        return '<td >'+data.BANK+'</td>';
+                 },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+            {"data": null,"render": (data, type, row) => {return '<td >'+data.KETERANGAN+'</td>';
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","left");}},
+            {"data": "ISHEADER","visible":false},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data": null,"render": (data, type, row) => {return '<td >'+data.TOTAL+'</td>';
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+        ],
+       "createdRow" : function (row, data, dataIndex){
+            const regexHead = RegExp("([A-Z])\\..");
+            const regexChild1 = RegExp("([A-Z])\\.[(0-9)]");
+
+            if(data['KODE'] === null){
+                $(row).css({
+                    "color": "#FFFFFF",
+                    "background-color": "#FFFFFF",
+                    "-webkit-touch-callout": "none",
+                    "-webkit-user-select": "none",
+                    "-khtml-user-select": "none",
+                    "-moz-user-select": "none",
+                    "-ms-user-select": "none",
+                    "user-select": "none",
+                });
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "MANDIRI") {
+                $(row).css({
+                    "background-color": "#E9D758",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BRI") {
+                $(row).css({
+                    "background-color": "#FF8552",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BNI") {
+                $(row).css({
+                    "background-color": "#A1CDF1",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BUKOPIN") {
+                $(row).css({
+                    "background-color": "#16A085",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "TOTAL") {
+                $(row).css({
+                    "background-color": "#77D5D4",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data["ISHEADER"] === 0 && regexChild1.test(data["KODE"])){
+                $(row).addClass("child");
+                $(row).hide();
+            }
+        },
+        "initComplete" : (settings, json) => {
+            let parent = $(".grand-parent").nextUntil(".grand-parent");
+            parent.hide();
+        }
+    });
+
+    let rupiah3 = $("#main-rupiah3").DataTable({
+        "ajax" : {
+            "url": baseUrl + "api_operator/api_report/dash_rupiah3",
+            "data" : {
+                "tanggal" : current_full_date,
+            },
+            "type" : "GET",
+            "dataType" : "json",
+        },
+        "sorting": false,
+        "searching" : false,
+        "paging": false,
+        "bInfo" : false,
+        "bLengthChange" : false,
+        "columns" : [
+            {"data": null,"render": (data, type, row) => {if (data.ISHEADER == "0"){
+                        return '<td > </td>';
+                    } else
+                        return '<td >'+data.BANK+'</td>';
+                 },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+            {"data": null,"render": (data, type, row) => {return '<td >'+data.KETERANGAN+'</td>';
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","left");}},
+            {"data": "ISHEADER","visible":false},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data": null,"render": (data, type, row) => {return '<td >'+data.TOTAL+'</td>';
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+        ],
+       "createdRow" : function (row, data, dataIndex){
+            const regexHead = RegExp("([A-Z])\\..");
+            const regexChild1 = RegExp("([A-Z])\\.[(0-9)]");
+
+            if(data['KODE'] === null){
+                $(row).css({
+                    "color": "#FFFFFF",
+                    "background-color": "#FFFFFF",
+                    "-webkit-touch-callout": "none",
+                    "-webkit-user-select": "none",
+                    "-khtml-user-select": "none",
+                    "-moz-user-select": "none",
+                    "-ms-user-select": "none",
+                    "user-select": "none",
+                });
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "MANDIRI") {
+                $(row).css({
+                    "background-color": "#E9D758",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BRI") {
+                $(row).css({
+                    "background-color": "#FF8552",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BNI") {
+                $(row).css({
+                    "background-color": "#A1CDF1",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BUKOPIN") {
+                $(row).css({
+                    "background-color": "#16A085",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "TOTAL") {
+                $(row).css({
+                    "background-color": "#77D5D4",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data["ISHEADER"] === 0 && regexChild1.test(data["KODE"])){
+                $(row).addClass("child");
+                $(row).hide();
+            }
+        },
+        "initComplete" : (settings, json) => {
+            let parent = $(".grand-parent").nextUntil(".grand-parent");
+            parent.hide();
+        }
+    });
+
+    let rupiah4 = $("#main-rupiah4").DataTable({
+        "ajax" : {
+            "url": baseUrl + "api_operator/api_report/dash_rupiah4",
+            "data" : {
+                "tanggal" : current_full_date,
+            },
+            "type" : "GET",
+            "dataType" : "json",
+        },
+        "sorting": false,
+        "searching" : false,
+        "paging": false,
+        "bInfo" : false,
+        "bLengthChange" : false,
+        "columns" : [
+            {"data": null,"render": (data, type, row) => {if (data.ISHEADER == "0"){
+                        return '<td > </td>';
+                    } else
+                        return '<td >'+data.BANK+'</td>';
+                 },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+            {"data": null,"render": (data, type, row) => {return '<td >'+data.KETERANGAN+'</td>';
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","left");}},
+            {"data": "ISHEADER","visible":false},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data": null,"render": (data, type, row) => {return '<td >'+data.TOTAL+'</td>';
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+        ],
+       "createdRow" : function (row, data, dataIndex){
+            const regexHead = RegExp("([A-Z])\\..");
+            const regexChild1 = RegExp("([A-Z])\\.[(0-9)]");
+
+            if(data['KODE'] === null){
+                $(row).css({
+                    "color": "#FFFFFF",
+                    "background-color": "#FFFFFF",
+                    "-webkit-touch-callout": "none",
+                    "-webkit-user-select": "none",
+                    "-khtml-user-select": "none",
+                    "-moz-user-select": "none",
+                    "-ms-user-select": "none",
+                    "user-select": "none",
+                });
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "MANDIRI") {
+                $(row).css({
+                    "background-color": "#E9D758",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BRI") {
+                $(row).css({
+                    "background-color": "#FF8552",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BNI") {
+                $(row).css({
+                    "background-color": "#A1CDF1",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BUKOPIN") {
+                $(row).css({
+                    "background-color": "#16A085",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "TOTAL") {
+                $(row).css({
+                    "background-color": "#77D5D4",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data["ISHEADER"] === 0 && regexChild1.test(data["KODE"])){
+                $(row).addClass("child");
+                $(row).hide();
+            }
+        },
+        "initComplete" : (settings, json) => {
+            let parent = $(".grand-parent").nextUntil(".grand-parent");
+            parent.hide();
+        }
+    });
+
+    let rupiah5 = $("#main-rupiah5").DataTable({
+        "ajax" : {
+            "url": baseUrl + "api_operator/api_report/dash_rupiah5",
+            "data" : {
+                "tanggal" : current_full_date,
+            },
+            "type" : "GET",
+            "dataType" : "json",
+        },
+        "sorting": false,
+        "searching" : false,
+        "paging": false,
+        "bInfo" : false,
+        "bLengthChange" : false,
+        "columns" : [
+            {"data": null,"render": (data, type, row) => {if (data.ISHEADER == "0"){
+                        return '<td > </td>';
+                    } else
+                        return '<td >'+data.BANK+'</td>';
+                 },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+            {"data": null,"render": (data, type, row) => {return '<td >'+data.KETERANGAN+'</td>';
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","left");}},
+            {"data": "ISHEADER","visible":false},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data": null,"render": (data, type, row) => {return '<td >'+data.TOTAL+'</td>';
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+        ],
+       "createdRow" : function (row, data, dataIndex){
+            const regexHead = RegExp("([A-Z])\\..");
+            const regexChild1 = RegExp("([A-Z])\\.[(0-9)]");
+
+            if(data['KODE'] === null){
+                $(row).css({
+                    "color": "#FFFFFF",
+                    "background-color": "#FFFFFF",
+                    "-webkit-touch-callout": "none",
+                    "-webkit-user-select": "none",
+                    "-khtml-user-select": "none",
+                    "-moz-user-select": "none",
+                    "-ms-user-select": "none",
+                    "user-select": "none",
+                });
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "MANDIRI") {
+                $(row).css({
+                    "background-color": "#E9D758",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BRI") {
+                $(row).css({
+                    "background-color": "#FF8552",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BNI") {
+                $(row).css({
+                    "background-color": "#A1CDF1",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BUKOPIN") {
+                $(row).css({
+                    "background-color": "#16A085",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "TOTAL") {
+                $(row).css({
+                    "background-color": "#77D5D4",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data["ISHEADER"] === 0 && regexChild1.test(data["KODE"])){
+                $(row).addClass("child");
+                $(row).hide();
+            }
+        },
+        "initComplete" : (settings, json) => {
+            let parent = $(".grand-parent").nextUntil(".grand-parent");
+            parent.hide();
+        }
+    });
+
+    let rupiah6 = $("#main-rupiah6").DataTable({
+        "ajax" : {
+            "url": baseUrl + "api_operator/api_report/dash_rupiah6",
+            "data" : {
+                "tanggal" : current_full_date,
+            },
+            "type" : "GET",
+            "dataType" : "json",
+        },
+        "sorting": false,
+        "searching" : false,
+        "paging": false,
+        "bInfo" : false,
+        "bLengthChange" : false,
+        "columns" : [
+            {"data": null,"render": (data, type, row) => {if (data.ISHEADER == "0"){
+                        return '<td > </td>';
+                    } else
+                        return '<td >'+data.BANK+'</td>';
+                 },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+            {"data": null,"render": (data, type, row) => {return '<td >'+data.KETERANGAN+'</td>';
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","left");}},
+            {"data": "ISHEADER","visible":false},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data": null,"render": (data, type, row) => {return '<td >'+data.TOTAL+'</td>';
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+        ],
+       "createdRow" : function (row, data, dataIndex){
+            const regexHead = RegExp("([A-Z])\\..");
+            const regexChild1 = RegExp("([A-Z])\\.[(0-9)]");
+
+            if(data['KODE'] === null){
+                $(row).css({
+                    "color": "#FFFFFF",
+                    "background-color": "#FFFFFF",
+                    "-webkit-touch-callout": "none",
+                    "-webkit-user-select": "none",
+                    "-khtml-user-select": "none",
+                    "-moz-user-select": "none",
+                    "-ms-user-select": "none",
+                    "user-select": "none",
+                });
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "MANDIRI") {
+                $(row).css({
+                    "background-color": "#E9D758",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BRI") {
+                $(row).css({
+                    "background-color": "#FF8552",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BNI") {
+                $(row).css({
+                    "background-color": "#A1CDF1",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BUKOPIN") {
+                $(row).css({
+                    "background-color": "#16A085",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "TOTAL") {
+                $(row).css({
+                    "background-color": "#77D5D4",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data["ISHEADER"] === 0 && regexChild1.test(data["KODE"])){
+                $(row).addClass("child");
+                $(row).hide();
+            }
+        },
+        "initComplete" : (settings, json) => {
+            let parent = $(".grand-parent").nextUntil(".grand-parent");
+            parent.hide();
+        }
+    });
+
+    let rupiah7 = $("#main-rupiah7").DataTable({
+        "ajax" : {
+            "url": baseUrl + "api_operator/api_report/dash_rupiah7",
+            "data" : {
+                "tanggal" : current_full_date,
+            },
+            "type" : "GET",
+            "dataType" : "json",
+        },
+        "sorting": false,
+        "searching" : false,
+        "paging": false,
+        "bInfo" : false,
+        "bLengthChange" : false,
+        "columns" : [
+            {"data": null,"render": (data, type, row) => {if (data.ISHEADER == "0"){
+                        return '<td > </td>';
+                    } else
+                        return '<td >'+data.BANK+'</td>';
+                 },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+            {"data": null,"render": (data, type, row) => {return '<td >'+data.KETERANGAN+'</td>';
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","left");}},
+            {"data": "ISHEADER","visible":false},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'
+                },
+                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,
+                "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data": null,"render": (data, type, row) => {return '<td >'+data.TOTAL+'</td>';
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+        ],
+       "createdRow" : function (row, data, dataIndex){
+            const regexHead = RegExp("([A-Z])\\..");
+            const regexChild1 = RegExp("([A-Z])\\.[(0-9)]");
+
+            if(data['KODE'] === null){
+                $(row).css({
+                    "color": "#FFFFFF",
+                    "background-color": "#FFFFFF",
+                    "-webkit-touch-callout": "none",
+                    "-webkit-user-select": "none",
+                    "-khtml-user-select": "none",
+                    "-moz-user-select": "none",
+                    "-ms-user-select": "none",
+                    "user-select": "none",
+                });
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "MANDIRI") {
+                $(row).css({
+                    "background-color": "#E9D758",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BRI") {
+                $(row).css({
+                    "background-color": "#FF8552",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BNI") {
+                $(row).css({
+                    "background-color": "#A1CDF1",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "BUKOPIN") {
+                $(row).css({
+                    "background-color": "#16A085",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "TOTAL") {
+                $(row).css({
+                    "background-color": "#77D5D4",
+                    "cursor": "pointer",
+                });
+                $(row).addClass("parent");
+                $(row).attr("onclick", "showChild(this)");
+            }
+
+            if (data["ISHEADER"] === 0 && regexChild1.test(data["KODE"])){
+                $(row).addClass("child");
+                $(row).hide();
+            }
+        },
+        "initComplete" : (settings, json) => {
+            let parent = $(".grand-parent").nextUntil(".grand-parent");
+            parent.hide();
+        }
+    });
 }
 
 function initDataTableImprstValas() {
     $.ajax({
-        url: baseUrl + "api_dashboard/get_saldo_rekening_valuta_asing",
+        url: baseUrl + "api_dashboard/get_giro_special_rate",
         dataType: 'JSON',
         type: "GET",
         success: function (res) {
             var data = res.return;
-            console.log("response : "+data);
-            $("#tglcetak").html(data[0].TANGGAL);
-            $('#table-imprst-valas tbody').empty();
+//            $("#tglcetak").html(data[0].TANGGAL);
+            $('#table-giro-special-rate tbody').empty();
             $.each(data, function (key, val) {
                 var html = "<tr>" +
-                    "<td>" + val.ID_BANK + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(val.NILAI_USD,2,".",",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(val.NILAI_JPY,2,".",",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(val.NILAI_EUR,2,".",",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(val.NILAI_MYR,2,".",",") + "</td>" +
+                    "<td>" + val.BANK + "</td>" +
+                    "<td>" + val.CURRENCY + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(val.NOMINAL,2,".",",") + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(val.JASA_GIRO,2,".",",") + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(val.NOMINAL_JASA_GIRO,2,".",",") + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(val.EQ_IDR_NOMINAL,2,".",",") + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(val.EQ_IDR_JASA_GIRO,2,".",",") + "</td>" +
+                    "<td align='right'>" + accounting.formatNumber(val.EQ_IDR_NOMINAL_JASA_GIRO,2,".",",") + "</td>" +
                     "</tr>";
-                $('#table-imprst-valas tbody').append(html);
+                $('#table-giro-special-rate tbody').append(html);
             });
 
-            var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                "<td>TOTAL</td>" +
-                                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_USD[0].TOTAL_USD,2,".",",") + "</td>" +
-                                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_JPY[0].TOTAL_JPY,2,".",",") + "</td>" +
-                                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_EUR[0].TOTAL_EUR,2,".",",") + "</td>" +
-                                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_MYR[0].TOTAL_MYR,2,".",",") + "</td>" +
-                                "</tr>";
-
-            var total2 = "<tr style='background-color:#67a2d8; color: white'>" +
-                "<td>EQ IDR</td>" +
-                                "<td align='right'> Rp. " + accounting.formatNumber(res.EQ_IDR_USD[0].EQ_IDR_USD,2,".",",") + "</td>" +
-                                "<td align='right'> Rp. " + accounting.formatNumber(res.EQ_IDR_JPY[0].EQ_IDR_JPY,2,".",",") + "</td>" +
-                                "<td align='right'> Rp. " + accounting.formatNumber(res.EQ_IDR_EUR[0].EQ_IDR_EUR,2,".",",") + "</td>" +
-                                "<td align='right'> Rp. " + accounting.formatNumber(res.EQ_IDR_MYR[0].EQ_IDR_MYR,2,".",",") + "</td>" +
-                                "</tr>";
-            $('#table-imprst-valas tbody').append(total1);
-            $('#table-imprst-valas tbody').append(total2);
-
-
-            var dataPieUSD = [];
-            $.each(res.OUT_PIE_USD, function (index, value) {
-                var dataPieTemp = {
-                    label: value.ID_BANK,
-                    value: value.NILAI == 0 ? null : value.NILAI
-                };
-                dataPieUSD.push(dataPieTemp)
-            });
-
-            var dataPieEUR = [];
-            $.each(res.OUT_PIE_EUR, function (index, value) {
-                var dataPieTemp = {
-                    label: value.ID_BANK,
-                    value: value.NILAI == 0 ? null : value.NILAI
-                };
-                dataPieEUR.push(dataPieTemp)
-            });
-
-            var dataPieJPY = [];
-            $.each(res.OUT_PIE_JPY, function (index, value) {
-                var dataPieTemp = {
-                    label: value.ID_BANK,
-                    value: value.NILAI == 0 ? null : value.NILAI
-                };
-                dataPieJPY.push(dataPieTemp)
-            });
-
-            var dataPieMYR = [];
-            $.each(res.OUT_PIE_MYR, function (index, value) {
-                var dataPieTemp = {
-                    label: value.ID_BANK,
-                    value: value.NILAI == 0 ? null : value.NILAI
-                };
-                dataPieMYR.push(dataPieTemp)
-            });
-
-            console.log("");
-
-            createChartUSDImprstValas(dataPieUSD);
-            createChartJPYImprstValas(dataPieJPY);
-            createChartEURImprstValas(dataPieEUR);
-            createChartMYRImprstValas(dataPieMYR);
-            hideLoadingCss()
-        },
-        error: function () {
-            // hideLoadingCss("Gagal Ambil Data IMPRST VALAS");
-            hideLoadingCss();
-            $('#table-imprst-valas tbody').empty();
-            var html = "<tr>" +
-                "<td colspan='5' align='center'> No Data </td>" +
+            var total1 = "<tr style='background-color:#67a2d8'>" +
+                "<td colspan='2'>TOTAL</td>" +
+                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_GIRO[0].NOMINAL,2,".",",") + "</td>" +
+                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_GIRO[0].JASA_GIRO,2,".",",") + "</td>" +
+                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_GIRO[0].NOMINAL_JASA_GIRO,2,".",",") + "</td>" +
+                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_GIRO[0].EQ_IDR_NOMINAL,2,".",",") + "</td>" +
+                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_GIRO[0].EQ_IDR_JASA_GIRO,2,".",",") + "</td>" +
+                "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_GIRO[0].EQ_IDR_NOMINAL_JASA_GIRO,2,".",",") + "</td>" +
                 "</tr>";
-            $('#table-imprst-valas tbody').append(html);
+
+            $('#table-giro-special-rate tbody').append(total1);
+        },
+
+        error: function () {
+            hideLoadingCss();
+            $('#table-giro-special-rate tbody').empty();
+            var html = "<tr>" +
+                "<td colspan='8' align='center'> No Data </td>" +
+                "</tr>";
+            $('#table-giro-special-rate tbody').append(html);
         }
     });
 }
 
 function initDataTableImprstValas2() {
-    showLoadingCss()
     $.ajax({
-        url: baseUrl + "api_dashboard/get_outstanding_produk_derivatif",
+        url: baseUrl + "api_dashboard/get_supply_chain_financing",
         dataType: 'JSON',
         type: "GET",
         success: function (res) {
             var data = res.return;
-            console.log("response : "+data);
-            $("#tglcetak").html(data[0].TANGGAL);
-            $('#table-derivatif-deposit tbody').empty();
+//            $("#tglcetak").html(data[0].TANGGAL);
+            $('#table-supply-chain-financing tbody').empty();
             $.each(data, function (key, val) {
-                var html = "<tr>" +
-                    "<td>" + val.BANK + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(val.FORWARD,2,".",",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(val.SWAP,2,".",",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(val.CSO,2,".",",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(val.DNDF,2,".",",") + "</td>" +
-                    "<td align='right'>" + accounting.formatNumber(val.DEPOSITO,2,".",",") + "</td>" +
-                    "</tr>";
-                $('#table-derivatif-deposit tbody').append(html);
+//                if(val.BANK === "null"){
+//                    var html = "<tr>" +
+//                        "<td> </td>" +
+//                        "<td>" + val.CURRENCY + "</td>" +
+//                        "<td align='right'>" + accounting.formatNumber(val.ORI_CURRENCY,2,".",",") + "</td>" +
+//                        "<td align='right'>" + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
+//                        "<td align='right'>" + accounting.formatNumber(val.FEE_TRANSAKSI_IDR,2,".",",") + "</td>" +
+//                        "<td align='right'>" + accounting.formatNumber(val.CASH_COLLATERAL,2,".",",") + "</td>" +
+//                        "<td align='right'>" + accounting.formatNumber(val.JASA_GIRO,2,".",",") + "</td>" +
+//                        "<td align='right'>" + accounting.formatNumber(val.PAJAK_PLN,2,".",",") + "</td>" +
+//                        "<td align='right'>" + accounting.formatNumber(val.NET_JASA_GIRO,2,".",",") + "</td>" +
+//                        "<td align='right'>" + accounting.formatNumber(val.NET_GAIN,2,".",",") + "</td>" +
+//                        "</tr>";
+//                } else
+                    var html = "<tr>" +
+                        "<td>" + val.BANK + "</td>" +
+                        "<td>" + val.CURRENCY + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.ORI_CURRENCY,2,".",",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.FEE_TRANSAKSI_IDR,2,".",",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.CASH_COLLATERAL,2,".",",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.JASA_GIRO,2,".",",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.PAJAK_PLN,2,".",",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.NET_JASA_GIRO,2,".",",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.NET_GAIN,2,".",",") + "</td>" +
+                        "</tr>";
+
+                $('#table-supply-chain-financing tbody').append(html);
             });
 
-            var total1 = "<tr style='background-color:#67a2d8;color: white'>" +
-                "<td>TOTAL</td>" +
-                "<td align='right'> </td>" +
-                "<td align='right'> </td>" +
-                "<td align='right'> </td>" +
-                "<td align='right'> </td>" +
-                "<td align='right'> </td>" +
-                "</tr>";
-            $('#table-derivatif-deposit tbody').append(total1);
-
-            var data2 = res.OUT_TOTAL;
+            var data2 = res.OUT_TOTAL_SCF;
+            var tes = JSON.stringify(data2);
+            console.log("Ini data : " + tes);
             $.each(data2, function (key, val) {
                 var html = "<tr>" +
-                    "<td style='background-color:#67a2d8;color: white'>" + val.CURRENCY + "</td>" +
-                    "<td align='right' style='background-color:#67a2d8;color: white'>" + accounting.formatNumber(val.TOTAL_FORWARD,2,".",",") + "</td>" +
-                    "<td align='right' style='background-color:#67a2d8;color: white'>" + accounting.formatNumber(val.TOTAL_SWAP,2,".",",") + "</td>" +
-                    "<td align='right' style='background-color:#67a2d8;color: white'>" + accounting.formatNumber(val.TOTAL_CSO,2,".",",") + "</td>" +
-                    "<td align='right' style='background-color:#67a2d8;color: white'>" + accounting.formatNumber(val.TOTAL_DNDF,2,".",",") + "</td>" +
-                    "<td align='right' style='background-color:#67a2d8;color: white'>" + accounting.formatNumber(val.TOTAL_DEPOSITO,2,".",",") + "</td>" +
+                    "<tr style='background-color:#67a2d8'>" + "<td>TOTAL</td>" +
+                    "<td style='background-color:#67a2d8'>" + val.CURRENCY + "</td>" +
+                    "<td align='right' style='background-color:#67a2d8'>" + accounting.formatNumber(val.ORI_CURRENCY,2,".",",") + "</td>" +
+                    "<td align='right' style='background-color:#67a2d8'>" + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
+                    "<td align='right' style='background-color:#67a2d8'>" + accounting.formatNumber(val.FEE_TRANSAKSI_IDR,2,".",",") + "</td>" +
+                    "<td align='right' style='background-color:#67a2d8'>" + accounting.formatNumber(val.CASH_COLLATERAL,2,".",",") + "</td>" +
+                    "<td align='right' style='background-color:#67a2d8'>" + accounting.formatNumber(val.JASA_GIRO,2,".",",") + "</td>" +
+                    "<td align='right' style='background-color:#67a2d8'>" + accounting.formatNumber(val.PAJAK_PLN,2,".",",") + "</td>" +
+                    "<td align='right' style='background-color:#67a2d8'>" + accounting.formatNumber(val.NET_JASA_GIRO,2,".",",") + "</td>" +
+                    "<td align='right' style='background-color:#67a2d8'>" + accounting.formatNumber(val.NET_GAIN,2,".",",") + "</td>" +
                     "</tr>";
-                $('#table-derivatif-deposit tbody').append(html);
+                $('#table-supply-chain-financing tbody').append(html);
             });
-
-            var dataDerivatifMandiri = [];
-            $.each(res.OUT_PIE_FORWARD, function (index, value) {
-                var dataDMandiri = {
-                    label: value.ID_BANK,
-                    value: value.NILAI == 0 ? null : value.NILAI
-                };
-                var tes = JSON.stringify(coba);
-                console.log("Tes : " + tes)
-                dataDerivatifMandiri.push(dataDMandiri)
-            });
-//
-            var dataPieEUR = [];
-            $.each(res.OUT_PIE_EUR, function (index, value) {
-                var dataPieTemp = {
-                    label: value.ID_BANK,
-                    value: value.NILAI == 0 ? null : value.NILAI
-                };
-                dataPieEUR.push(dataPieTemp)
-            });
-
-//            console.log("");
-
-            chartDerivatifMandiri(dataDerivatifMandiri);
-//            chartDerivatifBRI(dataDBRI);
-//            chartDerivatifBNI(dataDBNI);
-//            chartDerivatifBukopin(dataDBukopin);
-//            chartDepositoMandiri(datadMandiri);
-//            chartDepositoBRI(datadBRI);
-//            chartDepositoBNI(datadBNI);
-//            chartDepositoBukopin(datadBukopin);
-            hideLoadingCss()
         },
         error: function () {
             // hideLoadingCss("Gagal Ambil Data IMPRST VALAS");
@@ -601,120 +1085,3 @@ function initDataTableImprstValas2() {
         }
     });
 }
-
-function createChartUSDImprstValas(data) {
-    console.log(data);
-    FusionCharts.ready(function () {
-        var fusioncharts = new FusionCharts({
-                type: 'pie2d',
-                renderAt: 'chart-USD-imprst-valas',
-                width: '635',
-                height: '450',
-                dataFormat: 'json',
-                dataSource: {
-                    "chart": {
-                        "caption": "USD",
-                        "numbersuffix": " %",
-                        "exportEnabled": "1",
-                        "bgColor": "#ffffff",
-                        "showLabels": "0",
-                        "isSmartLineSlanted": "0",
-                        "showBorder": "0",
-                        "showLegend": "1",
-                        "baseFontSize": "12"
-                    },
-                    "data": data
-                }
-            }
-        );
-        fusioncharts.render();
-    });
-}
-
-function createChartEURImprstValas(data) {
-    console.log(data);
-    FusionCharts.ready(function () {
-        var fusioncharts = new FusionCharts({
-                type: 'pie2d',
-                renderAt: 'chart-EUR-imprst-valas',
-                width: '635',
-                height: '450',
-                dataFormat: 'json',
-                dataSource: {
-                    "chart": {
-                        "caption": "EUR",
-                        "numbersuffix": " %",
-                        "exportEnabled": "1",
-                        "bgColor": "#ffffff",
-                        "showLabels": "0",
-                        "isSmartLineSlanted": "0",
-                        "showBorder": "0",
-                        "showLegend": "1",
-                        "baseFontSize": "12"
-                    },
-                    "data": data
-                }
-            }
-        );
-        fusioncharts.render();
-    });
-}
-
-function createChartJPYImprstValas(data) {
-    console.log(data);
-    FusionCharts.ready(function () {
-        var fusioncharts = new FusionCharts({
-                type: 'pie2d',
-                renderAt: 'chart-JPY-imprst-valas',
-                width: '635',
-                height: '450',
-                dataFormat: 'json',
-                dataSource: {
-                    "chart": {
-                        "caption": "JPY",
-                        "numbersuffix": " %",
-                        "exportEnabled": "1",
-                        "bgColor": "#ffffff",
-                        "showLabels": "0",
-                        "isSmartLineSlanted": "0",
-                        "showBorder": "0",
-                        "showLegend": "1",
-                        "baseFontSize": "12"
-                    },
-                    "data": data
-                }
-            }
-        );
-        fusioncharts.render();
-    });
-}
-
- function createChartMYRImprstValas(data) {
-     console.log(data);
-     FusionCharts.ready(function () {
-         var fusioncharts = new FusionCharts({
-                 type: 'pie2d',
-                 renderAt: 'chart-MYR-imprst-valas',
-                 width: '635',
-                 height: '450',
-                 dataFormat: 'json',
-                 dataSource: {
-                     "chart": {
-                         "caption": "MYR",
-                         "numbersuffix": " %",
-                         "exportEnabled": "1",
-                         "bgColor": "#ffffff",
-                         "showLabels": "0",
-                         "isSmartLineSlanted": "0",
-                         "showBorder": "0",
-                         "showLegend": "1",
-                         "baseFontSize": "12"
-                     },
-                     "data": data
-                 }
-             }
-         );
-         fusioncharts.render();
-     });
- }
-

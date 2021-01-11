@@ -4,6 +4,8 @@ $(document).ready(function () {
     tableRencanaImprestValas();
     tableRencanaImpres();
     tableRealisasiBankCurrency();
+        getDataRencana();
+        getDataRealisasi();
     var date = new Date();
     var newDate = date.toJSON().slice(0, 10).replace(new RegExp("-", 'g'), "/").split("/").reverse().join("/")
     $("#tglcetak").html(newDate);
@@ -65,18 +67,18 @@ function tableMainDashboard(_date){
         "bLengthChange" : false,
         "columns" : [
             {"data": null,"render": (data, type, row) => { if (data.URAIAN === "Bank"){
-                                                            return '<td >'+data.URAIAN+'<img src="/static/images/add.svg" height="12.5" width="12.5" onclick="showModal(location.href="http://google.com")"/></td>';
-                                                            } else
-                                                            return '<td >'+data.URAIAN+'</td>';
+                    return '<td >'+data.URAIAN+'<img src="/static/images/add.svg" height="12.5" width="12.5" onclick="showModal(location.href="http://google.com")"/></td>';
+                    } else
+                    return '<td >'+data.URAIAN+'</td>';
                 }},
             {"data": "ISANAK","visible":false},
             {
                 "data":null,
                 "render" : (data, tyoe, row) => {
                     if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"){
-                        return "";
+                        return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
                     } else if (Intl.NumberFormat().format(data.RP_D0) === "0" ){
-                        return "";
+                        return "Rp. 0";
                     } else
                         return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
                 },
@@ -89,9 +91,9 @@ function tableMainDashboard(_date){
             {"data":null,
                 "render" : (data, tyoe, row) => {
                     if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"){
-                        return "";
+                        return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'
                     }else if (Intl.NumberFormat().format(data.RP_D1) === "0" ){
-                        return "";
+                        return "Rp. 0";
                     }else
                         return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'
                 },
@@ -99,9 +101,9 @@ function tableMainDashboard(_date){
             {"data":null,
                 "render" : (data, tyoe, row) => {
                     if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"){
-                        return "";
+                        return '<td> </td>'
                     }else if (Intl.NumberFormat().format(data.RP_D2) === "0" ){
-                        return "";
+                        return "Rp. 0";
                     }else
                         return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'
                 },
@@ -109,19 +111,19 @@ function tableMainDashboard(_date){
             {"data":null,
                 "render" : (data, tyoe, row) => {
                     if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"){
-                        return "";
+                        return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'
                     }else if (Intl.NumberFormat().format(data.RP_D3) === "0" ){
-                        return "";
+                        return "Rp. 0";
                     }else
                         return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
                 "render" : (data, tyoe, row) => {
                     if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"){
-                        return "";
+                        return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'
                     }else if (Intl.NumberFormat().format(data.RP_D4) === "0" ){
-                                                 return "";
-                                             }else
+                        return "Rp. 0";
+                    }else
                         return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
         ],
@@ -140,7 +142,6 @@ function tableMainDashboard(_date){
             $(row).addClass("grand-parent");
             $(row).addClass("parent");
             $(row).attr("onclick", "showParents(this)");
-
         }
 
         if (data["ISANAK"] === 0 && regexChild1.test(data["KODE"])){
@@ -184,50 +185,50 @@ function tableMainDashboard(_date){
                 {"data": "KODE","visible":false},
                 {
                     "data":null,"render" : (data, tyoe, row) => {
-                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"){
+                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank" || data.URAIAN.trim() === "Realisasi Penarikan Pinjaman"){
                             return "";
                         }else if (data.URAIAN.trim() === "BANK"){
                             return '<td class="trigger">' + data.URAIAN + '</td>'
                         }else if (Intl.NumberFormat().format(data.RP_DMIN5) === "0" ){
-                                                     return "";
-                                                 }else
+                            return "";
+                        }else
                             return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_DMIN5)+'</td>'
                     },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
                 {
                     "data":null,
                     "render" : (data, tyoe, row) => {
-                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"){
+                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank" || data.URAIAN.trim() === "Realisasi Penarikan Pinjaman"){
                             return "";
                         }else if (Intl.NumberFormat().format(data.RP_DMIN4) === "0" ){
-                                                     return "";
-                                                 }else
+                            return "";
+                        }else
                             return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_DMIN4)+'</td>';
                     },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
                 {"data":null,
                     "render" : (data, tyoe, row) => {
-                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"){
+                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank" || data.URAIAN.trim() === "Realisasi Penarikan Pinjaman"){
                             return "";
                         }else if (Intl.NumberFormat().format(data.RP_DMIN3) === "0" ){
-                                                     return "";
-                                                 }else
+                            return "";
+                        }else
                             return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_DMIN3)+'</td>';
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
                 {"data":null,
                     "render" : (data, tyoe, row) => {
-                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"){
+                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank" || data.URAIAN.trim() === "Realisasi Penarikan Pinjaman"){
                             return "";
                         }else if (Intl.NumberFormat().format(data.RP_DMIN2) === "0" ){
-                                                     return "";
-                                                 }else
+                            return "";
+                        }else
                             return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_DMIN2)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
                 {"data":null,
                     "render" : (data, tyoe, row) => {
-                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank"  ){
+                        if (data.URAIAN.trim() === "Jenis Rekening" || data.URAIAN.trim() === "Mata Uang" || data.URAIAN.trim() === "Bank" || data.URAIAN.trim() === "Realisasi Penarikan Pinjaman"){
                             return "";
                         }else if (Intl.NumberFormat().format(data.RP_DMIN1) === "0" ){
-                                                     return "";
-                                                 }else
+                            return "";
+                        }else
                             return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_DMIN1)+'</td>';
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             ],
@@ -1920,217 +1921,129 @@ function barRealisasiPembayaranTahun(datasett2){
     });
 }
 
-//function barRencanaRealisasiPembayaranHari(chart_hari){
-//    const dataSource = {
-//        chart : {
-//            caption : "Rencana & Realisasi Pembayaran Per Hari",
-//            subcaption : "PT. PLN (Persero) Divisi Treasury",
-//            showSum : "1",
-//            numberprefix : "Rp ",
-//            theme : "fusion",
-//            numDivLines : "5",
-//            divLineColor: "#6699cc",
-//            divLineAlpha: "60",
-//            divLineDashed: "0",
-//            showLegend: "0",
-//            numberScaleValue: "1000, 1000, 1000, 1000",
-//            numberScaleUnit: "Rb, Jt, M, T"
-//        },
-//        categories : [
-//            {
-//                category : [
-//                    {
-//                        label : "Hari ke 1"
-//                    },
-//                    {
-//                        label : "Hari ke 2"
-//                    },
-//                    {
-//                        label : "Hari ke 3"
-//                    },
-//                    {
-//                        label : "Hari ke 4"
-//                    },
-//                    {
-//                        label : "Hari ke 5"
-//                    }
-//                ]
-//            }
-//        ],
-//        dataset : chart_hari
-//    };
-//
-//    FusionCharts.ready(function () {
-//        let chart = new FusionCharts({
-//            type: "msstackedcolumn2d",
-//            renderAt: "column-rencana-pembayaran",
-//            width: "100%",
-//            height: "100%",
-//            dataFormat: "json",
-//            dataSource
-//        }).render();
-//    });
-//}
-//
-//function barRencanaRealisasiPembayaranMinggu(chart_minggu){
-//    const dataSource = {
-//        chart : {
-//            caption : "Rencana & Realisasi Pembayaran Per Minggu",
-//            subcaption : "PT. PLN (Persero) Divisi Treasury",
-//            showSum : "1",
-//            numberprefix : "Rp ",
-//            theme : "fusion",
-//            numDivLines : "5",
-//            divLineColor: "#6699cc",
-//            divLineAlpha: "60",
-//            divLineDashed: "0",
-//            showLegend: "0",
-//            numberScaleValue: "1000, 1000, 1000, 1000",
-//            numberScaleUnit: "Rb, Jt, M, T"
-//        },
-//        categories : [
-//            {
-//                category : [
-//                    {
-//                        label : "Minggu ke 1"
-//                    },
-//                    {
-//                        label : "Minggu ke 2"
-//                    },
-//                    {
-//                        label : "Minggu ke 3"
-//                    },
-//                    {
-//                        label : "Minggu ke 4"
-//                    },
-//                    {
-//                        label : "Minggu ke 5"
-//                    }
-//                ]
-//            }
-//        ],
-//        dataset : chart_minggu
-//    };
-//
-//    FusionCharts.ready(function () {
-//        let chart = new FusionCharts({
-//            type: "msstackedcolumn2d",
-//            renderAt: "column-rencana-pembayaran2",
-//            width: "100%",
-//            height: "100%",
-//            dataFormat: "json",
-//            dataSource
-//        }).render();
-//    });
-//}
-//
-//function barRencanaRealisasiPembayaranBulan(chart_bulan){
-//
-////    console.log(chart_bulan)
-//
-//    const dataSource = {
-//        chart : {
-//            caption : "Rencana & Realisasi Pembayaran Per Bulan",
-//            subcaption : "PT. PLN (Persero) Divisi Treasury",
-//            showSum : "1",
-//            numberprefix : "Rp ",
-//            theme : "fusion",
-//            numDivLines : "5",
-//            divLineColor: "#6699cc",
-//            divLineAlpha: "60",
-//            divLineDashed: "0",
-//            showLegend: "0",
-//            numberScaleValue: "1000, 1000, 1000, 1000",
-//            numberScaleUnit: "Rb, Jt, M, T"
-//        },
-//        categories : [
-//            {
-//                category : [
-//                    {
-//                        label : "Bulan ke 1"
-//                    },
-//                    {
-//                        label : "Bulan ke 2"
-//                    },
-//                    {
-//                        label : "Bulan ke 3"
-//                    },
-//                    {
-//                        label : "Bulan ke 4"
-//                    },
-//                    {
-//                        label : "Bulan ke 5"
-//                    }
-//                ]
-//            }
-//        ],
-//        dataset : chart_bulan
-//    };
-//
-//    FusionCharts.ready(function () {
-//        let chart = new FusionCharts({
-//            type: "msstackedcolumn2d",
-//            renderAt: "column-rencana-pembayaran3",
-//            width: "100%",
-//            height: "100%",
-//            dataFormat: "json",
-//            dataSource
-//        }).render();
-//    });
-//}
-//
-//function barRencanaRealisasiPembayaranTahun(chart_tahun){
-//
-////    console.log(chart_bulan)
-//
-//    const dataSource = {
-//        chart : {
-//            caption : "Rencana & Realisasi Pembayaran Per Bulan",
-//            subcaption : "PT. PLN (Persero) Divisi Treasury",
-//            showSum : "1",
-//            numberprefix : "Rp ",
-//            theme : "fusion",
-//            numDivLines : "5",
-//            divLineColor: "#6699cc",
-//            divLineAlpha: "60",
-//            divLineDashed: "0",
-//            showLegend: "0",
-//            numberScaleValue: "1000, 1000, 1000, 1000",
-//            numberScaleUnit: "Rb, Jt, M, T"
-//        },
-//        categories : [
-//            {
-//                category : [
-//                    {
-//                        label : "2019"
-//                    },
-//                    {
-//                        label : "2020"
-//                    },
-//                    {
-//                        label : "2021"
-//                    },
-//                    {
-//                        label : "2022"
-//                    },
-//                    {
-//                        label : "2023"
-//                    }
-//                ]
-//            }
-//        ],
-//        dataset : chart_tahun
-//    };
-//
-//    FusionCharts.ready(function () {
-//        let chart = new FusionCharts({
-//            type: "msstackedcolumn2d",
-//            renderAt: "column-rencana-pembayaran4",
-//            width: "100%",
-//            height: "100%",
-//            dataFormat: "json",
-//            dataSource
-//        }).render();
-//    });
-//}
+var table_rekapitulasi;
+var idValas = "";
+var allData;
+var tempVendor = "";
+var tempNilaiTagihan = "";
+var tempUnit = "";
+var tempTableSearch = "";
+
+var checkedArray = new Array();
+var cbParentArray = new Array();
+var srcTglAwal = null;
+var srcTglAkhir = null;
+var addedDays = 2;
+
+function getDataRencana(){
+    $.ajax({
+        crossOrigin: true,
+        type: "GET",
+        url: baseUrl + "api_operator/dashboard_evp/get_data_rencana",
+        cache: false,
+        dataType : 'json',
+        contentType: false,
+        processData: false,
+        success : (res) => {
+            if (res.OUT_SALDO_AWAL.length > 0){
+                let saldo_awal = Intl.NumberFormat().format(res.OUT_SALDO_AWAL[0].RP);
+                $("#saldo_awal_rencana").html(saldo_awal);
+            }
+            if (res.OUT_SALDO_AKHIR.length > 0){
+                let saldo_akhir = Intl.NumberFormat().format(res.OUT_SALDO_AKHIR[0].RP);
+                $("#saldo_akhir_rencana").html(saldo_akhir);
+            }
+            if (res.OUT_PENERIMAAN.length > 0){
+                let arr = res.OUT_PENERIMAAN;
+                arr.forEach(function (value, index) {
+                    let build = '<tr>';
+                    if (index === 0){
+                        build = build + '<td><h6><b>'+value.URAIAN+'</b></h6></td>\n' +
+                            '                                        <td><b>'+Intl.NumberFormat().format(value.RP)+'</b></td>\n' +
+                            '                                    </tr>'
+                    }else{
+                        build = build + '<td><span><i class="'+value.ICON+'"></i></span>&nbsp;'+value.URAIAN+'</td>\n'+
+                        '<td>'+Intl.NumberFormat().format(value.RP)+'</td></tr>';
+                    }
+                    $("#table_rencana_left").append(build);
+                });
+            }
+            if (res.OUT_BIAYA.length > 0){
+                let arr = res.OUT_BIAYA;
+                arr.forEach(function (value, index) {
+                    let build = '<tr>';
+                    if (index === 0){
+                        build = build + '<td><h6><b>'+value.URAIAN+'</b></h6></td>\n' +
+                            '                                        <td><b>'+Intl.NumberFormat().format(value.RP)+'</b></td>\n' +
+                            '                                    </tr>'
+                    }else{
+                        build = build + '<td><span><i class="'+value.ICON+'"></i></span>&nbsp;'+value.URAIAN+'</td>\n'+
+                            '<td>'+Intl.NumberFormat().format(value.RP)+'</td></tr>';
+                    }
+                    $("#table_rencana_right").append(build);
+                });
+            }
+            console.log("Result : ",res);
+        },
+        error : (err) => {
+            console.log("Error : ",err);
+        }
+    })
+}
+
+function getDataRealisasi(){
+    $.ajax({
+        crossOrigin: true,
+        type: "GET",
+        url: baseUrl + "api_operator/dashboard_evp/get_data_realisasi",
+        cache: false,
+        dataType : 'json',
+        contentType: false,
+        processData: false,
+        success : (res) => {
+            if (res.OUT_SALDO_AWAL.length > 0){
+                let saldo_awal = Intl.NumberFormat().format(res.OUT_SALDO_AWAL[0].RP);
+                $("#saldo_awal_realisasi").html(saldo_awal);
+            }
+            if (res.OUT_SALDO_AKHIR.length > 0){
+                let saldo_akhir = Intl.NumberFormat().format(res.OUT_SALDO_AKHIR[0].RP);
+                $("#saldo_akhir_realisasi").html(saldo_akhir);
+            }
+            if (res.OUT_PENERIMAAN.length > 0){
+                let arr = res.OUT_PENERIMAAN;
+                arr.forEach(function (value, index) {
+                    let build = '<tr>';
+                    if (index === 0){
+                        build = build + '<td><h6><b>'+value.URAIAN+'</b></h6></td>\n' +
+                            '                                        <td><b>'+Intl.NumberFormat().format(value.RP)+'</b></td>\n' +
+                            '                                    </tr>'
+                    }else{
+                        build = build + '<td><span><i class="'+value.ICON+'"></i></span>&nbsp;'+value.URAIAN+'</td>\n'+
+                            '<td>'+Intl.NumberFormat().format(value.RP)+'</td></tr>';
+                    }
+                    $("#table_realisasi_left").append(build);
+                });
+            }
+            if (res.OUT_BIAYA.length > 0){
+                let arr = res.OUT_BIAYA;
+                arr.forEach(function (value, index) {
+                    let build = '<tr>';
+                    if (index === 0){
+                        build = build + '<td><h6><b>'+value.URAIAN+'</b></h6></td>\n' +
+                            '                                        <td><b>'+Intl.NumberFormat().format(value.RP)+'</b></td>\n' +
+                            '                                    </tr>'
+                    }else{
+                        build = build + '<td><span><i class="'+value.ICON+'"></i></span>&nbsp;'+value.URAIAN+'</td>\n'+
+                            '<td>'+Intl.NumberFormat().format(value.RP)+'</td></tr>';
+                    }
+                    $("#table_realisasi_right").append(build);
+                });
+            }
+            console.log("Result : ",res);
+        },
+        error : (err) => {
+            console.log("Error : ",err);
+        }
+    })
+}
 

@@ -24,7 +24,7 @@ public class PageOperatorController {
     public String pengelolaan_likuiditas() { return "operator/pengelolaan_likuiditas";
     }
 
-    @RequestMapping("//dashboard_penerimaan")
+    @RequestMapping("/dashboard_penerimaan")
     public String dashboard_penerimaan() { return "operator/dash_penerimaan";
     }
 
@@ -34,6 +34,14 @@ public class PageOperatorController {
 
     @RequestMapping("/dash_rencana")
     public String dash_rencana() { return "operator/dash_rencana";
+    }
+
+    @RequestMapping("/dashboard_valas")
+    public String dash_valas() { return "operator/dashboard_valas";
+    }
+
+    @RequestMapping("/dashboard_rupiah")
+    public String dash_rupiah() { return "operator/dashboard_rupiah";
     }
 
     @RequestMapping("/dash_realisasi")
@@ -50,6 +58,11 @@ public class PageOperatorController {
 
     @RequestMapping("/placement_lcl")
     public String placement_lcl() { return "operator/placement_lcl";
+    }
+
+    @RequestMapping("/giro")
+    public String giro() {
+        return "operator/giro";
     }
 
     @RequestMapping("/placement_fcl")

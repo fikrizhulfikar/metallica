@@ -176,7 +176,7 @@ $(document).ready(function () {
     $("#dashboard-carousel").carousel({
         interval : 1000*5,
         pause : "hover",
-    });
+    });pembayaran-bank
 $("#dash_date").datepicker({dateFormat : "dd/mm/yy"});
 });
 
@@ -206,7 +206,6 @@ function updatePotensi()
 
     console.log(list);
 
-
     $.ajax({
         url: baseUrl + "/api_operator/api_report/ins_pengadaan_valas",
         dataType: 'JSON',
@@ -230,7 +229,6 @@ function updatePotensi()
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
         }
     });
-
 };
 
 

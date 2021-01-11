@@ -1,8 +1,13 @@
 var tempTableSearch = "";
 $(document).ready(function () {
     initDataTablePlacement();
-    initDataTablePlacement3();
+//    initDataTablePlacement3();
+    tableMainDashboard();
 //    tableMainDashboard();
+        var date = new Date();
+        var newDate = date.toJSON().slice(0, 10).replace(new RegExp("-", 'g'), "/").split("/").reverse().join("/")
+        $("#tglcetak1").html(newDate);
+        $("#tglcetak2").html(newDate);
 
     $("#dashboard-carousel").carousel({
         interval : 1000*5,
@@ -10,356 +15,6 @@ $(document).ready(function () {
     });
 $("#dash_date").datepicker({dateFormat : "dd/mm/yy"});
 });
-
-function initDataTablePlacement(p_tgl_awal, p_sesi) {
-showLoadingCss();
-    $('#tanggal_awal1').datepicker({dateFormat: 'dd/mm/yy'});
-    $('#sesi_filter').attr("disabled", "disabled");
-    $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/rekap_placement_fcl",
-        dataType: 'JSON',
-        type: "GET",
-        data: {
-            p_tgl_awal: $("#tanggal_awal1").val(),
-            p_sesi: $("#sesi_filter").val()
-        },
-        success: function (res) {
-            var data = res.return;
-            console.log("response : "+data);
-
-            $('#table-rekap-placement-lcl tbody').empty();
-            var nomor;
-            $.each(data, function (key, val) {
-            $("#tglcetak").html(data[0].TANGGAL);
-//            nomor = key + 1;
-            if (val["BANK"] === "BUKOPIN"){
-                var html = "<tr>" +
-                    "<td align='center' style='background: #78d5d4; border-bottom: 1px solid transparent !important; font-weight: bold; color:#78d5d4'>" + val.TIPE + "</td>" +
-                    "<td align='center' style='background: #5dbcd2'>" + val.BANK + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AWAL,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.MANDIRI,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.BRI,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.BNI,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.BUKOPIN,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AKHIR,2,".",",") + "</td>" +
-                    "</tr>";
-            } else if (val["BANK"] === "BRI"){
-               var html = "<tr>" +
-                   "<td align='center' style='background: #78d5d4; border-top: 1px solid transparent !important; border-bottom: 1px solid transparent !important; font-weight: bold ; color:#78d5d4'>" + val.TIPE + "</td>" +
-                   "<td align='center' style='background: #5dbcd2'>" + val.BANK + "</td>" +
-                   "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AWAL,2,".",",") + "</td>" +
-                   "<td align='right'> Rp " + accounting.formatNumber(val.MANDIRI,2,".",",") + "</td>" +
-                   "<td align='right'> Rp " + accounting.formatNumber(val.BRI,2,".",",") + "</td>" +
-                   "<td align='right'> Rp " + accounting.formatNumber(val.BNI,2,".",",") + "</td>" +
-                   "<td align='right'> Rp " + accounting.formatNumber(val.BUKOPIN,2,".",",") + "</td>" +
-                   "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AKHIR,2,".",",") + "</td>" +
-                   "</tr>";
-           } else if (val["BANK"] === "MANDIRI"){
-                var html = "<tr>" +
-                    "<td align='center' style='background: #78d5d4; border-bottom: 1px solid transparent !important; font-weight: bold'>" + val.TIPE + "</td>" +
-                    "<td align='center' style='background: #5dbcd2'>" + val.BANK + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AWAL,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.MANDIRI,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.BRI,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.BNI,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.BUKOPIN,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AKHIR,2,".",",") + "</td>" +
-                    "</tr>";
-            } else if (val["BANK"] === "BNI"){
-                 var html = "<tr>" +
-                     "<td align='center' style='background: #78d5d4; border-top: 1px solid transparent !important; border-bottom: 1px solid transparent !important; font-weight: bold; color:#78d5d4'>" + val.TIPE + "</td>" +
-                     "<td align='center' style='background: #5dbcd2'>" + val.BANK + "</td>" +
-                     "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AWAL,2,".",",") + "</td>" +
-                     "<td align='right'> Rp " + accounting.formatNumber(val.MANDIRI,2,".",",") + "</td>" +
-                     "<td align='right'> Rp " + accounting.formatNumber(val.BRI,2,".",",") + "</td>" +
-                     "<td align='right'> Rp " + accounting.formatNumber(val.BNI,2,".",",") + "</td>" +
-                     "<td align='right'> Rp " + accounting.formatNumber(val.BUKOPIN,2,".",",") + "</td>" +
-                     "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AKHIR,2,".",",") + "</td>" +
-                     "</tr>";
-             } else if (val["BANK"] === "TOTAL"){
-                  var html = "<tr>" +
-                      "<td align='center' style='background: #78d5d4; border-top: 1px solid transparent !important; font-weight: bold; color:#78d5d4'>" + val.TIPE + "</td>" +
-                      "<td align='center' style='background: #5dbcd2'>" + val.BANK + "</td>" +
-                      "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.SALDO_AWAL,2,".",",") + "</td>" +
-                      "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.MANDIRI,2,".",",") + "</td>" +
-                      "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.BRI,2,".",",") + "</td>" +
-                      "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.BNI,2,".",",") + "</td>" +
-                      "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.BUKOPIN,2,".",",") + "</td>" +
-                      "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.SALDO_AKHIR,2,".",",") + "</td>" +
-                      "</tr>";
-              }
-                $('#table-rekap-placement-lcl').append(html);
-            });
-
-            hideLoadingCss()
-        },
-        error: function () {
-            // hideLoadingCss("Gagal Ambil Data IMPRST VALAS");
-            hideLoadingCss();
-            $('#table-rekap-placement-lcl tbody').empty();
-            var html = "<tr>" +
-                "<td colspan='5' align='center'> No Data </td>" +
-                "</tr>";
-            $('#table-rekap-placement-lcl tbody').append(html);
-        }
-    });
-}
-
-function tableMainDashboard(_date){
-    let date = new Date();
-    let current_month = date.getMonth()+1;
-    let current_full_date;
-    let current_date = (date.getDate() < 10) ? "0"+ date.getDate().toString() : date.getDate();
-    let curr_month = (date.getMonth() < 10) ? "0"+current_month.toString() : current_month;
-    (_date === undefined) ? current_full_date = date.getFullYear().toString()+curr_month.toString()+current_date : current_full_date = _date;
-
-    var datestring = dateToString(date);
-    $("#tgl1b").html(datestring);
-    $("#tgl2b").html(incDate(date, 1));
-    $("#tgl3b").html(incDate(date, 2));
-    $("#tgl4b").html(incDate(date, 3));
-    $("#tgl5b").html(incDate(date, 4));
-    $("#tgl6b").html(incDate(date, 5));
-//    $("#tgl7b").html(incDate(date, 6));
-
-    let rupiah = $("#rupiah").DataTable({
-            "ajax" : {
-                "url": baseUrl + "/api_operator/rekap_invoice_belum/ins_rekap_placement_lcl",
-                "data" : {
-                    "tanggal" : current_full_date,
-                },
-                "type" : "GET",
-                "dataType" : "json",
-            },
-            "sorting": false,
-            "searching" : false,
-            "paging": false,
-            "bInfo" : false,
-            "bLengthChange" : false,
-            "columns" : [
-    //            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
-                {"data": null,"visible": false,"render": (data, type, row) => {return data.KETERANGAN;}},
-                {"data": null,"render": (data, type, row) => {return data.KETERANGAN;}},
-    //            {"data": null,"render": (data, type, row) => {if (data.BANK === "TOTAL"){
-    //                                                            return '<td> TOTAL '+data.CURRENCY+'</td>';
-    //                                                            }else
-    //                                                            return '<td>'+data.CURRENCY+'</td>';
-    //                                                            }},
-                {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D0 == "0" || data.RP_D0 == null){
-                                                                  return '<td> - </td>';
-                                                                  } else
-                                                                  return '<td>'+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
-                                                               },
-                                                             "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                             }},
-                {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D1 == "0" || data.RP_D1 == null){
-                                                                  return '<td> - </td>';
-                                                                  } else
-                                                                  return '<td>'+ new Intl.NumberFormat().format(data.RP_D1)+'</td>';
-                                                               },
-                                                             "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                             }},
-                {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D2 == "0" || data.RP_D2 == null){
-                                                                  return '<td> - </td>';
-                                                                  } else
-                                                                  return '<td>'+ new Intl.NumberFormat().format(data.RP_D2)+'</td>';
-                                                               },
-                                                             "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                             }},
-                {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D3 == "0" || data.RP_D3 == null){
-                                                                  return '<td> - </td>';
-                                                                  } else
-                                                                  return '<td>'+ new Intl.NumberFormat().format(data.RP_D3)+'</td>';
-                                                               },
-                                                             "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                             }},
-                {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D4 == "0" || data.RP_D4 == null){
-                                                                  return '<td> - </td>';
-                                                                  } else
-                                                                  return '<td>'+ new Intl.NumberFormat().format(data.RP_D4)+'</td>';
-                                                               },
-                                                             "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                             }},
-                {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D5 == "0" || data.RP_D5 == null){
-                                                                  return '<td> - </td>';
-                                                                  } else
-                                                                  return '<td>'+ new Intl.NumberFormat().format(data.RP_D5)+'</td>';
-                                                               },
-                                                             "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                             }},
-                {"data":null,"render" : (data, tyoe, row) => {if (data.RP_D6 == "0" || data.RP_D6 == null){
-                                                                  return '<td> - </td>';
-                                                                  } else
-                                                                  return '<td>'+ new Intl.NumberFormat().format(data.RP_D6)+'</td>';
-                                                               },
-                                                             "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                             }},
-                {"data":null,"render" : (data, tyoe, row) => {if (data.RP_TOTAL == "0" || data.RP_TOTAL == null){
-                                                                  return '<td> - </td>';
-                                                                  } else
-                                                                  return '<td>'+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                               },
-                                                             "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                             }},
-            ],
-
-             "createdRow" : function (row, data, dataIndex){
-
-                if ((data["BANK"] === "TOTAL")){
-                    $(row).css({
-                        "background-color": "#F4D35E",
-                        "text-align": "center",
-                        "font-weight": "bold",
-                    });
-    //                $('td', row).eq(0).attr("colspan","2");
-                 };
-             },
-
-             "drawCallback" : function (settings){
-                let groupColumn = 0;
-                var api = this.api();
-                var rows = api.rows({page:'current'}).nodes();
-                var last = null;
-                let array = api.column(groupColumn, {page:'current'}).data();
-    //            console.log(array[20])
-
-                api.column(groupColumn, {page:'current'}).data().each(function (group, i){
-                if (last !== group.BANK){
-                    let count = 1;
-
-                    for (let j=i; j<array.length; j++){
-                        let first = array[i].BANK;
-                        if (first !== array[j].BANK) break;
-                        count+= 1;
-                    }
-                    if ((group.BANK === "TOTAL")){
-                        $(rows).eq(i).before(
-                            '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold; background-color: #F4D35E">'+group.BANK+'</td></tr>'
-                        );
-                    }else
-                        $(rows).eq(i).before(
-                            '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold;">'+group.BANK+'</td></tr>'
-                        );
-    //                console.log(array)
-                    last = group.BANK;
-                    }
-                });
-             }
-        });
-}
-
-function initDataTablePlacement3() {
-    showLoadingCss();
-//    $('#tanggal_awal1').datepicker({dateFormat: 'dd/mm/yy'});
-//    $('#sesi_filter').attr("disabled", "disabled");
-    $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/get_pemindahan_buku_fcl",
-        dataType: 'JSON',
-        type: "GET",
-        success: function (res) {
-            var data = res.return;
-            console.log("response : "+data);
-
-            $('#table-pemindahbukuan tbody').empty();
-            var nomor;
-            $.each(data, function (key, val) {
-            $("#tglcetak").html(data[0].TANGGAL);
-//            nomor = key + 1;
-            if (val["BANK"] === "TOTAL"){
-                var html = "<tr>" +
-                    "<td align='center' style='background: #5dbcd2'>" + val.BANK + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='center' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.NOMINAL,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "</tr>";
-            } else {
-                var html = "<tr>" +
-                    "<td align='center'>" + val.BANK + "</td>" +
-                    "<td align='right'>" + val.NAMA_REKENING + "</td>" +
-                    "<td align='right'>" + val.NO_REKENING + "</td>" +
-                    "<td align='right'>" + val.KEPADA_BANK + "</td>" +
-                    "<td align='right'>" + val.NAMA_REKENING + "</td>" +
-                    "<td align='right'>" + val.NO_REKENING + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.NOMINAL,2,".",",") + "</td>" +
-                    "<td align='right'>" + val.NO_SAP + "</td>" +
-                    "<td align='right'> " + val.KETERANGAN + "</td>" +
-                    "</tr>";
-            }
-                $('#table-pemindahbukuan').append(html);
-            });
-
-            hideLoadingCss()
-        },
-        error: function () {
-            // hideLoadingCss("Gagal Ambil Data IMPRST VALAS");
-            hideLoadingCss();
-            $('#table-pemindahbukuan tbody').empty();
-            var html = "<tr>" +
-                "<td colspan='11' align='center'> No Data </td>" +
-                "</tr>";
-            $('#table-pemindahbukuan tbody').append(html);
-        }
-    });
-
-//    $.ajax({
-//        url: baseUrl + "api_operator/rekap_invoice_belum/get_pengadaan_valas",
-//        dataType: 'JSON',
-//        type: "GET",
-//        success: function (res) {
-//            var data = res.return;
-//            console.log("response : "+data);
-//
-//            $('#table-rekap-placement-lcl tbody').empty();
-//            var nomor;
-//            $.each(data, function (key, val) {
-//            $("#tglcetak").html(data[0].TANGGAL);
-////            nomor = key + 1;
-//           if (val["BANK"] === "TOTAL"){
-//                var html = "<tr>" +
-//                    "<td align='center' style='background: #5dbcd2'>" + val.BANK + "</td>" +
-//                    "<td align='right' style='background: #5dbcd2'> </td>" +
-//                    "<td align='right' style='background: #5dbcd2'> </td>" +
-//                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.NOMINAL,2,".",",") + "</td>" +
-//                    "<td align='center' style='background: #5dbcd2'> </td>" +
-//                    "<td align='right' style='background: #5dbcd2'> </td>" +
-//                    "<td align='right' style='background: #5dbcd2'> </td>" +
-//                    "<td align='right' style='background: #5dbcd2'> </td>" +
-//                    "<td align='right' style='background: #5dbcd2'> </td>" +
-//                    "</tr>";
-//            } else {
-//                var html = "<tr>" +
-//                    "<td align='center'>" + val.BANK + "</td>" +
-//                    "<td align='right'>" + val.NAMA_REKENING + "</td>" +
-//                    "<td align='right'>" + val.NO_REKENING + "</td>" +
-//                    "<td align='right'> Rp " + accounting.formatNumber(val.NOMINAL,2,".",",") + "</td>" +
-//                    "<td align='right'>" + val.BANK + "</td>" +
-//                    "<td align='right'>" + val.NAMA_REKENING + "</td>" +
-//                    "<td align='right'>" + val.NO_REKENING + "</td>" +
-//                    "<td align='right'>" + val.NO_SAP + "</td>" +
-//                    "<td align='right'> " + val.KETERANGAN + "</td>" +
-//                    "</tr>";
-//            }
-//                $('#table-pengadaan-valas').append(html);
-//            });
-//
-//            hideLoadingCss()
-//        },
-//        error: function () {
-//            // hideLoadingCss("Gagal Ambil Data IMPRST VALAS");
-//            hideLoadingCss();
-//            $('#table-pengadaan-valas tbody').empty();
-//            var html = "<tr>" +
-//                "<td colspan='9' align='center'> No Data </td>" +
-//                "</tr>";
-//            $('#table-pengadaan-valas tbody').append(html);
-//        }
-//    });
-}
 
 function dateToString(date) {
     return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
@@ -383,10 +38,365 @@ function stringToDate(_date) {
     return formatedDate;
 }
 
+function initDataTablePlacement(tanggal, sesi) {
+
+    $('#table-rekap-placement-lcl').dataTable().fnDestroy();
+
+    let rincian_saldo = $("#table-rekap-placement-lcl").DataTable({
+        "ajax" : {
+            "url": baseUrl + "api_operator/rekap_invoice_belum/placement_fcl",
+            "data" : {
+                p_tanggal: tanggal,
+                p_sesi: sesi
+            },
+            "type" : "GET",
+            "dataType" : "json",
+            "dataSrc":
+                function (res) {
+                    return res.data;
+                }
+        },
+        "sorting": false,
+        "searching" : true,
+        "paging": true,
+        "bInfo" : false,
+        "bLengthChange" : true,
+        "columns" : [
+            {"data":null,"render": (data, type, row) => {return '<td>'+data.CURRENCY+'</td>';}},
+            {"data":null,"render": (data, type, row) => {return '<td>'+data.BANK+'</td>';}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.SALDO_RECEIPT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.MANDIRI)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.BRI)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.BNI)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.BUKOPIN)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.SALDO_RECEIPT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+        ],
+    });
+}
+
+function tableMainDashboard(_date, tanggal, sesi){
+    let date = new Date();
+    let current_month = date.getMonth()+1;
+    let current_full_date;
+    let current_date = (date.getDate() < 10) ? "0"+ date.getDate().toString() : date.getDate();
+    let curr_month = (date.getMonth() < 10) ? "0"+current_month.toString() : current_month;
+    (_date === undefined) ? current_full_date = date.getFullYear().toString()+curr_month.toString()+current_date : current_full_date = _date;
+
+    var datestring = dateToString(date);
+    $("#tgl1b").html(datestring);
+    $("#tgl2b").html(incDate(date, 1));
+    $("#tgl3b").html(incDate(date, 2));
+    $("#tgl4b").html(incDate(date, 3));
+    $("#tgl5b").html(incDate(date, 4));
+    $("#tgl6b").html(incDate(date, 5));
+//    $("#tgl7b").html(incDate(date, 6));
+
+    let rupiah = $("#rupiah").DataTable({
+        "serverSide": true,
+        "bLengthChange": true,
+        "paging": false,
+        "scrollY": "100%",
+        "scrollX": "100%",
+        "searching": false,
+        "bSortable": false,
+        "scrollCollapse": false,
+        "aoColumnDefs": [
+            {width: 100, targets: 0},
+            {width: 100, targets: 1},
+            {width: 100, targets: 2},
+            {width: 100, targets: 3},
+            {width: 100, targets: 4},
+            {width: 100, targets: 5},
+            {width: 100, targets: 6},
+            {width: 100, targets: 7},
+//            {width: 100, targets: 8},
+            {width: "20%", "targets": 0},
+            { className: "datatables_action", "targets": [1, 2, 3, 4, 5, 6, 7, 8] },
+            {
+                "aTargets": [0],
+                "mRender": function (data, type, full) {
+                    return full.CURRENCY;
+                }
+
+            },
+            {
+                "aTargets": [1],
+                "mRender": function (data, type, full) {
+                    return full.BANK;
+                }
+
+            },
+            {
+                "aTargets": [2],
+                "mRender": function (data, type, full) {
+                    return accounting.formatNumber(full.RP_D0,2,".",",");
+                }
+
+            },
+            {
+                "aTargets": [3],
+                "mRender": function (data, type, full) {
+                    return accounting.formatNumber(full.RP_D1,2,".",",");
+                }
+
+            },
+
+            {
+                "aTargets": [4],
+                "mRender": function (data, type, full) {
+                    return accounting.formatNumber(full.RP_D2,2,".",",");
+                }
+
+            },
+            {
+                "aTargets": [5],
+                "mRender": function (data, type, full) {
+                    return accounting.formatNumber(full.RP_D3,2,".",",");
+                }
+
+            },
+            {
+                "aTargets": [6],
+                "mRender": function (data, type, full) {
+                    return accounting.formatNumber(full.RP_D4,2,".",",");
+                }
+
+            },
+            {
+                "aTargets": [7],
+                "mRender": function (data, type, full) {
+                    return accounting.formatNumber(full.RP_D5,2,".",",");
+                }
+
+            },
+            {
+                "aTargets": [8],
+                "mRender": function (data, type, full) {
+                    var ret_value = " ";
+                    ret_value = '<div class="col-md-6 btn-group" align="center">' +
+                                '<button style="width: 15px !important;" id="detail" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="seta(\''+full.CURRENCY+'\')"><i class="fa fa-clone"></i></button>';
+                    return ret_value;
+                }
+            }
+        ],
+        "ajax":
+            {
+                "url":
+                    baseUrl + "api_operator/rekap_invoice_belum/kebutuhan_placement_fcl",
+                "type":
+                    "GET",
+                "dataType":
+                    "json",
+                "data":
+                    {
+                        p_tanggal: tanggal,
+                        p_sesi: sesi
+                    }
+                ,
+                "dataSrc":
+                function (res) {
+                    hideLoadingCss()
+                    return res.data;
+                }
+            }
+        });
+
+        rupiah.columns.adjust();
+}
+
+function seta(jenis){
+
+    $('#set-a').modal({backdrop: 'static', keyboard: false});
+    $('#table-imprest-pusat').dataTable().fnDestroy();
+
+    let detail_placement = $("#table-imprest-pusat").DataTable({
+            "ajax" : {
+                "url": baseUrl + "api_operator/rekap_invoice_belum/detail_placement_fcl",
+                "data" : {
+                    p_jenis : jenis
+                },
+                "type" : "GET",
+                "dataType" : "json",
+                "dataSrc":
+                    function (res) {
+                        return res.data;
+                    }
+            },
+            "sorting": false,
+            "searching" : false,
+            "paging": false,
+            "bInfo" : false,
+            "bLengthChange" : true,
+            "columns" : [
+                {"data":null,"render" : (data, type, row) => {return "<td> <span id='data0'>"+data.BANK+"</span></td>";}},
+                {"data":null,"render" : (data, tyoe, row) => {return "<td> Rp. " + accounting.formatNumber(data.SISA_SALDO,2,".",",") +"</td>";
+                                                             },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+                {"data":null,"render" : (data, tyoe, row) => {if (data.MANDIRI == "0" || data.MANDIRI == null){
+                                                                return "<td> Rp. <input style='text-align:right;' id='data1' type='number' value='"+ data.MANDIRI +"'></td>";
+                                                                } else
+                                                                return "<td> Rp. <input style='text-align:right;' id='data1' type='number' value='"+ data.MANDIRI +"'></td>";
+                                                                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+                {"data":null,"render" : (data, tyoe, row) => {if (data.BRI == "0" || data.BRI == null){
+                                                                return "<td> Rp. <input style='text-align:right;' id='data2' type='number' value='"+ data.BRI +"'></td>";
+                                                                } else
+                                                                return "<td> Rp. <input style='text-align:right;' id='data2' type='number' value='"+ data.BRI +"'></td>";
+                                                                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+                {"data":null,"render" : (data, tyoe, row) => {if (data.BNI == "0" || data.BNI == null){
+                                                                return "<td> Rp. <input style='text-align:right;' id='data3' type='number' value='"+ data.BNI +"'></td>";
+                                                                } else
+                                                                return "<td> Rp. <input style='text-align:right;' id='data3' type='number' value='"+ data.BNI +"'></td>";
+                                                                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+                {"data":null,"render" : (data, tyoe, row) => {if (data.BUKOPIN == "0" || data.BUKOPIN == null){
+                                                                return "<td> Rp. <input style='text-align:right;' id='data4' type='number' value='"+ data.BUKOPIN +"'></td>";
+                                                                } else
+                                                                return "<td> Rp. <input style='text-align:right;' id='data4' type='number' value='"+ data.BUKOPIN +"'></td>";
+                                                                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+                {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.TOTAL)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            ],
+        });
+
+        $(document).ready(function() {
+            if (jenis == "JPY"){
+                $('#container').append('<button type="button" id="set" class="btn btn-primary" onclick="updateJPY()">Set</button>');
+            } else if (jenis == "EUR") {
+                $('#container').append('<button type="button" id="set" class="btn btn-primary" onclick="updateEUR()">Set</button>');
+            } else {
+                $('#container').append('<button type="button" id="set" class="btn btn-primary" onclick="updateUSD()">Set</button>');
+            }
+        });
+
+        $("#close").click(function(){
+            $('#set').remove();
+        })
+}
+
+function updateJPY(){
+
+    var row = $("#table-imprest-pusat").find('tr'),
+        cells = row.find('td'),
+        btnCell = $(this).parent();
+    var list = [];
+
+    $('#table-imprest-pusat > tbody  > tr').each(function() {
+        var cell = $(this).find('td');
+        var map = {};
+        var i = cell.find('input#data1').val();
+        if (i === undefined) { return true; }
+        map.data0 = cell.find('#data0').html();
+        map.data1 = cell.find('input#data1').val();
+        map.data2 = cell.find('input#data2').val();
+        map.data3 = cell.find('input#data3').val();
+        map.data4 = cell.find('input#data4').val();
+        list.push(map)
+    });
+
+    $.ajax({
+        url: baseUrl + "api_operator/rekap_invoice_belum/ins_jpy",
+        dataType: 'JSON',
+        type: "POST",
+        data : {
+            pData: JSON.stringify(list)
+        },
+        success: function (res) {
+            console.log("res ins potensi : ",res);
+            if(res.return == 1 || res.return == '1'){
+                alert ("Data tersimpan");
+                location.reload();
+            }else{
+                alert ("Data gagal tersimpan");
+            }
+
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
+function updateEUR(){
+    var row = $("#table-imprest-pusat").find('tr'),
+        cells = row.find('td'),
+        btnCell = $(this).parent();
+    var list = [];
+
+    $('#table-imprest-pusat > tbody  > tr').each(function() {
+        var cell = $(this).find('td');
+        var map = {};
+        var i = cell.find('input#data1').val();
+        if (i === undefined) { return true; }
+        map.data0 = cell.find('#data0').html();
+        map.data1 = cell.find('input#data1').val();
+        map.data2 = cell.find('input#data2').val();
+        map.data3 = cell.find('input#data3').val();
+        map.data4 = cell.find('input#data4').val();
+        list.push(map)
+    });
+
+    $.ajax({
+        url: baseUrl + "api_operator/rekap_invoice_belum/ins_eur",
+        dataType: 'JSON',
+        type: "POST",
+        data : {
+            pData: JSON.stringify(list)
+        },
+        success: function (res) {
+            console.log("res ins potensi : ",res);
+            if(res.return == 1 || res.return == '1'){
+                alert ("Data tersimpan");
+                location.reload();
+            }else{
+                alert ("Data gagal tersimpan");
+            }
+
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
+function updateUSD(){
+    var row = $("#table-imprest-pusat").find('tr'),
+        cells = row.find('td'),
+        btnCell = $(this).parent();
+    var list = [];
+
+    $('#table-imprest-pusat > tbody  > tr').each(function() {
+        var cell = $(this).find('td');
+        var map = {};
+        var i = cell.find('input#data1').val();
+        if (i === undefined) { return true; }
+        map.data0 = cell.find('#data0').html();
+        map.data1 = cell.find('input#data1').val();
+        map.data2 = cell.find('input#data2').val();
+        map.data3 = cell.find('input#data3').val();
+        map.data4 = cell.find('input#data4').val();
+        list.push(map)
+    });
+
+    $.ajax({
+        url: baseUrl + "api_operator/rekap_invoice_belum/ins_usd",
+        dataType: 'JSON',
+        type: "POST",
+        data : {
+            pData: JSON.stringify(list)
+        },
+        success: function (res) {
+            console.log("res ins potensi : ",res);
+            if(res.return == 1 || res.return == '1'){
+                alert ("Data tersimpan");
+                location.reload();
+            }else{
+                alert ("Data gagal tersimpan");
+            }
+
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
 function openLihatDokumen(){
-//    setSelectBank("pNewBankPembayar", "", "PEMBAYAR", "", "REKAP");
-//    $("#pNewTglJatuhTempo").val("");
-//    $("#pNewBankPembayar").val("")
-//    $('#pNewTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: new Date()});
     $('#set-d').modal({backdrop: 'static', keyboard: false});
 }

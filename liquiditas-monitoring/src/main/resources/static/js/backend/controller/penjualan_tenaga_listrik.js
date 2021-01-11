@@ -6,7 +6,17 @@ $(document).ready(function () {
     search1("load");
     search3("load");
     search4("load");
+
+    $('#tanggal_awal1').datepicker({dateFormat: 'dd-mm-yy'});
+    $('#tanggal_akhir1').attr("disabled", "disabled");
+    $('#tanggal_awal3').datepicker({dateFormat: 'dd-mm-yy'});
+    $('#tanggal_akhir3').attr("disabled", "disabled");
+    $('#tanggal_awal4').datepicker({dateFormat: 'dd-mm-yy'});
+    $('#tanggal_akhir4').attr("disabled", "disabled");
+
     setSelectUnit("unit_filter1", "FILTER", "", "REKAP");
+    setSelectBank("bank_filter2", "FILTER", "", "REKAP");
+//    setSelectUnit3("unit_filter3", "FILTER", "", "REKAP");
 //    setSelectRange("range_filter1", "FILTER", "", "REKAP");
 
     $("#dashboard-carousel").carousel({
@@ -18,6 +28,86 @@ $("#dash_date").datepicker({dateFormat : "dd/mm/yy"});
 
 var srcTglAwal = null;
 var srcTglAkhir = null;
+var tempTableSearch = "";
+
+$("#tanggal_awal1").change(function () {
+    var tglAwalData = $('#tanggal_awal1').val();
+    if (tglAwalData == "") {
+        $('#tanggal_akhir1').val("");
+    } else {
+        $('#tanggal_akhir1').attr("disabled", false);
+        $('#tanggal_akhir1').datepicker({dateFormat: 'dd-mm-yy', minDate: tglAwalData});
+    }
+});
+
+//$("#tanggal_awal3").change(function () {
+//    var tglAwalData = $('#tanggal_awal3').val();
+//    if (tglAwalData == "") {
+//        $('#tanggal_akhir').val("");
+//    } else {
+//        $('#tanggal_akhir3').attr("disabled", false);
+//        $('#tanggal_akhir3').datepicker({dateFormat: 'dd-mm-yy', minDate: tglAwalData});
+//    }
+//});
+
+$("#tanggal_awal4").change(function () {
+    var tglAwalData = $('#tanggal_awal4').val();
+    if (tglAwalData == "") {
+        $('#tanggal_akhir4').val("");
+    } else {
+        $('#tanggal_akhir4').attr("disabled", false);
+        $('#tanggal_akhir4').datepicker({dateFormat: 'dd-mm-yy', minDate: tglAwalData});
+    }
+});
+
+function getAllData() {
+    $.ajax({
+        url: baseUrl + "api_operator/rekap_invoice_belum/penjualan_tenaga_listrik",
+        dataType: 'JSON',
+        type: "GET",
+        data: {
+            p_tgl_awal: $("#tanggal_awal1").val(),
+            p_tgl_akhir: $("#tanggal_akhir1").val(),
+            p_unit: $("#unit_filter1").val()
+        },
+        success: function (res) {
+            allData = res;
+        },
+        error: function (res) {
+            console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
+        }
+    });
+}
+
+function getAllData2() {
+    $.ajax({
+        url: baseUrl + "api_operator/rekap_invoice_belum/penjualan_tenaga_listrik_bank",
+        dataType: 'JSON',
+        type: "GET",
+        data: {
+            p_tgl_awal: $("#tanggal_awal1").val(),
+            p_tgl_akhir: $("#tanggal_akhir1").val(),
+            p_bank: $("#bank_filter2").val()
+        },
+        success: function (res) {
+            allData = res;
+        },
+        error: function (res) {
+            console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
+        }
+    });
+}
+
+function search1(state) {
+    if ($("#tanggal_akhir1").val() == "" && state != "load" && $("#tanggal_awal1").val() != "" && $("#unit_filter1").val() == "") {
+        alert("Mohon Lengkapi Tgl Akhir");
+    } else {
+        initDataTable($("#tanggal_awal1").val(), $("#tanggal_akhir1").val(), $("#unit_filter1").val())
+        getAllData()
+        srcTglAwal = $("#tanggal_awal1").val()
+        srcTglAkhir = $("#tanggal_akhir1").val()
+    }
+}
 
 function initDataTablePenjualanTenagaListrik(p_tgl_awal, p_tgl_akhir, p_unit, p_range) {
 
@@ -82,6 +172,137 @@ function initDataTablePenjualanTenagaListrik(p_tgl_awal, p_tgl_akhir, p_unit, p_
             $('#penerimaan-penjualan-jenis-layanan tbody').append(html);
         }
     });
+
+//        table_rekapitulasi = $('#penerimaan-penjualan-jenis-layanan').DataTable({
+//                    "serverSide": true,
+//                    "oSearch": {"sSearch": tempTableSearch},
+//                    "bLengthChange": true,
+//                    "scrollY": "100%",
+//                    "scrollX": "100%",
+//                    "searching": false,
+//                    bSortable: false,
+//                    "scrollCollapse": true,
+//                    "lengthMenu": [[10, 25, 50, 100, 200, 400, 600, 1000], [10, 25, 50, 100, 200, 400, 600, 1000]],
+//                    "aoColumnDefs": [
+//                        {width: 20, targets: 0},
+//                        {width: 100, targets: 1},
+//                        {width: 100, targets: 2},
+//                        {width: 100, targets: 3},
+//                        {width: 100, targets: 4},
+//                        {width: 100, targets: 5},
+//                        {width: "20%", "targets": 0},
+//                        { className: "datatables_action", "targets": [1, 2, 3, 4, 5] },
+//                        {
+//                            "aTargets": [0],
+//                            "mRender": function (data, type, full) {
+//                                return full.NO;
+//                            }
+//
+//                        },
+//                        {
+//                            "aTargets": [1],
+//                            "mRender": function (data, type, full) {
+//                                return full.TANGGAL;
+//                            }
+//
+//                        },
+//                        {
+//                            "aTargets": [2],
+//                            "mRender": function (data, type, full) {
+//                                return accounting.formatNumber(full.POSTPAID,2,".",",");
+//                            }
+//
+//                        },
+//                        {
+//                            "aTargets": [3],
+//                            "mRender": function (data, type, full) {
+//                                return accounting.formatNumber(full.PREPAID,2,".",",");
+//                            }
+//
+//                        },
+//
+//                        {
+//                            "aTargets": [4],
+//                            "mRender": function (data, type, full) {
+//                                return accounting.formatNumber(full.NTL,2,".",",");
+//                            }
+//
+//                        },
+//                        {
+//                            "aTargets": [5],
+//                            "mRender": function (data, type, full) {
+//                                return accounting.formatNumber(full.TOTAL,2,".",",");
+//                            }
+//
+//                        },
+//                    ],
+//                    "ajax":
+//                        {
+//                            "url":
+//                                baseUrl + "api_operator/rekap_invoice_belum/penjualan_tenaga_listrik",
+//                            "type":
+//                                "GET",
+//                            "dataType":
+//                                "json",
+//                            "data":
+//                                {
+//                                    p_tgl_awal: p_tgl_awal,
+//                                    p_tgl_akhir: p_tgl_akhir,
+//                                    p_unit: p_unit,
+//                                    p_range:p_range
+//                                }
+//                            ,
+//                            "dataSrc":
+//
+//                                function (res) {
+//                                    hideLoadingCss()
+////                                    getTotalTagihan();
+//                                    return res.data;
+//                                }
+//                        }
+//                }
+//            );
+//
+//            table_rekapitulasi.on('search.dt', function () {
+//                var value = $('.dataTables_filter input').val();
+//                tempTableSearch = value;
+//            });
+//
+//            table_rekapitulasi.columns.adjust();
+
+//    $('#penerimaan-penjualan-jenis-layanan').dataTable().fnDestroy();
+//
+//    let rincian_saldo = $("#penerimaan-penjualan-jenis-layanan").DataTable({
+//        "ajax" : {
+//            "url": baseUrl + "api_operator/rekap_invoice_belum/penjualan_tenaga_listrik",
+//            "data" : {
+//                p_tgl_awal: p_tgl_awal,
+//                p_tgl_akhir: p_tgl_akhir,
+//                p_unit: p_unit,
+//                p_range:p_range
+//            },
+//            "type" : "GET",
+//            "dataType" : "json",
+//            "dataSrc":
+//                function (res) {
+////                    getTotalTagihan();
+//                    return res.data;
+//                }
+//        },
+//        "sorting": false,
+//        "searching" : true,
+//        "paging": true,
+//        "bInfo" : false,
+//        "bLengthChange" : true,
+//        "columns" : [
+//            {"data": null,"render": (data, type, row) => {return '<td>'+data.NO+'</td>';}},
+//            {"data": null,"render": (data, type, row) => {return '<tr><td> </td></tr>';},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp.'+ new Intl.NumberFormat().format(data.POSTPAID)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp.'+ new Intl.NumberFormat().format(data.PREPAID)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp.'+ new Intl.NumberFormat().format(data.NTL)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.TOTAL)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+//        ],
+//    });
 }
 
 $("#tanggal_awal1").change(function () {
@@ -158,6 +379,39 @@ function initDataTablePenjualanTenagaListrikBank(p_tgl_awal, p_tgl_akhir, p_bank
             $('#penerimaan-penjualan-bank tbody').append(html);
         }
     });
+
+//    $('#penerimaan-penjualan-bank').dataTable().fnDestroy();
+//
+//    let rincian_saldo = $("#penerimaan-penjualan-bank").DataTable({
+//        "ajax" : {
+//            "url": baseUrl + "api_operator/rekap_invoice_belum/penjualan_tenaga_listrik_bank",
+//            "data" : {
+//                p_tgl_awal: p_tgl_awal,
+//                p_tgl_akhir: p_tgl_akhir,
+//                p_bank: p_bank
+//            },
+//            "type" : "GET",
+//            "dataType" : "json",
+//            "dataSrc":
+//                function (res) {
+////                    getTotalTagihan();
+//                    return res.data;
+//                }
+//        },
+//        "sorting": false,
+//        "searching" : true,
+//        "paging": true,
+//        "bInfo" : false,
+//        "bLengthChange" : true,
+//        "columns" : [
+//            {"data": null,"render": (data, type, row) => {return '<td>'+data.NO+'</td>';}},
+//            {"data": null,"render": (data, type, row) => {return '<td>'+data.BANK+'</td>';}},
+//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp.'+ new Intl.NumberFormat().format(data.POSTPAID)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp.'+ new Intl.NumberFormat().format(data.PREPAID)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp.'+ new Intl.NumberFormat().format(data.NTL)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+//            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp.'+ new Intl.NumberFormat().format(data.TOTAL)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+//        ],
+//    });
 }
 
 $("#tanggal_awal3").change(function () {
@@ -172,10 +426,11 @@ $("#tanggal_awal3").change(function () {
 });
 
 function search3(state) {
-    if ($("#tanggal_akhir3").val() == "" && state != "load" && $("#tanggal_awal3").val() != "") {
+    if ($("#tanggal_akhir3").val() == "" && state != "load" && $("#tanggal_awal3").val() != "" && $("#bank_filter2").val() == "") {
         alert("Mohon Lengkapi Tgl Akhir");
     } else {
-        initDataTablePenjualanTenagaListrikBank()
+        initDataTablePenjualanTenagaListrikBank($("#tanggal_awal3").val(), $("#tanggal_akhir3").val(), $("#bank_filter2").val())
+        getAllData()
         srcTglAwal = $("#tanggal_awal3").val()
         srcTglAkhir = $("#tanggal_akhir3").val()
     }
@@ -196,7 +451,7 @@ function initDataTablePenjualanTenagaListrikDist(p_tgl_awal, p_tgl_akhir, p_unit
         },
         success: function (res) {
             var data = res.return;
-            console.log("response : "+data);
+//            console.log("response : "+data);
 
             $('#penerimaan-penjualan-distribusi tbody').empty();
             var nomor;

@@ -68,7 +68,6 @@ function tableMainDashboard(bank, jenisRekening, tipeRekening){
    $('.dataTables_length').each(function () {
         var html = '<label style="margin-left: 200px; cursor:default">Total eq currency : Rp. <b id="total_tagihan"> 0</b></label>';
         var html2 = '<label style="margin-left: 30px; cursor:default">Total % : <b id="total_percent">0</b> %</label>';
-//        var html3 = '<input style="margin-left: 30px; type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"/>';
         $(this).append(html, html2);
     });
 }
@@ -92,7 +91,6 @@ function getAllData() {
             console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
         }
     });
-
 }
 
 function search(state) {

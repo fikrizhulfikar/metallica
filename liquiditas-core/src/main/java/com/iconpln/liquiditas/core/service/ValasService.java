@@ -2302,5 +2302,49 @@ public class ValasService {
         jsonString = jsonString.replaceAll("},", "};");
         return jsonString;
     }
+
+    public List<Map<String, Object>> getListGiro(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data rekap search info = " +
+                        "pStart : {}, " +
+                        "pLength : {}, " +
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, " +
+                        "pBank : {}, " +
+                        "pCurrency : {}, ",
+
+                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_giro");
+
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_start", pStart, Types.INTEGER)
+                .addValue("p_length", pLength, Types.INTEGER)
+                .addValue("p_tgl_awal", pTglAwal, Types.VARCHAR)
+                .addValue("p_tgl_akhir", pTglAkhir, Types.VARCHAR)
+                .addValue("p_bank", pBank, Types.VARCHAR)
+                .addValue("p_cur", pCurrency, Types.VARCHAR);
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_giro : {}", resultset);
+        return resultset;
+    }
+
+    public Map<String, Object> deleteGiro(String pIdGiro) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("del_giro");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_giro", pIdGiro)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data del_giro : {}", out);
+        return out;
+    }
 }
 

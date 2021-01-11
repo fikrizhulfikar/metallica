@@ -3538,6 +3538,11 @@ button.close {
     transform: translate(0, -25%); }
   .modal.show .modal-dialog {
     transform: translate(0, 0); }
+  .modal.fade .modal-dialog-lcl {
+    transition: transform 0.3s ease-out;
+    transform: translate(0, -25%); }
+  .modal.show .modal-dialog-lcl {
+    transform: translate(0, 0); }
 
 .modal-open .modal {
   overflow-x: hidden;

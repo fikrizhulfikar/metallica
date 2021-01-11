@@ -1,11 +1,28 @@
 var tempTableSearch = "";
 var kebutuhanPlacement;
+var lcl_today = null;
+var tanggal = new Date();
+var tempTableSearch = "";
+var sesi = "";
 
 $(document).ready(function () {
     initDataTablePlacement();
     initDataTablePlacement2();
-    initDataTablePlacement3();
-//    initDataTablePlacement4();
+    var date = new Date();
+    var newDate = date.toJSON().slice(0, 10).replace(new RegExp("-", 'g'), "/").split("/").reverse().join("/")
+    $("#tglcetak1").html(newDate);
+    $("#tglcetak2").html(newDate);
+    $("#tglApprove").html(newDate);
+    let dd = String(tanggal.getDate()).padStart(2,'0');
+    let mm = String(tanggal.getMonth() + 1).padStart(2,'0');
+    let yyyy = tanggal.getFullYear();
+
+    tanggal = dd+'/'+mm+'/'+yyyy;
+    $('#tglcetak2').html(tanggal)
+    $('#tanggal_awal1').datepicker({dateFormat: 'dd/mm/yy'});
+//    setSelectSesi("sesi_filter", "FILTER", "", "REKAP");
+    search("load");
+
 
     $("#dashboard-carousel").carousel({
         interval : 1000*5,
@@ -13,507 +30,6 @@ $(document).ready(function () {
     });
 $("#dash_date").datepicker({dateFormat : "dd/mm/yy"});
 });
-
-function search(state) {
-    if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
-        alert("Mohon Lengkapi Tgl Akhir");
-    } else {
-        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val(), $("#cmb_jenis_pemabayaran").val(), $("#cmb_status_tracking").val())
-        getAllData()
-        srcTglAwal = $("#tanggal_awal").val()
-        srcTglAkhir = $("#tanggal_akhir").val()
-    }
-}
-
-function initDataTablePlacement(p_tgl_awal, p_sesi) {
-    showLoadingCss();
-    $('#tanggal_awal1').datepicker({dateFormat: 'dd/mm/yy'});
-//    $('#sesi_filter').attr("disabled", "disabled");
-    $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/rekap_placement_lcl",
-        dataType: 'JSON',
-        type: "GET",
-        data: {
-            p_tgl_awal: $("#tanggal_awal1").val(),
-            p_sesi: $("#sesi_filter").val()
-        },
-        success: function (res) {
-            var data = res.return;
-            console.log("response : "+data);
-
-            $('#table-rekap-placement-lcl tbody').empty();
-            var nomor;
-            $.each(data, function (key, val) {
-            $("#tglcetak").html(data[0].TANGGAL);
-//            nomor = key + 1;
-            if (val["BANK"] === "TOTAL"){
-                var html = "<tr>" +
-                    "<td align='center' style='background: #5dbcd2'>" + val.BANK + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.SALDO_AWAL,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.IMPREST_KP,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.IMPOR,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.IMPREST_OT,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.IMPREST_IT,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.SETTLEMENT,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.PROYEKSI_VALAS,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.RECEIPT_PLACEMENT,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.GIRO,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.SALDO_AKHIR,2,".",",") + "</td>" +
-                    "</tr>";
-            } else {
-                var html = "<tr>" +
-                    "<td align='center'>" + val.BANK + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AWAL,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.IMPREST_KP,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.IMPOR,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.IMPREST_OT,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.IMPREST_IT,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.SETTLEMENT,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.PROYEKSI_VALAS,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.RECEIPT_PLACEMENT,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.GIRO,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AKHIR,2,".",",") + "</td>" +
-                    "</tr>";
-            }
-                $('#table-rekap-placement-lcl').append(html);
-            });
-
-            hideLoadingCss()
-        },
-        error: function () {
-            // hideLoadingCss("Gagal Ambil Data IMPRST VALAS");
-            hideLoadingCss();
-            $('#table-rekap-placement-lcl tbody').empty();
-            var html = "<tr>" +
-                "<td colspan='11' align='center'> No Data </td>" +
-                "</tr>";
-            $('#table-rekap-placement-lcl tbody').append(html);
-        }
-    });
-}
-
-function initDataTablePlacement2(_date, p_tgl_awal, p_sesi){
-    let date = new Date();
-    let current_month = date.getMonth()+1;
-    let current_full_date;
-    let current_date = (date.getDate() < 10) ? "0"+ date.getDate().toString() : date.getDate();
-    let curr_month = (date.getMonth() < 10) ? "0"+current_month.toString() : current_month;
-    (_date === undefined) ? current_full_date = date.getFullYear().toString()+curr_month.toString()+current_date : current_full_date = _date;
-
-    var datestring = dateToString(date);
-    $("#tgl1b").html(datestring);
-    $("#tgl2b").html(incDate(date, 1));
-    $("#tgl3b").html(incDate(date, 2));
-    $("#tgl4b").html(incDate(date, 3));
-    $("#tgl5b").html(incDate(date, 4));
-    $("#tgl6b").html(incDate(date, 5));
-
-    showLoadingCss();
-    $('#table-rekapitulasi tbody').empty();
-    $('#table-rekapitulasi').dataTable().fnDestroy();
-
-    kebutuhanPlacement = $("#kebutuhan-placement").DataTable({
-        "serverSide": true,
-        "oSearch": {"sSearch": tempTableSearch},
-        "bLengthChange": true,
-        "scrollY": "100%",
-        "scrollX": "100%",
-        // "order": [3],
-        "searching": true,
-        bSortable: true,
-        /*"scrollY": "300px",
-        "scrollX": true,*/
-        "scrollCollapse": true,
-        "aoColumnDefs": [
-            {width: 100, targets: 0},
-            {width: 100, targets: 1},
-            {width: 100, targets: 2},
-            {width: 100, targets: 3},
-            {width: 100, targets: 4},
-            {width: 100, targets: 5},
-            {width: 100, targets: 6},
-            {width: 100, targets: 7},
-//            {width: 100, targets: 8},
-            {width: "20%", "targets": 0},
-            { className: "datatables_action", "targets": [1, 2, 3, 4, 5, 6, 7, 8] },
-            {
-                "aTargets": [0],
-                "mRender": function (data, type, full) {
-                    return full.TIPE_KEBUTUHAN;
-                }
-
-            },
-            {
-                "aTargets": [1],
-                "mRender": function (data, type, full) {
-                    return full.BANK;
-                }
-
-            },
-            {
-                "aTargets": [2],
-                "mRender": function (data, type, full) {
-                    return accounting.formatNumber(full.RP_D0,2,".",",");
-                }
-
-            },
-            {
-                "aTargets": [3],
-                "mRender": function (data, type, full) {
-                    return accounting.formatNumber(full.RP_D1,2,".",",");
-                }
-
-            },
-
-            {
-                "aTargets": [4],
-                "mRender": function (data, type, full) {
-                    return accounting.formatNumber(full.RP_D2,2,".",",");
-                }
-
-            },
-            {
-                "aTargets": [5],
-                "mRender": function (data, type, full) {
-                    return accounting.formatNumber(full.RP_D3,2,".",",");
-                }
-
-            },
-            {
-                "aTargets": [6],
-                "mRender": function (data, type, full) {
-                    return accounting.formatNumber(full.RP_D4,2,".",",");
-                }
-
-            },
-            {
-                "aTargets": [7],
-                "mRender": function (data, type, full) {
-                    return accounting.formatNumber(full.RP_D5,2,".",",");
-                }
-
-            },
-            {
-                "aTargets": [8],
-                "mRender": function (data, type, full) {
-                    var ret_value = " ";
-                    if (full.TIPE_KEBUTUHAN == "IMPREST KANTOR PUSAT"){
-                    ret_value =
-                        '<div class="btn-group">' +
-                        '<button style="width: 15px !important;" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="setA()"><i class="fa fa-clone"></i></button>';
-                    } else if (full.TIPE_KEBUTUHAN == "IMPOR"){
-                          ret_value =
-                              '<div class="btn-group">' +
-                              '<button style="width: 15px !important;" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="setB()"><i class="fa fa-clone"></i></button>';
-                    } else if (full.TIPE_KEBUTUHAN == "IMPREST INVESTASI TERPUSAT"){
-                          ret_value =
-                              '<div class="btn-group">' +
-                              '<button style="width: 15px !important;" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="setC()"><i class="fa fa-clone"></i></button>';
-                    } else if (full.TIPE_KEBUTUHAN == "IMPREST OPERASI TERPUSAT"){
-                          ret_value =
-                              '<div class="btn-group">' +
-                              '<button style="width: 15px !important;" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="setD()"><i class="fa fa-clone"></i></button>';
-                    } else if (full.TIPE_KEBUTUHAN == "SETTLEMENT"){
-                          ret_value =
-                               '<div class="btn-group">' +
-                               '<button style="width: 15px !important;" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="setE()"><i class="fa fa-clone"></i></button>';
-                    } else if (full.TIPE_KEBUTUHAN == "PROYEKSI PENGADAAN VALAS"){
-                          ret_value =
-                               '<div class="btn-group">' +
-                               '<button style="width: 15px !important;" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="setF()"><i class="fa fa-clone"></i></button>';
-                    } else if (full.TIPE_KEBUTUHAN == "RECEIPT PLACEMENT"){
-                          ret_value =
-                               '<div class="btn-group">' +
-                               '<button style="width: 15px !important;" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="setG()"><i class="fa fa-clone"></i></button>';
-                    } else if (full.TIPE_KEBUTUHAN == "GIRO SPECIAL RATE"){
-                          ret_value =
-                               '<div class="btn-group">' +
-                               '<button style="width: 15px !important;" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="setH()"><i class="fa fa-clone"></i></button>';
-                    }
-                    return ret_value;
-                }
-            }
-        ],
-        "ajax":
-            {
-                "url":
-                    baseUrl + "api_operator/rekap_invoice_belum/rekap_placement_lcl",
-                "type":
-                    "GET",
-                "dataType":
-                    "json",
-                "data":
-                    {
-                        p_tgl_awal: p_tgl_awal,
-                        p_sesi: p_sesi
-                    }
-                ,
-                "dataSrc":
-                function (res) {
-                    hideLoadingCss()
-                    getTotalTagihan();
-                    return res.OUT_KEBUTUHAN_PLACEMENT;
-                }
-            }
-//         "drawCallback" : function (settings){
-//            let groupColumn = 0;
-//            var api = this.api();
-//            var rows = api.rows({page:'current'}).nodes();
-//            var last = null;
-//            let array = api.column(groupColumn, {page:'current'}).data();
-//            console.log(array);
-//
-//            api.column(groupColumn, {page:'current'}).data().each(function (group, i){
-//            if (last !== group.TIPE_KEBUTUHAN){
-//                let count = 1;
-//
-//                for (let j=i; j<array.length; j++){
-//                    let first = array[i].TIPE_KEBUTUHAN;
-//                    if (first !== array[j].TIPE_KEBUTUHAN) break;
-//                    count+= 1;
-//                }
-//
-//                $(rows).eq(i).before(
-//                    '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold;">'+group.BANK+'</td></tr>'
-//                );
-////                console.log(array)
-//                last = group.TIPE_KEBUTUHAN;
-//                }
-//            });
-//         }
-    });
-
-    kebutuhanPlacement.columns.adjust();
-}
-
-function initDataTablePlacement3() {
-    showLoadingCss();
-//    $('#tanggal_awal1').datepicker({dateFormat: 'dd/mm/yy'});
-//    $('#sesi_filter').attr("disabled", "disabled");
-    $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/get_pemindahan_buku",
-        dataType: 'JSON',
-        type: "GET",
-        success: function (res) {
-            var data = res.return;
-            console.log("response : "+data);
-
-            $('#table-rekap-placement-lcl tbody').empty();
-            var nomor;
-            $.each(data, function (key, val) {
-            $("#tglcetak").html(data[0].TANGGAL);
-//            nomor = key + 1;
-            if (val["BANK"] === "TOTAL"){
-                var html = "<tr>" +
-                    "<td align='center' style='background: #5dbcd2'>" + val.BANK + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='center' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.NOMINAL,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "</tr>";
-            } else {
-                var html = "<tr>" +
-                    "<td align='center'>" + val.BANK + "</td>" +
-                    "<td align='right'>" + val.NAMA_REKENING + "</td>" +
-                    "<td align='right'>" + val.NO_REKENING + "</td>" +
-                    "<td align='right'>" + val.KEPADA_BANK + "</td>" +
-                    "<td align='right'>" + val.NAMA_REKENING + "</td>" +
-                    "<td align='right'>" + val.NO_REKENING + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.NOMINAL,2,".",",") + "</td>" +
-                    "<td align='right'>" + val.NO_SAP + "</td>" +
-                    "<td align='right'> " + val.KETERANGAN + "</td>" +
-                    "</tr>";
-            }
-                $('#table-pemindahbukuan').append(html);
-            });
-
-            hideLoadingCss()
-        },
-        error: function () {
-            // hideLoadingCss("Gagal Ambil Data IMPRST VALAS");
-            hideLoadingCss();
-            $('#table-pemindahbukuan tbody').empty();
-            var html = "<tr>" +
-                "<td colspan='11' align='center'> No Data </td>" +
-                "</tr>";
-            $('#table-pemindahbukuan tbody').append(html);
-        }
-    }),
-
-    $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/get_settlement_valas",
-        dataType: 'JSON',
-        type: "GET",
-        success: function (res) {
-            var data = res.return;
-            console.log("response : "+data);
-
-            $('#table-rekap-placement-lcl tbody').empty();
-            var nomor;
-            $.each(data, function (key, val) {
-            $("#tglcetak").html(data[0].TANGGAL);
-//            nomor = key + 1;
-            if (val["BANK"] === "TOTAL"){
-                var html = "<tr>" +
-                    "<td align='center' style='background: #5dbcd2'>" + val.BANK + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.NOMINAL,2,".",",") + "</td>" +
-                    "<td align='center' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "</tr>";
-            } else {
-                var html = "<tr>" +
-                    "<td align='center'>" + val.BANK + "</td>" +
-                    "<td align='right'>" + val.NAMA_REKENING + "</td>" +
-                    "<td align='right'>" + val.NO_REKENING + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.NOMINAL,2,".",",") + "</td>" +
-                    "<td align='right'>" + val.KEPADA_BANK + "</td>" +
-                    "<td align='right'>" + val.NAMA_REKENING + "</td>" +
-                    "<td align='right'>" + val.NO_REKENING + "</td>" +
-                    "<td align='right'>" + val.NO_SAP + "</td>" +
-                    "<td align='right'> " + val.KETERANGAN + "</td>" +
-                    "</tr>";
-            }
-                $('#table-settlement-valas').append(html);
-            });
-
-            hideLoadingCss()
-        },
-        error: function () {
-            // hideLoadingCss("Gagal Ambil Data IMPRST VALAS");
-            hideLoadingCss();
-            $('#table-settlement-valas tbody').empty();
-            var html = "<tr>" +
-                "<td colspan='9' align='center'> No Data </td>" +
-                "</tr>";
-            $('#table-settlement-valas tbody').append(html);
-        }
-    }),
-
-    $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/get_pengadaan_valas",
-        dataType: 'JSON',
-        type: "GET",
-        success: function (res) {
-            var data = res.return;
-            console.log("response : "+data);
-
-            $('#table-rekap-placement-lcl tbody').empty();
-            var nomor;
-            $.each(data, function (key, val) {
-            $("#tglcetak").html(data[0].TANGGAL);
-//            nomor = key + 1;
-           if (val["BANK"] === "TOTAL"){
-                var html = "<tr>" +
-                    "<td align='center' style='background: #5dbcd2'>" + val.BANK + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.NOMINAL,2,".",",") + "</td>" +
-                    "<td align='center' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "<td align='right' style='background: #5dbcd2'> </td>" +
-                    "</tr>";
-            } else {
-                var html = "<tr>" +
-                    "<td align='center'>" + val.BANK + "</td>" +
-                    "<td align='right'>" + val.NAMA_REKENING + "</td>" +
-                    "<td align='right'>" + val.NO_REKENING + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.NOMINAL,2,".",",") + "</td>" +
-                    "<td align='right'>" + val.BANK + "</td>" +
-                    "<td align='right'>" + val.NAMA_REKENING + "</td>" +
-                    "<td align='right'>" + val.NO_REKENING + "</td>" +
-                    "<td align='right'>" + val.NO_SAP + "</td>" +
-                    "<td align='right'> " + val.KETERANGAN + "</td>" +
-                    "</tr>";
-            }
-                $('#table-pengadaan-valas').append(html);
-            });
-
-            hideLoadingCss()
-        },
-        error: function () {
-            // hideLoadingCss("Gagal Ambil Data IMPRST VALAS");
-            hideLoadingCss();
-            $('#table-pengadaan-valas tbody').empty();
-            var html = "<tr>" +
-                "<td colspan='9' align='center'> No Data </td>" +
-                "</tr>";
-            $('#table-pengadaan-valas tbody').append(html);
-        }
-    }),
-
-    $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/rekap_placement_lcl",
-        dataType: 'JSON',
-        type: "GET",
-        data: {
-            p_tgl_awal: $("#tanggal_awal1").val(),
-            p_sesi: $("#sesi_filter").val()
-        },
-        success: function (res) {
-            var data = res.return;
-            console.log("response : "+data);
-
-            $('#table-rekap-placement-lcl tbody').empty();
-            var nomor;
-            $.each(data, function (key, val) {
-            $("#tglcetak").html(data[0].TANGGAL);
-//            nomor = key + 1;
-            if (val["BANK"] === "TOTAL"){
-                var html = "<tr>" +
-                    "<td align='center' style='background: #5dbcd2'>" + val.BANK + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.SALDO_AWAL,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.IMPREST_KP,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.IMPOR,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.IMPREST_OT,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.IMPREST_IT,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.SETTLEMENT,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.PROYEKSI_VALAS,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.RECEIPT_PLACEMENT,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.GIRO,2,".",",") + "</td>" +
-                    "<td align='right' style='background: #5dbcd2'> Rp " + accounting.formatNumber(val.SALDO_AKHIR,2,".",",") + "</td>" +
-                    "</tr>";
-            } else {
-                var html = "<tr>" +
-                    "<td align='center'>" + val.BANK + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AWAL,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.IMPREST_KP,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.IMPOR,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.IMPREST_OT,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.IMPREST_IT,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.SETTLEMENT,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.PROYEKSI_VALAS,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.RECEIPT_PLACEMENT,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.GIRO,2,".",",") + "</td>" +
-                    "<td align='right'> Rp " + accounting.formatNumber(val.SALDO_AKHIR,2,".",",") + "</td>" +
-                    "</tr>";
-            }
-                $('#table-rekap-placement-lcl').append(html);
-            });
-
-            hideLoadingCss()
-        },
-        error: function () {
-            // hideLoadingCss("Gagal Ambil Data IMPRST VALAS");
-            hideLoadingCss();
-            $('#table-rekap-placement-lcl tbody').empty();
-            var html = "<tr>" +
-                "<td colspan='11' align='center'> No Data </td>" +
-                "</tr>";
-            $('#table-rekap-placement-lcl tbody').append(html);
-        }
-    });
-}
 
 function dateToString(date) {
     return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
@@ -538,780 +54,495 @@ function stringToDate(_date) {
 }
 
 function search(state) {
-    if ($("#sesi").val() == "" && state != "load" && $("#tanggal_awal1").val() != "") {
-        alert("Mohon isi filter");
+    var selObj = document.getElementById("sesi_filter");
+    var ss = selObj.options[selObj.selectedIndex].text;
+
+    if ($("#tanggal_awal1").val() === "" && ss === " " && state !== "load") {
+        alert("Mohon Isi Tanggal Terlebih Dahulu");
+    } else if(state === "search"){
+        let tgl = $('#tanggal_awal1').val();
+        tanggal = tgl;
+
+        if (ss === "Sesi 1"){
+            ss = 1;
+        } else if (ss === "Sesi 2"){
+            ss = 2;
+        }
+
+        sesi = ss;
+
+        console.log("Ini data : " + tanggal + " " + sesi);
+        $('#tglcetak2').html(tgl);
+        initDataTablePlacement(tanggal, sesi);
+        initDataTablePlacement2(tanggal, sesi);
+        lcl_today = $("#tanggal_awal1").val();
     } else {
-        initDataTable($("#tanggal_awal1").val(), $("#cmb_bank").val(), $("#cmb_currecny").val(), $("#cmb_jenis_pemabayaran").val(), $("#cmb_status_tracking").val())
-        getAllData()
-        srcTglAwal = $("#tanggal_awal1").val()
+        initDataTablePlacement(tanggal, sesi);
+        initDataTablePlacement2(tanggal, sesi);
+        lcl_today = $("#tanggal_awal1").val();
     }
 }
 
-function openLihatDokumen(){
-    $('#set-i').modal({backdrop: 'static', keyboard: false});
+function initDataTablePlacement(tanggal, sesi) {
+
+    $('#table-rekap-placement-lcl').dataTable().fnDestroy();
+
+    let rincian_saldo = $("#table-rekap-placement-lcl").DataTable({
+        "ajax" : {
+            "url": baseUrl + "api_operator/rekap_invoice_belum/get_pemindahan_buku",
+            "data" : {
+                p_tanggal: tanggal,
+                p_sesi: sesi
+            },
+            "type" : "GET",
+            "dataType" : "json",
+            "dataSrc":
+                function (res) {
+                    return res.data;
+                }
+        },
+        "sorting": false,
+        "searching" : true,
+        "paging": true,
+        "bInfo" : false,
+        "bLengthChange" : true,
+        "columns" : [
+            {"data":null,"render": (data, type, row) => {return '<td>'+data.BANK+'</td>';}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.SALDO_RECEIPT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.IMPREST_KANTOR_PUSAT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.IMPOR)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.IMPREST_OPERASI_TERPUSAT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.IMPREST_INVESTASI_TERPUSAT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.SETTLEMENT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.PROYEKSI_PENGADAAN_VALAS)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RECEIPT_PLACEMENT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.GIRO_SPECIAL_RATE)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.SALDO_AKHIR_RECEIPT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+        ],
+    });
 }
 
-function setA(){
+function initDataTablePlacement2(){
+    let date = new Date();
+
+//    var datestring = dateToString(date);
+//    $("#tgl1b").html(datestring);
+//    $("#tgl2b").html(incDate(date, 1));
+//    $("#tgl3b").html(incDate(date, 2));
+//    $("#tgl4b").html(incDate(date, 3));
+//    $("#tgl5b").html(incDate(date, 4));
+//    $("#tgl6b").html(incDate(date, 5));
+
+//    console.log("Ini tanggal : " + tanggal);
+    $("#tgl1b").html(tanggal);
+    $("#tgl2b").html(incDate(date, 1));
+    $("#tgl3b").html(incDate(date, 2));
+    $("#tgl4b").html(incDate(date, 3));
+    $("#tgl5b").html(incDate(date, 4));
+    $("#tgl6b").html(incDate(date, 5));
+
+    showLoadingCss();
+    $('#kebutuhan-placement tbody').empty();
+    $('#kebutuhan-placement').dataTable().fnDestroy();
+
+    kebutuhanPlacement = $("#kebutuhan-placement").DataTable({
+        "serverSide": true,
+        "oSearch": {"sSearch": tempTableSearch},
+        "bLengthChange": false,
+        "paging": false,
+        "scrollY": "100%",
+        "scrollX": "100%",
+        "searching": false,
+        "bSortable": false,
+        "scrollCollapse": false,
+        "bInfo": false,
+        "aoColumnDefs": [
+            {width: 100, targets: 0},
+            {width: 100, targets: 1},
+            {width: 100, targets: 2},
+            {width: 100, targets: 3},
+            {width: 100, targets: 4},
+            {width: 100, targets: 5},
+            {width: 100, targets: 6},
+            {width: 100, targets: 7},
+//            {width: 100, targets: 8},
+            {width: "20%", "targets": 0},
+            { className: "datatables_action", "targets": [1, 2, 3, 4, 5, 6, 7, 8] },
+            {
+                "aTargets": [0],
+//                "visible" : false,
+                "mRender": function (data, type, full) {
+                    return full.TIPE_KEBUTUHAN;
+                }
+//                "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {$(cell).css("background-color","#77D5D4");}
+            },
+            {
+                "aTargets": [1],
+                "mRender": function (data, type, full) {
+                    return full.BANK;
+                }
+//                "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {$(cell).css("background-color","#5ef4d3");}
+
+            },
+            {
+                "aTargets": [2],
+                "mRender": function (data, type, full) {
+                    return "<td> Rp. " + accounting.formatNumber(full.RP_D0,2,".",",") + "</td";
+                }
+
+            },
+            {
+                "aTargets": [3],
+                "mRender": function (data, type, full) {
+                    return "<td> Rp. " + accounting.formatNumber(full.RP_D1,2,".",",") + "</td";
+                }
+
+            },
+
+            {
+                "aTargets": [4],
+                "mRender": function (data, type, full) {
+                    return "<td> Rp. " + accounting.formatNumber(full.RP_D2,2,".",",") + "</td";
+                }
+
+            },
+            {
+                "aTargets": [5],
+                "mRender": function (data, type, full) {
+                    return "<td> Rp. " + accounting.formatNumber(full.RP_D3,2,".",",") + "</td";
+                }
+
+            },
+            {
+                "aTargets": [6],
+                "mRender": function (data, type, full) {
+                    return "<td> Rp. " + accounting.formatNumber(full.RP_D4,2,".",",") + "</td";
+                }
+
+            },
+            {
+                "aTargets": [7],
+                "mRender": function (data, type, full) {
+                    return "<td> Rp. " + accounting.formatNumber(full.RP_D5,2,".",",") + "</td";
+                }
+
+            },
+            {
+                "aTargets": [8],
+                "mRender": function (data, type, full) {
+                    var ret_value = " ";
+                    if (full.TIPE_KEBUTUHAN == "RECEIPT PLACEMENT" || full.TIPE_KEBUTUHAN == "GIRO SPECIAL RATE" ){
+                    ret_value = '<div class="col-md-6 btn-group" align="center">' +
+                                '<button style="width: 15px !important;" id="detail" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="setb(\''+full.TIPE_KEBUTUHAN+'\')"><i class="fa fa-clone"></i></button>';
+                    return ret_value;
+                    } else {
+                    ret_value = '<div class="col-md-6 btn-group" align="center">' +
+                                '<button style="width: 15px !important;" id="detail" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="seta(\''+full.TIPE_KEBUTUHAN+'\')"><i class="fa fa-clone"></i></button>';
+                    return ret_value; }
+                }
+            }
+        ],
+        "ajax":
+            {
+                "url":
+                    baseUrl + "api_operator/rekap_invoice_belum/kebutuhan_placement_lcl",
+                "type":
+                    "GET",
+                "dataType":
+                    "json",
+                "data":
+                    {
+                        p_tanggal: tanggal,
+                        p_sesi: sesi
+                    }
+                ,
+                "dataSrc":
+                function (res) {
+                    hideLoadingCss()
+                    localStorage.setItem("imprest_approval_status", (res.data.length <= 0) ? "" : res.data[0].STATUS_APPROVE);
+                    localStorage.setItem("sesi", (res.data.length <= 0) ? "" : res.data[0].SESI);
+                    localStorage.setItem("tanggal", (res.data.length <= 0) ? "" : res.data[0].TANGGAL);
+                    return res.data;
+                }
+            },
+
+         "createdRow" : function (row, data, dataIndex){
+
+            if ((data["BANK"] === "TOTAL")){
+                $(row).css({
+                    "background-color": "#5ef4d3",
+                    "font-weight": "bold",
+                });
+             }
+         },
+
+         "drawCallback" : function (setting, json) {
+             let node = document.getElementById("button_action");
+             node.innerHTML = "";
+
+             let cur_periode = document.getElementById("tglcetak2").innerHTML;
+             let darr = cur_periode.split("/");
+             let now = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+             let periode = new Date(darr[2],darr[1]-1,darr[0]);
+
+             let elements = document.getElementsByClassName('md-step');
+             Array.prototype.forEach.call(elements,el => {
+                 document.getElementById(el.id).classList.remove("active");
+             });
+
+             if (localStorage.getItem("imprest_approval_status") === "1"){
+                 document.getElementById("staff_pe").className += " active";
+             }else if(localStorage.getItem("imprest_approval_status") === "2"){
+                 document.getElementById("staff_pe").className += " active";
+                 document.getElementById("msb_pe").className += " active";
+             }else if(localStorage.getItem("imprest_approval_status") === "3") {
+                 document.getElementById("staff_pe").className += " active";
+                 document.getElementById("msb_pe").className += " active";
+                 document.getElementById("vp_pe").className += " active";
+             }
+
+             if(!periode.getTime() < now.getTime()){
+                 $('.dataTables_filter2').each(function(){
+//                     console.log("Ini data : " + data);
+                     let html2;
+                     if (localStorage.getItem("imprest_approval_status") === "0"){
+                         if (newRoleUser[0] === "ROLE_ADMIN"){
+                             html2 = '<button class="btn btn-warning btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="update_lcl_data(1,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Approve"><i class="fas fa-check-square"></i></button>';
+                         }
+                     }else if(localStorage.getItem("imprest_approval_status") === "1"){
+                         if (newRoleUser[0] === "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY" || newRoleUser[0] === "ROLE_ADMIN"){
+                             html2 = '<button class="btn btn-warning btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="update_lcl_data(2,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Approve"><i class="fas fa-check-square"></i></button>';
+                             html2 += '<button class="btn btn-elementary btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="reverse_lcl_data(1,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Reverse"><i class="fas fa-backspace"></i></button>';
+                         }
+                     }else if(localStorage.getItem("imprest_approval_status") === "2"){
+                         if (newRoleUser[0] === "ROLE_VP_OPERATION_EXPENDITURE" || newRoleUser[0] === "ROLE_ADMIN"){
+                             html2 = '<button class="btn btn-warning btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="update_lcl_data(3,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Approve"><i class="fas fa-check-square"></i></button>';
+                             html2 += '<button class="btn btn-elementary btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="reverse_lcl_data(2,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Reverse"><i class="fas fa-backspace"></i></button>';
+                         }
+                     }
+                     else{
+                         if (newRoleUser[0] === "ROLE_ADMIN"){
+                             html2 = '<button class="btn btn-elementary btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="reverse_lcl_data(3,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Reverse"><i class="fas fa-backspace"></i></button>';
+                         }
+                     }
+                     $(this).append(html2);
+                 })
+             };
+         }
+     });
+
+     kebutuhanPlacement.on('search.dt', function () {
+         var value = $('.dataTables_filter2 input').val();
+         tempTableSearch = value;
+     });
+
+
+    kebutuhanPlacement.columns.adjust();
+}
+
+function viewDoc(){
+//    $('#set-i').modal({backdrop: 'static', keyboard: false});
+    alert("Mohon maaf fitur ini belum tersedia");
+}
+
+function generateExecl(){
+    alert("Mohon maaf fitur ini belum tersedia");
+}
+
+function seta(jenis){
+
     $('#set-a').modal({backdrop: 'static', keyboard: false});
+    $('#table-imprest-pusat').dataTable().fnDestroy();
+
+    let detail_placement = $("#table-imprest-pusat").DataTable({
+            "ajax" : {
+                "url": baseUrl + "api_operator/rekap_invoice_belum/detail_placement_imprest",
+                "data" : {
+                    p_jenis : jenis
+                },
+                "type" : "GET",
+                "dataType" : "json",
+                "dataSrc":
+                    function (res) {
+                        return res.data;
+                    }
+            },
+            "sorting": false,
+            "searching" : false,
+            "paging": false,
+            "bInfo" : false,
+            "bLengthChange" : true,
+            "columns" : [
+                {"data":null,"render" : (data, type, row) => {return "<td> <span id='data0'>"+data.BANK+"</span></td>";}},
+                {"data":null,"render" : (data, type, row) => {return "<td> Rp. " + accounting.formatNumber(data.SISA_SALDO,2,".",",") +"</td>";
+                                                             },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+                {"data":null,"render" : (data, type, row) => {if (data.MANDIRI == "0" || data.MANDIRI == null){
+                                                                return "<td> Rp. <input style='text-align:right;' id='data1' type='number' value='"+ data.MANDIRI +"'></td>";
+                                                                } else
+                                                                return "<td> Rp. <input style='text-align:right;' id='data1' type='number' value='"+ data.MANDIRI +"'></td>";
+                                                                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+                {"data":null,"render" : (data, type, row) => {if (data.BRI == "0" || data.BRI == null){
+                                                                return "<td> Rp. <input style='text-align:right;' id='data2' type='number' value='"+ data.BRI +"'></td>";
+                                                                } else
+                                                                return "<td> Rp. <input style='text-align:right;' id='data2' type='number' value='"+ data.BRI +"'></td>";
+                                                                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+                {"data":null,"render" : (data, type, row) => {if (data.BNI == "0" || data.BNI == null){
+                                                                return "<td> Rp. <input style='text-align:right;' id='data3' type='number' value='"+ data.BNI +"'></td>";
+                                                                } else
+                                                                return "<td> Rp. <input style='text-align:right;' id='data3' type='number' value='"+ data.BNI +"'></td>";
+                                                                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+                {"data":null,"render" : (data, type, row) => {if (data.BUKOPIN == "0" || data.BUKOPIN == null){
+                                                                return "<td> Rp. <input style='text-align:right;' id='data4' type='number' value='"+ data.BUKOPIN +"'></td>";
+                                                                } else
+                                                                return "<td> Rp. <input style='text-align:right;' id='data4' type='number' value='"+ data.BUKOPIN +"'></td>";
+                                                                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+                {"data":null,"render" : (data, type, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.TOTAL)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            ],
+        });
+
+        $(document).ready(function() {
+            if (jenis == "IMPREST KANTOR PUSAT"){
+                $('#container').append('<button type="button" id="set" class="btn btn-primary" onclick="updateImprestPusat()">Set</button>');
+            } else if (jenis == "IMPOR") {
+                $('#container').append('<button type="button" id="set" class="btn btn-primary" onclick="updateImpor()">Set</button>');
+            } else if (jenis == "IMPREST OPERASI TERPUSAT"){
+                $('#container').append('<button type="button" id="set" class="btn btn-primary" onclick="updateImprestOperasi()">Set</button>');
+            } else if (jenis == "IMPREST INVESTASI TERPUSAT"){
+                $('#container').append('<button type="button" id="set" class="btn btn-primary" onclick="updateImprestInvestasi()">Set</button>');
+            } else if (jenis == "SETTLEMENT"){
+                $('#container').append('<button type="button" id="set" class="btn btn-primary" onclick="updateSettlement()">Set</button>');
+            } else {
+                $('#container').append('<button type="button" id="set" class="btn btn-primary" onclick="updatePengadaanValas()">Set</button>');
+            }
+        });
+
+        $("#close").click(function(){
+            $('#set').remove();
+        })
 }
 
-function setB(){
+function setb(jenis){
+
     $('#set-b').modal({backdrop: 'static', keyboard: false});
-}
+    $('#table-receipt-placement').dataTable().fnDestroy();
 
-function setC(){
-    $('#set-c').modal({backdrop: 'static', keyboard: false});
-}
-
-function setD(){
-    $('#set-d').modal({backdrop: 'static', keyboard: false});
-}
-
-function setE(){
-    $('#set-e').modal({backdrop: 'static', keyboard: false});
-}
-
-function setF(){
-    $('#set-f').modal({backdrop: 'static', keyboard: false});
-}
-
-function setG(){
-    $('#set-g').modal({backdrop: 'static', keyboard: false});
-}
-
-function setH(){
-    $('#set-h').modal({backdrop: 'static', keyboard: false});
-}
-
-function update_approve_staff_lcl(pSesi){
-    var stateCrf = confirm("Anda Yakin Akan Memverifikasi Tagihan Ini ?");
-    showLoadingCss();
-    $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/approve_staff_lcl",
-        dataType: 'JSON',
-        type: "POST",
-        data: {
-//            pStaffLcl: pStaffLcl,
-            pSesi: pSesi,
+    let detail_placement_2 = $("#table-receipt-placement").DataTable({
+        "ajax" : {
+            "url": baseUrl + "api_operator/rekap_invoice_belum/detail_placement_imprest",
+            "data" : {
+                p_jenis : jenis
+            },
+            "type" : "GET",
+            "dataType" : "json",
+            "dataSrc":
+                function (res) {
+                    return res.data;
+                }
         },
-        success: function (res) {
-            hideLoadingCss("")
-            if (res.return == 1) {
-                alert(res.OUT_MSG);
-            } else {
-                alert(res.OUT_MSG);
-            }
-        },
-        error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        "sorting": false,
+        "searching" : false,
+        "paging": false,
+        "bInfo" : false,
+        "bLengthChange" : true,
+        "columns" : [
+            {"data":null,"render" : (data, type, row) => {return "<td> <span id='data0'>"+data.BANK+"</span></td>";}},
+            {"data":null,"render" : (data, tyoe, row) => {return "<td> Rp. " + accounting.formatNumber(data.SISA_SALDO,2,".",",") +"</td>";
+                                                         },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.MANDIRI == "0" || data.MANDIRI == null){
+                                                            return "<td> Rp. <input style='text-align:right;' id='data1' type='number' value='"+ data.MANDIRI +"'></td>";
+                                                            } else
+                                                            return "<td> Rp. <input style='text-align:right;' id='data1' type='number' value='"+ data.MANDIRI +"'></td>";
+                                                            },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.BRI == "0" || data.BRI == null){
+                                                            return "<td> Rp. <input style='text-align:right;' id='data2' type='number' value='"+ data.BRI +"'></td>";
+                                                            } else
+                                                            return "<td> Rp. <input style='text-align:right;' id='data2' type='number' value='"+ data.BRI +"'></td>";
+                                                            },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.BNI == "0" || data.BNI == null){
+                                                            return "<td> Rp. <input style='text-align:right;' id='data3' type='number' value='"+ data.BNI +"'></td>";
+                                                            } else
+                                                            return "<td> Rp. <input style='text-align:right;' id='data3' type='number' value='"+ data.BNI +"'></td>";
+                                                            },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.BUKOPIN == "0" || data.BUKOPIN == null){
+                                                            return "<td> Rp. <input style='text-align:right;' id='data4' type='number' value='"+ data.BUKOPIN +"'></td>";
+                                                            } else
+                                                            return "<td> Rp. <input style='text-align:right;' id='data4' type='number' value='"+ data.BUKOPIN +"'></td>";
+                                                            },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.MEGA == "0" || data.MEGA == null){
+                                                            return "<td> Rp. <input style='text-align:right;' id='data5' type='number' value='"+ data.MEGA +"'></td>";
+                                                            } else
+                                                            return "<td> Rp. <input style='text-align:right;' id='data5' type='number' value='"+ data.MEGA +"'></td>";
+                                                            },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.DKI == "0" || data.DKI == null){
+                                                            return "<td> Rp. <input style='text-align:right;' id='data6' type='number' value='"+ data.DKI +"'></td>";
+                                                            } else
+                                                            return "<td> Rp. <input style='text-align:right;' id='data6' type='number' value='"+ data.DKI +"'></td>";
+                                                            },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.BCA == "0" || data.BCA == null){
+                                                            return "<td> Rp. <input style='text-align:right;' id='data7' type='number' value='"+ data.BCA +"'></td>";
+                                                            } else
+                                                            return "<td> Rp. <input style='text-align:right;' id='data7' type='number' value='"+ data.BCA +"'></td>";
+                                                            },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.BII == "0" || data.BII == null){
+                                                            return "<td> Rp. <input style='text-align:right;' id='data8' type='number' value='"+ data.BII +"'></td>";
+                                                            } else
+                                                            return "<td> Rp. <input style='text-align:right;' id='data8' type='number' value='"+ data.BII +"'></td>";
+                                                                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.BRIS == "0" || data.BRIS == null){
+                                                            return "<td> Rp. <input style='text-align:right;' id='data9' type='number' value='"+ data.BRIS +"'></td>";
+                                                            } else
+                                                            return "<td> Rp. <input style='text-align:right;' id='data9' type='number' value='"+ data.BRIS +"'></td>";
+                                                            },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.BTN == "0" || data.BTN == null){
+                                                            return "<td> Rp. <input style='text-align:right;' id='data10' type='number' value='"+ data.BTN +"'></td>";
+                                                            } else
+                                                            return "<td> Rp. <input style='text-align:right;' id='data10' type='number' value='"+ data.BTN +"'></td>";
+                                                            },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.DANAMON_SYARIAH == "0" || data.DANAMON_SYARIAH == null){
+                                                            return "<td> Rp. <input style='text-align:right;' id='data11' type='number' value='"+ data.DANAMON_SYARIAH +"'></td>";
+                                                            } else
+                                                            return "<td> Rp. <input style='text-align:right;' id='data11' type='number' value='"+ data.DANAMON_SYARIAH +"'></td>";
+                                                            },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.OCBC_NISP == "0" || data.OCBC_NISP == null){
+                                                            return "<td> Rp. <input style='text-align:right;' id='data12' type='number' value='"+ data.OCBC_NISP +"'></td>";
+                                                            } else
+                                                            return "<td> Rp. <input style='text-align:right;' id='data12' type='number' value='"+ data.OCBC_NISP +"'></td>";
+                                                            },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.UOB == "0" || data.UOB == null){
+                                                            return "<td> Rp. <input style='text-align:right;' id='data13' type='number' value='"+ data.UOB +"'></td>";
+                                                            } else
+                                                            return "<td> Rp. <input style='text-align:right;' id='data13' type='number' value='"+ data.UOB +"'></td>";
+                                                            },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.DBS == "0" || data.DBS == null){
+                                                            return "<td> Rp. <input style='text-align:right;' id='data14' type='number' value='"+ data.DBS +"'></td>";
+                                                            } else
+                                                            return "<td> Rp. <input style='text-align:right;' id='data14' type='number' value='"+ data.DBS +"'></td>";
+                                                            },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {if (data.CIMB_NIAGA == "0" || data.CIMB_NIAGA == null){
+                                                            return "<td> Rp. <input style='text-align:right;' id='data15' type='number' value='"+ data.CIMB_NIAGA +"'></td>";
+                                                            } else
+                                                            return "<td> Rp. <input style='text-align:right;' id='data15' type='number' value='"+ data.CIMB_NIAGA +"'></td>";
+                                                            },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.TOTAL)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+        ],
+    });
+
+    $(document).ready(function() {
+        if (jenis == "RECEIPT PLACEMENT"){
+            $('#container2').append('<button type="button" class="btn btn-primary" onclick="updateReceiptPlacement()">Set</button>');
+        } else {
+            $('#container2').append('<button type="button" class="btn btn-primary" onclick="updateGiroSpecial()">Set</button>');
         }
     });
+
+    $("#close").click(function(){
+        $('#set').remove();
+    })
 }
 
-function update_approve_msb_lcl(pSesi){
-    var stateCrf = confirm("Anda Yakin Akan Memverifikasi Tagihan Ini ?");
-    showLoadingCss();
-    $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/approve_msb_lcl",
-        dataType: 'JSON',
-        type: "POST",
-        data: {
-//            pStaffLcl: pStaffLcl,
-            pSesi: pSesi,
-        },
-        success: function (res) {
-            hideLoadingCss("")
-            if (res.return == 1) {
-                alert(res.OUT_MSG);
-            } else {
-                alert(res.OUT_MSG);
-            }
-        },
-        error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-        }
-    });
-}
-
-function update_approve_vp_lcl(pSesi){
-    var stateCrf = confirm("Anda Yakin Akan Memverifikasi Tagihan Ini ?");
-    showLoadingCss();
-    $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/approve_vp_lcl",
-        dataType: 'JSON',
-        type: "POST",
-        data: {
-//            pStaffLcl: pStaffLcl,
-            pSesi: pSesi,
-        },
-        success: function (res) {
-            hideLoadingCss("")
-            if (res.return == 1) {
-                alert(res.OUT_MSG);
-            } else {
-                alert(res.OUT_MSG);
-            }
-        },
-        error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-        }
-    });
-}
-
-function initDataTablePlacement4(p_tgl_awal, p_sesi){
-
-    let set_a = $("#table-imprest-pusat").DataTable({
-               "ajax" : {
-                   "url": baseUrl + "api_operator/rekap_invoice_belum/detail_rekap_placement_lcl",
-                   "data" : {
-                       p_tgl_awal : p_tgl_awal,
-                       p_sesi : p_sesi
-                   },
-                   "type" : "GET",
-                   "dataType" : "json",
-               },
-               "sorting": false,
-               "searching" : false,
-               "paging": false,
-               "bInfo" : false,
-               "bLengthChange" : false,
-               "columns" : [
-       //            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
-                   {"data": null,"render": (data, type, row) => {if (data.BANK == null){
-                                                                     return "<td><input id='kdbank_potensi' type='text' value='"+data.BANK+"' disabled></td>";
-                                                                     } else
-                                                                     return "<td><input id='kdbank_potensi' type='text' value='"+data.BANK+"' disabled></td>";
-                                                                     },
-                                                                     "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                                     }},
-                   {"data":null,"render" : (data, tyoe, row) => {if (data.MANDIRI == "0" || data.MANDIRI == null){
-                                                                     return "<td><input style='text-align:right;' id='mandiri_imprest_pusat' type='number' value='"+data.MANDIRI+"'></td>";
-                                                                     } else
-                                                                     return "<td><input style='text-align:right;' id='mandiri_imprest_pusat' type='number' value='"+data.MANDIRI+"'></td>";
-                                                                  },
-                                                                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                                }},
-                   {"data":null,"render" : (data, tyoe, row) => {if (data.BRI == "0" || data.BRI == null){
-                                                                     return "<td><input style='text-align:right;' id='bri_imprest_pusat' type='number' value='"+data.BRI+"'></td>";
-                                                                     } else
-                                                                     return "<td><input style='text-align:right;' id='bri_imprest_pusat' type='number' value='"+data.BRI+"'></td>";
-                                                                  },
-                                                                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                                }},
-                   {"data":null,"render" : (data, tyoe, row) => {if (data.BNI == "0" || data.BNI == null){
-                                                                     return "<td><input style='text-align:right;' id='bni_imprest_pusat' type='number' value='"+data.BNI+"'></td>";
-                                                                     } else
-                                                                     return "<td><input style='text-align:right;' id='bni_imprest_pusat' type='number' value='"+data.BNI+"'></td>";
-                                                                  },
-                                                                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                                }},
-                   {"data":null,"render" : (data, tyoe, row) => {if (data.BUKOPIN == "0" || data.BUKOPIN == null){
-                                                                     return "<td><input style='text-align:right;' id='bukopin_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                                     } else
-                                                                     return "<td><input style='text-align:right;' id='bukopin_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                                  },
-                                                                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                                }},
-                   {"data":null,"render" : (data, tyoe, row) => {if (data.RP_TOTAL == "0" || data.RP_TOTAL == null){
-                                                                     return '<td>'+ "<input style='text-align:right;' id='kdcurrency_potensi' type='hidden' value='"+data.TOTAL+"' disabled>" + new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                                     } else
-                                                                     return '<td>'+ "<input style='text-align:right;' id='kdcurrency_potensi' type='hidden' value='"+data.TOTAL+"' disabled>"+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                                  },
-                                                                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                                }},
-               ],
-       });
-
-       let set_b = $("#table-impor").DataTable({
-           "ajax" : {
-               "url": baseUrl + "api_operator/rekap_invoice_belum/detail_rekap_placement_lcl",
-               "data" : {
-                   p_tgl_awal : p_tgl_awal,
-                   p_sesi : p_sesi
-               },
-               "type" : "GET",
-               "dataType" : "json",
-           },
-           "sorting": false,
-           "searching" : false,
-           "paging": false,
-           "bInfo" : false,
-           "bLengthChange" : false,
-           "columns" : [
-   //            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
-               {"data": null,"render": (data, type, row) => {if (data.BANK == null){
-                                                                 return "<td><input id='kdbank_potensi' type='text' value='"+data.BANK+"' disabled></td>";
-                                                                 } else
-                                                                 return "<td><input id='kdbank_potensi' type='text' value='"+data.BANK+"' disabled></td>";
-                                                                 },
-                                                                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                                 }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.MANDIRI == "0" || data.MANDIRI == null){
-                                                                 return "<td><input style='text-align:right;' id='mandiri_imprest_pusat' type='number' value='"+data.MANDIRI+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='mandiri_imprest_pusat' type='number' value='"+data.MANDIRI+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BRI == "0" || data.BRI == null){
-                                                                 return "<td><input style='text-align:right;' id='bri_imprest_pusat' type='number' value='"+data.BRI+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='bri_imprest_pusat' type='number' value='"+data.BRI+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BNI == "0" || data.BNI == null){
-                                                                 return "<td><input style='text-align:right;' id='bni_imprest_pusat' type='number' value='"+data.BNI+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='bni_imprest_pusat' type='number' value='"+data.BNI+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BUKOPIN == "0" || data.BUKOPIN == null){
-                                                                 return "<td><input style='text-align:right;' id='bukopin_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='bukopin_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.RP_TOTAL == "0" || data.RP_TOTAL == null){
-                                                                 return '<td>'+ "<input style='text-align:right;' id='kdcurrency_potensi' type='hidden' value='"+data.TOTAL+"' disabled>" + new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                                 } else
-                                                                 return '<td>'+ "<input style='text-align:right;' id='kdcurrency_potensi' type='hidden' value='"+data.TOTAL+"' disabled>"+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-           ],
-       });
-
-       let set_c = $("#table-imprest-operasi-terpusat").DataTable({
-           "ajax" : {
-               "url": baseUrl + "api_operator/rekap_invoice_belum/detail_rekap_placement_lcl",
-               "data" : {
-                   p_tgl_awal : p_tgl_awal,
-                   p_sesi : p_sesi
-               },
-               "type" : "GET",
-               "dataType" : "json",
-           },
-           "sorting": false,
-           "searching" : false,
-           "paging": false,
-           "bInfo" : false,
-           "bLengthChange" : false,
-           "columns" : [
-   //            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
-               {"data": null,"render": (data, type, row) => {if (data.BANK == null){
-                                                                 return "<td><input id='kdbank_potensi' type='text' value='"+data.BANK+"' disabled></td>";
-                                                                 } else
-                                                                 return "<td><input id='kdbank_potensi' type='text' value='"+data.BANK+"' disabled></td>";
-                                                                 },
-                                                                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                                 }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.MANDIRI == "0" || data.MANDIRI == null){
-                                                                 return "<td><input style='text-align:right;' id='mandiri_imprest_pusat' type='number' value='"+data.MANDIRI+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='mandiri_imprest_pusat' type='number' value='"+data.MANDIRI+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BRI == "0" || data.BRI == null){
-                                                                 return "<td><input style='text-align:right;' id='bri_imprest_pusat' type='number' value='"+data.BRI+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='bri_imprest_pusat' type='number' value='"+data.BRI+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BNI == "0" || data.BNI == null){
-                                                                 return "<td><input style='text-align:right;' id='bni_imprest_pusat' type='number' value='"+data.BNI+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='bni_imprest_pusat' type='number' value='"+data.BNI+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BUKOPIN == "0" || data.BUKOPIN == null){
-                                                                 return "<td><input style='text-align:right;' id='bukopin_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='bukopin_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.RP_TOTAL == "0" || data.RP_TOTAL == null){
-                                                                 return '<td>'+ "<input style='text-align:right;' id='kdcurrency_potensi' type='hidden' value='"+data.TOTAL+"' disabled>" + new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                                 } else
-                                                                 return '<td>'+ "<input style='text-align:right;' id='kdcurrency_potensi' type='hidden' value='"+data.TOTAL+"' disabled>"+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-           ],
-       });
-
-       let set_d = $("#table-imprest-investasi-terpusat").DataTable({
-           "ajax" : {
-               "url": baseUrl + "api_operator/rekap_invoice_belum/detail_rekap_placement_lcl",
-               "data" : {
-                   p_tgl_awal : p_tgl_awal,
-                   p_sesi : p_sesi
-               },
-               "type" : "GET",
-               "dataType" : "json",
-           },
-           "sorting": false,
-           "searching" : false,
-           "paging": false,
-           "bInfo" : false,
-           "bLengthChange" : false,
-           "columns" : [
-   //            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
-               {"data": null,"render": (data, type, row) => {if (data.BANK == null){
-                                                                 return "<td><input id='kdbank_potensi' type='text' value='"+data.BANK+"' disabled></td>";
-                                                                 } else
-                                                                 return "<td><input id='kdbank_potensi' type='text' value='"+data.BANK+"' disabled></td>";
-                                                                 },
-                                                                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                                 }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.MANDIRI == "0" || data.MANDIRI == null){
-                                                                 return "<td><input style='text-align:right;' id='mandiri_imprest_pusat' type='number' value='"+data.MANDIRI+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='mandiri_imprest_pusat' type='number' value='"+data.MANDIRI+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BRI == "0" || data.BRI == null){
-                                                                 return "<td><input style='text-align:right;' id='bri_imprest_pusat' type='number' value='"+data.BRI+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='bri_imprest_pusat' type='number' value='"+data.BRI+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BNI == "0" || data.BNI == null){
-                                                                 return "<td><input style='text-align:right;' id='bni_imprest_pusat' type='number' value='"+data.BNI+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='bni_imprest_pusat' type='number' value='"+data.BNI+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BUKOPIN == "0" || data.BUKOPIN == null){
-                                                                 return "<td><input style='text-align:right;' id='bukopin_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='bukopin_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.RP_TOTAL == "0" || data.RP_TOTAL == null){
-                                                                 return '<td>'+ "<input style='text-align:right;' id='kdcurrency_potensi' type='hidden' value='"+data.TOTAL+"' disabled>" + new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                                 } else
-                                                                 return '<td>'+ "<input style='text-align:right;' id='kdcurrency_potensi' type='hidden' value='"+data.TOTAL+"' disabled>"+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-           ],
-       });
-
-       let set_e = $("#table-settlement").DataTable({
-           "ajax" : {
-               "url": baseUrl + "api_operator/rekap_invoice_belum/detail_rekap_placement_lcl",
-               "data" : {
-                   p_tgl_awal : p_tgl_awal,
-                   p_sesi : p_sesi
-               },
-               "type" : "GET",
-               "dataType" : "json",
-           },
-           "sorting": false,
-           "searching" : false,
-           "paging": false,
-           "bInfo" : false,
-           "bLengthChange" : false,
-           "columns" : [
-   //            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
-               {"data": null,"render": (data, type, row) => {if (data.BANK == null){
-                                                                 return "<td><input id='kdbank_potensi' type='text' value='"+data.BANK+"' disabled></td>";
-                                                                 } else
-                                                                 return "<td><input id='kdbank_potensi' type='text' value='"+data.BANK+"' disabled></td>";
-                                                                 },
-                                                                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                                 }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.MANDIRI == "0" || data.MANDIRI == null){
-                                                                 return "<td><input style='text-align:right;' id='mandiri_imprest_pusat' type='number' value='"+data.MANDIRI+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='mandiri_imprest_pusat' type='number' value='"+data.MANDIRI+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BRI == "0" || data.BRI == null){
-                                                                 return "<td><input style='text-align:right;' id='bri_imprest_pusat' type='number' value='"+data.BRI+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='bri_imprest_pusat' type='number' value='"+data.BRI+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BNI == "0" || data.BNI == null){
-                                                                 return "<td><input style='text-align:right;' id='bni_imprest_pusat' type='number' value='"+data.BNI+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='bni_imprest_pusat' type='number' value='"+data.BNI+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BUKOPIN == "0" || data.BUKOPIN == null){
-                                                                 return "<td><input style='text-align:right;' id='bukopin_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='bukopin_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.RP_TOTAL == "0" || data.RP_TOTAL == null){
-                                                                 return '<td>'+ "<input style='text-align:right;' id='kdcurrency_potensi' type='hidden' value='"+data.TOTAL+"' disabled>" + new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                                 } else
-                                                                 return '<td>'+ "<input style='text-align:right;' id='kdcurrency_potensi' type='hidden' value='"+data.TOTAL+"' disabled>"+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-           ],
-       });
-
-       let set_f = $("#table-proteksi-pengadaan-valas").DataTable({
-           "ajax" : {
-               "url": baseUrl + "api_operator/rekap_invoice_belum/detail_rekap_placement_lcl",
-               "data" : {
-                   p_tgl_awal : p_tgl_awal,
-                   p_sesi : p_sesi
-               },
-               "type" : "GET",
-               "dataType" : "json",
-           },
-           "sorting": false,
-           "searching" : false,
-           "paging": false,
-           "bInfo" : false,
-           "bLengthChange" : false,
-           "columns" : [
-   //            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
-               {"data": null,"render": (data, type, row) => {if (data.BANK == null){
-                                                                 return "<td><input id='kdbank_potensi' type='text' value='"+data.BANK+"' disabled></td>";
-                                                                 } else
-                                                                 return "<td><input id='kdbank_potensi' type='text' value='"+data.BANK+"' disabled></td>";
-                                                                 },
-                                                                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                                 }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.MANDIRI == "0" || data.MANDIRI == null){
-                                                                 return "<td><input style='text-align:right;' id='mandiri_imprest_pusat' type='number' value='"+data.MANDIRI+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='mandiri_imprest_pusat' type='number' value='"+data.MANDIRI+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BRI == "0" || data.BRI == null){
-                                                                 return "<td><input style='text-align:right;' id='bri_imprest_pusat' type='number' value='"+data.BRI+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='bri_imprest_pusat' type='number' value='"+data.BRI+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BNI == "0" || data.BNI == null){
-                                                                 return "<td><input style='text-align:right;' id='bni_imprest_pusat' type='number' value='"+data.BNI+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='bni_imprest_pusat' type='number' value='"+data.BNI+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BUKOPIN == "0" || data.BUKOPIN == null){
-                                                                 return "<td><input style='text-align:right;' id='bukopin_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='bukopin_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.RP_TOTAL == "0" || data.RP_TOTAL == null){
-                                                                 return '<td>'+ "<input style='text-align:right;' id='kdcurrency_potensi' type='hidden' value='"+data.TOTAL+"' disabled>" + new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                                 } else
-                                                                 return '<td>'+ "<input style='text-align:right;' id='kdcurrency_potensi' type='hidden' value='"+data.TOTAL+"' disabled>"+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-           ],
-       });
-
-       let set_g = $("#table-receipt-placement").DataTable({
-           "ajax" : {
-               "url": baseUrl + "api_operator/rekap_invoice_belum/detail_rekap_placement_lcl",
-               "data" : {
-                   p_tgl_awal : p_tgl_awal,
-                   p_sesi : p_sesi
-               },
-               "type" : "GET",
-               "dataType" : "json",
-           },
-           "sorting": false,
-           "searching" : false,
-           "paging": false,
-           "bInfo" : false,
-           "bLengthChange" : false,
-           "columns" : [
-   //            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
-               {"data": null,"render": (data, type, row) => {if (data.BANK == null){
-                                                                 return "<td><input id='kdbank_potensi' type='text' value='"+data.BANK+"' disabled></td>";
-                                                                 } else
-                                                                 return "<td><input id='kdbank_potensi' type='text' value='"+data.BANK+"' disabled></td>";
-                                                                 },
-                                                                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                                 }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.MANDIRI == "0" || data.MANDIRI == null){
-                                                                 return "<td><input style='text-align:right;' id='mandiri_imprest_pusat' type='number' value='"+data.MANDIRI+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='mandiri_imprest_pusat' type='number' value='"+data.MANDIRI+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BRI == "0" || data.BRI == null){
-                                                                 return "<td><input style='text-align:right;' id='bri_imprest_pusat' type='number' value='"+data.BRI+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='bri_imprest_pusat' type='number' value='"+data.BRI+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BNI == "0" || data.BNI == null){
-                                                                 return "<td><input style='text-align:right;' id='bni_imprest_pusat' type='number' value='"+data.BNI+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='bni_imprest_pusat' type='number' value='"+data.BNI+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BUKOPIN == "0" || data.BUKOPIN == null){
-                                                                 return "<td><input style='text-align:right;' id='bukopin_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='bukopin_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-                {"data":null,"render" : (data, tyoe, row) => {if (data.MEGA == "0" || data.MEGA == null){
-                                                                 return "<td><input style='text-align:right;' id='mega_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='mega_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-                {"data":null,"render" : (data, tyoe, row) => {if (data.DKI == "0" || data.DKI == null){
-                                                                 return "<td><input style='text-align:right;' id='dki_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                                 } else
-                                                                 return "<td><input style='text-align:right;' id='dki_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BCA == "0" || data.BCA == null){
-                                                                return "<td><input style='text-align:right;' id='bca_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                                } else
-                                                                return "<td><input style='text-align:right;' id='bca_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                             },
-                                                           "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                           }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BII == "0" || data.BII == null){
-                                                                return "<td><input style='text-align:right;' id='bii_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                                } else
-                                                                return "<td><input style='text-align:right;' id='bii_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                             },
-                                                           "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                           }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BRIS == "0" || data.BRIS == null){
-                                                                return "<td><input style='text-align:right;' id='bris_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                                } else
-                                                                return "<td><input style='text-align:right;' id='bris_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                             },
-                                                           "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                           }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.BTN == "0" || data.BTN == null){
-                                                                return "<td><input style='text-align:right;' id='btn_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                                } else
-                                                                return "<td><input style='text-align:right;' id='btn_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                             },
-                                                           "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                           }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.DANAMON == "0" || data.DANAMON == null){
-                                                                return "<td><input style='text-align:right;' id='danamon_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                                } else
-                                                                return "<td><input style='text-align:right;' id='danamon_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                             },
-                                                           "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                           }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.OCBC == "0" || data.OCBC == null){
-                                                                return "<td><input style='text-align:right;' id='ocbc_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                                } else
-                                                                return "<td><input style='text-align:right;' id='ocbc_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                             },
-                                                           "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                           }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.UOB == "0" || data.UOB == null){
-                                                               return "<td><input style='text-align:right;' id='uob_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                               } else
-                                                               return "<td><input style='text-align:right;' id='uob_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                            },
-                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                          }},
-              {"data":null,"render" : (data, tyoe, row) => {if (data.DBS == "0" || data.DBS == null){
-                                                               return "<td><input style='text-align:right;' id='dbs_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                               } else
-                                                               return "<td><input style='text-align:right;' id='dbs_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                            },
-                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                          }},
-              {"data":null,"render" : (data, tyoe, row) => {if (data.CIMB == "0" || data.CIMB == null){
-                                                               return "<td><input style='text-align:right;' id='cimb_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                               } else
-                                                               return "<td><input style='text-align:right;' id='cimb_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                            },
-                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                          }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.RP_TOTAL == "0" || data.RP_TOTAL == null){
-                                                                 return '<td>'+ "<input style='text-align:right;' id='kdcurrency_potensi' type='hidden' value='"+data.TOTAL+"' disabled>" + new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                                 } else
-                                                                 return '<td>'+ "<input style='text-align:right;' id='kdcurrency_potensi' type='hidden' value='"+data.TOTAL+"' disabled>"+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                              },
-                                                            "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                            }},
-           ],
-       });
-
-       let set_h = $("#table-giro-special-rate").DataTable({
-           "ajax" : {
-               "url": baseUrl + "api_operator/rekap_invoice_belum/detail_rekap_placement_lcl",
-               "data" : {
-                   p_tgl_awal : p_tgl_awal,
-                   p_sesi : p_sesi
-               },
-               "type" : "GET",
-               "dataType" : "json",
-           },
-           "sorting": false,
-           "searching" : false,
-           "paging": false,
-           "bInfo" : false,
-           "bLengthChange" : false,
-           "columns" : [
-   //            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
-               {"data": null,"render": (data, type, row) => {if (data.BANK == null){
-                                                                return "<td><input id='kdbank_potensi' type='text' value='"+data.BANK+"' disabled></td>";
-                                                                } else
-                                                                return "<td><input id='kdbank_potensi' type='text' value='"+data.BANK+"' disabled></td>";
-                                                                },
-                                                                "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                                }},
-              {"data":null,"render" : (data, tyoe, row) => {if (data.MANDIRI == "0" || data.MANDIRI == null){
-                                                                return "<td><input style='text-align:right;' id='mandiri_imprest_pusat' type='number' value='"+data.MANDIRI+"'></td>";
-                                                                } else
-                                                                return "<td><input style='text-align:right;' id='mandiri_imprest_pusat' type='number' value='"+data.MANDIRI+"'></td>";
-                                                             },
-                                                           "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                           }},
-              {"data":null,"render" : (data, tyoe, row) => {if (data.BRI == "0" || data.BRI == null){
-                                                                return "<td><input style='text-align:right;' id='bri_imprest_pusat' type='number' value='"+data.BRI+"'></td>";
-                                                                } else
-                                                                return "<td><input style='text-align:right;' id='bri_imprest_pusat' type='number' value='"+data.BRI+"'></td>";
-                                                             },
-                                                           "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                           }},
-              {"data":null,"render" : (data, tyoe, row) => {if (data.BNI == "0" || data.BNI == null){
-                                                                return "<td><input style='text-align:right;' id='bni_imprest_pusat' type='number' value='"+data.BNI+"'></td>";
-                                                                } else
-                                                                return "<td><input style='text-align:right;' id='bni_imprest_pusat' type='number' value='"+data.BNI+"'></td>";
-                                                             },
-                                                           "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                           }},
-              {"data":null,"render" : (data, tyoe, row) => {if (data.BUKOPIN == "0" || data.BUKOPIN == null){
-                                                                return "<td><input style='text-align:right;' id='bukopin_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                                } else
-                                                                return "<td><input style='text-align:right;' id='bukopin_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                             },
-                                                           "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                           }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.MEGA == "0" || data.MEGA == null){
-                                                                return "<td><input style='text-align:right;' id='mega_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                                } else
-                                                                return "<td><input style='text-align:right;' id='mega_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                             },
-                                                           "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                           }},
-               {"data":null,"render" : (data, tyoe, row) => {if (data.DKI == "0" || data.DKI == null){
-                                                                return "<td><input style='text-align:right;' id='dki_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                                } else
-                                                                return "<td><input style='text-align:right;' id='dki_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                             },
-                                                           "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                           }},
-              {"data":null,"render" : (data, tyoe, row) => {if (data.BCA == "0" || data.BCA == null){
-                                                               return "<td><input style='text-align:right;' id='bca_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                               } else
-                                                               return "<td><input style='text-align:right;' id='bca_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                            },
-                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                          }},
-              {"data":null,"render" : (data, tyoe, row) => {if (data.BII == "0" || data.BII == null){
-                                                               return "<td><input style='text-align:right;' id='bii_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                               } else
-                                                               return "<td><input style='text-align:right;' id='bii_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                            },
-                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                          }},
-              {"data":null,"render" : (data, tyoe, row) => {if (data.BRIS == "0" || data.BRIS == null){
-                                                               return "<td><input style='text-align:right;' id='bris_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                               } else
-                                                               return "<td><input style='text-align:right;' id='bris_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                            },
-                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                          }},
-              {"data":null,"render" : (data, tyoe, row) => {if (data.BTN == "0" || data.BTN == null){
-                                                               return "<td><input style='text-align:right;' id='btn_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                               } else
-                                                               return "<td><input style='text-align:right;' id='btn_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                            },
-                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                          }},
-              {"data":null,"render" : (data, tyoe, row) => {if (data.DANAMON == "0" || data.DANAMON == null){
-                                                               return "<td><input style='text-align:right;' id='danamon_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                               } else
-                                                               return "<td><input style='text-align:right;' id='danamon_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                            },
-                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                          }},
-              {"data":null,"render" : (data, tyoe, row) => {if (data.OCBC == "0" || data.OCBC == null){
-                                                               return "<td><input style='text-align:right;' id='ocbc_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                               } else
-                                                               return "<td><input style='text-align:right;' id='ocbc_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                            },
-                                                          "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                          }},
-              {"data":null,"render" : (data, tyoe, row) => {if (data.UOB == "0" || data.UOB == null){
-                                                              return "<td><input style='text-align:right;' id='uob_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                              } else
-                                                              return "<td><input style='text-align:right;' id='uob_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                           },
-                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                         }},
-             {"data":null,"render" : (data, tyoe, row) => {if (data.DBS == "0" || data.DBS == null){
-                                                              return "<td><input style='text-align:right;' id='dbs_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                              } else
-                                                              return "<td><input style='text-align:right;' id='dbs_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                           },
-                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                         }},
-             {"data":null,"render" : (data, tyoe, row) => {if (data.CIMB == "0" || data.CIMB == null){
-                                                              return "<td><input style='text-align:right;' id='cimb_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                              } else
-                                                              return "<td><input style='text-align:right;' id='cimb_imprest_pusat' type='number' value='"+data.BUKOPIN+"'></td>";
-                                                           },
-                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                         }},
-              {"data":null,"render" : (data, tyoe, row) => {if (data.RP_TOTAL == "0" || data.RP_TOTAL == null){
-                                                                return '<td>'+ "<input style='text-align:right;' id='kdcurrency_potensi' type='hidden' value='"+data.TOTAL+"' disabled>" + new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                                } else
-                                                                return '<td>'+ "<input style='text-align:right;' id='kdcurrency_potensi' type='hidden' value='"+data.TOTAL+"' disabled>"+ new Intl.NumberFormat().format(data.RP_TOTAL)+'</td>';
-                                                             },
-                                                           "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
-                                                           }},
-           ],
-       });
-}
 
 function updateImprestPusat(){
+
     var row = $("#table-imprest-pusat").find('tr'),
         cells = row.find('td'),
         btnCell = $(this).parent();
@@ -1320,42 +551,25 @@ function updateImprestPusat(){
     $('#table-imprest-pusat > tbody  > tr').each(function() {
         var cell = $(this).find('td');
         var map = {};
-        var i = cell.find('input#bank_imprest_pusat').val();
+        var i = cell.find('input#data1').val();
         if (i === undefined) { return true; }
-//        map.tipe = cell.find('input#kdcurrency_potensi').val();
-        map.bank = cell.find('input#bank_imprest_pusat').val();
-        map.bmandiri = cell.find('input#mandiri_imprest_pusat').val();
-        map.bbri = cell.find('input#bri_imprest_pusat').val();
-        map.bbni = cell.find('input#bni_imprest_pusat').val();
-        map.bbukopin = cell.find('input#bukopin_imprest_pusat').val();
-        map.bmega = cell.find('input#mega_imprest_pusat').val();
-        map.bdki = cell.find('input#dki_imprest_pusat').val();
-        map.bbca = cell.find('input#bca_imprest_pusat').val();
-        map.bbii = cell.find('input#bii_imprest_pusat').val();
-        map.bbris = cell.find('input#bris_imprest_pusat').val();
-        map.bbtn = cell.find('input#btn_imprest_pusat').val();
-        map.bdanamon = cell.find('input#danamon_imprest_pusat').val();
-        map.bocbc = cell.find('input#ocbc_imprest_pusat').val();
-        map.buob = cell.find('input#uob_imprest_pusat').val();
-        map.bdbs = cell.find('input#dbs_imprest_pusat').val();
-        map.bcimb = cell.find('input#cimb_imprest_pusat').val();
+        map.data0 = cell.find('#data0').html();
+        map.data1 = cell.find('input#data1').val();
+        map.data2 = cell.find('input#data2').val();
+        map.data3 = cell.find('input#data3').val();
+        map.data4 = cell.find('input#data4').val();
         list.push(map)
     });
 
-    console.log(list);
-
-
     $.ajax({
-        url: baseUrl + "/api_operator/rekap_invoice_belum/ins_rekap_placement_lcl",
+        url: baseUrl + "api_operator/rekap_invoice_belum/ins_rekap_placement_imprest",
         dataType: 'JSON',
         type: "POST",
         data : {
-            /*pKodeBank: row.find('.kdbank_potensi').html(),
-            pJumlah: row.find('input').val(),*/
             pData: JSON.stringify(list)
         },
         success: function (res) {
-//            console.log("res ins potensi : ",res);
+            console.log("res ins potensi : ",res);
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
                 location.reload();
@@ -1368,5 +582,376 @@ function updateImprestPusat(){
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
         }
     });
+}
 
-};
+function updateImpor(){
+    var row = $("#table-imprest-pusat").find('tr'),
+        cells = row.find('td'),
+        btnCell = $(this).parent();
+    var list = [];
+
+    $('#table-imprest-pusat > tbody  > tr').each(function() {
+        var cell = $(this).find('td');
+        var map = {};
+        var i = cell.find('input#data1').val();
+        if (i === undefined) { return true; }
+        map.data0 = cell.find('#data0').html();
+        map.data1 = cell.find('input#data1').val();
+        map.data2 = cell.find('input#data2').val();
+        map.data3 = cell.find('input#data3').val();
+        map.data4 = cell.find('input#data4').val();
+        list.push(map)
+    });
+
+    $.ajax({
+        url: baseUrl + "api_operator/rekap_invoice_belum/ins_rekap_placement_impor",
+        dataType: 'JSON',
+        type: "POST",
+        data : {
+            pData: JSON.stringify(list)
+        },
+        success: function (res) {
+            console.log("res ins potensi : ",res);
+            if(res.return == 1 || res.return == '1'){
+                alert ("Data tersimpan");
+                location.reload();
+            }else{
+                alert ("Data gagal tersimpan");
+            }
+
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
+function updateImprestOperasi(){
+    var row = $("#table-imprest-pusat").find('tr'),
+        cells = row.find('td'),
+        btnCell = $(this).parent();
+    var list = [];
+
+    $('#table-imprest-pusat > tbody  > tr').each(function() {
+        var cell = $(this).find('td');
+        var map = {};
+        var i = cell.find('input#data1').val();
+        if (i === undefined) { return true; }
+        map.data0 = cell.find('#data0').html();
+        map.data1 = cell.find('input#data1').val();
+        map.data2 = cell.find('input#data2').val();
+        map.data3 = cell.find('input#data3').val();
+        map.data4 = cell.find('input#data4').val();
+        list.push(map)
+    });
+
+    $.ajax({
+        url: baseUrl + "api_operator/rekap_invoice_belum/ins_rekap_placement_imprest_operasi",
+        dataType: 'JSON',
+        type: "POST",
+        data : {
+            pData: JSON.stringify(list)
+        },
+        success: function (res) {
+            console.log("res ins potensi : ",res);
+            if(res.return == 1 || res.return == '1'){
+                alert ("Data tersimpan");
+                location.reload();
+            }else{
+                alert ("Data gagal tersimpan");
+            }
+
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
+function updateImprestInvestasi(){
+    var row = $("#table-imprest-pusat").find('tr'),
+        cells = row.find('td'),
+        btnCell = $(this).parent();
+    var list = [];
+
+    $('#table-imprest-pusat > tbody  > tr').each(function() {
+        var cell = $(this).find('td');
+        var map = {};
+        var i = cell.find('input#data1').val();
+        if (i === undefined) { return true; }
+        map.data0 = cell.find('#data0').html();
+        map.data1 = cell.find('input#data1').val();
+        map.data2 = cell.find('input#data2').val();
+        map.data3 = cell.find('input#data3').val();
+        map.data4 = cell.find('input#data4').val();
+        list.push(map)
+    });
+
+    $.ajax({
+        url: baseUrl + "api_operator/rekap_invoice_belum/ins_rekap_placement_imprest_invest",
+        dataType: 'JSON',
+        type: "POST",
+        data : {
+            pData: JSON.stringify(list)
+        },
+        success: function (res) {
+            console.log("res ins potensi : ",res);
+            if(res.return == 1 || res.return == '1'){
+                alert ("Data tersimpan");
+                location.reload();
+            }else{
+                alert ("Data gagal tersimpan");
+            }
+
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
+function updateSettlement(){
+    var row = $("#table-imprest-pusat").find('tr'),
+        cells = row.find('td'),
+        btnCell = $(this).parent();
+    var list = [];
+
+    $('#table-imprest-pusat > tbody  > tr').each(function() {
+        var cell = $(this).find('td');
+        var map = {};
+        var i = cell.find('input#data1').val();
+        if (i === undefined) { return true; }
+        map.data0 = cell.find('#data0').html();
+        map.data1 = cell.find('input#data1').val();
+        map.data2 = cell.find('input#data2').val();
+        map.data3 = cell.find('input#data3').val();
+        map.data4 = cell.find('input#data4').val();
+        list.push(map)
+    });
+
+    $.ajax({
+        url: baseUrl + "api_operator/rekap_invoice_belum/ins_rekap_placement_Settelment",
+        dataType: 'JSON',
+        type: "POST",
+        data : {
+            pData: JSON.stringify(list)
+        },
+        success: function (res) {
+            console.log("res ins potensi : ",res);
+            if(res.return == 1 || res.return == '1'){
+                alert ("Data tersimpan");
+                location.reload();
+            }else{
+                alert ("Data gagal tersimpan");
+            }
+
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
+function updatePengadaanValas(){
+    var row = $("#table-imprest-pusat").find('tr'),
+        cells = row.find('td'),
+        btnCell = $(this).parent();
+    var list = [];
+
+    $('#table-imprest-pusat > tbody  > tr').each(function() {
+        var cell = $(this).find('td');
+        var map = {};
+        var i = cell.find('input#data1').val();
+        if (i === undefined) { return true; }
+        map.data0 = cell.find('#data0').html();
+        map.data1 = cell.find('input#data1').val();
+        map.data2 = cell.find('input#data2').val();
+        map.data3 = cell.find('input#data3').val();
+        map.data4 = cell.find('input#data4').val();
+        list.push(map)
+    });
+
+    $.ajax({
+        url: baseUrl + "api_operator/rekap_invoice_belum/ins_rekap_placement_proyeksi_valas",
+        dataType: 'JSON',
+        type: "POST",
+        data : {
+            pData: JSON.stringify(list)
+        },
+        success: function (res) {
+            console.log("res ins potensi : ",res);
+            if(res.return == 1 || res.return == '1'){
+                alert ("Data tersimpan");
+                location.reload();
+            }else{
+                alert ("Data gagal tersimpan");
+            }
+
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
+function updateReceiptPlacement(){
+    var row = $("#table-receipt-placement").find('tr'),
+        cells = row.find('td'),
+        btnCell = $(this).parent();
+    var list = [];
+
+    $('#table-receipt-placement > tbody  > tr').each(function() {
+        var cell = $(this).find('td');
+        var map = {};
+        var i = cell.find('input#data1').val();
+        if (i === undefined) { return true; }
+        map.data0 = cell.find('#data0').html();
+        map.data1 = cell.find('input#data1').val();
+        map.data2 = cell.find('input#data2').val();
+        map.data3 = cell.find('input#data3').val();
+        map.data4 = cell.find('input#data4').val();
+        map.data5 = cell.find('input#data5').val();
+        map.data6 = cell.find('input#data6').val();
+        map.data7 = cell.find('input#data7').val();
+        map.data8 = cell.find('input#data8').val();
+        map.data9 = cell.find('input#data9').val();
+        map.data10 = cell.find('input#data10').val();
+        map.data11 = cell.find('input#data11').val();
+        map.data12 = cell.find('input#data12').val();
+        map.data13 = cell.find('input#data13').val();
+        map.data14 = cell.find('input#data14').val();
+        map.data15 = cell.find('input#data15').val();
+        list.push(map)
+    });
+
+    $.ajax({
+        url: baseUrl + "api_operator/rekap_invoice_belum/ins_rekap_placement_receipt",
+        dataType: 'JSON',
+        type: "POST",
+        data : {
+            pData: JSON.stringify(list)
+        },
+        success: function (res) {
+            console.log("res ins potensi : ",res);
+            if(res.return == 1 || res.return == '1'){
+                alert ("Data tersimpan");
+                location.reload();
+            }else{
+                alert ("Data gagal tersimpan");
+            }
+
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
+function updateGiroSpecial(){
+    var row = $("#table-receipt-placement").find('tr'),
+        cells = row.find('td'),
+        btnCell = $(this).parent();
+    var list = [];
+
+    $('#table-receipt-placement > tbody  > tr').each(function() {
+        var cell = $(this).find('td');
+        var map = {};
+        var i = cell.find('input#data1').val();
+        if (i === undefined) { return true; }
+        map.data0 = cell.find('#data0').html();
+        map.data1 = cell.find('input#data1').val();
+        map.data2 = cell.find('input#data2').val();
+        map.data3 = cell.find('input#data3').val();
+        map.data4 = cell.find('input#data4').val();
+        map.data5 = cell.find('input#data5').val();
+        map.data6 = cell.find('input#data6').val();
+        map.data7 = cell.find('input#data7').val();
+        map.data8 = cell.find('input#data8').val();
+        map.data9 = cell.find('input#data9').val();
+        map.data10 = cell.find('input#data10').val();
+        map.data11 = cell.find('input#data11').val();
+        map.data12 = cell.find('input#data12').val();
+        map.data13 = cell.find('input#data13').val();
+        map.data14 = cell.find('input#data14').val();
+        map.data15 = cell.find('input#data15').val();
+        list.push(map)
+    });
+
+    $.ajax({
+        url: baseUrl + "api_operator/rekap_invoice_belum/ins_rekap_placement_giro_special",
+        dataType: 'JSON',
+        type: "POST",
+        data : {
+            pData: JSON.stringify(list)
+        },
+        success: function (res) {
+            console.log("res ins potensi : ",res);
+            if(res.return == 1 || res.return == '1'){
+                alert ("Data tersimpan");
+                location.reload();
+            }else{
+                alert ("Data gagal tersimpan");
+            }
+
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
+function update_lcl_data(status, tanggal, sesi){
+    var confirmation = confirm("Apakah Anda yakin akan menyetujui placement LCL "+document.getElementById("tglcetak2").innerHTML+" ?");
+    console.log("Ini data : " + status + sesi);
+    if (confirmation){
+        showLoadingCss();
+        $.ajax({
+            url : baseUrl + "api_operator/rekap_invoice_belum/verifikasi_placement_lcl",
+            data : {
+                p_status : status,
+                p_tanggal : tanggal,
+                p_sesi: sesi
+            },
+            type : "POST",
+            success : function (res) {
+                if (res.return === 1){
+                    alert("Data Berhasil Disetujui");
+                    kebutuhanPlacement.ajax.reload();
+                } else
+                    alert("Maaf, Terjadi Kesalahan");
+                hideLoadingCss();
+            },
+            error : (err) => {
+                hideLoadingCss("Terjadi Kesalahan. Silahakn Hubungi Administrator!");
+            }
+        })
+    }
+}
+
+function reverse_lcl_data(status, tanggal, sesi){
+    var confirmation = confirm("Apakah Anda yakin akan mereverse dropping periode "+document.getElementById("tglcetak2").innerHTML+" ?");
+    if (confirmation){
+        showLoadingCss();
+        $.ajax({
+            url : baseUrl + "api_operator/rekap_invoice_belum/reverse_placement_lcl",
+            data : {
+                p_status : status,
+                p_tanggal : tanggal,
+                p_sesi: sesi
+            },
+            type : "POST",
+            success : function (res) {
+                if (res.return === 1){
+                    alert("Data Berhasil Direverse");
+                    kebutuhanPlacement.ajax.reload();
+//                    refreshFooter();
+                }else alert("Maaf, Terjadi Kesalahan");
+
+                hideLoadingCss();
+            },
+            error : (err) => {
+                hideLoadingCss("Terjadi Kesalahan. Silahakn Hubungi Administrator!");
+            }
+        })
+    }
+}
