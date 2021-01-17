@@ -30,9 +30,7 @@
         <li class="breadcrumb-item active" style="cursor: default">Deposito</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS')"><i class="fas fa-plus-square"></i> &nbsp;New Data</button>
             </div>
         </li>
@@ -82,10 +80,8 @@
                                 <input type="text" class="form-control" id="pTglJatuhTempo"/>
                             </div>
                             <div class="form-group">
-                                <label for="pTenor"><span style="color: red">*)</span>&nbsp;Tenor:</label>
-                                <select id="pTenor" class="form-control">
-                                    <option value="">Pilih Data</option>
-                                </select>
+                                <label for="pTenor"><span style="color: red"></span>&nbsp;Tenor (Hari):</label>
+                                <input type="text" id="pTenor" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label for="pKeterangan">Keterangan:</label>
@@ -93,13 +89,13 @@
                                     <option value="">Pilih Data</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="pStatus">Status:</label>
-                                <select id="pStatus" class="form-control">
-                                    <option value="0">TIDAK AKTIF</option>
-                                    <option value="1">AKTIF</option>
-                                </select>
-                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label for="pStatus">Status:</label>-->
+<!--                                <select id="pStatus" class="form-control">-->
+<!--                                    <option value="0">TIDAK AKTIF</option>-->
+<!--                                    <option value="1">AKTIF</option>-->
+<!--                                </select>-->
+<!--                            </div>-->
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -171,7 +167,7 @@
                                 <th>INTEREST</th>
                                 <th>TANGGAL PENEMPATAN</th>
                                 <th>TANGGAL JATUH TEMPO</th>
-                                <th>TENOR</th>
+                                <th>TENOR (HARI)</th>
                                 <th>JUMLAH HARI</th>
                                 <th>BUNGA</th>
                                 <th>POKOK &amp; BUNGA</th>

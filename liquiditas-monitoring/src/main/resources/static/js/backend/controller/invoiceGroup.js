@@ -1484,7 +1484,7 @@ function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
                 },
                 {
                     "sortable": false,
-                    "aTargets": [0,71,72]
+                    "aTargets": [0,71,72,73]
                 },
                 {
                     "aTargets": [0],

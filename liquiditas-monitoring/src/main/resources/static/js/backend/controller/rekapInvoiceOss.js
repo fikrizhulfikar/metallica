@@ -173,6 +173,8 @@ function duplicate_data(id) {
             $("#pSpread").val(res[0].SPREAD);
             $("#pJenisTagihan").val(res[0].JENIS_TAGIHAN.toLowerCase());
             $('#pTglJatuhTempo').prop('disabled', false);
+            $("#hrpayableradio").attr('disabled',false);
+            $("#apinvoiceradio").attr('disabled',false);
             if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
                 $('#pTglJatuhTempo').prop('disabled', true);
             }
@@ -480,8 +482,8 @@ function edit_data(id) {
                 $("#hrpayableradio").prop('checked',true)
                 $("#apinvoiceradio").prop('checked',false)
             }
-            $("#hrpayableradio").attr('disabled',true)
-            $("#apinvoiceradio").attr('disabled',true)
+            $("#hrpayableradio").attr('readonly',true)
+            $("#apinvoiceradio").attr('readonly',true)
             setTimeout(function () {
                 $("#pVendor").select2({
                     width: "100%"

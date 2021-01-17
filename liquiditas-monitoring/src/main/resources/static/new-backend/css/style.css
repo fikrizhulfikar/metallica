@@ -3239,8 +3239,8 @@ tbody.collapse.show {
 
 .badge {
   display: inline-block;
-  padding: 0.25em 0.4em;
-  font-size: 75%;
+  padding: 0.5em 0.4em;
+  font-size: 85%;
   font-weight: bold;
   line-height: 1;
   color: #fff;
@@ -8908,3 +8908,8 @@ div.buttons {
 }
 
 div.dataTables_filter input { width: 150px }
+
+.c-vr {
+  width: 1px;
+  background-color: rgba(0,0,21,.2);
+}

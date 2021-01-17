@@ -2827,7 +2827,7 @@ function cetakStrukLunas(button, comp_code, doc_no, fiscal_year, line_item, ket)
             if (res.createdoc.status === 1){
                 // console.log("Result : ",res);
                 alert("Berhasil Membuat Dokumen. Click 'Ok' untuk mengunduh.");
-                window.open(baseUrl+"generate_doc/cetak/downloadfile/corpay_lunas_"+doc_no+".docx","_blank");
+                window.open(baseUrl+"generate_doc/cetak/downloadfile/corpay_lunas_"+doc_no+".pdf","_blank");
             }
             $(button).find('i').remove();
             $(button).html($('<i/>',{class:'fas fa-receipt'})).prop("disabled",false);

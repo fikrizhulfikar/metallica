@@ -152,4 +152,12 @@ public class UploadSaldoService {
         }
         return true;
     }
+
+    public List<Map<String, Object>> getAllTransaksi(){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_all_transaksi");
+        return simpleJdbcCall.executeFunction(ArrayList.class);
+    }
+
 }

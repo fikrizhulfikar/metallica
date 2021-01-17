@@ -36,6 +36,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -662,7 +663,8 @@ public class GeneratedocController {
             @RequestParam("pLineItem") String pLineItem,
             @RequestParam("pKet") String pKet
     ) throws JSONException, AltException{
-        String filename = "uploadcorpay/temp/corpay_lunas_"+pDocNo;
+        String dlfilename = "corpay_lunas_"+pDocNo;
+        String filename = "uploadcorpay/temp/"+dlfilename;
         DocGenerator dg = new DocGenerator();
         Map out = new HashMap();
         List<Map<String, Object>> list = generateDocService.cetakStrukCorpay(pCompCode, pDocNo, pFiscalYear, pLineItem, pKet);
@@ -689,7 +691,8 @@ public class GeneratedocController {
         }catch (Exception err){
             err.printStackTrace();
         }
-        out.put("createdoc",checkfile(filename + ".docx")) ;
+        String pathtodwonload = doctopdf(filename,"uploadcorpay/temp/",dlfilename);
+        out.put("createdoc",checkfile(pathtodwonload)) ;
         return out;
     }
 
@@ -728,6 +731,37 @@ public class GeneratedocController {
         zipout.close();
         response.setStatus(HttpServletResponse.SC_OK);
         response.addHeader(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\""+ zipFileName +"\"");
+    }
+
+    public String doctopdf(String pathtofile, String outputdir, String filename) {
+
+        String filenametoexport = pathtofile + ".docx";
+//        filenametoexport = filenametoexport.replace("/", "\\");//linux dihilangkan
+//        String pathtoexport = "D:\\Project\\PLNE\\webservice\\"+filenametoexport;//linux dihilangkan
+        String pathtoexport = filenametoexport;
+//        String outputdir = "upload/temp/expense/";
+
+        Runtime rt = Runtime.getRuntime();
+//        String command = "\"C:\\Program Files\\LibreOffice\\program\\soffice.exe\"  --headless --convert-to pdf "+pathtoexport+" --outdir "+outputdir;
+        String command = "soffice  --headless --convert-to pdf " + pathtoexport + " --outdir " + outputdir; //linux  pake ini, yang atas hapus
+        System.out.println(command);
+        Process pr = null;
+        try {
+            pr = rt.exec(command);
+            pr.waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        String pathtodownload = outputdir + filename + ".pdf";// linux balikin jadi /
+        System.out.println("Path"+pathtodownload);
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return pathtodownload;
     }
 
 }
