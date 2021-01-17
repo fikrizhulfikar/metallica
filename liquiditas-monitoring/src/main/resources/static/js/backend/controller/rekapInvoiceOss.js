@@ -489,8 +489,8 @@ function edit_data(id) {
                 $("#hrpayableradio").prop('checked',true)
                 $("#apinvoiceradio").prop('checked',false)
             }
-            $("#hrpayableradio").attr('readonly',true)
-            $("#apinvoiceradio").attr('readonly',true)
+            // $("#hrpayableradio").attr('readonly',true)
+            // $("#apinvoiceradio").attr('readonly',true)
             setTimeout(function () {
                 $("#pVendor").select2({
                     width: "100%"
