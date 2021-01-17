@@ -756,7 +756,7 @@ public class GeneratedocController {
         String pathtodownload = outputdir + filename + ".pdf";// linux balikin jadi /
         System.out.println("Path"+pathtodownload);
         try {
-            TimeUnit.SECONDS.sleep(5);
+            TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
