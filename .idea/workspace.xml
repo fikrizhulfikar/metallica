@@ -12,6 +12,9 @@
       <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/coreapps.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/coreapps.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/jQuery-Mask-Plugin-master/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/jQuery-Mask-Plugin-master/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-scheduler/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-scheduler/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/login.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -425,6 +428,8 @@
       <option name="presentableId" value="LOCAL-00092" />
       <option name="project" value="LOCAL" />
       <updated>1607417963522</updated>
+      <workItem from="1606699328843" duration="622000" />
+
     </task>
     <task id="LOCAL-00093" summary="Penambahan function dashboard imprest valas (merge)">
       <created>1607562945257</created>
@@ -518,6 +523,42 @@
       <updated>1608280751220</updated>
     </task>
     <option name="localTasksCounter" value="106" />
+    <task id="LOCAL-00014" summary="Menambahkan tombol approval untuk role msb investment expenditure ii">
+      <created>1606205674880</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1606205674880</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Log">
+      <created>1606468186965</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1606468186965</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Fix bug, disable revere to sap for msb,vp, and evp in approval flow (after verified by maker)">
+      <created>1606471145015</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1606471145015</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Log">
+      <created>1606471177724</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1606471177724</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Log">
+      <created>1606699928627</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1606699928627</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -563,5 +604,19 @@
     <MESSAGE value="Menambahkan css garis vertical pembatas" />
     <MESSAGE value="Fix bug, menambahkan indikator mandatori pada form input" />
     <option name="LAST_COMMIT_MESSAGE" value="Fix bug, menambahkan indikator mandatori pada form input" />
+    <MESSAGE value="Add Param Head/Item to Split Head and Item" />
+    <MESSAGE value="Add Param Header and Item" />
+    <MESSAGE value="Fix Reverse Button" />
+    <MESSAGE value="Update Tracking" />
+    <MESSAGE value="Modify Function Hit" />
+    <MESSAGE value="Updated" />
+    <MESSAGE value="Ubah idle time dan jetty server post size" />
+    <MESSAGE value="Ubah konfigurasi smtp" />
+    <MESSAGE value="Ubah proses refnum bank menjadi di belakang" />
+    <MESSAGE value="menambahkan titik koma" />
+    <MESSAGE value="Menambahkan tombol approval untuk role msb investment expenditure ii" />
+    <MESSAGE value="Fix bug, disable revere to sap for msb,vp, and evp in approval flow (after verified by maker)" />
+    <MESSAGE value="Log" />
+    <option name="LAST_COMMIT_MESSAGE" value="Log" />
   </component>
 </project>
