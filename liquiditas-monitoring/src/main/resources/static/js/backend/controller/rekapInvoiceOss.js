@@ -178,6 +178,13 @@ function duplicate_data(id) {
             if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
                 $('#pTglJatuhTempo').prop('disabled', true);
             }
+            if(res[0].JENIS_TRANSAKSI === 'AP INVOICE'){
+                $("#hrpayableradio").prop('checked',false)
+                $("#apinvoiceradio").prop('checked',true)
+            }else{
+                $("#hrpayableradio").prop('checked',true)
+                $("#apinvoiceradio").prop('checked',false)
+            }
             setTimeout(function () {
                 $("#pVendor").select2({
                     width: "100%"
@@ -482,8 +489,8 @@ function edit_data(id) {
                 $("#hrpayableradio").prop('checked',true)
                 $("#apinvoiceradio").prop('checked',false)
             }
-            $("#hrpayableradio").attr('readonly',true)
-            $("#apinvoiceradio").attr('readonly',true)
+            // $("#hrpayableradio").attr('readonly',true)
+            // $("#apinvoiceradio").attr('readonly',true)
             setTimeout(function () {
                 $("#pVendor").select2({
                     width: "100%"
