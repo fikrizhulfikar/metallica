@@ -49,9 +49,9 @@ function openFormNew() {
     $("#pNominal").val("");
     $("#pInterest").val("");
     $("#pTglPenempatan").val("");
-    $("#pTglPenempatan").datepicker({ dateFormat: 'dd/mm/yy'});
+    //$("#pTglPenempatan").datepicker({ dateFormat: 'dd/mm/yy'});
     $("#pTglJatuhTempo").val("");
-    $('#pTglJatuhTempo').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
+    //$('#pTglJatuhTempo').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
 
     setSelectBank("pBankCounterParty","","PEMBAYAR","","DEPOSITO");
     setSelectCurr("pCurr",null,"","DEPOSITO");
@@ -60,6 +60,20 @@ function openFormNew() {
     $('#edit-deposito-modal').modal({backdrop: 'static', keyboard: false});
 
 }
+
+$("#pTglJatuhTempo").datepicker({
+    minDate: '0',
+    maxDate: '+1Y+6M',
+    dateFormat : 'dd/mm/yy',
+    onSelect: function (dateStr) {
+        var max = $(this).datepicker('getDate'); // Get selected date
+        $('#datepicker').datepicker('option', 'maxDate', max || '+1Y+6M'); // Set other max, default to +18 months
+        var start = $("#pTglPenempatan").datepicker("getDate");
+        var end = $("#pTglJatuhTempo").datepicker("getDate");
+        var days = (end - start) / (1000 * 60 * 60 * 24);
+        $("#pTenor").val(days);
+    }
+});
 
 function delete_data(id) {
     var stateCrf = confirm("Anda Yakin Akan Menghapus Data Ini ?");

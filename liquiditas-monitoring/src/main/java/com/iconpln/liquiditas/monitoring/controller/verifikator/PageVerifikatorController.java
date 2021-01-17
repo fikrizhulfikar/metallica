@@ -16,6 +16,11 @@ public class PageVerifikatorController {
         return "verifikator/imprst_valas_and_global_bond";
     }
 
+    @RequestMapping("/page_verifikator/saldo_rekening_valuta_asing")
+    public String saldoRekeningValutaAsing(){
+        return "verifikator/saldo_rekening_valuta_asing";
+    }
+
     @RequestMapping("/page_verifikator/derivatif_and_deposito")
     public String derivatifDeposito(){
         return "verifikator/derivatif_and_deposito";
@@ -49,6 +54,11 @@ public class PageVerifikatorController {
     @RequestMapping("/page_idrverifikator/idr_imprest")
     public String idrImprst(){
         return "verifikatoridr/idr_imprest";
+    }
+
+    @RequestMapping("/page_idrverifikator/saldo_rekening_rupiah")
+    public String saldoRekeningRupiah(){
+        return "verifikatoridr/saldo_rekening_rupiah";
     }
 
     @RequestMapping("/page_idrverifikator/idr_subsidi_kmk")

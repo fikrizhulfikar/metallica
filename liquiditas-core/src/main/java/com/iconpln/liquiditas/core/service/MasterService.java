@@ -1240,4 +1240,20 @@ public class MasterService {
         return list;
     }
 
+    public List<Map<String, Object>> getFilterBank(){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("bank_pembayar");
+        List<Map<String, Object>> list = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+        return list;
+    }
+
+    public List<Map<String, Object>> getFilterCashCode(){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("cash_code_pembayar");
+        List<Map<String, Object>> list = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+        return list;
+    }
+
 }

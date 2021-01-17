@@ -4,6 +4,10 @@ import com.iconpln.liquiditas.core.service.RealisasiInvoiceService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.monitoring.utils.NotificationUtil;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import net.sf.jxls.transformer.XLSTransformer;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -16,13 +20,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by israj on 10/4/2016.
@@ -68,6 +72,96 @@ public class RealisasiInvoiceController {
         List<Map<String, Object>> list = new ArrayList<>();
         try {
             list = realisasiInvoiceService.getListPembayaranLunas(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, WebUtils.getUsernameLogin(), sortBy, sortDir, pStatus, pStatusTracking, pSearch);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("draw", draw);
+        mapData.put("data", list);
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
+        return mapData;
+    }
+
+    @RequestMapping(value = "/get_rekap_bayar", method = RequestMethod.GET)
+    public Map listRekapBayar(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "10") int length,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
+            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
+            @RequestParam(value = "pCaraBayar", defaultValue = "ALL") String pCaraBayar,
+            @RequestParam(value = "status", defaultValue = "ALL") String pStatus,
+            @RequestParam(value = "statusTracking", defaultValue = "ALL") String pStatusTracking,
+            @RequestParam(value = "search[value]", defaultValue = "") String pSearch
+    ) {
+
+        String sortBy = parseColumn(sortIndex);
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = realisasiInvoiceService.getListRekapPembayaranLunas(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, WebUtils.getUsernameLogin(), sortBy, sortDir, pStatus, pStatusTracking, pSearch);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("draw", draw);
+        mapData.put("data", list);
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
+        return mapData;
+    }
+
+    @RequestMapping(value = "/get_rekap_currency", method = RequestMethod.GET)
+    public Map listRekapCurrency(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "10") int length,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
+            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
+            @RequestParam(value = "pCaraBayar", defaultValue = "ALL") String pCaraBayar,
+            @RequestParam(value = "status", defaultValue = "ALL") String pStatus,
+            @RequestParam(value = "statusTracking", defaultValue = "ALL") String pStatusTracking,
+            @RequestParam(value = "search[value]", defaultValue = "") String pSearch
+    ) {
+
+        String sortBy = parseColumn(sortIndex);
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = realisasiInvoiceService.getListRekapCurrencyLunas(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, WebUtils.getUsernameLogin(), sortBy, sortDir, pStatus, pStatusTracking, pSearch);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -687,6 +781,203 @@ public class RealisasiInvoiceController {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    @GetMapping(path = "/pdfRekap/{pTglAwal}/{pTglAkhir}/{pCurr}/{pCaraBayar}/{pBank}/{pStatus}/{pStatusTracking}/{idr}/{usd}/{eur}/{jpy}")
+    public String exportPdfRekap(
+            @PathVariable String pTglAwal,
+            @PathVariable String pTglAkhir,
+            @PathVariable String pCurr,
+            @PathVariable String pStatusTracking,
+            @PathVariable String pBank,
+            @PathVariable String pCaraBayar,
+            @PathVariable String pStatus,
+            @PathVariable String idr,
+            @PathVariable String usd,
+            @PathVariable String eur,
+            @PathVariable String jpy,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws InvalidFormatException, ParseException {
+        SimpleDateFormat dateParser = new SimpleDateFormat("yyyymmdd");
+        try {
+
+            String tglAwal = "";
+            String tglAkhir = "";
+            String caraBayar = (pCaraBayar.equals("null")) ? "ALL" : pCaraBayar;
+            String status = (pStatus.equals("null")) ? "ALL" : pStatus;
+            String statusTracking = (pStatusTracking.equals("null")) ? "ALL" : pStatusTracking;
+
+            if (!pTglAwal.equals("null")) {
+                tglAwal = pTglAwal;
+            }
+            if (!pTglAkhir.equals("null")) {
+                tglAkhir = pTglAkhir;
+            }
+
+            List<Map<String, Object>> listData = realisasiInvoiceService.getAllRekapPembayaran(WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pCurr, statusTracking, pBank, caraBayar, status);
+
+            Document document = new Document(PageSize.A3.rotate());
+            File file = new File("pdfFileName.pdf");
+            FileOutputStream pdfFileout = new FileOutputStream(file);
+            PdfWriter.getInstance(document, pdfFileout);
+            document.open();
+            Font fontHeader = new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD);
+            Font fontRow = new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.NORMAL);
+            String[] headers = new String[]{ "NO", "DOC NO", "METODE PEMBAYARAN", "VENDOR",
+                    "BANK PEMBAYARAN", "NOREK BANK PEMBAYARAN", "BANK TUJUAN", "NOREK BANK TUJUAN",
+                    "CURR", "AMT TC", "SIGN", "COUNTER" };
+            PdfPTable table = new PdfPTable(headers.length);
+            for (String header : headers) {
+                PdfPCell cell = new PdfPCell();
+                cell.setGrayFill(0.9f);
+                cell.setPhrase(new Phrase(header.toUpperCase(), fontHeader));
+                table.addCell(cell);
+            }
+            table.completeRow();
+            for (Map data : listData) {
+                Phrase phrase1 = new Phrase(data.get("ROW_NUMBER").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase1));
+                Phrase phrase2 = new Phrase(data.get("DOC_NO").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase2));
+                Phrase phrase3 = new Phrase(data.get("METODE_PEMBAYARAN").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase3));
+                Phrase phrase4 = new Phrase(data.get("VENDOR").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase4));
+                Phrase phrase5 = new Phrase(data.get("HOUSE_BANK").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase5));
+                Phrase phrase6 = new Phrase(data.get("NO_REK_HOUSE_BANK").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase6));
+                Phrase phrase7 = new Phrase(data.get("BANK_BENEF").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase7));
+                Phrase phrase8 = new Phrase(data.get("NO_REK_BENEF").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase8));
+                Phrase phrase9 = new Phrase(data.get("CURRENCY").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase9));
+                Phrase phrase10 = new Phrase(data.get("AMT_TC").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase10));
+                Phrase phrase11 = new Phrase(data.get("APPROVER").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase11));
+                Phrase phrase12 = new Phrase(data.get("COUNTER").toString(), fontRow);
+                table.addCell(new PdfPCell(phrase12));
+                table.completeRow();
+            }
+            Paragraph p = new Paragraph();
+            p.add("REKAPITULASI REALISASI PEMBAYARAN");
+            p.setAlignment(Element.ALIGN_CENTER);
+            Paragraph p2 = new Paragraph();
+            p2.add("TANGGAL : " + tglAwal + " s.d " + tglAkhir);
+            p2.setAlignment(Element.ALIGN_CENTER);
+            Paragraph p3 = new Paragraph();
+            p3.add("IDR " + idr + ", USD " + usd + ", EUR " + eur + ", JPY " + jpy);
+            p3.setAlignment(Element.ALIGN_LEFT);
+            Paragraph p4 = new Paragraph();
+            p4.add("________________________________________________________________________");
+            p4.setAlignment(Element.ALIGN_CENTER);
+            document.add(p);
+            document.add(p2);
+            document.add(p4);
+            document.add(table);
+            document.add(p3);
+            document.close();
+
+            response.setContentType("application/pdf");
+            response.setHeader("Content-disposition","attachment;filename="+ "rekap_realisasi_pembayaran.pdf");
+            File f = new File("pdfFileName.pdf");
+            FileInputStream fis = new FileInputStream(f);
+            DataOutputStream os = new DataOutputStream(response.getOutputStream());
+            response.setHeader("Content-Length",String.valueOf(f.length()));
+            byte[] buffer = new byte[1024];
+            int len = 0;
+            while ((len = fis.read(buffer)) >= 0) {
+                os.write(buffer, 0, len);
+            }
+            return null;
+        } catch (IOException | DocumentException e) {
+            e.printStackTrace();
+            return "Gagal Export Data :" + e.getMessage();
+        }
+    }
+
+    @GetMapping(path = "/xlsRekap/{pTglAwal}/{pTglAkhir}/{pCurr}/{pCaraBayar}/{pBank}/{pStatus}/{pStatusTracking}/{idr}/{usd}/{eur}/{jpy}")
+    public String exportRekap(
+            @PathVariable String pTglAwal,
+            @PathVariable String pTglAkhir,
+            @PathVariable String pCurr,
+            @PathVariable String pStatusTracking,
+            @PathVariable String pBank,
+            @PathVariable String pCaraBayar,
+            @PathVariable String pStatus,
+            @PathVariable String idr,
+            @PathVariable String usd,
+            @PathVariable String eur,
+            @PathVariable String jpy,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws InvalidFormatException, ParseException {
+        SimpleDateFormat dateParser = new SimpleDateFormat("yyyymmdd");
+        try {
+
+            String tglAwal = "";
+            String tglAkhir = "";
+            String caraBayar = (pCaraBayar.equals("null")) ? "ALL" : pCaraBayar;
+            String status = (pStatus.equals("null")) ? "ALL" : pStatus;
+            String statusTracking = (pStatusTracking.equals("null")) ? "ALL" : pStatusTracking;
+
+            if (!pTglAwal.equals("null")) {
+                tglAwal = pTglAwal;
+            }
+            if (!pTglAkhir.equals("null")) {
+                tglAkhir = pTglAkhir;
+            }
+
+            String title = "REKAPITULASI REALISASI PEMBAYARAN";
+            String namaFile = "rekap_realisasi_pembayaran.xls";
+
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
+
+            List<Map<String, Object>> listData = realisasiInvoiceService.getAllRekapPembayaran(WebUtils.getUsernameLogin(), tglAwal.replaceAll("-", "/"), tglAkhir.replaceAll("-", "/"), pCurr, statusTracking, pBank, caraBayar, status);
+            System.out.println("Ini List Data Excel Cok!"+ listData);
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+
+            param.put("TITLE", title);
+            param.put("TGL_AWAL", tglAwal);
+            param.put("TGL_AKHIR", tglAkhir);
+            param.put("IDR", idr);
+            param.put("USD", usd);
+            param.put("EUR", eur);
+            param.put("JPY", jpy);
+            for (Map data : listData) {
+                Map paramDetail = new HashMap();
+                paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
+                paramDetail.put("DOC_NO",data.get("DOC_NO"));
+                paramDetail.put("METODE_PEMBAYARAN",data.get("METODE_PEMBAYARAN"));
+                paramDetail.put("VENDOR",data.get("VENDOR"));
+                paramDetail.put("HOUSE_BANK",data.get("HOUSE_BANK"));
+                paramDetail.put("NO_REK_HOUSE_BANK",data.get("NO_REK_HOUSE_BANK"));
+                paramDetail.put("BANK_BENEF",data.get("BANK_BENEF"));
+                paramDetail.put("NO_REK_BENEF",data.get("NO_REK_BENEF"));
+                paramDetail.put("CURRENCY",data.get("CURRENCY"));
+                paramDetail.put("AMT_TC",data.get("AMT_TC"));
+                paramDetail.put("APPROVER",data.get("APPROVER"));
+                paramDetail.put("COUNTER",data.get("COUNTER"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/rekap_realisasi_pembayaran.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Gagal Export Data :" + e.getMessage();
         }
     }
 

@@ -470,7 +470,7 @@ public class CorpayService {
             String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pKet, String pBankPembayar, String pKeterangan, String pTglRencanaBayar,
             String pSumberDana, String pMetodePembayaran, String pNoRekHouseBank, String pInqCustomerName, String pInqAccountNumber, String pInqAccountStatus,
             String pKodeBankPenerima, String pRetrievalRefNumber, String pCustomerRefNumber, String pConfirmationCode, String pTglActBayar, String pJamBayar,
-            String pUserId, String pOssId, String pGroupId, String pNoGiro, String pRefNum) throws SQLException {
+            String pUserId, String pOssId, String pGroupId, String pNoGiro, String pRefNum, String pExchRateDeals) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("invoice_edit");
@@ -501,6 +501,7 @@ public class CorpayService {
                 .addValue("p_group_id", pGroupId)
                 .addValue("p_no_giro",pNoGiro)
                 .addValue("p_ref_num_bank", pRefNum)
+                .addValue("p_kurs",pExchRateDeals)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data edit pembayaran : {}", out);
@@ -563,7 +564,7 @@ public class CorpayService {
 
     public Map<String, Object> updateLunas(
             String pCompCode, String pDocNo, String pFiscYear, String pLineItem, String pJenisTransaksi,
-            String pUserId, String pStatus, String pOssId, String pGroupId
+            String pUserId, String pStatus, String pOssId, String pGroupId, String pRefNumBank
     ) throws SQLException {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -579,6 +580,7 @@ public class CorpayService {
                 .addValue("p_status", pStatus)
                 .addValue("p_oss_id", pOssId)
                 .addValue("p_group_id", pGroupId)
+                .addValue("p_ref_num_bank", pRefNumBank)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("update data lunas : {}", out);
@@ -1500,7 +1502,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
             CloseableHttpResponse response = httpClient.execute(request);
             result = EntityUtils.toString(response.getEntity());
         }catch (Exception e){
-            //log.warning(e.getMessage());
+//            e.printStackTrace();
         }
         return result;
     }

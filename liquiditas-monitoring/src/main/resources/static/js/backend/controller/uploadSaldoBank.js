@@ -92,3 +92,7 @@ function upload_server_psd(){
         }
     })
 }
+
+function cetakExcelAllInvoice(){
+    window.open(baseUrl + "api_master/upload_saldo_bank/cetak_all_invoice");
+}

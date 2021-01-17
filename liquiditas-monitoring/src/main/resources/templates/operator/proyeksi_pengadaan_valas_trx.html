@@ -1,0 +1,96 @@
+<div th:fragment="stylesheets-backend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        table {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+        }
+        table th {
+            font-size: 12px;
+            vertical-align: middle;
+        }
+        table td {
+            font-size: 12px;
+            text-align: center;
+        }
+<!--        tbody:hover td {-->
+<!--            color: transparent;-->
+<!--            text-shadow: 0 0 3px #aaa;-->
+<!--        }-->
+
+<!--        tbody:hover tr:hover td {-->
+<!--            color: #444;-->
+<!--            text-shadow: 0 1px 0 #fff;-->
+<!--        }-->
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Proyeksi Kebutuhan Pengadaan Valas</li>
+    </ol>
+
+    <div class="col-md-12">
+        <div align="center" class="title"><h5><b>PROYEKSI KEBUTUHAN PENGADAAN VALAS</b></h5></div>
+        <div align="center" class="title"><h5><b>TGL : <span id="tglcetak"></span></b></h5></div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div style="overflow-y:auto;">
+                            <table id="pembayaran-bank" class="table table-rencana-realisasi table-condensed table-bordered" width="100%">
+                                <thead>
+                                <tr>
+                                <tr style="background: #F4D35E" width="12%">
+                                    <!--                                id="header-tanggal1"<td style="background-color: #F4D35E" width="5%">NO</td>-->
+                                    <th style="background: #67a2d8" width="10%">CURRENCY</th>
+                                    <th style="background: #67a2d8; text-align: center;" width="9%">CURRENCY</th>
+                                    <th style="background: #67a2d8; text-align: center;" width="7%">BANK</th>
+                                    <th id="tgl1" style="background: #67a2d8;vertical-align: middle !important; text-align: center;"  ></th>
+                                    <th id="tgl2" style="background: #67a2d8;vertical-align: middle !important; text-align: center;"  ></th>
+                                    <th id="tgl3" style="background: #67a2d8;vertical-align: middle !important; text-align: center;"  ></th>
+                                    <th id="tgl4" style="background: #67a2d8;vertical-align: middle !important; text-align: center;"  ></th>
+                                    <th id="tgl5" style="background: #67a2d8;vertical-align: middle !important; text-align: center;"  ></th>
+                                    <th id="tgl6" style="background: #67a2d8;vertical-align: middle !important; text-align: center;"  ></th>
+                                    <th id="tgl7" style="background: #67a2d8;vertical-align: middle !important; text-align: center;"  ></th>
+                                    <th style="background: #67a2d8;vertical-align: middle !important; text-align: center;" width="10%" >TOTAL</th>
+                                </tr>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <button class='btn btn-primary' onclick="updatePotensi()" style='cursor: pointer;float: right; width: 140px; margin-bottom: 20px'>Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--    modal detail -->
+    <div class="modal fade" id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/proyeksi_kebutuhan_pengadaan_valas.js"></script>
+</div>

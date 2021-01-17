@@ -34,13 +34,10 @@
     </ol>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h5>Upload Saldo Bank</h5>
-                        <!--                <a th:href="@{/api_operator/pembayaran/template}" id="btn-download-template-data-pembayaran">-->
-                        <!--                    Download Template-->
-                        <!--                </a>-->
                         <div class="form-group mb-3">
                             <input type="file" class="form-control" id="file-xls"
                                    accept="application/vnd.ms-excel"/>
@@ -49,18 +46,23 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h5>Upload Subsidi, Pinjaman, Dropping</h5>
-                        <!--                <a th:href="@{/api_operator/pembayaran/template}" id="btn-download-template-data-pembayaran">-->
-                        <!--                    Download Template-->
-                        <!--                </a>-->
                         <div class="form-group mb-3">
                             <input type="file" class="form-control" id="file-xls-psd"
                                    accept="application/vnd.ms-excel"/>
                         </div>
                         <button class="btn btn-primary" onclick="upload_server_psd()">Upload <i class="fas fa-cloud-upload-alt"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h5>Cetak All Invoice</h5>
+                        <button class="btn btn-success" onclick="cetakExcelAllInvoice()">Cetak <i class="fas fa-file-excel"></i></button>
                     </div>
                 </div>
             </div>

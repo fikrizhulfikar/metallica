@@ -632,7 +632,8 @@ public class CorpayController {
             @RequestParam(value = "pOssId", defaultValue = "") String pOssId,
             @RequestParam(value = "pGroupId", defaultValue = "") String pGroupId,
             @RequestParam(value = "pNoGiro",defaultValue = "") String pNoGiro,
-            @RequestParam(value = "pRefNum", defaultValue = "") String pRefNum
+            @RequestParam(value = "pRefNum", defaultValue = "") String pRefNum,
+            @RequestParam(value = "pExchRateDeals", defaultValue = "") String pExchRateDeals
     ) {
         AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
 //        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
@@ -647,7 +648,7 @@ public class CorpayController {
         try {
             Map<String, Object> res = corpayService.updatePembayaran(pCompCode, pDocNo, pFiscYear, pLineItem, pKet, pBankPembayar, pKeterangan, pTglRencanaBayar,pSumberDana,
                     pMetodePembayaran,pNoRekHouseBank,pInqCustomerName,pInqAccountNumber,pInqAccountStatus, pKodeBankPenerima, pRetrievalRefNumber,
-                    pCustomerRefNumber, pConfirmationCode, pTglActBayar, pJamBayar, WebUtils.getUsernameLogin(), pOssId, pGroupId, pNoGiro, pRefNum);
+                    pCustomerRefNumber, pConfirmationCode, pTglActBayar, pJamBayar, WebUtils.getUsernameLogin(), pOssId, pGroupId, pNoGiro, pRefNum, pExchRateDeals);
             if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
             }
@@ -700,7 +701,8 @@ public class CorpayController {
             @RequestParam(value = "pJenisTransaksi", defaultValue = "") String pJenisTransaksi,
             @RequestParam(value = "pStatus", defaultValue = "Sukses") String pStatus,
             @RequestParam(value = "pOssId", defaultValue = "") String pOssId,
-            @RequestParam(value = "pGroupId", defaultValue = "Sukses") String pGroupId
+            @RequestParam(value = "pGroupId", defaultValue = "Sukses") String pGroupId,
+            @RequestParam(value = "pRefNumBank", defaultValue = "-") String pRefNumBank
     ) {
         AppUtils.getLogger(this).info("pCompCode edit data: {}", pCompCode);
 //        AppUtils.getLogger(this).info("pDocNo edit data: {}", pDocNo);
@@ -713,7 +715,7 @@ public class CorpayController {
 //        AppUtils.getLogger(this).info("pSumberDana edit data: {}", pSumberDana);
 //        AppUtils.getLogger(this).info("pMetodePembayaran edit data: {}", pMetodePembayaran);
         try {
-            Map<String, Object> res = corpayService.updateLunas(pCompCode, pDocNo, pFiscYear, pLineItem, pJenisTransaksi, WebUtils.getUsernameLogin(), pStatus, pOssId, pGroupId);
+            Map<String, Object> res = corpayService.updateLunas(pCompCode, pDocNo, pFiscYear, pLineItem, pJenisTransaksi, WebUtils.getUsernameLogin(), pStatus, pOssId, pGroupId, pRefNumBank);
             if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
             }

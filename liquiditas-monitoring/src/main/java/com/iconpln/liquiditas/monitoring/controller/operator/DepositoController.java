@@ -1,5 +1,6 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
+import com.iconpln.liquiditas.core.service.DashboardService;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
 import com.iconpln.liquiditas.core.service.ValasService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
@@ -34,6 +35,9 @@ public class DepositoController {
     ValasService valasService;
 
     @Autowired
+    DashboardService dashboardService;
+
+    @Autowired
     private ResourceLoader resourceLoader;
 
     @RequestMapping(value = "/ins_data", method = RequestMethod.POST)
@@ -45,10 +49,10 @@ public class DepositoController {
             @RequestParam(value = "pNominal", defaultValue = "") String pNominal,
             @RequestParam(value = "pInterest", defaultValue = "") String pInterest,
             @RequestParam(value = "pTglpenempatan", defaultValue = "") String pTglpenempatan,
-            @RequestParam(value = "pTenor", defaultValue = "") String pTenor,
+            @RequestParam(value = "pTenor", defaultValue = "12341234") String pTenor,
             @RequestParam(value = "pTglJatuhTempo", defaultValue = "") String pTglJatuhTempo,
             @RequestParam(value = "pKeterangan", defaultValue = "") String pKeterangan,
-            @RequestParam(value = "pStatusDeposito", defaultValue = "") String pStatusDeposito
+            @RequestParam(value = "pStatusDeposito", defaultValue = "1") String pStatusDeposito
     ) {
         try {
             return valasService.insDeposito(pIdDeposito, pBank, pCurr, pNoAccount,
@@ -199,10 +203,10 @@ public class DepositoController {
                 paramDetail.put("TGL_PENEMPATAN", data.get("TGL_PENEMPATAN"));
                 paramDetail.put("TGL_JATUH_TEMPO", data.get("TGL_JATUH_TEMPO"));
                 paramDetail.put("TENOR", data.get("TENOR"));
-                paramDetail.put("JUMLAH_HARI", data.get("JUMLAH_HARI"));
+                paramDetail.put("JUMLAH_HARI", Integer.parseInt(data.get("JUMLAH_HARI").toString()));
                 paramDetail.put("BUNGA", data.get("BUNGA"));
                 paramDetail.put("POKOK_BUNGA", data.get("POKOK_BUNGA"));
-                paramDetail.put("COUNT_DOWN", data.get("COUNT_DOWN"));
+                paramDetail.put("COUNT_DOWN", Integer.parseInt(data.get("COUNT_DOWN").toString()));
                 paramDetail.put("KETERANGAN", data.get("KETERANGAN"));
                 String sts = (String) data.get("STATUS_DEPOSITO");
                 if (sts == "1" || sts.equals("1")) {
@@ -329,6 +333,21 @@ public class DepositoController {
                 return "STATUS";
             default:
                 return "BANK_CONTERPARTY";
+        }
+    }
+
+    @RequestMapping(value = "/get_dashboar_deposito", method = RequestMethod.GET)
+    public Map getDashDeposito(
+    ) {
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = dashboardService.getDashboardDeposito();
+            Map dataMap = new HashMap();
+            dataMap.put("data",list);
+            return  dataMap;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
