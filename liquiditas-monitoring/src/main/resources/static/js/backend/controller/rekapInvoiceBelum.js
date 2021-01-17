@@ -1861,7 +1861,7 @@ function edit_data(pCompCode, pNoDoc, pFiscYear, pLineItem,pSource, pBank,  pBen
             $('#pPostDate').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
             $('#pBaseline').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
             $('#pExchRateDeals3').val(res[0].KURS_YG_DITENTUKAN);
-            $('#pExchRateDeals3').mask('000,000,000,000,000',{reverse : true});
+            $('#pExchRateDeals3').mask('000,000,000,000,000.00',{reverse : true});
 
             if(res[0].METODE_PEMBAYARAN === "GIRO" || res[0].METODE_PEMBAYARAN === "INTERNETBANKING"){
                 $("#btn-inquiry").hide();
