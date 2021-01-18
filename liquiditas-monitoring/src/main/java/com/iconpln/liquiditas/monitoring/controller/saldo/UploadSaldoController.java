@@ -62,12 +62,11 @@ public class UploadSaldoController {
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
             param.put("TITLE", title);
-            System.out.println("List Data Excel : "+listData);
             int no = 1;
             for(Map data : listData){
                 Map paramDetail = new HashMap();
                 paramDetail.put("NO",no++);
-                paramDetail.put("KET", data.get("JENIS_TAGIHAN"));
+                paramDetail.put("JENIS_TAGIHAN", data.get("KET"));
                 paramDetail.put("COMP_CODE", data.get("COMP_CODE"));
                 paramDetail.put("DOC_NO", data.get("DOC_NO"));
                 paramDetail.put("GROUP_ID", data.get("GROUP_ID"));
@@ -104,6 +103,7 @@ public class UploadSaldoController {
             Workbook workbook = transformer.transformXLS(streamTemplate, param);
             workbook.write(os);
             os.flush();
+            System.out.println("List Data Excel : "+listData);
             return null;
         } catch (IOException | InvalidFormatException e) {
             e.printStackTrace();
