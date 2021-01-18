@@ -2,19 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c1432616-f44a-456c-b349-daf6be464567" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/maven.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/maven.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/PlacementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/PlacementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/coreapps.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/coreapps.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/jQuery-Mask-Plugin-master/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/jQuery-Mask-Plugin-master/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-scheduler/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-scheduler/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/login.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -176,41 +165,6 @@
       <workItem from="1607647324570" duration="12438000" />
       <workItem from="1607908696734" duration="25192000" />
       <workItem from="1608079625905" duration="18045000" />
-    </task>
-    <task id="LOCAL-00057" summary="Menambahkan teks posisi terakhir pada detail tracking">
-      <created>1606101106628</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1606101106628</updated>
-    </task>
-    <task id="LOCAL-00058" summary="Menambahkan parameter reference number">
-      <created>1606101190855</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1606101190855</updated>
-    </task>
-    <task id="LOCAL-00059" summary="Menambah parameter reference number bank">
-      <created>1606112757358</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1606112757358</updated>
-    </task>
-    <task id="LOCAL-00060" summary="Modifikasi ukuran bedge">
-      <created>1606112809962</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1606112809962</updated>
-    </task>
-    <task id="LOCAL-00061" summary="No Changes">
-      <created>1606116320516</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1606116320516</updated>
     </task>
     <task id="LOCAL-00062" summary="Add proyeksi kebutuhan pengadaan .js dan .html">
       <created>1606116428991</created>
@@ -429,7 +383,6 @@
       <option name="project" value="LOCAL" />
       <updated>1607417963522</updated>
       <workItem from="1606699328843" duration="622000" />
-
     </task>
     <task id="LOCAL-00093" summary="Penambahan function dashboard imprest valas (merge)">
       <created>1607562945257</created>
@@ -522,7 +475,6 @@
       <option name="project" value="LOCAL" />
       <updated>1608280751220</updated>
     </task>
-    <option name="localTasksCounter" value="106" />
     <task id="LOCAL-00014" summary="Menambahkan tombol approval untuk role msb investment expenditure ii">
       <created>1606205674880</created>
       <option name="number" value="00014" />
@@ -603,7 +555,6 @@
     <MESSAGE value="Menambahkan resume total perbank" />
     <MESSAGE value="Menambahkan css garis vertical pembatas" />
     <MESSAGE value="Fix bug, menambahkan indikator mandatori pada form input" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix bug, menambahkan indikator mandatori pada form input" />
     <MESSAGE value="Add Param Head/Item to Split Head and Item" />
     <MESSAGE value="Add Param Header and Item" />
     <MESSAGE value="Fix Reverse Button" />
