@@ -747,14 +747,14 @@ function getAllData() {
                                 let darr = full.TGL_RENCANA_BAYAR.split("/");
                                 let now = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
                                 let ren_byr = new Date(darr[2],darr[1]-1,darr[0]);
-                                if (ren_byr < now){
-                                    verif = '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-danger" title="Reject" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                }else{
+                                // if (ren_byr < now){
+                                //     verif = '<button style="width: 15px !important;" class="btn btn-reverse-data btn-sm btn-danger" title="Reject" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
+                                // }else{
                                     verif = '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-reverse-data btn-sm btn-success" title="Approve Tanggal" onclick="verifikasi_tanggal(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\')"><i class="fa fa-check"></i></button>'+'<button style="width: 15px !important;" class= "btn btn-reverse-data btn-sm btn-danger" title="Reject" onclick="reverse_sap(\'' +full.COMP_CODE+'\',\'' +full.DOC_NO+ '\',\''+full.FISC_YEAR+'\',\''+full.LINE_ITEM+'\',\''+full.KET+'\',\''+full.GROUP_ID+'\')"><i class="fa fa-arrow-left"></i></button>';
-                                }
+                                //}
                                 var ret_value = "-";
                                 var role = newRoleUser[0];
-                                if(newRoleUser[0] == "ROLE_EXECUTIVE_VICE_PRESIDENT"){
+                                if(newRoleUser[0] === "ROLE_EXECUTIVE_VICE_PRESIDENT"){
 
                                 ret_value =
                                 '<div class="btn-group">' + verif + '</div>';
