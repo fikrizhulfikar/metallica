@@ -165,13 +165,6 @@
       <workItem from="1607908696734" duration="25192000" />
       <workItem from="1608079625905" duration="18045000" />
     </task>
-    <task id="LOCAL-00063" summary="Menaambah button cetak all rekap invoice">
-      <created>1606116854020</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1606116854020</updated>
-    </task>
     <task id="LOCAL-00064" summary="Menambahkan cetak all rekap invoice">
       <created>1606116895069</created>
       <option name="number" value="00064" />
@@ -509,7 +502,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610978324766</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Disabling alert lewat tgl rencana bayar">
+      <created>1612165692560</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1612165692560</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -529,7 +529,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Menambahkan fitur cetak struk corpay (merge)" />
     <MESSAGE value="Menambah function filter cashcode dan bank (merge)" />
     <MESSAGE value="Menambahkan function filter bank dan cashcode (merge)" />
     <MESSAGE value="Menambahkan menu dashboard deposito" />
@@ -567,6 +566,7 @@
     <MESSAGE value="Fix bug, disable revere to sap for msb,vp, and evp in approval flow (after verified by maker)" />
     <MESSAGE value="Log" />
     <MESSAGE value="Fix bug, memperbaiki maping data jenis transaksi ke kolom excel" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix bug, memperbaiki maping data jenis transaksi ke kolom excel" />
+    <MESSAGE value="Disabling alert lewat tgl rencana bayar" />
+    <option name="LAST_COMMIT_MESSAGE" value="Disabling alert lewat tgl rencana bayar" />
   </component>
 </project>
