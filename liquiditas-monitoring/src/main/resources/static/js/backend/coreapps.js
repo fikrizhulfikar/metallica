@@ -1058,6 +1058,10 @@ function checkColumn(value) {
     $("#hc81").prop("checked", value);
 }
 
+function checkAllColumn(value){
+    $("#hide_column_modal").find(".checkbox-toggle").prop("checked",value);
+}
+
 function setSelectJenisRekening(idHtml, jenis, idForSelected, form) {
     $.ajax({
         url: baseUrl + "api_operator/rekap_invoice_belum/get_jenis_rekening",
