@@ -1507,15 +1507,15 @@ function multipleReverseSap(){
 }
 
 function verifikasi_tanggal_multiple(){
-    let breakPoint;
-    invoiceCheckedArray.forEach((item, index) => {
-        console.log(item);
-        if (item.ok === "1"){
-            alert("Silahkan Ubah Tanggal Rencana Bayar");
-            throw breakPoint;
-            return;
-        }
-    });
+    // let breakPoint;
+    // invoiceCheckedArray.forEach((item, index) => {
+    //     console.log(item);
+    //     if (item.ok === "1"){
+    //         alert("Silahkan Ubah Tanggal Rencana Bayar");
+    //         throw breakPoint;
+    //         return;
+    //     }
+    // });
     if (invoiceCheckedArray.length <= 0){
         alert("Maaf, Silahkan pilih data terlebih dahulu!");
     }else if(invoiceCheckedArray.length > 0){
