@@ -33,9 +33,9 @@ $(document).ready(function () {
 
     $('#check_all').change(function() {
         if($(this).is(':checked')){
-            checkColumn(true);
+            checkAllColumn(true);
         } else {
-            checkColumn(false);
+            checkAllColumn(false);
         }
     });
 });
