@@ -1872,7 +1872,7 @@ function saveColumn() {
         "verified_by" : 0,
         "verified_on" : 0,
     };
-    // // // console.log("data save column", data);
+
     $.ajax({
         url: baseUrl + "api_operator/rekap_invoice_belum/save_column",
         dataType: 'JSON',
