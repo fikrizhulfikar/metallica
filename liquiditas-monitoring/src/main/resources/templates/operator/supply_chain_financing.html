@@ -1,0 +1,249 @@
+<div th:fragment="stylesheets-backend">
+    <style>
+        button{ cursor: pointer
+        }
+        /*.table td {*/
+        /*    padding-right: 0.75rem;*/
+        /*    padding-bottom: 0.25rem;*/
+        /*    padding-left: 0.75rem;*/
+        /*    padding-top: 0.25rem;*/
+        /*}*/
+        div.dataTables_wrapper div.dataTables_paginate {
+            float: right !important;
+            text-align: left !important;
+            padding-left: 3px;
+            padding-right: 75px;
+        }
+
+        .lbl-src {
+            font-size: 12px;
+        }
+
+        .panel-custom {
+            overflow-x: hidden !important;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter {
+            text-align: right !important;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Supply Chain Financing Non Cash Loan</li>
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')">
+                    <i class="fas fa-plus-square"></i> &nbsp;New Data
+                </button>
+            </div>
+        </li>
+    </ol>
+    <div id="edit-scf-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Supply Chain Financing</h5>
+                </div>
+                <div class="modal-body">
+                    <form autocomplete="off" action="#" id="form_scf">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pbankCounterparty"><span style="color: red">*)</span>&nbsp;Bank Counterparty :</label>
+                                    <select id="pbankCounterparty" class="form-control" required="required">
+                                        <option value="">Pilih Data</option>
+                                    </select>
+                                </div>
+                                <input type="hidden" value="" id="pIdScf"/>
+                                <div class="form-group">
+                                    <label for="pTglTransaksi"><span style="color: red">*)</span> Tanggal Transaksi :</label>
+                                    <input type="text" class="form-control" id="pTglTransaksi" required="required"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pTglJatuhTempo"><span style="color: red">*)</span>Tanggal Jatuh
+                                        Tempo :</label>
+                                    <input type="text" class="form-control" id="pTglJatuhTempo" required="required"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pVendor"><span style="color: red">*)</span>&nbsp;Vendor :</label>
+                                    <select id="pVendor" class="form-control" required="required">
+                                        <option value="">Pilih Data</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pCurrecny"><span style="color: red">*)</span>&nbsp;Currency:</label>
+                                    <select id="pCurrecny" class="form-control" required="required">
+                                        <option value="">Pilih Data</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pNominal"><span style="color: red">*)</span>&nbsp;Nominal:</label>
+                                    <input type="text" class="form-control" id="pNominal" required="required"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pProvisi"><span style="color: red">*)</span>&nbsp;Provisi (%):</label>
+                                    <input type="number" class="form-control" id="pProvisi" required="required"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pSukuBunga"><span style="color: red">*)</span>&nbsp;Suku Bunga (%):</label>
+                                    <input type="number" class="form-control" id="pSukuBunga" required="required"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pJenisPembayaran"><span style="color: red">*)</span>&nbsp;Jenis Pembayaran :</label>
+                                    <select id="pJenisPembayaran" class="form-control" required="required">
+                                        <option value="">Pilih Data</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group" style="margin-top: 40px">
+                                <label for="pCurrecny">Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label><br/>
+                                <label>Gunakan titik (.) untuk koma (,)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="ins_data()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-upload-file" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title_modal">UPLOAD FILE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="input_file">
+                    <div class="form-group" style="display:none">
+                        <input type="text" class="form-control" id="temp_id_scf_file"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="file_pendukung">UPLOAD DOKUMEN PENDUKUNG</label><br/>
+                        <small><a href="" id="btn_download_file_pendukung">-</a></small>
+                        <input type="file" class="form-control" id="file_pendukung"
+                               accept="application/pdf,application/zip" onchange="upload_server('6')"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="file_lembar_verifikasi">COPY INVOICE DAN LEMBAR VERIFIKASI</label><br/>
+                        <small><a href="" id="btn_download_file_verifikasi">-</a></small>
+                        <input type="file" class="form-control" id="file_lembar_verifikasi"
+                               accept="application/pdf,application/zip" onchange="upload_server('7')"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="file_lainya">DOKUMEN LAIN (JIKA ADA) </label><br/>
+                        <small><a href="" id="btn_download_file_lainya">-</a></small>
+                        <input type="file" class="form-control" id="file_lainya"
+                               accept="application/pdf,application/zip" onchange="upload_server('8')"/>
+                    </div>
+                    <div class="form-group">
+                        <p>File bertipe .zip atau pdf</p>
+                        <p>Disarankan Maksimal 5mb</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Selesai</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+            <div id="filter">
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;">
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Tanggal Awal </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal"/>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Tanggal Akhir </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Bank </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="bank" id="cmb_bank" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Currency </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="bacurrecnynk" id="cmb_currecny" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Jenis Pembayaran </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="jenispembayaran" id="cmb_jenis_pembayaran" class="form-control">
+                            <option selected="selected" value="ALL">SEMUA JENIS PEMBAYARAN</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
+                    </div>
+                </div>
+            </div>
+            <div class="list-data" style="margin-top:25px;">
+                <div class="panel panel-default">
+                    <div class="panel-body panel-custom">
+                        <table id="table-scf" class="table table-bordered table-striped">
+                            <thead style="font-size: 12px">
+                            <tr>
+                                <th>NO</th>
+                                <th>NAMA BANK</th>
+                                <th>TANGGAL TRANSAKSI</th>
+                                <th>TANGGAL JATUH TEMPO</th>
+                                <th>TENOR</th>
+                                <th>VENDOR</th>
+                                <th>JENIS PEMBAYARAN</th>
+                                <th>CURRENCY</th>
+                                <th>NOMINAL</th>
+                                <th>KURS</th>
+                                <th>EQ IDR</th>
+                                <th>SUKU BUNGA</th>
+                                <th>BIAYA BUNGA</th>
+                                <th>PROVISI</th>
+                                <th>BIAYA PROVISI</th>
+                                <th>TOTAL BIAYA</th>
+                                <th>AKSI</th>
+                            </tr>
+                            </thead>
+                            <tbody style="font-size: 12px">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/supplyChainFinancing.js"></script>
+</div>
