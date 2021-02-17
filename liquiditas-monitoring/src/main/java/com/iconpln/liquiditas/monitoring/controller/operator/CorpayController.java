@@ -1,7 +1,9 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
+import com.iconpln.liquiditas.core.domain.Notification;
 import com.iconpln.liquiditas.core.service.CorpayService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
+import com.iconpln.liquiditas.monitoring.utils.NamedIdentifier;
 import com.iconpln.liquiditas.monitoring.utils.NotificationUtil;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
 
@@ -2385,26 +2387,6 @@ public class CorpayController {
         return out;
     }
 
-//    @RequestMapping(path = "/verifikasi_placement")
-//    public Map<String, Object> listVerifikasiPlacement(
-//            @RequestParam(value = "p_status", defaultValue = "ALL") String status,
-//            @RequestParam(value = "p_tanggal", defaultValue = "") String tanggal,
-//            @RequestParam(value = "p_sesi", defaultValue = "") String sesi
-//    ){
-//        List<Map<String, Object>> list = new ArrayList<>();
-//
-//        try {
-//            list = corpayService.getVerifikasiPlacement(status, tanggal, sesi);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//
-//        Map mapData = new HashMap();
-//        mapData.put("data", list);
-//
-//        return mapData;
-//    }
-
     @RequestMapping(value = "/verifikasi_placement_lcl", method = RequestMethod.POST)
     public Map<String, Object> updateStatus(
             @RequestParam(value = "p_status", defaultValue = "") String status,
@@ -2543,6 +2525,109 @@ public class CorpayController {
             out = corpayService.getInsPlacementUSD(bank, mandiri, bri, bni, bukopin);
         }
         return out;
+    }
+
+    @GetMapping(path = "/operasi_pendanaan_valas")
+    public Map listOperasiPendanaanValas(
+            @RequestParam(value = "p_tanggal", defaultValue = "") String tanggal,
+            @RequestParam(value = "p_sesi", defaultValue = "") String sesi
+    ){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = corpayService.getOperasiPendanaanValas(tanggal, sesi, WebUtils.getUsernameLogin());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @GetMapping(path = "/operasi_pendanaan_idr")
+    public Map listOperasiPendanaanIdr(
+            @RequestParam(value = "p_tanggal", defaultValue = "") String tanggal,
+            @RequestParam(value = "p_sesi", defaultValue = "") String sesi
+    ){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = corpayService.getOperasiPendanaanIdr(tanggal, sesi, WebUtils.getUsernameLogin());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @GetMapping(path = "/placement_lcl_header")
+    public Map listPlacementlclHeader(
+            @RequestParam(value = "p_tgl_awal", defaultValue = "ALL") String tglAwal,
+            @RequestParam(value = "p_tgl_akhir", defaultValue = "ALL") String tglAkhir
+    ){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = corpayService.getPlacementlclHeader(tglAwal, tglAkhir, WebUtils.getUsernameLogin());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @RequestMapping(value = "/delete_data", method = RequestMethod.POST)
+    public Map<String, Object> deletePlacementlclHeader(
+            @RequestParam(value = "p_id_form", defaultValue = "") String idForm
+    ){
+        try {
+            Map<String, Object> result = (Map<String, Object>) corpayService.delPlacementlclHeader(idForm);
+
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/create_palcement_lcl_header", method = RequestMethod.POST)
+    public Map<String, Object> createPlacementLclHeader(
+            @RequestParam(value = "p_id_form", defaultValue = "") String idForm,
+            @RequestParam(value = "p_tgl_jatuh_tempo", defaultValue = "") String tglJatuhTempo
+    ){
+        try {
+            Map<String, Object> result = (Map<String, Object>) corpayService.createPlacementlclHeader(idForm, tglJatuhTempo, WebUtils.getUsernameLogin());
+
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/verifikasi_placement_lcl_header", method = RequestMethod.POST)
+    public Map<String, Object> updateStatus(
+            @RequestParam(value = "p_id_form", defaultValue = "") String idForm,
+            @RequestParam(value = "p_status", defaultValue = "") String status
+    ){
+        AppUtils.getLogger(this).info("p_status : {}", status);
+
+        try {
+            Map<String, Object> result = corpayService.updatePlacementlclHeader(WebUtils.getUsernameLogin(), idForm, status);
+
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

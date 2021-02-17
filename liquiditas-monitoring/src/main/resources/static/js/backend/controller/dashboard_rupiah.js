@@ -159,8 +159,8 @@ function tableMainDashboard(_date, tanggal, kode, bank){
             {"data":null,
                 "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data": null,"render": (data, type, row) => {return '<td >'+data.TOTAL+'</td>';
-                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+            {"data": null,"render": (data, type, row) => {return '<td > Rp '+Intl.NumberFormat().format(data.TOTAL)+'</td>';
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
         ],
         "createdRow" : function (row, data, dataIndex){
             const regexHead = RegExp("([A-Z])\\..");
@@ -281,8 +281,8 @@ function tableMainDashboard(_date, tanggal, kode, bank){
             {"data":null,
                 "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data": null,"render": (data, type, row) => {return '<td >'+data.TOTAL+'</td>';
-                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+            {"data": null,"render": (data, type, row) => {return '<td > Rp '+Intl.NumberFormat().format(data.TOTAL)+'</td>';
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
         ],
        "createdRow" : function (row, data, dataIndex){
             const regexHead = RegExp("([A-Z])\\..");
@@ -403,8 +403,8 @@ function tableMainDashboard(_date, tanggal, kode, bank){
             {"data":null,
                 "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data": null,"render": (data, type, row) => {return '<td >'+data.TOTAL+'</td>';
-                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+            {"data": null,"render": (data, type, row) => {return '<td > Rp '+Intl.NumberFormat().format(data.TOTAL)+'</td>';
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
         ],
        "createdRow" : function (row, data, dataIndex){
             const regexHead = RegExp("([A-Z])\\..");
@@ -525,8 +525,8 @@ function tableMainDashboard(_date, tanggal, kode, bank){
             {"data":null,
                 "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data": null,"render": (data, type, row) => {return '<td >'+data.TOTAL+'</td>';
-                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+            {"data": null,"render": (data, type, row) => {return '<td > Rp '+Intl.NumberFormat().format(data.TOTAL)+'</td>';
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
         ],
        "createdRow" : function (row, data, dataIndex){
             const regexHead = RegExp("([A-Z])\\..");
@@ -647,8 +647,8 @@ function tableMainDashboard(_date, tanggal, kode, bank){
             {"data":null,
                 "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data": null,"render": (data, type, row) => {return '<td >'+data.TOTAL+'</td>';
-                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+            {"data": null,"render": (data, type, row) => {return '<td > Rp '+Intl.NumberFormat().format(data.TOTAL)+'</td>';
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
         ],
        "createdRow" : function (row, data, dataIndex){
             const regexHead = RegExp("([A-Z])\\..");
@@ -769,8 +769,8 @@ function tableMainDashboard(_date, tanggal, kode, bank){
             {"data":null,
                 "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data": null,"render": (data, type, row) => {return '<td >'+data.TOTAL+'</td>';
-                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+            {"data": null,"render": (data, type, row) => {return '<td > Rp '+Intl.NumberFormat().format(data.TOTAL)+'</td>';
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
         ],
        "createdRow" : function (row, data, dataIndex){
             const regexHead = RegExp("([A-Z])\\..");
@@ -891,8 +891,8 @@ function tableMainDashboard(_date, tanggal, kode, bank){
             {"data":null,
                 "render" : (data, tyoe, row) => {return '<td> Rp '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data": null,"render": (data, type, row) => {return '<td >'+data.TOTAL+'</td>';
-                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+            {"data": null,"render": (data, type, row) => {return '<td > Rp '+Intl.NumberFormat().format(data.TOTAL)+'</td>';
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
         ],
        "createdRow" : function (row, data, dataIndex){
             const regexHead = RegExp("([A-Z])\\..");
@@ -991,8 +991,8 @@ function initDataTableImprstValas() {
                 $('#table-giro-special-rate tbody').append(html);
             });
 
-            var total1 = "<tr style='background-color:#67a2d8'>" +
-                "<td colspan='2'>TOTAL</td>" +
+            var total1 = "<tr style='background-color:#77d5d4'>" +
+                "<td colspan='2' style='text-align: center'>TOTAL</td>" +
                 "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_GIRO[0].NOMINAL,2,".",",") + "</td>" +
                 "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_GIRO[0].JASA_GIRO,2,".",",") + "</td>" +
                 "<td align='right'>" + accounting.formatNumber(res.OUT_TOTAL_GIRO[0].NOMINAL_JASA_GIRO,2,".",",") + "</td>" +
@@ -1059,17 +1059,17 @@ function initDataTableImprstValas2() {
             var tes = JSON.stringify(data2);
             console.log("Ini data : " + tes);
             $.each(data2, function (key, val) {
-                var html = "<tr>" +
-                    "<tr style='background-color:#67a2d8'>" + "<td>TOTAL</td>" +
-                    "<td style='background-color:#67a2d8'>" + val.CURRENCY + "</td>" +
-                    "<td align='right' style='background-color:#67a2d8'>" + accounting.formatNumber(val.ORI_CURRENCY,2,".",",") + "</td>" +
-                    "<td align='right' style='background-color:#67a2d8'>" + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
-                    "<td align='right' style='background-color:#67a2d8'>" + accounting.formatNumber(val.FEE_TRANSAKSI_IDR,2,".",",") + "</td>" +
-                    "<td align='right' style='background-color:#67a2d8'>" + accounting.formatNumber(val.CASH_COLLATERAL,2,".",",") + "</td>" +
-                    "<td align='right' style='background-color:#67a2d8'>" + accounting.formatNumber(val.JASA_GIRO,2,".",",") + "</td>" +
-                    "<td align='right' style='background-color:#67a2d8'>" + accounting.formatNumber(val.PAJAK_PLN,2,".",",") + "</td>" +
-                    "<td align='right' style='background-color:#67a2d8'>" + accounting.formatNumber(val.NET_JASA_GIRO,2,".",",") + "</td>" +
-                    "<td align='right' style='background-color:#67a2d8'>" + accounting.formatNumber(val.NET_GAIN,2,".",",") + "</td>" +
+                var html = "<tr style='background-color:#77d5d4'>" +
+                    "<td>TOTAL</td>" +
+                    "<td >" + val.CURRENCY + "</td>" +
+                    "<td align='right' >" + accounting.formatNumber(val.ORI_CURRENCY,2,".",",") + "</td>" +
+                    "<td align='right' >" + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
+                    "<td align='right' >" + accounting.formatNumber(val.FEE_TRANSAKSI_IDR,2,".",",") + "</td>" +
+                    "<td align='right' >" + accounting.formatNumber(val.CASH_COLLATERAL,2,".",",") + "</td>" +
+                    "<td align='right' >" + accounting.formatNumber(val.JASA_GIRO,2,".",",") + "</td>" +
+                    "<td align='right' >" + accounting.formatNumber(val.PAJAK_PLN,2,".",",") + "</td>" +
+                    "<td align='right' >" + accounting.formatNumber(val.NET_JASA_GIRO,2,".",",") + "</td>" +
+                    "<td align='right' >" + accounting.formatNumber(val.NET_GAIN,2,".",",") + "</td>" +
                     "</tr>";
                 $('#table-supply-chain-financing tbody').append(html);
             });

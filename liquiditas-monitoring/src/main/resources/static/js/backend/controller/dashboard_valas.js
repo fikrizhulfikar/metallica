@@ -1,3 +1,5 @@
+var tanggal = new Date();
+
 $(document).ready(function () {
     tableMainDashboard();
     tableMainDashboard2();
@@ -111,28 +113,28 @@ function tableMainDashboard(_date){
                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","left");}},
             {"data": "ISHEADER","visible":false},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
                 },
                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'
                 },
                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'
                 },
                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data": null,"render": (data, type, row) => {return '<td > Rp. '+data.TOTAL+'</td>';
-                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+            {"data": null,"render": (data, type, row) => {return '<td >  '+Intl.NumberFormat().format(data.TOTAL)+'</td>';
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
         ],
         "createdRow" : function (row, data, dataIndex){
             const regexHead = RegExp("([A-Z])\\..");
@@ -189,7 +191,7 @@ function tableMainDashboard(_date){
 
             if (data['ISHEADER'] === 1 && !regexChild1.test(data["KODE"]) && data['BANK'] === "TOTAL") {
                 $(row).css({
-                    "background-color": "#77D5D4",
+                    "background-color": "#FFFFFF",
                     "cursor": "pointer",
                 });
                 $(row).addClass("parent");
@@ -233,28 +235,28 @@ function tableMainDashboard(_date){
                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","left");}},
             {"data": "ISHEADER","visible":false},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
                 },
                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'
                 },
                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'
                 },
                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data": null,"render": (data, type, row) => {return '<td > Rp. '+data.TOTAL+'</td>';
-                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+            {"data": null,"render": (data, type, row) => {return '<td >  '+Intl.NumberFormat().format(data.TOTAL)+'</td>';
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
         ],
         "createdRow" : function (row, data, dataIndex){
             const regexHead = RegExp("([A-Z])\\..");
@@ -355,28 +357,28 @@ function tableMainDashboard(_date){
                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","left");}},
             {"data": "ISHEADER","visible":false},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
                 },
                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'
                 },
                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'
                 },
                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data": null,"render": (data, type, row) => {return '<td > Rp. '+data.TOTAL+'</td>';
-                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","center");}},
+            {"data": null,"render": (data, type, row) => {return '<td >  '+Intl.NumberFormat().format(data.TOTAL)+'</td>';
+                },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
         ],
         "createdRow" : function (row, data, dataIndex){
             const regexHead = RegExp("([A-Z])\\..");
@@ -451,8 +453,112 @@ function tableMainDashboard(_date){
         }
     });
 
-//    let main_valas2 = $("#main-valas2").DataTable({
-//    });
+    let main_valas4 = $("#giro-special-rate").DataTable({
+        "ajax" : {
+            "url": baseUrl + "api_operator/api_report/giro_special_rate",
+            "data" : {
+                "tanggal" : current_full_date,
+            },
+            "type" : "GET",
+            "dataType" : "json",
+        },
+        "sorting": false,
+        "searching" : false,
+        "paging": false,
+        "bInfo" : false,
+        "bLengthChange" : false,
+        "columns" : [
+//            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
+            {"data": null,"visible": false,"render": (data, type, row) => {return data.BULAN;}},
+            {"data": null,"render": (data, type, row) => {return data.BANK;}},
+//            {"data": null,"render": (data, type, row) => {if (data.BANK === "TOTAL"){
+//                                                            return '<td> TOTAL '+data.CURRENCY+'</td>';
+//                                                            }else
+//                                                            return '<td>'+data.CURRENCY+'</td>';
+//                                                            }},
+            {"data":null,"render" : (data, type, row) => {if (data.NOMINAL == "0" || data.NOMINAL == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.NOMINAL)+'</td>';
+                                                           },
+                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                         }},
+            {"data":null,"render" : (data, type, row) => {if (data.JASA_GIRO == "0" || data.JASA_GIRO == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.JASA_GIRO)+'</td>';
+                                                           },
+                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                         }},
+            {"data":null,"render" : (data, type, row) => {if (data.PAJAK == "0" || data.PAJAK == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.PAJAK)+'</td>';
+                                                           },
+                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                         }},
+            {"data":null,"render" : (data, type, row) => {if (data.NETT_JASA_GIRO == "0" || data.NETT_JASA_GIRO == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.NETT_JASA_GIRO)+'</td>';
+                                                           },
+                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                         }},
+            {"data":null,"render" : (data, type, row) => {if (data.POKOK_NETT_GIRO == "0" || data.POKOK_NETT_GIRO == null){
+                                                              return '<td> - </td>';
+                                                              } else
+                                                              return '<td>'+ new Intl.NumberFormat().format(data.POKOK_NETT_GIRO)+'</td>';
+                                                           },
+                                                         "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");
+                                                         }},
+        ],
+
+         "createdRow" : function (row, data, dataIndex){
+
+            if ((data["BANK"] === "SUB TOTAL" || data["BANK"] === "TOTAL")){
+                $(row).css({
+                    "background-color": "#F4D35E",
+                    "text-align": "center",
+                    "font-weight": "bold",
+                });
+             };
+            if (data["BANK"] === "TOTAL"){
+               $('td', row).eq(0).attr("colspan","2");
+             };
+            if (data["BULAN"] === "TOTAL"){
+               $("td:eq(1)").css({ "visibility": "hidden" });
+             };
+         },
+
+         "drawCallback" : function (settings){
+            let groupColumn = 0;
+            var api = this.api();
+            var rows = api.rows({page:'current'}).nodes();
+            var last = null;
+            let array = api.column(groupColumn, {page:'current'}).data();
+            console.log(array)
+
+            api.column(groupColumn, {page:'current'}).data().each(function (group, i){
+            if (last !== group.BULAN){
+                let count = 1;
+
+                for (let j=i; j<array.length; j++){
+                    let first = array[i].BULAN;
+                    if (first !== array[j].BULAN) break;
+                    count+= 1;
+                }
+                if ((group.BULAN === "TOTAL")){
+//                    $(rows).eq(1).css({ "visibility": "hidden" });
+                    $("td:eq(1)").css({ "visibility": "hidden" });
+                }else
+                    $(rows).eq(i).before(
+                        '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold; background-color: #F4D35E">'+group.BULAN+'</td></tr>'
+                    );
+                last = group.BULAN;
+                }
+            });
+         }
+    });
 }
 
 function tableMainDashboard2(_date){
@@ -489,25 +595,25 @@ function tableMainDashboard2(_date){
                 },
                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","left");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>';
                 },
                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'
                 },
                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'
                 },
                 "createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,
-                "render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
+                "render" : (data, tyoe, row) => {return '<td>  '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'
                 },"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
         ],
         "createdRow" : function (row, data, dataIndex){
@@ -615,10 +721,10 @@ function initDataTableImprstValas() {
 
             var total2 = "<tr style='background-color:#67a2d8; color: white'>" +
                 "<td>EQ IDR</td>" +
-                                "<td align='right'> Rp. " + accounting.formatNumber(res.EQ_IDR_USD[0].EQ_IDR_USD,2,".",",") + "</td>" +
-                                "<td align='right'> Rp. " + accounting.formatNumber(res.EQ_IDR_JPY[0].EQ_IDR_JPY,2,".",",") + "</td>" +
-                                "<td align='right'> Rp. " + accounting.formatNumber(res.EQ_IDR_EUR[0].EQ_IDR_EUR,2,".",",") + "</td>" +
-                                "<td align='right'> Rp. " + accounting.formatNumber(res.EQ_IDR_MYR[0].EQ_IDR_MYR,2,".",",") + "</td>" +
+                                "<td align='right'>  " + accounting.formatNumber(res.EQ_IDR_USD[0].EQ_IDR_USD,2,".",",") + "</td>" +
+                                "<td align='right'>  " + accounting.formatNumber(res.EQ_IDR_JPY[0].EQ_IDR_JPY,2,".",",") + "</td>" +
+                                "<td align='right'>  " + accounting.formatNumber(res.EQ_IDR_EUR[0].EQ_IDR_EUR,2,".",",") + "</td>" +
+                                "<td align='right'>  " + accounting.formatNumber(res.EQ_IDR_MYR[0].EQ_IDR_MYR,2,".",",") + "</td>" +
                                 "</tr>";
             $('#table-imprst-valas tbody').append(total1);
             $('#table-imprst-valas tbody').append(total2);

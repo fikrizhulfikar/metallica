@@ -14,8 +14,8 @@ $(document).ready(function () {
 
     tanggal = dd+'/'+mm+'/'+yyyy;
 
-    initDataTablePlacement();
-    initDataTablePlacement2();
+//    initDataTablePlacement();
+//    initDataTablePlacement2();
 
     if (time <= "14"){
         sesi = 1;
@@ -30,7 +30,6 @@ $(document).ready(function () {
     $("#tglApprove").html(tanggal);
     $('#tanggal_awal1').datepicker({dateFormat: 'dd/mm/yy'});
     search("load");
-
 
     $("#dashboard-carousel").carousel({
         interval : 1000*5,

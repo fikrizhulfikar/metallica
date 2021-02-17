@@ -94,65 +94,26 @@ function search(state) {
     }
 }
 
-function initDataTablePlacement(tanggal, sesi) {
-
-    $('#table-rekap-placement-lcl').dataTable().fnDestroy();
-
-    let rincian_saldo = $("#table-rekap-placement-lcl").DataTable({
-        "ajax" : {
-            "url": baseUrl + "api_operator/rekap_invoice_belum/get_pemindahan_buku",
-            "data" : {
-                p_tanggal: tanggal,
-                p_sesi: sesi
-            },
-            "type" : "GET",
-            "dataType" : "json",
-            "dataSrc":
-                function (res) {
-                    return res.data;
-                }
-        },
-        "sorting": false,
-        "searching" : true,
-        "paging": true,
-        "bInfo" : false,
-        "bLengthChange" : true,
-        "columns" : [
-            {"data":null,"render": (data, type, row) => {return '<td>'+data.BANK+'</td>';}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.SALDO_RECEIPT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.IMPREST_KANTOR_PUSAT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.IMPOR)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.IMPREST_OPERASI_TERPUSAT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.IMPREST_INVESTASI_TERPUSAT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.SETTLEMENT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.PROYEKSI_PENGADAAN_VALAS)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RECEIPT_PLACEMENT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.GIRO_SPECIAL_RATE)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-            {"data":null,"render" : (data, tyoe, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.SALDO_AKHIR_RECEIPT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
-        ],
-    });
-}
-
-function initDataTablePlacement2(){
+function initDataTablePlacement() {
     let date = new Date();
 
-    $("#tgl1b").html(tanggal);
+    $("#tgl1a").html(tanggal);
     var dateString = tanggal;
     var dateArray = dateString.split("/");
     var newDate = dateArray[1] + '/' + dateArray[0] + '/' + dateArray[2];
     var dateObject = new Date(newDate);
 
-    $("#tgl2b").html(incDate(dateObject, 1));
-    $("#tgl3b").html(incDate(dateObject, 2));
-    $("#tgl4b").html(incDate(dateObject, 3));
-    $("#tgl5b").html(incDate(dateObject, 4));
-    $("#tgl6b").html(incDate(dateObject, 5));
+    $("#tgl2a").html(incDate(dateObject, 1));
+    $("#tgl3a").html(incDate(dateObject, 2));
+    $("#tgl4a").html(incDate(dateObject, 3));
+    $("#tgl5a").html(incDate(dateObject, 4));
+    $("#tgl6a").html(incDate(dateObject, 5));
 
     showLoadingCss();
-    $('#kebutuhan-placement tbody').empty();
-    $('#kebutuhan-placement').dataTable().fnDestroy();
+    $('#operasi-pendanaan-valas tbody').empty();
+    $('#operasi-pendanaan-valas').dataTable().fnDestroy();
 
-    kebutuhanPlacement = $("#kebutuhan-placement").DataTable({
+    kebutuhanPlacement = $("#operasi-pendanaan-valas").DataTable({
         "serverSide": true,
         "oSearch": {"sSearch": tempTableSearch},
         "bLengthChange": false,
@@ -172,15 +133,15 @@ function initDataTablePlacement2(){
             {width: 100, targets: 5},
             {width: 100, targets: 6},
             {width: 100, targets: 7},
-//            {width: 100, targets: 8},
-            {width: "20%", "targets": 0},
-            { className: "datatables_action", "targets": [1, 2, 3, 4, 5, 6, 7, 8] },
+            {width: 100, targets: 8},
+//            {width: "20%", "targets": 0},
+            { className: "datatables_action", "targets": [1, 2, 3, 4, 5, 6, 7, 8, 9] },
             {
                 "data":null,
                 "aTargets": [0],
 //                "visible" : false,
                 "mRender": function (data, type, full) {
-                    return full.TIPE_KEBUTUHAN;
+                    return full.CURRENCY;
                 },
                 "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {$(cell).css("background-color","#77D5D4");}
             },
@@ -188,7 +149,7 @@ function initDataTablePlacement2(){
                 "data":null,
                 "aTargets": [1],
                 "mRender": function (data, type, full) {
-                    return full.BANK;
+                    return full.KETERANGAN;
                 },
                 "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {$(cell).css("background-color","#5ef4d3");}
             },
@@ -241,7 +202,15 @@ function initDataTablePlacement2(){
 
             },
             {
+                "data":null,
                 "aTargets": [8],
+                "mRender": function (data, type, full) {
+                    return "<td> Rp. " + accounting.formatNumber(full.RP_TOTAL,2,".",",") + "</td";
+                }
+
+            },
+            {
+                "aTargets": [9],
                 "mRender": function (data, type, full) {
                     var ret_value = " ";
                     if (full.TIPE_KEBUTUHAN == "RECEIPT PLACEMENT" || full.TIPE_KEBUTUHAN == "GIRO SPECIAL RATE" ){
@@ -258,7 +227,7 @@ function initDataTablePlacement2(){
         "ajax":
             {
                 "url":
-                    baseUrl + "api_operator/rekap_invoice_belum/kebutuhan_placement_lcl",
+                    baseUrl + "api_operator/rekap_invoice_belum/operasi_pendanaan_valas",
                 "type":
                     "GET",
                 "dataType":
@@ -272,9 +241,6 @@ function initDataTablePlacement2(){
                 "dataSrc":
                 function (res) {
                     hideLoadingCss()
-                    localStorage.setItem("imprest_approval_status", (res.data.length <= 0) ? "" : res.data[0].STATUS_APPROVE);
-                    localStorage.setItem("sesi", (res.data.length <= 0) ? "" : res.data[0].SESI);
-                    localStorage.setItem("tanggal", (res.data.length <= 0) ? "" : res.data[0].TANGGAL);
                     return res.data;
                 }
             },
@@ -287,89 +253,6 @@ function initDataTablePlacement2(){
                     "font-weight": "bold",
                 });
              }
-         },
-
-         "drawCallback" : function (setting, json) {
-             let node = document.getElementById("button_action");
-             node.innerHTML = "";
-
-             let cur_periode = document.getElementById("tglcetak2").innerHTML;
-             let darr = cur_periode.split("/");
-             let now = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-             let periode = new Date(darr[2],darr[1]-1,darr[0]);
-
-             let elements = document.getElementsByClassName('md-step');
-             Array.prototype.forEach.call(elements,el => {
-                 document.getElementById(el.id).classList.remove("active");
-             });
-
-             if (localStorage.getItem("imprest_approval_status") === "1"){
-                 document.getElementById("staff_pe").className += " active";
-             }else if(localStorage.getItem("imprest_approval_status") === "2"){
-                 document.getElementById("staff_pe").className += " active";
-                 document.getElementById("msb_pe").className += " active";
-             }else if(localStorage.getItem("imprest_approval_status") === "3") {
-                 document.getElementById("staff_pe").className += " active";
-                 document.getElementById("msb_pe").className += " active";
-                 document.getElementById("vp_pe").className += " active";
-             }
-
-             if(!periode.getTime() < now.getTime()){
-                 $('.dataTables_filter2').each(function(){
-//                     console.log("Ini data : " + data);
-                     let html2;
-                     if (localStorage.getItem("imprest_approval_status") === "0"){
-                         if (newRoleUser[0] === "ROLE_ADMIN"){
-                             html2 = '<button class="btn btn-warning btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="update_lcl_data(1,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Approve"><i class="fas fa-check-square"></i></button>';
-                         }
-                     }else if(localStorage.getItem("imprest_approval_status") === "1"){
-                         if (newRoleUser[0] === "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY" || newRoleUser[0] === "ROLE_ADMIN"){
-                             html2 = '<button class="btn btn-warning btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="update_lcl_data(2,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Approve"><i class="fas fa-check-square"></i></button>';
-                             html2 += '<button class="btn btn-elementary btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="reverse_lcl_data(1,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Reverse"><i class="fas fa-backspace"></i></button>';
-                         }
-                     }else if(localStorage.getItem("imprest_approval_status") === "2"){
-                         if (newRoleUser[0] === "ROLE_VP_LIQUIDITY_AND_RECEIPT" || newRoleUser[0] === "ROLE_ADMIN"){
-                             html2 = '<button class="btn btn-warning btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="update_lcl_data(3,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Approve"><i class="fas fa-check-square"></i></button>';
-                             html2 += '<button class="btn btn-elementary btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="reverse_lcl_data(2,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Reverse"><i class="fas fa-backspace"></i></button>';
-                         }
-                     }
-                     else{
-                         if (newRoleUser[0] === "ROLE_ADMIN"){
-                             html2 = '<button class="btn btn-elementary btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="reverse_lcl_data(3,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Reverse"><i class="fas fa-backspace"></i></button>';
-                         }
-                     }
-                     $(this).append(html2);
-                 })
-             };
-
-//             "drawCallback" : function (setting, json) {
-//                  let groupColumn = 0;
-//                  var api = this.api();
-//                  var rows = api.rows({page:'current'}).nodes();
-//                  var last = null;
-//                  let array = api.column(groupColumn, {page:'current'}).data();
-//
-//                  api.column(groupColumn, {page:'current'}).data().each(function (group, i){
-//                  if (last !== group.TIPE_KEBUTUHAN){
-//                      let count = 1;
-//
-//                      for (let j=i; j<array.length; j++){
-//                          let first = array[i].TIPE_KEBUTUHAN;
-//                          if (first !== array[j].TIPE_KEBUTUHAN) break;
-//                          count+= 1;
-//                      }
-//                      if ((group.TIPE_KEBUTUHAN === "TOTAL")){
-//                          $(rows).eq(i).before(
-//                              '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold; background-color: #77D5D4">'+group.TIPE_KEBUTUHAN+'</td></tr>'
-//                          );
-//                      }else
-//                          $(rows).eq(i).before(
-//                              '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold; background-color: #77D5D4"">'+group.TIPE_KEBUTUHAN+'</td></tr>'
-//                          );
-//                      last = group.TIPE_KEBUTUHAN;
-//                      }
-//                  });
-//              }
          }
      });
 
@@ -378,12 +261,180 @@ function initDataTablePlacement2(){
          tempTableSearch = value;
      });
 
+    kebutuhanPlacement.columns.adjust();
+}
+
+function initDataTablePlacement2(){
+    let date = new Date();
+
+    $("#tgl1b").html(tanggal);
+    var dateString = tanggal;
+    var dateArray = dateString.split("/");
+    var newDate = dateArray[1] + '/' + dateArray[0] + '/' + dateArray[2];
+    var dateObject = new Date(newDate);
+
+    $("#tgl2b").html(incDate(dateObject, 1));
+    $("#tgl3b").html(incDate(dateObject, 2));
+    $("#tgl4b").html(incDate(dateObject, 3));
+    $("#tgl5b").html(incDate(dateObject, 4));
+    $("#tgl6b").html(incDate(dateObject, 5));
+
+    showLoadingCss();
+    $('#operasi-pendanaan-idr tbody').empty();
+    $('#operasi-pendanaan-idr').dataTable().fnDestroy();
+
+    kebutuhanPlacement = $("#operasi-pendanaan-idr").DataTable({
+        "serverSide": true,
+        "oSearch": {"sSearch": tempTableSearch},
+        "bLengthChange": false,
+        "paging": false,
+        "scrollY": "100%",
+        "scrollX": "100%",
+        "searching": false,
+        "bSortable": false,
+        "scrollCollapse": false,
+        "bInfo": false,
+        "aoColumnDefs": [
+            {width: 100, targets: 0},
+            {width: 100, targets: 1},
+            {width: 100, targets: 2},
+            {width: 100, targets: 3},
+            {width: 100, targets: 4},
+            {width: 100, targets: 5},
+            {width: 100, targets: 6},
+            {width: 100, targets: 7},
+            {width: 100, targets: 8},
+//            {width: "20%", "targets": 0},
+            { className: "datatables_action", "targets": [1, 2, 3, 4, 5, 6, 7, 8, 9] },
+            {
+                "data":null,
+                "aTargets": [0],
+//                "visible" : false,
+                "mRender": function (data, type, full) {
+                    return full.JENIS;
+                },
+                "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {$(cell).css("background-color","#77D5D4");}
+            },
+            {
+                "data":null,
+                "aTargets": [1],
+                "mRender": function (data, type, full) {
+                    return full.KETERANGAN;
+                },
+                "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {$(cell).css("background-color","#5ef4d3");}
+            },
+            {
+                "data":null,
+                "aTargets": [2],
+                "mRender": function (data, type, full) {
+                    return "<td> Rp. " + accounting.formatNumber(full.RP_D0,2,".",",") + "</td";
+                }
+
+            },
+            {
+                "data":null,
+                "aTargets": [3],
+                "mRender": function (data, type, full) {
+                    return "<td> Rp. " + accounting.formatNumber(full.RP_D1,2,".",",") + "</td";
+                }
+
+            },
+            {
+                "data":null,
+                "aTargets": [4],
+                "mRender": function (data, type, full) {
+                    return "<td> Rp. " + accounting.formatNumber(full.RP_D2,2,".",",") + "</td";
+                }
+
+            },
+            {
+                "data":null,
+                "aTargets": [5],
+                "mRender": function (data, type, full) {
+                    return "<td> Rp. " + accounting.formatNumber(full.RP_D3,2,".",",") + "</td";
+                }
+
+            },
+            {
+                "data":null,
+                "aTargets": [6],
+                "mRender": function (data, type, full) {
+                    return "<td> Rp. " + accounting.formatNumber(full.RP_D4,2,".",",") + "</td";
+                }
+
+            },
+            {
+                "data":null,
+                "aTargets": [7],
+                "mRender": function (data, type, full) {
+                    return "<td> Rp. " + accounting.formatNumber(full.RP_D5,2,".",",") + "</td";
+                }
+
+            },
+            {
+                "data":null,
+                "aTargets": [8],
+                "mRender": function (data, type, full) {
+                    return "<td> Rp. " + accounting.formatNumber(full.RP_TOTAL,2,".",",") + "</td";
+                }
+
+            },
+            {
+                "aTargets": [9],
+                "mRender": function (data, type, full) {
+                    var ret_value = " ";
+                    if (full.TIPE_KEBUTUHAN == "RECEIPT PLACEMENT" || full.TIPE_KEBUTUHAN == "GIRO SPECIAL RATE" ){
+                    ret_value = '<div class="col-md-6 btn-group" align="center">' +
+                                '<button style="width: 15px !important;" id="detail" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="setb(\''+full.TIPE_KEBUTUHAN+'\')"><i class="fa fa-clone"></i></button>';
+                    return ret_value;
+                    } else {
+                    ret_value = '<div class="col-md-6 btn-group" align="center">' +
+                                '<button style="width: 15px !important;" id="detail" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="seta(\''+full.TIPE_KEBUTUHAN+'\')"><i class="fa fa-clone"></i></button>';
+                    return ret_value; }
+                }
+            }
+        ],
+        "ajax":
+            {
+                "url":
+                    baseUrl + "api_operator/rekap_invoice_belum/operasi_pendanaan_idr",
+                "type":
+                    "GET",
+                "dataType":
+                    "json",
+                "data":
+                    {
+                        p_tanggal: tanggal,
+                        p_sesi: sesi
+                    }
+                ,
+                "dataSrc":
+                function (res) {
+                    hideLoadingCss()
+                    return res.data;
+                }
+            },
+
+         "createdRow" : function (row, data, dataIndex){
+
+            if ((data["BANK"] === "TOTAL")){
+                $(row).css({
+                    "background-color": "#5ef4d3",
+                    "font-weight": "bold",
+                });
+             }
+         }
+     });
+
+     kebutuhanPlacement.on('search.dt', function () {
+         var value = $('.dataTables_filter2 input').val();
+         tempTableSearch = value;
+     });
 
     kebutuhanPlacement.columns.adjust();
 }
 
 function viewDoc(){
-//    $('#set-i').modal({backdrop: 'static', keyboard: false});
     alert("Mohon maaf fitur ini belum tersedia");
 }
 

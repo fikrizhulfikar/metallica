@@ -2567,4 +2567,82 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         return out;
     }
 
+    public List<Map<String, Object>> getOperasiPendanaanValas(String tanggal, String sesi, String userid){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_VALAS")
+                .withFunctionName("header_operasi_pendanaan_valas");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("ptanggal", tanggal, OracleTypes.VARCHAR)
+                .addValue("psesi", sesi, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userid, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public List<Map<String, Object>> getOperasiPendanaanIdr(String tanggal, String sesi, String userid){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_IDR")
+                .withFunctionName("header_operasi_pendanaan_idr");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("ptanggal", tanggal, OracleTypes.VARCHAR)
+                .addValue("psesi", sesi, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userid, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public List<Map<String, Object>> getPlacementlclHeader(String tglAwal, String tglAkhir, String userId){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_header_lcl");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", tglAwal, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", tglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public List<Map<String, Object>> createPlacementlclHeader(String idForm, String tglJatuhTempo, String userId){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("create_header_lcl");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_form", idForm, OracleTypes.VARCHAR)
+                .addValue("p_tgl_jatuh_tempo", tglJatuhTempo, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public List<Map<String, Object>> delPlacementlclHeader(String idForm){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("del_header_lcl");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_form", idForm, OracleTypes.VARCHAR)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public Map<String, Object> updatePlacementlclHeader(String idForm, String userId, String status){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("upd_status_lcl");
+        Map<String, Object> out;
+        SqlParameterSource inParent = new MapSqlParameterSource()
+                .addValue("p_id_form", idForm, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR)
+                .addValue("p_status", status, OracleTypes.VARCHAR)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        out = simpleJdbcCall.execute(inParent);
+        AppUtils.getLogger(this).info("data upd_status_lcl : {}", out);
+        return out;
+    }
 }

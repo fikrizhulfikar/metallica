@@ -14,8 +14,8 @@ $(document).ready(function () {
 
     tanggal = dd+'/'+mm+'/'+yyyy;
 
-    initDataTablePlacement();
-    initDataTablePlacement2();
+//    initDataTablePlacement();
+//    initDataTablePlacement2();
 
     if (time <= "14"){
         sesi = 1;

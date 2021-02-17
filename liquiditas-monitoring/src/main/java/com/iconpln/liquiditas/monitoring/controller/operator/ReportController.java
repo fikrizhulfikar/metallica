@@ -490,4 +490,21 @@ public class ReportController {
 
         return mapData;
     }
+
+    @GetMapping(path = "/giro_special_rate")
+    public Map listDashboardGiroSpesialRate(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardGiroSpesialRate(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
 }

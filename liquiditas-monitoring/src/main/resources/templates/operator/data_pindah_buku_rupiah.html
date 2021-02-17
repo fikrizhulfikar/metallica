@@ -1,0 +1,280 @@
+<div th:fragment="stylesheets-backend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        table {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+        }
+        table th {
+            font-size: 13px;
+            vertical-align: middle;
+            text-align: center;
+            font-weight: bold;
+        }
+        table td {
+            font-size: 12px;
+            font-weight: bold;
+            width:1%;
+            white-space:nowrap;
+        }
+        .modal-dialog {
+            max-width: 1500px;
+            margin: 30px auto;
+        }
+        input{
+            border: none;
+            width: 80%;
+            max-width: 120px;
+        }
+                .md-stepper-horizontal {
+            display:table;
+            width:80%;
+            margin:0 auto;
+        }
+        .md-stepper-horizontal .md-step {
+            display:table-cell;
+            position:relative;
+            padding:15px;
+        }
+        .md-stepper-horizontal .md-step:active {
+            border-radius: 15% / 75%;
+        }
+        .md-stepper-horizontal .md-step:first-child:active {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        .md-stepper-horizontal .md-step:last-child:active {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        .md-stepper-horizontal .md-step:hover .md-step-circle {
+            background-color:#757575;
+        }
+        .md-stepper-horizontal .md-step:first-child .md-step-bar-left,
+        .md-stepper-horizontal .md-step:last-child .md-step-bar-right {
+            display:none;
+        }
+        .md-stepper-horizontal .md-step .md-step-circle {
+            width:30px;
+            height:30px;
+            margin:0 auto;
+            background-color:#999999;
+            border-radius: 50%;
+            text-align: center;
+            line-height:30px;
+            font-size: 16px;
+            font-weight: 600;
+            color:#FFFFFF;
+        }
+        .md-stepper-horizontal.green .md-step.active .md-step-circle {
+            background-color:#00AE4D;
+        }
+        .md-stepper-horizontal.orange .md-step.active .md-step-circle {
+            background-color:#F96302;
+        }
+        .md-stepper-horizontal .md-step.active .md-step-circle {
+            background-color: rgb(33,150,243);
+        }
+        .md-stepper-horizontal .md-step.done .md-step-circle:before {
+            font-family:'FontAwesome';
+            font-weight:100;
+            content: "\f00c";
+        }
+        .md-stepper-horizontal .md-step.done .md-step-circle *,
+        .md-stepper-horizontal .md-step.editable .md-step-circle * {
+            display:none;
+        }
+        .md-stepper-horizontal .md-step.editable .md-step-circle {
+            -moz-transform: scaleX(-1);
+            -o-transform: scaleX(-1);
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+        }
+        .md-stepper-horizontal .md-step.editable .md-step-circle:before {
+            font-family:'FontAwesome';
+            font-weight:100;
+            content: "\f040";
+        }
+        .md-stepper-horizontal .md-step .md-step-title {
+            margin-top:3px;
+            font-size:16px;
+            font-weight:600;
+        }
+        .md-stepper-horizontal .md-step .md-step-title,
+        .md-stepper-horizontal .md-step .md-step-optional {
+            text-align: center;
+            color:rgba(0,0,0,.26);
+        }
+        .md-stepper-horizontal .md-step.active .md-step-title {
+            font-weight: 600;
+            color:rgba(0,0,0,.87);
+        }
+        .md-stepper-horizontal .md-step.active.done .md-step-title,
+        .md-stepper-horizontal .md-step.active.editable .md-step-title {
+            font-weight:600;
+        }
+        .md-stepper-horizontal .md-step .md-step-optional {
+            font-size:12px;
+        }
+        .md-stepper-horizontal .md-step.active .md-step-optional {
+            color:rgba(0,0,0,.54);
+        }
+        .md-stepper-horizontal .md-step .md-step-bar-left,
+        .md-stepper-horizontal .md-step .md-step-bar-right {
+            position:absolute;
+            top:36px;
+            height:1px;
+            border-top:1px solid #DDDDDD;
+        }
+        .md-stepper-horizontal .md-step .md-step-bar-right {
+            right:0;
+            left:50%;
+            margin-left:20px;
+        }
+        .md-stepper-horizontal .md-step .md-step-bar-left {
+            left:0;
+            right:50%;
+            margin-right:20px;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Data Pindah Buku LCL</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12" style="margin-top: 20px">
+                <div class="card">
+                    <div class="card-header" style="margin-bottom: 0.5rem; background-color: #eceff1 !important">
+                        <div align="center" class="title" style="margin-bottom: 10px"><h6><b>NOTA PEMINDAHBUKUAN LCL</b></h6></div>
+                        <div align="center" class="title" style="margin-bottom: 10px"><h6><b>TGL : <span id="tglcetak1"></span></b><b> - Sesi : <span id="sesicetak1"></span></b></h6></div>
+                        <div class="col-md-12 row" id="filter2" style="margin-left: 0rem;">
+                            <div class="col-md-12 row" style="padding-left: 7.5px;margin-right: 0;">
+                                <div class="col-md-5" style="padding-right: 0px;">
+                                    <form class="form-inline" style="margin-bottom: 0rem;">
+                                        <div class="form-group">
+                                            <label>Tanggal </label>
+                                            <input type="text" style="border-radius: 5px; margin: 0 1em 0 1em" class="form-control" id="tanggal_awal1"/>
+                                            <label>Sesi </label>
+                                            <select style="border-radius: 5px; margin: 0 1em 0" class="form-control" id="sesi_filter" >
+                                                <option value="0">Sesi 1</option>
+                                                <option value="1">Sesi 2</option>
+                                            </select>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-primary" style="margin-top: 1px" onclick="search('search')"><i class="fas fa-search"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-block" >
+                        <div align="center">
+                            <div class="md-stepper-horizontal orange">
+                                <div id="staff_pe" class="md-step done" style="width: 31.33%;">
+                                    <div class="md-step-circle"><span>1</span></div>
+                                    <div class="md-step-title">STAFF LCL</div>
+                                    <div class="md-step-bar-left"></div>
+                                    <div class="md-step-bar-right"></div>
+                                </div>
+                                <div id="msb_pe" class="md-step done">
+                                    <div class="md-step-circle"><span>2</span></div>
+                                    <div class="md-step-title">MSB LCL</div>
+                                    <div class="md-step-bar-left"></div>
+                                    <div class="md-step-bar-right"></div>
+                                </div>
+                                <div id="vp_pe" class="md-step done">
+                                    <div class="md-step-circle"><span>3</span></div>
+                                    <div class="md-step-title">VP TLR</div>
+                                    <div class="md-step-bar-left"></div>
+                                    <div class="md-step-bar-right"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 row" id="filter" style="margin-left: 0rem; margin-bottom: 1rem; margin-right: 0rem;">
+                            <div class="col-md-12 row" style="padding-left: 7.5px;margin-right: 0;">
+                                <div class="col-md-5" style="padding-right: 0px;"> </div>
+                                <div class="col-md-7" style="padding-right: 0px;">
+                                    <div class="dataTables_filter2 float-right" id="button_action" style="padding-top: 0.45rem;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="overflow-y:auto;">
+                            <table id="table-pemindahbukuan" class="table table-rencana-realisasi table-condensed table-bordered" width="100%">
+                                <thead>
+                                <tr >
+                                    <th style="text-align: center; vertical-align: middle" colspan="3">DARI (RUPIAH)</th>
+                                    <th style="text-align: center; vertical-align: middle" colspan="6">KEPADA (RUPIAH)</th>
+                                </tr>
+                                <tr >
+                                    <th style="text-align: center">BANK</th>
+                                    <th style="text-align: center">NAMA REKENING</th>
+                                    <th style="text-align: center">NO REKENING</th>
+                                    <th style="text-align: center">BANK</th>
+                                    <th style="text-align: center">NAMA REKENING</th>
+                                    <th style="text-align: center">NO REKENING</th>
+                                    <th style="text-align: center">NOMINAL</th>
+                                    <th style="text-align: center">NO SAP</th>
+                                    <th style="text-align: center">KETERANGAN</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                            <table id="table-settlement-valas" class="table table-rencana-realisasi table-condensed table-bordered" width="100%">
+                                <thead>
+                                <tr >
+                                    <th style="text-align: center; vertical-align: middle" colspan="3">DARI (RUPIAH)</th>
+                                    <th style="text-align: center; vertical-align: middle" colspan="6">KEPADA (RUPIAH)</th>
+                                </tr>
+                                <tr >
+                                    <th style="text-align: center">BANK</th>
+                                    <th style="text-align: center">NAMA REKENING</th>
+                                    <th style="text-align: center">NO REKENING</th>
+                                    <th style="text-align: center">BANK</th>
+                                    <th style="text-align: center">NAMA REKENING</th>
+                                    <th style="text-align: center">NO REKENING</th>
+                                    <th style="text-align: center">NOMINAL</th>
+                                    <th style="text-align: center">NO SAP</th>
+                                    <th style="text-align: center">KETERANGAN</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                            <table id="table-pengadaan-valas" class="table table-rencana-realisasi table-condensed table-bordered" width="100%">
+                                <thead>
+                                <tr >
+                                    <th style="text-align: center; vertical-align: middle" colspan="3">DARI (RUPIAH)</th>
+                                    <th style="text-align: center; vertical-align: middle" colspan="6">KEPADA (RUPIAH)</th>
+                                </tr>
+                                <tr >
+                                    <th style="text-align: center">BANK</th>
+                                    <th style="text-align: center">NAMA REKENING</th>
+                                    <th style="text-align: center">NO REKENING</th>
+                                    <th style="text-align: center">BANK</th>
+                                    <th style="text-align: center">NAMA REKENING</th>
+                                    <th style="text-align: center">NO REKENING</th>
+                                    <th style="text-align: center">NOMINAL</th>
+                                    <th style="text-align: center">NO SAP</th>
+                                    <th style="text-align: center">KETERANGAN</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/data_pindah_buku_rupiah.js"></script>
+    <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
+    <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+</div>

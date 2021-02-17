@@ -1039,6 +1039,18 @@ public class DashboardService {
         List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
         return out;
     }
+
+    public List<Map<String, Object>> getDashboardGiroSpesialRate(String tanggal){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY2")
+                .withFunctionName("get_dash_giro");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tanggal", tanggal, OracleTypes.VARCHAR);
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+
 }
 
 
