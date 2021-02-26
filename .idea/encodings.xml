@@ -3,10 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/liquiditas-core" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/liquiditas-core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/liquiditas-datasap" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/liquiditas-monitoring" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/liquiditas-monitoring/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/liquiditas-scheduler" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/liquiditas-scheduler/src/main/java" charset="UTF-8" />
   </component>
 </project>
