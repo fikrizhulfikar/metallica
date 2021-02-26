@@ -1,3 +1,23 @@
+$(document).ready(function () {
+    tableRekapMataUang();
+    tableJenisRekening();
+    tableRekeningInvestasi();
+    rencanaBayarBarLine();
+    tableMainDashboard();
+    dataTable();
+    tableRencanaImprestValas();
+    tableRencanaImpres();
+    tableRealisasiBankCurrency();
+    getDataRencana();
+    getDataRealisasi();
+
+    $("#dashboard-carousel").carousel({
+        interval : 1000*5,
+        pause : "hover",
+    });
+$("#dash_date").datepicker({dateFormat : "dd/mm/yy"});
+});
+
 function rencanaBayarBarLine(){
     const dataSource = {
         chart : {
@@ -246,7 +266,7 @@ function tableMainDashboard(_date){
 
             if (data['ISANAK'] === 0 && !regexChild1.test(data["KODE"]) && dataIndex === 0){
                 $(row).css({
-                    "color" : "white",
+//                    "color" : "white",
                     "background-color": "#a01629",
                     "cursor" : "pointer",
                 });
@@ -264,7 +284,7 @@ function tableMainDashboard(_date){
 
             if (data["ISANAK"] === 0 && regexChild1.test(data["KODE"])){
                 $(row).css({
-                    "background-color": "#f1c40f",
+//                    "background-color": "#f1c40f",
                     "cursor": "pointer",
 
                 });
@@ -333,7 +353,7 @@ function tableMainDashboard(_date){
 
             if (data["ISANAK"] === 0 && regexChild1.test(data["KODE"])){
                 $(row).css({
-                    "background-color": "#f1c40f",
+//                    "background-color": "#f1c40f",
                     "cursor": "pointer",
 
                 });
@@ -1115,6 +1135,7 @@ function creteChartKompSaldo(data) {
     var tes = JSON.stringify(data);
     var maxval1 = data[1].maxvalue + data[0].maxvalue;
     var maxval2 = data[2].maxvalue + data[1].maxvalue;
+    console.log('WARNA :'+ tes);
     FusionCharts.ready(function () {
         var fusioncharts = new FusionCharts({
                 type: 'angulargauge',
@@ -1141,40 +1162,6 @@ function creteChartKompSaldo(data) {
                         "gaugeFillMix": "{dark-10},{light-10},{dark-10}",
                         "theme": "fusion"
                     },
-//                    "annotations": {
-//                            "width": "500",
-//                            "height": "300",
-//                            "autoScale": "1",
-//                            "groups": [{
-//                              "id": "user-images",
-//                              "items": [
-//                                {
-//                                  "id": "dyn-label-bg",
-//                                  "type": "rectangle",
-//                                  "showBorder": "0",
-//                                  "borderColor": "12345d",
-//
-//                                  "fillcolor": "ffffff",
-//                                  "x": "$canvasEndY-245",
-//                                  "y": "$canvasEndY+45",
-//                                  "tox": "$canvasEndX+10",
-//                                  "toy": "$canvasEndY + 80"
-//
-//                                }, {
-//                                  "id": "dyn-label1",
-//                                  "type": "text",
-//                                  "fillcolor": "#000000",
-//                                  "fontsize": "13",
-//                                  "text": "Text 1",
-//                                  "bold": "1",
-//                                  "wrap": "1",
-//                                  "wrapWidth": "350",
-//                                  "x": "$canvasEndY - 125",
-//                                  "y": "$canvasEndY + 60",
-//                                }
-//                              ]
-//                          }]
-//                      },
                     "colorrange": {
                          "color": [
                            {

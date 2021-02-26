@@ -24,6 +24,10 @@ public class PageOperatorController {
     public String pengelolaan_likuiditas() { return "operator/pengelolaan_likuiditas";
     }
 
+    @RequestMapping("/dashboard_penerimaan")
+    public String dashboard_penerimaan() { return "operator/dash_penerimaan";
+    }
+
     @RequestMapping("/dashboard")
     public String dashboard() { return "operator/dashboard2";
     }
@@ -32,8 +36,53 @@ public class PageOperatorController {
     public String dash_rencana() { return "operator/dash_rencana";
     }
 
+    @RequestMapping("/dashboard_valas")
+    public String dash_valas() { return "operator/dashboard_valas";
+    }
+
+    @RequestMapping("/dashboard_rupiah")
+    public String dash_rupiah() { return "operator/dashboard_rupiah";
+    }
+
     @RequestMapping("/dash_realisasi")
     public String dash_realisasi() { return "operator/dash_realisasi";
+    }
+
+    @RequestMapping("/rekap_realisasi_pembayaran")
+    public String rekap_realisasi_pembayaran() { return "operator/rekap_realisasi_pembayaran";
+    }
+
+    @RequestMapping("/penjualan_tenaga_listrik")
+    public String penjualan_tenaga_listrik() { return "operator/penjualan_tenaga_listrik";
+    }
+
+    @RequestMapping("/rupiah")
+    public String rupiah() { return "operator/data_pindah_buku_rupiah";
+    }
+
+    @RequestMapping("/valuta_asing")
+    public String valuta_asing() { return "operator/data_pindah_valuta_asing";
+    }
+
+    @RequestMapping("/placement_lcl")
+    public String placement_lcl() { return "operator/placement_lcl_header";
+    }
+
+    @RequestMapping("/giro")
+    public String giro() {
+        return "operator/giro";
+    }
+
+    @RequestMapping("/placement_fcl")
+    public String placement_fcl() { return "operator/placement_lcl";
+    }
+
+    @RequestMapping("/penerimaan_pendanaan")
+    public String penerimaan_pendanaan() { return "operator/penerimaan_pendanaan";
+    }
+
+    @RequestMapping("/penerimaan_operasi")
+    public String penerimaan_operasi() { return "operator/penerimaan_operasi";
     }
 
     @RequestMapping("/rekapitulasi_data")

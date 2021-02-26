@@ -1628,8 +1628,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                             getTotalTagihan();
                             return res.data;
                         }
-                }
-            ,
+                },
             "drawCallback":
                 function (settings) {
                     // $(".dataTables_scrollHeadInner").css({"width":"100%"});

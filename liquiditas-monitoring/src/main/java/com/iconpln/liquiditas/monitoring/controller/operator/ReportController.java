@@ -282,4 +282,257 @@ public class ReportController {
         mapData.put("data", list);
         return mapData;
     }
+
+    @GetMapping(path = "/proyeksi_kebutuhan_pengadaan_valas")
+    public Map listProyeksiKebutuhanPengadaanValas(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getProyeksiPengadaanKebutuhanValas(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @RequestMapping(value = "/ins_pengadaan_valas", method = RequestMethod.POST)
+    public Map insPengadaanValas(
+            @RequestParam(value = "pData", defaultValue = "") String pData
+    ) {
+        try {
+            return dashboardService.insPengadaanValas(pData);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping(path = "/valuta_asing")
+    public Map listDashboardPenerimaanOperasiValutaAsing(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardPenerimaanOperasiValutaAsing(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @GetMapping(path = "/rupiah")
+    public Map listDashboardPenerimaanOperasiRupiah(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardPenerimaanOperasiRupiah(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @GetMapping(path = "/dash_valas")
+    public Map listDashboardValas(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardValas(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @GetMapping(path = "/dash_valas2")
+    public Map listDashboardValas2(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardValas2(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @GetMapping(path = "/dash_valas3")
+    public Map listDashboardValas3(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardValas3(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @GetMapping(path = "/dash_valas4")
+    public Map listDashboardValas4(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardValas4(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @GetMapping(path = "/dash_rupiah")
+    public Map listDashboardRupiah(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardRupiah(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @GetMapping(path = "/dash_rupiah2")
+    public Map listDashboardRupiah2(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardRupiah2(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @GetMapping(path = "/dash_rupiah3")
+    public Map listDashboardRupiah3(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardRupiah3(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @GetMapping(path = "/dash_rupiah4")
+    public Map listDashboardRupiah4(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardRupiah4(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @GetMapping(path = "/dash_rupiah5")
+    public Map listDashboardRupiah5(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardRupiah5(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @GetMapping(path = "/dash_rupiah6")
+    public Map listDashboardRupiah6(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardRupiah6(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @GetMapping(path = "/dash_rupiah7")
+    public Map listDashboardRupiah7(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardRupiah7(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
+    @GetMapping(path = "/giro_special_rate")
+    public Map listDashboardGiroSpesialRate(@RequestParam(value = "tanggal") String tanggal){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        try {
+            list = dashboardService.getDashboardGiroSpesialRate(tanggal);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        return mapData;
+    }
+
 }
