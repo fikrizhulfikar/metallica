@@ -24,49 +24,93 @@
             margin: 2px 2px;
             transition: 0.3s;
             border-radius: 10px;
-          }
+        }
 
-          .btn:hover {
+        .btn:hover {
             background-color: #3e8e41;
             color: white;
-          }
+        }
 
-          div.a{
+        div.a{
             visibility: visible;
-          }
+        }
 
-          div.b{
+        div.b{
             visibility: hidden;
-          }
-          .wrapper {
-                text-align: center;
-            }
-            .wrapper ul {
-                display: inline-block;
-                margin: 0;
-                padding: 0;
-                /* For IE, the outcast */
-                zoom:1;
-                *display: inline;
-            }
-            .wrapper li {
-                float: left;
-                padding: 2px 5px;
-            }
-          /* basic positioning */
-            .legend { list-style: none; align: center;}
-            .legend li { float: left; margin-right: 10px; font-size: 12px;}
-            .legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
-            /* your colors */
-            .legend .one { background-color: #F2726F;}
-            .legend .two { background-color: #77D5D4; }
-            .legend .three { background-color: #62B58F; }
-            .legend .four { background-color: #FFC533; }
-            .legend .five { background-color: #998650; }
-            .legend .six { background-color: #7AC74F; }
-            .legend .seven { background-color: #5ADBFF; }
-            .legend .eight { background-color: #F20F2F; }
-            .legend .nine { background-color: #F4D35E; }
+        }
+        .wrapper {
+            text-align: center;
+        }
+        .wrapper ul {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            /* For IE, the outcast */
+            zoom:1;
+            *display: inline;
+        }
+        .wrapper li {
+            float: left;
+            padding: 2px 5px;
+        }
+        /* basic positioning */
+        .legend { list-style: none; align: center;}
+        .legend li { float: left; margin-right: 10px; font-size: 12px;}
+        .legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+        /* your colors */
+        .legend .one { background-color: #F2726F;}
+        .legend .two { background-color: #77D5D4; }
+        .legend .three { background-color: #62B58F; }
+        .legend .four { background-color: #FFC533; }
+        .legend .five { background-color: #998650; }
+        .legend .six { background-color: #7AC74F; }
+        .legend .seven { background-color: #5ADBFF; }
+        .legend .eight { background-color: #F20F2F; }
+        .legend .nine { background-color: #F4D35E; }
+
+        h6, h5, .card-title, .title-top, .title-bottom{
+            margin-bottom: 0em;
+        }
+        .title-bottom{
+            margin-top: 0em;
+        }
+        .title-top{
+            margin-top: 0.5em;
+            /*margin-bottom: 0.5em;*/
+        }
+        .title-bottom, .title-top{
+            text-align: center;
+        }
+        .row-top, .row-bottom{
+            margin-bottom: 0.5rem;
+        }
+
+        .table-left{
+            margin-left: 0.65rem;
+            box-shadow: none !important;
+            width: 98%;
+        }
+        .table-right{
+            margin-right: 0.75rem;
+            margin-bottom: 0.2rem;
+            box-shadow: none !important;
+            width: 98%;
+        }
+
+        .table-left td, .table-right td{
+            padding: 0.45rem;
+        }
+        .note{
+            margin-left: 0.75rem;
+            margin-bottom: 1em;
+            margin-top: 1rem;
+        }
+        .realisasi-header{
+            background-color: #b4e2aa !important;
+        }
+        .rencana-header{
+            background-color: #b9d4e6 !important;
+        }
     </style>
 </div>
 <main class="main" th:fragment="content">
@@ -173,6 +217,7 @@
                                                         </div>
                                                         <div class="note">
                                                             <small><i>*Dropping imprest ke unit belum entry di metallica, data berdasarkan permintaan dropping mingguan.</i></small>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -397,96 +442,97 @@
 </main>
 <div th:fragment="scripts-backend">
     <script src="/static/js/backend/controller/dashboard.js"></script>
+    <script src="/static/js/backend/controller/financialTalk.js"></script>
     <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
     <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
     <script type="text/javascript">
 
-		function renHari() {
-			element = document.querySelector('#column-rencana-pembayaran');
-			element.style.visibility = 'visible';
-            element = document.querySelector('#column-rencana-pembayaran2');
-			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-rencana-pembayaran3');
-			element.style.visibility = 'hidden';
-			element = document.querySelector('#column-rencana-pembayaran4');
-			element.style.visibility = 'hidden';
-		}
-
-		function renMinggu() {
-			element = document.querySelector('#column-rencana-pembayaran2');
-			element.style.visibility = 'visible';
+        function renHari() {
             element = document.querySelector('#column-rencana-pembayaran');
-			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-rencana-pembayaran3');
-			element.style.visibility = 'hidden';
-			element = document.querySelector('#column-rencana-pembayaran4');
-			element.style.visibility = 'hidden';
-		}
-
-		function renBulan() {
-			element = document.querySelector('#column-rencana-pembayaran3');
-			element.style.visibility = 'visible';
+            element.style.visibility = 'visible';
             element = document.querySelector('#column-rencana-pembayaran2');
-			element.style.visibility = 'hidden';
+            element.style.visibility = 'hidden';
+            element = document.querySelector('#column-rencana-pembayaran3');
+            element.style.visibility = 'hidden';
+            element = document.querySelector('#column-rencana-pembayaran4');
+            element.style.visibility = 'hidden';
+        }
+
+        function renMinggu() {
+            element = document.querySelector('#column-rencana-pembayaran2');
+            element.style.visibility = 'visible';
             element = document.querySelector('#column-rencana-pembayaran');
-			element.style.visibility = 'hidden';
-			element = document.querySelector('#column-rencana-pembayaran4');
-			element.style.visibility = 'hidden';
-		}
+            element.style.visibility = 'hidden';
+            element = document.querySelector('#column-rencana-pembayaran3');
+            element.style.visibility = 'hidden';
+            element = document.querySelector('#column-rencana-pembayaran4');
+            element.style.visibility = 'hidden';
+        }
+
+        function renBulan() {
+            element = document.querySelector('#column-rencana-pembayaran3');
+            element.style.visibility = 'visible';
+            element = document.querySelector('#column-rencana-pembayaran2');
+            element.style.visibility = 'hidden';
+            element = document.querySelector('#column-rencana-pembayaran');
+            element.style.visibility = 'hidden';
+            element = document.querySelector('#column-rencana-pembayaran4');
+            element.style.visibility = 'hidden';
+        }
 
         function renTahun() {
             element = document.querySelector('#column-rencana-pembayaran4');
-			element.style.visibility = 'visible';
-			element = document.querySelector('#column-rencana-pembayaran3');
-			element.style.visibility = 'hidden';
+            element.style.visibility = 'visible';
+            element = document.querySelector('#column-rencana-pembayaran3');
+            element.style.visibility = 'hidden';
             element = document.querySelector('#column-rencana-pembayaran2');
-			element.style.visibility = 'hidden';
+            element.style.visibility = 'hidden';
             element = document.querySelector('#column-rencana-pembayaran');
-			element.style.visibility = 'hidden';
-		}
+            element.style.visibility = 'hidden';
+        }
 
-		function realHari() {
-			element = document.querySelector('#column-realisasi-pembayaran');
-			element.style.visibility = 'visible';
-            element = document.querySelector('#column-realisasi-pembayaran2');
-			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-realisasi-pembayaran3');
-			element.style.visibility = 'hidden';
-			element = document.querySelector('#column-realisasi-pembayaran4');
-			element.style.visibility = 'hidden';
-		}
-
-		function realMinggu() {
-			element = document.querySelector('#column-realisasi-pembayaran2');
-			element.style.visibility = 'visible';
+        function realHari() {
             element = document.querySelector('#column-realisasi-pembayaran');
-			element.style.visibility = 'hidden';
-            element = document.querySelector('#column-realisasi-pembayaran3');
-			element.style.visibility = 'hidden';
-			element = document.querySelector('#column-realisasi-pembayaran4');
-			element.style.visibility = 'hidden';
-		}
-
-		function realBulan() {
-			element = document.querySelector('#column-realisasi-pembayaran3');
-			element.style.visibility = 'visible';
+            element.style.visibility = 'visible';
             element = document.querySelector('#column-realisasi-pembayaran2');
-			element.style.visibility = 'hidden';
+            element.style.visibility = 'hidden';
+            element = document.querySelector('#column-realisasi-pembayaran3');
+            element.style.visibility = 'hidden';
+            element = document.querySelector('#column-realisasi-pembayaran4');
+            element.style.visibility = 'hidden';
+        }
+
+        function realMinggu() {
+            element = document.querySelector('#column-realisasi-pembayaran2');
+            element.style.visibility = 'visible';
             element = document.querySelector('#column-realisasi-pembayaran');
-			element.style.visibility = 'hidden';
-			element = document.querySelector('#column-realisasi-pembayaran4');
-			element.style.visibility = 'hidden';
-		}
+            element.style.visibility = 'hidden';
+            element = document.querySelector('#column-realisasi-pembayaran3');
+            element.style.visibility = 'hidden';
+            element = document.querySelector('#column-realisasi-pembayaran4');
+            element.style.visibility = 'hidden';
+        }
+
+        function realBulan() {
+            element = document.querySelector('#column-realisasi-pembayaran3');
+            element.style.visibility = 'visible';
+            element = document.querySelector('#column-realisasi-pembayaran2');
+            element.style.visibility = 'hidden';
+            element = document.querySelector('#column-realisasi-pembayaran');
+            element.style.visibility = 'hidden';
+            element = document.querySelector('#column-realisasi-pembayaran4');
+            element.style.visibility = 'hidden';
+        }
 
         function realTahun() {
             element = document.querySelector('#column-realisasi-pembayaran4');
-			element.style.visibility = 'visible';
-			element = document.querySelector('#column-realisasi-pembayaran3');
-			element.style.visibility = 'hidden';
+            element.style.visibility = 'visible';
+            element = document.querySelector('#column-realisasi-pembayaran3');
+            element.style.visibility = 'hidden';
             element = document.querySelector('#column-realisasi-pembayaran2');
-			element.style.visibility = 'hidden';
+            element.style.visibility = 'hidden';
             element = document.querySelector('#column-realisasi-pembayaran');
-			element.style.visibility = 'hidden';
-		}
-	</script>
+            element.style.visibility = 'hidden';
+        }
+    </script>
 </div>

@@ -361,9 +361,9 @@ public class PlacementController {
         }
     }
 
-    @RequestMapping(value = "/xls_detail", method = RequestMethod.GET)
+    @RequestMapping(path = "/xls_detail/{idJenis}", method = RequestMethod.GET)
     public String export(
-            HttpServletResponse response, @RequestParam(value = "idJenis", defaultValue = "") String idJenis) {
+            HttpServletResponse response, @PathVariable("idJenis") String idJenis) {
         try {
 
             String title;

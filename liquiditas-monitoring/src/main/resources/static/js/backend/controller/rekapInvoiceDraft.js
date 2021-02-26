@@ -29,7 +29,8 @@ $(document).ready(function () {
     $('#tanggal_awal').datepicker({dateFormat: 'dd/mm/yy'});
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
-    setSelectBank("cmb_bank", "FILTER", "", "", "REKAP");
+    setSelectFilterBank("cmb_bank", "FILTER", "", "", "REKAP");
+    // setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
     setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
 
     $('#check_all').change(function() {
@@ -106,15 +107,15 @@ function exportXls() {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/rekap_invoice_draft/xls/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currecny").val() + "/" + $("#cmb_cara_pembayaran").val() + "/" + $("#cmb_bank").val() + "/" +null+ "/" +null);
+    window.open(baseUrl + "api_operator/rekap_invoice_draft/xls/" + tglAwal.replace(/\//g,"-") + "/" + tglAkhir.replace(/\//g,"-") + "/" + $("#cmb_currecny").val() + "/ALL/" + $("#cmb_bank").val() + "/" +null+ "/" +null);
 }
 
 function search(state) {
         if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
             alert("Mohon Lengkapi Tgl Akhir");
         } else {
-            initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val(), $("#cmb_jenis_pemabayaran").val(), $("#cmb_status_tracking").val())
-            getAllData();
+            initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val(), "ALL", $("#cmb_status_tracking").val())
+            // getAllData();
             srcTglAwal = $("#tanggal_awal").val()
             srcTglAkhir = $("#tanggal_akhir").val()
         }
@@ -2340,33 +2341,6 @@ function edit_data2() {
                 hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
             }
         });
-}
-
-function setSelectMetodeBayar(idHtml,idSelectElement){
-    $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_belum/get_metode_bayar",
-        dataType: 'JSON',
-        type: "GET",
-        sync :true,
-
-
-        success: function (res) {
-            // // console.log("Select Hasil : ",res);
-            $("#" + idHtml + "").html('');
-            $.each(res, function (key, val) {
-                $("#" + idHtml + "").append('<option value="' + val.METODE_PEMBAYARAN + '">'+val.METODE_PEMBAYARAN+'</option>');
-            });
-//            // // console.log("jenis pemb : ", idForSelected);
-            if (idSelectElement != "") {
-                $("#" + idHtml + "").val(idSelectElement).trigger('change');
-            } else {
-                $('#pBankPembayaran').val("null").trigger('change');
-            }
-        },
-        error: function () {
-            $("#" + idHtml + "").html('<option value="">Pilih Data</option>');
-        }
-    });
 }
 
 function setSelectBankPembayar(idHtml ,idForSelected) {

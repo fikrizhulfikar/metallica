@@ -5,6 +5,11 @@
 var timeHideLoading = 1600;
 var timeSowFormEdit = 1000;
 var nilaiAnggaran = "";
+// var sso_key = 'METALLICA_TEST'; //<= for server dev
+var sso_key = 'METALLICA'; // <= sso for server prod
+// var sso_key = 'METALLICA_DEV'; //<= for localhost
+var sso_url = 'http://10.1.86.13:8070/dms/auth'; // <= prod
+// var sso_url = 'http://10.14.153.156:8070/dms/auth';// <= dev
 
 function hideLoading(msg) {
     setTimeout(function () {
@@ -13,6 +18,43 @@ function hideLoading(msg) {
             alert(msg);
         }
     }, timeHideLoading);
+}
+
+function createReferenceNumber(){
+    let reference = null;
+    let date = new Date();
+    var dd = date.getDate();
+    if (dd<10){
+        dd='0'+dd;
+    }
+    let mm = date.getMonth()+1;
+    if (mm<10){
+        mm='0'+mm;
+    }
+    let yyyy = date.getFullYear();
+    let hh = date.getHours();
+    let ii = date.getMinutes();
+    let SS = date.getSeconds();
+    let sss = date.getMilliseconds();
+    let rand = Math.floor(100 + Math.random() * 900);
+    reference = yyyy+mm+dd+hh+ii+SS+sss+rand;
+    return reference;
+}
+
+function doSso(){
+    $.ajax({
+        url : sso_url+"/sso",
+        type : "GET",
+        beforeSend : (xhr) => {
+            xhr.setRequestHeader("App-Source",sso_key);
+        },success : (res) => {
+            if (res.status === 200){
+                window.location.replace(res.data.uri);
+            }
+        },error : (err) => {
+            alert("Something Wrong, Try Again Later!");
+        }
+    })
 }
 
 function showLoadingCss() {
@@ -36,26 +78,31 @@ function hideLoadingCss(msg) {
 
 }
 
-function setSelectMetodeBayar(idHtml ,idForSelected) {
+function setSelectMetodeBayar(idHtml,idSelectElement,idForSelected){
     $.ajax({
         url: baseUrl + "api_operator/rekap_invoice_belum/get_metode_bayar",
         dataType: 'JSON',
         type: "GET",
         sync :true,
 
-
         success: function (res) {
+            // console.log("Select Hasil : ",res);
             $("#" + idHtml + "").html('');
+            if (idSelectElement !== ""){
+                $("#" + idHtml + "").append('<option value="ALL">SEMUA METODE BAYAR</option>');
+            }
             $.each(res, function (key, val) {
-                $("#" + idHtml + "").append('<option value="' + val.METODE_PEMBAYARAN + '">'+val.METODE_PEMBAYARAN+'</option>');
+                $("#" + idHtml + "").append('<option value="' + val.ID_METODE + '">'+val.METODE_PEMBAYARAN+'</option>');
             });
-//            console.log("jenis pemb : ", idForSelected);
-             if (idForSelected != "") {
-                            $("#" + idHtml + "").val(idForSelected);
-                        }
+//            // // console.log("jenis pemb : ", idForSelected);
+            if (idForSelected != "") {
+                $("#" + idHtml + "").val(idSelectElement).trigger('change');
+            } else {
+                $('#pBankPembayaran').val("null").trigger('change');
+            }
         },
         error: function () {
-            $("#" + idHtml + "").html('<option value="">Pilih Data</option>');
+            $("#" + idHtml + "").html('<option value="ALL">SEMUA METODE BAYAR</option>');
         }
     });
 }
@@ -148,7 +195,7 @@ function setSelectCurr(idHtml, jenis, idForSelected, form) {
             }
         },
         error: function () {
-            $("#" + idHtml + "").html('<option value="">Pilih Data</option>');
+            $("#" + idHtml + "").html('<option value="ALL">SELURUH MATA UANG</option>');
         }
     });
 }
@@ -210,26 +257,6 @@ function setSelectSumberDana(idHtml, idForSelected) {
             $("#" + idHtml + "").html('');
             $.each(res, function (key, val) {
                 $("#" + idHtml + "").append('<option value="' + val.ID + '">' + val.VALUE + '</option>');
-            });
-            if (idForSelected != "") {
-                $("#" + idHtml + "").val(idForSelected);
-            }
-        },
-        error: function () {
-            $("#" + idHtml + "").html('<option value="">Pilih Data</option>');
-        }
-    });
-}
-
-function setSelectMetodeBayar(idHtml, idForSelected) {
-    $.ajax({
-        url: baseUrl + "api_master/metode_bayar/get_list_metode_bayar",
-        dataType: 'JSON',
-        type: "GET",
-        success: function (res) {
-            $("#" + idHtml + "").html('');
-            $.each(res, function (key, val) {
-                $("#" + idHtml + "").append('<option value="' + val.CODE + '">' + val.VALUE + '</option>');
             });
             if (idForSelected != "") {
                 $("#" + idHtml + "").val(idForSelected);
@@ -1031,6 +1058,10 @@ function checkColumn(value) {
     $("#hc81").prop("checked", value);
 }
 
+function checkAllColumn(value){
+    $("#hide_column_modal").find(".checkbox-toggle").prop("checked",value);
+}
+
 function setSelectJenisRekening(idHtml, jenis, idForSelected, form) {
     $.ajax({
         url: baseUrl + "api_operator/rekap_invoice_belum/get_jenis_rekening",
@@ -1102,6 +1133,31 @@ function setSelectBankSaldo(idHtml, jenis, idForSelected, form) {
         },
         error: function () {
             $("#" + idHtml + "").html('<option value="">Pilih Data</option>');
+        }
+    });
+}
+
+function setSelectFilterBank(idHtml, jenis, idForSelected) {
+    $.ajax({
+        url: baseUrl + "api_master/filter/get_list_filter_bank",
+        dataType: 'JSON',
+        type: "GET",
+        sync :true,
+        success: function (res) {
+            $("#" + idHtml + "").html('');
+            $("#" + idHtml + "").append('<option value="ALL">SEMUA BANK</option>');
+            $.each(res, function (key, val) {
+                $("#" + idHtml + "").append('<option value="' + val.NAMA_BANK + '">' + val.NAMA_BANK + '</option>');
+            });
+//            console.log("jenis pemb : ", idForSelected);
+            if (idForSelected != "") {
+                $("#" + idHtml + "").val(idForSelected).trigger('change');
+            } else {
+                $('#pJenisPemabayaran').val("null").trigger('change');
+            }
+        },
+        error: function () {
+            $("#" + idHtml + "").html('<option value="ALL">SEMUA BANK</option>');
         }
     });
 }

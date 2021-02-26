@@ -4,6 +4,7 @@
 var tableMain;
 var isUpdate = "0";
 var tempTableSearch = "";
+var tempTableItemSearch = "";
 var groupCheckedArray = new Array();
 var fullArrayGroup = new Array();
 var cbParentArray = new Array();
@@ -16,11 +17,12 @@ var srcTglAwal = "";
 var srcTglAkhir = "";
 
 $(document).ready(function () {
-    initDataTable();
     $('#tanggal_awal').datepicker({dateFormat: "dd/mm/yy"});
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
-    // setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+    setSelectFilterBank("cmb_bank", "FILTER", "", "", "REKAP");
+    setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+    setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
 
     $('#check_all').change(function() {
         if($(this).is(':checked')){
@@ -232,7 +234,7 @@ function getAllData() {
 
 }
 
-function initDataTable(pTglAwal, pTglAkhir,  pBank) {
+function initDataTable(pTglAwal, pTglAkhir,  pBank, pCaraBayar, pCurr) {
     showLoadingCss();
     $('#table-rekapitulasi tbody').empty();
     $('#table-rekapitulasi').dataTable().fnDestroy();
@@ -410,6 +412,8 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank) {
                             pTglAwal: pTglAwal,
                             pTglAkhir: pTglAkhir,
                             pBank: pBank,
+                            pCaraBayar : pCaraBayar,
+                            pCurr : pCurr
                         }
                     ,
                     "dataSrc":
@@ -730,7 +734,7 @@ function getDetails(idGroup) {
     hideLoadingCss()
     tableDetailGroupInvoiceSiapBayar = $('#table-main-detail').DataTable({
             "serverSide": true,
-            "oSearch": {"sSearch": tempTableSearch},
+            "oSearch": {"sSearch": tempTableItemSearch},
             "bLengthChange": true,
             "scrollY": "100%",
             "scrollX": "100%",
@@ -1546,7 +1550,7 @@ function getDetails(idGroup) {
                     "dataSrc":
                         function (res) {
                             hideLoadingCss()
-                            getTotalTagihan();
+                            getTotalTagihanItem(idGroup);
                             return res.data;
                         }
                 }
@@ -1609,8 +1613,8 @@ function search(state) {
     if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
         alert("Mohon Lengkapi Tgl Akhir");
     } else {
-        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(),$("#cmb_bank").val())
-        getAllData()
+        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(),$("#cmb_bank").val(),$("#cmb_cara_pembayaran").val(),$("#cmb_currecny").val())
+        // getAllData()
         srcTglAwal = $("#tanggal_awal").val()
         srcTglAkhir = $("#tanggal_akhir").val()
     }
@@ -1795,6 +1799,29 @@ function getTotalTagihan() {
 
 }
 
+function getTotalTagihanItem(groupId) {
+    $.ajax({
+        url: baseUrl + "api_operator/invoice_group/get_total_tagihan_group_item",
+        type: "GET",
+        data: {
+            tgl_awal: $("#tanggal_awal").val(),
+            tgl_akhir: $("#tanggal_akhir").val(),
+            bank: $("#cmb_bank").val(),
+            currency : $("#cmb_currecny").val(),
+            cara_bayar : $("#cmb_cara_pembayaran").val(),
+            group_id : groupId,
+            search: tempTableSearch
+        },
+        success: function (res) {
+            $("#total_tagihan_item").html(res);
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+
+}
+
 function exportXls() {
     var tglAwal = "null";
     if (srcTglAwal != "") {
@@ -1804,7 +1831,7 @@ function exportXls() {
     if (srcTglAkhir != "") {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/invoice_group/xls/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_bank").val() + "/" +null+ "/" +null);
+    window.open(baseUrl + "api_operator/invoice_group/xls/" + tglAwal.replace(/\//g,"-") + "/" + tglAkhir.replace(/\//g,"-") + "/" + $("#cmb_bank").val() + "/" +null+ "/" +null);
 }
 
 function back(){
@@ -1812,4 +1839,5 @@ function back(){
     $(".detail-data").hide();
     tableInvoiceGroupSiapBayar.ajax.reload()
     tableDetailGroupInvoiceSiapBayar.destroy();
+    $("#tagihan_item").remove();
 }

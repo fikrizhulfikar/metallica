@@ -101,6 +101,11 @@ public class PageOperatorController {
         return "operator/rekap_belum";
     }
 
+    @RequestMapping("/giro")
+    public String giro() {
+        return "operator/giro";
+    }
+
     @RequestMapping("/rekap_sudah")
     public String rekapDataSudahVerifikasi() {
         return "operator/rekap_sudah";
@@ -230,11 +235,25 @@ public class PageOperatorController {
         return "operator/rekap_invoice_reject";
     }
 
+    @RequestMapping("/rekap_realisasi_pembayaran")
+    public String rekap_realisasi_pembayaran() {
+        return "operator/rekap_realisasi_pembayaran";
+    }
+
     @RequestMapping("/rekap_invoice_admin")
     public String rekap_invoice_admin() {return "operator/rekap_invoice_admin"; }
 
     @RequestMapping("/rekap_invoice_oss")
     public String rekap_invoice_oss(){return "operator/rekap_invoice_oss";}
+
+    @RequestMapping("/giro_special_rate")
+    public String giro_special_rate(){return "operator/giro_special_rate";}
+
+    @RequestMapping("/rekap_invoice_reverse")
+    public String rekap_invoice_reverse(){return "operator/rekap_invoice_reverse";}
+
+    @RequestMapping("/rekap_invoice_salah")
+    public String rekap_invoice_salah(){return "operator/rekap_invoice_salah";}
 
     @RequestMapping("/rekap_invoice_oss_verifikator")
     public String rekap_invoice_verifikator() {
@@ -320,4 +339,13 @@ public class PageOperatorController {
     public String operasi_khusus_trx_lunas() {
         return "operator/operasi_khusus_trx_lunas";
     }
+
+    @RequestMapping("/financial_talk")
+    public String financial_talk(){return "dashboardcorpay/financial_talk";}
+
+    @RequestMapping("/dashboard_deposito")
+    public String dashboard_deposito(){return "operator/dashboard_deposito";}
+
+    @RequestMapping("/kebutuhan_imprest_unit")
+    public String dashboard_dropping_imprest_unit(){return "dashboardcorpay/imprest_unit";}
 }

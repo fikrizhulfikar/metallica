@@ -153,55 +153,62 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                 {
                     "aTargets": [3],
                     "mRender": function (data, type, full) {
+                        return full.TGL_RENCANA_BAYAR;
+                    }
+
+                },
+                {
+                    "aTargets": [4],
+                    "mRender": function (data, type, full) {
                         return full.DOCUMENT_NUMBER;
                     }
 
                 },
 
                 {
-                    "aTargets": [4],
+                    "aTargets": [5],
                     "mRender": function (data, type, full) {
                         return full.REFERENCE;
                     }
 
                 },
                 {
-                    "aTargets": [5],
+                    "aTargets": [6],
                     "mRender": function (data, type, full) {
                         return full.COMPANY_CODE;
                     }
 
                 },
                 {
-                    "aTargets": [6],
+                    "aTargets": [7],
                     "mRender": function (data, type, full) {
                         return full.BUSINESS_AREA;
                     }
 
                 },
                 {
-                    "aTargets": [7],
+                    "aTargets": [8],
                     "mRender": function (data, type, full) {
                         return full.CURRENCY;
                     }
 
                 },
                 {
-                    "aTargets": [8],
+                    "aTargets": [9],
                     "mRender": function (data, type, full) {
                         return full.DOC_HDR_TXT;
                     }
 
                 },
                 {
-                  "aTargets" : [9],
+                  "aTargets" : [10],
                   "mRender" : (data, type, full) => {
                       return full.STATUS_TRACKING;
                   }
                 },
 
                 {
-                    "aTargets": [10],
+                    "aTargets": [11],
                     "mRender": function (data, type, full) {
                         var jenis = "OPERASI_KHUSUS";
                         console.log("Ini Full : "+full);
@@ -217,7 +224,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                                 '<button type="button" style="width: 15px !important;" class="btn btn-update-data btn-ms btn-danger" title="Hapus" onclick="deleteHead(\'' + full.ID_METALLICA + '\')"><i class="fa fa-close"></i></button>'+
                                 '</div>';
                         }else {
-                            ret_value = '<button type="button" style="width: 15px !important;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISC_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\')"><i class="fa fa-info-circle"></i></button>'+
+                            ret_value = '<button type="button" style="width: 15px !important;" class="btn btn-edit-data btn-sm btn-success" title="Detail" onclick="getDetails(\'' +full.ID_METALLICA+'\',\''+full.DOCUMENT_NUMBER+'\',\''+full.BUSINESS_AREA+'\',\''+full.COMPANY_CODE+'\',\''+full.REFERENCE+'\',\''+full.PMT_PROPOSAL_ID+'\',\''+full.POSTING_DATE+'\',\''+full.FISCAL_YEAR+'\',\''+full.CURRENCY+'\',\''+full.EXCHANGE_RATE+'\')"><i class="fa fa-info-circle"></i></button>'+
                                 '</div>';
                         }
                         return ret_value;
@@ -481,7 +488,6 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
 
     tracking = track;
     (track === "INPUT DATA" || newRoleUser[0] === "ROLE_ADMIN") ? $(".just-for-input-data").show() : $(".just-for-input-data").hide();
-    // hideLoadingCss();
     showLoadingCss();
     tblOperasiKhususVerifiedDetail = $("#table-main-detail").DataTable({
         "ajax" : {
@@ -492,6 +498,8 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
             "type": "GET",
             "dataType": "json",
         },
+        "scrollX" : true,
+        "scrollY" : true,
         "columns" : [
             // {"data" : "DOC_NO"},
             // {"data" : "PMT_PROPOSAL_ID"},
@@ -534,18 +542,13 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
                 if (d.DEBIT_CREDIT_IND === "D") debit = debit + parseInt(d.AMOUNT);
             });
             balance = debit-credit;
-            console.log("Debit : ",debit);
-            console.log("Credit : ", credit);
-            console.log("Ballance : ",balance);
-
-            $("#table-main-detail tfoot").find('td').eq(0).html("Debit : "+ new Intl.NumberFormat().format(debit));
-            $("#table-main-detail tfoot").find('td').eq(1).html("Credit : "+ new Intl.NumberFormat().format(credit));
-            $("#table-main-detail tfoot").find('td').eq(2).html("Balance : "+ new Intl.NumberFormat().format(balance));
+            $("#debit").html(new Intl.NumberFormat().format(debit));
+            $("#kredit").html(new Intl.NumberFormat().format(credit));
+            $("#balance").html(new Intl.NumberFormat().format(balance));
 
             setBalance(balance);
         },
         "initComplete" : (data) => {
-            // showToast('Successfully Load Table');
             hideLoadingCss();
         }
     });
@@ -557,7 +560,7 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
         pIdMetallica : id,
         pDocumentNumber : doc_no,
         operasiKhususDetails : null,
-    }
+    };
 
     $("#pDetailExchangeRate").val((exc_rate === undefined || exc_rate === '-') ? 1 : exc_rate);
     $("#pDetailDocumentNumber").val(doc_no);

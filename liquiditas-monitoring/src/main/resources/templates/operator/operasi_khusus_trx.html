@@ -28,7 +28,7 @@
 </div>
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" style="cursor: default">Transaksi Operasi Khusus</li>
+        <li class="breadcrumb-item active" style="cursor: default">Operasi Khusus Belum Diapprove</li>
         <li class="breadcrumb-menu d-md-down-none fungsional-button">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
@@ -93,6 +93,7 @@
                                 <th>NO.</th>
                                 <th>DOCUMENT DATE</th>
                                 <th>POSTING DATE</th>
+                                <th>TGL RENCANA BAYAR</th>
                                 <th>DOCUMENT NUMBER</th>
                                 <th>REFERENCE</th>
                                 <th>FISCAL YEAR</th>
@@ -135,6 +136,10 @@
                             <div class="form-group">
                                 <label for="pHeadPostingDate"><span class="mandatory">*</span>&nbsp;Posting Date :</label>
                                 <input type="text" class="form-control" id="pHeadPostingDate" style="background-color: white" value="" required="required" readonly="readonly"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pHeadTglRencanaBayar"><span class="mandatory">*</span>&nbsp;Tanggal Rencana Bayar :</label>
+                                <input type="text" class="form-control" id="pHeadTglRencanaBayar" style="background-color: white" value="" required="required" readonly="readonly"/>
                             </div>
                             <div class="form-group">
                                 <label for="pHeadSumberDana"><span class="mandatory">*</span>&nbsp;Sumber Dana :</label>
@@ -226,7 +231,7 @@
         </div>
     </div>
 
-    <div class="detail-data container-fluid" style="display: none;">
+    <div class="detail-data container-fluid" style="display: none; margin-bottom: 1.5rem;">
         <div class="panel panel-default">
             <div class="panel-body">
                 <div id="form-detail">
@@ -311,52 +316,69 @@
                                     <option value="">Pilih Data</option>
                                 </select>
                             </div>
+                            <div align="right" class="just-for-input-data" style="margin-top: 2.8rem;">
+                                <button onclick="AddToTable()" class="btn btn-success"><i class="fa fa-plus-square"></i> Add</button>
+                            </div>
                         </div>
-                    </div>
-                    <div align="right" class="just-for-input-data">
-                        <button onclick="AddToTable()" class="btn btn-success"><i class="fa fa-plus-square"></i> Add</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="table-responsive" style="margin-top: 50px;overflow-x: auto">
-            <table id="table-main-detail" class="table table-striped table-condensed">
-                <thead>
-                <tr>
-                    <th>DOCUMENT NUMBER</th>
-                    <th>PAYMENT PROPOSAL</th>
-                    <th>COMPANY CODE</th>
-                    <th>CASH CODE</th>
-                    <th>SUMBER DANA</th>
-                    <th>FISCAL YEAR</th>
-                    <th>LINE NUMBER</th>
-                    <th>DEBIT CREDIT INDICATOR</th>
-                    <th>GL ACCOUNT</th>
-                    <th>REAL AMOUNT</th>
-                    <th>AMOUNT</th>
-                    <th>CURRENCY</th>
-                    <th>COST CENTER</th>
-                    <th>BUSINESS AREA</th>
-                    <th>REMARKS</th>
-                    <th>MASUK</th>
-                    <th>AKSI</th>
-                </tr>
-                </thead>
-                <tbody>
+        <div class="card">
+            <div class="card-block">
+                <div class="table-responsive" style="margin-top:0.5rem;">
+                    <table id="table-main-detail" class="table table-striped table-condensed">
+                        <thead>
+                        <tr>
+                            <th>DOCUMENT NUMBER</th>
+                            <th>PAYMENT PROPOSAL</th>
+                            <th>COMPANY CODE</th>
+                            <th>CASH CODE</th>
+                            <th>SUMBER DANA</th>
+                            <th>FISCAL YEAR</th>
+                            <th>LINE NUMBER</th>
+                            <th>DEBIT CREDIT INDICATOR</th>
+                            <th>GL ACCOUNT</th>
+                            <th>REAL AMOUNT</th>
+                            <th>AMOUNT</th>
+                            <th>CURRENCY</th>
+                            <th>COST CENTER</th>
+                            <th>BUSINESS AREA</th>
+                            <th>REMARKS</th>
+                            <th>MASUK</th>
+                            <th>AKSI</th>
+                        </tr>
+                        </thead>
+                        <tbody>
 
-                </tbody>
-                <tfoot>
-                <tr>
-                    <td colspan="3"></td>
-                    <td colspan="3"></td>
-                    <td colspan="2"></td>
-                </tr>
-                </tfoot>
-            </table>
-        </div>
-        <div align="right">
-            <button class="btn btn-danger" onclick="back()"><i class="fas fa-arrow-circle-left"></i>&nbsp;Back</button>
-            <button onclick="submitChild()" class="btn btn-success just-for-input-data"><i class="fa fa-save"></i>&nbsp;Submit</button>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="3"></td>
+                            <td colspan="3"></td>
+                            <td colspan="2"></td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-md-8">
+                        <table style="margin-top: 0.5em">
+                            <tr style="font-size: 0.9rem">
+                                <td style="padding-right: 20px;"><h7>Debit : <span><b id="debit">0</b></span></h7></td>
+                                <td style="padding-right: 20px;"><h7>Kredit : <span><b id="kredit">0</b></span></h7></td>
+                                <td><h7>Balance : <span><b id="balance">0</b></span></h7></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-4" align="right">
+                        <button class="btn btn-danger" onclick="back()"><i class="fas fa-arrow-circle-left"></i>&nbsp;Back</button>
+                        <button onclick="submitChild()" class="btn btn-success just-for-input-data"><i class="fa fa-save"></i>&nbsp;Submit</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </main>

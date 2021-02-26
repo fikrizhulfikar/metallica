@@ -77,7 +77,7 @@ public class OperasiKhususTrxService {
     public Map<String, Object> insOperasiKhusus(
             String pIdMetallica, String pDocDate, String pPostDate, String pDocNo, String pReference,
             String pCompCode, String pBusArea, String pCurrency, String pDocHdrTxt, String pUserId, String pExchangeRate,
-            String pFiscalYear, String pSumberDana
+            String pFiscalYear, String pSumberDana, String pTglRencanaBayar
     ) throws SQLException{
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
@@ -88,6 +88,7 @@ public class OperasiKhususTrxService {
                 .addValue("p_id_metallica",pIdMetallica)
                 .addValue("p_doc_date",pDocDate)
                 .addValue("p_post_date",pPostDate)
+                .addValue("p_tgl_rencana_byr", pTglRencanaBayar)
                 .addValue("p_doc_no", pDocNo)
                 .addValue("p_reference", pReference)
                 .addValue("p_comp_code", pCompCode)

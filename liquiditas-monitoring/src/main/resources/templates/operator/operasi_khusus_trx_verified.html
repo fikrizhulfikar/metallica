@@ -27,7 +27,7 @@
 </div>
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" style="cursor: default">Transaksi Operasi Khusus Verified</li>
+        <li class="breadcrumb-item active" style="cursor: default">Operasi Khusus Sudah Diapprove</li>
         <li class="breadcrumb-menu d-md-down-none fungsional-button">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
 <!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>-->
@@ -82,6 +82,7 @@
                                 <th>NO.</th>
                                 <th>DOCUMENT DATE</th>
                                 <th>POSTING DATE</th>
+                                <th>TANGGAL RENCANA BAYAR</th>
                                 <th>DOCUMENT NUMBER</th>
                                 <th>REFERENCE</th>
                                 <th>COMPANY CODE</th>
@@ -285,41 +286,60 @@
                 </div>
             </div>
         </div>
-        <div class="table-responsive" style="margin-top: 50px;">
-            <table id="table-main-detail" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>COMP CODE</th>
-                    <th>CASH CODE</th>
-                    <th>SUMBER DANA</th>
-                    <th>LINE NUMBER</th>
-                    <th>DEBIT CREDIT INDICATOR</th>
-                    <th>GL ACCOUNT</th>
-                    <th>AMOUNT</th>
-                    <th>CURRENCY</th>
-                    <th>COST CENTER</th>
-                    <th>BUSINESS AREA</th>
-                    <th>REMARKS</th>
-                    <th>MASUK</th>
-<!--                    <th>AKSI</th>-->
-                </tr>
-                </thead>
-                <tbody>
+        <div class="card">
+            <div class="card-block">
+                <div class="table-responsive">
+                    <table id="table-main-detail" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>COMP CODE</th>
+                            <th>CASH CODE</th>
+                            <th>SUMBER DANA</th>
+                            <th>LINE NUMBER</th>
+                            <th>DEBIT CREDIT INDICATOR</th>
+                            <th>GL ACCOUNT</th>
+                            <th>AMOUNT</th>
+                            <th>CURRENCY</th>
+                            <th>COST CENTER</th>
+                            <th>BUSINESS AREA</th>
+                            <th>REMARKS</th>
+                            <th>MASUK</th>
+                            <!--                    <th>AKSI</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
 
-                </tbody>
-                <tfoot>
-                <tr>
-                    <td colspan="3"></td>
-                    <td colspan="3"></td>
-                    <td colspan="2"></td>
-                </tr>
-                </tfoot>
-            </table>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="3"></td>
+                            <td colspan="3"></td>
+                            <td colspan="2"></td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-md-8">
+                        <table style="margin-top: 0.5em">
+                            <tr style="font-size: 0.9rem">
+                                <td style="padding-right: 20px;"><h7>Debit : <span><b id="debit">0</b></span></h7></td>
+                                <td style="padding-right: 20px;"><h7>Kredit : <span><b id="kredit">0</b></span></h7></td>
+                                <td><h7>Balance : <span><b id="balance">0</b></span></h7></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-4" align="right">
+                        <button class="btn btn-danger" onclick="back()"><i class="fas fa-arrow-circle-left"></i>&nbsp;Back</button>
+                        <button onclick="submitChild()" class="btn btn-success just-for-input-data">Submit</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div align="right">
-            <button class="btn btn-danger" onclick="back()"><i class="fas fa-arrow-circle-left"></i>&nbsp;Back</button>
-            <button onclick="submitChild()" class="btn btn-success just-for-input-data">Submit</button>
-        </div>
+
+
     </div>
 </main>
 <div th:fragment="scripts-backend">

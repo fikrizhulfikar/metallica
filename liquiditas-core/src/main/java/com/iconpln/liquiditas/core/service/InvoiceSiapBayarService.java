@@ -152,4 +152,28 @@ public class InvoiceSiapBayarService {
                 .executeFunction(BigDecimal.class, in);
         return result;
     }
+
+    public Map<String, Object> corpayUpdateJamBayar(
+            String pCompCode, String pDocNo, String pFiscYear, String pLineItem,
+            String pJenisTransaksi, String pJamBayar, String puserId,
+            String pOssId, String pGroupId ) throws SQLException {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("corpay_upd_jambayar");
+        Map<String, Object> out;
+        SqlParameterSource inParent = new MapSqlParameterSource()
+                .addValue("p_comp_code", pCompCode)
+                .addValue("p_doc_no", pDocNo)
+                .addValue("p_fisc_year", pFiscYear)
+                .addValue("p_line_item", pLineItem)
+                .addValue("p_jenis_transaksi", pJenisTransaksi)
+                .addValue("p_jam_bayar", pJamBayar)
+                .addValue("p_user_id", puserId)
+                .addValue("p_oss_id", pOssId)
+                .addValue("p_group_id", pGroupId)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        out = simpleJdbcCall.execute(inParent);
+        AppUtils.getLogger(this).info("data ubah jam corpay siap bayar : {}", out);
+        return out;
+    }
 }

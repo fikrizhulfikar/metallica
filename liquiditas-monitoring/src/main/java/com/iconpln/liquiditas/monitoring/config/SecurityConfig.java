@@ -75,17 +75,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     salt = getSaltSource().getSalt(userDetails);
                 }
 // ================================================================================================================== start of LDAP LOGIN
-                String username = userDetails.getUsername();
-                List<String> Users = new ArrayList<String>(Arrays.asList(username.split("\\\\")));
-                String xuser = "pusat\\"+username;
-                String xpassword = authentication.getCredentials().toString();
-                username = ad.getLDAP(xuser,xpassword);
-                if(username.equals("0")){
-                    AppUtils.getLogger(this).info("User / Password tidak sesuai!", username);
-                    throw new BadCredentialsException(messages.getMessage(
-                            "AbstractUserDetailsAuthenticationProvider.badCredentials",
-                            "Bad credentials"));
-                }
+//                String username = userDetails.getUsername();
+//                List<String> Users = new ArrayList<String>(Arrays.asList(username.split("\\\\")));
+//                String xuser = "pusat\\"+username;
+//                String xpassword = authentication.getCredentials().toString();
+//                username = ad.getLDAP(xuser,xpassword);
+//                if(username.equals("0")){
+//                    AppUtils.getLogger(this).info("User / Password tidak sesuai!", username);
+//                    throw new BadCredentialsException(messages.getMessage(
+//                            "AbstractUserDetailsAuthenticationProvider.badCredentials",
+//                            "Bad credentials"));
+//                }
 // ================================================================================================================== end of LDAP LOGIN
 
 // ================================================================================================================== login FROM DATABASE
@@ -110,14 +110,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         };
 
         authenticationProvider.setUserDetailsService(userDetailsService);
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
+//        authenticationProvider.setPasswordEncoder(passwordEncoder());
         auth.authenticationProvider(authenticationProvider);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/static/**").permitAll()
+                .antMatchers("/static/**","/redirect").permitAll()
                 .and().authorizeRequests()
                 .anyRequest().authenticated()
                 .accessDecisionManager(accessDecisionManager)

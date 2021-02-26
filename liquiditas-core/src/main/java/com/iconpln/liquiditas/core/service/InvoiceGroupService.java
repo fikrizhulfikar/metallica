@@ -10,6 +10,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.apache.poi.ss.usermodel.IgnoredErrorType;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,6 +18,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -35,9 +37,11 @@ public class InvoiceGroupService {
     @Autowired
     private PlsqlUtils plsqlUtils;
 
-    private JdbcTemplate getJdbcTemplate(){return new JdbcTemplate(dataSource);}
+    private JdbcTemplate getJdbcTemplate() {
+        return new JdbcTemplate(dataSource);
+    }
 
-    public List<Map<String, Object>> getListInvoiceGroupHead(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pUserId, String sortBy, String sortDir, String pSearch) throws SQLException {
+    public List<Map<String, Object>> getListInvoiceGroupHead(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pUserId, String sortBy, String sortDir, String pSearch, String pCaraBayar, String pCurr) throws SQLException {
         AppUtils.getLogger(this).debug("data rekap search info = " +
                         "pStart : {}, " +
                         "pLength : {}, " +
@@ -62,6 +66,8 @@ public class InvoiceGroupService {
                 .addValue("p_user_id", pUserId, Types.VARCHAR)
                 .addValue("p_sort_by", sortBy, Types.VARCHAR)
                 .addValue("p_sort_dir", sortDir, Types.VARCHAR)
+                .addValue("p_cara_bayar", pCaraBayar, Types.VARCHAR)
+                .addValue("p_cur", pCurr, Types.VARCHAR)
                 .addValue("p_search", pSearch, Types.VARCHAR);
 
         List<Map<String, Object>> result = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
@@ -108,7 +114,7 @@ public class InvoiceGroupService {
         return out;
     }
 
-    public List<Map<String, Object>> getListInvoiceGroupVerifiedHead(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pUserId, String sortBy, String sortDir, String pSearch) throws SQLException {
+    public List<Map<String, Object>> getListInvoiceGroupVerifiedHead(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pUserId, String sortBy, String sortDir, String pSearch, String pCaraBayar, String pCurr) throws SQLException {
         AppUtils.getLogger(this).debug("data rekap search info = " +
                         "pStart : {}, " +
                         "pLength : {}, " +
@@ -133,6 +139,8 @@ public class InvoiceGroupService {
                 .addValue("p_user_id", pUserId, Types.VARCHAR)
                 .addValue("p_sort_by", sortBy, Types.VARCHAR)
                 .addValue("p_sort_dir", sortDir, Types.VARCHAR)
+                .addValue("p_cara_bayar", pCaraBayar, Types.VARCHAR)
+                .addValue("p_cur", pCurr, Types.VARCHAR)
                 .addValue("p_search", pSearch, Types.VARCHAR);
 
         List<Map<String, Object>> result = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
@@ -140,7 +148,7 @@ public class InvoiceGroupService {
         return result;
     }
 
-    public List<Map<String, Object>> getListInvoiceGroupLunasHead(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pUserId, String sortBy, String sortDir, String pSearch) throws SQLException {
+    public List<Map<String, Object>> getListInvoiceGroupLunasHead(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pUserId, String sortBy, String sortDir, String pSearch, String pCaraBayar, String pCurr) throws SQLException {
         AppUtils.getLogger(this).debug("data rekap search info = " +
                         "pStart : {}, " +
                         "pLength : {}, " +
@@ -165,6 +173,8 @@ public class InvoiceGroupService {
                 .addValue("p_user_id", pUserId, Types.VARCHAR)
                 .addValue("p_sort_by", sortBy, Types.VARCHAR)
                 .addValue("p_sort_dir", sortDir, Types.VARCHAR)
+                .addValue("p_cara_bayar", pCaraBayar, Types.VARCHAR)
+                .addValue("p_cur", pCurr, Types.VARCHAR)
                 .addValue("p_search", pSearch, Types.VARCHAR);
 
         List<Map<String, Object>> result = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
@@ -172,7 +182,7 @@ public class InvoiceGroupService {
         return result;
     }
 
-    public List<Map<String, Object>> getListInvoiceGroupHeadSiapBayar(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pUserId, String sortBy, String sortDir, String pSearch) throws SQLException {
+    public List<Map<String, Object>> getListInvoiceGroupHeadSiapBayar(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pUserId, String sortBy, String sortDir, String pSearch, String pCaraBayar, String pCurr) throws SQLException {
         AppUtils.getLogger(this).debug("data rekap search info = " +
                         "pStart : {}, " +
                         "pLength : {}, " +
@@ -197,6 +207,8 @@ public class InvoiceGroupService {
                 .addValue("p_user_id", pUserId, Types.VARCHAR)
                 .addValue("p_sort_by", sortBy, Types.VARCHAR)
                 .addValue("p_sort_dir", sortDir, Types.VARCHAR)
+                .addValue("p_cara_bayar", pCaraBayar, Types.VARCHAR)
+                .addValue("p_cur", pCurr, Types.VARCHAR)
                 .addValue("p_search", pSearch, Types.VARCHAR);
 
         List<Map<String, Object>> result = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
@@ -217,7 +229,7 @@ public class InvoiceGroupService {
 
     public List<Map<String, Object>> getDetails2(
             Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pGroupId, String pSortBy, String pSortDir, String pUserId, String pSearch
-    ){
+    ) {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY")
                 .withFunctionName("group_item_get");
@@ -231,13 +243,13 @@ public class InvoiceGroupService {
                 .addValue("p_id_group", pGroupId, Types.VARCHAR)
                 .addValue("p_sort_by", pSortBy, Types.VARCHAR)
                 .addValue("p_sort_dir", pSortDir, Types.VARCHAR)
-                .addValue("p_user_id",pUserId, Types.VARCHAR)
+                .addValue("p_user_id", pUserId, Types.VARCHAR)
                 .addValue("p_search", pSearch, Types.VARCHAR);
 
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
 
         AppUtils.getLogger(this).info("data pembelian_valas_trx_get : {}", resultset);
-        AppUtils.getLogger(this).info("pIdGroup : {}",pGroupId);
+        AppUtils.getLogger(this).info("pIdGroup : {}", pGroupId);
 //        System.out.println("Pembelian Valas Metallica : "+resultset);
         return resultset;
     }
@@ -280,7 +292,7 @@ public class InvoiceGroupService {
                 .addValue("p_sort_dir", sortDir, Types.VARCHAR)
                 .addValue("p_status", status, Types.VARCHAR)
                 .addValue("p_status_tracking", statusTracking, Types.VARCHAR)
-                .addValue("p_id_group",pIdGroup)
+                .addValue("p_id_group", pIdGroup)
                 .addValue("p_search", pSearch, Types.VARCHAR);
 
         List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
@@ -290,65 +302,64 @@ public class InvoiceGroupService {
     }
 
 
-
-    public static String inhousePayment (String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
+    public static String inhousePayment(String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
         HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doPayment");
-        request.addHeader("Content-Type","application/json");
-        request.addHeader("api-key","s3cr3tk3y");
-        request.addHeader("timestamp",timestamp);
-        request.addHeader("signature",signature);
-        request.addHeader("Authorization","Bearer "+ token);
+        request.addHeader("Content-Type", "application/json");
+        request.addHeader("api-key", "s3cr3tk3y");
+        request.addHeader("timestamp", timestamp);
+        request.addHeader("signature", signature);
+        request.addHeader("Authorization", "Bearer " + token);
 
         request.setEntity(new StringEntity(body));
 
-        try{
+        try {
             CloseableHttpClient httpClient = HttpClients.createDefault();
             CloseableHttpResponse response = httpClient.execute(request);
             result = EntityUtils.toString(response.getEntity());
-        }catch (Exception e){
+        } catch (Exception e) {
             //log.warning(e.getMessage());
         }
         return result;
     }
 
-    public static String inhousePaymentRtgs (String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
+    public static String inhousePaymentRtgs(String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
         HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doPaymentRtgs");
-        request.addHeader("Content-Type","application/json");
-        request.addHeader("api-key","s3cr3tk3y");
-        request.addHeader("timestamp",timestamp);
-        request.addHeader("signature",signature);
-        request.addHeader("Authorization","Bearer "+ token);
+        request.addHeader("Content-Type", "application/json");
+        request.addHeader("api-key", "s3cr3tk3y");
+        request.addHeader("timestamp", timestamp);
+        request.addHeader("signature", signature);
+        request.addHeader("Authorization", "Bearer " + token);
 
         request.setEntity(new StringEntity(body));
 
-        try{
+        try {
             CloseableHttpClient httpClient = HttpClients.createDefault();
             CloseableHttpResponse response = httpClient.execute(request);
             result = EntityUtils.toString(response.getEntity());
-        }catch (Exception e){
+        } catch (Exception e) {
             //log.warning(e.getMessage());
         }
         return result;
     }
 
-    public static String inhousePaymentKliring (String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
+    public static String inhousePaymentKliring(String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
         String result = null;
         HttpPost request = new HttpPost("http://10.14.204.15:8181/corpay/doPaymentKliring");
-        request.addHeader("Content-Type","application/json");
-        request.addHeader("api-key","s3cr3tk3y");
-        request.addHeader("timestamp",timestamp);
-        request.addHeader("signature",signature);
-        request.addHeader("Authorization","Bearer "+ token);
+        request.addHeader("Content-Type", "application/json");
+        request.addHeader("api-key", "s3cr3tk3y");
+        request.addHeader("timestamp", timestamp);
+        request.addHeader("signature", signature);
+        request.addHeader("Authorization", "Bearer " + token);
 
         request.setEntity(new StringEntity(body));
 
-        try{
+        try {
             CloseableHttpClient httpClient = HttpClients.createDefault();
             CloseableHttpResponse response = httpClient.execute(request);
             result = EntityUtils.toString(response.getEntity());
-        }catch (Exception e){
+        } catch (Exception e) {
             //log.warning(e.getMessage());
         }
         return result;
@@ -359,12 +370,16 @@ public class InvoiceGroupService {
                                       String tglAkhir,
                                       String bank,
                                       String userId,
+                                      String currency,
+                                      String cara_bayar,
                                       String search) {
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_tgl_awal", tglAwal, OracleTypes.VARCHAR)
                 .addValue("p_tgl_akhir", tglAkhir, OracleTypes.VARCHAR)
                 .addValue("p_user_id", userId, OracleTypes.VARCHAR)
                 .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_curr", currency, OracleTypes.VARCHAR)
+                .addValue("p_cara_bayar", cara_bayar, OracleTypes.VARCHAR)
                 .addValue("p_search", search, OracleTypes.VARCHAR);
 
         getJdbcTemplate().execute("alter session set NLS_NUMERIC_CHARACTERS = '.,'");
@@ -374,6 +389,85 @@ public class InvoiceGroupService {
                 .withFunctionName("get_total_tagihan_group")
                 .executeFunction(BigDecimal.class, in);
         return result;
+    }
+
+    public BigDecimal getTotalTagihanLunasItem(
+            String tglAwal,
+            String tglAkhir,
+            String bank,
+            String userId,
+            String currency,
+            String cara_bayar,
+            String group_id,
+            String search
+    ){
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", tglAwal, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", tglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR)
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_curr", currency, OracleTypes.VARCHAR)
+                .addValue("p_cara_bayar", cara_bayar, OracleTypes.VARCHAR)
+                .addValue("p_id_group", group_id, OracleTypes.VARCHAR)
+                .addValue("p_search", search, OracleTypes.VARCHAR);
+        BigDecimal result = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_total_tagihan_group_lunas2")
+                .executeFunction(BigDecimal.class,in);
+        return result;
+    }
+
+    public BigDecimal getTotalTagihanLunas(
+            String tglAwal,
+            String tglAkhir,
+            String bank,
+            String userId,
+            String currency,
+            String cara_bayar,
+            String search
+    )
+    {
+            SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", tglAwal, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", tglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR)
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_curr", currency, OracleTypes.VARCHAR)
+                .addValue("p_cara_bayar", cara_bayar, OracleTypes.VARCHAR)
+                .addValue("p_search", search, OracleTypes.VARCHAR);
+            getJdbcTemplate().execute("alter session set NLS_NUMERIC_CHARACTERS = '.,'");
+            BigDecimal total = new SimpleJdbcCall(getJdbcTemplate())
+                    .withCatalogName("PKG_CORPAY")
+                    .withFunctionName("get_total_tagihan_group_lunas")
+                    .executeFunction(BigDecimal.class,param);
+            return total;
+    }
+
+    public BigDecimal getTotalTagihanGroupItem(
+            String tgl_awal,
+            String tgl_akhir,
+            String bank,
+            String userId,
+            String currency,
+            String cara_bayar,
+            String search,
+            String group_id_metallica
+    ){
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", tgl_awal, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", tgl_akhir, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR)
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_curr", currency, OracleTypes.VARCHAR)
+                .addValue("p_cara_bayar", cara_bayar, OracleTypes.VARCHAR)
+                .addValue("p_id_group",group_id_metallica, OracleTypes.VARCHAR)
+                .addValue("p_search", search, OracleTypes.VARCHAR);
+        getJdbcTemplate().execute("alter session set NLS_NUMERIC_CHARACTERS = '.,'");
+        BigDecimal total = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY")
+                .withFunctionName("get_total_tagihan_group_item")
+                .executeFunction(BigDecimal.class,params);
+        return total;
     }
 
     public static String interbankPayment (String timestamp, String signature, String body, String token) throws UnsupportedEncodingException {
@@ -1055,5 +1149,4 @@ public class InvoiceGroupService {
                 .withFunctionName("group_save_column");
         return simpleJdbcCall.executeFunction(String.class, in);
     }
-
 }

@@ -850,6 +850,26 @@ function showParents(el){
     (parent.is(":visible")) ? parent.hide() : parent.show();
 }
 
+$(document).ready(function () {
+    tableRekapMataUang();
+    tableJenisRekening();
+    tableRekeningInvestasi();
+    rencanaBayarBarLine();
+    tableMainDashboard();
+    dataTable();
+    tableRencanaImprestValas();
+    tableRencanaImpres();
+    tableRealisasiBankCurrency();
+    getDataRencana();
+    getDataRealisasi();
+
+    $("#dashboard-carousel").carousel({
+        interval : 1000*5,
+        pause : "hover",
+    });
+$("#dash_date").datepicker({dateFormat : "dd/mm/yy"});
+});
+
 function dataTable(){
 $.ajax({
           url: baseUrl + "api_dashboard/get_rekening_vs_rencana",
@@ -1285,9 +1305,6 @@ console.log('DZ :' +tes);
     });
 }
 
-/**
- * Created by israjhaliri on 8/23/17.
- */
 var table_rekapitulasi;
 var idValas = "";
 var allData;
