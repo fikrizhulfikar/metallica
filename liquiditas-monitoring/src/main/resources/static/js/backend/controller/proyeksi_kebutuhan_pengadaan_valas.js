@@ -205,6 +205,8 @@ function updatePotensi()
     });
 
     console.log(list);
+
+
     $.ajax({
         url: baseUrl + "/api_operator/api_report/ins_pengadaan_valas",
         dataType: 'JSON',
@@ -228,6 +230,7 @@ function updatePotensi()
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
         }
     });
+
 };
 
 

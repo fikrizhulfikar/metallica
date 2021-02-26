@@ -599,6 +599,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                                 '<button style="width: 15px !important;" class="btn btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-trash"></i></button>' +
                                 '</div>';
                         }else {
+
                             if (full.STATUS_TRACKING === "INPUT DATA") {
                                 var role = newRoleUser[0];
                                 ret_value =
