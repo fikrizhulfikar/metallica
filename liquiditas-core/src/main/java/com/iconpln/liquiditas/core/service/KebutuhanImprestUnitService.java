@@ -24,20 +24,17 @@ public class KebutuhanImprestUnitService {
 
     private JdbcTemplate getJdbcTemplate(){return new JdbcTemplate(dataSource);}
 
-    public List<Map<String, Object>> getImprestUnit(String pPeriode, String pUserId){
+    public List<Map<String, Object>> getDetailImprestUnit(String pFormId){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY2")
-                .withFunctionName("invoice_get_status2");
+                .withFunctionName("get_detail_imprest");
         SqlParameterSource params = new MapSqlParameterSource()
-                .addValue("p_tanggal", pPeriode)
-                .addValue("p_user_id", pUserId);
+                .addValue("p_id_form", pFormId);
         List<Map<String, Object>> result = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
-        AppUtils.getLogger(this).info("imprest_unit_get_param : {}",params);
-        AppUtils.getLogger(this).info("imprest_unit_get : {}",result);
         return result;
     }
 
-    public Map<String, Object> uploadXlsImprestUnit(InputStream path, String user, String jenisFile, String idImprest) throws IOException {
+    public Map<String, Object> uploadXlsImprestUnit(InputStream path, String user, String jenisFile, String idImprest, String pIdForm) throws IOException {
         Map<String, Object> out = new HashMap<>();
         Workbook workbook = null;
         Iterator<Row> rowIterator;
@@ -80,17 +77,18 @@ public class KebutuhanImprestUnitService {
                 }
                 AppUtils.getLogger(this).info("list_cell_value : {}",list);
                 if (x >= 0){
-                    if (!list.get(4).equals("0.0") || !list.get(5).equals("0.0") || !list.get(6).equals("0.0")){
+                    if (!list.get(4).equals("0.0") || !list.get(5).equals("0.0")){
                         SqlParameterSource params;
                         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                                 .withCatalogName("PKG_CORPAY2")
                                 .withFunctionName("ins_imprest_unit");
                         params = new MapSqlParameterSource()
+                                .addValue("p_id_form", pIdForm)
                                 .addValue("p_unit_pln",list.get(2))
                                 .addValue("p_nama_bank", list.get(3))
-                                .addValue("p_investasi_rutin", list.get(4))
-                                .addValue("p_investasi_non_rutin", list.get(5))
-                                .addValue("p_operasi", list.get(6))
+                                .addValue("p_investasi", list.get(4))
+                                .addValue("p_operasi", list.get(5))
+                                .addValue("p_user_id",user)
                                 .addValue("out_msg", OracleTypes.VARCHAR);
                         out = simpleJdbcCall.execute(params);
                     }
@@ -115,37 +113,83 @@ public class KebutuhanImprestUnitService {
         return true;
     }
 
-    public Map<String, Object> deletePeriodeImprest(String pPeriode){
+    public Map<String, Object> deleteDetailImprest(String pIdForm){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY2")
                 .withFunctionName("del_imprest_unit");
         SqlParameterSource param = new MapSqlParameterSource()
-                .addValue("p_tanggal", pPeriode)
+                .addValue("p_id_form", pIdForm)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         return simpleJdbcCall.execute(param);
     }
 
-    public Map<String, Object> updateStatusImprest(String pTanggal, String pUserId, String pStatus){
+    public Map<String, Object> updateStatusImprest(String pIdForm, String pUserId, String pStatus){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY2")
                 .withFunctionName("upd_status_imprest");
         SqlParameterSource params = new MapSqlParameterSource()
-                .addValue("p_tanggal", pTanggal, OracleTypes.VARCHAR)
+                .addValue("p_id_form", pIdForm, OracleTypes.VARCHAR)
                 .addValue("p_user_id", pUserId, OracleTypes.VARCHAR)
                 .addValue("p_status", pStatus, OracleTypes.VARCHAR)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         return simpleJdbcCall.execute(params);
     }
 
-    public Map<String, Object> revereStatusImprest(String pTanggal, String pUserId, String pStatus){
+    public Map<String, Object> revereStatusImprest(String pIdForm, String pUserId, String pStatus){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY2")
                 .withFunctionName("reverse_status_imprest");
         SqlParameterSource params = new MapSqlParameterSource()
-                .addValue("p_tanggal", pTanggal)
+                .addValue("p_id_form", pIdForm)
                 .addValue("p_user_id", pUserId)
                 .addValue("p_status", pStatus)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         return simpleJdbcCall.execute(params);
+    }
+
+    public Map<String, Object> insHeaderImprest(String pIdForm, String pUserId, String pTglJatuhTempo){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY2")
+                .withFunctionName("create_header_imprest");
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_id_form", pIdForm)
+                .addValue("p_tgl_jatuh_tempo", pTglJatuhTempo)
+                .addValue("p_user_id", pUserId);
+        return simpleJdbcCall.execute(params);
+    }
+
+    public List<Map<String, Object>> getHeaderImprestUnit(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pUserId){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY2")
+                .withFunctionName("get_header_imprest");
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_start", pStart)
+                .addValue("p_length", pLength)
+                .addValue("p_tgl_awal", pTglAwal)
+                .addValue("p_tgl_akhir", pTglAkhir)
+                .addValue("p_user_id", pUserId);
+        List<Map<String, Object>> result = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+        AppUtils.getLogger(this).info("imprest_unit_get_param : {}",params.getValue("p_tgl_awal"));
+        AppUtils.getLogger(this).info("imprest_unit_get_param : {}",params.getValue("p_tgl_akhir"));
+        AppUtils.getLogger(this).info("imprest_unit_get : {}",result);
+        return result;
+    }
+
+    public Map<String, Object> deleteHeaderImprestUnit(String pIdForm){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY2")
+                .withFunctionName("del_imprest_header");
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_id_form", pIdForm);
+        return simpleJdbcCall.execute(params);
+    }
+
+    public List<Map<String, Object>> getHeaderImprestUnitById(String pIdForm){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY2")
+                .withFunctionName("get_header_imprest_byid");
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_id_form", pIdForm);
+        return (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class,params);
     }
 }
