@@ -400,3 +400,7 @@ function updateUSD(){
 function openLihatDokumen(){
     $('#set-d').modal({backdrop: 'static', keyboard: false});
 }
+
+function generateExcel(){
+    alert("Mohon maaf fitur ini belum tersedia");
+}

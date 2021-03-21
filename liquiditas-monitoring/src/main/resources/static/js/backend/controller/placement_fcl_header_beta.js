@@ -317,131 +317,170 @@ function detail(idForm, status){
     $('#kebutuhan-placement').dataTable().fnDestroy();
 
     kebutuhanPlacement = $("#kebutuhan-placement").DataTable({
-       "serverSide": true,
-       "bLengthChange": false,
-       "paging": false,
-       "scrollY": "100%",
-       "scrollX": "100%",
-       "searching": false,
-       "bSortable": false,
-       "scrollCollapse": false,
-       "fixedColumns": { leftColumns: 1 },
-       "bInfo": false,
-       "aoColumnDefs": [
-           {width: 100, targets: 0},
-           {width: 100, targets: 1},
-           {width: 100, targets: 2},
-           {width: 100, targets: 3},
-           {width: 100, targets: 4},
-           {width: 100, targets: 5},
-           {width: 100, targets: 6},
-           {width: 100, targets: 7},
-//            {width: 100, targets: 8},
-//           {width: "20%", "targets": 0},
-           { className: "datatables_action", "targets": [1, 2, 3, 4, 5, 6, 7, 8] },
-           {
-               "data":null,
-               "aTargets": [0],
-//               "visible" : false,
-               "mRender": function (data, type, full) {
-                   return full.TIPE_KEBUTUHAN;
-               },
-                "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {$(cell).css("background-color","#77D5D4");}
-           },
-           {
-               "data":null,
-               "aTargets": [1],
-               "mRender": function (data, type, full) {
-                   return full.BANK;
-               },
-                "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {$(cell).css("background-color","#5ef4d3");}
-           },
-           {
-               "aTargets": [2],
-               "mRender": function (data, type, full) {
-                   return accounting.formatNumber(full.RP_D0,2,".",",");
-               }
-
-           },
-           {
-               "aTargets": [3],
-               "mRender": function (data, type, full) {
-                   return accounting.formatNumber(full.RP_D1,2,".",",");
-               }
-
-           },
-
-           {
-               "aTargets": [4],
-               "mRender": function (data, type, full) {
-                   return accounting.formatNumber(full.RP_D2,2,".",",");
-               }
-
-           },
-           {
-               "aTargets": [5],
-               "mRender": function (data, type, full) {
-                   return accounting.formatNumber(full.RP_D3,2,".",",");
-               }
-
-           },
-           {
-               "aTargets": [6],
-               "mRender": function (data, type, full) {
-                   return accounting.formatNumber(full.RP_D4,2,".",",");
-               }
-
-           },
-           {
-               "aTargets": [7],
-               "mRender": function (data, type, full) {
-                   return accounting.formatNumber(full.RP_D5,2,".",",");
-               }
-
-           },
-           {
-               "aTargets": [8],
-               "mRender": function (data, type, full) {
-                    var ret_value = " ";
-                    if (status == "INPUT DATA") {
-                        ret_value = '<div class="col-md-6 btn-group" align="center">' +
-                                    '<button style="width: 15px !important;" id="detail" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="setA(\''+full.TIPE_KEBUTUHAN+'\',\''+full.ID_FCL+'\')"><i class="fa fa-clone"></i></button>';
-                        return ret_value;
-                    } else{
-                        return ret_value;
-                    }
-               }
-           }
-       ],
-       "ajax":
-           {
-               "url":
-                   baseUrl + "api_operator/rekap_invoice_belum/detail_placement_fcl_head",
-               "type":
-                   "GET",
-               "dataType":
-                   "json",
-               "data":
-                    {
-                        p_id_form: idForm
-                    }
-                ,
-                "dataSrc":
+        "ajax" : {
+            "url": baseUrl + "api_operator/rekap_invoice_belum/detail_placement_fcl_head",
+            "data" : {
+                p_id_form: idForm
+            },
+            "type" : "GET",
+            "dataType" : "json",
+            "dataSrc":
                 function (res) {
-                    hideLoadingCss()
-                    return res.OUT_KEBUTUHAN_FCL;
+                    var data = res.OUT_KEBUTUHAN_FCL;
+                    return data;
                 }
-           },
+        },
+        "sorting": false,
+        "searching" : true,
+        "paging": true,
+        "bInfo" : false,
+        "bLengthChange" : true,
+        "columns" : [
+            {"data":null,"render": (data, type, row) => {return '<td>'+data.TIPE_KEBUTUHAN+'</td>';}},
+            {"data":null,"render": (data, type, row) => {return '<td>'+data.BANK+'</td>';}},
+            {"data":null,"render" : (data, type, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D0)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, type, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D1)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, type, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D2)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, type, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D3)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, type, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D4)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, type, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.RP_D5)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
+            {"data":null,"render" : (data, type, row) => {var ret_value = " ";
+                                                          if (status == "INPUT DATA") {
+                                                              ret_value = '<div class="col-md-6 btn-group" align="center">' +
+                                                                          '<button style="width: 15px !important;" id="detail" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="setA(\''+full.TIPE_KEBUTUHAN+'\',\''+full.ID_FCL+'\')"><i class="fa fa-clone"></i></button>';
+                                                              return ret_value;
+                                                          } else{
+                                                              return ret_value;
+                                                          }}
+        ]
+//    });
 
-        "createdRow" : function (row, data, dataIndex){
-
-           if ((data["BANK"] === "TOTAL")){
-               $(row).css({
-                   "background-color": "#5ef4d3",
-                   "font-weight": "bold",
-               });
-            }
-        }
+//    kebutuhanPlacement = $("#kebutuhan-placement").DataTable({
+//       "serverSide": true,
+//       "bLengthChange": false,
+//       "paging": false,
+//       "scrollY": "100%",
+//       "scrollX": "100%",
+//       "searching": false,
+//       "bSortable": false,
+//       "scrollCollapse": false,
+//       "fixedColumns": { leftColumns: 1 },
+//       "bInfo": false,
+//       "aoColumnDefs": [
+//           {width: 100, targets: 0},
+//           {width: 100, targets: 1},
+//           {width: 100, targets: 2},
+//           {width: 100, targets: 3},
+//           {width: 100, targets: 4},
+//           {width: 100, targets: 5},
+//           {width: 100, targets: 6},
+//           {width: 100, targets: 7},
+////            {width: 100, targets: 8},
+////           {width: "20%", "targets": 0},
+//           { className: "datatables_action", "targets": [1, 2, 3, 4, 5, 6, 7, 8] },
+//           {
+//               "data":null,
+//               "aTargets": [0],
+////               "visible" : false,
+//               "mRender": function (data, type, full) {
+//                   return full.TIPE_KEBUTUHAN;
+//               },
+//                "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {$(cell).css("background-color","#77D5D4");}
+//           },
+//           {
+//               "data":null,
+//               "aTargets": [1],
+//               "mRender": function (data, type, full) {
+//                   return full.BANK;
+//               },
+//                "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {$(cell).css("background-color","#5ef4d3");}
+//           },
+//           {
+//               "aTargets": [2],
+//               "mRender": function (data, type, full) {
+//                   return accounting.formatNumber(full.RP_D0,2,".",",");
+//               }
+//
+//           },
+//           {
+//               "aTargets": [3],
+//               "mRender": function (data, type, full) {
+//                   return accounting.formatNumber(full.RP_D1,2,".",",");
+//               }
+//
+//           },
+//
+//           {
+//               "aTargets": [4],
+//               "mRender": function (data, type, full) {
+//                   return accounting.formatNumber(full.RP_D2,2,".",",");
+//               }
+//
+//           },
+//           {
+//               "aTargets": [5],
+//               "mRender": function (data, type, full) {
+//                   return accounting.formatNumber(full.RP_D3,2,".",",");
+//               }
+//
+//           },
+//           {
+//               "aTargets": [6],
+//               "mRender": function (data, type, full) {
+//                   return accounting.formatNumber(full.RP_D4,2,".",",");
+//               }
+//
+//           },
+//           {
+//               "aTargets": [7],
+//               "mRender": function (data, type, full) {
+//                   return accounting.formatNumber(full.RP_D5,2,".",",");
+//               }
+//
+//           },
+//           {
+//               "aTargets": [8],
+//               "mRender": function (data, type, full) {
+//                    var ret_value = " ";
+//                    if (status == "INPUT DATA") {
+//                        ret_value = '<div class="col-md-6 btn-group" align="center">' +
+//                                    '<button style="width: 15px !important;" id="detail" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="setA(\''+full.TIPE_KEBUTUHAN+'\',\''+full.ID_FCL+'\')"><i class="fa fa-clone"></i></button>';
+//                        return ret_value;
+//                    } else{
+//                        return ret_value;
+//                    }
+//               }
+//           }
+//       ],
+//       "ajax":
+//           {
+//               "url":
+//                   baseUrl + "api_operator/rekap_invoice_belum/detail_placement_fcl_head",
+//               "type":
+//                   "GET",
+//               "dataType":
+//                   "json",
+//               "data":
+//                    {
+//                        p_id_form: idForm
+//                    }
+//                ,
+//                "dataSrc":
+//                function (res) {
+//                    hideLoadingCss()
+//                    return res.OUT_KEBUTUHAN_FCL;
+//                }
+//           },
+//
+//        "createdRow" : function (row, data, dataIndex){
+//
+//           if ((data["BANK"] === "TOTAL")){
+//               $(row).css({
+//                   "background-color": "#5ef4d3",
+//                   "font-weight": "bold",
+//               });
+//            }
+//        }
 
 //         "drawCallback" : function (setting, json) {
 //              let groupColumn = 0;

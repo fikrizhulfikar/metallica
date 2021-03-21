@@ -491,7 +491,6 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                 "mRender": function (data, type, full) {
                     return full.ROW_NUMBER;
                 }
-
             },
             {
                 "aTargets": [1],
@@ -1244,7 +1243,7 @@ function getDetails(id, doc_no, bus_area, comp_code, ref, prop_pmt_id, post_date
             "dataType": "json",
         },
         "columns" : [
-           {"data" : "DOC_NO"},
+          {"data" : "DOC_NO"},
           {"data" : "PMT_PROPOSAL_ID"},
           {"data" : "COMP_CODE"},
           {"data" : "CASH_CODE"},
@@ -1468,6 +1467,8 @@ function edit_data (idMetallica){
         },
         success : (res) => {
             // console.log("data edit data : ",res);
+            var tes = JSON.stringify(res);
+            console.log("Result : "+ tes);
             hideLoadingCss("");
             $("#pHeadDocDate").val(res.data[0].DOCUMENT_DATE).attr("disabled", true);
             $("#pHeadPostingDate").val(res.data[0].POSTING_DATE).attr("disabled", true);
@@ -1544,6 +1545,8 @@ function ins_data() {
         },
         success: function (res) {
             hideLoadingCss("");
+                        var tes = JSON.stringify(res);
+                        console.log("ini " + tes);
             // console.log("Result : "+res);
             if (res.RETURN == 1 || res.OUT_MSG === "DATA BERHASIL DISIMPAN") {
                 Swal.fire("Sukses!", "Data berhasil disimpan", "success");
