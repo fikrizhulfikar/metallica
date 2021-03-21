@@ -1256,4 +1256,18 @@ public class MasterService {
         return list;
     }
 
+    public List<Map<String,Object>> getListVendorSap(String pNamaVendor) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_MASTER")
+                .withFunctionName("get_list_vendor_sap");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_nama", pNamaVendor);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data get_list_vendor : {}",resultset);
+        return resultset;
+    }
+
 }
