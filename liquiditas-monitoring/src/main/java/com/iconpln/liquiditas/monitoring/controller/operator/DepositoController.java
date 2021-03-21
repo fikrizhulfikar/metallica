@@ -1,6 +1,7 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
 import com.iconpln.liquiditas.core.service.DashboardService;
+import com.iconpln.liquiditas.core.service.DepositoService;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
 import com.iconpln.liquiditas.core.service.ValasService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
@@ -35,36 +36,50 @@ public class DepositoController {
     ValasService valasService;
 
     @Autowired
+    DepositoService depositoService;
+
+    @Autowired
     DashboardService dashboardService;
 
     @Autowired
     private ResourceLoader resourceLoader;
 
-    @RequestMapping(value = "/ins_data", method = RequestMethod.POST)
-    public Map<String, Object> insData(
+    @RequestMapping(value = "/ins_header_data", method = RequestMethod.POST)
+    public Map<String, Object> insHeaderData(
             @RequestParam(value = "pIdDeposito", defaultValue = "") String pIdDeposito,
             @RequestParam(value = "pBank", defaultValue = "") String pBank,
-            @RequestParam(value = "pCurr", defaultValue = "") String pCurr,
-            @RequestParam(value = "pNoAccount", defaultValue = "") String pNoAccount,
-            @RequestParam(value = "pNominal", defaultValue = "") String pNominal,
-            @RequestParam(value = "pInterest", defaultValue = "") String pInterest,
-            @RequestParam(value = "pTglpenempatan", defaultValue = "") String pTglpenempatan,
-            @RequestParam(value = "pTenor", defaultValue = "12341234") String pTenor,
-            @RequestParam(value = "pTglJatuhTempo", defaultValue = "") String pTglJatuhTempo,
-            @RequestParam(value = "pKeterangan", defaultValue = "") String pKeterangan,
-            @RequestParam(value = "pStatusDeposito", defaultValue = "1") String pStatusDeposito
+            @RequestParam(value = "pBillyet", defaultValue = "") String pBillyet
     ) {
         try {
-            return valasService.insDeposito(pIdDeposito, pBank, pCurr, pNoAccount,
-                    pNominal, pInterest, pTglpenempatan, pTenor,
-                    pTglJatuhTempo, pKeterangan, pStatusDeposito, WebUtils.getUsernameLogin());
+            return depositoService.insHeaderDeposito(pIdDeposito, pBank, pBillyet, WebUtils.getUsernameLogin());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    @RequestMapping(value = "/get_data", method = RequestMethod.GET)
+    @RequestMapping(value = "/ins_detail_data", method = RequestMethod.POST)
+    public Map<String, Object> insDetailData(
+            @RequestParam(value = "pIdDeposito", defaultValue = "") String pIdDeposito,
+            @RequestParam(value = "pIdDetail", defaultValue = "") String pIdDetail,
+            @RequestParam(value = "pBank", defaultValue = "") String pBank,
+            @RequestParam(value = "pJenis", defaultValue = "") String pJenis,
+            @RequestParam(value = "pBillyet", defaultValue = "") String pBillyet,
+            @RequestParam(value = "pNominal", defaultValue = "") String pNominal,
+            @RequestParam(value = "pInterest", defaultValue = "") String pInterest,
+            @RequestParam(value = "pTglPenempatan", defaultValue = "") String pTglPenempatan,
+            @RequestParam(value = "pTglJatuhTempo", defaultValue = "") String pTglJatuhTempo,
+            @RequestParam(value = "pKeterangan", defaultValue = "") String pKeterangan
+    ) {
+        try {
+            return depositoService.insDetailDeposito(pIdDeposito, pIdDetail, pBank, pJenis, pBillyet,pNominal,pInterest, pTglPenempatan, pTglJatuhTempo, pKeterangan, WebUtils.getUsernameLogin());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_detail_data", method = RequestMethod.GET)
     public Map listRekapData(
             @RequestParam(value = "draw", defaultValue = "0") int draw,
             @RequestParam(value = "start", defaultValue = "0") int start,
@@ -72,12 +87,7 @@ public class DepositoController {
             @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
             @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
             @RequestParam(value = "order[0][dir]", defaultValue = "ASC") String sortDir,
-            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
-            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
-            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
-            @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
-            @RequestParam(value = "pTenor", defaultValue = "ALL") String pTenor,
-            @RequestParam(value = "pKeterangan", defaultValue = "0") String pKeterangan,
+            @RequestParam(value = "pIdDeposito", defaultValue = "0") String pIdDeposito,
             @RequestParam(value = "search[value]", defaultValue = "") String pSearch
 
     ) {
@@ -88,7 +98,7 @@ public class DepositoController {
             if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
                 sortDir = "DESC";
             }
-            list = valasService.getListDeposito(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pKeterangan, sortBy, sortDir, pSearch);
+            list = depositoService.getLisDetailDeposito(pIdDeposito);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -119,7 +129,7 @@ public class DepositoController {
             @RequestParam(value = "pKet", defaultValue = "ALL") String pKet
     ) {
         try {
-            return valasService.getAllDeposito(pTglAwal, pTglAkhir, pBank, pCurr, pTenor, pKet);
+            return depositoService.getAllDeposito(pTglAwal, pTglAkhir, pBank, pCurr, pTenor, pKet);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -127,32 +137,58 @@ public class DepositoController {
 
     }
 
-    @RequestMapping(value = "/delete_data", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete_header_data", method = RequestMethod.POST)
     public Map<String, Object> deleteData(
             @RequestParam(value = "pIdDeposito", defaultValue = "") String pIdDeposito
     ) {
 
         AppUtils.getLogger(this).debug("pIdDeposito : {} ", pIdDeposito);
         try {
-            return valasService.deleteDeposito(pIdDeposito);
+            return depositoService.deleteDeposito(pIdDeposito);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    @RequestMapping(value = "/edit_data", method = RequestMethod.GET)
-    public List getRekapDataById(
-            @RequestParam(value = "pIdDeposito", defaultValue = "") String pIdDeposito
+    @RequestMapping(value = "/delete_detail_data", method = RequestMethod.POST)
+    public Map<String, Object> deleteDetailData(
+            @RequestParam(value = "pIdDetailDeposito", defaultValue = "") String pIdDetailDeposito
     ) {
-        AppUtils.getLogger(this).info("pIdDeposito edit data: {}", pIdDeposito);
+
+        AppUtils.getLogger(this).debug("pIdDeposito : {} ", pIdDetailDeposito);
         try {
-            return valasService.getDepositobyId(pIdDeposito);
+            return depositoService.deleteDetailDeposito(pIdDetailDeposito);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
 
+    @RequestMapping(value = "/edit_header_data", method = RequestMethod.GET)
+    public List getDepositoById(
+            @RequestParam(value = "pIdDeposito", defaultValue = "") String pIdDeposito
+    ) {
+        AppUtils.getLogger(this).info("pIdDeposito edit data: {}", pIdDeposito);
+        try {
+            return depositoService.getDepositobyId(pIdDeposito);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/edit_detail_data", method = RequestMethod.GET)
+    public List getDetailDepositoById(
+            @RequestParam(value = "pIdDetailDeposito", defaultValue = "") String pIdDetailDeposito
+    ) {
+        AppUtils.getLogger(this).info("pIdDetailDeposito edit data: {}", pIdDetailDeposito);
+        try {
+            return depositoService.getDetailDepositobyId(pIdDetailDeposito);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @RequestMapping(value = "/xls/{pTglAwal}/{pTglAkhir}/{pBank}/{pCurr}/{pTenor}/{pKet}", method = RequestMethod.GET)
@@ -185,7 +221,7 @@ public class DepositoController {
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
 
-            List<Map<String, Object>> listData = valasService.getAllDeposito(tglAwal.replaceAll("-","/"), tglAkhir.replaceAll("-","/"),pBank,pCurr,pTenor,pKet);
+            List<Map<String, Object>> listData = depositoService.getAllDeposito(tglAwal.replaceAll("-","/"), tglAkhir.replaceAll("-","/"),pBank,pCurr,pTenor,pKet);
 
             AppUtils.getLogger(this).info("data report : {}", listData.toString());
             Map param = new HashMap();
@@ -349,6 +385,46 @@ public class DepositoController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @RequestMapping(value = "/get_data_header", method = RequestMethod.GET)
+    public Map listHeaderDeposito(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "10") int length,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "ASC") String sortDir,
+            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "search[value]", defaultValue = "") String pSearch
+
+    ) {
+
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            String sortBy = parseColumn(sortIndex);
+            if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+                sortDir = "DESC";
+            }
+            list = depositoService.getListHeaderDeposito(((start / length) + 1), length, pBank, pSearch);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        Map mapData = new HashMap();
+        mapData.put("draw", draw);
+        mapData.put("data", list);
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        if (list.size() < 1 || list.isEmpty()) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
+
+        return mapData;
     }
 
 }

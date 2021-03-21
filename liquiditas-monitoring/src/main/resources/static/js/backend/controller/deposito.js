@@ -5,26 +5,28 @@
  * Created by israjhaliri on 8/22/17.
  */
 var idDeposito;
+var idDetailDeposito = "";
 var allData;
 var table_deposito;
+var table_deposito_header;
 var tempTableSearch= "";
 
 var srcTglAwal = null;
 var srcTglAkhir = null;
 $(document).ready(function () {
-    getAllData();
-
     $('#tanggal_awal').datepicker({ dateFormat: 'dd/mm/yy'});
     $('#tanggal_akhir').attr("disabled", "disabled");
 
     $("#pTglPenempatan").datepicker({ dateFormat: 'dd/mm/yy'});
     $('#pTglJatuhTempo').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
 
-    setSelectBank("cmb_bank","FILTER","","","DEPOSITO");
-    setSelectCurr("cmb_currecny","FILTER","","DEPOSITO");
-    setSelectTenor("cmb_tenor","FILTER","");
-    setSelectKeterangan("cmb_ket","FILTER","","DEPOSITO");
-    search("load");
+    //setSelectBank("cmb_bank","FILTER","","","DEPOSITO");
+    //setSelectCurr("cmb_currecny","FILTER","","DEPOSITO");
+    //setSelectTenor("cmb_tenor","FILTER","");
+    //setSelectKeterangan("cmb_ket","FILTER","","DEPOSITO");
+    // search("load");
+
+    initHeaderTable("");
 });
 
 $("#tanggal_awal").change(function() {
@@ -41,22 +43,86 @@ $("#tanggal_awal").change(function() {
     }
 });
 
+function initHeaderTable(bank){
+    showLoadingCss();
+    $('#table_deposito_header').dataTable().fnDestroy();
+    table_deposito_header = $("#table_deposito_header").DataTable({
+        "serverSide": true,
+        "oSearch": {"sSearch": tempTableSearch},
+        "scrollY": "100%",
+        "scrollX": "100%",
+        "searching": true,
+        "ordering": false,
+        "scrollCollapse": true,
+        "paging": true,
+        "bLengthChange": true,
+        "aoColumnDefs": [
+            {width: 17, targets: 0, className: 'dt-body-center'},
+            {width: 100, targets: 1,className: 'dt-body-center'},
+            {width: 100, targets: 2,className: 'dt-body-center'},
+            {width: 50, targets: 3,className: 'dt-body-center'},
+            {className: "datatables_action", "targets": [0,1,2,3]},
+            {
+                "aTargets": [0],
+                "mRender": function (data, type, full) {
+                    return full.ROW_NUMBER;
+                },
+            },
+            {
+                "aTargets": [1],
+                "mRender": function (data, type, full) {
+                    return full.BANK_CONTERPARTY;
+                },
+            },
+            {
+                "aTargets": [2],
+                "mRender": function (data, type, full) {
+                    return full.NO_ACCOUNT;
+                },
+
+            },
+            {
+                "aTargets": [3],
+                "mRender": function (data, type, full) {
+                    var ret_value = '<div class="btn-group">' +
+                        '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-success" title="Detail Data" onclick="detail_data(\'' + full.ID_DEPOSITO + '\',\'' + full.KODE_BANK + '\',\'' + full.BANK_CONTERPARTY + '\',\'' + full.NO_ACCOUNT + '\')"><i class="fa fa-info-circle"></i></button>';
+                    if (newRoleUser[0] === "ROLE_ADMIN" ){
+                        ret_value = ret_value +
+                            '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-info" title="Edit Data" onclick="edit_data_header(\'' + full.ID_DEPOSITO + '\')"><i class="far fa-edit"></i></button>'+
+                            '<button style="width: 15px !important;" class="btn btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_header_data(\'' + full.ID_DEPOSITO + '\')"><i class="fas fa-trash"></i></button>' +
+                            '</div>';
+                    }
+                    return ret_value;
+                },
+            },
+        ],
+        "ajax":
+            {
+                "url":
+                    baseUrl + "api_operator/deposito/get_data_header",
+                "type":
+                    "GET",
+                "dataType":
+                    "json",
+                "data":
+                    {
+                        pBank : bank
+                    }
+                ,
+                "dataSrc":
+                    function (res) {
+                        hideLoadingCss();
+                        return res.data;
+                    }
+            }
+    });
+}
+
 function openFormNew() {
 
     idDeposito = "";
-
     $("#pNoBilyet").val("");
-    $("#pNominal").val("");
-    $("#pInterest").val("");
-    $("#pTglPenempatan").val("");
-    //$("#pTglPenempatan").datepicker({ dateFormat: 'dd/mm/yy'});
-    $("#pTglJatuhTempo").val("");
-    //$('#pTglJatuhTempo').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
-
     setSelectBank("pBankCounterParty","","PEMBAYAR","","DEPOSITO");
-    setSelectCurr("pCurr",null,"","DEPOSITO");
-    setSelectTenor("pTenor","","");
-    setSelectKeterangan("pKeterangan","","","DEPOSITO");
     $('#edit-deposito-modal').modal({backdrop: 'static', keyboard: false});
 
 }
@@ -75,23 +141,22 @@ $("#pTglJatuhTempo").datepicker({
     }
 });
 
-function delete_data(id) {
+function delete_header_data(id) {
     var stateCrf = confirm("Anda Yakin Akan Menghapus Data Ini ?");
     if (stateCrf == true) {
         showLoadingCss();
         $.ajax({
-            url: baseUrl+"api_operator/deposito/delete_data",
+            url: baseUrl+"api_operator/deposito/delete_header_data",
             dataType: 'JSON',
             type: "POST",
             data : {
                 pIdDeposito : id
             },
             success: function (res) {
-                hideLoadingCss()
-                console.log("delete log : ",res)
+                hideLoadingCss();
                 if(res.return == 1){
                     alert(res.OUT_MSG);
-                    location.reload();
+                    table_deposito_header.ajax.reload();
                 }else{
                     alert(res.OUT_MSG);
                 }
@@ -104,31 +169,20 @@ function delete_data(id) {
     }
 }
 
-function edit_data(id) {
+function edit_data_header(id) {
     showLoadingCss();
     $.ajax({
-        url: baseUrl+"api_operator/deposito/edit_data",
+        url: baseUrl+"api_operator/deposito/edit_header_data",
         dataType: 'JSON',
         type: "GET",
         data : {
             pIdDeposito : id
         },
         success: function (res) {
-            hideLoadingCss("")
+            hideLoadingCss("");
             idDeposito = id
-            console.log("data edit_data :",res);
-
-            $("#pNoBilyet").val(res[0].NO_ACCOUNT);
-            $("#pNominal").val(res[0].NOMINAL);
-            $("#pInterest").val(res[0].INTEREST);
-            $("#pTglPenempatan").val(res[0].TGL_PENEMPATAN);
-            $("#pTglJatuhTempo").val(res[0].TGL_JATUH_TEMPO);
-
-            setSelectBank("pBankCounterParty","","PEMBAYAR",res[0].ID_BANK_CONTERPARTY,"DEPOSITO");
-            setSelectCurr("pCurr","",res[0].CURRENCY,"DEPOSITO");
-            setSelectTenor("pTenor","",res[0].ID_TENOR);
-            setSelectKeterangan("pKeterangan","",res[0].ID_KETERANGAN,"DEPOSITO");
-            $("#pStatus").val(res[0].STATUS_DEPOSITO);
+            $("#pBillyet").val(res[0].NO_ACCOUNT);
+            setSelectBank("pBankCounterParty","","PEMBAYAR",res[0].KODE_BANK,"DEPOSITO");
             setTimeout(function(){ $('#edit-deposito-modal').modal({backdrop: 'static', keyboard: false}); }, timeSowFormEdit);
         },
         error: function () {
@@ -138,41 +192,34 @@ function edit_data(id) {
 }
 
 function ins_data() {
-    showLoadingCss();
-    $.ajax({
-        url: baseUrl+"api_operator/deposito/ins_data",
-        dataType: 'JSON',
-        type: "POST",
-        data : {
-            pIdDeposito : idDeposito,
-            pBank : $("#pBankCounterParty").val(),
-            pCurr : $("#pCurr").val(),
-            pNoAccount : $("#pNoBilyet").val(),
-            pNominal : $("#pNominal").val(),
-            pInterest : $("#pInterest").val(),
-            pTglpenempatan : $("#pTglPenempatan").val(),
-            pTenor : $("#pTenor").val(),
-            pTglJatuhTempo : $("#pTglJatuhTempo").val(),
-            pKeterangan : $("#pKeterangan").val(),
-            pStatusDeposito : $("#pStatus").val()
-        },
-        success: function (res) {
-            hideLoadingCss();
-
-            console.log("ins log : ",res);
-            if(res.return == 1){
-                alert(res.OUT_MSG);
-                // location.reload();
-                search("load");
-                $('#edit-deposito-modal').modal('hide');
-            }else{
-                alert(res.OUT_MSG);
+    if (validateFormHeader("#form_header_deposito") > 0){
+        alert("Silahkan lengkapi data terlebih dahulu!");
+    }else {
+        showLoadingCss();
+        $.ajax({
+            url: baseUrl+"api_operator/deposito/ins_header_data",
+            dataType: 'JSON',
+            type: "POST",
+            data : {
+                pIdDeposito : idDeposito,
+                pBank : $("#pBankCounterParty").val(),
+                pBillyet : $("#pBillyet").val()
+            },
+            success: function (res) {
+                hideLoadingCss();
+                if(res.return === "1"){
+                    alert("DATA BERHASIL DITAMBAHKAN");
+                    table_deposito_header.ajax.reload();
+                    $('#edit-deposito-modal').modal('hide');
+                }else{
+                    alert("GAGAL");
+                }
+            },
+            error: function () {
+                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
             }
-        },
-        error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
-        }
-    });
+        });
+    }
 }
 
 function search(state) {
@@ -465,14 +512,12 @@ function generatePDF() {
     pdfMake.createPdf(docDefinition).open();
 }
 
-function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pTenor,pketerangan){
-    console.log("pTglAwal : ",pTglAwal);
-    console.log("pTglAkhir : ",pTglAkhir);
-    console.log("pBank : ",pBank);
-    console.log("pCurrency : ",pCurrency);
-    console.log("pTenor : ",pTenor);
-    console.log("pketerangan : ",pketerangan);
-    showLoadingCss();
+function detail_data(id, bank,bank_counterparty,  billyet){
+    $("#deposito_detail").show();
+    $("#header_deposito_row").hide();
+    $("#btn_data_baru_header_deposito").hide();
+    $("#judul_form").html(bank_counterparty +" | "+billyet);
+
     $('#table-deposito tbody').empty();
     $('#table-deposito').dataTable().fnDestroy();
     table_deposito = $('#table-deposito').DataTable( {
@@ -480,8 +525,8 @@ function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pTenor,pketerangan){
         "serverSide": true,
         "searching": true,
         "oSearch": {"sSearch": tempTableSearch},
-        "scrollY":        "300px",
-        "scrollX":        true,
+        "scrollY": "300px",
+        "scrollX": true,
         "scrollCollapse": true,
         "aoColumnDefs": [
             { width: 125, targets: 1 },
@@ -494,106 +539,127 @@ function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pTenor,pketerangan){
             { width: 115, targets: 8 },
             { width: 90, targets: 9 },
             { width: 90, targets: 10 },
-            { width: 115, targets: 11 },
-            { width: 105, targets: 12 },
-            { width: 105, targets: 13 },
-            { width: 85, targets: 14 },
-            { className: "datatables_action", "targets": [3 ,4 , 5, 9, 10, 11, 12] },
+            { width: 60, targets: 11 },
+            { className: "datatables_action", "targets": [3 ,4 , 5, 9, 10, 11] },
             {
                 "bSortable": true,
-                "aTargets": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+                "aTargets": [0,1,2,3,4,5,6,7,8,9,10,11]
+            },
+            {
+                "aTargets": 0,
+                "mRender": function ( data, type, full ) {
+                    return full.ROW_NUMBER;
+                }
+            },
+            {
+                "aTargets": 1,
+                "mRender": function ( data, type, full ) {
+                    return full.BANK_CONTERPARTY;
+                }
+            },
+            {
+                "aTargets": 2,
+                "mRender": function ( data, type, full ) {
+                    return full.NO_ACCOUNT;
+                }
+
             }
             ,
             {
-                "aTargets": [15],
+                "aTargets": 3,
                 "mRender": function ( data, type, full ) {
-                   if(newRoleUser[0] == "ROLE_MS_LIKUIDITAS"){
-                       return "-"
-                   }else{
+                    return accounting.formatNumber(full.NOMINAL,2,".",",");
+                }
+            },
+            {
+                "aTargets": 4,
+                "mRender": function ( data, type, full ) {
+                    return accounting.formatNumber(full.INTEREST,2,".",",");
+                }
+            },
+            {
+                "aTargets": 5,
+                "mRender": function ( data, type, full ) {
+                    return full.TGL_PENEMPATAN;
+                }
+            },
+            {
+                "aTargets": 6,
+                "mRender": function ( data, type, full ) {
+                    return full.JATUH_TEMPO;
+                }
+            },
+            {
+                "aTargets": 7,
+                "mRender": function ( data, type, full ) {
+                    return full.JUMLAH_HARI;
+                }
+            },
+            {
+                "aTargets": 8,
+                "mRender": function ( data, type, full ) {
+                    return full.BUNGA_ACCRUAL;
+                }
+            },
+            {
+                "aTargets": 9,
+                "mRender": function ( data, type, full ) {
+                    return full.POKOK_BUNGA;
+                }
+            },
+            {
+                "aTargets": 10,
+                "mRender": function ( data, type, full ) {
+                    return full.KETERANGAN;
+                }
+            },
+            {
+                "aTargets": [11],
+                "mRender": function ( data, type, full ) {
+                    if(newRoleUser[0] == "ROLE_MS_LIKUIDITAS"){
+                        return "-"
+                    }else{
                         var ret_value =
                             '<div class="btn-group">' +
-                            '<button style="width: 15px !important;" class="btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_DEPOSITO + '\')"><i class="fas fa-edit"></i></button>' +
-                            '<button style="width: 15px !important;" class="btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_DEPOSITO + '\')"><i class="fa fa-remove"></i></button>' +
-                            '</div>'
+                            '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-info" title="Edit Data" onclick="edit_detail_data(\'' + full.ID_DETAIL + '\')"><i class="fas fa-edit"></i></button>' +
+                            '<button style="width: 15px !important;" class="btn btn-sm btn-danger" title="Delete" onclick="delete_detail_data(\'' + full.ID_DETAIL + '\')"><i class="fas fa-trash"></i></button>' +
+                            '</div>';
                         return ret_value;
                     }
                 }
 
             },
-            {
-                "aTargets": 4,
-                "mRender": function ( data, type, full ) {
-                    return accounting.formatNumber(full.NOMINAL,2,".",",")
-
-                }
-
-            },
-            {
-                "aTargets": 5,
-                "mRender": function ( data, type, full ) {
-                    return full.INTEREST + " %"
-
-                }
-
-            }
-            ,
-            {
-                "aTargets": 10,
-                "mRender": function ( data, type, full ) {
-                    return accounting.formatNumber(full.BUNGA,2,".",",")
-
-                }
-
-            },
-            {
-                "aTargets": 11,
-                "mRender": function ( data, type, full ) {
-                    return accounting.formatNumber(full.POKOK_BUNGA,2,".",",")
-
-                }
-
-            }
         ],
         "ajax": {
-            "url": baseUrl+"api_operator/deposito/get_data",
+            "url": baseUrl+"api_operator/deposito/get_detail_data",
             "type": "GET",
             "dataType" : "json",
             "data": {
-                pTglAwal : pTglAwal,
-                pTglAkhir : pTglAkhir,
-                pBank : pBank,
-                pCurrency : pCurrency,
-                pTenor : pTenor,
-                pKeterangan : pketerangan
+                pIdDeposito : billyet
             },
             "dataSrc" : function(res){
                 hideLoadingCss("")
-                console.log("get log : ",res);
                 return res.data;
             }
         },
-        "columns": [
-            {"data": "ROW_NUMBER", "defaultContent": ""},
-            {"data": "BANK_CONTERPARTY", "defaultContent": ""},
-            {"data": "CURRENCY", "defaultContent": ""},
-            {"data": "NO_ACCOUNT", "defaultContent": ""},
-            {"data": "NOMINAL", "defaultContent": ""},
-            {"data": "INTEREST", "defaultContent": ""},
-            {"data": "TGL_PENEMPATAN", "defaultContent": ""},
-            {"data": "TGL_JATUH_TEMPO", "defaultContent": ""},
-            {"data": "TENOR", "defaultContent": ""},
-            {"data": "JUMLAH_HARI", "defaultContent": ""},
-            {"data": "BUNGA", "defaultContent": ""},
-            {"data": "POKOK_BUNGA", "defaultContent": ""},
-            {"data": "COUNT_DOWN", "defaultContent": ""},
-            {"data": "KETERANGAN", "defaultContent": ""},
-            {"data": "STATUS_DEPOSITO", "defaultContent": ""}
-
-        ],
         "drawCallback": function( settings ) {
             $('th').removeClass('sorting_asc');
             $('th').removeClass('datatables_action');
             $('th').addClass('th-middle');
+            $("#btn_kembali")
+                .removeAttr('onclick')
+                .attr('onclick', 'backToHeader()');
+            $("#btn_tambah_detail")
+                .removeAttr('onclick')
+                .attr('onclick', 'openFormNewDetail("'+id+'","'+bank+'","'+bank_counterparty+'","'+billyet+'")');
+        },
+        "createdRow" : (row, data, dataIndex) => {
+            if ( data["JENIS"] === "PENCAIRAN" ) {
+                $(row).css({
+                    "color": "#ff6767",
+                    "font-weight" : "bold",
+                });
+            };
         }
     });
 
@@ -602,5 +668,179 @@ function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pTenor,pketerangan){
         console.log(value); // <-- the value
         tempTableSearch = value;
     });
+}
 
+function openFormNewDetail(id, bank,bank_counterparty, billyet) {
+    let d = new Date();
+    $("#pDetailTglPenempatan").datepicker({minDate : 0, dateFormat : "dd/mm/yy"});
+    $("#pDetailTglPenempatanPencairan, #pDetailTglJatuhTempoPencairan").val(("0" + d.getDate()).slice(-2)+"/"+(("0" + d.getMonth()).slice(-2))+"/"+d.getFullYear());
+    $("#pDetailBankCounterParty,#pDetailBankCounterPartyPencairan").val(bank_counterparty);
+    $("#pDetailCounter, #pDetailCounterPencairan").val(bank)
+    $("#pDetailBillyet,#pDetailBillyetPencairan").val(billyet);
+    idDeposito = id;
+
+    $('#modal_detail_deposito').modal({backdrop: 'static', keyboard: false});
+}
+
+function backToHeader(){
+    $("#deposito_detail").hide();
+    $("#header_deposito_row").show();
+    $("#btn_data_baru_header_deposito").show();
+    table_deposito.destroy();
+    table_deposito_header.ajax.reload();
+}
+
+$("#pDetailTglPenempatan").change(function () {
+    var tglAwalData = $('#pDetailTglPenempatan').val();
+    if (tglAwalData == "") {
+        alert("Tanggal awal belum di tentukan");
+        $('#pDetailTglJatuhTempo').val("");
+    } else {
+        $('#pDetailTglJatuhTempo')
+            .attr("disabled", false)
+            .val("")
+            .datepicker("destroy")
+            .datepicker({dateFormat: 'dd/mm/yy', minDate: tglAwalData});
+    }
+});
+
+function ins_detail_data(type) {
+    showLoadingCss();
+    $.ajax({
+        url: baseUrl + "api_operator/deposito/ins_detail_data",
+        dataType: 'JSON',
+        type: "POST",
+        data: {
+            pIdDeposito: idDeposito,
+            pIdDetail: idDetailDeposito,
+            pJenis : (type === 1) ? "INPUT" : "PENCAIRAN",
+            pBank : (type === 1) ? $("input[type=hidden]#pDetailCounter").val() : $("input[type=hidden]#pDetailCounterPencairan").val(),
+            pBillyet : (type === 1) ? $("#pDetailBillyet").val() : $("#pDetailBillyetPencairan").val(),
+            pNominal : (type === 1) ? $("#pDetailNominal").val() : $("#pDetailNominalPencairan").val(),
+            pInterest : (type === 1) ? $("#pDetailInterest").val() : "",
+            pTglPenempatan : (type === 1) ? $("#pDetailTglPenempatan").val() : $("#pDetailTglPenempatanPencairan").val(),
+            pTglJatuhTempo : (type === 1) ? $("#pDetailTglJatuhTempo").val() : $("#pDetailTglJatuhTempoPencairan").val(),
+            pKeterangan : (type === 1) ? $("#pDetailKeterangan").val() : "",
+        },
+        success: function (res) {
+            if (res.return == 1) {
+                alert("DATA BERHASIL DISIMPAN");
+                $('#modal_detail_deposito').modal('hide');
+                table_deposito.ajax.reload();
+            } else {
+                alert("GAGAL MENAMBAHKAN DATA");
+            }
+            hideLoadingCss("");
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
+        }
+    });
+}
+
+function edit_detail_data(detail_id) {
+    showLoadingCss();
+    $("#ex2-tabs-2, #ex2-tabs-1").removeClass("active show");
+    $("#ex2-tab-2, #ex2-tab-1").removeAttr("data-toggle");
+    $("#ex2-tab-2,#ex2-tab-1")
+        .removeClass("active")
+        .css('cursor','pointer');
+    $.ajax({
+        url: baseUrl+"api_operator/deposito/edit_detail_data",
+        dataType: 'JSON',
+        type: "GET",
+        data : {
+            pIdDetailDeposito : detail_id
+        },
+        success: function (res) {
+            hideLoadingCss("");
+            idDetailDeposito = detail_id;
+            if (res.length > 0){
+                let tp = new Date(res[0].TGL_PENEMPATAN);
+                let jt = new Date(res[0].JATUH_TEMPO);
+
+                if (res[0].JENIS === "INPUT"){
+                    $("input[type=hidden]#pDetailCounter").val(res[0].BANK_CONTERPARTY);
+                    $("#pDetailInterest").val(res[0].INTEREST);
+                    $("#pDetailTglPenempatan").val(("0"+tp.getDate()).slice(-2)+"/"+("0"+tp.getMonth()).slice(-2)+"/"+tp.getFullYear());
+                    $("#pDetailTglJatuhTempo").val(("0"+jt.getDate()).slice(-2)+"/"+("0"+jt.getMonth()).slice(-2)+"/"+jt.getFullYear());
+                    $("#pDetailKeterangan").val(res[0].KETERANGAN);
+                    $("#pDetailNominal").val(res[0].NOMINAL);
+                    $("#pDetailBillyet")
+                        .attr("readonly","readonly")
+                        .val(res[0].NO_ACCOUNT);
+
+                    $("#ex2-tabs-1")
+                        .addClass("active show")
+                        .attr("data-toggle","tab");
+                    $("#ex2-tab-2")
+                        .css("cursor",'not-allowed');
+                    $("#ex2-tab-1")
+                        .addClass("active");
+                }else{
+                    $("#pDetailTglPenempatanPencairan").val(("0"+tp.getDate()).slice(-2)+"/"+("0"+tp.getMonth()).slice(-2)+"/"+tp.getFullYear());
+                    $("#pDetailTglJatuhTempoPencairan").val(("0"+jt.getDate()).slice(-2)+"/"+("0"+jt.getMonth()).slice(-2)+"/"+jt.getFullYear());
+                    $("#pDetailNominalPencairan").val(res[0].NOMINAL);
+                    $("#pDetailBillyetPencairan").val(res[0].NO_ACCOUNT);
+                    $("input[type=hidden]#pDetailCounterPencairan").val(res[0].BANK_CONTERPARTY);
+
+                    $("#ex2-tabs-2")
+                        .addClass("active show")
+                        .attr("data-toggle","tab");
+                    $("#ex2-tab-1")
+                        .css("cursor",'not-allowed');
+                    $("#ex2-tab-2")
+                        .addClass("active");
+                }
+            }
+
+            setTimeout(function () {
+                $('#modal_detail_deposito').modal({backdrop: 'static', keyboard: false});
+            }, timeSowFormEdit);
+            hideLoadingCss()
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
+
+function delete_detail_data(id_detail) {
+    var stateCrf = confirm("Anda Yakin Akan Menghapus Data Ini ?");
+    if (stateCrf == true) {
+        showLoadingCss();
+        $.ajax({
+            url: baseUrl+"api_operator/deposito/delete_detail_data",
+            dataType: 'JSON',
+            type: "POST",
+            data : {
+                pIdDetailDeposito : id_detail
+            },
+            success: function (res) {
+                hideLoadingCss();
+                if(res.return === 1){
+                    alert(res.OUT_MSG);
+                    table_deposito.ajax.reload();
+                }else{
+                    alert(res.OUT_MSG);
+                }
+
+            },
+            error: function () {
+                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+            }
+        });
+    }
+}
+
+function validateFormHeader(form_name){
+    let empty=0;
+    $(form_name)
+        .find("select, input")
+        .each(function(){
+            if (($(this).prop("required") && $(this).val() === "") || $(this).val() === null || $(this).attr("selectedIndex") === 0){
+                empty++;
+            }
+        });
+    return empty;
 }
