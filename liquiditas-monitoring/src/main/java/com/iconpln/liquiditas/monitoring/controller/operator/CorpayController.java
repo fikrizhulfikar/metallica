@@ -2237,7 +2237,7 @@ public class CorpayController {
             return null;
         }
     }
-//
+
 //    @RequestMapping(value = "/get_pemindahan_buku", method = RequestMethod.GET)
 //    public Map<String, Object> getPemindahBukuan(
 //            @RequestParam(value = "p_tgl_awal", defaultValue = "") String tanggal,
@@ -2315,6 +2315,8 @@ public class CorpayController {
         return mapData;
     }
 
+    // Placement LCL Header
+
     @GetMapping(path = "/kebutuhan_placement_lcl")
     public Map listKebutuhanPlacementLCL(
             @RequestParam(value = "p_tanggal", defaultValue = "") String tanggal,
@@ -2336,12 +2338,13 @@ public class CorpayController {
 
     @GetMapping(path = "/detail_placement_imprest")
     public Map listDetailPlacementImprest(
+            @RequestParam(value = "p_id_form", defaultValue = "ALL") String p_id_form,
             @RequestParam(value = "p_jenis", defaultValue = "ALL") String jenis
     ){
         List<Map<String, Object>> list = new ArrayList<>();
 
         try {
-            list = corpayService.getDetailPlacementImprest(jenis);
+            list = corpayService.getDetailPlacementImprest(p_id_form, jenis);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -2354,7 +2357,9 @@ public class CorpayController {
 
 
     @PostMapping(path = "/ins_rekap_placement_imprest")
-    public Map<String, Object> listInsPlacementImprest(@RequestParam(value = "pData") String pData) throws JSONException, SQLException {
+    public Map<String, Object> listInsPlacementImprest(@RequestParam(value = "pData") String pData,
+                                                       @RequestParam(value = "p_id_form", defaultValue = "") String p_id_form
+                                                       ) throws JSONException, SQLException {
         JSONArray jsonArray = new JSONArray(pData);
         Map<String, Object> out = new HashMap<>();
 
@@ -2365,13 +2370,15 @@ public class CorpayController {
             String bri = jsonObject.getString("data2");
             String bni = jsonObject.getString("data3");
             String bukopin = jsonObject.getString("data4");
-            out = corpayService.getInsPlacementImprest(bank, mandiri, bri, bni, bukopin);
+            out = corpayService.getInsPlacementImprest(bank, mandiri, bri, bni, bukopin, p_id_form);
         }
         return out;
     }
 
     @PostMapping(path = "/ins_rekap_placement_impor")
-    public Map<String, Object> listInsPlacementImpor(@RequestParam(value = "pData") String pData) throws JSONException, SQLException {
+    public Map<String, Object> listInsPlacementImpor(@RequestParam(value = "pData") String pData,
+                                                     @RequestParam(value = "p_id_form", defaultValue = "") String p_id_form
+    ) throws JSONException, SQLException {
         JSONArray jsonArray = new JSONArray(pData);
         Map<String, Object> out = new HashMap<>();
 
@@ -2382,13 +2389,14 @@ public class CorpayController {
             String bri = jsonObject.getString("data2");
             String bni = jsonObject.getString("data3");
             String bukopin = jsonObject.getString("data4");
-            out = corpayService.getInsPlacementImpor(bank, mandiri, bri, bni, bukopin);
+            out = corpayService.getInsPlacementImpor(bank, mandiri, bri, bni, bukopin, p_id_form);
         }
         return out;
     }
 
     @PostMapping(path = "/ins_rekap_placement_imprest_operasi")
-    public Map<String, Object> listInsPlacementImprestOperasi(@RequestParam(value = "pData") String pData) throws JSONException, SQLException {
+    public Map<String, Object> listInsPlacementImprestOperasi(@RequestParam(value = "pData") String pData,
+                                                              @RequestParam(value = "p_id_form", defaultValue = "") String p_id_form) throws JSONException, SQLException {
         JSONArray jsonArray = new JSONArray(pData);
         Map<String, Object> out = new HashMap<>();
 
@@ -2399,13 +2407,14 @@ public class CorpayController {
             String bri = jsonObject.getString("data2");
             String bni = jsonObject.getString("data3");
             String bukopin = jsonObject.getString("data4");
-            out = corpayService.getInsPlacementImprestOperasi(bank, mandiri, bri, bni, bukopin);
+            out = corpayService.getInsPlacementImprestOperasi(bank, mandiri, bri, bni, bukopin, p_id_form);
         }
         return out;
     }
 
     @PostMapping(path = "/ins_rekap_placement_imprest_invest")
-    public Map<String, Object> listInsPlacementImprestInvest(@RequestParam(value = "pData") String pData) throws JSONException, SQLException {
+    public Map<String, Object> listInsPlacementImprestInvest(@RequestParam(value = "pData") String pData,
+                                                             @RequestParam(value = "p_id_form", defaultValue = "") String p_id_form) throws JSONException, SQLException {
         JSONArray jsonArray = new JSONArray(pData);
         Map<String, Object> out = new HashMap<>();
 
@@ -2416,13 +2425,14 @@ public class CorpayController {
             String bri = jsonObject.getString("data2");
             String bni = jsonObject.getString("data3");
             String bukopin = jsonObject.getString("data4");
-            out = corpayService.getInsPlacementImprestInvest(bank, mandiri, bri, bni, bukopin);
+            out = corpayService.getInsPlacementImprestInvest(bank, mandiri, bri, bni, bukopin, p_id_form);
         }
         return out;
     }
 
     @PostMapping(path = "/ins_rekap_placement_Settelment")
-    public Map<String, Object> listInsPlacementSettlement(@RequestParam(value = "pData") String pData) throws JSONException, SQLException {
+    public Map<String, Object> listInsPlacementSettlement(@RequestParam(value = "pData") String pData,
+                                                          @RequestParam(value = "p_id_form", defaultValue = "") String p_id_form) throws JSONException, SQLException {
         JSONArray jsonArray = new JSONArray(pData);
         Map<String, Object> out = new HashMap<>();
 
@@ -2433,13 +2443,14 @@ public class CorpayController {
             String bri = jsonObject.getString("data2");
             String bni = jsonObject.getString("data3");
             String bukopin = jsonObject.getString("data4");
-            out = corpayService.getInsPlacementSettlement(bank, mandiri, bri, bni, bukopin);
+            out = corpayService.getInsPlacementSettlement(bank, mandiri, bri, bni, bukopin, p_id_form);
         }
         return out;
     }
 
     @PostMapping(path = "/ins_rekap_placement_proyeksi_valas")
-    public Map<String, Object> listInsPlacementProyeksiValas(@RequestParam(value = "pData") String pData) throws JSONException, SQLException {
+    public Map<String, Object> listInsPlacementProyeksiValas(@RequestParam(value = "pData") String pData,
+                                                             @RequestParam(value = "p_id_form", defaultValue = "") String p_id_form) throws JSONException, SQLException {
         JSONArray jsonArray = new JSONArray(pData);
         Map<String, Object> out = new HashMap<>();
 
@@ -2450,13 +2461,14 @@ public class CorpayController {
             String bri = jsonObject.getString("data2");
             String bni = jsonObject.getString("data3");
             String bukopin = jsonObject.getString("data4");
-            out = corpayService.getInsPlacementProyeksiValas(bank, mandiri, bri, bni, bukopin);
+            out = corpayService.getInsPlacementProyeksiValas(bank, mandiri, bri, bni, bukopin, p_id_form);
         }
         return out;
     }
 
     @PostMapping(path = "/ins_rekap_placement_receipt")
-    public Map<String, Object> listInsPlacementReceipt(@RequestParam(value = "pData") String pData) throws JSONException, SQLException {
+    public Map<String, Object> listInsPlacementReceipt(@RequestParam(value = "pData") String pData,
+                                                       @RequestParam(value = "p_id_form", defaultValue = "") String p_id_form) throws JSONException, SQLException {
         JSONArray jsonArray = new JSONArray(pData);
         Map<String, Object> out = new HashMap<>();
 
@@ -2478,13 +2490,14 @@ public class CorpayController {
             String uob = jsonObject.getString("data13");
             String dbs = jsonObject.getString("data14");
             String cimb = jsonObject.getString("data15");
-            out = corpayService.getInsPlacementReceipt(bank, mandiri, bri, bni, bukopin, mega, dki, bca, bii, bris, btn, danamon, ocbc, uob, dbs, cimb);
+            out = corpayService.getInsPlacementReceipt(bank, mandiri, bri, bni, bukopin, mega, dki, bca, bii, bris, btn, danamon, ocbc, uob, dbs, cimb, p_id_form);
         }
         return out;
     }
 
     @PostMapping(path = "/ins_rekap_placement_giro_special")
-    public Map<String, Object> listInsPlacementGiroSpcial(@RequestParam(value = "pData") String pData) throws JSONException, SQLException {
+    public Map<String, Object> listInsPlacementGiroSpcial(@RequestParam(value = "pData") String pData,
+                                                          @RequestParam(value = "p_id_form", defaultValue = "") String p_id_form) throws JSONException, SQLException {
         JSONArray jsonArray = new JSONArray(pData);
         Map<String, Object> out = new HashMap<>();
 
@@ -2506,7 +2519,7 @@ public class CorpayController {
             String uob = jsonObject.getString("data13");
             String dbs = jsonObject.getString("data14");
             String cimb = jsonObject.getString("data15");
-            out = corpayService.getInsPlacementGiroSpcial(bank, mandiri, bri, bni, bukopin, mega, dki, bca, bii, bris, btn, danamon, ocbc, uob, dbs, cimb);
+            out = corpayService.getInsPlacementGiroSpcial(bank, mandiri, bri, bni, bukopin, mega, dki, bca, bii, bris, btn, danamon, ocbc, uob, dbs, cimb, p_id_form);
         }
         return out;
     }
@@ -2584,12 +2597,13 @@ public class CorpayController {
 
     @GetMapping(path = "/detail_placement_fcl")
     public Map listDetailPlacementFCL(
-            @RequestParam(value = "p_jenis", defaultValue = "ALL") String jenis
+            @RequestParam(value = "p_jenis", defaultValue = "ALL") String jenis,
+            @RequestParam(value = "p_id_form", defaultValue = "ALL") String p_id_form
     ){
         List<Map<String, Object>> list = new ArrayList<>();
 
         try {
-            list = corpayService.getDetailPlacementFCL(jenis);
+            list = corpayService.getDetailPlacementFCL(jenis, p_id_form);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -2601,7 +2615,8 @@ public class CorpayController {
     }
 
     @PostMapping(path = "/ins_jpy")
-    public Map<String, Object> listInsPlacementJPY(@RequestParam(value = "pData") String pData) throws JSONException, SQLException {
+    public Map<String, Object> listInsPlacementJPY(@RequestParam(value = "pData") String pData,
+                                                   @RequestParam(value = "p_id_form", defaultValue = "") String p_id_form) throws JSONException, SQLException {
         JSONArray jsonArray = new JSONArray(pData);
         Map<String, Object> out = new HashMap<>();
 
@@ -2612,13 +2627,14 @@ public class CorpayController {
             String bri = jsonObject.getString("data2");
             String bni = jsonObject.getString("data3");
             String bukopin = jsonObject.getString("data4");
-            out = corpayService.getInsPlacementJPY(bank, mandiri, bri, bni, bukopin);
+            out = corpayService.getInsPlacementJPY(bank, mandiri, bri, bni, bukopin, p_id_form);
         }
         return out;
     }
 
     @PostMapping(path = "/ins_eur")
-    public Map<String, Object> listInsPlacementEUR(@RequestParam(value = "pData") String pData) throws JSONException, SQLException {
+    public Map<String, Object> listInsPlacementEUR(@RequestParam(value = "pData") String pData,
+                                                   @RequestParam(value = "p_id_form", defaultValue = "") String p_id_form) throws JSONException, SQLException {
         JSONArray jsonArray = new JSONArray(pData);
         Map<String, Object> out = new HashMap<>();
 
@@ -2629,13 +2645,14 @@ public class CorpayController {
             String bri = jsonObject.getString("data2");
             String bni = jsonObject.getString("data3");
             String bukopin = jsonObject.getString("data4");
-            out = corpayService.getInsPlacementEUR(bank, mandiri, bri, bni, bukopin);
+            out = corpayService.getInsPlacementEUR(bank, mandiri, bri, bni, bukopin, p_id_form);
         }
         return out;
     }
 
     @PostMapping(path = "/ins_usd")
-    public Map<String, Object> listInsPlacementUSD(@RequestParam(value = "pData") String pData) throws JSONException, SQLException {
+    public Map<String, Object> listInsPlacementUSD(@RequestParam(value = "pData") String pData,
+                                                   @RequestParam(value = "p_id_form", defaultValue = "") String p_id_form) throws JSONException, SQLException {
         JSONArray jsonArray = new JSONArray(pData);
         Map<String, Object> out = new HashMap<>();
 
@@ -2646,7 +2663,7 @@ public class CorpayController {
             String bri = jsonObject.getString("data2");
             String bni = jsonObject.getString("data3");
             String bukopin = jsonObject.getString("data4");
-            out = corpayService.getInsPlacementUSD(bank, mandiri, bri, bni, bukopin);
+            out = corpayService.getInsPlacementUSD(bank, mandiri, bri, bni, bukopin, p_id_form);
         }
         return out;
     }
@@ -2691,29 +2708,49 @@ public class CorpayController {
 
     @GetMapping(path = "/placement_lcl_header")
     public Map listPlacementlclHeader(
-            @RequestParam(value = "p_tgl_awal", defaultValue = "ALL") String tglAwal,
-            @RequestParam(value = "p_tgl_akhir", defaultValue = "ALL") String tglAkhir
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "10") int length,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
+            @RequestParam(value = "p_tgl_awal", defaultValue = "") String p_tgl_awal,
+            @RequestParam(value = "p_tgl_akhir", defaultValue = "") String p_tgl_akhir
     ){
-        List<Map<String, Object>> list = new ArrayList<>();
 
+        String sortBy = parseColumn(sortIndex);
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
+        List<Map<String, Object>> list = new ArrayList<>();
         try {
-            list = corpayService.getPlacementlclHeader(tglAwal, tglAkhir, WebUtils.getUsernameLogin());
-        }catch (Exception e){
+            list = corpayService.getPlacementlclHeader(((start / length) + 1), length, p_tgl_awal, p_tgl_akhir, WebUtils.getUsernameLogin());
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         Map mapData = new HashMap();
+        mapData.put("draw", draw);
         mapData.put("data", list);
-
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
         return mapData;
     }
 
     @RequestMapping(value = "/delete_data", method = RequestMethod.POST)
     public Map<String, Object> deletePlacementlclHeader(
-            @RequestParam(value = "p_id_form", defaultValue = "") String idForm
+            @RequestParam("p_id_form") String p_id_form
     ){
         try {
-            Map<String, Object> result = (Map<String, Object>) corpayService.delPlacementlclHeader(idForm);
+            Map<String, Object> result = corpayService.delPlacementlclHeader(p_id_form);
 
             return result;
         }catch (Exception e){
@@ -2722,15 +2759,29 @@ public class CorpayController {
         }
     }
 
-    @RequestMapping(value = "/create_palcement_lcl_header", method = RequestMethod.POST)
+    @RequestMapping(value = "/detail_placement_lcl_head", method = RequestMethod.GET)
+    public Map detailPlacementlcl(
+            @RequestParam(value = "p_id_form", defaultValue = "") String idForm
+    ){
+        List<Map<String, Object>> list;
+
+        try {
+            return corpayService.detailPlacementLcl(idForm);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/create_placement_lcl_header", method = RequestMethod.POST)
     public Map<String, Object> createPlacementLclHeader(
-            @RequestParam(value = "p_id_form", defaultValue = "") String idForm,
-            @RequestParam(value = "p_tgl_jatuh_tempo", defaultValue = "") String tglJatuhTempo
+            @RequestParam(value = "p_id_form", defaultValue = "") String p_id_form,
+            @RequestParam(value = "p_tgl_jatuh_tempo", defaultValue = "") String p_tgl_jatuh_tempo,
+            @RequestParam(value = "p_user_id", defaultValue = "") String pUserId
     ){
         try {
-            Map<String, Object> result = (Map<String, Object>) corpayService.createPlacementlclHeader(idForm, tglJatuhTempo, WebUtils.getUsernameLogin());
-
-            return result;
+            Map<String, Object> res = corpayService.createPlacementlclHeader(p_id_form, p_tgl_jatuh_tempo, WebUtils.getUsernameLogin());
+            return res;
         }catch (Exception e){
             e.printStackTrace();
             return null;
@@ -2742,10 +2793,160 @@ public class CorpayController {
             @RequestParam(value = "p_id_form", defaultValue = "") String idForm,
             @RequestParam(value = "p_status", defaultValue = "") String status
     ){
-        AppUtils.getLogger(this).info("p_status : {}", status);
+        try {
+            Map<String, Object> result = corpayService.updatePlacementlclHeader(idForm, WebUtils.getUsernameLogin(), status);
+
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_placement_lcl_head_byid", method = RequestMethod.GET)
+    public Map getPlacementLclHeadById(
+            @RequestParam(value = "p_id_form") String p_id_form
+    ){
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            System.out.println("QWERTY "+p_id_form);
+            list = corpayService.getPlacementLclHead(p_id_form);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        return mapData;
+    }
+
+    @RequestMapping(path = "/reverse_placement_lcl_head", method = RequestMethod.POST)
+    public Map<String, Object> reversePlacementLCLHead(
+            @RequestParam(value = "p_status", defaultValue = "") String status,
+            @RequestParam(value = "p_id_form", defaultValue = "") String idForm
+    ) {
+        try {
+            Map<String, Object> result = corpayService.reversePlacementLCLHead(status, idForm);
+            System.out.println("Testing reverse = "+status);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //Placement FCL Header
+
+    @GetMapping(path = "/placement_fcl_header")
+    public Map listPlacementFclHeader(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "10") int length,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
+            @RequestParam(value = "p_tgl_awal", defaultValue = "") String p_tgl_awal,
+            @RequestParam(value = "p_tgl_akhir", defaultValue = "") String p_tgl_akhir
+    ){
+
+        String sortBy = parseColumn(sortIndex);
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = corpayService.getPlacementFclHeader(((start / length) + 1), length, p_tgl_awal, p_tgl_akhir, WebUtils.getUsernameLogin());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("draw", draw);
+        mapData.put("data", list);
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
+        return mapData;
+    }
+
+    @RequestMapping(value = "/create_placement_fcl_header", method = RequestMethod.POST)
+    public Map<String, Object> createPlacementFclHeader(
+            @RequestParam(value = "p_id_form", defaultValue = "") String p_id_form,
+            @RequestParam(value = "p_tgl_jatuh_tempo", defaultValue = "") String p_tgl_jatuh_tempo,
+            @RequestParam(value = "p_user_id", defaultValue = "") String pUserId
+    ){
+        try {
+            Map<String, Object> res = corpayService.createPlacementFclHeader(p_id_form, p_tgl_jatuh_tempo, WebUtils.getUsernameLogin());
+            return res;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/delete_data_fcl", method = RequestMethod.POST)
+    public Map<String, Object> deletePlacementFclHeader(
+            @RequestParam("p_id_form") String p_id_form
+    ){
+        try {
+            Map<String, Object> result = corpayService.delPlacementFclHeader(p_id_form);
+
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_placement_fcl_head_byid", method = RequestMethod.GET)
+    public Map getPlacementFclHeadById(
+            @RequestParam(value = "p_id_form") String p_id_form
+    ){
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            System.out.println("QWERTY "+p_id_form);
+            list = corpayService.getPlacementFclHead(p_id_form);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("data", list);
+
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        return mapData;
+    }
+
+    @RequestMapping(value = "/detail_placement_fcl_head", method = RequestMethod.GET)
+    public Map detailPlacementFcl(
+            @RequestParam(value = "p_id_form", defaultValue = "") String idForm
+    ){
+        List<Map<String, Object>> list;
 
         try {
-            Map<String, Object> result = corpayService.updatePlacementlclHeader(WebUtils.getUsernameLogin(), idForm, status);
+            return corpayService.detailPlacementFcl(idForm);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/verifikasi_placement_fcl_header", method = RequestMethod.POST)
+    public Map<String, Object> updateStatusFcl(
+            @RequestParam(value = "p_id_form", defaultValue = "") String idForm,
+            @RequestParam(value = "p_status", defaultValue = "") String status
+    ){
+        try {
+            Map<String, Object> result = corpayService.updatePlacementFclHeader(idForm, WebUtils.getUsernameLogin(), status);
 
             return result;
         }catch (Exception e){

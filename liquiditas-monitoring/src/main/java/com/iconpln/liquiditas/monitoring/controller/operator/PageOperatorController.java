@@ -70,7 +70,7 @@ public class PageOperatorController {
     }
 
     @RequestMapping("/placement_fcl")
-    public String placement_fcl() { return "operator/placement_lcl";
+    public String placement_fcl() { return "operator/placement_fcl_header";
     }
 
     @RequestMapping("/penerimaan_pendanaan")

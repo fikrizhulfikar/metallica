@@ -882,7 +882,9 @@ public class DashboardService {
 
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("out_total_scf", OracleTypes.CURSOR)
-                .addValue("out_data", OracleTypes.CURSOR);
+                .addValue("out_total_scf2", OracleTypes.CURSOR)
+                .addValue("out_data", OracleTypes.CURSOR)
+                .addValue("out_data2", OracleTypes.CURSOR);
         Map<String, Object> out = simpleJdbcCall.execute(in);
         AppUtils.getLogger(this).info("data get_scf_b2 : {}", out);
         return out;

@@ -24,7 +24,7 @@
             width: 80%;
             max-width: 120px;
         }
-                .md-stepper-horizontal {
+        .md-stepper-horizontal {
             display:table;
             width:80%;
             margin:0 auto;
@@ -325,29 +325,9 @@
         <div class="row">
             <div class="col-md-12" style="margin-top: 20px">
                 <div class="card">
-                    <div class="card-header" style="margin-bottom: 0.5rem; background-color: #eceff1 !important">
-                        <div align="center" class="title" style="margin-bottom: 10px"><h6><b>REKAP PLACEMENT LCL</b></h6></div>
-                        <div align="center" class="title" style="margin-bottom: 10px"><h6><b>TGL : <span id="tglcetak1"></span></b><b> - Sesi : <span id="sesicetak1"></span></b></h6></div>
-                        <div class="col-md-12 row" id="filter2" style="margin-left: 0rem;">
-                            <div class="col-md-12 row" style="padding-left: 7.5px;margin-right: 0;">
-                                <div class="col-md-5" style="padding-right: 0px;">
-                                    <form class="form-inline" style="margin-bottom: 0rem;">
-                                        <div class="form-group">
-                                            <label>Tanggal </label>
-                                            <input type="text" style="border-radius: 5px; margin: 0 1em 0 1em" class="form-control" id="tanggal_awal1"/>
-                                            <label>Sesi </label>
-                                            <select style="border-radius: 5px; margin: 0 1em 0" class="form-control" id="sesi_filter" >
-                                                <option value="0">Sesi 1</option>
-                                                <option value="1">Sesi 2</option>
-                                            </select>
-                                        </div>
-                                        <button type="button" class="btn btn-sm btn-primary" style="margin-top: 1px" onclick="search('search')"><i class="fas fa-search"></i></button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="card-block" >
+                        <div align="center" class="title" style="margin-bottom: 10px"><h6><b>REKAP PLACEMENT LCL</b></h6></div>
+                        <div align="center" class="title" style="margin-bottom: 10px"><h6><b>TGL : <span id="tglcetak1"></span></b></h6></div>
                         <div style="overflow-y:auto;">
                             <table id="table-rekap-placement-lcl" class="table table-bordered" width="100%">
                                 <thead>
@@ -381,47 +361,11 @@
                 <div class="card">
                     <div class="card-block" >
                         <div align="center" class="title" style="margin-bottom: 10px"><h6><b>KEBUTUHAN PLACEMENT LCL</b></h6></div>
-                        <div align="center" class="title" style="margin-bottom: 10px"><h6><b>TGL : <span id="tglcetak2"></span></b><b> - Sesi : <span id="sesicetak2"></span></b></h6></div>
-                        <div align="center">
-                            <div class="md-stepper-horizontal orange">
-                                <div id="staff_pe" class="md-step done" style="width: 31.33%;">
-                                    <div class="md-step-circle"><span>1</span></div>
-                                    <div class="md-step-title">STAFF LCL</div>
-                                    <div class="md-step-bar-left"></div>
-                                    <div class="md-step-bar-right"></div>
-                                </div>
-                                <div id="msb_pe" class="md-step done">
-                                    <div class="md-step-circle"><span>2</span></div>
-                                    <div class="md-step-title">MSB LCL</div>
-                                    <div class="md-step-bar-left"></div>
-                                    <div class="md-step-bar-right"></div>
-                                </div>
-                                <div id="vp_pe" class="md-step done">
-                                    <div class="md-step-circle"><span>3</span></div>
-                                    <div class="md-step-title">VP TLR</div>
-                                    <div class="md-step-bar-left"></div>
-                                    <div class="md-step-bar-right"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 row" id="filter" style="margin-left: 0rem; margin-bottom: 1rem; margin-right: 0rem;">
-                            <div class="col-md-12 row" style="padding-left: 7.5px;margin-right: 0;">
-                                <div class="col-md-5" style="padding-right: 0px;"> </div>
-                                <div class="col-md-7" style="padding-right: 0px;">
-                                    <div class="dataTables_filter2 float-right" id="button_action" style="padding-top: 0.45rem;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div align="center" class="title" style="margin-bottom: 10px"><h6><b>TGL : <span id="tglcetak2"></span></b></h6></div>
                         <div style="overflow-y:auto;">
                             <table id="kebutuhan-placement" class="table table-rencana-realisasi table-condensed table-bordered" width="100%">
                                 <thead>
-<!--                                <tr>-->
-<!--                                    <th colspan="11" style="vertical-align: middle; text-align: center; background-color: #F4D35E;">PENERIMAAN OPERASI DAN PENDANAAN RUPIAH</th>-->
                                 <tr width="12%">
-                                    <!--                                id="header-tanggal1"<td style="background-color: #F4D35E" width="5%">NO</td>-->
-                                    <!--                                                    <th style="background: #F4D35E" width="10%">BANK</th>-->
-<!--                                    <th style=" text-align: center;" width="9%">TIPE KEBUTUHAN</th>-->
                                     <th style=" text-align: center;" width="9%">TIPE KEBUTUHAN</th>
                                     <th style=" text-align: center;" width="7%">BANK</th>
                                     <th id="tgl1b" style="vertical-align: middle !important; text-align: center;"  ></th>
@@ -432,7 +376,6 @@
                                     <th id="tgl6b" style="vertical-align: middle !important; text-align: center;"  ></th>
                                     <th style="vertical-align: middle !important; text-align: center;" width="10%" >AKSI</th>
                                 </tr>
-<!--                                </tr>-->
                                 </thead>
                                 <tbody>
 

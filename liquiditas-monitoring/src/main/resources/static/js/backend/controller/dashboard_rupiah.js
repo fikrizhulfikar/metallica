@@ -1,7 +1,9 @@
 $(document).ready(function () {
     tableMainDashboard();
+    initDataTableImprstValas3();
     initDataTableImprstValas();
     initDataTableImprstValas2();
+
 
     var date = new Date();
     var newDate = date.toJSON().slice(0, 10).replace(new RegExp("-", 'g'), "/").split("/").reverse().join("/")
@@ -1025,20 +1027,6 @@ function initDataTableImprstValas2() {
 //            $("#tglcetak").html(data[0].TANGGAL);
             $('#table-supply-chain-financing tbody').empty();
             $.each(data, function (key, val) {
-//                if(val.BANK === "null"){
-//                    var html = "<tr>" +
-//                        "<td> </td>" +
-//                        "<td>" + val.CURRENCY + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.ORI_CURRENCY,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.FEE_TRANSAKSI_IDR,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.CASH_COLLATERAL,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.JASA_GIRO,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.PAJAK_PLN,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.NET_JASA_GIRO,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.NET_GAIN,2,".",",") + "</td>" +
-//                        "</tr>";
-//                } else
                     var html = "<tr>" +
                         "<td>" + val.BANK + "</td>" +
                         "<td>" + val.CURRENCY + "</td>" +
@@ -1056,8 +1044,8 @@ function initDataTableImprstValas2() {
             });
 
             var data2 = res.OUT_TOTAL_SCF;
-            var tes = JSON.stringify(data2);
-            console.log("Ini data : " + tes);
+//            var tes = JSON.stringify(data2);
+//            console.log("Ini data : " + tes);
             $.each(data2, function (key, val) {
                 var html = "<tr style='background-color:#77d5d4'>" +
                     "<td>TOTAL</td>" +
@@ -1072,6 +1060,57 @@ function initDataTableImprstValas2() {
                     "<td align='right' >" + accounting.formatNumber(val.NET_GAIN,2,".",",") + "</td>" +
                     "</tr>";
                 $('#table-supply-chain-financing tbody').append(html);
+            });
+        },
+        error: function () {
+            // hideLoadingCss("Gagal Ambil Data IMPRST VALAS");
+            hideLoadingCss();
+            $('#table-imprst-valas tbody').empty();
+            var html = "<tr>" +
+                "<td colspan='5' align='center'> No Data </td>" +
+                "</tr>";
+            $('#table-imprst-valas tbody').append(html);
+        }
+    });
+}
+
+function initDataTableImprstValas3() {
+    $.ajax({
+        url: baseUrl + "api_dashboard/get_supply_chain_financing",
+        dataType: 'JSON',
+        type: "GET",
+        success: function (res) {
+            var data = res.OUT_DATA2;
+//            $("#tglcetak").html(data[0].TANGGAL);
+            $('#table-supply-chain-financing tbody').empty();
+            $.each(data, function (key, val) {
+                    var html = "<tr>" +
+                        "<td>" + val.CURRENCY + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.BIAYA_BUNGA,2,".",",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.PROVISI,2,".",",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.BIAYA_PROVISI,2,".",",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.ORI_CURRENCY,2,".",",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
+                        "<td align='right'>" + accounting.formatNumber(val.TOTAL_BIAYA,2,".",",") + "</td>" +
+                        "</tr>";
+
+                $('#table-supply-chain-financing-non tbody').append(html);
+            });
+
+            var data2 = res.OUT_TOTAL_SCF2;
+//            var tes = JSON.stringify(data2);
+//            console.log("Ini data : " + tes);
+            $.each(data2, function (key, val) {
+                var html = "<tr style='background-color:#77d5d4'>" +
+                    "<td >" + val.CURRENCY + "</td>" +
+                    "<td align='right' >" + accounting.formatNumber(val.BIAYA_BUNGA,2,".",",") + "</td>" +
+                    "<td align='right' >" + accounting.formatNumber(val.PROVISI,2,".",",") + "</td>" +
+                    "<td align='right' >" + accounting.formatNumber(val.BIAYA_PROVISI,2,".",",") + "</td>" +
+                    "<td align='right' >" + accounting.formatNumber(val.ORI_CURRENCY,2,".",",") + "</td>" +
+                    "<td align='right' >" + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
+                    "<td align='right' >" + accounting.formatNumber(val.TOTAL_BIAYA,2,".",",") + "</td>" +
+                    "</tr>";
+                $('#table-supply-chain-financing-non tbody').append(html);
             });
         },
         error: function () {
