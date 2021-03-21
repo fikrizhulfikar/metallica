@@ -1,8 +1,9 @@
 $(document).ready(function () {
     tableMainDashboard();
+    initDataTableImprstValas3();
     initDataTableImprstValas();
     initDataTableImprstValas2();
-    initDataTableImprstValas3();
+
 
     var date = new Date();
     var newDate = date.toJSON().slice(0, 10).replace(new RegExp("-", 'g'), "/").split("/").reverse().join("/")
@@ -1026,20 +1027,6 @@ function initDataTableImprstValas2() {
 //            $("#tglcetak").html(data[0].TANGGAL);
             $('#table-supply-chain-financing tbody').empty();
             $.each(data, function (key, val) {
-//                if(val.BANK === "null"){
-//                    var html = "<tr>" +
-//                        "<td> </td>" +
-//                        "<td>" + val.CURRENCY + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.ORI_CURRENCY,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.FEE_TRANSAKSI_IDR,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.CASH_COLLATERAL,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.JASA_GIRO,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.PAJAK_PLN,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.NET_JASA_GIRO,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.NET_GAIN,2,".",",") + "</td>" +
-//                        "</tr>";
-//                } else
                     var html = "<tr>" +
                         "<td>" + val.BANK + "</td>" +
                         "<td>" + val.CURRENCY + "</td>" +
@@ -1097,20 +1084,6 @@ function initDataTableImprstValas3() {
 //            $("#tglcetak").html(data[0].TANGGAL);
             $('#table-supply-chain-financing tbody').empty();
             $.each(data, function (key, val) {
-//                if(val.BANK === "null"){
-//                    var html = "<tr>" +
-//                        "<td> </td>" +
-//                        "<td>" + val.CURRENCY + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.ORI_CURRENCY,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.EQ_IDR,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.FEE_TRANSAKSI_IDR,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.CASH_COLLATERAL,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.JASA_GIRO,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.PAJAK_PLN,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.NET_JASA_GIRO,2,".",",") + "</td>" +
-//                        "<td align='right'>" + accounting.formatNumber(val.NET_GAIN,2,".",",") + "</td>" +
-//                        "</tr>";
-//                } else
                     var html = "<tr>" +
                         "<td>" + val.CURRENCY + "</td>" +
                         "<td align='right'>" + accounting.formatNumber(val.BIAYA_BUNGA,2,".",",") + "</td>" +
