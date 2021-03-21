@@ -17,12 +17,6 @@ $("#dash_date").datepicker({dateFormat : "dd/mm/yy"});
 });
 
 function tableMainDashboard(bank, jenisRekening, tipeRekening){
-//    showLoadingCss();
-//    let date = new Date();
-//    let current_month = date.getMonth()+1;
-//    let current_full_date;
-//    (_date === undefined) ? current_full_date = date.getFullYear().toString()+"0"+current_month.toString()+date.getDate().toString() : current_full_date = _date;
-//    console.log("Current Date : ",current_full_date);
 
     $('#rincian-saldo').dataTable().fnDestroy();
 
@@ -74,7 +68,6 @@ function tableMainDashboard(bank, jenisRekening, tipeRekening){
    $('.dataTables_length').each(function () {
         var html = '<label style="margin-left: 200px; cursor:default">Total eq currency : Rp. <b id="total_tagihan"> 0</b></label>';
         var html2 = '<label style="margin-left: 30px; cursor:default">Total % : <b id="total_percent">0</b> %</label>';
-//        var html3 = '<input style="margin-left: 30px; type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"/>';
         $(this).append(html, html2);
     });
 }
@@ -98,7 +91,6 @@ function getAllData() {
             console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
         }
     });
-
 }
 
 function search(state) {
@@ -130,8 +122,6 @@ function getTotalTagihan() {
     });
 
 }
-
-
 
 function tableMainDashboard2(){
 $.ajax({
