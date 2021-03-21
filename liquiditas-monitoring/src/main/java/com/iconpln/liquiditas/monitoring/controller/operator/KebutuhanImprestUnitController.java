@@ -16,6 +16,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -33,13 +34,13 @@ public class KebutuhanImprestUnitController {
     @Autowired
     private ResourceLoader resourceLoader;
 
-    @GetMapping(path = "/get_imprest_unit")
-    public Map listKebutuhanImprestUnit(
-            @RequestParam(value = "periode") String periode
+    @GetMapping(path = "/get_detail_imprest_unit")
+    public Map listDetailKebutuhanImprestUnit(
+            @RequestParam(value = "pFormId") String pFormId
     ){
         List<Map<String, Object>> list = new ArrayList<>();
         try {
-            list = imprestUnitService.getImprestUnit(periode, WebUtils.getUsernameLogin());
+            list = imprestUnitService.getDetailImprestUnit(pFormId);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -58,10 +59,11 @@ public class KebutuhanImprestUnitController {
     @RequestMapping(value = "/upload_xls_imprest", method = RequestMethod.POST)
     public Map<String, Object> uploadFileXls(
             @RequestParam(value = "file") MultipartFile file,
+            @RequestParam(value = "idForm") String pIdForm,
             HttpServletResponse response
     ) throws IOException, ParseException, SQLException {
         InputStream inputStream = file.getInputStream();
-        return imprestUnitService.uploadXlsImprestUnit(inputStream, WebUtils.getUsernameLogin(), "1", "");
+        return imprestUnitService.uploadXlsImprestUnit(inputStream, WebUtils.getUsernameLogin(), "1", "", pIdForm);
     }
 
     public String generateReport(HttpServletResponse response, Map<String, Object> errorData, String tipe) {
@@ -88,11 +90,11 @@ public class KebutuhanImprestUnitController {
         return null;
     }
 
-    @PostMapping(path = "/delete_periode")
-    public Map<String, Object> deletePeriodeImprest(@RequestParam(value = "periode") String periode){
+    @PostMapping(path = "/delete_imprest")
+    public Map<String, Object> deleteDetailImprest(@RequestParam(value = "pIdForm") String pIdForm){
         Map<String, Object> delete = new HashMap<>();
         try {
-            delete = imprestUnitService.deletePeriodeImprest(periode);
+            delete = imprestUnitService.deleteDetailImprest(pIdForm);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -101,12 +103,12 @@ public class KebutuhanImprestUnitController {
 
     @PostMapping(path = "/upd_status_imprest")
     public Map<String, Object> updStatusImprest(
-            @RequestParam(value = "tanggal") String tanggal,
-            @RequestParam(value = "status") String status
+            @RequestParam(value = "pIdForm") String pIdForm,
+            @RequestParam(value = "pStatus") String pStatus
     ){
         Map<String, Object> update = new HashMap<>();
         try {
-            update = imprestUnitService.updateStatusImprest(tanggal, WebUtils.getUsernameLogin(), status);
+            update = imprestUnitService.updateStatusImprest(pIdForm, WebUtils.getUsernameLogin(), pStatus);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -115,15 +117,110 @@ public class KebutuhanImprestUnitController {
 
     @PostMapping(path = "/reverse_status_imprest")
     public Map<String, Object> reverseStatusImprest(
-            @RequestParam(value = "tanggal") String tanggal,
-            @RequestParam(value = "status") String status
+            @RequestParam(value = "pIdForm") String pIdForm,
+            @RequestParam(value = "pStatus") String pStatus
     ){
         Map<String, Object> reverse = new HashMap<>();
         try {
-            reverse = imprestUnitService.revereStatusImprest(tanggal, WebUtils.getUsernameLogin(), status);
+            reverse = imprestUnitService.revereStatusImprest(pIdForm, WebUtils.getUsernameLogin(), pStatus);
         } catch (Exception e){
             e.printStackTrace();
         }
         return reverse;
     }
+
+    @PostMapping(path = "/delete_header_imprest")
+    public Map<String, Object> deleteHeaderImprest(
+            @RequestParam(value = "pIdForm") String pIdForm
+    ){
+        Map<String, Object> delete = new HashMap<>();
+        try {
+            delete = imprestUnitService.deleteHeaderImprestUnit(pIdForm);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return delete;
+    }
+
+    @PostMapping(path = "/insert_header_imprest")
+    public Map<String, Object> insertHeaderImprest(
+            @RequestParam(value = "pHeadTglJatuhTempo") String pHeadTglJatuhTempo,
+            @RequestParam(value = "pIdImprestHeader") String pIdImprestHeader
+    ){
+        Map<String, Object> reverse = new HashMap<>();
+        try {
+            reverse = imprestUnitService.insHeaderImprest(pIdImprestHeader, WebUtils.getUsernameLogin(), pHeadTglJatuhTempo);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return reverse;
+    }
+
+    @RequestMapping(value = "/get_imprest_header", method = RequestMethod.GET)
+    public Map listImprestHeader(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "10") int length,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
+            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir
+    ) {
+
+        String sortBy = parseColumn(sortIndex);
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = imprestUnitService.getHeaderImprestUnit(((start / length) + 1), length, pTglAwal, pTglAkhir,WebUtils.getUsernameLogin());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("draw", draw);
+        mapData.put("data", list);
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
+        return mapData;
+    }
+
+    private String parseColumn(int index) {
+        switch (index) {
+            case 1:
+                return "COMP_CODE";
+            case 2:
+                return "DOC_NO";
+            case 3:
+                return "FISC_YEAR";
+            case 4:
+                return "DOC_TYPE";
+            default:
+                return "UPDATE_DATE";
+        }
+    }
+
+    @RequestMapping(value = "/edit_data", method = RequestMethod.GET)
+    public List getDataInvoiceBy(
+            @RequestParam(value = "pIdForm") String pIdForm
+    ) {
+        try {
+            return imprestUnitService.getHeaderImprestUnitById(pIdForm);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
 }

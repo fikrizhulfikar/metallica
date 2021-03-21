@@ -30,10 +30,10 @@
         <li class="breadcrumb-item active" style="cursor: default">Deposito</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS')"><i class="fas fa-plus-square"></i> &nbsp;New Data</button>
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>-->
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>-->
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>-->
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS')"><i class="fas fa-plus-square"></i> &nbsp;New Data</button>-->
             </div>
         </li>
     </ol>
@@ -58,14 +58,17 @@
                         <table id="table-dash-deposito" class="table table-bordered table-striped" width="100%" style="margin-left: 0px;">
                             <thead style="font-size: 12px">
                             <tr>
-                                <th style="text-align: center">PERIODE</th>
                                 <th style="text-align: center">BANK</th>
-                                <th style="text-align: center">PERIODE</th>
                                 <th style="text-align: center">BANK</th>
-                                <th style="text-align: center">CURRENCY</th>
+                                <th style="text-align: center">NOMOR ACCOUNT / BILLYET</th>
                                 <th style="text-align: center">NOMINAL</th>
-                                <th style="text-align: center">BUNGA</th>
+                                <th style="text-align: center">INTEREST</th>
+                                <th style="text-align: center">TENOR</th>
+                                <th style="text-align: center">TGL PENEMPATAN</th>
+                                <th style="text-align: center">TGL JATUH TEMPO</th>
+                                <th style="text-align: center">BUNGA ACCRUAL</th>
                                 <th style="text-align: center">POKOK BUNGA</th>
+                                <th style="text-align: center">KETERANGAN</th>
                             </tr>
                             </thead>
                             <tbody style="font-size: 12px">

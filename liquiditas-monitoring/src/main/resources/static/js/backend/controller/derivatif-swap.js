@@ -12,23 +12,10 @@ var tempTableSearch= "";
 var srcTglAwal = null;
 var srcTglAkhir = null;
 $(document).ready(function () {
-
-    getAllData();
-
-    $('#pTglNotaDinas').datepicker({ dateFormat: 'dd/mm/yy' });
-    $('#pTglTagihan').datepicker({ dateFormat: 'dd/mm/yy' });
-    $('#pTglDeal').datepicker({ dateFormat: 'dd/mm/yy' });
-
     $('#tanggal_awal').datepicker({ dateFormat: 'dd/mm/yy'});
     $('#tanggal_akhir').attr("disabled", "disabled");
-
-    $('#pPeruntukanDana').select2({
-        width: '100%'
-    });
-
     setSelectBank("cmb_bank","FILTER","","","DERIVATIF");
     setSelectCurr("cmb_currecny","FILTER","","DERIVATIF");
-    setSelectTenor("cmb_tenor","FILTER","");
     search("load");
 });
 
@@ -47,30 +34,48 @@ $("#tanggal_awal").change(function() {
 });
 
 function openFormNew() {
-
     idDeviratif = "";
-
-    $("#pTglDeal").val("");
-    $("#pTglJatuhTempo").val("");
-    $('#pTglJatuhTempo').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
-    $("#pJam").val("");
-    $("#pNationalAmount").val("");
-    $("#pDealRate").val("");
-    $("#pForwardPoint").val("");
-    $("#pBungaDeposito").val("");
-    $("#pLeg2SwapPoint").val("");
-    $("#pLeg1FixingRate").val("");
-    $("#pPeruntukanDana").select2("val","");
-
+    $('#pTglDeal').datepicker({ dateFormat: 'dd/mm/yy' });
+    $("#edit-derivatif-swap").find(".modal-title").html("Form New Data Derivatif Swap")
+    $("#form_derivatif_swap").find("input[type=text], textarea, select")
+        .val("")
+        .prop("readonly", false);
+    $("#pSwapPoint").prop("readonly", true);
+    $("#pNationalAmount, #pKursBeli, #pSpotRate, #pForwardRate, #pKursJual").mask('000,000,000,000,000.00',{reverse : true});
     setSelectCurr("pCurr","","","DERIVATIF");
     setSelectBank("pBankCounterParty","","PEMBAYAR","","DERIVATIF");
-    setSelectTenor("pTenor","","");
-    setSelectSumberDana("pSumberDana","");
-    // setSelectPeruntukanDana("pPeruntukanDana","");
-    setSelectJenisPembayaran("pPeruntukanDana","","");
     $('#edit-derivatif-swap').modal({backdrop: 'static', keyboard: false});
-
 }
+
+$("#pKursBeli, #pKursJual").on("keyup", function(){
+    let sum = parseInt($("#pKursBeli").val().replace(/,/g,"")) - parseInt($("#pKursJual").val().replace(/,/g,""));
+    $("#pSwapPoint").val((isNaN(sum) ? "0" : sum.toString()));
+});
+
+$("#pTglDeal").change(function() {
+    var tglDeal = $('#pTglDeal').val();
+    if(tglDeal === ""){
+        $('#pTglJatuhTempo').val("");
+        $('#pTglJatuhTempo').attr("disabled", "disabled");
+    }else{
+        $('#pTglJatuhTempo').val("");
+        $('#pTglJatuhTempo').datepicker( "destroy" );
+        $('#pTglJatuhTempo').attr("disabled", false);
+        $("#pTglJatuhTempo").datepicker({
+            minDate: tglDeal,
+            maxDate: '+1Y+6M',
+            dateFormat : 'dd/mm/yy',
+            onSelect: function (dateStr) {
+                var max = $(this).datepicker('getDate'); // Get selected date
+                $('#datepicker').datepicker('option', 'maxDate', max || '+1Y+6M'); // Set other max, default to +18 months
+                var start = $("#pTglDeal").datepicker("getDate");
+                var end = $("#pTglJatuhTempo").datepicker("getDate");
+                var days = (end - start) / (1000 * 60 * 60 * 24);
+                $("#pTenor").val(days);
+            }
+        });
+    }
+});
 
 function delete_data(id) {
     var stateCrf = confirm("Anda Yakin Akan Menghapus Data Ini ?");
@@ -89,7 +94,7 @@ function delete_data(id) {
                 // console.log("delete log : ", res)
                 if (res.return == 1) {
                     alert(res.OUT_MSG);
-                    location.reload();
+                    table_derivatif_swap.ajax.reload();
                 } else {
                     alert(res.OUT_MSG);
                 }
@@ -113,28 +118,34 @@ function edit_data(id) {
             pIdDerivatif : id,
         },
         success: function (res) {
-            hideLoadingCss("")
-            idDeviratif = id
-            // console.log("data edit_data :",res);
+            hideLoadingCss("");
+            idDeviratif = id;
 
+            $("#edit-derivatif-swap").find(".modal-title").html("Form Edit Data Derivatif Swap")
+            $("#pNationalAmount, #pKursBeli, #pSpotRate, #pForwardRate, #pKursJual").unmask();
+
+            $("#pDocNoLegOne").val(res[0].DOC_NO).prop('readonly' , true);
+            $("#pDocNoLegTwo").val(res[0].DOC_NO2);
+            // $('#pBankCounterParty').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
             $("#pTglDeal").val(res[0].TGL_DEAL);
-            $("#pTglJatuhTempo").val(res[0].TGL_JATUH_TEMPO);
-            $('#pTglJatuhTempo').datepicker({ dateFormat: 'dd/mm/yy' ,minDate: new Date()});
-            $("#pJam").val(res[0].JAM_DEAL);
-            $("#pNationalAmount").val(res[0].NATIONAL_AMOUNT);
-            $("#pDealRate").val(res[0].DEAL_RATE);
-            $("#pForwardPoint").val(res[0].FORWARD_POINT);
-            $("#pBungaDepositoUtkHedging").val(res[0].BUNGA_DEPOSITE_HEDGING);
-            $("#pLeg1FixingRate").val(res[0].FIXING_RATE);
-            $("#pLeg2SwapPoint").val(res[0].SWAP_POINT);
-            $("#pLeg1KursJisdor").val(res[0].KURS_JISDOR1);
-            $("#pLeg2KursJisdor").val(res[0].KURS_JISDOR2);
+            $("#pTglJatuhTempo").val(res[0].TGL_JATUH_TEMPO).prop('readonly' , true);
+            $("#pTenor").val(res[0].TENOR).prop('readonly' , true);
+            $("#pCurr").val(res[0].CURRENCY).prop('readonly' , true);
+            $("#pNationalAmount").val(parseInt(res[0].NATIONAL_AMOUNT)*100).prop('readonly' , true);
+            $("#pSpotRate").val(parseInt(res[0].SPOT_RATE)*100).prop('readonly' , true);
+            $("#pForwardRate").val(parseInt(res[0].FORWARD_RATE)*100).prop('readonly' , true);
+            $("#pKursJual").val(parseInt(res[0].KURS_JUAL)*100).prop('readonly' , true);
+            $("#pSwapPoint").val(parseInt(res[0].SWAP_POINT)*100);
+            $("#pKursBeli").val(parseInt(res[0].KURS_BELI)*100);
+            $("#pKeterangan").val(res[0].KETERANGAN);
+
+            $("#pNationalAmount, #pSpotRate, #pForwardRate, #pKursJual, #pSwapPoint, #pKursBeli").mask('000,000,000,000,000.00',{reverse : true});
 
             setSelectCurr("pCurr","",res[0].CURRENCY,"DERIVATIF");
-            setSelectBank("pBankCounterParty","","PEMBAYAR",res[0].ID_BANK_CONTERPARTY,"DERIVATIF");
-            setSelectTenor("pTenor","",res[0].ID_TENOR);
-            setSelectSumberDana("pSumberDana",res[0].ID_SUMBER_DANA);
-            setSelectJenisPembayaran("pPeruntukanDana","",res[0].ID_PERUNTUKAN_DANA);
+            setSelectBank("pBankCounterParty","","PEMBAYAR",res[0].KODE_BANK,"DERIVATIF");
+            // setSelectTenor("pTenor","",res[0].ID_TENOR);
+            // setSelectSumberDana("pSumberDana",res[0].ID_SUMBER_DANA);
+            // setSelectJenisPembayaran("pPeruntukanDana","",res[0].ID_PERUNTUKAN_DANA);
             $("#pStatusDeviratif").val(res[0].STATUS_DERIVATIF);
 
             setTimeout(function(){ $('#edit-derivatif-swap').modal({backdrop: 'static', keyboard: false}); }, timeSowFormEdit);
@@ -147,16 +158,6 @@ function edit_data(id) {
 
 function ins_data() {
     showLoadingCss();
-    // console.log("idDeviratif : ",idDeviratif);
-    // console.log("p tgl deal tempo : ",$("#pTglDeal").val()+"T"+$("#pJam").val());
-    // console.log("peruntukan dana : ",$("#pPeruntukanDana").val());
-
-    var newtgl = $("#pTglDeal").val();
-    var resTgl = newtgl.split("/");
-    var newJam = $("#pJam").val();
-    var resJam = newJam.split(":");
-    var datetime = resTgl[0]+resTgl[1]+resTgl[2]+resJam[0]+resJam[1];
-    // console.log(datetime);
 
     $.ajax({
         url: baseUrl+"api_operator/derivatif/ins_data",
@@ -165,19 +166,20 @@ function ins_data() {
         data : {
             pIdProduct : "2",
             pIdDeviratif : idDeviratif,
-            pTglDeal : datetime,
+            pTglDeal : $("#pTglDeal").val(),
+            pDocNo1 : $("#pDocNoLegOne").val(),
+            pDocNo2 : $("#pDocNoLegTwo").val(),
             pBank : $("#pBankCounterParty").val(),
             pTglJatuhTempo : $("#pTglJatuhTempo").val(),
             pTenor : $("#pTenor").val(),
             pCurr : $("#pCurr").val(),
-            pNationalAmount : $("#pNationalAmount").val(),
-            pBungaDeposito : $("#pBungaDepositoUtkHedging").val(),
-            pPeruntukanDana : $("#pPeruntukanDana").val(),
-            pFixingRate : $("#pLeg1FixingRate").val(),
-            pSumberDana : $("#pSumberDana").val(),
-            pKursJisdor2 : $("#pLeg2KursJisdor").val(),
-            pSwapPoint : $("#pLeg2SwapPoint").val(),
-            pStatusDeviratif : $("#pStatusDeviratif").val()
+            pNationalAmount : $("#pNationalAmount").val().replace(/,/g,""),
+            pSpotRate : $("#pSpotRate").val().replace(/,/g,""),
+            pForwardRate : $("#pForwardRate").val().replace(/,/g,""),
+            pKursJual : $("#pKursJual").val().replace(/,/g,""),
+            pKursBeli : $("#pKursBeli").val().replace(/,/g,""),
+            pSwapPoint : $("#pSwapPoint").val().replace(/,/g,""),
+            pKeterangan : $("#pKeterangan").val()
         },
         success: function (res) {
             hideLoadingCss("");
@@ -240,7 +242,7 @@ function exportXls() {
     if(srcTglAkhir != ""){
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_operator/derivatif/xls/2/"+tglAwal.replace(/\//g,"-")+"/"+tglAkhir.replace(/\//g,"-")+"/"+$("#cmb_bank").val()+"/"+$("#cmb_currecny").val()+"/"+$("#cmb_tenor").val());
+    window.open(baseUrl + "api_operator/derivatif/xls/2/"+tglAwal.replace(/\//g,"-")+"/"+tglAkhir.replace(/\//g,"-")+"/"+$("#cmb_bank").val()+"/"+$("#cmb_currecny").val()+"/ALL");
 }
 
 function generatePDF() {
@@ -543,8 +545,13 @@ function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pTenor){
         "scrollX":        true,
         "scrollCollapse": true,
         "aoColumnDefs": [
+            { width: 20, targets: 0 },
+            { width: 100, targets: 1 },
+            { width: 150, targets: 2 },
+            { width: 110, targets: 3 },
+            { width: 100, targets: 4 },
             { width: 100, targets: 5 },
-            { width: 80, targets: 6 },
+            { width: 100, targets: 6 },
             { width: 150, targets: 7 },
             { width: 110, targets: 8 },
             { width: 150, targets: 9 },
@@ -553,25 +560,24 @@ function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pTenor){
             { width: 130, targets: 12 },
             { width: 110, targets: 13 },
             { width: 150, targets: 14 },
-            { width: 100, targets: 15 },
-            { width: 100, targets: 16 },
-            { width: 205, targets: 17 },
-            { width: 90, targets: 18 },
+            { width: 150, targets: 15 },
+            { width: 150, targets: 16 },
+            { width: 50, targets: 17 },
             {
-                "bSortable": true,
-                "aTargets": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+                "bSortable": false,
+                "aTargets": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
             }
             ,
             {
-                "aTargets": [ 19 ],
+                "aTargets": [ 17 ],
                 "mRender": function ( data, type, full ) {
                    if(newRoleUser[0] == "ROLE_MS_LIKUIDITAS"){
                        return "-"
                    }else{
                         var ret_value =
                             '<div class="btn-group">' +
-                            '<button style="width: 15px !important;" class="btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_DERIVATIF + '\')"><i class="fas fa-edit"></i></button>' +
-                            '<button style="width: 15px !important;" class="btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_DERIVATIF + '\')"><i class="fa fa-remove"></i></button>' +
+                            '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_DERIVATIF + '\')"><i class="fas fa-edit"></i></button>' +
+                            '<button style="width: 15px !important;" class="btn btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_DERIVATIF + '\')"><i class="fas fa-trash"></i></button>' +
                             '</div>';
                         return ret_value;
                     }
@@ -581,7 +587,57 @@ function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pTenor){
             }
             ,
             {
-                "aTargets": [ 7 ],
+                "aTargets": [ 0 ],
+                "sClass": "datatables_action",
+                "mRender": function ( data, type, full ) {
+
+                    return full.ROW_NUMBER;
+
+                }
+
+            },
+            {
+                "aTargets": [ 1 ],
+                "sClass": "datatables_action",
+                "mRender": function ( data, type, full ) {
+
+                    return full.DOC_NO;
+
+                }
+
+            },
+            {
+                "aTargets": [ 2 ],
+                "sClass": "datatables_action",
+                "mRender": function ( data, type, full ) {
+
+                    return full.DOC_NO2;
+
+                }
+
+            },
+            {
+                "aTargets": [ 3 ],
+                "sClass": "datatables_action",
+                "mRender": function ( data, type, full ) {
+
+                    return full.BANK;
+
+                }
+
+            },
+            {
+                "aTargets": [ 4 ],
+                "sClass": "datatables_action",
+                "mRender": function ( data, type, full ) {
+
+                    return full.CURRENCY;
+
+                }
+
+            },
+            {
+                "aTargets": [ 5 ],
                 "sClass": "datatables_action",
                 "mRender": function ( data, type, full ) {
 
@@ -591,11 +647,31 @@ function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pTenor){
 
             },
             {
+                "aTargets": [ 6 ],
+                "sClass": "datatables_action",
+                "mRender": function ( data, type, full ) {
+
+                    return full.TGL_DEAL;
+
+                }
+
+            },
+            {
+                "aTargets": [ 7 ],
+                "sClass": "datatables_action",
+                "mRender": function ( data, type, full ) {
+
+                    return full.TGL_JATUH_TEMPO;
+
+                }
+
+            },
+            {
                 "aTargets": [ 8 ],
                 "sClass": "datatables_action",
                 "mRender": function ( data, type, full ) {
 
-                    return accounting.formatNumber(full.FIXING_RATE,2,".",",");
+                    return full.TENOR;
 
                 }
 
@@ -605,7 +681,7 @@ function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pTenor){
                 "sClass": "datatables_action",
                 "mRender": function ( data, type, full ) {
 
-                    return accounting.formatNumber(full.NATIONAL_AMOUNT1,2,".",",");
+                    return accounting.formatNumber(full.KURS_JUAL,2,".",",");
 
                 }
 
@@ -615,7 +691,7 @@ function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pTenor){
                 "sClass": "datatables_action",
                 "mRender": function ( data, type, full ) {
 
-                    return accounting.formatNumber(full.SWAP_POINT,2,".",",");
+                    return accounting.formatNumber(full.SELL_NATIONAL_AMOUNT_USD,2,".",",");
 
                 }
 
@@ -625,7 +701,7 @@ function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pTenor){
                 "sClass": "datatables_action",
                 "mRender": function ( data, type, full ) {
 
-                    return accounting.formatNumber(full.SWAP_RATE,2,".",",");
+                    return accounting.formatNumber(full.SWAP_POINT,2,".",",");
 
                 }
 
@@ -635,7 +711,7 @@ function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pTenor){
                 "sClass": "datatables_action",
                 "mRender": function ( data, type, full ) {
 
-                    return accounting.formatNumber(full.NATIONAL_AMOUNT2,2,".",",");
+                    return accounting.formatNumber(full.KURS_BELI,2,".",",");
 
                 }
 
@@ -645,7 +721,7 @@ function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pTenor){
                 "sClass": "datatables_action",
                 "mRender": function ( data, type, full ) {
 
-                    return accounting.formatNumber(full.BIAYA_SWAP,2,".",",");
+                    return accounting.formatNumber(full.BUY_NATIONAL_AMOUNT_USD,2,".",",");
 
                 }
 
@@ -655,7 +731,7 @@ function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pTenor){
                 "sClass": "datatables_action",
                 "mRender": function ( data, type, full ) {
 
-                    return accounting.formatNumber(full.BUNGA_DEPOSITE_HEDGING,2,".",",");
+                    return accounting.formatNumber(full.JISDOR,2,".",",");
 
                 }
 
@@ -665,7 +741,17 @@ function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pTenor){
                 "sClass": "datatables_action",
                 "mRender": function ( data, type, full ) {
 
-                    return accounting.formatNumber(full.NET_BIAYA_SWAP,2,".",",");
+                    return accounting.formatNumber(full.BEBAN_PENDAPATAN,2,".",",");
+
+                }
+
+            },
+            {
+                "aTargets": [ 16 ],
+                "sClass": "datatables_action",
+                "mRender": function ( data, type, full ) {
+
+                    return full.KETERANGAN;
 
                 }
 
@@ -689,31 +775,6 @@ function initDataTable(pTglAwal,pTglAkhir,pBank,pCurrency,pTenor){
                 return res.data;
             }
         },
-        "columns": [
-            {"data": "ROW_NUMBER", "defaultContent": ""},
-            {"data": "BANK_CONTERPARTY", "defaultContent": ""},
-            {"data": "CURRENCY", "defaultContent": ""},
-            {"data": "TGL_DEAL", "defaultContent": ""},
-            {"data": "JAM_DEAL", "defaultContent": ""},
-            {"data": "TGL_JATUH_TEMPO", "defaultContent": ""},
-            {"data": "TENOR", "defaultContent": ""},
-            {"data": "NATIONAL_AMOUNT", "defaultContent": ""},
-            {"data": "FIXING_RATE", "defaultContent": ""},
-            {"data": "NATIONAL_AMOUNT1", "defaultContent": ""},
-            // {"data": "KURS_JISDOR1", "defaultContent": ""},
-            // {"data": "PENDAPATAN1", "defaultContent": ""},
-            {"data": "SWAP_POINT", "defaultContent": ""},
-            {"data": "SWAP_RATE", "defaultContent": ""},
-            {"data": "NATIONAL_AMOUNT2", "defaultContent": ""},
-            // {"data": "KURS_JISDOR2", "defaultContent": ""},
-            // {"data": "PENDAPATAN2", "defaultContent": ""},
-            {"data": "BIAYA_SWAP", "defaultContent": ""},
-            {"data": "BUNGA_DEPOSITE_HEDGING", "defaultContent": ""},
-            {"data": "NET_BIAYA_SWAP", "defaultContent": ""},
-            {"data": "SUMBER_DANA", "defaultContent": ""},
-            {"data": "PERUNTUKAN_DANA", "defaultContent": ""},
-            {"data": "STATUS_DERIVATIF", "defaultContent": ""}
-        ],
         "drawCallback": function( settings ) {
             $('th').removeClass('sorting_asc');
             $('th').removeClass('datatables_action');

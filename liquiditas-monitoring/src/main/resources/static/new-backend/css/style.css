@@ -3580,11 +3580,16 @@ button.close {
   display: none;
   overflow: hidden;
   outline: 0; }
-.modal.fade .modal-dialog {
-  transition: transform 0.3s ease-out;
-  transform: translate(0, -25%); }
-.modal.show .modal-dialog {
-  transform: translate(0, 0); }
+  .modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out;
+    transform: translate(0, -25%); }
+  .modal.show .modal-dialog {
+    transform: translate(0, 0); }
+  .modal.fade .modal-dialog-lcl {
+    transition: transform 0.3s ease-out;
+    transform: translate(0, -25%); }
+  .modal.show .modal-dialog-lcl {
+    transform: translate(0, 0); }
 
 .modal-open .modal {
   overflow-x: hidden;
@@ -3659,8 +3664,14 @@ button.close {
     max-width: 300px; } }
 
 @media (min-width: 992px) {
-  .modal-lg {
+  .modal-lg .modal-xl {
     max-width: 800px; } }
+
+@media (min-width: 1200px) {
+  .modal-xl {
+    max-width: 1140px;
+  }
+}
 
 .tooltip {
   position: absolute;

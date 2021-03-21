@@ -30,6 +30,31 @@
             overflow-x: hidden !important;
         }
 
+        .btn-circle.btn-sm {
+            width: 30px;
+            height: 30px;
+            padding: 6px 0px;
+            border-radius: 15px;
+            font-size: 8px;
+            text-align: center;
+        }
+        .btn-circle.btn-md {
+            width: 50px;
+            height: 50px;
+            padding: 7px 10px;
+            border-radius: 25px;
+            font-size: 10px;
+            text-align: center;
+        }
+        .btn-circle.btn-xl {
+            width: 70px;
+            height: 70px;
+            padding: 10px 16px;
+            border-radius: 35px;
+            font-size: 12px;
+            text-align: center;
+        }
+
         .md-stepper-horizontal {
             display:table;
             width:80%;
@@ -148,17 +173,14 @@
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="fas fa-file-pdf"></i> &nbsp;Pdf</button>
+                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew()" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_JA_CASH','ROLE_JA_IE')"><i class="fas fa-plus-square"></i>&nbsp;Tambah Data</button>
             </div>
         </li>
     </ol>
     <div class="container-fluid" style="margin-bottom: 15px;">
-        <div class="animated fadeIn">
+        <div class="animated fadeIn" id="imprest_detail" style="margin-bottom: 0em !important; display: none;">
             <div align="center">
-                <h5><b>KEBUTUHAN IMPREST UNIT</b></h5>
-                <h6 id="tgl_imprest">ini diisi tanggal</h6>
-            </div>
-            <div align="center">
-                <div class="md-stepper-horizontal orange">
+                <div class="md-stepper-horizontal green">
                     <div id="staff_pe" class="md-step done" style="width: 31.33%;">
                         <div class="md-step-circle"><span>1</span></div>
                         <div class="md-step-title">STAFF PE</div>
@@ -173,7 +195,7 @@
                     </div>
                     <div id="vp_pe" class="md-step done">
                         <div class="md-step-circle"><span>4</span></div>
-                        <div class="md-step-title">VP PE</div>
+                        <div class="md-step-title">VP TOE</div>
                         <div class="md-step-bar-left"></div>
                         <div class="md-step-bar-right"></div>
                     </div>
@@ -185,17 +207,15 @@
                     <div class="card-header" style="margin-bottom: 0.5rem; background-color: #eceff1 !important">
                         <div class="col-md-12 row" id="filter" style="margin-left: 0rem;">
                             <div class="col-md-12 row" style="padding-left: 7.5px;margin-right: 0;">
-                                <div class="col-md-5" style="padding-right: 0px;">
-                                    <form class="form-inline" style="margin-bottom: 0rem;">
-                                        <div class="form-group">
-                                            <label>PERIODE </label>
-                                            <input type="text" style="border-radius: 5px; margin: 0 1em 0" class="form-control" id="periode_dropping"/>
-                                        </div>
-                                        <button type="button" class="btn btn-sm btn-primary" onclick="search('search')"><i class="fas fa-search"></i></button>
-                                    </form>
+                                <div class="col-md-3" style="padding-right: 0;">
+                                    <h5 class="card-title" style="margin-bottom: 0 !important;">DETAIL IMPREST UNIT</h5>
+                                    <small id="judul_form" style="font-size: 1em; !important;"></small>
                                 </div>
-                                <div class="col-md-7" style="padding-right: 0;">
-                                    <div class="dataTables_filter float-right" id="button_action" style="padding-top: 0.45rem;">
+                                <div class="col-md-1">
+
+                                </div>
+                                <div class="col-md-8" style="padding-right: 0;">
+                                    <div class="dataTables_filter float-right" id="button_action" style="padding-top: 0.65rem;">
 
                                     </div>
                                 </div>
@@ -205,73 +225,74 @@
                     <div class="card-block" style="padding-top: 0 !important;">
                         <table id="table_imprest_unit" class="table table-striped" style="margin-left: 0px; width: 100%;">
                             <thead>
-                            <tr>
-                                <th rowspan="2">NO</th>
-                                <th rowspan="2">NAMA UNIT</th>
-                                <th rowspan="2">NAMA BANK</th>
-                                <th style="background-color: #ffc671;" colspan="2">INVESTASI</th>
-                                <th style="background-color: #97d48f;" rowspan="2">OPERASI</th>
-                            </tr>
-                            <tr>
-                                <th style="background-color: #ffc671;">NON RUTIN</th>
-                                <th style="background-color: #ffc671;">RUTIN</th>
-                            </tr>
+                                <tr>
+                                    <th>NO</th>
+                                    <th>NAMA UNIT</th>
+                                    <th>NAMA BANK</th>
+                                    <th style="background-color: #ffc671;">INVESTASI</th>
+                                    <th style="background-color: #97d48f;">OPERASI</th>
+                                </tr>
                             </thead>
                             <tbody style="font-size: 12px">
                             </tbody>
+                            <tfoot>
                             <tr style="font-size: 12px; background-color: #b1cae0;">
                                 <td colspan="2" rowspan="4" style="vertical-align: middle; background-color: #ffffff !important; text-align: center;"><h6><b>TOTAL</b></h6></td>
                                 <td ><b>MANDIRI</b></td>
-                                <td style="text-align: right; background-color: #ffc672;" id="t_mandiri_non"></td>
                                 <td style="text-align: right; background-color: #ffc672;" id="t_mandiri_inv"></td>
                                 <td style="text-align: right; background-color: #97d48f;" id="t_mandiri_ops"></td>
                             </tr>
                             <tr style="font-size: 12px; background-color: #b1cae0;">
                                 <td><b>BRI</b></td>
-                                <td style="text-align: right; background-color: #ffc672;" id="t_bri_non"></td>
                                 <td style="text-align: right; background-color: #ffc672;" id="t_bri_inv"></td>
                                 <td style="text-align: right; background-color: #97d48f;" id="t_bri_ops"></td>
                             </tr>
                             <tr style="font-size: 12px; background-color: #b1cae0;">
                                 <td><b>BNI</b></td>
-                                <td style="text-align: right; background-color: #ffc672;" id="t_bni_non"></td>
                                 <td style="text-align: right; background-color: #ffc672;" id="t_bni_inv"></td>
                                 <td style="text-align: right; background-color: #97d48f;" id="t_bni_ops"></td>
                             </tr>
                             <tr style="font-size: 12px; background-color: #b1cae0;">
                                 <td><b>BUKOPIN</b></td>
-                                <td style="text-align: right; background-color: #ffc672;" id="t_bukopin_non"></td>
                                 <td style="text-align: right; background-color: #ffc672;" id="t_bukopin_inv"></td>
                                 <td style="text-align: right; background-color: #97d48f;" id="t_bukopin_ops"></td>
                             </tr>
+                            </tfoot>
+
                         </table>
                     </div>
-                    <div class="card-footer" style="background-color: #eceff1 !important">
-                        <div class="row text-center">
-                            <div class="col">
-                                <div class="text-fuchsia"><h6>MANDIRI</h6></div>
-                                <b id="tot_man_inv" style="color: #ec991e;">23,293,940</b> <br/>
-                                <b id="tot_man" style="color: #3b942f;">23,293,940</b>
-                            </div>
-                            <div class="c-vr"></div>
-                            <div class="col">
-                                <div class="text-fuchsia"><h6>BRI</h6></div>
-                                <b id="tot_bri_inv" style="color: #ec991e;">23,293,940</b><br/>
-                                <b id="tot_bri" style="color: #3b942f;">23,293,940</b>
-                            </div>
-                            <div class="c-vr"></div>
-                            <div class="col">
-                                <div class="text-fuchsia"><h6>BNI</h6></div>
-                                <b id="tot_bni_inv" style="color: #ec991e;">23,293,940</b><br/>
-                                <b id="tot_bni" style="color: #3b942f;">23,293,940</b>
-                            </div>
-                            <div class="c-vr"></div>
-                            <div class="col">
-                                <div class="text-fuchsia"><h6>BUKOPIN</h6></div>
-                                <b id="tot_buk_inv" style="color: #ec991e;">23,293,940</b><br/>
-                                <b id="tot_buk" style="color: #3b942f;">23,293,940</b>
-                            </div>
-                        </div>
+                </div>
+            </div>
+        </div >
+
+<!--        Header-->
+        <div class="row" id="header_imprest_row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <form class="form-inline">
+                            <label for="tglAwal" class="m-2">Jatuh Tempo</label>
+                            <input type="text" class="form-control m-2" id="tglAwal" placeholder="Dari.."/>
+                            <input type="text" class="form-control m-2" id="tglAKhir" placeholder="Sampai.."/>
+                            <button type="button" class="btn btn-primary btn-sm m-2" onclick="search()" style="width: 35px;"><i class="fas fa-search"></i></button>
+                        </form>
+                    </div>
+
+                    <div class="card-block" style="padding-top: 1em !important;">
+                        <table id="table_imprest_unit_header" class="table table-striped" style="margin-left: 0px;" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>NO</th>
+                                    <th>NAMA FORM</th>
+                                    <th>TANGGAL PEMBUATAN</th>
+                                    <th>JATUH TEMPO</th>
+                                    <th>STATUS</th>
+                                    <th>AKSI</th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: 12px" align="center">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -295,11 +316,40 @@
                             </a></label>
                         <input type="file" class="form-control" id="file-xls"
                                accept="application/vnd.ms-excel"/>
+                        <input type="hidden" name="idForm" id="idForm" value=""/>
+                        <input type="hidden" name="status" id="status" value=""/>
+                        <input type="hidden" name="jt" id="jt" value=""/>
 
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-info" data-dismiss="modal" onclick="upload_server_xls()">Selesai</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--    Modal New Data-->
+    <div class="modal fade" id="modal_new_data" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Header Baru Imprest Unit</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="pHeadTglJatuhTempo"><span class="mandatory">*</span>&nbsp;Tanggal Jatuh Tempo :</label>
+                                <input type="text" class="form-control" id="pHeadTglJatuhTempo" style="background-color: white" value="" required="required"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="ins_header_data()">Submit</button>
                 </div>
             </div>
         </div>

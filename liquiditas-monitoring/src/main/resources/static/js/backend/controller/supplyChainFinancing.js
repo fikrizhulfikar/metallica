@@ -212,7 +212,7 @@ function edit_data(id) {
         success: function (res) {
             $("#pNominal").unmask();
             setSelectCurr("pCurrecny", "", res[0].CURRENCY, "REKAP");
-            setSelectBank("pbankCounterparty", "FILTER", "PEMBAYAR", res[0].BANK, "REKAP");
+            setSelectBank("pbankCounterparty", "FILTER", "PEMBAYAR", res[0].ID_BANK, "REKAP");
             setSelectCashCode("pJenisPembayaran", res[0].JENIS_PEMBAYARAN);
             $("#pIdScf").val(res[0].ID_SCF);
             $("#pTglJatuhTempo").val(res[0].TGL_JATUH_TEMPO);
@@ -233,21 +233,19 @@ function edit_data(id) {
                 width : "100%",
                 theme : "bootstrap",
                 placeholder: 'Cari vendor...',
-                minimumInputLength: 3,
                 ajax : {
                     url : baseUrl + "/api_master/vendor/get_data_vendor_sap",
                     dataType : "JSON",
-                    delay : 500,
                     data : function (params) {
                         params.term = res[0].VENDOR;
                         return {
-                            pNamaVendor : params.term
+                            pNamaVendor : res[0].VENDOR
                         };
                     },
                     processResults : function (data, page) {
-                        console.log(data);
                         return {
                             results :$.map(data, function (items) {
+                                console.log(items);
                                 return {
                                     text : items.VALUE,
                                     id : items.ID
@@ -257,7 +255,7 @@ function edit_data(id) {
                     },
                     cache : true
                 }
-            });
+            }).trigger("change");
 
             setTimeout(function () {
                $('#edit-scf-modal').modal({backdrop: 'static', keyboard: false});
@@ -548,8 +546,6 @@ function upload_file(pIdScf) {
 }
 
 function upload_server(jenisFile) {
-    $("#modal-upload-file").modal("hide");
-    showLoadingCss();
     var form = $('form')[0];
     var formData = new FormData(form);
     let fileSize;
@@ -567,6 +563,14 @@ function upload_server(jenisFile) {
         fileSize = $('input[type=file]#file_lainya')[0].files[0].size / 1000;
         $("#file_lainya").val('');
     }
+
+    if (fileSize > 10024){
+        alert("Ukuran File Maksimal 10 MB");
+        return false;
+    }
+
+    $("#modal-upload-file").modal("hide");
+    showLoadingCss();
 
     formData.append('pIdScf', $("#temp_id_scf_file").val());
     formData.append('pJenisFile', jenisFile);
@@ -647,4 +651,17 @@ function getScfFiles(pIdScf) {
             console.log("Gagal mengambil data files rekap")
         }
     });
+}
+
+function validateForm(form_type) {
+    let form = (form_type === 1) ? "#form_penambah" : "#form_pengurang";
+    let empty=0;
+    $(form)
+        .find("select, input")
+        .each(function(){
+            if ($(this).prop("required") && $(this).val() === ""){
+                empty++;
+            }
+        });
+    return empty;
 }
