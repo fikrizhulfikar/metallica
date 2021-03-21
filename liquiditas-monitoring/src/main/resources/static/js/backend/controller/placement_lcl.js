@@ -2,6 +2,7 @@ var tempTableSearch = "";
 var kebutuhanPlacement;
 var lcl_today = null;
 var tanggal = new Date();
+var tanggal2 = new Date();
 var time = tanggal.getHours();
 var tempTableSearch = "";
 var sesi = "";
@@ -28,7 +29,6 @@ $(document).ready(function () {
     $("#sesicetak2").html(sesi);
     $("#tglApprove").html(tanggal);
     $('#tanggal_awal1').datepicker({dateFormat: 'dd/mm/yy'});
-//    setSelectSesi("sesi_filter", "FILTER", "", "REKAP");
     search("load");
 
 
@@ -39,13 +39,16 @@ $(document).ready(function () {
 $("#dash_date").datepicker({dateFormat : "dd/mm/yy"});
 });
 
-function dateToString(date) {
-    return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+function dateToString(tanggal) {
+    return tanggal.getDate() + "/" + (tanggal.getMonth() + 1) + "/" + tanggal.getFullYear();
 }
 
 function incDate(tanggal, days) {
     date = new Date(tanggal.getTime() + (86400000 * days));
-    return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+    if (date.getMonth() >= "9"){
+        return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+    } else
+        return date.getDate() + "/0" + (date.getMonth() + 1) + "/" + date.getFullYear()
 
 }
 
@@ -79,19 +82,15 @@ function search(state) {
         }
 
         sesi = ss;
-
-        console.log("Ini data : " + tanggal + " " + sesi);
         $('#tglcetak1').html(tgl);
         $('#sesicetak1').html(ss);
         $('#tglcetak2').html(tgl);
         $('#sesicetak2').html(ss);
         initDataTablePlacement(tanggal, sesi);
         initDataTablePlacement2(tanggal, sesi);
-//        lcl_today = $("#tanggal_awal1").val();
     } else {
         initDataTablePlacement(tanggal, sesi);
         initDataTablePlacement2(tanggal, sesi);
-//        lcl_today = $("#tanggal_awal1").val();
     }
 }
 
@@ -137,19 +136,17 @@ function initDataTablePlacement(tanggal, sesi) {
 function initDataTablePlacement2(){
     let date = new Date();
 
-//    console.log("Ini tanggal : " + tanggal);
     $("#tgl1b").html(tanggal);
-//    var dt = $.datepicker.parseDate('yy-mm-dd', '2011-02-25');
-//    tanggal.setDate(tanggal.getDate() + 1)
-//    console.log("Ini tanggal 2 : " + tanggal);
-//    var dtNew = $.datepicker.formatDate('yy-mm-dd', dt);
-//    console.log("Ini tanggal 3 : " + dtNew);
-    $("#tgl2b").html(incDate(date, 1));
-    $("#tgl3b").html(incDate(date, 2));
-    $("#tgl4b").html(incDate(date, 3));
-    $("#tgl5b").html(incDate(date, 4));
-    $("#tgl6b").html(incDate(date, 5));
-//    console.log("Ini tanggal 2 : " + incDate(tanggal, 1));
+    var dateString = tanggal;
+    var dateArray = dateString.split("/");
+    var newDate = dateArray[1] + '/' + dateArray[0] + '/' + dateArray[2];
+    var dateObject = new Date(newDate);
+
+    $("#tgl2b").html(incDate(dateObject, 1));
+    $("#tgl3b").html(incDate(dateObject, 2));
+    $("#tgl4b").html(incDate(dateObject, 3));
+    $("#tgl5b").html(incDate(dateObject, 4));
+    $("#tgl6b").html(incDate(dateObject, 5));
 
     showLoadingCss();
     $('#kebutuhan-placement tbody').empty();
@@ -179,22 +176,24 @@ function initDataTablePlacement2(){
             {width: "20%", "targets": 0},
             { className: "datatables_action", "targets": [1, 2, 3, 4, 5, 6, 7, 8] },
             {
+                "data":null,
                 "aTargets": [0],
 //                "visible" : false,
                 "mRender": function (data, type, full) {
                     return full.TIPE_KEBUTUHAN;
-                }
-//                "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {$(cell).css("background-color","#77D5D4");}
+                },
+                "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {$(cell).css("background-color","#77D5D4");}
             },
             {
+                "data":null,
                 "aTargets": [1],
                 "mRender": function (data, type, full) {
                     return full.BANK;
-                }
-//                "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {$(cell).css("background-color","#5ef4d3");}
-
+                },
+                "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {$(cell).css("background-color","#5ef4d3");}
             },
             {
+                "data":null,
                 "aTargets": [2],
                 "mRender": function (data, type, full) {
                     return "<td> Rp. " + accounting.formatNumber(full.RP_D0,2,".",",") + "</td";
@@ -202,14 +201,15 @@ function initDataTablePlacement2(){
 
             },
             {
+                "data":null,
                 "aTargets": [3],
                 "mRender": function (data, type, full) {
                     return "<td> Rp. " + accounting.formatNumber(full.RP_D1,2,".",",") + "</td";
                 }
 
             },
-
             {
+                "data":null,
                 "aTargets": [4],
                 "mRender": function (data, type, full) {
                     return "<td> Rp. " + accounting.formatNumber(full.RP_D2,2,".",",") + "</td";
@@ -217,6 +217,7 @@ function initDataTablePlacement2(){
 
             },
             {
+                "data":null,
                 "aTargets": [5],
                 "mRender": function (data, type, full) {
                     return "<td> Rp. " + accounting.formatNumber(full.RP_D3,2,".",",") + "</td";
@@ -224,6 +225,7 @@ function initDataTablePlacement2(){
 
             },
             {
+                "data":null,
                 "aTargets": [6],
                 "mRender": function (data, type, full) {
                     return "<td> Rp. " + accounting.formatNumber(full.RP_D4,2,".",",") + "</td";
@@ -231,6 +233,7 @@ function initDataTablePlacement2(){
 
             },
             {
+                "data":null,
                 "aTargets": [7],
                 "mRender": function (data, type, full) {
                     return "<td> Rp. " + accounting.formatNumber(full.RP_D5,2,".",",") + "</td";
@@ -325,7 +328,7 @@ function initDataTablePlacement2(){
                              html2 += '<button class="btn btn-elementary btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="reverse_lcl_data(1,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Reverse"><i class="fas fa-backspace"></i></button>';
                          }
                      }else if(localStorage.getItem("imprest_approval_status") === "2"){
-                         if (newRoleUser[0] === "ROLE_VP_OPERATION_EXPENDITURE" || newRoleUser[0] === "ROLE_ADMIN"){
+                         if (newRoleUser[0] === "ROLE_VP_LIQUIDITY_AND_RECEIPT" || newRoleUser[0] === "ROLE_ADMIN"){
                              html2 = '<button class="btn btn-warning btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="update_lcl_data(3,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Approve"><i class="fas fa-check-square"></i></button>';
                              html2 += '<button class="btn btn-elementary btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="reverse_lcl_data(2,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Reverse"><i class="fas fa-backspace"></i></button>';
                          }
@@ -338,6 +341,35 @@ function initDataTablePlacement2(){
                      $(this).append(html2);
                  })
              };
+
+//             "drawCallback" : function (setting, json) {
+//                  let groupColumn = 0;
+//                  var api = this.api();
+//                  var rows = api.rows({page:'current'}).nodes();
+//                  var last = null;
+//                  let array = api.column(groupColumn, {page:'current'}).data();
+//
+//                  api.column(groupColumn, {page:'current'}).data().each(function (group, i){
+//                  if (last !== group.TIPE_KEBUTUHAN){
+//                      let count = 1;
+//
+//                      for (let j=i; j<array.length; j++){
+//                          let first = array[i].TIPE_KEBUTUHAN;
+//                          if (first !== array[j].TIPE_KEBUTUHAN) break;
+//                          count+= 1;
+//                      }
+//                      if ((group.TIPE_KEBUTUHAN === "TOTAL")){
+//                          $(rows).eq(i).before(
+//                              '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold; background-color: #77D5D4">'+group.TIPE_KEBUTUHAN+'</td></tr>'
+//                          );
+//                      }else
+//                          $(rows).eq(i).before(
+//                              '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold; background-color: #77D5D4"">'+group.TIPE_KEBUTUHAN+'</td></tr>'
+//                          );
+//                      last = group.TIPE_KEBUTUHAN;
+//                      }
+//                  });
+//              }
          }
      });
 
@@ -355,7 +387,7 @@ function viewDoc(){
     alert("Mohon maaf fitur ini belum tersedia");
 }
 
-function generateExecl(){
+function generateExcel(){
     alert("Mohon maaf fitur ini belum tersedia");
 }
 

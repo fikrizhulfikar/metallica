@@ -1241,4 +1241,15 @@ public class MasterDataController {
             return null;
         }
     }
+
+    @RequestMapping(value = "/vendor/get_data_vendor_sap", method = RequestMethod.GET)
+    public List<Map<String,Object>> listVendorSap(@RequestParam(value = "pNamaVendor") String pNamaVendor) {
+
+        try{
+            return masterService.getListVendorSap(pNamaVendor);
+        }catch (Exception e){
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
 }
