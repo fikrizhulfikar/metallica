@@ -267,7 +267,7 @@ function detail(idForm, status){
 //    showLoadingCss();
     $('#table-rekap-placement-lcl').dataTable().fnDestroy();
 
-    let rincian_saldo = $("#table-rekap-placement-lcl").DataTable({
+    rincian_saldo = $("#table-rekap-placement-lcl").DataTable({
         "ajax" : {
             "url": baseUrl + "api_operator/rekap_invoice_belum/detail_placement_lcl_head",
             "data" : {
@@ -662,7 +662,7 @@ function setA(jenis, p_id_form){
 
         $("#close").click(function(){
             $('#set').remove();
-//            rincian_saldo.ajax.reload();
+            rincian_saldo.ajax.reload();
             kebutuhanPlacement.ajax.reload();
         })
 }
@@ -782,7 +782,7 @@ function setB(jenis, p_id_form){
 
     $("#close").click(function(){
         $('#set').remove();
-//        rincian_saldo.ajax.reload();
+        rincian_saldo.ajax.reload();
         kebutuhanPlacement.ajax.reload();
     })
 }

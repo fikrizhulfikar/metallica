@@ -675,11 +675,11 @@ function setA(jenis, p_id_form){
 
         $(document).ready(function() {
             if (jenis == "JPY"){
-                $('#container').append('<button type="button" id="set" class="btn btn-primary" onclick="updateJPY()">Set</button>');
+                $('#container').append('<button type="button" id="set" class="btn btn-primary" onclick="updateJPY(\''+p_id_form+'\')">Set</button>');
             } else if (jenis == "EUR") {
-                $('#container').append('<button type="button" id="set" class="btn btn-primary" onclick="updateEUR()">Set</button>');
+                $('#container').append('<button type="button" id="set" class="btn btn-primary" onclick="updateEUR(\''+p_id_form+'\')">Set</button>');
             } else {
-                $('#container').append('<button type="button" id="set" class="btn btn-primary" onclick="updateUSD()">Set</button>');
+                $('#container').append('<button type="button" id="set" class="btn btn-primary" onclick="updateUSD(\''+p_id_form+'\')">Set</button>');
             }
         });
 
@@ -721,7 +721,8 @@ function updateJPY(p_id_form){
             console.log("res ins potensi : ",res);
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
-                location.reload();
+                rincian_saldo.ajax.reload();
+                kebutuhanPlacement.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
@@ -763,7 +764,8 @@ function updateEUR(p_id_form){
             console.log("res ins potensi : ",res);
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
-                location.reload();
+                rincian_saldo.ajax.reload();
+                kebutuhanPlacement.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
@@ -805,7 +807,8 @@ function updateUSD(p_id_form){
             console.log("res ins potensi : ",res);
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
-                location.reload();
+                rincian_saldo.ajax.reload();
+                kebutuhanPlacement.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
