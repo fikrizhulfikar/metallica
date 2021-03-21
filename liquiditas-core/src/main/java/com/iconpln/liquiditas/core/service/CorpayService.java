@@ -11,6 +11,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -2085,4 +2086,684 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         return out;
     }
 
+    public Map<String, Object> getPenjualanTenagaListrik(String p_tgl_awal, String p_tgl_akhir, String p_unit, String p_range) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data getPenjualanTenagaListrik search info = " +
+                        "p_tgl_awal : {}, " +
+                        "p_tgl_akhir : {}, " +
+                        "p_unit : {}, " +
+                        "p_range : {}, ",
+
+                p_tgl_awal, p_tgl_akhir, p_unit, p_range);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_penerimaanptl_perlayanan");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_total", OracleTypes.CURSOR)
+                .addValue("p_tgl_awal", p_tgl_awal, Types.VARCHAR)
+                .addValue("p_tgl_akhir", p_tgl_akhir, Types.VARCHAR)
+                .addValue("p_unit", p_unit, Types.VARCHAR)
+                .addValue("p_range", p_range, Types.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data get_penerimaanptl_perlayanan : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> getPenjualanTenagaListrikBank(String p_tgl_awal, String p_tgl_akhir, String p_bank) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data getPenjualanTenagaListrik search info = " +
+                        "p_tgl_awal : {}, " +
+                        "p_tgl_akhir : {}, " +
+                        "p_bank : {}, ",
+
+                p_tgl_awal, p_tgl_akhir, p_bank);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_penerimaanptl_perbank");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_total", OracleTypes.CURSOR)
+                .addValue("p_tgl_awal", p_tgl_awal, Types.VARCHAR)
+                .addValue("p_tgl_akhir", p_tgl_akhir, Types.VARCHAR)
+                .addValue("p_bank", p_bank, Types.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data get_penerimaanptl_perbank : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> getPenjualanTenagaListrikDist(String p_tgl_awal, String p_tgl_akhir, String p_unit) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data getPenjualanTenagaListrik search info = " +
+                        "p_tgl_awal : {}, " +
+                        "p_tgl_akhir : {}, " +
+                        "p_unit : {}, ",
+
+                p_tgl_awal, p_tgl_akhir, p_unit);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_ptl_perdist");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_total", OracleTypes.CURSOR)
+                .addValue("p_tgl_awal", p_tgl_awal, Types.VARCHAR)
+                .addValue("p_tgl_akhir", p_tgl_akhir, Types.VARCHAR)
+                .addValue("p_unit", p_unit, Types.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data get_ptl_perdist : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> getPlacementLCL(String p_tgl_awal, String p_sesi) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data getPlacementLCL search info = " +
+                        "p_tgl_awal : {}, " +
+                        "psesi : {}, ",
+
+                p_tgl_awal, p_sesi);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("header_rekap_placement_lcl");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_kebutuhan_placement", OracleTypes.CURSOR)
+                .addValue("ptanggal", p_tgl_awal, Types.VARCHAR)
+                .addValue("psesi", p_sesi, Types.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data header_rekap_placement_lcl : {}", out);
+        return out;
+    }
+
+    public List<Map<String, Object>> getDPlacementLCL(String p_tgl_awal, String p_sesi, String p_tipe) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("detail_rekap_placement_lcl");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_total", OracleTypes.CURSOR)
+                .addValue("p_tipe", OracleTypes.CURSOR)
+                .addValue("p_tanggal", p_tgl_awal, OracleTypes.VARCHAR)
+                .addValue("p_sesi", p_sesi, Types.VARCHAR);
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public Map<String, Object> getInsPlacementLCL(String pData) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("ins_rekap_placement_lcl");
+        SqlParameterSource in;
+        Map<String, Object> out = null;
+        System.out.println("pData: "+pData);
+        JSONArray jsonArray = new JSONArray(pData);
+
+        try {
+            for (int index = 0; index < jsonArray.length(); index++) {
+                JSONObject obj = jsonArray.getJSONObject(index);
+                System.out.println(obj);
+                in = new MapSqlParameterSource()
+                        .addValue("p_tipe", obj.get("tipe"))
+                        .addValue("p_bank", obj.get("bank"))
+                        .addValue("p_mandiri", obj.get("bmandiri"))
+                        .addValue("p_bri", obj.get("bbri"))
+                        .addValue("p_bni", obj.get("bbni"))
+                        .addValue("p_bukopin", obj.get("bbukopin"))
+                        .addValue("p_mega", obj.get("bmega"))
+                        .addValue("p_dki", obj.get("bdki"))
+                        .addValue("p_bca", obj.get("bbca"))
+                        .addValue("p_bii", obj.get("bbii"))
+                        .addValue("p_bris", obj.get("bbris"))
+                        .addValue("p_btn", obj.get("bbtn"))
+                        .addValue("p_danamon", obj.get("bdanamon"))
+                        .addValue("p_ocbc", obj.get("bocbc"))
+                        .addValue("p_uob", obj.get("buob"))
+                        .addValue("p_dbs", obj.get("bdbs"))
+                        .addValue("p_cimb", obj.get("bcimb"));
+
+                out = simpleJdbcCall.execute(in);
+                AppUtils.getLogger(this).info("data ins_rekap_placement_lcl {}: {}", obj.get("bank"), out);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return out;
+    }
+
+    public Map<String, Object> getDocPlacementLCL(String p_tgl_awal, String p_sesi) throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("lihat_dokument_placement_lcl");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_pindah_buku", OracleTypes.CURSOR)
+                .addValue("out_settlement", OracleTypes.CURSOR)
+                .addValue("out_pengadaan_valas", OracleTypes.CURSOR)
+                .addValue("out_approver", OracleTypes.CURSOR)
+                .addValue("ptanggal", p_tgl_awal, Types.VARCHAR)
+                .addValue("psesi", p_sesi, Types.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data lihat_dokument_placement_lcl : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> getPlacementFCL(String p_tgl_awal, String p_sesi) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data getPlacementLCL search info = " +
+                        "p_tgl_awal : {}, " +
+                        "psesi : {}, ",
+
+                p_tgl_awal, p_sesi);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("header_rekap_placement_fcl");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_kebutuhan_placement", OracleTypes.CURSOR)
+                .addValue("ptanggal", p_tgl_awal, Types.VARCHAR)
+                .addValue("psesi", p_sesi, Types.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data header_rekap_placement_fcl : {}", out);
+        return out;
+    }
+
+//    public Map<String, Object> getPemindahBukuan(String p_tgl_awal, String p_sesi) throws SQLException {
+//
+//        AppUtils.getLogger(this).debug("data getPlacementLCL search info = " +
+//                        "p_tgl_awal : {}, " +
+//                        "psesi : {}, ",
+//
+//                p_tgl_awal, p_sesi);
+//
+//        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+//                .withCatalogName("PKG_DASHBOARD_CORPAY")
+//                .withFunctionName("get_rekap_placement_lcl");
+//
+//        SqlParameterSource in = new MapSqlParameterSource()
+//                .addValue("out_pindah_buku", OracleTypes.CURSOR)
+//                .addValue("ptanggal", p_tgl_awal, Types.VARCHAR)
+//                .addValue("psesi", p_sesi, Types.VARCHAR);
+//
+//        Map<String, Object> out = simpleJdbcCall.execute(in);
+//        AppUtils.getLogger(this).info("data get_rekap_placement_lcl : {}", out);
+//        return out;
+//    }
+
+    public Map<String, Object> getSettlementValas(String p_tgl_awal, String p_sesi) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data getPlacementLCL search info = " +
+                        "p_tgl_awal : {}, " +
+                        "psesi : {}, ",
+
+                p_tgl_awal, p_sesi);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("lihat_dokument_placement_lcl");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_settlement", OracleTypes.CURSOR)
+                .addValue("ptanggal", p_tgl_awal, Types.VARCHAR)
+                .addValue("psesi", p_sesi, Types.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data lihat_dokument_placement_lcl : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> getApprover(String p_tgl_awal, String p_sesi) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data getPlacementLCL search info = " +
+                        "p_tgl_awal : {}, " +
+                        "psesi : {}, ",
+
+                p_tgl_awal, p_sesi);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("lihat_dokument_placement_lcl");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_pindah_buku", OracleTypes.CURSOR)
+                .addValue("out_settlement", OracleTypes.CURSOR)
+                .addValue("out_pengadaan_valas", OracleTypes.CURSOR)
+                .addValue("out_approver", OracleTypes.CURSOR)
+                .addValue("ptanggal", p_tgl_awal, Types.VARCHAR)
+                .addValue("psesi", p_sesi, Types.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data lihat_dokument_placement_lcl : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> getPemindahBukuanFCL(String p_tgl_awal, String p_sesi) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data getPlacementLCL search info = " +
+                        "p_tgl_awal : {}, " +
+                        "psesi : {}, ",
+
+                p_tgl_awal, p_sesi);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("lihat_dokument_placement_fcl");
+
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_pindah_buku", OracleTypes.CURSOR)
+                .addValue("ptanggal", p_tgl_awal, Types.VARCHAR)
+                .addValue("psesi", p_sesi, Types.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        AppUtils.getLogger(this).info("data lihat_dokument_placement_fcl : {}", out);
+        return out;
+    }
+
+    public List<Map<String, Object>> getPemindahBukuan(String tanggal, String sesi){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_rekap_placement_lcl");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tanggal", tanggal, OracleTypes.VARCHAR)
+                .addValue("p_sesi", sesi, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public List<Map<String, Object>> getRekapPlacementLCL(String tanggal, String sesi){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_rekap_placement_lcl");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tanggal", tanggal, OracleTypes.VARCHAR)
+                .addValue("p_sesi", sesi, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public List<Map<String, Object>> getKebutuhanPlacementLCL(String tanggal, String sesi, String userid){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_kebutuhan_lcl");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tanggal", tanggal, OracleTypes.VARCHAR)
+                .addValue("p_sesi", sesi, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userid, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public List<Map<String, Object>> getDetailPlacementImprest(String jenis){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_placement_imprest");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_jenis", jenis, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public Map<String, Object> getInsPlacementImprest(String bank, String mandiri, String bri, String bni, String bukopin){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("ins_placement_imprest");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_mandiri", mandiri, OracleTypes.VARCHAR)
+                .addValue("p_bri", bri, OracleTypes.VARCHAR)
+                .addValue("p_bni", bni, OracleTypes.VARCHAR)
+                .addValue("p_bukopin", bukopin, OracleTypes.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        return out;
+    }
+
+    public Map<String, Object> getInsPlacementImpor(String bank, String mandiri, String bri, String bni, String bukopin){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("ins_placement_impor");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_mandiri", mandiri, OracleTypes.VARCHAR)
+                .addValue("p_bri", bri, OracleTypes.VARCHAR)
+                .addValue("p_bni", bni, OracleTypes.VARCHAR)
+                .addValue("p_bukopin", bukopin, OracleTypes.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        return out;
+    }
+
+    public Map<String, Object> getInsPlacementImprestOperasi(String bank, String mandiri, String bri, String bni, String bukopin){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("ins_placement_imprest_operasi");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_mandiri", mandiri, OracleTypes.VARCHAR)
+                .addValue("p_bri", bri, OracleTypes.VARCHAR)
+                .addValue("p_bni", bni, OracleTypes.VARCHAR)
+                .addValue("p_bukopin", bukopin, OracleTypes.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        return out;
+    }
+
+    public Map<String, Object> getInsPlacementImprestInvest(String bank, String mandiri, String bri, String bni, String bukopin){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("ins_placement_imprest_invest");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_mandiri", mandiri, OracleTypes.VARCHAR)
+                .addValue("p_bri", bri, OracleTypes.VARCHAR)
+                .addValue("p_bni", bni, OracleTypes.VARCHAR)
+                .addValue("p_bukopin", bukopin, OracleTypes.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        return out;
+    }
+
+    public Map<String, Object> getInsPlacementSettlement(String bank, String mandiri, String bri, String bni, String bukopin){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("ins_placement_settlement");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_mandiri", mandiri, OracleTypes.VARCHAR)
+                .addValue("p_bri", bri, OracleTypes.VARCHAR)
+                .addValue("p_bni", bni, OracleTypes.VARCHAR)
+                .addValue("p_bukopin", bukopin, OracleTypes.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        return out;
+    }
+
+    public Map<String, Object> getInsPlacementProyeksiValas(String bank, String mandiri, String bri, String bni, String bukopin){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("ins_placement_proyeksi_valas");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_mandiri", mandiri, OracleTypes.VARCHAR)
+                .addValue("p_bri", bri, OracleTypes.VARCHAR)
+                .addValue("p_bni", bni, OracleTypes.VARCHAR)
+                .addValue("p_bukopin", bukopin, OracleTypes.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        return out;
+    }
+
+    public Map<String, Object> getInsPlacementReceipt(String bank, String mandiri, String bri, String bni, String bukopin, String mega, String dki, String bca,
+                                                      String bii, String bris, String btn, String danamon, String ocbc, String uob, String dbs, String cimb){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("ins_placement_receipt");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_mandiri", mandiri, OracleTypes.VARCHAR)
+                .addValue("p_bri", bri, OracleTypes.VARCHAR)
+                .addValue("p_bni", bni, OracleTypes.VARCHAR)
+                .addValue("p_bukopin", bukopin, OracleTypes.VARCHAR)
+                .addValue("p_mega", mega, OracleTypes.VARCHAR)
+                .addValue("p_dki", dki, OracleTypes.VARCHAR)
+                .addValue("p_bca", bca, OracleTypes.VARCHAR)
+                .addValue("p_bii", bii, OracleTypes.VARCHAR)
+                .addValue("p_bris", bris, OracleTypes.VARCHAR)
+                .addValue("p_btn", btn, OracleTypes.VARCHAR)
+                .addValue("p_danamon_syariah", danamon, OracleTypes.VARCHAR)
+                .addValue("p_ocbc", ocbc, OracleTypes.VARCHAR)
+                .addValue("p_uob", uob, OracleTypes.VARCHAR)
+                .addValue("p_dbs", dbs, OracleTypes.VARCHAR)
+                .addValue("p_cimb", cimb, OracleTypes.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        return out;
+    }
+
+    public Map<String, Object> getInsPlacementGiroSpcial(String bank, String mandiri, String bri, String bni, String bukopin, String mega, String dki, String bca,
+                                                      String bii, String bris, String btn, String danamon, String ocbc, String uob, String dbs, String cimb){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("ins_placement_giro_special");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_mandiri", mandiri, OracleTypes.VARCHAR)
+                .addValue("p_bri", bri, OracleTypes.VARCHAR)
+                .addValue("p_bni", bni, OracleTypes.VARCHAR)
+                .addValue("p_bukopin", bukopin, OracleTypes.VARCHAR)
+                .addValue("p_mega", mega, OracleTypes.VARCHAR)
+                .addValue("p_dki", dki, OracleTypes.VARCHAR)
+                .addValue("p_bca", bca, OracleTypes.VARCHAR)
+                .addValue("p_bii", bii, OracleTypes.VARCHAR)
+                .addValue("p_bris", bris, OracleTypes.VARCHAR)
+                .addValue("p_btn", btn, OracleTypes.VARCHAR)
+                .addValue("p_danamon_syariah", danamon, OracleTypes.VARCHAR)
+                .addValue("p_ocbc", ocbc, OracleTypes.VARCHAR)
+                .addValue("p_uob", uob, OracleTypes.VARCHAR)
+                .addValue("p_dbs", dbs, OracleTypes.VARCHAR)
+                .addValue("p_cimb", cimb, OracleTypes.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        return out;
+    }
+
+//    public List<Map<String, Object>> getVerifikasiPlacement(String status, String tanggal, String sesi){
+//        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+//                .withCatalogName("PKG_DASHBOARD_CORPAY")
+//                .withFunctionName("verifikasi_placement_lcl");
+//        SqlParameterSource in = new MapSqlParameterSource()
+//                .addValue("p_status", status, OracleTypes.VARCHAR)
+//                .addValue("p_tanggal", tanggal, OracleTypes.VARCHAR)
+//                .addValue("p_sesi", sesi, OracleTypes.VARCHAR)
+//                .addValue("out_msg", OracleTypes.VARCHAR);
+//
+//        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+//        return out;
+//    }
+
+    public Map<String, Object> getVerifikasiPlacement(String userid, String status, String tanggal, String sesi){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("verifikasi_placement_lcl");
+        Map<String, Object> out;
+        SqlParameterSource inParent = new MapSqlParameterSource()
+                .addValue("p_user_id", userid, OracleTypes.VARCHAR)
+                .addValue("p_status", status, OracleTypes.VARCHAR)
+                .addValue("p_tanggal", tanggal, OracleTypes.VARCHAR)
+                .addValue("p_sesi", sesi, OracleTypes.VARCHAR)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        out = simpleJdbcCall.execute(inParent);
+        AppUtils.getLogger(this).info("data verifikasi_placement : {}", out);
+        return out;
+    }
+
+    public Map<String, Object> reversePlacementLCL(String userid, String status, String tanggal, String sesi){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("reverse_placement_lcl");
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_user_id", userid, OracleTypes.VARCHAR)
+                .addValue("p_status", status, OracleTypes.VARCHAR)
+                .addValue("p_tanggal", tanggal, OracleTypes.VARCHAR)
+                .addValue("p_sesi", sesi, OracleTypes.VARCHAR)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        return simpleJdbcCall.execute(params);
+    }
+
+    public List<Map<String, Object>> getRekapPlacementFCL(String tanggal, String sesi){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_rekap_placement_fcl");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tanggal", tanggal, OracleTypes.VARCHAR)
+                .addValue("p_sesi", sesi, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public List<Map<String, Object>> getKebutuhanPlacementFCL(String tanggal, String sesi, String userid){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_kebutuhan_lcl");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tanggal", tanggal, OracleTypes.VARCHAR)
+                .addValue("p_sesi", sesi, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userid, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public List<Map<String, Object>> getDetailPlacementFCL(String jenis){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_detail_placement_fcl");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_jenis", jenis, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public Map<String, Object> getInsPlacementJPY(String bank, String mandiri, String bri, String bni, String bukopin){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("ins_placement_jpy");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_mandiri", mandiri, OracleTypes.VARCHAR)
+                .addValue("p_bri", bri, OracleTypes.VARCHAR)
+                .addValue("p_bni", bni, OracleTypes.VARCHAR)
+                .addValue("p_bukopin", bukopin, OracleTypes.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        return out;
+    }
+
+    public Map<String, Object> getInsPlacementEUR(String bank, String mandiri, String bri, String bni, String bukopin){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("ins_placement_eur");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_mandiri", mandiri, OracleTypes.VARCHAR)
+                .addValue("p_bri", bri, OracleTypes.VARCHAR)
+                .addValue("p_bni", bni, OracleTypes.VARCHAR)
+                .addValue("p_bukopin", bukopin, OracleTypes.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        return out;
+    }
+
+    public Map<String, Object> getInsPlacementUSD(String bank, String mandiri, String bri, String bni, String bukopin){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("ins_placement_usd");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_mandiri", mandiri, OracleTypes.VARCHAR)
+                .addValue("p_bri", bri, OracleTypes.VARCHAR)
+                .addValue("p_bni", bni, OracleTypes.VARCHAR)
+                .addValue("p_bukopin", bukopin, OracleTypes.VARCHAR);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        return out;
+    }
+
+    public List<Map<String, Object>> getOperasiPendanaanValas(String tanggal, String sesi, String userid){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_VALAS")
+                .withFunctionName("header_operasi_pendanaan_valas");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("ptanggal", tanggal, OracleTypes.VARCHAR)
+                .addValue("psesi", sesi, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userid, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public List<Map<String, Object>> getOperasiPendanaanIdr(String tanggal, String sesi, String userid){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_IDR")
+                .withFunctionName("header_operasi_pendanaan_idr");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("ptanggal", tanggal, OracleTypes.VARCHAR)
+                .addValue("psesi", sesi, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userid, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public List<Map<String, Object>> getPlacementlclHeader(String tglAwal, String tglAkhir, String userId){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_header_lcl");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", tglAwal, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", tglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public List<Map<String, Object>> createPlacementlclHeader(String idForm, String tglJatuhTempo, String userId){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("create_header_lcl");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_form", idForm, OracleTypes.VARCHAR)
+                .addValue("p_tgl_jatuh_tempo", tglJatuhTempo, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public List<Map<String, Object>> delPlacementlclHeader(String idForm){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("del_header_lcl");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_id_form", idForm, OracleTypes.VARCHAR)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public Map<String, Object> updatePlacementlclHeader(String idForm, String userId, String status){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("upd_status_lcl");
+        Map<String, Object> out;
+        SqlParameterSource inParent = new MapSqlParameterSource()
+                .addValue("p_id_form", idForm, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR)
+                .addValue("p_status", status, OracleTypes.VARCHAR)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        out = simpleJdbcCall.execute(inParent);
+        AppUtils.getLogger(this).info("data upd_status_lcl : {}", out);
+        return out;
+    }
 }
