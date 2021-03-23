@@ -20,6 +20,8 @@ $(document).ready(function () {
 
     tanggal = dd+'/'+mm+'/'+yyyy;
 
+    $("#download-excel").hide();
+
 //    initDataTablePlacement();
     search("load");
 });
@@ -261,6 +263,7 @@ function insData() {
 function detail(idForm, status){
     $(".list-data").hide();
     $("#new-data").hide();
+    $("#download-excel").show();
     $(".detail-data").show();
     $("#status").html(status);
     $("#nama-form").html(idForm);
@@ -576,18 +579,20 @@ function deleteHead(idForm){
 
 function back(){
     Swal.fire({
-        title : "Yakin ?",
-        text : "Apakah anda yakin ingin kembali?",
+//        title : "Yakin ?",
+        title : "Apakah anda yakin ingin kembali?",
         icon : "error",
         showCancelButton : true,
         confirmButtonColor : "#3085d6",
         cancelButtonColor : "#d33",
+        cancelButtonText : "Tidak",
         confirmButtonText : "Ya"
     }).then(result => {
         if (result.value){
             $(".list-data").show();
             $(".detail-data").hide();
             $("#new-data").show();
+            $("#download-excell").hide();
             placementHeader.ajax.reload();
         }
     });
@@ -597,7 +602,7 @@ function setA(jenis, p_id_form){
     $('#set-a').modal({backdrop: 'static', keyboard: false});
     $('#table-imprest-pusat').dataTable().fnDestroy();
 
-    let detail_placement = $("#table-imprest-pusat").DataTable({
+    detail_placement = $("#table-imprest-pusat").DataTable({
             "ajax" : {
                 "url": baseUrl + "api_operator/rekap_invoice_belum/detail_placement_imprest",
                 "data" : {
@@ -671,7 +676,7 @@ function setB(jenis, p_id_form){
     $('#set-b').modal({backdrop: 'static', keyboard: false});
     $('#table-receipt-placement').dataTable().fnDestroy();
 
-    let detail_placement_2 = $("#table-receipt-placement").DataTable({
+    detail_placement_2 = $("#table-receipt-placement").DataTable({
         "ajax" : {
             "url": baseUrl + "api_operator/rekap_invoice_belum/detail_placement_imprest",
             "data" : {
@@ -820,9 +825,9 @@ function updateImprestPusat(p_id_form){
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
 //                $('#set-a').modal('hide');
-                rincian_saldo.ajax.reload();
-                kebutuhanPlacement.ajax.reload();
-//                $('#set').remove();
+//                rincian_saldo.ajax.reload();
+//                kebutuhanPlacement.ajax.reload();
+                detail_placement.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
@@ -866,9 +871,9 @@ function updateImpor(p_id_form){
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
 //                $('#set-a').modal('hide');
-                rincian_saldo.ajax.reload();
-                kebutuhanPlacement.ajax.reload();
-//                $('#set').remove();
+//                rincian_saldo.ajax.reload();
+//                kebutuhanPlacement.ajax.reload();
+                detail_placement.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
@@ -912,9 +917,9 @@ function updateImprestOperasi(p_id_form){
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
 //                $('#set-a').modal('hide');
-                rincian_saldo.ajax.reload();
-                kebutuhanPlacement.ajax.reload();
-//                $('#set').remove();
+//                rincian_saldo.ajax.reload();
+//                kebutuhanPlacement.ajax.reload();
+                detail_placement.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
@@ -958,9 +963,9 @@ function updateImprestInvestasi(p_id_form){
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
 //                $('#set-a').modal('hide');
-                rincian_saldo.ajax.reload();
-                kebutuhanPlacement.ajax.reload();
-//                $('#set').remove();
+//                rincian_saldo.ajax.reload();
+//                kebutuhanPlacement.ajax.reload();
+                detail_placement.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
@@ -1004,9 +1009,9 @@ function updateSettlement(p_id_form){
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
 //                $('#set-a').modal('hide');
-                rincian_saldo.ajax.reload();
-                kebutuhanPlacement.ajax.reload();
-//                $('#set').remove();
+//                rincian_saldo.ajax.reload();
+//                kebutuhanPlacement.ajax.reload();
+                detail_placement.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
@@ -1050,9 +1055,9 @@ function updatePengadaanValas(p_id_form){
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
 //                $('#set-a').modal('hide');
-                rincian_saldo.ajax.reload();
-                kebutuhanPlacement.ajax.reload();
-//                $('#set').remove();
+//                rincian_saldo.ajax.reload();
+//                kebutuhanPlacement.ajax.reload();
+                detail_placement.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
@@ -1107,9 +1112,9 @@ function updateReceiptPlacement(p_id_form){
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
 //                $('#set-b').modal('hide');
-                rincian_saldo.ajax.reload();
-                kebutuhanPlacement.ajax.reload();
-//                $('#set').remove();
+//                rincian_saldo.ajax.reload();
+//                kebutuhanPlacement.ajax.reload();
+                detail_placement_2.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
@@ -1164,9 +1169,9 @@ function updateGiroSpecial(p_id_form){
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
 //                $('#set-b').modal('hide');
-                rincian_saldo.ajax.reload();
-                kebutuhanPlacement.ajax.reload();
-//                $('#set').remove();
+//                rincian_saldo.ajax.reload();
+//                kebutuhanPlacement.ajax.reload();
+                detail_placement_2.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }

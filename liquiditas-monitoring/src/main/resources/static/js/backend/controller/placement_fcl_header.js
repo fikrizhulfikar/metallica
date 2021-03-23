@@ -20,6 +20,8 @@ $(document).ready(function () {
 
     tanggal = dd+'/'+mm+'/'+yyyy;
 
+    $("#download-excel").hide();
+
 //    initDataTablePlacement();
     search("load");
 });
@@ -261,13 +263,14 @@ function detail(idForm, status){
 
     $(".list-data").hide();
     $("#new-data").hide();
+    $("#download-excel").show();
     $(".detail-data").show();
     $("#status").html(status);
     $("#nama-form").html(idForm);
 //    showLoadingCss();
     $('#table-rekap-placement-fcl').dataTable().fnDestroy();
 
-    let rincian_saldo = $("#table-rekap-placement-fcl").DataTable({
+    rincian_saldo = $("#table-rekap-placement-fcl").DataTable({
         "ajax" : {
             "url": baseUrl + "api_operator/rekap_invoice_belum/detail_placement_fcl_head",
             "data" : {
@@ -451,35 +454,6 @@ function detail(idForm, status){
                });
             }
         }
-
-//         "drawCallback" : function (setting, json) {
-//              let groupColumn = 0;
-//              var api = this.api();
-//              var rows = api.rows({page:'current'}).nodes();
-//              var last = null;
-//              let array = api.column(groupColumn, {page:'current'}).data();
-//
-//              api.column(groupColumn, {page:'current'}).data().each(function (group, i){
-//              if (last !== group.TIPE_KEBUTUHAN){
-//                  let count = 1;
-//
-//                  for (let j=i; j<array.length; j++){
-//                      let first = array[i].TIPE_KEBUTUHAN;
-//                      if (first !== array[j].TIPE_KEBUTUHAN) break;
-//                      count+= 1;
-//                  }
-//                  if ((group.TIPE_KEBUTUHAN === "TOTAL")){
-//                      $(rows).eq(i).before(
-//                          '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold; background-color: #77D5D4">'+group.TIPE_KEBUTUHAN+'</td></tr>'
-//                      );
-//                  }else
-//                      $(rows).eq(i).before(
-//                          '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold; background-color: #77D5D4"">'+group.TIPE_KEBUTUHAN+'</td></tr>'
-//                      );
-//                  last = group.TIPE_KEBUTUHAN;
-//                  }
-//              });
-//          }
        });
 
      kebutuhanPlacement.on('search.dt', function () {
@@ -605,12 +579,13 @@ function deleteHead(idForm){
 
 function back(){
     Swal.fire({
-        title : "Yakin ?",
-        text : "Apakah anda yakin ingin kembali?",
+//        title : "Yakin ?",
+        title : "Apakah anda yakin ingin kembali?",
         icon : "error",
         showCancelButton : true,
         confirmButtonColor : "#3085d6",
         cancelButtonColor : "#d33",
+        cancelButtonText : "Tidak",
         confirmButtonText : "Ya"
     }).then(result => {
         if (result.value){
@@ -626,7 +601,7 @@ function setA(jenis, p_id_form){
     $('#set-a').modal({backdrop: 'static', keyboard: false});
     $('#table-imprest-pusat').dataTable().fnDestroy();
 
-    let detail_placement = $("#table-imprest-pusat").DataTable({
+    detail_placement = $("#table-imprest-pusat").DataTable({
             "ajax" : {
                 "url": baseUrl + "api_operator/rekap_invoice_belum/detail_placement_fcl",
                 "data" : {
@@ -685,7 +660,7 @@ function setA(jenis, p_id_form){
 
         $("#close").click(function(){
             $('#set').remove();
-//            rincian_saldo.ajax.reload();
+            rincian_saldo.ajax.reload();
             kebutuhanPlacement.ajax.reload();
         })
 }
@@ -696,6 +671,8 @@ function updateJPY(p_id_form){
         cells = row.find('td'),
         btnCell = $(this).parent();
     var list = [];
+
+    $("#data1, #data2, #data3, #data4").mask('000,000,000,000,000.00',{reverse : true});
 
     $('#table-imprest-pusat > tbody  > tr').each(function() {
         var cell = $(this).find('td');
@@ -715,14 +692,16 @@ function updateJPY(p_id_form){
         dataType: 'JSON',
         type: "POST",
         data : {
-            pData: JSON.stringify(list)
+            pData: JSON.stringify(list),
+            p_id_form : p_id_form
         },
         success: function (res) {
             console.log("res ins potensi : ",res);
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
-                rincian_saldo.ajax.reload();
-                kebutuhanPlacement.ajax.reload();
+//                rincian_saldo.ajax.reload();
+//                kebutuhanPlacement.ajax.reload();
+                detail_placement.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
@@ -758,14 +737,16 @@ function updateEUR(p_id_form){
         dataType: 'JSON',
         type: "POST",
         data : {
-            pData: JSON.stringify(list)
+            pData: JSON.stringify(list),
+            p_id_form : p_id_form
         },
         success: function (res) {
             console.log("res ins potensi : ",res);
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
-                rincian_saldo.ajax.reload();
-                kebutuhanPlacement.ajax.reload();
+//                rincian_saldo.ajax.reload();
+//                kebutuhanPlacement.ajax.reload();
+                detail_placement.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
@@ -801,14 +782,16 @@ function updateUSD(p_id_form){
         dataType: 'JSON',
         type: "POST",
         data : {
-            pData: JSON.stringify(list)
+            pData: JSON.stringify(list),
+            p_id_form : p_id_form
         },
         success: function (res) {
             console.log("res ins potensi : ",res);
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
-                rincian_saldo.ajax.reload();
-                kebutuhanPlacement.ajax.reload();
+//                rincian_saldo.ajax.reload();
+//                kebutuhanPlacement.ajax.reload();
+                detail_placement.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
