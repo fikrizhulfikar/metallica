@@ -2,12 +2,6 @@
     <style>
         button{ cursor: pointer
         }
-        /*.table td {*/
-        /*    padding-right: 0.75rem;*/
-        /*    padding-bottom: 0.25rem;*/
-        /*    padding-left: 0.75rem;*/
-        /*    padding-top: 0.25rem;*/
-        /*}*/
         div.dataTables_wrapper div.dataTables_paginate {
             float: right !important;
             text-align: left !important;
@@ -30,7 +24,7 @@
 </div>
 <main class="main" th:fragment="content">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" style="cursor: default">Supply Chain Financing Non Cash Loan</li>
+        <li class="breadcrumb-item active" style="cursor: default">Supply Chain Financing Collateral</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')">
@@ -44,7 +38,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title">Supply Chain Financing</h5>
+                    <h5 class="modal-title">Supply Chain Financing Collateral</h5>
                 </div>
                 <div class="modal-body">
                     <form autocomplete="off" action="#" id="form_scf">
@@ -67,7 +61,15 @@
                                     <input type="text" class="form-control" id="pTglJatuhTempo" required="required"/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="pVendor"><span style="color: red">*)</span>&nbsp;Vendor :</label>
+                                    <label for="pPajak"><span style="color: red">*</span>&nbsp;Pajak (%):</label>
+                                    <input type="number" class="form-control" id="pPajak" required="required"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pRateJasaGiro"><span style="color: red">*</span>&nbsp;Rate Jasa Giro (%):</label>
+                                    <input type="number" class="form-control" id="pRateJasaGiro" required="required"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pVendor"><span style="color: red">*</span>&nbsp;Vendor :</label>
                                     <select id="pVendor" class="form-control" required="required">
                                         <option value="">Pilih Data</option>
                                     </select>
@@ -75,25 +77,29 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="pCurrecny"><span style="color: red">*)</span>&nbsp;Currency:</label>
+                                    <label for="pCurrecny"><span style="color: red">*</span>&nbsp;Currency:</label>
                                     <select id="pCurrecny" class="form-control" required="required">
                                         <option value="">Pilih Data</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="pNominal"><span style="color: red">*)</span>&nbsp;Nominal:</label>
-                                    <input type="text" class="form-control" id="pNominal" required="required"/>
+                                    <label for="pOriCurr"><span style="color: red">*</span>&nbsp;Original Currency:</label>
+                                    <input type="text" class="form-control" id="pOriCurr" required="required"/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="pProvisi"><span style="color: red">*)</span>&nbsp;Provisi (%):</label>
-                                    <input type="number" class="form-control" id="pProvisi" required="required"/>
+                                    <label for="pKurs"><span style="color: red">*</span>&nbsp;Kurs:</label>
+                                    <input type="text" class="form-control" id="pKurs" required="required"/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="pSukuBunga"><span style="color: red">*)</span>&nbsp;Suku Bunga (%):</label>
-                                    <input type="number" class="form-control" id="pSukuBunga" required="required"/>
+                                    <label for="pFeeTransaksi"><span style="color: red">*</span>&nbsp;Fee Transaksi (%):</label>
+                                    <input type="number" class="form-control" id="pFeeTransaksi" required="required"/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="pJenisPembayaran"><span style="color: red">*)</span>&nbsp;Jenis Pembayaran :</label>
+                                    <label for="pCashCollateral"><span style="color: red">*</span>&nbsp;Cash Collateral (%):</label>
+                                    <input type="number" class="form-control" id="pCashCollateral" required="required"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pJenisPembayaran"><span style="color: red">*</span>&nbsp;Jenis Pembayaran :</label>
                                     <select id="pJenisPembayaran" class="form-control" required="required">
                                         <option value="">Pilih Data</option>
                                     </select>
@@ -223,14 +229,19 @@
                                 <th>VENDOR</th>
                                 <th>JENIS PEMBAYARAN</th>
                                 <th>CURRENCY</th>
-                                <th>NOMINAL</th>
+                                <th>ORI CURRENCY</th>
                                 <th>KURS</th>
                                 <th>EQ IDR</th>
-                                <th>SUKU BUNGA</th>
-                                <th>BIAYA BUNGA</th>
-                                <th>PROVISI</th>
-                                <th>BIAYA PROVISI</th>
-                                <th>TOTAL BIAYA</th>
+                                <th>FEE TRASAKSI (%)</th>
+                                <th>FEE TRASAKSI (IDR)</th>
+                                <th>CASH COLLATERAL (%)</th>
+                                <th>CASH COLLATERAL (IDR)</th>
+                                <th>RATE JASA GIRO</th>
+                                <th>JASA GIRO</th>
+                                <th>PAJAK (%)</th>
+                                <th>PAJAK YANG DITANGGUNG PLN</th>
+                                <th>NET JASA GIRO</th>
+                                <th>NET GAIN/(LOSS) TRANSAKSI SCF</th>
                                 <th>AKSI</th>
                             </tr>
                             </thead>
