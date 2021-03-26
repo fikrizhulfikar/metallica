@@ -111,4 +111,68 @@ public class SupplyChainFinancingService {
         AppUtils.getLogger(this).info("data getFilesRekap : {}", out);
         return out;
     }
+
+    public List<Map<String, Object>> getListScfCollateral(
+            Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir,
+            String pBank, String pCurr, String pJenisPembayaran
+    ){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_scf");
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_start", pStart, OracleTypes.INTEGER)
+                .addValue("p_length", pLength, OracleTypes.INTEGER)
+                .addValue("p_tgl_awal", pTglAwal, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", pTglAkhir, OracleTypes.VARCHAR)
+                .addValue("p_bank", pBank, OracleTypes.VARCHAR)
+                .addValue("p_cur", pCurr, OracleTypes.VARCHAR)
+                .addValue("p_jenis_pembayaran", pJenisPembayaran, OracleTypes.VARCHAR);
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+        return resultset;
+    }
+
+    public Map<String, Object> insScfCollateral(
+            String pIdScfCol, String pKodeBank, String pTglTransaksi, String pJatuhTempo, String pVendor, String pJenisPembayaran,
+            String pCurrency, String pOriCurr, String pKurs, String pFeeTransaksi, String pCashCollateral, String pPajak, String pJasaGiro, String pUserId
+    ){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("ins_scf");
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_id_scf", pIdScfCol)
+                .addValue("p_kode_bank", pKodeBank)
+                .addValue("p_tgl_transaksi", pTglTransaksi)
+                .addValue("p_jatuh_tempo", pJatuhTempo)
+                .addValue("p_vendor", pVendor)
+                .addValue("p_jenis_pembayaran", pJenisPembayaran)
+                .addValue("p_currency", pCurrency)
+                .addValue("p_ori_currency", pOriCurr)
+                .addValue("p_kurs", pKurs)
+                .addValue("p_fee_transaksi", pFeeTransaksi)
+                .addValue("p_cash_collateral", pCashCollateral)
+                .addValue("p_pajak", pPajak)
+                .addValue("p_rate_jasa_giro", pJasaGiro)
+                .addValue("p_user_id", pUserId);
+        Map<String, Object> out = simpleJdbcCall.execute(params);
+        return out;
+    }
+
+    public List<Map<String, Object>> getScfCollateralById(String pIdScf){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("get_scf_byId");
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_id_scf", pIdScf);
+        return simpleJdbcCall.executeFunction(ArrayList.class,params);
+    }
+
+    public Map<String, Object> deleteScfCollateral(String pIdScf){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("del_scf");
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_id_scf", pIdScf)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        return simpleJdbcCall.execute(params);
+    }
 }

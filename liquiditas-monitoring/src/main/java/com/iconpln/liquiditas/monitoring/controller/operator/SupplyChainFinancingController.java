@@ -238,6 +238,7 @@ public class SupplyChainFinancingController {
             return null;
         }
     }
+
     @RequestMapping(value = "/upload_files_pembayaran", method = RequestMethod.POST)
     public Map uploadFileRekap(
             @RequestParam(value = "file") MultipartFile file,
@@ -281,6 +282,94 @@ public class SupplyChainFinancingController {
         }catch (Exception e){
             e.printStackTrace();
             return null ;
+        }
+    }
+
+    @GetMapping(path = "/get_scf_collateral_data")
+    public Map listDataScfCollateral(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "10") int length,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
+            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
+            @RequestParam(value = "pJenisPembayaran", defaultValue = "ALL") String pJenisPemabayran
+    ){
+        String sortBy = parseColumn(sortIndex);
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        if (sortBy.equalsIgnoreCase("UPDATE_DATA")){
+            sortDir = "DESC";
+        }
+
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = scf.getListScfCollateral(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pJenisPemabayran);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("draw", draw);
+        mapData.put("data", list);
+
+        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
+        return mapData;
+    }
+
+    @PostMapping(path = "/ins_scf_collateral")
+    public Map<String, Object> insScfCollateral(
+            @RequestParam(value = "pIdScfCol", defaultValue = "") String pIdScf,
+            @RequestParam(value = "pKodeBank", defaultValue = "") String pKodeBank,
+            @RequestParam(value = "pTglTransaksi", defaultValue = "") String pTglTransaksi,
+            @RequestParam(value = "pJatuhTempo", defaultValue = "") String pJatuhTempo,
+            @RequestParam(value = "pVendor", defaultValue = "") String pVendor,
+            @RequestParam(value = "pJenisPembayaran", defaultValue = "") String pJenisPembayaran,
+            @RequestParam(value = "pCurrency", defaultValue = "") String pCurrency,
+            @RequestParam(value = "pOriCurr", defaultValue = "") String pOriCurr,
+            @RequestParam(value = "pKurs", defaultValue = "") String pKurs,
+            @RequestParam(value = "pFeeTransaksi", defaultValue = "") String pFeeTransaksi,
+            @RequestParam(value = "pCashCollateral", defaultValue = "") String pCashCollateral,
+            @RequestParam(value = "pPajak", defaultValue = "") String pPajak,
+            @RequestParam(value = "pJasaGiro", defaultValue = "") String pJasaGiro
+    ){
+        try {
+            Map<String, Object> result = scf.insScfCollateral(pIdScf, pKodeBank, pTglTransaksi, pJatuhTempo, pVendor, pJenisPembayaran, pCurrency, pOriCurr, pKurs, pFeeTransaksi, pCashCollateral, pPajak, pJasaGiro, WebUtils.getUsernameLogin());
+            return result;
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping(path = "/get_scf_collateral_byId")
+    public List<Map<String, Object>> getScfCollateralById(@RequestParam(value = "pIdScfCollateral") String pIdScf){
+        List<Map<String, Object>> result;
+        try {
+            return scf.getScfCollateralById(pIdScf);
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @PostMapping(path = "/delete_scf_collateral_data")
+    public Map<String, Object> deleteScfCollateral(@RequestParam(value = "pIdScfCollateral") String pIdScf){
+        try{
+            Map<String, Object> out = scf.deleteScfCollateral(pIdScf);
+            return out;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
     }
 }
