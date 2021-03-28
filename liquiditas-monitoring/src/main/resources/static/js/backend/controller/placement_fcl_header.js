@@ -152,6 +152,7 @@ function initDataTablePlacement(p_tgl_awal, p_tgl_akhir){
                 "mRender": function (data, type, full) {
                     var ret_value;
                     if (full.STATUS_APPROVE === "INPUT DATA"){
+                        if (newRoleUser[0] === "ROLE_ADMIN" && newRoleUser[0] === "ROLE_FOREIGN_CURRENCY_LIQUIDITY"){
                         ret_value = '<div class="col-md-6 btn-group" align="center">' +
                                     '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
                                     '<button style="width: 15px !important; margin: 2px;" id="verifikasi" class="btn btn-sm btn-warning" title="Verifikasi" onclick="verif(1,\''+full.NAMA_FORM+'\')"><i class="fa fa-check-square"></i></button>' +
@@ -159,27 +160,43 @@ function initDataTablePlacement(p_tgl_awal, p_tgl_akhir){
                                     '<button style="width: 15px !important; margin: 2px;" id="delete" class="btn btn-sm btn-danger" title="Hapus" onclick="deleteHead(\''+full.NAMA_FORM+'\')"><i class="fa fa-trash"></i></button>' +
                                     '</div>'
                         return ret_value;
+                        } else {
+                        ret_value = '<div class="col-md-6 btn-group" align="center">' +
+                                    '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
+                                    '</div>'
+                        return ret_value;
+                        }
                     } else if (full.STATUS_APPROVE === "VERIFIKASI STAFF") {
+                        if (newRoleUser[0] === "ROLE_ADMIN" && newRoleUser[0] === "ROLE_MSB_FOREIGN_CURRENCY_LIQUIDITY"){
                         ret_value = '<div class="col-md-6 btn-group" align="center">' +
                                     '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
                                     '<button style="width: 15px !important; margin: 2px;" id="verifikasi" class="btn btn-sm btn-warning" title="Verifikasi" onclick="verif(2,\''+full.NAMA_FORM+'\')"><i class="fa fa-check-square"></i></button>' +
                                     '<button style="width: 15px !important; margin: 2px;" id="reverse" class="btn btn-duplicate-data btn-sm btn-primary" title="Reverse" onclick="reverse(1,\''+full.NAMA_FORM+'\')"><i class="fa fa-backspace"></i></button>' +
-                                    '<button style="width: 15px !important; margin: 2px;" id="delete" class="btn btn-sm btn-danger" title="Hapus" onclick="deleteHead(\''+full.NAMA_FORM+'\')"><i class="fa fa-trash"></i></button>' +
                                     '</div>'
                         return ret_value;
+                        } else {
+                        ret_value = '<div class="col-md-6 btn-group" align="center">' +
+                                    '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
+                                    '</div>'
+                        return ret_value;
+                        }
                     } else if (full.STATUS_APPROVE === "VERIFIKASI MSB FCL") {
+                        if (newRoleUser[0] === "ROLE_ADMIN" && newRoleUser[0] === "ROLE_VP_LIQUIDITY_AND_RECEIPT"){
                         ret_value = '<div class="col-md-6 btn-group" align="center">' +
                                     '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
                                     '<button style="width: 15px !important; margin: 2px;" id="verifikasi" class="btn btn-sm btn-warning" title="Verifikasi" onclick="verif(3,\''+full.NAMA_FORM+'\')"><i class="fa fa-check-square"></i></button>' +
                                     '<button style="width: 15px !important; margin: 2px;" id="reverse" class="btn btn-duplicate-data btn-sm btn-primary" title="Reverse" onclick="reverse(2,\''+full.NAMA_FORM+'\')"><i class="fa fa-backspace"></i></button>' +
-                                    '<button style="width: 15px !important; margin: 2px;" id="delete" class="btn btn-sm btn-danger" title="Hapus" onclick="deleteHead(\''+full.NAMA_FORM+'\')"><i class="fa fa-trash"></i></button>' +
                                     '</div>'
                         return ret_value;
+                        } else {
+                        ret_value = '<div class="col-md-6 btn-group" align="center">' +
+                                    '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
+                                    '</div>'
+                        return ret_value;
+                        }
                     } else if (full.STATUS_APPROVE === "VERIFIKASI VP TLR") {
                         ret_value = '<div class="col-md-6 btn-group" align="center">' +
                                     '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
-                                    '<button style="width: 15px !important; margin: 2px;" id="reverse" class="btn btn-duplicate-data btn-sm btn-primary" title="Reverse" onclick="reverse(3,\''+full.NAMA_FORM+'\')"><i class="fa fa-backspace"></i></button>' +
-                                    '<button style="width: 15px !important; margin: 2px;" id="delete" class="btn btn-sm btn-danger" title="Hapus" onclick="deleteHead(\''+full.NAMA_FORM+'\')"><i class="fa fa-trash"></i></button>' +
                                     '</div>'
                         return ret_value;
                     }
@@ -290,7 +307,7 @@ function detail(idForm, status){
         "bInfo" : false,
         "bLengthChange" : false,
         "columns" : [
-            {"data":null,"render": (data, type, row) => {return '<td>'+data.CURRENCY+'</td>'},"createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {$(cell).css("background-color","#77D5D4");}},
+            {"data":null,"visible": false,"render": (data, type, row) => {return '<td>'+data.CURRENCY+'</td>'},"createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {$(cell).css("background-color","#77D5D4");}},
             {"data":null,"render": (data, type, row) => {return '<td>'+data.BANK+'</td>'},"createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {$(cell).css("background-color","#5ef4d3");}},
             {"data":null,"render" : (data, type, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.SALDO_RECEIPT)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,"render" : (data, type, row) => {return '<td> Rp. '+ new Intl.NumberFormat().format(data.MANDIRI)+'</td>'},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
@@ -307,7 +324,36 @@ function detail(idForm, status){
                    "font-weight": "bold",
                });
             }
-        }
+        },
+
+         "drawCallback" : function (setting, json) {
+              let groupColumn = 0;
+              var api = this.api();
+              var rows = api.rows({page:'current'}).nodes();
+              var last = null;
+              let array = api.column(groupColumn, {page:'current'}).data();
+
+              api.column(groupColumn, {page:'current'}).data().each(function (group, i){
+              if (last !== group.CURRENCY){
+                  let count = 1;
+
+                  for (let j=i; j<array.length; j++){
+                      let first = array[i].CURRENCY;
+                      if (first !== array[j].CURRENCY) break;
+                      count+= 1;
+                  }
+                  if ((group.CURRENCY === "TOTAL")){
+                      $(rows).eq(i).before(
+                          '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold; background-color: #77D5D4">'+group.CURRENCY+'</td></tr>'
+                      );
+                  }else
+                      $(rows).eq(i).before(
+                          '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold; background-color: #77D5D4"">'+group.CURRENCY+'</td></tr>'
+                      );
+                  last = group.CURRENCY;
+                  }
+              });
+          }
     });
 
     let date = new Date();

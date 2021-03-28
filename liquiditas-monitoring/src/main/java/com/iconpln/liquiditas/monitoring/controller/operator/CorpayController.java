@@ -2642,6 +2642,7 @@ public class CorpayController {
         List<Map<String, Object>> list;
 
         try {
+
             return corpayService.detailPlacementLcl(idForm);
         } catch (Exception e) {
             e.printStackTrace();
@@ -2789,7 +2790,7 @@ public class CorpayController {
     ){
         List<Map<String, Object>> list = new ArrayList<>();
         try {
-            System.out.println("QWERTY "+p_id_form);
+//            System.out.println("QWERTY "+p_id_form);
             list = corpayService.getPlacementFclHead(p_id_form);
         } catch (Exception e) {
             e.printStackTrace();
@@ -2809,6 +2810,7 @@ public class CorpayController {
         List<Map<String, Object>> list;
 
         try {
+//            System.out.println("QWERTY "+idForm);
             return corpayService.detailPlacementFcl(idForm);
         } catch (Exception e) {
             e.printStackTrace();
