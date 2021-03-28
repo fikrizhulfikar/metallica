@@ -110,4 +110,90 @@ public class UploadSaldoController {
             return "Gagal melakukan export data"+ e.getMessage();
         }
     }
+
+    @RequestMapping(path = "/cetak_rencana_imprest")
+    public String cetakRencanaImprest(HttpServletRequest request, HttpServletResponse response){
+        try {
+            String title = "Rekap Rencana Imprest";
+            String fileName = "Rencana Imprest.xls";
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposistion","attachment; filename=\""+fileName+"\"");
+            List<Map<String, Object>> listData = uploadSaldoService.getRencanaImprest();
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+            param.put("TITLE", title);
+            int no = 1;
+            for(Map data : listData){
+                Map paramDetail = new HashMap();
+                paramDetail.put("ROW_NUMBER",data.get("ROW_NUMBER"));
+                paramDetail.put("ID_FORM", data.get("ID_FORM"));
+                paramDetail.put("UNIT_PLN", data.get("UNIT_PLN"));
+                paramDetail.put("NAMA_BANK", data.get("NAMA_BANK"));
+                paramDetail.put("INVESTASI", data.get("INVESTASI"));
+                paramDetail.put("OPERASI", data.get("OPERASI"));
+                paramDetail.put("TANGGAL_UPLOAD", data.get("TANGGAL_UPLOAD"));
+                paramDetail.put("TGL_JATUH_TEMPO", data.get("TGL_JATUH_TEMPO"));
+                paramDetail.put("TGL_APPROVE_STAFF", data.get("TGL_APPROVE_STAFF"));
+                paramDetail.put("TGL_APPROVE_MSB", data.get("TGL_APPROVE_MSB"));
+                paramDetail.put("TGL_APPROVE_VP", data.get("TGL_APPROVE_VP"));
+                paramDetail.put("STATUS", data.get("STATUS"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/rekap_imprest.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            System.out.println("List Data Excel : "+listData);
+            return null;
+        } catch (IOException | InvalidFormatException e) {
+            e.printStackTrace();
+            return "Gagal melakukan export data"+ e.getMessage();
+        }
+    }
+
+    @RequestMapping(path = "/cetak_realisasi_imprest")
+    public String cetakRealisasiImprest(HttpServletRequest request, HttpServletResponse response){
+        try {
+            String title = "Rekap Realisasi Imprest";
+            String fileName = "Realisasi Imprest.xls";
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposistion","attachment; filename=\""+fileName+"\"");
+            List<Map<String, Object>> listData = uploadSaldoService.getRealisasiImprest();
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+            param.put("TITLE", title);
+            int no = 1;
+            for(Map data : listData){
+                Map paramDetail = new HashMap();
+                paramDetail.put("ROW_NUMBER",data.get("ROW_NUMBER"));
+                paramDetail.put("ID_FORM", data.get("ID_FORM"));
+                paramDetail.put("UNIT_PLN", data.get("UNIT_PLN"));
+                paramDetail.put("NAMA_BANK", data.get("NAMA_BANK"));
+                paramDetail.put("INVESTASI", data.get("INVESTASI"));
+                paramDetail.put("OPERASI", data.get("OPERASI"));
+                paramDetail.put("TANGGAL_UPLOAD", data.get("TANGGAL_UPLOAD"));
+                paramDetail.put("TGL_JATUH_TEMPO", data.get("TGL_JATUH_TEMPO"));
+                paramDetail.put("TGL_APPROVE_STAFF", data.get("TGL_APPROVE_STAFF"));
+                paramDetail.put("TGL_APPROVE_MSB", data.get("TGL_APPROVE_MSB"));
+                paramDetail.put("TGL_APPROVE_VP", data.get("TGL_APPROVE_VP"));
+                paramDetail.put("STATUS", data.get("STATUS"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/rekap_imprest.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            System.out.println("List Data Excel : "+listData);
+            return null;
+        } catch (IOException | InvalidFormatException e) {
+            e.printStackTrace();
+            return "Gagal melakukan export data"+ e.getMessage();
+        }
+    }
 }
