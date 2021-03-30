@@ -48,7 +48,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.10.0.pr1</version>
+            <version>2.10.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -64,30 +64,41 @@
             <version>5.2.1.RELEASE</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.13</version>
+        </dependency>
+
     </dependencies>
 
     <profiles>
-<!--        <profile>-->
-<!--            <id>development</id>-->
-<!--            <properties>-->
-<!--                <activatedProperties>development</activatedProperties>-->
-<!--                <db.url>jdbc:oracle:thin:@10.14.152.120:1591:cisqa</db.url>-->
-<!--                <db.username>DASHBOARD</db.username>-->
-<!--                <db.password>DASHBOARD</db.password>-->
-<!--            </properties>-->
-<!--            <activation>-->
-<!--                <activeByDefault>true</activeByDefault>-->
-<!--            </activation>-->
-<!--        </profile>-->
-<!--        <profile>-->
-<!--            <id>testing</id>-->
-<!--            <properties>-->
-<!--                <activatedProperties>testing</activatedProperties>-->
-<!--                <db.url>jdbc:oracle:thin:@10.14.152.120:1591:cisqa</db.url>-->
-<!--                <db.username>DASHBOARD</db.username>-->
-<!--                <db.password>DASHBOARD</db.password>-->
-<!--            </properties>-->
-<!--        </profile>-->
+        <profile>
+            <id>development</id>
+            <properties>
+                <activatedProperties>development</activatedProperties>
+                <db.url>jdbc:oracle:thin:@10.14.152.120:1591:cisqa</db.url>
+                <db.username>CORPAY</db.username>
+                <db.password>corpay</db.password>
+                <build.profile.id>development</build.profile.id>
+                <profileActive>development</profileActive>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>testing</id>
+            <properties>
+                <activatedProperties>testing</activatedProperties>
+                <db.url>jdbc:oracle:thin:@10.14.152.120:1591:cisqa</db.url>
+                <db.username>DASHBOARD</db.username>
+                <db.password>DASHBOARD</db.password>
+                <build.profile.id>testing</build.profile.id>
+                <profileActive>testing</profileActive>
+            </properties>
+        </profile>
         <profile>
             <id>production</id>
             <properties>
@@ -95,10 +106,9 @@
                 <db.url>jdbc:oracle:thin:@10.14.158.192:1521:DBTRESRY</db.url>
                 <db.username>corpay</db.username>
                 <db.password>corpay</db.password>
+                <build.profile.id>production</build.profile.id>
+                <profileActive>production</profileActive>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
     </profiles>
 
