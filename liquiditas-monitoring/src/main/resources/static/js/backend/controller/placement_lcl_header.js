@@ -20,6 +20,8 @@ $(document).ready(function () {
 
     tanggal = dd+'/'+mm+'/'+yyyy;
 
+    $("#download-excel").hide();
+
 //    initDataTablePlacement();
     search("load");
 });
@@ -151,6 +153,7 @@ function initDataTablePlacement(p_tgl_awal, p_tgl_akhir){
                 "mRender": function (data, type, full) {
                     var ret_value;
                     if (full.STATUS_APPROVE === "INPUT DATA"){
+                        if (newRoleUser[0] === "ROLE_ADMIN" || newRoleUser[0] === "ROLE_LOCAL_CURRENCY_LIQUIDITY"){
                         ret_value = '<div class="col-md-6 btn-group" align="center">' +
                                     '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
                                     '<button style="width: 15px !important; margin: 2px;" id="verifikasi" class="btn btn-sm btn-warning" title="Verifikasi" onclick="verif(1,\''+full.NAMA_FORM+'\')"><i class="fa fa-check-square"></i></button>' +
@@ -158,27 +161,43 @@ function initDataTablePlacement(p_tgl_awal, p_tgl_akhir){
                                     '<button style="width: 15px !important; margin: 2px;" id="delete" class="btn btn-sm btn-danger" title="Hapus" onclick="deleteHead(\''+full.NAMA_FORM+'\')"><i class="fa fa-trash"></i></button>' +
                                     '</div>'
                         return ret_value;
+                        } else {
+                        ret_value = '<div class="col-md-6 btn-group" align="center">' +
+                                    '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
+                                    '</div>'
+                        return ret_value;
+                        }
                     } else if (full.STATUS_APPROVE === "VERIFIKASI STAFF") {
+                        if (newRoleUser[0] === "ROLE_ADMIN" || newRoleUser[0] === "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY"){
                         ret_value = '<div class="col-md-6 btn-group" align="center">' +
                                     '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
                                     '<button style="width: 15px !important; margin: 2px;" id="verifikasi" class="btn btn-sm btn-warning" title="Verifikasi" onclick="verif(2,\''+full.NAMA_FORM+'\')"><i class="fa fa-check-square"></i></button>' +
                                     '<button style="width: 15px !important; margin: 2px;" id="reverse" class="btn btn-duplicate-data btn-sm btn-primary" title="Reverse" onclick="reverse(1,\''+full.NAMA_FORM+'\')"><i class="fa fa-backspace"></i></button>' +
-                                    '<button style="width: 15px !important; margin: 2px;" id="delete" class="btn btn-sm btn-danger" title="Hapus" onclick="deleteHead(\''+full.NAMA_FORM+'\')"><i class="fa fa-trash"></i></button>' +
                                     '</div>'
                         return ret_value;
+                        } else {
+                        ret_value = '<div class="col-md-6 btn-group" align="center">' +
+                                    '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
+                                    '</div>'
+                        return ret_value;
+                        }
                     } else if (full.STATUS_APPROVE === "VERIFIKASI MSB LCL") {
+                        if (newRoleUser[0] === "ROLE_ADMIN" || newRoleUser[0] === "ROLE_VP_LIQUIDITY_AND_RECEIPT"){
                         ret_value = '<div class="col-md-6 btn-group" align="center">' +
                                     '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
                                     '<button style="width: 15px !important; margin: 2px;" id="verifikasi" class="btn btn-sm btn-warning" title="Verifikasi" onclick="verif(3,\''+full.NAMA_FORM+'\')"><i class="fa fa-check-square"></i></button>' +
                                     '<button style="width: 15px !important; margin: 2px;" id="reverse" class="btn btn-duplicate-data btn-sm btn-primary" title="Reverse" onclick="reverse(2,\''+full.NAMA_FORM+'\')"><i class="fa fa-backspace"></i></button>' +
-                                    '<button style="width: 15px !important; margin: 2px;" id="delete" class="btn btn-sm btn-danger" title="Hapus" onclick="deleteHead(\''+full.NAMA_FORM+'\')"><i class="fa fa-trash"></i></button>' +
                                     '</div>'
                         return ret_value;
+                        } else {
+                        ret_value = '<div class="col-md-6 btn-group" align="center">' +
+                                    '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
+                                    '</div>'
+                        return ret_value;
+                        }
                     } else if (full.STATUS_APPROVE === "VERIFIKASI VP TLR") {
                         ret_value = '<div class="col-md-6 btn-group" align="center">' +
                                     '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
-                                    '<button style="width: 15px !important; margin: 2px;" id="reverse" class="btn btn-duplicate-data btn-sm btn-primary" title="Reverse" onclick="reverse(3,\''+full.NAMA_FORM+'\')"><i class="fa fa-backspace"></i></button>' +
-                                    '<button style="width: 15px !important; margin: 2px;" id="delete" class="btn btn-sm btn-danger" title="Hapus" onclick="deleteHead(\''+full.NAMA_FORM+'\')"><i class="fa fa-trash"></i></button>' +
                                     '</div>'
                         return ret_value;
                     }
@@ -261,6 +280,7 @@ function insData() {
 function detail(idForm, status){
     $(".list-data").hide();
     $("#new-data").hide();
+    $("#download-excel").show();
     $(".detail-data").show();
     $("#status").html(status);
     $("#nama-form").html(idForm);
@@ -576,18 +596,20 @@ function deleteHead(idForm){
 
 function back(){
     Swal.fire({
-        title : "Yakin ?",
-        text : "Apakah anda yakin ingin kembali?",
+//        title : "Yakin ?",
+        title : "Apakah anda yakin ingin kembali?",
         icon : "error",
         showCancelButton : true,
         confirmButtonColor : "#3085d6",
         cancelButtonColor : "#d33",
+        cancelButtonText : "Tidak",
         confirmButtonText : "Ya"
     }).then(result => {
         if (result.value){
             $(".list-data").show();
             $(".detail-data").hide();
             $("#new-data").show();
+            $("#download-excell").hide();
             placementHeader.ajax.reload();
         }
     });
@@ -597,7 +619,7 @@ function setA(jenis, p_id_form){
     $('#set-a').modal({backdrop: 'static', keyboard: false});
     $('#table-imprest-pusat').dataTable().fnDestroy();
 
-    let detail_placement = $("#table-imprest-pusat").DataTable({
+    detail_placement = $("#table-imprest-pusat").DataTable({
             "ajax" : {
                 "url": baseUrl + "api_operator/rekap_invoice_belum/detail_placement_imprest",
                 "data" : {
@@ -671,7 +693,7 @@ function setB(jenis, p_id_form){
     $('#set-b').modal({backdrop: 'static', keyboard: false});
     $('#table-receipt-placement').dataTable().fnDestroy();
 
-    let detail_placement_2 = $("#table-receipt-placement").DataTable({
+    detail_placement_2 = $("#table-receipt-placement").DataTable({
         "ajax" : {
             "url": baseUrl + "api_operator/rekap_invoice_belum/detail_placement_imprest",
             "data" : {
@@ -820,9 +842,9 @@ function updateImprestPusat(p_id_form){
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
 //                $('#set-a').modal('hide');
-                rincian_saldo.ajax.reload();
-                kebutuhanPlacement.ajax.reload();
-//                $('#set').remove();
+//                rincian_saldo.ajax.reload();
+//                kebutuhanPlacement.ajax.reload();
+                detail_placement.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
@@ -866,9 +888,9 @@ function updateImpor(p_id_form){
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
 //                $('#set-a').modal('hide');
-                rincian_saldo.ajax.reload();
-                kebutuhanPlacement.ajax.reload();
-//                $('#set').remove();
+//                rincian_saldo.ajax.reload();
+//                kebutuhanPlacement.ajax.reload();
+                detail_placement.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
@@ -912,9 +934,9 @@ function updateImprestOperasi(p_id_form){
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
 //                $('#set-a').modal('hide');
-                rincian_saldo.ajax.reload();
-                kebutuhanPlacement.ajax.reload();
-//                $('#set').remove();
+//                rincian_saldo.ajax.reload();
+//                kebutuhanPlacement.ajax.reload();
+                detail_placement.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
@@ -958,9 +980,9 @@ function updateImprestInvestasi(p_id_form){
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
 //                $('#set-a').modal('hide');
-                rincian_saldo.ajax.reload();
-                kebutuhanPlacement.ajax.reload();
-//                $('#set').remove();
+//                rincian_saldo.ajax.reload();
+//                kebutuhanPlacement.ajax.reload();
+                detail_placement.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
@@ -1004,9 +1026,9 @@ function updateSettlement(p_id_form){
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
 //                $('#set-a').modal('hide');
-                rincian_saldo.ajax.reload();
-                kebutuhanPlacement.ajax.reload();
-//                $('#set').remove();
+//                rincian_saldo.ajax.reload();
+//                kebutuhanPlacement.ajax.reload();
+                detail_placement.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
@@ -1050,9 +1072,9 @@ function updatePengadaanValas(p_id_form){
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
 //                $('#set-a').modal('hide');
-                rincian_saldo.ajax.reload();
-                kebutuhanPlacement.ajax.reload();
-//                $('#set').remove();
+//                rincian_saldo.ajax.reload();
+//                kebutuhanPlacement.ajax.reload();
+                detail_placement.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
@@ -1107,9 +1129,9 @@ function updateReceiptPlacement(p_id_form){
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
 //                $('#set-b').modal('hide');
-                rincian_saldo.ajax.reload();
-                kebutuhanPlacement.ajax.reload();
-//                $('#set').remove();
+//                rincian_saldo.ajax.reload();
+//                kebutuhanPlacement.ajax.reload();
+                detail_placement_2.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }
@@ -1164,9 +1186,9 @@ function updateGiroSpecial(p_id_form){
             if(res.return == 1 || res.return == '1'){
                 alert ("Data tersimpan");
 //                $('#set-b').modal('hide');
-                rincian_saldo.ajax.reload();
-                kebutuhanPlacement.ajax.reload();
-//                $('#set').remove();
+//                rincian_saldo.ajax.reload();
+//                kebutuhanPlacement.ajax.reload();
+                detail_placement_2.ajax.reload();
             }else{
                 alert ("Data gagal tersimpan");
             }

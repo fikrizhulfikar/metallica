@@ -2860,7 +2860,7 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
                 .withCatalogName("PKG_DASHBOARD_CORPAY")
                 .withFunctionName("get_detail_fcl");
         SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("out_kebutuhan_lcl", OracleTypes.VARCHAR)
+                .addValue("out_kebutuhan_fcl", OracleTypes.VARCHAR)
                 .addValue("p_id_form", idForm);
 
         Map<String, Object> out = simpleJdbcCall.execute(in);

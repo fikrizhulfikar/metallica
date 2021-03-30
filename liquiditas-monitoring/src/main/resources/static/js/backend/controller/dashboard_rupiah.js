@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    tableMainDashboard();
+//    tableMainDashboard();
     initDataTableImprstValas3();
     initDataTableImprstValas();
     initDataTableImprstValas2();
