@@ -55,25 +55,39 @@
                         <small>Divisi Treasury, PT. PLN (Persero)</small>
                     </div>
                     <div class="card-block">
-                        <table id="table-dash-deposito" class="table table-bordered table-striped" width="100%" style="margin-left: 0px;">
-                            <thead style="font-size: 12px">
-                            <tr>
-                                <th style="text-align: center">BANK</th>
-                                <th style="text-align: center">BANK</th>
-                                <th style="text-align: center">NOMOR ACCOUNT / BILLYET</th>
-                                <th style="text-align: center">NOMINAL</th>
-                                <th style="text-align: center">INTEREST</th>
-                                <th style="text-align: center">TENOR</th>
-                                <th style="text-align: center">TGL PENEMPATAN</th>
-                                <th style="text-align: center">TGL JATUH TEMPO</th>
-                                <th style="text-align: center">BUNGA ACCRUAL</th>
-                                <th style="text-align: center">POKOK BUNGA</th>
-                                <th style="text-align: center">KETERANGAN</th>
-                            </tr>
-                            </thead>
-                            <tbody style="font-size: 12px">
-                            </tbody>
-                        </table>
+
+                        <div class="form-group">
+                            <label for="dashDepositoSearch">Currency</label>
+                            <select type="text" class="form-control" id="dashDepositoSearch">
+                                <option value="IDR" selected="selected">IDR</option>
+                                <option value="JPY">JPY</option>
+                                <option value="EUR">EUR</option>
+                                <option value="USD">USD</option>
+                                <option value="EQ_IDR">EQ IDR</option>
+                            </select>
+                        </div>
+                        <div style="overflow-x: auto;">
+                            <table id="table-dash-deposito" class="table table-bordered table-striped" width="1500px" style="margin-left: 0px; ">
+                                <thead style="font-size: 12px">
+                                <tr>
+                                    <th style="text-align: center">BANK</th>
+                                    <th style="text-align: center">BANK</th>
+                                    <th style="text-align: center">NOMOR ACCOUNT / BILLYET</th>
+                                    <th style="text-align: center">NOMINAL</th>
+                                    <th style="text-align: center">INTEREST</th>
+                                    <th style="text-align: center">TENOR</th>
+                                    <th style="text-align: center">TGL PENEMPATAN</th>
+                                    <th style="text-align: center">TGL JATUH TEMPO</th>
+                                    <th style="text-align: center">TGL PENCAIRAN</th>
+                                    <th style="text-align: center">BUNGA ACCRUAL</th>
+                                    <th style="text-align: center">POKOK BUNGA</th>
+                                    <th style="text-align: center">KETERANGAN</th>
+                                </tr>
+                                </thead>
+                                <tbody style="font-size: 12px">
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
         </div>
