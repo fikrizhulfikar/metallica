@@ -153,7 +153,7 @@ function initDataTablePlacement(p_tgl_awal, p_tgl_akhir){
                 "mRender": function (data, type, full) {
                     var ret_value;
                     if (full.STATUS_APPROVE === "INPUT DATA"){
-                        if (newRoleUser[0] === "ROLE_ADMIN" && newRoleUser[0] === "ROLE_LOCAL_CURRENCY_LIQUIDITY"){
+                        if (newRoleUser[0] === "ROLE_ADMIN" || newRoleUser[0] === "ROLE_LOCAL_CURRENCY_LIQUIDITY"){
                         ret_value = '<div class="col-md-6 btn-group" align="center">' +
                                     '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
                                     '<button style="width: 15px !important; margin: 2px;" id="verifikasi" class="btn btn-sm btn-warning" title="Verifikasi" onclick="verif(1,\''+full.NAMA_FORM+'\')"><i class="fa fa-check-square"></i></button>' +
@@ -165,9 +165,10 @@ function initDataTablePlacement(p_tgl_awal, p_tgl_akhir){
                         ret_value = '<div class="col-md-6 btn-group" align="center">' +
                                     '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
                                     '</div>'
+                        return ret_value;
                         }
                     } else if (full.STATUS_APPROVE === "VERIFIKASI STAFF") {
-                        if (newRoleUser[0] === "ROLE_ADMIN" && newRoleUser[0] === "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY"){
+                        if (newRoleUser[0] === "ROLE_ADMIN" || newRoleUser[0] === "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY"){
                         ret_value = '<div class="col-md-6 btn-group" align="center">' +
                                     '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
                                     '<button style="width: 15px !important; margin: 2px;" id="verifikasi" class="btn btn-sm btn-warning" title="Verifikasi" onclick="verif(2,\''+full.NAMA_FORM+'\')"><i class="fa fa-check-square"></i></button>' +
@@ -178,9 +179,10 @@ function initDataTablePlacement(p_tgl_awal, p_tgl_akhir){
                         ret_value = '<div class="col-md-6 btn-group" align="center">' +
                                     '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
                                     '</div>'
+                        return ret_value;
                         }
                     } else if (full.STATUS_APPROVE === "VERIFIKASI MSB LCL") {
-                        if (newRoleUser[0] === "ROLE_ADMIN" && newRoleUser[0] === "ROLE_VP_LIQUIDITY_AND_RECEIPT"){
+                        if (newRoleUser[0] === "ROLE_ADMIN" || newRoleUser[0] === "ROLE_VP_LIQUIDITY_AND_RECEIPT"){
                         ret_value = '<div class="col-md-6 btn-group" align="center">' +
                                     '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
                                     '<button style="width: 15px !important; margin: 2px;" id="verifikasi" class="btn btn-sm btn-warning" title="Verifikasi" onclick="verif(3,\''+full.NAMA_FORM+'\')"><i class="fa fa-check-square"></i></button>' +
@@ -191,6 +193,7 @@ function initDataTablePlacement(p_tgl_awal, p_tgl_akhir){
                         ret_value = '<div class="col-md-6 btn-group" align="center">' +
                                     '<button style="width: 15px !important; margin: 2px;" id="detail" class="btn btn-sm btn-success" title="Detail" onclick="detail(\''+full.NAMA_FORM+'\',\''+full.STATUS_APPROVE+'\')"><i class="fa fa-info-circle"></i></button>' +
                                     '</div>'
+                        return ret_value;
                         }
                     } else if (full.STATUS_APPROVE === "VERIFIKASI VP TLR") {
                         ret_value = '<div class="col-md-6 btn-group" align="center">' +
