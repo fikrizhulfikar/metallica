@@ -131,8 +131,15 @@
             <version>0.0.20131108.vaadin1</version>
             <scope>compile</scope>
         </dependency>
+		<!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.13</version>
+		</dependency>
 
-    </dependencies>
+
+	</dependencies>
 
 	<build>
 		<plugins>
@@ -146,6 +153,11 @@
 				<configuration>
 					<nonFilteredFileExtensions>
 						<nonFilteredFileExtension>xls</nonFilteredFileExtension>
+						<nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+						<nonFilteredFileExtension>woff</nonFilteredFileExtension>
+						<nonFilteredFileExtension>woff2</nonFilteredFileExtension>
+						<nonFilteredFileExtension>eot</nonFilteredFileExtension>
+						<nonFilteredFileExtension>svg</nonFilteredFileExtension>
 					</nonFilteredFileExtensions>
 				</configuration>
 			</plugin>
@@ -160,30 +172,21 @@
 	</build>
 
 	<profiles>
-<!--		<profile>-->
-<!--			<id>development</id>-->
-<!--			<properties>-->
-<!--				<activatedProperties>development</activatedProperties>-->
-<!--			</properties>-->
-<!--			<activation>-->
-<!--				<activeByDefault>true</activeByDefault>-->
-<!--			</activation>-->
-<!--		</profile>-->
+		<profile>
+			<id>development</id>
+			<properties>
+				<activatedProperties>development</activatedProperties>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
 <!--		<profile>-->
 <!--			<id>testing</id>-->
 <!--			<properties>-->
 <!--				<activatedProperties>testing</activatedProperties>-->
 <!--			</properties>-->
 <!--		</profile>-->
-		<profile>
-			<id>production</id>
-			<properties>
-				<activatedProperties>production</activatedProperties>
-			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-		</profile>
 	</profiles>
 
 	<repositories>
