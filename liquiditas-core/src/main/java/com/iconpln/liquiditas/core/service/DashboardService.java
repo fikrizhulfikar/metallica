@@ -1047,12 +1047,14 @@ public class DashboardService {
         return out;
     }
 
-    public List<Map<String, Object>> getDashboardDeposito(){
+    public List<Map<String, Object>> getDashboardDeposito(String pCurr){
         List<Map<String, Object>> result;
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY2")
                 .withFunctionName("get_dash_deposito");
-        result = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_currency", pCurr);
+        result = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
         return result;
     }
 }
