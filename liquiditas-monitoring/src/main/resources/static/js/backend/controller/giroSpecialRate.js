@@ -69,11 +69,6 @@ function selectCurrency(value) {
     setSelectSisaAnggaran("pSisaAnggaran",tempCurrency, tempNilaiTagihan );
 }
 
-function openInsIdOss(){
-     $('#ins-id-oss').modal({backdrop: 'static', keyboard: false});
- }
-
-
 function selectStatus(value) {
     if (value != 1) {
         $("#pTglJatuhTempo").prop('disabled', false);
@@ -84,7 +79,8 @@ function selectStatus(value) {
 }
 
 function openFormNew() {
-    $("#form_penambah, #form_pengurang").find('input[type="number"], input[type="text"]').val("");
+    $("#id_giro_special_rate_plus").val("");
+    $("#form_penambah, #form_pengurang").find('input[type="number"], input[type="text"], textarea').val("");
     $("#ex2-tabs-1, #ex2-tabs-2").removeClass("active show");
     $("#ex2-tabs-1").addClass("active show");
     $("#ex2-tab-1, #ex2-tab-2")
@@ -104,7 +100,6 @@ function openFormNew() {
     $("#pNominal, #pJasaGiro, #pNominalPengurang").mask('000,000,000,000,000.00',{reverse : true});
 
     $('#edit-rekap-modal').modal({backdrop: 'static', keyboard: false});
-
 }
 
 $("#pTglPenempatan").change(function() {
@@ -170,7 +165,7 @@ function ins_data(type) {
             dataType: 'JSON',
             type: "POST",
             data: {
-                pIdGiro: idGiro,
+                pIdGiro: (type === 1) ? $("#id_giro_special_rate_plus").val() : $("#id_giro_special_rate_min").val(),
                 pTglJatuhTempo: (type === 1) ? $("#pTglJatuhTempo").val() : $("#pTglJatuhTempoPengurang").val(),
                 pTglPenempatan: (type === 1) ? $("#pTglPenempatan").val() : "",
                 pCurr: (type === 1) ? $("#pCurrecny").val() : $("#pCurrecnyPengurang").val(),
@@ -184,7 +179,7 @@ function ins_data(type) {
                 pJasaGiro : (type === 1) ? $("#pJasaGiro").val().replace(/,/g,"") : ""
             },
             success: function (res) {
-                hideLoadingCss("")
+                hideLoadingCss("");
                 var result = res.return.split(";")[0];
                 if (result == 1 || result == '1') {
                     alert("Data Berhasil Disimpan");
@@ -217,11 +212,12 @@ function edit_data(id, type) {
             pIdGiro: id
         },
         success: function (res) {
-            hideLoadingCss("")
+            hideLoadingCss("");
             setSelectCurr("pCurrecny, #pCurrecnyPengurang", "", res[0].CURRENCY, "REKAP");
             setSelectBank2("pBankTujuan, #pBankTujuanPengurang", "", "GIRO_SPECIAL_RATE", res[0].KODE_BANK, "REKAP");
             $("#pNominal, #pJasaGiro, #pNominalPengurang").unmask();
             if (type === 'PENAMBAH'){
+                $("#id_giro_special_rate_plus").val(id);
                 $("#pTglJatuhTempo").val(res[0].JATUH_TEMPO);
                 $("#pTglPenempatan").val(res[0].TGL_PENEMPATAN);
                 $("#pPajak").val(res[0].PAJAK);
@@ -240,6 +236,7 @@ function edit_data(id, type) {
                     .addClass("active");
 
             }else if (type === 'PENGURANG'){
+                $("#id_giro_special_rate_min").val(id);
                 $("#pTglJatuhTempoPengurang").val(res[0].JATUH_TEMPO);
                 $("#pProdukPengurang").val(res[0].PRODUK);
                 $("#pNominalPengurang").val(res[0].NOMINAL);
@@ -304,16 +301,19 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency) {
                 {width: 100, targets: 3},
                 {width: 100, targets: 4},
                 {width: 120, targets: 5},
-                {width: 100, targets: 6},
+                {width: 130, targets: 6},
                 {width: 100, targets: 7},
                 {width: 100, targets: 8},
                 {width: 100, targets: 9},
                 {width: 100, targets: 10},
                 {width: 120, targets: 11},
-                {width: 100, targets: 12},
-                {width: 57, targets: 13},
+                {width: 170, targets: 12},
+                {width: 90, targets: 13},
+                {width: 60, targets: 14},
                 {width: "20%", "targets": 0},
-                { className: "datatables_action", "targets": [11] },
+                { className: "datatables_action", "targets": [] },
+                {"targets": [4, 9, 10, 11, 12], "className": 'dt-body-right'},
+                {"targets": [0], "className": 'dt-body-center'},
                 {
                     "sortable": false,
                     "aTargets": [0]
@@ -339,78 +339,84 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency) {
                     }
 
                 },
-
                 {
                     "aTargets": [3],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.NOMINAL,2,".",",");
+                        return full.CURRENCY;
                     }
 
                 },
                 {
                     "aTargets": [4],
                     "mRender": function (data, type, full) {
-                        return (full.INTEREST !== "-") ? full.INTEREST + "%" : "-";
+                        return accounting.formatNumber(full.NOMINAL,2,".",",");
                     }
 
                 },
                 {
                     "aTargets": [5],
                     "mRender": function (data, type, full) {
-                        return full.TGL_PENEMPATAN;
+                        return (full.INTEREST !== "-") ? full.INTEREST + "%" : "-";
                     }
 
                 },
                 {
                     "aTargets": [6],
                     "mRender": function (data, type, full) {
-                        return full.JATUH_TEMPO;
+                        return full.TGL_PENEMPATAN;
                     }
 
                 },
                 {
                     "aTargets": [7],
                     "mRender": function (data, type, full) {
-                        return full.JUMLAH_HARI;
+                        return full.JATUH_TEMPO;
                     }
 
                 },
                 {
                     "aTargets": [8],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.JASA_GIRO,2,".",",");
+                        return full.JUMLAH_HARI;
                     }
 
                 },
                 {
                     "aTargets": [9],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.PAJAK,2,".",",");
+                        return accounting.formatNumber(full.JASA_GIRO,2,".",",");
                     }
 
                 },
                 {
                     "aTargets": [10],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.NET_JASA_GIRO, 2, ".",",");
+                        return accounting.formatNumber(full.PAJAK,2,".",",");
                     }
 
                 },
                 {
                     "aTargets": [11],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.POKOK_JASA_GIRO, 2, ".",",");
+                        return accounting.formatNumber(full.NET_JASA_GIRO, 2, ".",",");
                     }
 
                 },
                 {
                     "aTargets": [12],
                     "mRender": function (data, type, full) {
+                        return accounting.formatNumber(full.POKOK_JASA_GIRO, 2, ".",",");
+                    }
+
+                },
+                {
+                    "aTargets": [13],
+                    "mRender": function (data, type, full) {
                         return full.KETERANGAN;
                     }
                 },
                 {
-                    "aTargets": [13],
+                    "aTargets": [14],
                     "mRender": function (data, type, full) {
                            var ret_value;
                          ret_value =

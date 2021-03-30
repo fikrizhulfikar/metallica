@@ -60,7 +60,7 @@ function openFormNew() {
     var date = new Date();
     date.setDate(date.getDate() + addedDays);
 
-    $("#form_scf").find("input[type=number], input[type=text], select").val("");
+    $("#form_scf").find("input[type=number], input[type=text], input[type=hidden], select").val("");
 
     $('#pTglJatuhTempo').datepicker({dateFormat: 'dd/mm/yy', minDate: date});
     $('#pTglTransaksi').datepicker({dateFormat: 'dd/mm/yy'});
@@ -165,38 +165,42 @@ function delete_data(id) {
 
 // uSED
 function ins_data() {
-    showLoadingCss();
-    $.ajax({
-        url: baseUrl + "/api_operator/supply_chain_financing/ins_scf",
-        dataType: 'JSON',
-        type: "POST",
-        data: {
-            pIdScf: $("#pIdScf").val(),
-            pKodeBank: $("#pbankCounterparty").val(),
-            pTglTransaksi: $("#pTglTransaksi").val(),
-            pJatuhTempo: $("#pTglJatuhTempo").val(),
-            pVendor: $("#pVendor").val(),
-            pJenisPembayaran: $("#pJenisPembayaran").val(),
-            pKodeCurrency: $("#pCurrecny").val(),
-            pNominal: $("#pNominal").val().toString().replace(/,/g,''),
-            pSukuBunga: $("#pSukuBunga").val(),
-            pProvisi: $("#pProvisi").val(),
-        },
-        success: function (res) {
-            if (res.return == 1) {
-                alert("Data Berhasil Disimpan");
-                $('#edit-scf-modal').modal('hide');
-                table_scf.ajax.reload();
-            } else {
-                alert("Data Gagal Disimpan");
-            }
-            hideLoadingCss("");
+    if (validateForm("#form_scf") > 0){
+        alert("Silahkan Lengkapi Data Terlebih Dahulu!");
+    }else{
+        showLoadingCss();
+        $.ajax({
+            url: baseUrl + "/api_operator/supply_chain_financing/ins_scf",
+            dataType: 'JSON',
+            type: "POST",
+            data: {
+                pIdScf: $("#pIdScf").val(),
+                pKodeBank: $("#pbankCounterparty").val(),
+                pTglTransaksi: $("#pTglTransaksi").val(),
+                pJatuhTempo: $("#pTglJatuhTempo").val(),
+                pVendor: $("#pVendor").val(),
+                pJenisPembayaran: $("#pJenisPembayaran").val(),
+                pKodeCurrency: $("#pCurrecny").val(),
+                pNominal: $("#pNominal").val().toString().replace(/,/g,''),
+                pSukuBunga: $("#pSukuBunga").val(),
+                pProvisi: $("#pProvisi").val(),
+            },
+            success: function (res) {
+                if (res.return == 1) {
+                    alert("Data Berhasil Disimpan");
+                    $('#edit-scf-modal').modal('hide');
+                    table_scf.ajax.reload();
+                } else {
+                    alert("Data Gagal Disimpan");
+                }
+                hideLoadingCss("");
 
-        },
-        error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
-        }
-    });
+            },
+            error: function () {
+                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
+            }
+        });
+    }
 }
 
 // USED
@@ -213,7 +217,7 @@ function edit_data(id) {
             $("#pNominal").unmask();
             setSelectCurr("pCurrecny", "", res[0].CURRENCY, "REKAP");
             setSelectBank("pbankCounterparty", "FILTER", "PEMBAYAR", res[0].ID_BANK, "REKAP");
-            setSelectCashCode("pJenisPembayaran", res[0].JENIS_PEMBAYARAN);
+            setSelectCashCode("pJenisPembayaran", res[0].KODE_JENIS_PEMBAYARAN);
             $("#pIdScf").val(res[0].ID_SCF);
             $("#pTglJatuhTempo").val(res[0].TGL_JATUH_TEMPO);
             $("#pNominal").val(parseFloat(res[0].NOMINAL * 100).toString());
@@ -221,14 +225,11 @@ function edit_data(id) {
             $("#pKurs").val(res[0].KURS);
             $("#pProvisi").val(res[0].PROVISI);
             $("#pSukuBunga").val(res[0].SUKU_BUNGA);
-
             $("#pNominal").mask('000,000,000,000,000.00',{reverse : true});
-
             $("#pCurrecny, #pbankCounterparty").select2({
                 width : "100%",
                 theme : "bootstrap"
             });
-
             $("#pVendor").select2({
                 width : "100%",
                 theme : "bootstrap",
@@ -237,9 +238,8 @@ function edit_data(id) {
                     url : baseUrl + "/api_master/vendor/get_data_vendor_sap",
                     dataType : "JSON",
                     data : function (params) {
-                        params.term = res[0].VENDOR;
                         return {
-                            pNamaVendor : res[0].VENDOR
+                            pNamaVendor : params.term
                         };
                     },
                     processResults : function (data, page) {
@@ -260,8 +260,6 @@ function edit_data(id) {
             setTimeout(function () {
                $('#edit-scf-modal').modal({backdrop: 'static', keyboard: false});
             }, timeSowFormEdit);
-            // hideLoadingCss()
-
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -379,7 +377,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pJenisPembayaran) 
                 {
                     "aTargets": [8],
                     "mRender": function (data, type, full) {
-                        return full.NOMINAL;
+                        return accounting.formatNumber(full.NOMINAL,2,".", ",");
                     }
 
                 },
@@ -393,7 +391,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pJenisPembayaran) 
                 {
                     "aTargets": [10],
                     "mRender": function (data, type, full) {
-                        return full.EQ_IDR;
+                        return accounting.formatNumber(full.EQ_IDR,2,".", ",");
                     }
 
                 },
@@ -653,13 +651,12 @@ function getScfFiles(pIdScf) {
     });
 }
 
-function validateForm(form_type) {
-    let form = (form_type === 1) ? "#form_penambah" : "#form_pengurang";
+function validateForm(form_name){
     let empty=0;
-    $(form)
-        .find("select, input")
+    $(form_name)
+        .find("select, input, textarea")
         .each(function(){
-            if ($(this).prop("required") && $(this).val() === ""){
+            if (($(this).prop("required") && $(this).val() === "") || ($(this).prop("required") && $(this).val() === null)){
                 empty++;
             }
         });

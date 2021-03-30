@@ -71,7 +71,7 @@ public class DepositoService {
 
     //    deposito
     public Map<String, Object> insHeaderDeposito(
-            String pIdDeposito, String pBank, String pBillyet, String pUserId
+            String pIdDeposito, String pBank, String pBillyet, String pCurrency, String pUserId
     ) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -85,6 +85,7 @@ public class DepositoService {
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_id_depo", pIdDeposito)
                 .addValue("p_bank", pBank)
+                .addValue("p_currency", pCurrency)
                 .addValue("p_account", pBillyet)
                 .addValue("p_user_id", pUserId)
                 .addValue("out_msg", OracleTypes.VARCHAR);
@@ -95,8 +96,8 @@ public class DepositoService {
 
     public Map<String, Object> insDetailDeposito(
             String pIdDeposito, String pIdDetail, String pBank, String pJenis ,String pNoAccount,
-            String pNominal, String pInterest, String pTglPenempatan,
-            String pTglJatuhTempo, String pKeterangan, String pUserId
+            String pNominal, String pCurr, String pInterest, String pTglPenempatan, String pTglPencairan,
+            String pTglJatuhTempo, String pKeterangan, String pBungaAccrual, String pPokokBunga, String pUserId
     ) throws SQLException {
 
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
@@ -118,10 +119,14 @@ public class DepositoService {
                 .addValue("p_bank", pBank)
                 .addValue("p_jenis", pJenis)
                 .addValue("p_account", pNoAccount)
+                .addValue("p_currency", pCurr)
                 .addValue("p_nominal", pNominal)
+                .addValue("p_bunga_acc", pBungaAccrual)
+                .addValue("p_pokok_bunga", pPokokBunga)
                 .addValue("p_interest", pInterest)
                 .addValue("p_tgl_penempatan", pTglPenempatan)
                 .addValue("p_tgl_jatuh_tempo", pTglJatuhTempo)
+                .addValue("p_tgl_pencairan", pTglPencairan)
                 .addValue("p_keterangan", pKeterangan)
                 .addValue("p_user_id", pUserId)
                 .addValue("out_msg", OracleTypes.VARCHAR);

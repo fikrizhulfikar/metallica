@@ -36,7 +36,6 @@
         <li class="breadcrumb-item active" style="cursor: default">Deposito</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" id="btn_data_baru_header_deposito" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS')"><i class="fas fa-plus-square"></i> &nbsp;New Data</button>
             </div>
         </li>
@@ -50,7 +49,14 @@
                 </div>
                 <div class="modal-body">
                     <form action="#" autocomplete="off" id="form_header_deposito">
+                        <input type="hidden" id="id_deposito_header"/>
                         <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="pBillyet"><span style="color: red">* </span>&nbsp;Account Billyet:</label>
+                                    <input type="text" id="pBillyet" class="form-control" required="required"/>
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="pBankCounterParty"><span style="color: red">* </span>&nbsp;Bank Counterparty:</label>
@@ -61,8 +67,10 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="pBillyet"><span style="color: red">* </span>&nbsp;Account Billyet:</label>
-                                    <input type="text" id="pBillyet" class="form-control" required="required"/>
+                                    <label for="pCurrencyHeader"><span style="color: red">* </span>&nbsp;Currency:</label>
+                                    <select id="pCurrencyHeader" class="form-control" required="required">
+                                        <option value="">Pilih Data</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -81,133 +89,126 @@
             </div>
         </div>
     </div>
-
+<!--modal peempata deposito-->
     <div id="modal_detail_deposito" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title">Form Detail Deposito</h5>
+                    <h5 class="modal-title">Form Penempatan Deposito</h5>
                 </div>
                 <div class="modal-body">
-                    <ul class="nav nav-tabs nav-fill" id="ex1" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a
-                                    class="nav-link active"
-                                    id="ex2-tab-1"
-                                    data-toggle="tab"
-                                    href="#ex2-tabs-1"
-                            >INPUT <span style="color: Dodgerblue;"><i class="fas fa-keyboard"></i></span></a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a
-                                    class="nav-link"
-                                    id="ex2-tab-2"
-                                    data-toggle="tab"
-                                    href="#ex2-tabs-2"
-                            >PENCAIRAN <span style="color: Tomato"><i class="fas fa-file-invoice-dollar"></i></span></a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="ex2-content">
-                        <div class="tab-pane fade active show"
-                             id="ex2-tabs-1"
-                             role="tabpanel"
-                             aria-labelledby="ex2-tab-1">
-                            <form action="#" class="form" autocomplete="off" id="form_input">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="pDetailBankCounterParty"><span style="color: red"></span>&nbsp;Bank Counterparty:</label>
-                                            <input type="text" id="pDetailBankCounterParty" class="form-control" readonly="readonly"/>
-                                            <input type="hidden" id="pDetailCounter" readonly="readonly"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pDetailTglPenempatan"><span style="color: red">*</span>&nbsp;Tanggal Penempatan:</label>
-                                            <input type="text" id="pDetailTglPenempatan" class="form-control"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pDetailTglJatuhTempo"><span style="color: red">*</span>&nbsp;Tanggal Jatuh Tempo:</label>
-                                            <input type="text" id="pDetailTglJatuhTempo" class="form-control"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label>
-                                            <br/>
-                                            <label>Gunakan titik (.) untuk koma (,)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="pDetailBillyet"><span style="color: red">*</span>&nbsp;Account Billyet:</label>
-                                            <input type="text" id="pDetailBillyet" class="form-control" readonly="readonly"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pDetailNominal"><span style="color: red">*</span>&nbsp;Nominal:</label>
-                                            <input type="text" id="pDetailNominal" class="form-control"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pDetailInterest"><span style="color: red">*</span>&nbsp;Interest :</label>
-                                            <input type="text" id="pDetailInterest" class="form-control"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pDetailKeterangan"><span style="color: red">*</span>&nbsp;Keterangan:</label>
-                                            <textarea type="text" id="pDetailKeterangan" class="form-control"></textarea>
-                                        </div>
-                                    </div>
+                    <form action="#" class="form" autocomplete="off" id="form_input">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pDetailBankCounterParty"><span style="color: red"></span>&nbsp;Bank Counterparty:</label>
+                                    <input type="text" id="pDetailBankCounterParty" class="form-control" readonly="readonly"/>
+                                    <input type="hidden" id="pDetailCounter" readonly="readonly"/>
                                 </div>
-                            </form>
-                            <div class="pull-right">
-                                <button type="button" class="btn btn-primary" onclick="ins_detail_data(1)">Submit</button>
+                                <div class="form-group">
+                                    <label for="pDetailCurrency"><span style="color: red"></span>&nbsp;Currency:</label>
+                                    <input type="text" id="pDetailCurrency" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailTglPenempatan"><span style="color: red">*</span>&nbsp;Tanggal Penempatan:</label>
+                                    <input type="text" id="pDetailTglPenempatan" class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailTglJatuhTempo"><span style="color: red">*</span>&nbsp;Tanggal Jatuh Tempo:</label>
+                                    <input type="text" id="pDetailTglJatuhTempo" class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label>
+                                    <br/>
+                                    <label>Gunakan titik (.) untuk koma (,)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pDetailBillyet"><span style="color: red">*</span>&nbsp;Account Billyet:</label>
+                                    <input type="text" id="pDetailBillyet" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailNominal"><span style="color: red">*</span>&nbsp;Nominal:</label>
+                                    <input type="text" id="pDetailNominal" class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailInterest"><span style="color: red">*</span>&nbsp;Interest :</label>
+                                    <input type="text" id="pDetailInterest" class="form-control"/>
+                                </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade"
-                             id="ex2-tabs-2"
-                             role="tabpanel"
-                             aria-labelledby="ex2-tab-2">
-                            <form action="#" autocomplete="off" class="form" id="form_Pencairan">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="pDetailBankCounterPartyPencairan"><span style="color: red"></span>&nbsp;Bank Counterparty:</label>
-                                            <input type="text" id="pDetailBankCounterPartyPencairan" class="form-control" readonly="readonly"/>
-                                            <input type="hidden" id="pDetailCounterPencairan" readonly="readonly"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pDetailTglPenempatanPencairan"><span style="color: red">*</span>&nbsp;Tanggal Penempatan:</label>
-                                            <input type="text" id="pDetailTglPenempatanPencairan" class="form-control" readonly="readonly"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label>
-                                            <br/>
-                                            <label>Gunakan titik (.) untuk koma (,)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="pDetailBillyetPencairan"><span style="color: red">*</span>&nbsp;Account Billyet:</label>
-                                            <input type="text" id="pDetailBillyetPencairan" class="form-control" readonly="readonly"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pDetailNominalPencairan"><span style="color: red">*</span>&nbsp;Nominal:</label>
-                                            <input type="text" id="pDetailNominalPencairan" class="form-control"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pDetailTglJatuhTempoPencairan"><span style="color: red">*</span>&nbsp;Tanggal Jatuh Tempo:</label>
-                                            <input type="text" id="pDetailTglJatuhTempoPencairan" class="form-control" readonly="readonly"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-
-                            <div>
-                                <button type="button" class="btn btn-primary" onclick="ins_detail_data(2)">Submit</button>
-                            </div>
-                        </div>
+                    </form>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-primary" onclick="ins_detail_data(1)">Submit</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+<!--    ed of modal peempata deposito-->
 
+<!--    Pecaira Deposito Modal-->
+    <div id="modal_pecairan_deposito" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Pencairan Deposito</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="#" autocomplete="off" class="form" id="form_Pencairan">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pDetailBankCounterPartyPencairan"><span style="color: red"></span>&nbsp;Bank Counterparty:</label>
+                                    <input type="text" id="pDetailBankCounterPartyPencairan" class="form-control" readonly="readonly"/>
+                                    <input type="hidden" id="pDetailCounterPencairan" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailCurrencyPencairan"><span style="color: red"></span>&nbsp;Currency Pencairan:</label>
+                                    <input type="text" id="pDetailCurrencyPencairan" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailBungaAccrual">&nbsp;Bunga Accrual:</label>
+                                    <input type="text" id="pDetailBungaAccrual" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label>
+                                    <br/>
+                                    <label>Gunakan titik (.) untuk koma (,)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pDetailBillyetPencairan"><span style="color: red"></span>&nbsp;Account Billyet:</label>
+                                    <input type="text" id="pDetailBillyetPencairan" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailNominalPencairan"><span style="color: red"></span>&nbsp;Nominal:</label>
+                                    <input type="text" id="pDetailNominalPencairan" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pPokokBunga">&nbsp;Pokok Bunga:</label>
+                                    <input type="text" id="pPokokBunga" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailTglPencairan"><span style="color: red">*</span>&nbsp;Tanggal Pencairan:</label>
+                                    <input type="text" id="pDetailTglPencairan" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div>
+                        <button type="button" class="btn btn-primary" onclick="ins_detail_data(2)">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--    ed of pecaira deposito modal-->
     <div class="container-fluid" style="margin-bottom: 15px;">
         <div class="animated fadeIn" style="display: none;" id="deposito_detail">
             <div id="filter">
@@ -265,6 +266,7 @@
                                     <div class="col-md-7" style="padding-right: 0;">
                                         <div class="float-right" style="padding-top: 0.65rem;">
                                             <button style="width: 35px !important;" id="btn_tambah_detail" class="btn btn-sm btn-success" title="Tambah Detail"><i class="fas fa-plus-square"></i></button>
+                                            <button style="width: 35px !important;" id="btn_pencairan_detail" class="btn btn-sm btn-default" title="Pencairan"><i class="fas fa-hand-holding-usd"></i></button>
                                             <button style="width: 35px !important;" id="btn_kembali" class="btn btn-sm btn-warning" title="Kembali Ke Header"><i class="fas fa-arrow-circle-left"></i></button>
                                         </div>
                                     </div>
@@ -282,11 +284,13 @@
                                     <th>INTEREST</th>
                                     <th>TANGGAL PENEMPATAN</th>
                                     <th>TANGGAL JATUH TEMPO</th>
+                                    <th>TANGGAL PENCAIRAN</th>
                                     <th>TENOR (HARI)</th>
                                     <th>BUNGA ACCRUAL</th>
                                     <th>POKOK &amp; BUNGA</th>
                                     <th>KETERANGAN</th>
                                     <th>AKSI</th>
+                                    <th id="forcbparent"></th>
                                 </tr>
                                 </thead>
                                 <tbody style="font-size: 12px">
@@ -310,8 +314,9 @@
                             <thead>
                             <tr>
                                 <th>NO</th>
-                                <th>BANK</th>
                                 <th>NOMOR ACCOUNT / BILLYET</th>
+                                <th>BANK</th>
+                                <th>CURRENCY</th>
                                 <th>AKSI</th>
                             </tr>
                             </thead>

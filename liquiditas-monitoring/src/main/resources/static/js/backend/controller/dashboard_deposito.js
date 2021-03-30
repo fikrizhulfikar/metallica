@@ -1,41 +1,78 @@
 document.addEventListener('DOMContentLoaded', function (event) {
-   getDashDeposito();
+   getDashDeposito($("#dashDepositoSearch").val());
 });
 
-function getDashDeposito(){
+$("#dashDepositoSearch").on("change", function () {
+   getDashDeposito($(this).val());
+});
+
+function getDashDeposito(curr){
+    $('#table-dash-deposito tbody').empty();
+    $('#table-dash-deposito').dataTable().fnDestroy();
     let dash = $("#table-dash-deposito").DataTable({
         "ajax" : {
             "url": baseUrl + "api_operator/deposito/get_dashboar_deposito",
             "type" : "GET",
             "dataType" : "json",
+            "data" : {
+                pCurr : curr,
+            }
         },
         "sorting": false,
         "searching" : false,
         "paging": false,
         "bInfo" : false,
-        "scrollX": "100%",
         "bLengthChange" : false,
         "columns" : [
 //            {"data": null,"render": (data, type, row) => {return '<td>'+data.NOURUT+'</td>';}},
             {"data": null,"orderable": false,"visible": false,"render": (data, type, row) => {return data.BANK_CONTERPARTY;}},
-            {"data": null,"orderable": false, "width" : "20%","render": (data, type, row) => {return data.NO_ACCOUNT;}},
+            {"data": null,"orderable": false,"render": (data, type, row) => {return data.NO_ACCOUNT;}},
             {"data":null,"orderable": false,"render" : (data, tyoe, row) => {return new Intl.NumberFormat('id-ID').format(data.NOMINAL);}},
             {"data": null,"orderable": false,"render": (data, type, row) => {return data.INTEREST;}},
             {"data": null,"orderable": false,"render": (data, type, row) => {return data.JUMLAH_HARI;}},
             {"data": null,"orderable": false,"render": (data, type, row) => {
-                let tp = new Date(data.TGL_PENEMPATAN);
-                return ("0" + tp.getDate()).slice(-2) +"/"+ ("0" + tp.getMonth()).slice(-2) +"/"+ tp.getFullYear();
+                    let tp;
+                    if (data.TGL_PENEMPATAN === null){
+                        tp = "-";
+                    }else {
+                        let date = new Date(data.TGL_PENEMPATAN);
+                        tp = ("0" + date.getDate()).slice(-2) +"/"+ ("0" + (date.getMonth()+1)).slice(-2) +"/"+ date.getFullYear();
+                    }
+                    return tp;
             }},
             {"data": null,"orderable": false,"render": (data, type, row) => {
-                let jt = new Date(data.JATUH_TEMPO);
-                return ("0" + jt.getDate()).slice(-2) +"/"+ ("0" + jt.getMonth()).slice(-2) +"/"+ jt.getFullYear();
+                    let jt;
+                    if (data.JATUH_TEMPO === null){
+                        jt = "-";
+                    }else {
+                        let date = new Date(data.JATUH_TEMPO);
+                        jt = ("0" + date.getDate()).slice(-2) +"/"+ ("0" + (date.getMonth()+1)).slice(-2) +"/"+ date.getFullYear();
+                    }
+                    return jt;
             }},
+            {"data": null,"orderable": false,"render": (data, type, row) => {
+                    let jt;
+                    if (data.TGL_PENCAIRAN === null){
+                        jt = "-";
+                    }else {
+                        let date = new Date(data.TGL_PENCAIRAN);
+                        jt = ("0" + date.getDate()).slice(-2) +"/"+ ("0" + (date.getMonth()+1)).slice(-2) +"/"+ date.getFullYear();
+                    }
+                    return jt;
+                }},
             {"data":null,"orderable": false,"render" : (data, tyoe, row) => {return new Intl.NumberFormat('id-ID').format(data.BUNGA_ACCRUAL)},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data":null,"orderable": false,"render" : (data, tyoe, row) => {return new Intl.NumberFormat('id-ID').format(data.POKOK_BUNGA)},"createdCell" : (cell, cellData, rowata, rowIndex, colIndex) => {$(cell).css("text-align","right");}},
             {"data": null,"orderable": false,"render": (data, type, row) => {return data.KETERANGAN;}},
         ],
 
         "createdRow" : function (row, data, dataIndex){
+            if ( data["JENIS"] === "PENCAIRAN" ) {
+                $(row).css({
+                    "color": "#ff6767",
+                    "font-weight" : "bold",
+                });
+            };
+
             if ( data["BANK_CONTERPARTY"].includes("TOTAL") ) {
                 $(row).css({
                     "background-color": "#ffd67a",

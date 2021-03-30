@@ -160,4 +160,17 @@ public class UploadSaldoService {
         return simpleJdbcCall.executeFunction(ArrayList.class);
     }
 
+    public List<Map<String, Object>> getRencanaImprest(){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY2")
+                .withFunctionName("xls_imprest_rencana");
+        return simpleJdbcCall.executeFunction(ArrayList.class);
+    }
+
+    public List<Map<String, Object>> getRealisasiImprest(){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY2")
+                .withFunctionName("xls_imprest_realisasi");
+        return simpleJdbcCall.executeFunction(ArrayList.class);
+    }
 }

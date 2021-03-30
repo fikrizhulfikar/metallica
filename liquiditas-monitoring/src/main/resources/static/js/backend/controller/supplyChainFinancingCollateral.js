@@ -73,7 +73,7 @@ function openFormNew() {
         theme : "bootstrap",
     });
 
-    $("#pNominal").mask('000,000,000,000,000',{reverse : true});
+    $("#pNominal, #pOriCurr, #pKurs").mask('000,000,000,000,000',{reverse : true});
 
     $("#pVendor").select2({
         width : "100%",
@@ -140,11 +140,11 @@ function delete_data(id) {
     if (stateCrf == true) {
         showLoadingCss()
         $.ajax({
-            url: baseUrl + "api_operator/supply_chain_financing/delete_scf_data",
+            url: baseUrl + "api_operator/supply_chain_financing/delete_scf_collateral_data",
             dataType: 'JSON',
             type: "POST",
             data: {
-                pIdScf: id
+                pIdScfCollateral: id
             },
             success: function (res) {
                 hideLoadingCss("")
@@ -165,70 +165,76 @@ function delete_data(id) {
 
 // uSED
 function ins_data() {
-    showLoadingCss();
-    $.ajax({
-        url: baseUrl + "/api_operator/supply_chain_financing/ins_scf",
-        dataType: 'JSON',
-        type: "POST",
-        data: {
-            pIdScf: $("#pIdScf").val(),
-            pKodeBank: $("#pbankCounterparty").val(),
-            pTglTransaksi: $("#pTglTransaksi").val(),
-            pJatuhTempo: $("#pTglJatuhTempo").val(),
-            pVendor: $("#pVendor").val(),
-            pJenisPembayaran: $("#pJenisPembayaran").val(),
-            pKodeCurrency: $("#pCurrecny").val(),
-            pNominal: $("#pNominal").val().toString().replace(/,/g,''),
-            pSukuBunga: $("#pSukuBunga").val(),
-            pProvisi: $("#pProvisi").val(),
-        },
-        success: function (res) {
-            if (res.return == 1) {
-                alert("Data Berhasil Disimpan");
-                $('#edit-scf-modal').modal('hide');
-                table_scf.ajax.reload();
-            } else {
-                alert("Data Gagal Disimpan");
-            }
-            hideLoadingCss("");
+    if (validateForm("#form_scf") > 0){
+        alert("Silahkan Lengkapi Data Terlebih Dahulu!");
+    }else{
+        showLoadingCss();
+        $.ajax({
+            url: baseUrl + "/api_operator/supply_chain_financing/ins_scf_collateral",
+            dataType: 'JSON',
+            type: "POST",
+            data: {
+                pIdScfCol: $("#pIdScf").val(),
+                pKodeBank: $("#pbankCounterparty").val(),
+                pTglTransaksi: $("#pTglTransaksi").val(),
+                pJatuhTempo: $("#pTglJatuhTempo").val(),
+                pVendor: $("#pVendor").val(),
+                pJenisPembayaran: $("#pJenisPembayaran").val(),
+                pCurrency: $("#pCurrecny").val(),
+                pOriCurr: $("#pOriCurr").val().toString().replace(/,/g,''),
+                pKurs: $("#pKurs").val().toString().replace(/,/g,''),
+                pFeeTransaksi: $("#pFeeTransaksi").val(),
+                pCashCollateral: $("#pCashCollateral").val().toString().replace(/,/g,''),
+                pPajak: $("#pPajak").val(),
+                pJasaGiro: $("#pRateJasaGiro").val(),
+            },
+            success: function (res) {
+                if (res.return == 1) {
+                    alert("Data Berhasil Disimpan");
+                    $('#edit-scf-modal').modal('hide');
+                    table_scf.ajax.reload();
+                } else {
+                    alert("Data Gagal Disimpan");
+                }
+                hideLoadingCss("");
 
-        },
-        error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
-        }
-    });
+            },
+            error: function () {
+                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
+            }
+        });
+    }
 }
 
 // USED
 function edit_data(id) {
     //showLoadingCss()
     $.ajax({
-        url: baseUrl + "api_operator/supply_chain_financing/get_scf_byId",
+        url: baseUrl + "api_operator/supply_chain_financing/get_scf_collateral_byId",
         dataType: 'JSON',
         type: "GET",
         data: {
-            pIdScf: id
+            pIdScfCollateral: id
         },
         success: function (res) {
             $("#pNominal").unmask();
             setSelectCurr("pCurrecny", "", res[0].CURRENCY, "REKAP");
-            setSelectBank("pbankCounterparty", "FILTER", "PEMBAYAR", res[0].BANK, "REKAP");
-            setSelectCashCode("pJenisPembayaran", res[0].JENIS_PEMBAYARAN);
+            setSelectBank("pbankCounterparty", "FILTER", "PEMBAYAR", res[0].BANK_CONTERPARTY, "REKAP");
+            setSelectCashCode("pJenisPembayaran", res[0].KODE_JENIS_PEMBAYARAN);
             $("#pIdScf").val(res[0].ID_SCF);
-            $("#pTglJatuhTempo").val(res[0].TGL_JATUH_TEMPO);
-            $("#pNominal").val(parseFloat(res[0].NOMINAL * 100).toString());
             $("#pTglTransaksi").val(res[0].TGL_TRANSAKSI);
+            $("#pTglJatuhTempo").val(res[0].JATUH_TEMPO);
+            $("#pPajak").val(parseFloat(res[0].PAJAK).toString());
+            $("#pRateJasaGiro").val(res[0].RATE_JASA_GIRO);
+            $("#pCurrecny").val(res[0].CURRENCY);
+            $("#pOriCurr").val(res[0].ORI_CURRENCY);
             $("#pKurs").val(res[0].KURS);
-            $("#pProvisi").val(res[0].PROVISI);
-            $("#pSukuBunga").val(res[0].SUKU_BUNGA);
-
-            $("#pNominal").mask('000,000,000,000,000.00',{reverse : true});
-
-            $("#pCurrecny, #pbankCounterparty").select2({
+            $("#pFeeTransaksi").val(res[0].FEE_TRANSAKSI);
+            $("#pCashCollateral").val(res[0].CASH_COLLATERAL);
+            $("#pCurrecny, #pbankCounterparty, #pJenisPembayaran").select2({
                 width : "100%",
                 theme : "bootstrap"
             });
-
             $("#pVendor").select2({
                 width : "100%",
                 theme : "bootstrap",
@@ -239,7 +245,6 @@ function edit_data(id) {
                     dataType : "JSON",
                     delay : 500,
                     data : function (params) {
-                        params.term = res[0].VENDOR;
                         return {
                             pNamaVendor : params.term
                         };
@@ -257,13 +262,10 @@ function edit_data(id) {
                     },
                     cache : true
                 }
-            });
-
+            }).val(res[0].VENDOR).trigger("change");
             setTimeout(function () {
                $('#edit-scf-modal').modal({backdrop: 'static', keyboard: false});
             }, timeSowFormEdit);
-            // hideLoadingCss()
-
         },
         error: function () {
             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -321,6 +323,11 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pJenisPembayaran) 
                 {width: 100, targets: 14},
                 {width: 100, targets: 15},
                 {width: 100, targets: 16},
+                {width: 100, targets: 17},
+                {width: 100, targets: 18},
+                {width: 100, targets: 19},
+                {width: 100, targets: 20},
+                {width: 100, targets: 21},
                 { className: "datatables_action", "targets": [11] },
                 {
                     "aTargets": [0],
@@ -345,7 +352,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pJenisPembayaran) 
                 {
                     "aTargets": [3],
                     "mRender": function (data, type, full) {
-                        return full.TGL_JATUH_TEMPO;
+                        return full.JATUH_TEMPO;
                     }
 
                 },
@@ -381,61 +388,96 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pJenisPembayaran) 
                 {
                     "aTargets": [8],
                     "mRender": function (data, type, full) {
-                        return full.NOMINAL;
+                        return accounting.formatNumber(full.ORI_CURRENCY, 2, ".", ",");
                     }
 
                 },
                 {
                     "aTargets": [9],
                     "mRender": function (data, type, full) {
-                        return full.KURS;
+                        return accounting.formatNumber(full.KURS, 2, ".", ",");
                     }
 
                 },
                 {
                     "aTargets": [10],
                     "mRender": function (data, type, full) {
-                        return full.EQ_IDR;
+                        return accounting.formatNumber(full.EQ_IDR, 2, ".", ",");
                     }
 
                 },
                 {
                     "aTargets": [11],
                     "mRender": function (data, type, full) {
-                        return full.SUKU_BUNGA;
+                        return full.FEE_TRANSAKSI;
                     }
 
                 },
                 {
                     "aTargets": [12],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.BIAYA_BUNGA, 2, ".", ",");
+                        return accounting.formatNumber(full.NOMINAL_FEE_TRANSAKSI, 2, ".", ",");
                     }
 
                 },
                 {
                     "aTargets": [13],
                     "mRender": function (data, type, full) {
-                        return full.PROVISI;
+                        return full.CASH_COLLATERAL;
                     }
 
                 },
                 {
                     "aTargets": [14],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.BIAYA_PROVISI, 2, ".", ",");
+                        return accounting.formatNumber(full.NOMINAL_COLLATERAL, 2, ".", ",");
                     }
 
                 },
                 {
                     "aTargets": [15],
                     "mRender": function (data, type, full) {
-                        return accounting.format(full.TOTAL_BIAYA,2, ".", ",") ;
+                        return accounting.format(full.RATE_JASA_GIRO,2, ".", ",") ;
                     }
 
                 },
                 {
                     "aTargets": [16],
+                    "mRender": function (data, type, full) {
+                        return accounting.format(full.NOMINAL_JASA_GIRO,2, ".", ",") ;
+                    }
+
+                },
+                {
+                    "aTargets": [17],
+                    "mRender": function (data, type, full) {
+                        return accounting.format(full.PAJAK,2, ".", ",") ;
+                    }
+
+                },
+                {
+                    "aTargets": [18],
+                    "mRender": function (data, type, full) {
+                        return accounting.format(full.PAJAK_PLN,2, ".", ",") ;
+                    }
+
+                },
+                {
+                    "aTargets": [19],
+                    "mRender": function (data, type, full) {
+                        return accounting.format(full.NET_JASA_GIRO,2, ".", ",") ;
+                    }
+
+                },
+                {
+                    "aTargets": [20],
+                    "mRender": function (data, type, full) {
+                        return accounting.format(full.NET_GAIN,2, ".", ",") ;
+                    }
+
+                },
+                {
+                    "aTargets": [21],
                     "mRender": function (data, type, full) {
                            var ret_value;
                          ret_value =
@@ -444,13 +486,12 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pJenisPembayaran) 
                              '<button style="width: 15px !important;" class="btn btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_SCF + '\')"><i class="fas fa-trash"></i></button>' ;
                          return ret_value;
                     }
-
                 }
             ],
             "ajax":
                 {
                     "url":
-                        baseUrl + "api_operator/supply_chain_financing/get_scf_data",
+                        baseUrl + "api_operator/supply_chain_financing/get_scf_collateral_data",
                     "type":
                         "GET",
                     "dataType":
@@ -483,7 +524,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pJenisPembayaran) 
     });
 
     $('.dataTables_length').each(function () {
-        var html = '<label style="margin-left: 250px; cursor:default; text-align: center;"><b>SUPPLY CHAIN FINANCING NON CASH LOAN</b><br><b>TANGGAL :</b> <a id="start_date"></a><b> s.d </b><a id="finish_date"></a></label>';
+        var html = '<label style="margin-left: 250px; cursor:default; text-align: center;"><b>SUPPLY CHAIN FINANCING COLLATERAL</b><br><b>TANGGAL :</b> <a id="start_date"></a><b> s.d </b><a id="finish_date"></a></label>';
         $(this).append(html);
     });
 
@@ -647,4 +688,16 @@ function getScfFiles(pIdScf) {
             console.log("Gagal mengambil data files rekap")
         }
     });
+}
+
+function validateForm(form_name){
+    let empty=0;
+    $(form_name)
+        .find("select, input, textarea")
+        .each(function(){
+            if (($(this).prop("required") && $(this).val() === "") || ($(this).prop("required") && $(this).val() === null)){
+                empty++;
+            }
+        });
+    return empty;
 }

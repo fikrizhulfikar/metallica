@@ -8,6 +8,12 @@
             padding-left: 0.75rem;
             padding-top: 0.25rem;
         }
+        table th{
+            text-align: center;
+        }
+        table.number-alignment{
+            text-align: right;
+        }
         div.dataTables_wrapper div.dataTables_paginate {
             float: right !important;
             text-align: left !important;
@@ -58,7 +64,7 @@
                                     id="ex2-tab-1"
                                     data-toggle="tab"
                                     href="#ex2-tabs-1"
-                            >PENAMBAH <span style="color: Dodgerblue;"><i class="fas fa-plus-circle"></i></span></a>
+                            >PENEMPATAN <span style="color: Dodgerblue;"><i class="fas fa-plus-circle"></i></span></a>
                         </li>
                         <li class="nav-item" role="presentation">
                             <a
@@ -66,7 +72,7 @@
                                     id="ex2-tab-2"
                                     data-toggle="tab"
                                     href="#ex2-tabs-2"
-                            >PENGURANG <span style="color: Tomato"><i class="fas fa-minus-circle"></i></span></a>
+                            >PENCAIRAN <span style="color: Tomato"><i class="fas fa-minus-circle"></i></span></a>
                         </li>
                     </ul>
                     <!-- Tabs navs -->
@@ -76,6 +82,7 @@
                              role="tabpanel"
                              aria-labelledby="ex2-tab-1">
                             <form action="#" class="form" autocomplete="off" id="form_penambah">
+                                <input type="hidden" value="" id="id_giro_special_rate_plus"/>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -141,6 +148,7 @@
                              role="tabpanel"
                              aria-labelledby="ex2-tab-2">
                             <form action="#" autocomplete="off" class="form" id="form_pengurang">
+                                <input type="hidden" value="" id="id_giro_special_rate_min"/>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -240,11 +248,12 @@
                 <div class="panel panel-default">
                     <div class="panel-body panel-custom">
                         <table id="table-rekapitulasi" class="table table-bordered table-striped">
-                            <thead style="font-size: 12px">
+                            <thead style="font-size: 12px;">
                             <tr>
                                 <th>NO</th>
                                 <th>NAMA BANK</th>
                                 <th>PRODUK</th>
+                                <th>CURRENCY</th>
                                 <th>NOMINAL</th>
                                 <th>INTEREST RATE</th>
                                 <th>TGL PENEMPATAN</th>
@@ -256,7 +265,6 @@
                                 <th>POKOK + JASA GIRO</th>
                                 <th>KETERANGAN</th>
                                 <th>AKSI</th>
-
                             </tr>
                             </thead>
                             <tbody style="font-size: 12px">
