@@ -165,41 +165,45 @@ function delete_data(id) {
 
 // uSED
 function ins_data() {
-    showLoadingCss();
-    $.ajax({
-        url: baseUrl + "/api_operator/supply_chain_financing/ins_scf_collateral",
-        dataType: 'JSON',
-        type: "POST",
-        data: {
-            pIdScfCol: $("#pIdScf").val(),
-            pKodeBank: $("#pbankCounterparty").val(),
-            pTglTransaksi: $("#pTglTransaksi").val(),
-            pJatuhTempo: $("#pTglJatuhTempo").val(),
-            pVendor: $("#pVendor").val(),
-            pJenisPembayaran: $("#pJenisPembayaran").val(),
-            pCurrency: $("#pCurrecny").val(),
-            pOriCurr: $("#pOriCurr").val().toString().replace(/,/g,''),
-            pKurs: $("#pKurs").val().toString().replace(/,/g,''),
-            pFeeTransaksi: $("#pFeeTransaksi").val(),
-            pCashCollateral: $("#pCashCollateral").val().toString().replace(/,/g,''),
-            pPajak: $("#pPajak").val(),
-            pJasaGiro: $("#pRateJasaGiro").val(),
-        },
-        success: function (res) {
-            if (res.return == 1) {
-                alert("Data Berhasil Disimpan");
-                $('#edit-scf-modal').modal('hide');
-                table_scf.ajax.reload();
-            } else {
-                alert("Data Gagal Disimpan");
-            }
-            hideLoadingCss("");
+    if (validateForm("#form_scf") > 0){
+        alert("Silahkan Lengkapi Data Terlebih Dahulu!");
+    }else{
+        showLoadingCss();
+        $.ajax({
+            url: baseUrl + "/api_operator/supply_chain_financing/ins_scf_collateral",
+            dataType: 'JSON',
+            type: "POST",
+            data: {
+                pIdScfCol: $("#pIdScf").val(),
+                pKodeBank: $("#pbankCounterparty").val(),
+                pTglTransaksi: $("#pTglTransaksi").val(),
+                pJatuhTempo: $("#pTglJatuhTempo").val(),
+                pVendor: $("#pVendor").val(),
+                pJenisPembayaran: $("#pJenisPembayaran").val(),
+                pCurrency: $("#pCurrecny").val(),
+                pOriCurr: $("#pOriCurr").val().toString().replace(/,/g,''),
+                pKurs: $("#pKurs").val().toString().replace(/,/g,''),
+                pFeeTransaksi: $("#pFeeTransaksi").val(),
+                pCashCollateral: $("#pCashCollateral").val().toString().replace(/,/g,''),
+                pPajak: $("#pPajak").val(),
+                pJasaGiro: $("#pRateJasaGiro").val(),
+            },
+            success: function (res) {
+                if (res.return == 1) {
+                    alert("Data Berhasil Disimpan");
+                    $('#edit-scf-modal').modal('hide');
+                    table_scf.ajax.reload();
+                } else {
+                    alert("Data Gagal Disimpan");
+                }
+                hideLoadingCss("");
 
-        },
-        error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
-        }
-    });
+            },
+            error: function () {
+                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
+            }
+        });
+    }
 }
 
 // USED
@@ -223,10 +227,10 @@ function edit_data(id) {
             $("#pPajak").val(parseFloat(res[0].PAJAK).toString());
             $("#pRateJasaGiro").val(res[0].RATE_JASA_GIRO);
             $("#pCurrecny").val(res[0].CURRENCY);
-            $("#pOriCurr").val(res[0].ORI_CURRENCY).mask('000,000,000,000,000.00',{reverse : true});
+            $("#pOriCurr").val(res[0].ORI_CURRENCY);
             $("#pKurs").val(res[0].KURS);
-            $("#pFeeTransaksi").val(res[0].FEE_TRANSAKSI).mask('000.00',{reverse : true});
-            $("#pCashCollateral").val(res[0].CASH_COLLATERAL).mask('000.00',{reverse : true});
+            $("#pFeeTransaksi").val(res[0].FEE_TRANSAKSI);
+            $("#pCashCollateral").val(res[0].CASH_COLLATERAL);
             $("#pCurrecny, #pbankCounterparty, #pJenisPembayaran").select2({
                 width : "100%",
                 theme : "bootstrap"
@@ -241,7 +245,6 @@ function edit_data(id) {
                     dataType : "JSON",
                     delay : 500,
                     data : function (params) {
-                        params.term = res[0].VENDOR;
                         return {
                             pNamaVendor : params.term
                         };
@@ -259,7 +262,7 @@ function edit_data(id) {
                     },
                     cache : true
                 }
-            });
+            }).val(res[0].VENDOR).trigger("change");
             setTimeout(function () {
                $('#edit-scf-modal').modal({backdrop: 'static', keyboard: false});
             }, timeSowFormEdit);
@@ -385,21 +388,21 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pJenisPembayaran) 
                 {
                     "aTargets": [8],
                     "mRender": function (data, type, full) {
-                        return full.ORI_CURRENCY;
+                        return accounting.formatNumber(full.ORI_CURRENCY, 2, ".", ",");
                     }
 
                 },
                 {
                     "aTargets": [9],
                     "mRender": function (data, type, full) {
-                        return full.KURS;
+                        return accounting.formatNumber(full.KURS, 2, ".", ",");
                     }
 
                 },
                 {
                     "aTargets": [10],
                     "mRender": function (data, type, full) {
-                        return full.EQ_IDR;
+                        return accounting.formatNumber(full.EQ_IDR, 2, ".", ",");
                     }
 
                 },
@@ -685,4 +688,16 @@ function getScfFiles(pIdScf) {
             console.log("Gagal mengambil data files rekap")
         }
     });
+}
+
+function validateForm(form_name){
+    let empty=0;
+    $(form_name)
+        .find("select, input, textarea")
+        .each(function(){
+            if (($(this).prop("required") && $(this).val() === "") || ($(this).prop("required") && $(this).val() === null)){
+                empty++;
+            }
+        });
+    return empty;
 }
