@@ -48,10 +48,11 @@ public class DepositoController {
     public Map<String, Object> insHeaderData(
             @RequestParam(value = "pIdDeposito", defaultValue = "") String pIdDeposito,
             @RequestParam(value = "pBank", defaultValue = "") String pBank,
+            @RequestParam(value = "pCurrencyHeader", defaultValue = "") String pCurrencyHeader,
             @RequestParam(value = "pBillyet", defaultValue = "") String pBillyet
     ) {
         try {
-            return depositoService.insHeaderDeposito(pIdDeposito, pBank, pBillyet, WebUtils.getUsernameLogin());
+            return depositoService.insHeaderDeposito(pIdDeposito, pBank, pBillyet, pCurrencyHeader, WebUtils.getUsernameLogin());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -66,13 +67,17 @@ public class DepositoController {
             @RequestParam(value = "pJenis", defaultValue = "") String pJenis,
             @RequestParam(value = "pBillyet", defaultValue = "") String pBillyet,
             @RequestParam(value = "pNominal", defaultValue = "") String pNominal,
+            @RequestParam(value = "pCurr", defaultValue = "") String pCurr,
             @RequestParam(value = "pInterest", defaultValue = "") String pInterest,
+            @RequestParam(value = "pBungaAccrual", defaultValue = "") String pBungaAccrual,
+            @RequestParam(value = "pPokokBunga", defaultValue = "") String pPokokBunga,
             @RequestParam(value = "pTglPenempatan", defaultValue = "") String pTglPenempatan,
             @RequestParam(value = "pTglJatuhTempo", defaultValue = "") String pTglJatuhTempo,
+            @RequestParam(value = "pTglPencairan", defaultValue = "") String pTglPencairan,
             @RequestParam(value = "pKeterangan", defaultValue = "") String pKeterangan
     ) {
         try {
-            return depositoService.insDetailDeposito(pIdDeposito, pIdDetail, pBank, pJenis, pBillyet,pNominal,pInterest, pTglPenempatan, pTglJatuhTempo, pKeterangan, WebUtils.getUsernameLogin());
+            return depositoService.insDetailDeposito(pIdDeposito, pIdDetail, pBank, pJenis, pBillyet,pNominal,pCurr,pInterest, pTglPenempatan,pTglPencairan, pTglJatuhTempo, pKeterangan, pBungaAccrual,pPokokBunga, WebUtils.getUsernameLogin());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -374,10 +379,11 @@ public class DepositoController {
 
     @RequestMapping(value = "/get_dashboar_deposito", method = RequestMethod.GET)
     public Map getDashDeposito(
+            @RequestParam(value = "pCurr", defaultValue = "IDR") String pCurr
     ) {
         List<Map<String, Object>> list = new ArrayList<>();
         try {
-            list = dashboardService.getDashboardDeposito();
+            list = dashboardService.getDashboardDeposito(pCurr);
             Map dataMap = new HashMap();
             dataMap.put("data",list);
             return  dataMap;
