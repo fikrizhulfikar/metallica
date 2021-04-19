@@ -2800,4 +2800,48 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
         return out;
     }
+
+    //Update new Placement LCL
+
+    public List<Map<String, Object>> getNewPlacementlclHeader(Integer pStart, Integer pLength, String p_tanggal, String p_search){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY2")
+                .withFunctionName("get_header_lcl");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("p_start", pStart, Types.INTEGER)
+                .addValue("p_length", pLength, Types.INTEGER)
+                .addValue("p_tanggal", p_tanggal, OracleTypes.VARCHAR)
+                .addValue("p_search", p_search, OracleTypes.VARCHAR);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
+
+    public Map<String, Object> detailTagihanLcl(String idForm){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY2")
+                .withFunctionName("get_detail_tagihan_lcl");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_operasi", OracleTypes.VARCHAR)
+                .addValue("out_giro", OracleTypes.VARCHAR)
+                .addValue("out_dropping", OracleTypes.VARCHAR)
+                .addValue("p_id_form", idForm);
+
+        Map<String, Object> out = simpleJdbcCall.execute(in);
+        return out;
+    }
+
+    public List<Map<String, Object>> getTagihanTerbesar(String idForm, String pBank){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY2")
+                .withFunctionName("get_tagihan_terbesar");
+        SqlParameterSource in = new MapSqlParameterSource()
+                .addValue("out_h1", OracleTypes.VARCHAR)
+                .addValue("out_h2", OracleTypes.VARCHAR)
+                .addValue("p_bank", pBank)
+                .addValue("p_id_form", idForm);
+
+        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
+        return out;
+    }
 }

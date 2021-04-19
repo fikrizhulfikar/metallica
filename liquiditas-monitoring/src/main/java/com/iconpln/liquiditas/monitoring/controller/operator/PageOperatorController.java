@@ -65,7 +65,7 @@ public class PageOperatorController {
     }
 
     @RequestMapping("/placement_lcl")
-    public String placement_lcl() { return "operator/placement_lcl_header";
+    public String placement_lcl() { return "operator/placement_lcl_header_new";
     }
 
     @RequestMapping("/giro")

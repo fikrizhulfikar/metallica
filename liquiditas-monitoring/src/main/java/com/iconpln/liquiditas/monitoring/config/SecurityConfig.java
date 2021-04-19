@@ -75,36 +75,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     salt = getSaltSource().getSalt(userDetails);
                 }
 // ================================================================================================================== start of LDAP LOGIN
-                String username = userDetails.getUsername();
-                List<String> Users = new ArrayList<String>(Arrays.asList(username.split("\\\\")));
-                String xuser = "pusat\\"+username;
-                String xpassword = authentication.getCredentials().toString();
-                username = ad.getLDAP(xuser,xpassword);
-                if(username.equals("0")){
-                    AppUtils.getLogger(this).info("User / Password tidak sesuai!", username);
+//                String username = userDetails.getUsername();
+//                List<String> Users = new ArrayList<String>(Arrays.asList(username.split("\\\\")));
+//                String xuser = "pusat\\"+username;
+//                String xpassword = authentication.getCredentials().toString();
+//                username = ad.getLDAP(xuser,xpassword);
+//                if(username.equals("0")){
+//                    AppUtils.getLogger(this).info("User / Password tidak sesuai!", username);
+//                    throw new BadCredentialsException(messages.getMessage(
+//                            "AbstractUserDetailsAuthenticationProvider.badCredentials",
+//                            "Bad credentials"));
+//                }
+// ================================================================================================================== end of LDAP LOGIN
+
+// ================================================================================================================== login FROM DATABASE
+                if (authentication.getCredentials() == null) {
+                    logger.debug("Authentication failed: no credentials provided");
+
                     throw new BadCredentialsException(messages.getMessage(
                             "AbstractUserDetailsAuthenticationProvider.badCredentials",
                             "Bad credentials"));
                 }
-// ================================================================================================================== end of LDAP LOGIN
+                String presentedPassword = authentication.getCredentials().toString();
+                if (!getPasswordEncoder().isPasswordValid(userDetails.getPassword(),
+                        presentedPassword, salt)) {
+                    logger.debug("Authentication failed: password does not match stored value");
 
-// ================================================================================================================== login FROM DATABASE
-//                if (authentication.getCredentials() == null) {
-//                    logger.debug("Authentication failed: no credentials provided");
-//
-//                    throw new BadCredentialsException(messages.getMessage(
-//                            "AbstractUserDetailsAuthenticationProvider.badCredentials",
-//                            "Bad credentials"));
-//                }
-//                String presentedPassword = authentication.getCredentials().toString();
-//                if (!getPasswordEncoder().isPasswordValid(userDetails.getPassword(),
-//                        presentedPassword, salt)) {
-//                    logger.debug("Authentication failed: password does not match stored value");
-//
-//                    throw new BadCredentialsException(messages.getMessage(
-//                            "AbstractUserDetailsAuthenticationProvider.badCredentials",
-//                            "Bad credentials"));
-//                }
+                    throw new BadCredentialsException(messages.getMessage(
+                            "AbstractUserDetailsAuthenticationProvider.badCredentials",
+                            "Bad credentials"));
+                }
 //=================================================================================================================== end of LOGIN FROM DATABASE
             }
         };
