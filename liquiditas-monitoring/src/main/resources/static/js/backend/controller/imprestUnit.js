@@ -548,9 +548,9 @@ function detail_data(id, status, jatuh_tempo) {
                             if (api.column(3).data()[cur_index].NAMA_BANK === "MANDIRI") {
                                 t_mandiri_inv += intVal(a) + intVal(b.INVESTASI);
                             }
-                            if (api.column(3).data()[cur_index].NAMA_BANK === "BUKOPIN") {
-                                t_bukopin_inv += intVal(a) + intVal(b.INVESTASI);
-                            }
+                            // if (api.column(3).data()[cur_index].NAMA_BANK === "BUKOPIN") {
+                            //     t_bukopin_inv += intVal(a) + intVal(b.INVESTASI);
+                            // }
                             if (api.column(3).data()[cur_index].NAMA_BANK === "BNI") {
                                 t_bni_inv += intVal(a) + intVal(b.INVESTASI);
                             }
@@ -565,9 +565,9 @@ function detail_data(id, status, jatuh_tempo) {
                             if (api.column(4).data()[cur_index].NAMA_BANK === "MANDIRI") {
                                 t_mandiri_ops += intVal(a) + intVal(b.OPERASI);
                             }
-                            if (api.column(4).data()[cur_index].NAMA_BANK === "BUKOPIN") {
-                                t_bukopin_ops += intVal(a) + intVal(b.OPERASI);
-                            }
+                            // if (api.column(4).data()[cur_index].NAMA_BANK === "BUKOPIN") {
+                            //     t_bukopin_ops += intVal(a) + intVal(b.OPERASI);
+                            // }
                             if (api.column(4).data()[cur_index].NAMA_BANK === "BNI") {
                                 t_bni_ops += intVal(a) + intVal(b.OPERASI);
                             }
@@ -576,11 +576,11 @@ function detail_data(id, status, jatuh_tempo) {
                             }
                         }, 0);
                     document.getElementById('t_mandiri_inv').innerHTML = "<b>"+accounting.formatNumber(t_mandiri_inv.toString(), 2, '.', ',')+"</b>";
-                    document.getElementById('t_bukopin_inv').innerHTML = "<b>"+accounting.formatNumber(t_bukopin_inv.toString(), 2, '.', ',')+"</b>";
+                    // document.getElementById('t_bukopin_inv').innerHTML = "<b>"+accounting.formatNumber(t_bukopin_inv.toString(), 2, '.', ',')+"</b>";
                     document.getElementById('t_bni_inv').innerHTML = "<b>"+accounting.formatNumber(t_bni_inv.toString(), 2, '.', ',')+"</b>";
                     document.getElementById('t_bri_inv').innerHTML = "<b>"+accounting.formatNumber(t_bri_inv.toString(), 2, '.', ',')+"</b>";
                     document.getElementById('t_mandiri_ops').innerHTML = "<b>"+accounting.formatNumber(t_mandiri_ops.toString(), 2, '.', ',')+"</b>";
-                    document.getElementById('t_bukopin_ops').innerHTML = "<b>"+accounting.formatNumber(t_bukopin_ops.toString(), 2, '.', ',')+"</b>";
+                    // document.getElementById('t_bukopin_ops').innerHTML = "<b>"+accounting.formatNumber(t_bukopin_ops.toString(), 2, '.', ',')+"</b>";
                     document.getElementById('t_bni_ops').innerHTML = "<b>"+accounting.formatNumber(t_bni_ops.toString(), 2, '.', ',')+"</b>";
                     document.getElementById('t_bri_ops').innerHTML = "<b>"+accounting.formatNumber(t_bri_ops.toString(), 2, '.', ',')+"</b>";
                 },
