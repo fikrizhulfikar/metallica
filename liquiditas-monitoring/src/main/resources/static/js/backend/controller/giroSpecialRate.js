@@ -5,9 +5,10 @@ var tempVendor = "";
 var tempCurrency = "";
 var tempUnit = "";
 var tempTableSearch = "";
+var fullArray = [];
 
-var checkedArray = new Array();
-var cbParentArray = new Array();
+var checkedArray = [];
+var cbParentArray = [];
 var srcTglAwal = null;
 var srcTglAkhir = null;
 var addedDays = 2;
@@ -143,10 +144,12 @@ function delete_data(id) {
                 if (res.return == 1) {
                     alert(res.OUT_MSG);
                     table_rekapitulasi.ajax.reload();
+                    fullArray = [];
+                    checkedArray = [];
+                    ch
                 } else {
                     alert(res.OUT_MSG);
                 }
-
             },
             error: function () {
                 hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
@@ -165,18 +168,18 @@ function ins_data(type) {
             dataType: 'JSON',
             type: "POST",
             data: {
-                pIdGiro: (type === 1) ? $("#id_giro_special_rate_plus").val() : $("#id_giro_special_rate_min").val(),
-                pTglJatuhTempo: (type === 1) ? $("#pTglJatuhTempo").val() : $("#pTglJatuhTempoPengurang").val(),
-                pTglPenempatan: (type === 1) ? $("#pTglPenempatan").val() : "",
-                pCurr: (type === 1) ? $("#pCurrecny").val() : $("#pCurrecnyPengurang").val(),
-                pBankTujuan: (type === 1) ? $("#pBankTujuan").val() : $("#pBankTujuanPengurang").val(),
-                pPajak: (type === 1) ? $("#pPajak").val() : "",
-                pInterest: (type === 1) ? $("#pInterest").val() : "",
-                pNominal: (type === 1) ? $("#pNominal").val().replace(/,/g,"") : $("#pNominalPengurang").val().replace(/,/g,""),
-                pProduk: (type === 1) ? $("#pProduk").val() : $("#pProdukPengurang").val(),
-                pKeterangan : (type === 1) ? $("#pKeterangan").val() : $("#pKeteranganPengurang").val(),
-                pJenis : (type === 1) ? "PENAMBAH" : "PENGURANG",
-                pJasaGiro : (type === 1) ? $("#pJasaGiro").val().replace(/,/g,"") : ""
+                pIdGiro: (type === 1) ? $("#id_giro_special_rate_plus").val() : (type === 2) ? $("#id_giro_special_rate_wd").val() : $("#id_giro_special_rate_ex").val(),
+                pTglJatuhTempo: (type === 1) ? $("#pTglJatuhTempo").val() : (type === 2) ? "" : $("#pTglJatuhTempoPerpanjangan").val(),
+                pTglPenempatan: (type === 1) ? $("#pTglPenempatan").val() : (type === 2) ? "" : $("#pTglPenempatanPerpanjangan").val(),
+                pCurr: (type === 1) ? $("#pCurrecny").val() : (type === 2) ? $("#pCurrecnyWd").val() : $("#pCurrecnyPerpanjangan").val(),
+                pBankTujuan: (type === 1) ? $("#pBankTujuan").val() : (type === 2) ? $("#pBankTujuanWd").val() : $("#pBankTujuanPerpanjangan").val(),
+                pPajak: (type === 1) ? $("#pPajak").val() :(type === 2) ? $("#pPajakWd").val() : "",
+                pInterest: (type === 1) ? $("#pInterest").val() : (type === 2) ? $("#pInterestWd").val() : $("#pInterestPerpanjangan").val(),
+                pNominal: (type === 1) ? $("#pNominal").val().replace(/,/g,"") : (type === 2) ? $("#pNominalWd").val().replace(/,/g,"") : $("#pNominalPerpanjangan").val().replace(/,/g,""),
+                pProduk: (type === 1) ? $("#pProduk").val() : (type === 2) ? $("#pProdukWd").val() : $("#pProdukPerpanjangan").val(),
+                pKeterangan : (type === 1) ? $("#pKeterangan").val() : (type === 2) ? $("#pKeteranganPengurang").val() : $("#pKeteranganPerpanjangan").val(),
+                pJenis : (type === 1) ? "PENEMPATAN" : (type === 2) ? "PENCAIRAN" : "PERPANJANGAN",
+                pJasaGiro : (type === 1) ? $("#pJasaGiro").val().replace(/,/g,"") : (type === 2) ? $("#pJasaGirolWd").val() : ""
             },
             success: function (res) {
                 hideLoadingCss("");
@@ -186,6 +189,8 @@ function ins_data(type) {
                     search("load");
                     $('#edit-rekap-modal').modal('hide');
                     table_rekapitulasi.ajax.reload();
+                    fullArray = [];
+                    checkedArray = [];
                 } else {
                     alert("Data Gagal Disimpan");
                 }
@@ -216,10 +221,15 @@ function edit_data(id, type) {
             setSelectCurr("pCurrecny, #pCurrecnyPengurang", "", res[0].CURRENCY, "REKAP");
             setSelectBank2("pBankTujuan, #pBankTujuanPengurang", "", "GIRO_SPECIAL_RATE", res[0].KODE_BANK, "REKAP");
             $("#pNominal, #pJasaGiro, #pNominalPengurang").unmask();
-            if (type === 'PENAMBAH'){
+            if (type === 'PENEMPATAN'){
                 $("#id_giro_special_rate_plus").val(id);
-                $("#pTglJatuhTempo").val(res[0].JATUH_TEMPO);
-                $("#pTglPenempatan").val(res[0].TGL_PENEMPATAN);
+                $("#pTglJatuhTempo")
+                    .datepicker({dateFormat : 'dd/mm/yy', minDate : '0'})
+                    .val(res[0].JATUH_TEMPO);
+
+                $("#pTglPenempatan")
+                    .datepicker({dateFormat : 'dd/mm/yy', minDate : '0'})
+                    .val(res[0].TGL_PENEMPATAN);
                 $("#pPajak").val(res[0].PAJAK);
                 $("#pInterest").val(res[0].INTEREST);
                 $("#pNominal").val(res[0].NOMINAL);
@@ -290,8 +300,8 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency) {
             "bLengthChange": true,
             "scrollY": "100%",
             "scrollX": "100%",
-            "searching": false,
-            bSortable: false,
+            "searching": true,
+            'ordering' : false,
             "scrollCollapse": true,
             "lengthMenu": [[10, 25, 50, 100, 200, 400, 600, 1000], [10, 25, 50, 100, 200, 400, 600, 1000]],
             "aoColumnDefs": [
@@ -310,10 +320,12 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency) {
                 {width: 170, targets: 12},
                 {width: 90, targets: 13},
                 {width: 60, targets: 14},
+                {width: 60, targets: 15},
+                {width: 60, targets: 16},
                 {width: "20%", "targets": 0},
                 { className: "datatables_action", "targets": [] },
                 {"targets": [4, 9, 10, 11, 12], "className": 'dt-body-right'},
-                {"targets": [0], "className": 'dt-body-center'},
+                {"targets": [0, 16], "className": 'dt-body-center'},
                 {
                     "sortable": false,
                     "aTargets": [0]
@@ -328,103 +340,128 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency) {
                 {
                     "aTargets": [1],
                     "mRender": function (data, type, full) {
-                        return full.BANK;
+                        return full.ID_GIRO;
                     }
 
                 },
                 {
                     "aTargets": [2],
                     "mRender": function (data, type, full) {
-                        return full.PRODUK;
+                        return full.BANK;
                     }
 
                 },
                 {
                     "aTargets": [3],
                     "mRender": function (data, type, full) {
-                        return full.CURRENCY;
+                        return full.PRODUK;
                     }
 
                 },
                 {
                     "aTargets": [4],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.NOMINAL,2,".",",");
+                        return full.CURRENCY;
                     }
 
                 },
                 {
                     "aTargets": [5],
                     "mRender": function (data, type, full) {
-                        return (full.INTEREST !== "-") ? full.INTEREST + "%" : "-";
+                        return accounting.formatNumber(full.NOMINAL,2,".",",");
                     }
 
                 },
                 {
                     "aTargets": [6],
                     "mRender": function (data, type, full) {
-                        return full.TGL_PENEMPATAN;
+                        return (full.INTEREST !== "-") ? full.INTEREST + "%" : "-";
                     }
 
                 },
                 {
                     "aTargets": [7],
                     "mRender": function (data, type, full) {
-                        return full.JATUH_TEMPO;
+                        return full.TGL_PENEMPATAN;
                     }
 
                 },
                 {
                     "aTargets": [8],
                     "mRender": function (data, type, full) {
-                        return full.JUMLAH_HARI;
+                        return full.JATUH_TEMPO;
                     }
 
                 },
                 {
                     "aTargets": [9],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.JASA_GIRO,2,".",",");
+                        return full.JUMLAH_HARI;
                     }
 
                 },
                 {
                     "aTargets": [10],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.PAJAK,2,".",",");
+                        return accounting.formatNumber(full.JASA_GIRO,2,".",",");
                     }
 
                 },
                 {
                     "aTargets": [11],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.NET_JASA_GIRO, 2, ".",",");
+                        return accounting.formatNumber(full.PAJAK,2,".",",");
                     }
 
                 },
                 {
                     "aTargets": [12],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.POKOK_JASA_GIRO, 2, ".",",");
+                        return accounting.formatNumber(full.NET_JASA_GIRO, 2, ".",",");
                     }
 
                 },
                 {
                     "aTargets": [13],
                     "mRender": function (data, type, full) {
-                        return full.KETERANGAN;
+                        return accounting.formatNumber(full.POKOK_JASA_GIRO, 2, ".",",");
                     }
+
                 },
                 {
                     "aTargets": [14],
                     "mRender": function (data, type, full) {
-                           var ret_value;
-                         ret_value =
-                         '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_GIRO + '\',\'' + full.JENIS + '\')"><i class="fas fa-edit"></i></button>'+
-                         '<button style="width: 15px !important;" class="btn btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_GIRO + '\')"><i class="fas fa-trash"></i></button>' ;
+                        return full.KETERANGAN;
+                    }
+                },
+                {
+                    "aTargets": [15],
+                    "mRender": function (data, type, full) {
+                        return full.JENIS;
+                    }
+                },
+                {
+                    "aTargets": [16],
+                    "mRender": function (data, type, full) {
+                            var ret_value = '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_GIRO + '\')"><i class="fas fa-trash"></i></button>' ;;
+
+                            if (full.JENIS === "PENEMPATAN"){
+                                ret_value += '<button style="width: 15px !important; text-align: center;" class="btn btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_GIRO + '\',\'' + full.JENIS + '\')"><i class="fas fa-edit"></i></button>';
+                            }
                          return ret_value;
                     }
-
+                },
+                {
+                    "aTargets": [17],
+                    "mRender": function (data, type, full) {
+                        let json_string = JSON.stringify(full);
+                        var full_value = '{"full":'+json_string.replace(/'/g,"")+'}';
+                        if (full.JENIS === "PENCAIRAN" || full.JENIS === "PENGURANG"){
+                            return "-";
+                        }else{
+                            return "<input class='cb' type='checkbox' data-full='"+full_value+"' onchange='checkArray(this)' id='cbcheckbox'>";
+                        }
+                    }
                 }
             ],
             "ajax":
@@ -458,6 +495,9 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency) {
            if(data.JENIS === "PENGURANG"){
                $(row).addClass('red-color');
            }
+            if(data.JENIS === "PENCAIRAN"){
+                $(row).css('color', '#ea8d00');
+            }
         }
         }
     );
@@ -466,11 +506,14 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency) {
         tempTableSearch = value;
     });
 
-    $('.dataTables_length').each(function () {
-        var html = '<label style="margin-left: 250px; cursor:default; text-align: center;"><b>GIRO SPECIAL RATE</b><br><b>TANGGAL :</b> <a id="start_date"></a><b> s.d </b><a id="finish_date"></a></label>';
+    $('.dataTables_filter').each(function () {
+        var html = '<button class="btn btn-info btn-sm" style="margin-left: 10px" type="button" data-toggle="modal" title="Pencairan" onclick="openFormWdGiro()"><i class="fas fa-hand-holding-usd"></i></button>';
+        if(newRoleUser[0] == "ROLE_ADMIN"){
+            html = html + '<button class="btn btn-sm btn-default" id="btn-verified" title="Perpanjangan" style="margin-left: 10px" type="button" onclick="openFormPerpanjanganGiro()"><i class="fas fa-calendar-day"></i></button>';
+        }
         $(this).append(html);
     });
-
+    initCbparent();
     table_rekapitulasi.columns.adjust();
 }
 
@@ -499,7 +542,7 @@ function getTotalTagihan() {
 }
 
 function validateForm(form_type){
-    let form = (form_type === 1) ? "#form_penambah" : "#form_pengurang";
+    let form = (form_type === 1) ? "#form_penambah" : (form_type === 2) ? "#form_wd" : "#form_ext";
     let empty=0;
     $(form)
         .find("select, input")
@@ -509,4 +552,158 @@ function validateForm(form_type){
             }
         });
     return empty;
+}
+
+function checkArray(e) {
+    var isNew = true;
+    var isNew1 = true;
+    //// console.log ("Checked : ",e);
+    if($(e).is(":checked")) {
+        if(fullArray.length == 0) {
+            fullArray.push($(e).data("full").full);
+        }else {
+            // test fikri
+            for(let i = 0; i < fullArray.length; i++){
+                var fullVal = JSON.stringify(fullArray[i]);
+                var valCb2 = JSON.stringify($(e).data("full").full);
+                if (fullVal == valCb2){
+                    isNew = false;
+                    break;
+                }
+            }
+
+            if(isNew == true){
+                fullArray.push($(e).data("full").full);
+            }
+        }
+    }
+    else {
+        var total1 = $("#table-deposito input[type=checkbox]:checked").map(function () {
+            return $(this).data("full");
+        }).get().length;
+
+        if(total1 == 0){
+            $("#cbparent").prop('checked', false);
+        }
+
+        for (x = 0; x < fullArray.length; x++){
+            let fullVal = JSON.stringify(fullArray[x]);
+            let valCb2 = JSON.stringify($(e).data("full").full);
+            if(fullVal == valCb2){
+                fullArray.splice(x, 1);
+            }
+        }
+    }
+    console.log("Full Array : ", fullArray);
+}
+
+function initCbparent() {
+    $('#forcbparent').empty();
+    $('#forcbparent').append("<input type=\"checkbox\" id='cbparent'> ");
+    $("#cbparent").click(function(){
+        var pageNumber =table_rekapitulasi .page.info().page;
+        if($(this).is(":checked")) {
+            $('input:checkbox').not(this).prop('checked', this.checked).change();
+            cbParentArray.push(pageNumber);
+        }
+        else {
+            $('input:checkbox').not(this).prop('checked', this.checked).change();
+            for (x = 0; x < cbParentArray.length; x++) {
+                if (cbParentArray[x] == pageNumber) {
+                    cbParentArray.splice(x, 1);
+                }
+            }
+        }
+    });
+}
+
+function openFormPerpanjanganGiro(id, bank_counterparty, bank) {
+    idDeposito = id;
+    idDetailDeposito = "";
+    if (fullArray.length <= 0){
+        alert("Silahkan Pilih Data Terlebih Dahulu");
+    }else if (fullArray.length > 1){
+        alert("Anda hanya bisa memilih satu giro untuk diperpanjang");
+    }else{
+        let total = fullArray.reduce(function (a,b) {
+            return a + parseInt(b.NOMINAL);
+        },0);
+
+        setSelectBank2("pBankTujuanDis", "", "GIRO_SPECIAL_RATE", fullArray[0].KODE_BANK, "REKAP");
+        $("#pBankTujuanPerpanjangan").val(fullArray[0].KODE_BANK);
+        $("#pProdukPerpanjangan, #pProdukDis").val(fullArray[0].PRODUK);
+        $("#pNominalPerpanjangan").val(accounting.formatNumber(total, 2, ",", ".") );
+        $("#pInterestPerpanjangan").val(accounting.formatNumber(fullArray[0].INTEREST, 2, ",", ".") );
+        setSelectCurr("pCurrecnyDis", "FILTER", fullArray[0].CURRENCY, "REKAP");
+        $("#pCurrecnyPerpanjangan").val(fullArray[0].CURRENCY);
+        $("#pTglPenempatanPerpanjangan").datepicker({minDate : "-7", dateFormat : "dd/mm/yy"})
+        $('#modal_perpanjangan_giro').modal({backdrop: 'static', keyboard: false});
+    }
+}
+
+$("#pTglPenempatanPerpanjangan").change(function() {
+    var tglDeal = $('#pTglPenempatanPerpanjangan').val();
+    if(tglDeal === ""){
+        $('#pTglJatuhTempoPerpanjangan')
+            .val("")
+            .attr("disabled", "disabled");
+    }else{
+        $('#pTglJatuhTempoPerpanjangan')
+            .val("")
+            .datepicker( "destroy" )
+            .attr("disabled", false)
+            .datepicker({
+            minDate: tglDeal,
+            maxDate: '+1Y+6M',
+            dateFormat : 'dd/mm/yy',
+            onSelect: function (dateStr) {
+                var max = $(this).datepicker('getDate'); // Get selected date
+                $('#datepicker').datepicker('option', 'maxDate', max || '+1Y+6M'); // Set other max, default to +18 months
+                var start = $("#pTglPenempatanPerpanjangan").datepicker("getDate");
+                var end = $("#pTglJatuhTempoPerpanjangan").datepicker("getDate");
+            }
+        });
+    }
+});
+
+function exportXls() {
+    var tglAwal = "null";
+    if (srcTglAwal != "") {
+        tglAwal = srcTglAwal
+    }
+    var tglAkhir = "null";
+    if (srcTglAkhir != "") {
+        tglAkhir = srcTglAkhir
+    }
+    window.open(baseUrl + "api_operator/giro_special_rate/xls_giro");
+}
+
+function openFormWdGiro() {
+    idDeposito = '';
+    idDetailDeposito = "";
+    if (fullArray.length <= 0){
+        alert("Silahkan Pilih Data Terlebih Dahulu");
+    }else if (fullArray.length > 1){
+        alert("Anda hanya bisa memilih satu giro untuk dicairkang");
+    }else{
+        let total = fullArray.reduce(function (a,b) {
+            return a + parseInt(b.NOMINAL);
+        },0);
+
+        $("#pBankTujuanWdDis").val(fullArray[0].BANK);
+        $("#pBankTujuanWd").val(fullArray[0].KODE_BANK);
+        $("#pProdukWdDis").val(fullArray[0].PRODUK);
+        $("#pProdukWd").val((fullArray[0].PRODUK === "GIRO OPTIMA") ? "OPTIMA" : "SPECIALRATE");
+        $("#pCurrecnyWd").val(fullArray[0].CURRENCY);
+        $("#pNominalWd").val(fullArray[0].NOMINAL);
+        $("#pPajakWd").val(fullArray[0].PAJAK);
+        $("#pInterestWd").val(fullArray[0].INTEREST);
+        $("#pNetJasaGiroWd").val(fullArray[0].NET_JASA_GIRO);
+        $("#pPokoJasaGiroWd").val(fullArray[0].POKOK_JASA_GIRO);
+        $("#pJasaGirolWd").val(fullArray[0].JASA_GIRO);
+        $("#pTglWd").datepicker({minDate : "-7", dateFormat : "dd/mm/yy"});
+
+        $('#modal_pencairan_giro').modal({backdrop: 'static', keyboard: false});
+    }
+
 }
