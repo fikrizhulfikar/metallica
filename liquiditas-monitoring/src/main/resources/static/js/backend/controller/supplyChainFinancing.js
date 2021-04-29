@@ -317,6 +317,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pJenisPembayaran) 
                 {width: 100, targets: 14},
                 {width: 100, targets: 15},
                 {width: 100, targets: 16},
+                {width: 100, targets: 19},
                 { className: "datatables_action", "targets": [11] },
                 {
                     "aTargets": [0],
@@ -412,26 +413,47 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pJenisPembayaran) 
                 {
                     "aTargets": [13],
                     "mRender": function (data, type, full) {
-                        return full.PROVISI;
+                        return accounting.formatNumber(full.BIAYA_BUNGA_REAL, 2, ".", ",");
                     }
 
                 },
                 {
                     "aTargets": [14],
                     "mRender": function (data, type, full) {
-                        return accounting.formatNumber(full.BIAYA_PROVISI, 2, ".", ",");
+                        return full.PROVISI;
                     }
 
                 },
                 {
                     "aTargets": [15],
                     "mRender": function (data, type, full) {
-                        return accounting.format(full.TOTAL_BIAYA,2, ".", ",") ;
+                        return accounting.formatNumber(full.BIAYA_PROVISI, 2, ".", ",");
                     }
 
                 },
                 {
                     "aTargets": [16],
+                    "mRender": function (data, type, full) {
+                        return accounting.formatNumber(full.BIAYA_PROVISI_REAL, 2, ".", ",");
+                    }
+
+                },
+                {
+                    "aTargets": [17],
+                    "mRender": function (data, type, full) {
+                        return accounting.format(full.TOTAL_BIAYA,2, ".", ",") ;
+                    }
+
+                },
+                {
+                    "aTargets": [18],
+                    "mRender": function (data, type, full) {
+                        return accounting.format(full.TOTAL_BIAYA_REAL,2, ".", ",") ;
+                    }
+
+                },
+                {
+                    "aTargets": [19],
                     "mRender": function (data, type, full) {
                            var ret_value;
                          ret_value =
