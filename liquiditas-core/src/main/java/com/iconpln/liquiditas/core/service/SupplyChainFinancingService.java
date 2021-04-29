@@ -133,7 +133,7 @@ public class SupplyChainFinancingService {
 
     public Map<String, Object> insScfCollateral(
             String pIdScfCol, String pKodeBank, String pTglTransaksi, String pJatuhTempo, String pVendor, String pJenisPembayaran,
-            String pCurrency, String pOriCurr, String pKurs, String pFeeTransaksi, String pCashCollateral, String pPajak, String pJasaGiro, String pUserId
+            String pCurrency, String pOriCurr, String pKurs, String pFeeTransaksi, String pCashCollateral, String pPajak, String pPajakBank, String pJasaGiro, String pUserId
     ){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_DASHBOARD_CORPAY")
@@ -151,6 +151,7 @@ public class SupplyChainFinancingService {
                 .addValue("p_fee_transaksi", pFeeTransaksi)
                 .addValue("p_cash_collateral", pCashCollateral)
                 .addValue("p_pajak", pPajak)
+                .addValue("p_pajak_bank", pPajakBank)
                 .addValue("p_rate_jasa_giro", pJasaGiro)
                 .addValue("p_user_id", pUserId);
         Map<String, Object> out = simpleJdbcCall.execute(params);
