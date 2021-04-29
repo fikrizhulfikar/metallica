@@ -2714,19 +2714,6 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         return out;
     }
 
-    public List<Map<String, Object>> getPlacementlclHeader(String tglAwal, String tglAkhir, String userId){
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_DASHBOARD_CORPAY")
-                .withFunctionName("get_header_lcl");
-        SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("p_tgl_awal", tglAwal, OracleTypes.VARCHAR)
-                .addValue("p_tgl_akhir", tglAkhir, OracleTypes.VARCHAR)
-                .addValue("p_user_id", userId, OracleTypes.VARCHAR);
-
-        List<Map<String, Object>> out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, in);
-        return out;
-    }
-
     public List<Map<String, Object>> createPlacementlclHeader(String idForm, String tglJatuhTempo, String userId){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_DASHBOARD_CORPAY")
