@@ -42,167 +42,232 @@
         <li class="breadcrumb-item active" style="cursor: default">Giro Special Rate</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')">
-                    <i class="fas fa-plus-square"></i> &nbsp;New Data
-                </button>
+                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')"><i class="fas fa-plus-square"></i> &nbsp;New Data</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
             </div>
         </li>
     </ol>
+<!--    Penempatan-->
     <div id="edit-rekap-modal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title">Giro Special Rate</h5>
+                    <h5 class="modal-title">Penempatan Giro Special Rate</h5>
                 </div>
                 <div class="modal-body">
-                    <!-- Tabs navs -->
-                    <ul class="nav nav-tabs nav-fill" id="ex1" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a
-                                    class="nav-link active"
-                                    id="ex2-tab-1"
-                                    data-toggle="tab"
-                                    href="#ex2-tabs-1"
-                            >PENEMPATAN <span style="color: Dodgerblue;"><i class="fas fa-plus-circle"></i></span></a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a
-                                    class="nav-link"
-                                    id="ex2-tab-2"
-                                    data-toggle="tab"
-                                    href="#ex2-tabs-2"
-                            >PENCAIRAN <span style="color: Tomato"><i class="fas fa-minus-circle"></i></span></a>
-                        </li>
-                    </ul>
-                    <!-- Tabs navs -->
-                    <div class="tab-content" id="ex2-content">
-                        <div class="tab-pane fade active show"
-                             id="ex2-tabs-1"
-                             role="tabpanel"
-                             aria-labelledby="ex2-tab-1">
-                            <form action="#" class="form" autocomplete="off" id="form_penambah">
-                                <input type="hidden" value="" id="id_giro_special_rate_plus"/>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="pBankTujuan"><span style="color: red">*)</span>&nbsp;Bank Tujuan
-                                                Pembayaran:</label>
-                                            <select id="pBankTujuan" class="form-control" required="required">
-                                                <option value="">Pilih Data</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pTglPenempatan"><span style="color: red">*)</span>Tanggal Penempatan:</label>
-                                            <input type="text" class="form-control" id="pTglPenempatan" required="required"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pTglJatuhTempo"><span style="color: red">*)</span>Tanggal Jatuh
-                                                Tempo:</label>
-                                            <input type="text" class="form-control" id="pTglJatuhTempo" required="required"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="label"><span style="color: red">*)</span>&nbsp;Produk:</label>
-                                            <select class="form-control" id="pProduk" required="required">
-                                                <option value="OPTIMA">GIRO OPTIMA</option>
-                                                <option value="SPECIALRATE">GIRO SPECIAL RATE</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group" style="margin-top: 40px">
-                                            <label for="pCurrecny">Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label><br/>
-                                            <label>Gunakan titik (.) untuk koma (,)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="pCurrecny"><span style="color: red">*)</span>&nbsp;Currency:</label>
-                                            <select id="pCurrecny" class="form-control" required="required">
-                                                <option value="">Pilih Data</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pInterest"><span style="color: red">*)</span>&nbsp;Interest (%):</label>
-                                            <input type="number" class="form-control" id="pInterest" pattern="(^\d*\.?\d*[1-9]+\d*$)|(^[1-9]+\d*\.\d*$)" required="required"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pNominal"><span style="color: red">*)</span>&nbsp;Nominal:</label>
-                                            <input type="text" class="form-control" id="pNominal" required="required"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pJasaGiro">&nbsp;Jasa Giro:</label>
-                                            <input type="text" class="form-control" id="pJasaGiro"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pKeterangan" class="label">Keterangan</label>
-                                            <textarea name="" class="form-control" id="pKeterangan" cols="30" rows="10"></textarea>
-                                        </div>
-                                    </div>
+                    <form action="#" class="form" autocomplete="off" id="form_penambah">
+                        <input type="hidden" value="" id="id_giro_special_rate_plus"/>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pBankTujuan"><span style="color: red">*)</span>&nbsp;Bank Tujuan
+                                        Pembayaran:</label>
+                                    <select id="pBankTujuan" class="form-control" required="required">
+                                        <option value="">Pilih Data</option>
+                                    </select>
                                 </div>
-                            </form>
-                            <div class="pull-right">
-                                <button type="button" class="btn btn-primary" onclick="ins_data(1)">Submit</button>
+                                <div class="form-group">
+                                    <label for="pTglPenempatan"><span style="color: red">*)</span>Tanggal Penempatan:</label>
+                                    <input type="text" class="form-control" id="pTglPenempatan" required="required"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pTglJatuhTempo"><span style="color: red">*)</span>Tanggal Jatuh
+                                        Tempo:</label>
+                                    <input type="text" class="form-control" id="pTglJatuhTempo" required="required"/>
+                                </div>
+                                <div class="form-group">
+                                    <label class="label"><span style="color: red">*)</span>&nbsp;Produk:</label>
+                                    <select class="form-control" id="pProduk" required="required">
+                                        <option value="OPTIMA">GIRO OPTIMA</option>
+                                        <option value="SPECIALRATE">GIRO SPECIAL RATE</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" style="margin-top: 40px">
+                                    <label for="pCurrecny">Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label><br/>
+                                    <label>Gunakan titik (.) untuk koma (,)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pCurrecny"><span style="color: red">*)</span>&nbsp;Currency:</label>
+                                    <select id="pCurrecny" class="form-control" required="required">
+                                        <option value="">Pilih Data</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pInterest"><span style="color: red">*)</span>&nbsp;Interest (%):</label>
+                                    <input type="number" class="form-control" id="pInterest" pattern="(^\d*\.?\d*[1-9]+\d*$)|(^[1-9]+\d*\.\d*$)" required="required"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pNominal"><span style="color: red">*)</span>&nbsp;Nominal:</label>
+                                    <input type="text" class="form-control" id="pNominal" required="required"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pJasaGiro">&nbsp;Jasa Giro:</label>
+                                    <input type="text" class="form-control" id="pJasaGiro"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pKeterangan" class="label">Keterangan</label>
+                                    <textarea name="" class="form-control" id="pKeterangan" cols="30" rows="10"></textarea>
+                                </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade"
-                             id="ex2-tabs-2"
-                             role="tabpanel"
-                             aria-labelledby="ex2-tab-2">
-                            <form action="#" autocomplete="off" class="form" id="form_pengurang">
-                                <input type="hidden" value="" id="id_giro_special_rate_min"/>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="pBankTujuanPengurang"><span style="color: red">*)</span>&nbsp;Bank Tujuan
-                                                Pembayaran:</label>
-                                            <select id="pBankTujuanPengurang" class="form-control" required="required">
-                                                <option value="">Pilih Data</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="label"><span style="color: red">*)</span>&nbsp;Produk:</label>
-                                            <select class="form-control" id="pProdukPengurang" required="required">
-                                                <option value="OPTIMA">GIRO OPTIMA</option>
-                                                <option value="SPECIALRATE">GIRO SPECIAL RATE</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pCurrecnyPengurang"><span style="color: red">*)</span>&nbsp;Currency:</label>
-                                            <select id="pCurrecnyPengurang" class="form-control" required="required">
-                                                <option value="">Pilih Data</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group" style="margin-top: 40px">
-                                            <label>Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label><br/>
-                                            <label>Gunakan titik (.) untuk koma (,)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="pNominalPengurang"><span style="color: red">*)</span>&nbsp;Nominal:</label>
-                                            <input type="text" class="form-control" id="pNominalPengurang" required="required"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pTglJatuhTempoPengurang"><span style="color: red">*)</span>Tanggal Jatuh
-                                                Tempo:</label>
-                                            <input type="text" class="form-control" id="pTglJatuhTempoPengurang" required="required"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pKeteranganPengurang" class="label">Keterangan</label>
-                                            <textarea name="" class="form-control" id="pKeteranganPengurang" cols="30" rows="10"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-
-                            <div>
-                                <button type="button" class="btn btn-primary" onclick="ins_data(2)">Submit</button>
-                            </div>
-                        </div>
+                    </form>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-primary" onclick="ins_data(1)">Submit</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+<!--end of penempatan modal-->
+
+    <!--    Perpanjangan-->
+    <div id="modal_perpanjangan_giro" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Perpanjangan Giro Special Rate</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="#" autocomplete="off" class="form" id="form_ext">
+                        <div class="row">
+                            <input type="hidden" value="" id="id_giro_special_rate_ex"/>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pBankTujuanDis"><span style="color: red">*)</span>&nbsp;Bank Tujuan Pembayaran:</label>
+                                    <select id="pBankTujuanDis" class="form-control" required="required" disabled="disabled">
+                                        <option value="">Pilih Data</option>
+                                    </select>
+                                    <input type="hidden" value="" id="pBankTujuanPerpanjangan"/>
+                                </div>
+                                <div class="form-group">
+                                    <label class="label"><span style="color: red">*)</span>&nbsp;Produk:</label>
+                                    <select class="form-control" id="pProdukDis" disabled="disabled">
+                                        <option value="OPTIMA">GIRO OPTIMA</option>
+                                        <option value="SPECIALRATE">GIRO SPECIAL RATE</option>
+                                    </select>
+                                    <input type="hidden" value="" id="pProdukPerpanjangan"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pCurrecnyPerpanjangan"><span style="color: red">*)</span>&nbsp;Currency:</label>
+                                    <select id="pCurrecnyDis" class="form-control" disabled="disabled">
+                                        <option value="">Pilih Data</option>
+                                    </select>
+                                    <input type="hidden" value="" id="pCurrecnyPerpanjangan"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pNominalPerpanjangan"><span style="color: red">*)</span>&nbsp;Nominal:</label>
+                                    <input type="text" class="form-control" id="pNominalPerpanjangan" required="required"/>
+                                </div>
+                                <div class="form-group" style="margin-top: 40px">
+                                    <label>Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label><br/>
+                                    <label>Gunakan titik (.) untuk koma (,)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pInterestPerpanjangan"><span style="color: red">*)</span>&nbsp;Interest (%):</label>
+                                    <input type="number" class="form-control" id="pInterestPerpanjangan" pattern="(^\d*\.?\d*[1-9]+\d*$)|(^[1-9]+\d*\.\d*$)" required="required"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pTglPenempatanPerpanjangan"><span style="color: red">*)</span>Tanggal Penempatan:</label>
+                                    <input type="text" class="form-control" id="pTglPenempatanPerpanjangan" required="required"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pTglJatuhTempoPerpanjangan"><span style="color: red">*)</span>Tanggal Jatuh Tempo:</label>
+                                    <input type="text" class="form-control" id="pTglJatuhTempoPerpanjangan" required="required"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pKeteranganPerpanjangan" class="label">Keterangan</label>
+                                    <textarea name="" class="form-control" id="pKeteranganPerpanjangan" cols="30" rows="10"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div>
+                        <button type="button" class="btn btn-primary" onclick="ins_data(3)">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end of Perpanjangan modal-->
+
+    <!--    Pencairan-->
+    <div id="modal_pencairan_giro" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Pencairan Giro Special Rate</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="#" autocomplete="off" class="form" id="form_wd">
+                        <div class="row">
+                            <input type="hidden" value="" id="id_giro_special_rate_wd"/>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pBankTujuanDis">&nbsp;Bank Tujuan </label>
+                                    <input type="text" class="form-control" value="" id="pBankTujuanWdDis" readonly="readonly"/>
+                                    <input type="hidden" value="" id="pBankTujuanWd"/>
+                                </div>
+                                <div class="form-group">
+                                    <label class="label">&nbsp;Produk</label>
+                                    <input type="text" class="form-control" value="" id="pProdukWdDis" readonly="readonly"/>
+                                    <input type="hidden" value="" id="pProdukWd"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pCurrecnyWd">&nbsp;Currency</label>
+                                    <input type="text" class="form-control" value="" id="pCurrecnyWd" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pNominalWd">&nbsp;Nominal</label>
+                                    <input type="text" class="form-control" id="pNominalWd" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pPajakWd">&nbsp;Pajak</label>
+                                    <input type="text" class="form-control" id="pPajakWd" readonly="readonly"/>
+                                </div>
+                                <div class="form-group" style="margin-top: 40px">
+                                    <label>Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label><br/>
+                                    <label>Gunakan titik (.) untuk koma (,)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pInterestWd">&nbsp;Interest (%)</label>
+                                    <input type="number" class="form-control" id="pInterestWd" pattern="(^\d*\.?\d*[1-9]+\d*$)|(^[1-9]+\d*\.\d*$)" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pNetJasaGiroWd" class="label">Net Jasa Giro</label>
+                                    <input type="text" class="form-control" id="pNetJasaGiroWd" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pPokoJasaGiroWd" class="label">Poko + Jasa Giro</label>
+                                    <input type="text" class="form-control" id="pPokoJasaGiroWd" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pJasaGirolWd">&nbsp;Jasa Giro</label>
+                                    <input type="text" class="form-control" id="pJasaGirolWd" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pTglWd"><span style="color: red">*)</span>Tanggal Pencairan</label>
+                                    <input type="text" class="form-control" id="pTglWd" required="required"/>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div>
+                        <button type="button" class="btn btn-primary" onclick="ins_data(2)">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end of Peencairan modal-->
 
     <div class="container-fluid" style="margin-bottom: 15px;">
         <div class="animated fadeIn">
@@ -251,6 +316,7 @@
                             <thead style="font-size: 12px;">
                             <tr>
                                 <th>NO</th>
+                                <th>ID GIRO</th>
                                 <th>NAMA BANK</th>
                                 <th>PRODUK</th>
                                 <th>CURRENCY</th>
@@ -263,8 +329,10 @@
                                 <th>PAJAK</th>
                                 <th>NET JASA GIRO</th>
                                 <th>POKOK + JASA GIRO</th>
+                                <th>JENIS</th>
                                 <th>KETERANGAN</th>
                                 <th>AKSI</th>
+                                <th id="forcbparent"></th>
                             </tr>
                             </thead>
                             <tbody style="font-size: 12px">
