@@ -2689,25 +2689,6 @@ public class CorpayController {
         return mapData;
     }
 
-    @GetMapping(path = "/placement_lcl_header")
-    public Map listPlacementlclHeader(
-            @RequestParam(value = "p_tgl_awal", defaultValue = "ALL") String tglAwal,
-            @RequestParam(value = "p_tgl_akhir", defaultValue = "ALL") String tglAkhir
-    ){
-        List<Map<String, Object>> list = new ArrayList<>();
-
-        try {
-            list = corpayService.getPlacementlclHeader(tglAwal, tglAkhir, WebUtils.getUsernameLogin());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        Map mapData = new HashMap();
-        mapData.put("data", list);
-
-        return mapData;
-    }
-
     @RequestMapping(value = "/delete_data", method = RequestMethod.POST)
     public Map<String, Object> deletePlacementlclHeader(
             @RequestParam(value = "p_id_form", defaultValue = "") String idForm
