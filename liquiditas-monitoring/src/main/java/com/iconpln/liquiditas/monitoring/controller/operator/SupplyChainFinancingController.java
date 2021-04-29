@@ -340,10 +340,11 @@ public class SupplyChainFinancingController {
             @RequestParam(value = "pFeeTransaksi", defaultValue = "") String pFeeTransaksi,
             @RequestParam(value = "pCashCollateral", defaultValue = "") String pCashCollateral,
             @RequestParam(value = "pPajak", defaultValue = "") String pPajak,
-            @RequestParam(value = "pJasaGiro", defaultValue = "") String pJasaGiro
+            @RequestParam(value = "pJasaGiro", defaultValue = "") String pJasaGiro,
+            @RequestParam(value = "pPajakBank", defaultValue = "") String pPajakBank
     ){
         try {
-            Map<String, Object> result = scf.insScfCollateral(pIdScf, pKodeBank, pTglTransaksi, pJatuhTempo, pVendor, pJenisPembayaran, pCurrency, pOriCurr, pKurs, pFeeTransaksi, pCashCollateral, pPajak, pJasaGiro, WebUtils.getUsernameLogin());
+            Map<String, Object> result = scf.insScfCollateral(pIdScf, pKodeBank, pTglTransaksi, pJatuhTempo, pVendor, pJenisPembayaran, pCurrency, pOriCurr, pKurs, pFeeTransaksi, pCashCollateral, pPajak, pPajakBank, pJasaGiro, WebUtils.getUsernameLogin());
             return result;
         } catch (Exception e){
             e.printStackTrace();
