@@ -89,6 +89,7 @@
             </div>
         </div>
     </div>
+
 <!--modal peempata deposito-->
     <div id="modal_detail_deposito" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -209,6 +210,76 @@
         </div>
     </div>
 <!--    ed of pecaira deposito modal-->
+
+    <!--    Pecaira Deposito Modal-->
+    <div id="modal_perpanjangan_deposito" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Perpanjangan Deposito</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="#" autocomplete="off" class="form" id="form_perpanjangan">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pDetailBankCounterPartyPerpanjangan"><span style="color: red"></span>&nbsp;Bank Counterparty:</label>
+                                    <input type="text" id="pDetailBankCounterPartyPerpanjangan" class="form-control" readonly="readonly"/>
+                                    <input type="hidden" id="pDetailCounterPerpanjangan" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailCurrencyPerpanjangan"><span style="color: red"></span>&nbsp;Currency Pencairan:</label>
+                                    <input type="text" id="pDetailCurrencyPerpanjangan" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailBungaAccrualPerpanjangan">&nbsp;Bunga Accrual:</label>
+                                    <input type="text" id="pDetailBungaAccrualPerpanjangan" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailInterestPerpanjangan"><span style="color: red">*</span>&nbsp;Interest :</label>
+                                    <input type="text" id="pDetailInterestPerpanjangan" class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label>
+                                    <br/>
+                                    <label>Gunakan titik (.) untuk koma (,)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pDetailBillyetPerpanjangan"><span style="color: red"></span>&nbsp;Account Billyet:</label>
+                                    <input type="text" id="pDetailBillyetPerpanjangan" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailNominalPerpanjangan"><span style="color: red"></span>&nbsp;Nominal:</label>
+                                    <input type="text" id="pDetailNominalPerpanjangan" class="form-control" required="required" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailTglPenempatanPerpanjangan"><span style="color: red">*</span>&nbsp;Tanggal Penempatan:</label>
+                                    <input type="text" id="pDetailTglPenempatanPerpanjangan" class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailTglJtPerpanjangan"><span style="color: red">*</span>&nbsp;Tanggal Jatuh Tempo:</label>
+                                    <input type="text" id="pDetailTglJtPerpanjangan" class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pPokokBungaPerpanjangan">&nbsp;Pokok Bunga:</label>
+                                    <input type="text" id="pPokokBungaPerpanjangan" class="form-control" readonly="readonly"/>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div>
+                        <button type="button" class="btn btn-primary" onclick="ins_detail_data(3)">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    ed of pecaira deposito modal-->
+
     <div class="container-fluid" style="margin-bottom: 15px;">
         <div class="animated fadeIn" style="display: none;" id="deposito_detail">
             <div id="filter">
@@ -266,6 +337,7 @@
                                     <div class="col-md-7" style="padding-right: 0;">
                                         <div class="float-right" style="padding-top: 0.65rem;">
                                             <button style="width: 35px !important;" id="btn_tambah_detail" class="btn btn-sm btn-success" title="Tambah Detail"><i class="fas fa-plus-square"></i></button>
+                                            <button style="width: 35px !important;" id="btn_ext_detail" class="btn btn-sm btn-primary" title="Perpanjangan"><i class="fas fa-calendar-day"></i></button>
                                             <button style="width: 35px !important;" id="btn_pencairan_detail" class="btn btn-sm btn-default" title="Pencairan"><i class="fas fa-hand-holding-usd"></i></button>
                                             <button style="width: 35px !important;" id="btn_kembali" class="btn btn-sm btn-warning" title="Kembali Ke Header"><i class="fas fa-arrow-circle-left"></i></button>
                                         </div>
