@@ -636,14 +636,29 @@ function detail_data(id, bank,bank_counterparty,  billyet, curr){
             {
                 "aTargets": [12],
                 "mRender": function ( data, type, full ) {
+                    let ret_value = "";
                     if(newRoleUser[0] == "ROLE_MS_LIKUIDITAS"){
                         return "-"
                     }else{
-                        var ret_value =
-                            '<div class="btn-group">' +
-                            '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-info" title="Edit Data" onclick="edit_detail_data(\'' + full.ID_DETAIL + '\', \'' + full.BANK_CONTERPARTY + '\')"><i class="fas fa-edit"></i></button>' +
-                            '<button style="width: 15px !important;" class="btn btn-sm btn-danger" title="Delete" onclick="delete_detail_data(\'' + full.ID_DETAIL + '\')"><i class="fas fa-trash"></i></button>' +
-                            '</div>';
+                        if (full.JENIS === "PENEMPATAN"){
+                            ret_value =
+                                '<div class="btn-group">' +
+                                '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-info" title="Edit Data" onclick="edit_detail_data(\'' + full.ID_DETAIL + '\', \'' + full.BANK_CONTERPARTY + '\')"><i class="fas fa-edit"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn btn-sm btn-danger" title="Delete" onclick="delete_detail_data(\'' + full.ID_DETAIL + '\')"><i class="fas fa-trash"></i></button>' +
+                                '</div>';
+                        }else if(full.JENIS === "PENGURANG" || full.JENIS === "PENCAIRAN"){
+                            ret_value =
+                                '<div class="btn-group">' +
+                                '<button style="width: 15px !important;" class="btn btn-sm btn-danger" title="Delete" onclick="delete_detail_data(\'' + full.ID_DETAIL + '\')"><i class="fas fa-trash"></i></button>' +
+                                '</div>';
+                        }
+                        else{
+                            ret_value =
+                                '<div class="btn-group">' +
+                                '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-sm btn-info" title="Edit Data" onclick="edit_detail_data(\'' + full.ID_DETAIL + '\', \'' + full.BANK_CONTERPARTY + '\')"><i class="fas fa-edit"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn btn-sm btn-danger" title="Delete" onclick="delete_detail_data(\'' + full.ID_DETAIL + '\')"><i class="fas fa-trash"></i></button>' +
+                                '</div>';
+                        }
                         return ret_value;
                     }
                 }
@@ -653,7 +668,7 @@ function detail_data(id, bank,bank_counterparty,  billyet, curr){
                 "mRender": function (data, type, full) {
                     let json_string = JSON.stringify(full);
                     var full_value = '{"full":'+json_string.replace(/'/g,"")+'}';
-                    if (full.JENIS === "PENCAIRAN"){
+                    if (full.JENIS === "PENCAIRAN" || full.JENIS === "PENGURANG"){
                         return "-";
                     }else{
                         return "<input class='cb' type='checkbox' data-full='"+full_value+"' onchange='checkArray(this)' id='cbcheckbox'>";
@@ -686,6 +701,14 @@ function detail_data(id, bank,bank_counterparty,  billyet, curr){
             $("#btn_pencairan_detail")
                 .removeAttr('onclick')
                 .attr('onclick', 'openFormPencairan("'+id+'","'+bank+'","'+bank_counterparty+'","'+billyet+'","'+curr+'")');
+            $("#btn_ext_detail")
+                .removeAttr('onclick')
+                .attr('onclick', 'openFormPerpanjangan("'+id+'","'+bank+'","'+bank_counterparty+'","'+billyet+'","'+curr+'")');
+
+            // let api = this.api();
+            // api.rows().every(value, index => {
+            //
+            // });
         },
         "createdRow" : (row, data, dataIndex) => {
             if ( data["JENIS"] === "PENCAIRAN" ) {
@@ -693,13 +716,18 @@ function detail_data(id, bank,bank_counterparty,  billyet, curr){
                     "color": "#ff6767",
                     "font-weight" : "bold",
                 });
-            };
+            }
+            if (data["JENIS"] === "PENGURANG"){
+                $(row).css({
+                    "color": "#ff8302",
+                    "font-weight" : "bold",
+                });
+            }
         }
     });
 
     table_deposito.on('search.dt', function() {
         var value = $('.dataTables_filter input').val();
-        console.log(value); // <-- the value
         tempTableSearch = value;
     });
     initCbparent();
@@ -748,7 +776,7 @@ function checkArray(e) {
     console.log("Full Array : ", fullArray);
 }
 
-function  initCbparent() {
+function initCbparent() {
     $('#forcbparent').empty();
     $('#forcbparent').append("<input type=\"checkbox\" id='cbparent'> ");
     $("#cbparent").click(function(){
@@ -797,6 +825,46 @@ function openFormPencairan(id, bank,bank_counterparty, billyet, curr) {
     }
 }
 
+function openFormPerpanjangan(id, bank,bank_counterparty, billyet, curr) {
+    idDeposito = id;
+    idDetailDeposito = "";
+    if (fullArray.length <= 0){
+        alert("Silahkan Pilih Data Terlebih Dahulu");
+    }else{
+        let total = fullArray.reduce(function (a,b) {
+            return a + parseInt(b.NOMINAL);
+        },0);
+        let tot_accrual = fullArray.reduce(function (a,b) {
+            return a + b.BUNGA_ACCRUAL;
+        },0);
+        let pokok_bunga = fullArray.reduce(function (a,b) {
+            return a + b.POKOK_BUNGA;
+        },0);
+
+        $("#pDetailBankCounterPartyPerpanjangan").val(bank_counterparty);
+        $("#pDetailCounterPerpanjangan").val(bank);
+        $("#pDetailBillyetPerpanjangan").val(billyet);
+        $("#pDetailCurrencyPerpanjangan").val(curr);
+        $("#pPokokBungaPerpanjangan").val(accounting.formatNumber(pokok_bunga, 2, ",", ".") );
+        $("#pDetailBungaAccrualPerpanjangan").val(accounting.formatNumber(tot_accrual, 2, ",", ".") );
+        $("#pDetailNominalPerpanjangan").val(accounting.formatNumber(total, 2, ",", "."));
+        $("#pDetailTglPenempatanPerpanjangan").datepicker({dateFormat : "dd/mm/yy",minDate : "-7"});
+
+        $("#modal_perpanjangan_deposito").modal({backdrop: false , keyboard: false})
+    }
+}
+
+$("#pDetailTglJtPerpanjangan").datepicker({
+    minDate: '0',
+    maxDate: '+1Y+6M',
+    dateFormat : 'dd/mm/yy',
+    onSelect: function (dateStr) {
+        var max = $(this).datepicker('getDate'); // Get selected date
+        $('#datepicker').datepicker('option', 'maxDate', max || '+10Y+6M'); // Set other max, default to +18 months
+        var start = $("#pDetailTglPenempatanPerpanjangan").datepicker("getDate");
+    }
+});
+
 function openFormNewDetail(id, bank,bank_counterparty, billyet, curr) {
     let d = new Date();
     $("#form_input").find("input, select, textarea").val("");
@@ -806,6 +874,7 @@ function openFormNewDetail(id, bank,bank_counterparty, billyet, curr) {
     $("#pDetailCounter, #pDetailCounterPencairan").val(bank);
     $("#pDetailCurrency, #pDetailCurrencyPencairan").val(curr);
     $("#pDetailBillyet,#pDetailBillyetPencairan").val(billyet);
+    $('#pDetailNominal').mask('000,000,000,000,000.00',{reverse : true});
     idDeposito = id;
     idDetailDeposito = "";
 
@@ -843,23 +912,23 @@ function ins_detail_data(type) {
         data: {
             pIdDeposito: idDeposito,
             pIdDetail: idDetailDeposito,
-            pJenis : (type === 1) ? "PENEMPATAN" : "PENCAIRAN",
-            pBank : (type === 1) ? $("input[type=hidden]#pDetailCounter").val() : $("input[type=hidden]#pDetailCounterPencairan").val(),
-            pBillyet : (type === 1) ? $("#pDetailBillyet").val() : $("#pDetailBillyetPencairan").val(),
-            pNominal : (type === 1) ? $("#pDetailNominal").val() : $("#pDetailNominalPencairan").val().replace(/,/g,""),
-            pInterest : (type === 1) ? $("#pDetailInterest").val().replace(/,/g,"") : "",
-            pCurr : (type === 1) ? $("#pDetailCurrency").val() : $("#pDetailCurrencyPencairan").val(),
-            pBungaAccrual : (type === 1) ? "" : $("#pDetailBungaAccrual").val().replace(/,/g,""),
-            pPokokBunga : (type === 1) ? "" : $("#pPokokBunga").val().replace(/,/g,""),
-            pTglPenempatan : (type === 1) ? $("#pDetailTglPenempatan").val() : "",
-            pTglJatuhTempo : (type === 1) ? $("#pDetailTglJatuhTempo").val() : "",
-            pTglPencairan : (type === 1) ? "" : $("#pDetailTglPencairan").val(),
-            pKeterangan : (type === 1) ? "PENEMPATAN" : "PENCAIRAN",
+            pJenis : (type === 1) ? "PENEMPATAN" : (type === 2) ? "PENCAIRAN" : "PERPANJANGAN",
+            pBank : (type === 1) ? $("input[type=hidden]#pDetailCounter").val() : (type === 2) ? $("input[type=hidden]#pDetailCounterPencairan").val() : $("input[type=hidden]#pDetailCounterPerpanjangan").val(),
+            pBillyet : (type === 1) ? $("#pDetailBillyet").val() : (type === 2) ? $("#pDetailBillyetPencairan").val() : $("#pDetailBillyetPerpanjangan").val(),
+            pNominal : (type === 1) ? $("#pDetailNominal").val().replace(/,/g,"") : (type === 2) ? $("#pDetailNominalPencairan").val().replace(/,/g,"") : $("#pDetailNominalPerpanjangan").val().replace(/,/g,""),
+            pInterest : (type === 1) ? $("#pDetailInterest").val().replace(/,/g,"") : (type === 2) ? "" : $("#pDetailInterestPerpanjangan").val().replace(/,/g,""),
+            pCurr : (type === 1) ? $("#pDetailCurrency").val() : (type === 2) ? $("#pDetailCurrencyPencairan").val() : $("#pDetailCurrencyPerpanjangan").val(),
+            pBungaAccrual : (type === 1) ? "" : (type === 2) ? $("#pDetailBungaAccrual").val().replace(/,/g,"") : $("#pDetailBungaAccrualPerpanjangan").val().replace(/,/g,""),
+            pPokokBunga : (type === 1) ? "" : (type === 2) ? $("#pPokokBunga").val().replace(/,/g,"") : $("#pPokokBungaPerpanjangan").val().replace(/,/g,""),
+            pTglPenempatan : (type === 1) ? $("#pDetailTglPenempatan").val() : (type === 2) ? "" : $("#pDetailTglPenempatanPerpanjangan").val(),
+            pTglJatuhTempo : (type === 1) ? $("#pDetailTglJatuhTempo").val() : (type === 2) ? "" : $("#pDetailTglJtPerpanjangan").val(),
+            pTglPencairan : (type === 1) ? "" :  (type === 2) ? $("#pDetailTglPencairan").val() : "",
+            pKeterangan : (type === 1) ? "PENEMPATAN" : (type === 2) ? "PENCAIRAN" : "PERPANJANGAN",
         },
         success: function (res) {
             if (res.return == 1) {
                 alert("DATA BERHASIL DISIMPAN");
-                (type ===1 ) ? $('#modal_detail_deposito').modal('hide') : $('#modal_pecairan_deposito').modal('hide');
+                (type ===1 ) ? $('#modal_detail_deposito').modal('hide') : (type ===2 ) ? $('#modal_pecairan_deposito').modal('hide') : $('#modal_perpanjangan_deposito').modal('hide') ;
                 table_deposito.ajax.reload();
                 fullArray = [];
             } else {
@@ -907,7 +976,10 @@ function edit_detail_data(detail_id, bank) {
                         .val(("0"+jt.getDate()).slice(-2)+"/"+("0"+(jt.getMonth()+1)).slice(-2)+"/"+jt.getFullYear())
                         .datepicker({dateFormat : "dd/mm/yy", minDate : "0"});
                     // $("#pDetailKeterangan").val(res[0].KETERANGAN);
-                    $("#pDetailNominal").val(res[0].NOMINAL);
+                    $("#pDetailNominal")
+                        .unmask()
+                        .val(res[0].NOMINAL*100)
+                        .mask('000,000,000,000,000.00',{reverse : true});
                     $("#pDetailBillyet")
                         .attr("readonly","readonly")
                         .val(res[0].NO_ACCOUNT);
