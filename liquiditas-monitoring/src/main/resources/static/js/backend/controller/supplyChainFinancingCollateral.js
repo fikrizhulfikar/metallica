@@ -187,6 +187,7 @@ function ins_data() {
                 pCashCollateral: $("#pCashCollateral").val().toString().replace(/,/g,''),
                 pPajak: $("#pPajak").val(),
                 pJasaGiro: $("#pRateJasaGiro").val(),
+                pPajakBank : $("#pPajakBank").val().replace(/,/g,''),
             },
             success: function (res) {
                 if (res.return == 1) {
@@ -217,7 +218,7 @@ function edit_data(id) {
             pIdScfCollateral: id
         },
         success: function (res) {
-            $("#pNominal").unmask();
+            $("#pNominal,#pOriCurr,#pPajakBank").unmask();
             setSelectCurr("pCurrecny", "", res[0].CURRENCY, "REKAP");
             setSelectBank("pbankCounterparty", "FILTER", "PEMBAYAR", res[0].BANK_CONTERPARTY, "REKAP");
             setSelectCashCode("pJenisPembayaran", res[0].KODE_JENIS_PEMBAYARAN);
@@ -225,9 +226,14 @@ function edit_data(id) {
             $("#pTglTransaksi").val(res[0].TGL_TRANSAKSI);
             $("#pTglJatuhTempo").val(res[0].JATUH_TEMPO);
             $("#pPajak").val(parseFloat(res[0].PAJAK).toString());
+            $("#pPajakBank")
+                .val(res[0].PAJAK_BANK)
+                .mask('000,000,000,000,000.00',{reverse : true});
             $("#pRateJasaGiro").val(res[0].RATE_JASA_GIRO);
             $("#pCurrecny").val(res[0].CURRENCY);
-            $("#pOriCurr").val(res[0].ORI_CURRENCY);
+            $("#pOriCurr")
+                .val(res[0].ORI_CURRENCY*100)
+                .mask('000,000,000,000,000.00',{reverse : true});
             $("#pKurs").val(res[0].KURS);
             $("#pFeeTransaksi").val(res[0].FEE_TRANSAKSI);
             $("#pCashCollateral").val(res[0].CASH_COLLATERAL);
@@ -328,6 +334,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pJenisPembayaran) 
                 {width: 100, targets: 19},
                 {width: 100, targets: 20},
                 {width: 100, targets: 21},
+                {width: 100, targets: 22},
                 { className: "datatables_action", "targets": [11] },
                 {
                     "aTargets": [0],
@@ -465,19 +472,26 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pJenisPembayaran) 
                 {
                     "aTargets": [19],
                     "mRender": function (data, type, full) {
-                        return accounting.format(full.NET_JASA_GIRO,2, ".", ",") ;
+                        return accounting.format(full.PAJAK_BANK,2, ".", ",") ;
                     }
 
                 },
                 {
                     "aTargets": [20],
                     "mRender": function (data, type, full) {
-                        return accounting.format(full.NET_GAIN,2, ".", ",") ;
+                        return accounting.format(full.NET_JASA_GIRO,2, ".", ",") ;
                     }
 
                 },
                 {
                     "aTargets": [21],
+                    "mRender": function (data, type, full) {
+                        return accounting.format(full.NET_GAIN,2, ".", ",") ;
+                    }
+
+                },
+                {
+                    "aTargets": [22],
                     "mRender": function (data, type, full) {
                            var ret_value;
                          ret_value =

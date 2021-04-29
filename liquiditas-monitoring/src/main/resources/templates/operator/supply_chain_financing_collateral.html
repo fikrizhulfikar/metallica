@@ -84,11 +84,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="pOriCurr"><span style="color: red">*</span>&nbsp;Original Currency:</label>
-                                    <input type="number" class="form-control" id="pOriCurr" required="required"/>
+                                    <input type="text" class="form-control" id="pOriCurr" required="required"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="pKurs"><span style="color: red">*</span>&nbsp;Kurs:</label>
-                                    <input type="number" class="form-control" id="pKurs" required="required"/>
+                                    <input type="text" class="form-control" id="pKurs" required="required"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="pFeeTransaksi"><span style="color: red">*</span>&nbsp;Fee Transaksi (%):</label>
@@ -97,6 +97,11 @@
                                 <div class="form-group">
                                     <label for="pCashCollateral"><span style="color: red">*</span>&nbsp;Cash Collateral (%):</label>
                                     <input type="number" class="form-control" id="pCashCollateral" required="required"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pPajakBank"><span style="color: red">*</span>&nbsp;Pajak Bank </label>
+                                    <small>Sesuai dengan original currency</small>
+                                    <input type="text" class="form-control" id="pPajakBank" required="required"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="pJenisPembayaran"><span style="color: red">*</span>&nbsp;Jenis Pembayaran :</label>
@@ -242,6 +247,7 @@
                                 <th>JASA GIRO</th>
                                 <th>PAJAK (%)</th>
                                 <th>PAJAK YANG DITANGGUNG PLN</th>
+                                <th>PAJAK BANK</th>
                                 <th>NET JASA GIRO</th>
                                 <th>NET GAIN/(LOSS) TRANSAKSI SCF</th>
                                 <th>AKSI</th>
