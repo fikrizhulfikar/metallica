@@ -5,14 +5,23 @@ import com.iconpln.liquiditas.core.service.GiroSpecialRateService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.monitoring.utils.NotificationUtil;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
+import net.sf.jxls.transformer.XLSTransformer;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +33,9 @@ public class GiroSpecialRateController {
 
     @Autowired
     private GiroSpecialRateService giroSpecialRateService;
+
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     @Autowired
     private NotificationUtil notificationUtil;
@@ -204,4 +216,60 @@ public class GiroSpecialRateController {
         }
     }
 
+    @RequestMapping(value = "/xls_giro", method = RequestMethod.GET)
+    public String export(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            SimpleDateFormat dateParser = new SimpleDateFormat("yyyymmdd");
+            String pattern = "###,###.###";
+            DecimalFormat df  = new DecimalFormat(pattern);
+            String tglAwal = "";
+            String tglAkhir = "";
+
+            String title = "REKAP GIRO SPECIAL RATE";
+            String namaFile = "rekap_giro.xls";
+
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
+
+            List<Map<String, Object>> listData = giroSpecialRateService.getXlsGiroSpecialRate();
+
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+            System.out.println("List_Excel_giro : "+listData.toString());
+
+            param.put("TITLE", title);
+            for (Map data : listData) {
+                Map paramDetail = new HashMap();
+                paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
+                paramDetail.put("ID_GIRO",data.get("ID_GIRO"));
+                paramDetail.put("JENIS",data.get("JENIS"));
+                paramDetail.put("BANK",data.get("BANK"));
+                paramDetail.put("CURRENCY",data.get("CURRENCY"));
+                paramDetail.put("PRODUK",data.get("PRODUK"));
+                paramDetail.put("NOMINAL",data.get("NOMINAL"));
+                paramDetail.put("INTEREST",data.get("INTEREST"));
+                paramDetail.put("TGL_PENEMPATAN", data.get("TGL_PENEMPATAN"));
+                paramDetail.put("JATUH_TEMPO",data.get("JATUH_TEMPO"));
+                paramDetail.put("JUMLAH_HARI",data.get("JUMLAH_HARI"));
+                paramDetail.put("JASA_GIRO",data.get("JASA_GIRO"));
+                paramDetail.put("PAJAK",data.get("PAJAK"));
+                paramDetail.put("NET_JASA_GIRO",data.get("NET_JASA_GIRO"));
+                paramDetail.put("POKOK_JASA_GIRO",data.get("POKOK_JASA_GIRO"));
+                paramDetail.put("KETERANGAN",data.get("KETERANGAN"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/rekap_giro.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Gagal Export Data :" + e.getMessage();
+        }
+    }
 }
