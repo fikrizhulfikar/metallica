@@ -94,9 +94,6 @@ public class GiroSpecialRateService {
                 .withCatalogName("PKG_DASHBOARD_CORPAY")
                 .withFunctionName("ins_giro");
         Map<String, Object> out;
-        if (StringUtils.isEmpty(pIdGiro)) {
-            pIdGiro = "TESTING0005X";
-        }
         SqlParameterSource inParent = new MapSqlParameterSource()
                 .addValue("p_user_id", pUserId)
                 .addValue("p_id_giro", pIdGiro)
@@ -114,5 +111,16 @@ public class GiroSpecialRateService {
         out = simpleJdbcCall.execute(inParent);
         AppUtils.getLogger(this).info("data ins_rekap_giro : {}", out);
         return out;
+    }
+
+    public List<Map<String, Object>> getXlsGiroSpecialRate() throws SQLException {
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("xls_giro_special");
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class);
+        AppUtils.getLogger(this).info("data get_all_giro : {}", resultset);
+        return resultset;
     }
 }
