@@ -11,7 +11,6 @@ var tempBankAccount = "";
 var tempKodeBank = "";
 var tempUnit = "";
 var tempTableSearch = "";
-
 var checkedArray = new Array();
 var Invoice = "";
 var fullArray = new Array();
@@ -28,8 +27,8 @@ $(document).ready(function () {
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
     setSelectFilterBank("cmb_bank", "FILTER", "", "", "REKAP");
-    setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
-    setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+    // setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
+    // setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
 
     $('#check_all').change(function() {
         if($(this).is(':checked')){
@@ -1167,7 +1166,14 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                                 function (res) {
                                     hideLoadingCss();
-                                    getTotalTagihan();
+                                    let totaltagihan = 0;
+                                    let arr = res.data;
+                                    arr.forEach(function (val, key) {
+                                        if(val.AMOUNT){
+                                            totaltagihan += parseFloat(val.AMOUNT);
+                                        }
+                                    });
+                                    $("#total_tagihan").html(accounting.formatNumber(totaltagihan.toString(), 2, '.', ','));
                                     return res.data;
                                 }
                         }
@@ -1185,41 +1191,10 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                                     $("#cbparent").prop('checked', false);
                                 }
                             }
-                            $('th').addClass('th-middle');
-                            $(".btn-update-status").hide();
-                            $(".btn-edit-data").hide();
-                            $(".btn-delete-data").hide();
-                            $("#btn-add-rekap").hide();
-
-                            $("#option-lunas").hide();
-                            $("#option-input").hide();
-                            $("#option-siap").hide();
-                            if (newRoleUser.length > 0) {
-                                for (var i = 0; i < newRoleUser.length; i++) {
-                                    if (newRoleUser[i] == "ROLE_KASIR_IDR" || newRoleUser[i] == "ROLE_KASIR") {
-                                        $(".btn-update-status").show();
-                                        $("#option-lunas").show();
-                                        $("#option-input").show();
-                                    } else if (newRoleUser[i] == "ROLE_ADMIN") {
-                                        $(".btn-update-status").show();
-                                        $(".btn-edit-data").show();
-                                        $(".btn-delete-data").show();
-                                        $("#btn-add-rekap").show();
-                                        $("#option-lunas").show();
-                                        $("#option-siap").show();
-                                        $("#option-input").show();
-                                    } else {
-                                        $(".btn-update-status").show();
-                                        $(".btn-edit-data").show();
-                                        $(".btn-delete-data").show();
-                                        $("#btn-add-rekap").show();
-                                        $("#option-siap").show();
-                                    }
-                                }
-                            }
                         },
                     "initComplete": function(settings, json) {
                         var api = this.api();
+
                         $.ajax({
                             url: baseUrl + "api_operator/rekap_invoice_belum/get_column",
                             dataType: 'JSON',
@@ -1234,7 +1209,8 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                                 hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
                             }
                         });
-                    }
+
+                    },
                 }
             );
             table_rekapitulasi.on('search.dt', function () {
