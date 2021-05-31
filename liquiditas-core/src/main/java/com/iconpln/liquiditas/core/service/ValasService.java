@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -827,36 +828,48 @@ public class ValasService {
             String pSumberDana, String pPeruntukanDana, String pFixingRate,
             String pKursJisdor2, String pSwapPoint, String pStrikePrice,
             String pStrikePrice2, String pSettlementRate, String pKeterangan,
-            String pStatusDeviratif, String pBiayaPremi, String pCreateBy
-    ) throws SQLException {
-
+            String pStatusDeviratif, String pBiayaPremi, String pCreateBy,
+            String pDocNo1, String pDocNo2, String pSpotRate, String pForwardRate, String pKursJual,
+            String pKursBeli, String pSellNetAmountUsd, String pStatus, String pRatePremi, String pJisdorSettlement, String pKursSettlement
+            ){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_VALAS")
                 .withFunctionName("ins_derivatif");
 
-        AppUtils.getLogger(this).debug("pIdProduct : {} ", pIdProduct);
-        AppUtils.getLogger(this).debug("pIdDeviratif : {} ", pIdDeviratif);
-        AppUtils.getLogger(this).debug("pTglDeal : {} ", pTglDeal);
-        AppUtils.getLogger(this).debug("pBank : {} ", pBank);
-        AppUtils.getLogger(this).debug("pTglJatuhTempo : {} ", pTglJatuhTempo);
-        AppUtils.getLogger(this).debug("pTenor : {} ", pTenor);
-        AppUtils.getLogger(this).debug("pCurr : {} ", pCurr);
-        AppUtils.getLogger(this).debug("pNationalAmount : {} ", pNationalAmount);
-        AppUtils.getLogger(this).debug("pDealRate : {} ", pDealRate);
-        AppUtils.getLogger(this).debug("pForwardPoint : {} ", pForwardPoint);
-        AppUtils.getLogger(this).debug("pKursJisdor1 : {} ", pKursJisdor1);
-        AppUtils.getLogger(this).debug("pBungaDeposito : {} ", pBungaDeposito);
-        AppUtils.getLogger(this).debug("pPeruntukanDana : {} ", pPeruntukanDana);
-        AppUtils.getLogger(this).debug("pFixingRate : {} ", pFixingRate);
-        AppUtils.getLogger(this).debug("pSumberDana : {} ", pSumberDana);
-        AppUtils.getLogger(this).debug("pKursJisdor2 : {} ", pKursJisdor2);
-        AppUtils.getLogger(this).debug("pSwapPoint : {} ", pSwapPoint);
-        AppUtils.getLogger(this).debug("pStrikePrice : {} ", pStrikePrice);
-        AppUtils.getLogger(this).debug("pStrikePrice2 : {} ", pStrikePrice2);
-        AppUtils.getLogger(this).debug("pSettlementRate : {} ", pSettlementRate);
-        AppUtils.getLogger(this).debug("pKeterangan : {} ", pKeterangan);
-        AppUtils.getLogger(this).debug("pStatusDeviratif : {} ", pStatusDeviratif);
-        AppUtils.getLogger(this).debug("pBiayaPremi : {} ", pBiayaPremi);
+        AppUtils.getLogger(this).info("pIdProduct : {} ", pIdProduct);
+        AppUtils.getLogger(this).info("pIdDeviratif : {} ", pIdDeviratif);
+        AppUtils.getLogger(this).info("pTglDeal : {} ", pTglDeal);
+        AppUtils.getLogger(this).info("pBank : {} ", pBank);
+        AppUtils.getLogger(this).info("pTglJatuhTempo : {} ", pTglJatuhTempo);
+        AppUtils.getLogger(this).info("pTenor : {} ", pTenor);
+        AppUtils.getLogger(this).info("pCurr : {} ", pCurr);
+        AppUtils.getLogger(this).info("pNationalAmount : {} ", pNationalAmount);
+        AppUtils.getLogger(this).info("pDealRate : {} ", pDealRate);
+        AppUtils.getLogger(this).info("pForwardPoint : {} ", pForwardPoint);
+        AppUtils.getLogger(this).info("pKursJisdor1 : {} ", pKursJisdor1);
+        AppUtils.getLogger(this).info("pBungaDeposito : {} ", pBungaDeposito);
+        AppUtils.getLogger(this).info("pPeruntukanDana : {} ", pPeruntukanDana);
+        AppUtils.getLogger(this).info("pFixingRate : {} ", pFixingRate);
+        AppUtils.getLogger(this).info("pSumberDana : {} ", pSumberDana);
+        AppUtils.getLogger(this).info("pKursJisdor2 : {} ", pKursJisdor2);
+        AppUtils.getLogger(this).info("pSwapPoint : {} ", pSwapPoint);
+        AppUtils.getLogger(this).info("pStrikePrice : {} ", pStrikePrice);
+        AppUtils.getLogger(this).info("pStrikePrice2 : {} ", pStrikePrice2);
+        AppUtils.getLogger(this).info("pSettlementRate : {} ", pSettlementRate);
+        AppUtils.getLogger(this).info("pKeterangan : {} ", pKeterangan);
+        AppUtils.getLogger(this).info("pStatusDeviratif : {} ", pStatusDeviratif);
+        AppUtils.getLogger(this).info("pBiayaPremi : {} ", pBiayaPremi);
+        AppUtils.getLogger(this).info("pDocNo1 : {} ", pDocNo1);
+        AppUtils.getLogger(this).info("pDocNo2 : {} ", pDocNo2);
+        AppUtils.getLogger(this).info("pSpotRate : {} ", pSpotRate);
+        AppUtils.getLogger(this).info("pForwardRate : {} ", pForwardRate);
+        AppUtils.getLogger(this).info("pKursJual : {} ", pKursJual);
+        AppUtils.getLogger(this).info("pKursBeli : {} ", pKursBeli);
+        AppUtils.getLogger(this).info("pSellNetAmountUsd : {} ", pSellNetAmountUsd);
+        AppUtils.getLogger(this).info("pStatus : {} ", pStatus);
+        AppUtils.getLogger(this).info("pRatePremi : {} ", pRatePremi);
+        AppUtils.getLogger(this).info("pJisdorSettlement : {} ", pJisdorSettlement);
+        AppUtils.getLogger(this).info("pKursSettlement : {} ", pKursSettlement);
 
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("p_id_product", pIdProduct)
@@ -883,6 +896,17 @@ public class ValasService {
                 .addValue("p_status_derivatif", pStatusDeviratif)
                 .addValue("p_create_by", pCreateBy)
                 .addValue("p_biaya_premi", pBiayaPremi)
+                .addValue("p_doc_no", pDocNo1)
+                .addValue("p_doc_no2", pDocNo2)
+                .addValue("p_spot_rate", pSpotRate)
+                .addValue("p_forward_rate", pForwardRate)
+                .addValue("p_kurs_jual", pKursJual)
+                .addValue("p_kurs_beli", pKursBeli)
+                .addValue("p_sell_natmount_usd", pSellNetAmountUsd)
+                .addValue("p_status", pStatus)
+                .addValue("p_rate_premi", pRatePremi)
+                .addValue("p_jisdor_settlement", pJisdorSettlement)
+                .addValue("p_kurs_settlement", pKursSettlement)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         Map<String, Object> out = simpleJdbcCall.execute(in);
         AppUtils.getLogger(this).info("data ins_derivatif : {}", out);
@@ -891,7 +915,7 @@ public class ValasService {
 
     public List<Map<String, Object>> getListDeviratif(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pTenor, String pStatusDerivatif, String pSortBy, String pSortDir, String pSearch) throws SQLException {
 
-        AppUtils.getLogger(this).debug("data rekap search info = " +
+        AppUtils.getLogger(this).info("data rekap search info = " +
                         "start : {}, " +
                         "length : {}, " +
                         "pTglAwal : {}, " +
@@ -1012,143 +1036,6 @@ public class ValasService {
         AppUtils.getLogger(this).info("data del_derivatif : {}", out);
         return out;
     }
-
-    //    deposito
-    public Map<String, Object> insDeposito(
-            String pIdDeposito, String pBank, String pCurr, String pNoAccount,
-            String pNominal, String pInterest, String pTglpenempatan, String pTenor,
-            String pTglJatuhTempo, String pKeterangan, String pStatusDeposito, String pCreateBy
-    ) throws SQLException {
-
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_VALAS")
-                .withFunctionName("ins_deposito");
-
-        AppUtils.getLogger(this).debug("pIdDeposito : {} ", pIdDeposito);
-        AppUtils.getLogger(this).debug("pBank : {} ", pBank);
-        AppUtils.getLogger(this).debug("pCurr : {} ", pCurr);
-        AppUtils.getLogger(this).debug("pNoAccount : {} ", pNoAccount);
-        AppUtils.getLogger(this).debug("pNominal : {} ", pNominal);
-        AppUtils.getLogger(this).debug("pInterest : {} ", pInterest);
-        AppUtils.getLogger(this).debug("pTglpenempatan : {} ", pTglpenempatan);
-        AppUtils.getLogger(this).debug("pTenor : {} ", pTenor);
-        AppUtils.getLogger(this).debug("pTglJatuhTempo : {} ", pTglJatuhTempo);
-        AppUtils.getLogger(this).debug("pKeterangan : {} ", pKeterangan);
-        AppUtils.getLogger(this).debug("pStatusDeposito : {} ", pStatusDeposito);
-        AppUtils.getLogger(this).debug("pCreateBy : {} ", pCreateBy);
-
-        SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("p_id_deposito", pIdDeposito)
-                .addValue("p_bank", pBank)
-                .addValue("p_curr", pCurr)
-                .addValue("p_no_account", pNoAccount)
-                .addValue("p_nominal", pNominal)
-                .addValue("p_interest", pInterest)
-                .addValue("p_tgl_penempatan", pTglpenempatan)
-                .addValue("p_tenor", pTenor)
-                .addValue("p_tgl_jatuh_tempo", pTglJatuhTempo)
-                .addValue("p_keterangan", pKeterangan)
-                .addValue("p_status_deposito", pStatusDeposito)
-                .addValue("p_create_by", pCreateBy)
-                .addValue("out_msg", OracleTypes.VARCHAR);
-        Map<String, Object> out = simpleJdbcCall.execute(in);
-        AppUtils.getLogger(this).info("data ins_deposito : {}", out);
-        return out;
-    }
-
-    public List<Map<String, Object>> getListDeposito(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pTenor, String pKeterangan, String pSortBy, String pSortDir, String pSearch) throws SQLException {
-
-        AppUtils.getLogger(this).debug("data rekap search info = " +
-                        "start : {}, " +
-                        "length : {}, " +
-                        "pTglAwal : {}, " +
-                        "pTglAkhir : {}, " +
-                        "pBank : {}, " +
-                        "pCurrency : {}, " +
-                        "pTenor : {}," +
-                        "pKeterangan : {}," +
-                        "pSearch : {},",
-
-                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pKeterangan, pSearch);
-
-
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_VALAS")
-                .withFunctionName("get_deposito_pss");
-
-        Map<String, Object> params = new HashMap<>();
-        params.put("p_start", pStart);
-        params.put("p_length", pLength);
-        params.put("p_tgl_awal", pTglAwal);
-        params.put("p_tgl_akhir", pTglAkhir);
-        params.put("p_bank", pBank);
-        params.put("p_cur", pCurrency);
-        params.put("p_tenor", pTenor);
-        params.put("p_keterangan", pKeterangan);
-        params.put("p_sort_by", pSortBy);
-        params.put("p_sort_dir", pSortDir.toUpperCase());
-        params.put("p_search", pSearch);
-        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
-
-        AppUtils.getLogger(this).info("data get_deposito_pss : {}", resultset);
-        return resultset;
-    }
-
-    public List<Map<String, Object>> getAllDeposito(String pTglAwal, String pTglAkhir, String pBank, String pCurr, String pTenor, String pKet) throws SQLException {
-
-        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAwal : {}", pTglAwal);
-        AppUtils.getLogger(this).debug("PARAM SEARCH pTglAkhir : {}", pTglAkhir);
-        AppUtils.getLogger(this).debug("PARAM SEARCH pBank : {}", pBank);
-        AppUtils.getLogger(this).debug("PARAM SEARCH pCurr : {}", pCurr);
-        AppUtils.getLogger(this).debug("PARAM SEARCH pTenor : {}", pTenor);
-        AppUtils.getLogger(this).debug("PARAM SEARCH pKet : {}", pKet);
-
-
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_VALAS")
-                .withFunctionName("get_all_deposito");
-
-        Map<String, Object> params = new HashMap<>();
-        params.put("p_tgl_awal", pTglAwal);
-        params.put("p_tgl_akhir", pTglAkhir);
-        params.put("p_bank", pBank);
-        params.put("p_cur", pCurr);
-        params.put("p_tenor", pTenor);
-        params.put("p_keterangan", pKet);
-        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
-
-        AppUtils.getLogger(this).info("data get_all_deposito : {}", resultset);
-        return resultset;
-    }
-
-    public List<Map<String, Object>> getDepositobyId(String pIdDeposito) throws SQLException {
-
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_VALAS")
-                .withFunctionName("get_deposito_byid");
-
-        Map<String, Object> params = new HashMap<>();
-        params.put("p_id_deposito", pIdDeposito);
-        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
-
-        AppUtils.getLogger(this).info("data get_deposito_byid : {}", resultset);
-        return resultset;
-    }
-
-    public Map<String, Object> deleteDeposito(String pIdDeposito) throws SQLException {
-
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_VALAS")
-                .withFunctionName("del_deposito");
-
-        SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("p_id_deposito", pIdDeposito)
-                .addValue("out_msg", OracleTypes.VARCHAR);
-        Map<String, Object> out = simpleJdbcCall.execute(in);
-        AppUtils.getLogger(this).info("data del_deposito : {}", out);
-        return out;
-    }
-
 
     //    tripartite
     public Map<String, Object> insTripartite(
@@ -1680,16 +1567,21 @@ public class ValasService {
         System.out.println("pData: "+pData);
         JSONArray jsonArray = new JSONArray(pData);
 
-        for (Object item : jsonArray){
-            JSONObject obj = (JSONObject)item;
-            System.out.println(obj);
-            in = new MapSqlParameterSource()
-                    .addValue("p_kode_bank", obj.get("kdbank"))
-                    .addValue("p_h0", obj.get("potensi_h0"))
-                    .addValue("p_h1", obj.get("potensi_h1"));
-            out = simpleJdbcCall.execute(in);
-            AppUtils.getLogger(this).info("data insSaldoPotensi {}: {}", obj.get("kdbank"), out);
+        try {
+            for (int index = 0; index < jsonArray.length(); index++){
+                JSONObject obj = jsonArray.getJSONObject(index);
+                System.out.println(obj);
+                in = new MapSqlParameterSource()
+                        .addValue("p_kode_bank", obj.get("kdbank"))
+                        .addValue("p_h0", obj.get("potensi_h0"))
+                        .addValue("p_h1", obj.get("potensi_h1"));
+                out = simpleJdbcCall.execute(in);
+                AppUtils.getLogger(this).info("data insSaldoPotensi {}: {}", obj.get("kdbank"), out);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
         return out;
     }
 

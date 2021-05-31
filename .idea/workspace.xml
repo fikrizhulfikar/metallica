@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="ALL" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="c1432616-f44a-456c-b349-daf6be464567" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/liquiditas.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/login.html" afterDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,6 +28,13 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
   </component>
   <component name="ProjectId" id="1d9OvPfjMINLtYXwiis6azDd6GN" />
   <component name="ProjectLevelVcsManager">
@@ -55,7 +62,19 @@
       <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\backend\controller" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.ApplicationMonitoring">
     <configuration name="ApplicationMonitoring" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="liquiditas-monitoring" />
       <extension name="coverage">
@@ -76,6 +95,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.ApplicationMonitoring" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -219,21 +243,7 @@
       <option name="project" value="LOCAL" />
       <updated>1606699928627</updated>
     </task>
-    <task id="LOCAL-00019" summary="Bug Fix, radio button HR/AP disabled when duplicate data">
-      <created>1610365386999</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1610365386999</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Log">
-      <created>1610365436011</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1610365436011</updated>
-    </task>
-    <option name="localTasksCounter" value="21" />
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -244,12 +254,13 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add Param Head/Item to Split Head and Item" />
@@ -264,7 +275,6 @@
     <MESSAGE value="menambahkan titik koma" />
     <MESSAGE value="Menambahkan tombol approval untuk role msb investment expenditure ii" />
     <MESSAGE value="Fix bug, disable revere to sap for msb,vp, and evp in approval flow (after verified by maker)" />
-    <MESSAGE value="Bug Fix, radio button HR/AP disabled when duplicate data" />
     <MESSAGE value="Log" />
     <option name="LAST_COMMIT_MESSAGE" value="Log" />
   </component>

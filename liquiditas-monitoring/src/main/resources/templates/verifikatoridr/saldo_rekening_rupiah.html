@@ -1,0 +1,153 @@
+<div th:fragment="stylesheets-frontend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        th {
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        td {
+            font-size: 12px;
+        }
+
+        td, th {
+            padding: 5px !important;
+        }
+
+        .carousel-control {
+            width: 8% !important;
+        }
+    </style>
+</div>
+<div style="margin-top: -15px;min-height: 400px" class="app-body col-md-12" th:fragment="content"
+     xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="col-md-12">
+        <div class="col-md-12" style="margin-top:20px">
+            <div align="center" class="title">
+                <h5>
+                    <b>SALDO REKENING RUPIAH TGL : <span id="tglcetak">-</span></b>
+                </h5>
+            </div>
+        </div>
+        <div class="col-md-12" style="padding-top: 15px;">
+            <div class="col-md-1" style="padding-top: 15px;"></div>
+            <div class="col-md-2" style="padding-top: 15px;">
+                <div class="view-table">
+                    <table id="table-receipt" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="background-color: #12dfa7" width="10%">Receipt</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-2" style="padding-top: 15px;">
+                <div class="view-table">
+                    <table id="table-imprestkp" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="background-color: #12dfa7" width="10%">Imprest Kantor Pusat</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-2" style="padding-top: 15px;">
+                <div class="view-table">
+                    <table id="table-imprestop" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="background-color: #12dfa7" width="10%">Imprest Operasi</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-2" style="padding-top: 15px;">
+                <div class="view-table">
+                    <table id="table-imprestinv" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="background-color: #12dfa7" width="10%">Inprest Investasi</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-2" style="padding-top: 15px;">
+                <div class="view-table">
+                    <table id="table-impor" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="background-color: #12dfa7" width="10%">Impor</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-1" style="padding-top: 15px;"></div>
+        </div>
+        <div class="col-md-12" style="padding-top: 15px; margin-top: 40px">
+            <div class="col-md-3" style="padding-top: 30px;">
+                <div class="view-table">
+                    <table id="table-saldo-idr" class="table table-bordered" style="margin-top: 30px;">
+                        <thead>
+                        <tr>
+                            <th style="background-color: #12dfa7" width="10%">BANK</th>
+                            <th style="background: #12dfa7" width="18%">RECEIPT</th>
+<!--                            <th style="background: #12dfa7" width="18%">IMPREST KP</th>-->
+<!--                            <th style="background: #12dfa7" width="18%">IMPREST OPERASI</th>-->
+<!--                            <th style="background: #12dfa7" width="18%">IMPREST INVESTASI</th>-->
+<!--                            <th style="background: #12dfa7" width="18%">IMPOR</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-3" style="padding-top: 15px;">
+                <div class="item" align="center">
+                    <div id="chart-saldo-terpusat"></div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding-top: 15px;">
+                <div align="center" class="title"><h5><b>Proyeksi Penerimaan</b></h5></div>
+                <div class="item" align="center">
+                    <div id="chart-proyeksi-penerimaan"></div>
+                </div>
+            </div>
+        </div>
+<!--        <div class="col-md-12" style="padding-top: 15px;">-->
+<!--            <div class="col-md-6" style="padding-top: 15px;">-->
+<!--                <div align="center" class="title"><h5><b>Nominal Penempatan Giro Special Rate (Optimasi Dana)</b></h5></div>-->
+<!--                <div class="item" align="center">-->
+<!--                    <div id="chart-penempatan"></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-md-3" style="padding-top: 15px;">-->
+<!--                <div class="item" align="center">-->
+<!--                    <div id="chart-jasa-giro"></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-md-3" style="padding-top: 15px;">-->
+<!--                <div class="item" align="center">-->
+<!--                    <div id="chart-akumulasi-jasa-giro"></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+</div>
+<div th:fragment="scripts-frontend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <script src="/static/js/frontend/verifikatoridr/saldo_rekening_rupiah.js"></script>
+</div>

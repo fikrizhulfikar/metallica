@@ -10,15 +10,6 @@
         table td {
             font-size: 12px;
         }
-<!--        tbody:hover td {-->
-<!--            color: transparent;-->
-<!--            text-shadow: 0 0 3px #aaa;-->
-<!--        }-->
-
-<!--        tbody:hover tr:hover td {-->
-<!--            color: #444;-->
-<!--            text-shadow: 0 1px 0 #fff;-->
-<!--        }-->
     </style>
 </div>
 <main class="main" th:fragment="content">
@@ -31,9 +22,9 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-block">
-<!--                        <div style="overflow-y:auto;">-->
-                            <iframe height="1000" width="100%" src="http://10.14.153.169:8080/pivot/#!/auth/pivot"></iframe>
-<!--                        </div>-->
+                        <!--                        <div style="overflow-y:auto;">-->
+                        <iframe height="1000" width="100%" src="http://10.14.153.169:8080/pivot/#!/auth/pivot"></iframe>
+                        <!--                        </div>-->
                     </div>
                 </div>
             </div>
@@ -63,6 +54,76 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+
+<!--                        <div class="col-md-12">-->
+<!--                            <div align="center" class="title"><h5><b>Realisasi Pembayaran - Cashcode (10 Besar)<span></span></b></h5></div>-->
+<!--                            <div align="center" class="title"><h5><b>TGL : <span id="tglcetak">-</span></b></h5></div>-->
+<!--                        </div>-->
+
+                        <div id="filter">
+                            <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;">
+                                <div class="col-md-1" style="padding-right: 0px;">
+                                    <label class="lbl-src">Tanggal Awal </label>
+                                </div>
+                                <div class="col-md-3" style="padding-right: 0px;">
+                                    <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal"/>
+                                </div>
+                                <div class="col-md-1" style="padding-right: 0px;">
+                                    <label class="lbl-src">Tanggal Akhir </label>
+                                </div>
+                                <div class="col-md-3" style="padding-right: 0px;">
+                                    <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>
+                                </div>
+                                <div class="col-md-1" style="padding-right: 0px;">
+                                    <label class="lbl-src">Bank </label>
+                                </div>
+                                <div class="col-md-3" style="padding-right: 0px;">
+                                    <select name="bank" id="cmb_bank" class="form-control">
+                                        <option value="">Pilih Data</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
+                                <div class="col-md-1" style="padding-right: 0px;">
+                                    <label class="lbl-src">Cash Code </label>
+                                </div>
+                                <div class="col-md-3" style="padding-right: 0px;">
+                                    <select name="cashcode" id="cmb_cashcode" class="form-control">
+                                        <option value="">Pilih Data</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
+                                <div class="col-md-3" style="padding-right: 0px;">
+                                    <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12" style="padding-top: 15px;">
+                            <div class="view-table">
+                                <table id="table-imprst-valas"  class="table table-bordered">
+                                    <thead>
+                                    <tr >
+                                        <th style="background: #F4D35E; text-align: center" width="4%">NO</th>
+                                        <th style="background: #F4D35E; text-align: center" width="16.666%">VENDOR</th>
+                                        <th style="background: #F4D35E; text-align: center" width="16.666%">BANK PEMBAYARAN</th>
+                                        <th style="background: #F4D35E; text-align: center" width="16.666%">CURR</th>
+                                        <th style="background: #F4D35E; text-align: center" width="16.666%">ORIGINAL CURR</th>
+                                        <th style="background: #F4D35E; text-align: center" width="16.666%">EQ IDR</th>
+                                        <th style="background: #F4D35E; text-align: center" width="16.666%">CASH CODE</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div></div></div>
+        </div>
     </div>
 
     <!--    modal detail -->
@@ -88,6 +149,6 @@
 </main>
 <div th:fragment="scripts-backend">
     <script src="/static/js/backend/controller/dash_realisasi.js"></script>
-    <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
-    <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
+    <!--<script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
+    <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>-->
 </div>

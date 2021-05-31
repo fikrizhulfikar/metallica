@@ -51,7 +51,7 @@ function getDataRencana(){
                             '                                    </tr>'
                     }else{
                         build = build + '<td><span><i class="'+value.ICON+'"></i></span>&nbsp;'+value.URAIAN+'</td>\n'+
-                        '<td style="text-align: right;">'+new Intl.NumberFormat('id-ID', {style : 'currency', currency: 'IDR'}).format(value.RP)+'</td></tr>';
+                            '<td style="text-align: right;">'+new Intl.NumberFormat('id-ID', {style : 'currency', currency: 'IDR'}).format(value.RP)+'</td></tr>';
                     }
                     $("#table_rencana_left").append(build);
                 });

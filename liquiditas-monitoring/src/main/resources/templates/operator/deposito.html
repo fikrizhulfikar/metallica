@@ -8,6 +8,12 @@
             padding-left: 0.75rem;
             padding-top: 0.25rem;
         }
+
+        .table tr th {
+            vertical-align: middle;
+            text-align: center;
+            /*padding: 2.2px 18px !important;*/
+        }
         div.dataTables_wrapper div.dataTables_paginate {
             float: right !important;
             text-align: left !important;
@@ -30,10 +36,7 @@
         <li class="breadcrumb-item active" style="cursor: default">Deposito</li>
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS')"><i class="fas fa-plus-square"></i> &nbsp;New Data</button>
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" id="btn_data_baru_header_deposito" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS')"><i class="fas fa-plus-square"></i> &nbsp;New Data</button>
             </div>
         </li>
     </ol>
@@ -42,73 +45,43 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h5 class="modal-title">Form Deposito</h5>
+                    <h5 class="modal-title">Form Header Deposito</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="pBankCounterParty"><span style="color: red">*)</span>&nbsp;Bank Counterparty:</label>
-                                <select id="pBankCounterParty" class="form-control">
-                                    <option value="">Pilih Data</option>
-                                </select>
+                    <form action="#" autocomplete="off" id="form_header_deposito">
+                        <input type="hidden" id="id_deposito_header"/>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="pBillyet"><span style="color: red">* </span>&nbsp;Account Billyet:</label>
+                                    <input type="text" id="pBillyet" class="form-control" required="required"/>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="pCurr"><span style="color: red">*)</span>&nbsp;Currency:</label>
-                                <select id="pCurr" class="form-control">
-                                    <option value="">Pilih Data</option>
-                                </select>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pBankCounterParty"><span style="color: red">* </span>&nbsp;Bank Counterparty:</label>
+                                    <select id="pBankCounterParty" class="form-control" required="required">
+                                        <option value="">Pilih Data</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="pNoBilyet"><span style="color: red">*)</span>&nbsp;Nomor/Account Bilyet:</label>
-                                <input type="text" class="form-control" id="pNoBilyet"/>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pCurrencyHeader"><span style="color: red">* </span>&nbsp;Currency:</label>
+                                    <select id="pCurrencyHeader" class="form-control" required="required">
+                                        <option value="">Pilih Data</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="pNominal"><span style="color: red">*)</span>&nbsp;Nominal:</label>
-                                <input type="number" class="form-control" id="pNominal"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pInterest"><span style="color: red">*)</span>&nbsp;Interest (%):</label>
-                                <input type="number" min="0" max="100" class="form-control" id="pInterest"/>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="pTglPenempatan"><span style="color: red">*)</span>&nbsp;Tanggal Penempatan:</label>
-                                <input type="text" class="form-control" id="pTglPenempatan"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pTglJatuhTempo"><span style="color: red">*)</span>&nbsp;Tanggal Jatuh Tempo:</label>
-                                <input type="text" class="form-control" id="pTglJatuhTempo"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="pTenor"><span style="color: red">*)</span>&nbsp;Tenor:</label>
-                                <select id="pTenor" class="form-control">
-                                    <option value="">Pilih Data</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="pKeterangan">Keterangan:</label>
-                                <select id="pKeterangan" class="form-control">
-                                    <option value="">Pilih Data</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="pStatus">Status:</label>
-                                <select id="pStatus" class="form-control">
-                                    <option value="0">TIDAK AKTIF</option>
-                                    <option value="1">AKTIF</option>
-                                </select>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label>
+                                    <br/>
+                                    <label>Gunakan titik (.) untuk koma (,)</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label>
-                                <br/>
-                                <label>Gunakan titik (.) untuk koma (,)</label>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" onclick="ins_data()">Submit</button>
@@ -116,8 +89,199 @@
             </div>
         </div>
     </div>
+
+<!--modal peempata deposito-->
+    <div id="modal_detail_deposito" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Penempatan Deposito</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="#" class="form" autocomplete="off" id="form_input">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pDetailBankCounterParty"><span style="color: red"></span>&nbsp;Bank Counterparty:</label>
+                                    <input type="text" id="pDetailBankCounterParty" class="form-control" readonly="readonly"/>
+                                    <input type="hidden" id="pDetailCounter" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailCurrency"><span style="color: red"></span>&nbsp;Currency:</label>
+                                    <input type="text" id="pDetailCurrency" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailTglPenempatan"><span style="color: red">*</span>&nbsp;Tanggal Penempatan:</label>
+                                    <input type="text" id="pDetailTglPenempatan" class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailTglJatuhTempo"><span style="color: red">*</span>&nbsp;Tanggal Jatuh Tempo:</label>
+                                    <input type="text" id="pDetailTglJatuhTempo" class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label>
+                                    <br/>
+                                    <label>Gunakan titik (.) untuk koma (,)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pDetailBillyet"><span style="color: red">*</span>&nbsp;Account Billyet:</label>
+                                    <input type="text" id="pDetailBillyet" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailNominal"><span style="color: red">*</span>&nbsp;Nominal:</label>
+                                    <input type="text" id="pDetailNominal" class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailInterest"><span style="color: red">*</span>&nbsp;Interest :</label>
+                                    <input type="text" id="pDetailInterest" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-primary" onclick="ins_detail_data(1)">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--    ed of modal peempata deposito-->
+
+<!--    Pecaira Deposito Modal-->
+    <div id="modal_pecairan_deposito" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Pencairan Deposito</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="#" autocomplete="off" class="form" id="form_Pencairan">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pDetailBankCounterPartyPencairan"><span style="color: red"></span>&nbsp;Bank Counterparty:</label>
+                                    <input type="text" id="pDetailBankCounterPartyPencairan" class="form-control" readonly="readonly"/>
+                                    <input type="hidden" id="pDetailCounterPencairan" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailCurrencyPencairan"><span style="color: red"></span>&nbsp;Currency Pencairan:</label>
+                                    <input type="text" id="pDetailCurrencyPencairan" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailBungaAccrual">&nbsp;Bunga Accrual:</label>
+                                    <input type="text" id="pDetailBungaAccrual" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label>
+                                    <br/>
+                                    <label>Gunakan titik (.) untuk koma (,)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pDetailBillyetPencairan"><span style="color: red"></span>&nbsp;Account Billyet:</label>
+                                    <input type="text" id="pDetailBillyetPencairan" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailNominalPencairan"><span style="color: red"></span>&nbsp;Nominal:</label>
+                                    <input type="text" id="pDetailNominalPencairan" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pPokokBunga">&nbsp;Pokok Bunga:</label>
+                                    <input type="text" id="pPokokBunga" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailTglPencairan"><span style="color: red">*</span>&nbsp;Tanggal Pencairan:</label>
+                                    <input type="text" id="pDetailTglPencairan" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div>
+                        <button type="button" class="btn btn-primary" onclick="ins_detail_data(2)">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--    ed of pecaira deposito modal-->
+
+    <!--    Pecaira Deposito Modal-->
+    <div id="modal_perpanjangan_deposito" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Perpanjangan Deposito</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="#" autocomplete="off" class="form" id="form_perpanjangan">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pDetailBankCounterPartyPerpanjangan"><span style="color: red"></span>&nbsp;Bank Counterparty:</label>
+                                    <input type="text" id="pDetailBankCounterPartyPerpanjangan" class="form-control" readonly="readonly"/>
+                                    <input type="hidden" id="pDetailCounterPerpanjangan" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailCurrencyPerpanjangan"><span style="color: red"></span>&nbsp;Currency Pencairan:</label>
+                                    <input type="text" id="pDetailCurrencyPerpanjangan" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailBungaAccrualPerpanjangan">&nbsp;Bunga Accrual:</label>
+                                    <input type="text" id="pDetailBungaAccrualPerpanjangan" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailInterestPerpanjangan"><span style="color: red">*</span>&nbsp;Interest :</label>
+                                    <input type="text" id="pDetailInterestPerpanjangan" class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ket : <span style="color: red">*) Tidak Boleh Kosong</span>&nbsp;</label>
+                                    <br/>
+                                    <label>Gunakan titik (.) untuk koma (,)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="pDetailBillyetPerpanjangan"><span style="color: red"></span>&nbsp;Account Billyet:</label>
+                                    <input type="text" id="pDetailBillyetPerpanjangan" class="form-control" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailNominalPerpanjangan"><span style="color: red"></span>&nbsp;Nominal:</label>
+                                    <input type="text" id="pDetailNominalPerpanjangan" class="form-control" required="required" readonly="readonly"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailTglPenempatanPerpanjangan"><span style="color: red">*</span>&nbsp;Tanggal Penempatan:</label>
+                                    <input type="text" id="pDetailTglPenempatanPerpanjangan" class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pDetailTglJtPerpanjangan"><span style="color: red">*</span>&nbsp;Tanggal Jatuh Tempo:</label>
+                                    <input type="text" id="pDetailTglJtPerpanjangan" class="form-control"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pPokokBungaPerpanjangan">&nbsp;Pokok Bunga:</label>
+                                    <input type="text" id="pPokokBungaPerpanjangan" class="form-control" readonly="readonly"/>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div>
+                        <button type="button" class="btn btn-primary" onclick="ins_detail_data(3)">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    ed of pecaira deposito modal-->
+
     <div class="container-fluid" style="margin-bottom: 15px;">
-        <div class="animated fadeIn">
+        <div class="animated fadeIn" style="display: none;" id="deposito_detail">
             <div id="filter">
                 <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;">
                     <div class="col-md-1" style="padding-right: 0px;"><label class="lbl-src">Tanggal Awal </label></div>
@@ -157,61 +321,81 @@
                     </div>
                 </div>
             </div>
-            <div class="list-data" style="margin-top:50px;">
-                <div class="panel panel-default">
-                    <div class="panel-body panel-custom">
-                        <table id="table-deposito" class="table table-bordered table-striped" style="margin-left: 0px;">
-                            <thead style="font-size: 12px">
-                            <tr>
-                                <th>N0.</th>
-                                <th>BANK COUNTERPARTY</th>
-                                <th>CURRENCY</th>
-                                <th>NO/ACCOUNT BILYET</th>
-                                <th>NOMINAL</th>
-                                <th>INTEREST</th>
-                                <th>TANGGAL PENEMPATAN</th>
-                                <th>TANGGAL JATUH TEMPO</th>
-                                <th>TENOR</th>
-                                <th>JUMLAH HARI</th>
-                                <th>BUNGA</th>
-                                <th>POKOK &amp; BUNGA</th>
-                                <th>COUNTDOWN</th>
-                                <th>KETERANGAN</th>
-                                <th>STATUS</th>
-                                <th>AKSI</th>
-                            </tr>
-                            </thead>
-                            <tbody style="font-size: 12px">
-                            </tbody>
-                        </table>
+            <div class="row" style="margin-top:50px;">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="col-md-12 row" style="margin-left: 0rem;">
+                                <div class="col-md-12 row" style="padding-left: 7.5px;margin-right: 0;">
+                                    <div class="col-md-4" style="padding-right: 0;">
+                                        <h5 class="card-title" style="margin-bottom: 0 !important;">DETAIL DEPOSITO</h5>
+                                        <small id="judul_form" style="font-size: 0.9em; !important;"></small>
+                                    </div>
+                                    <div class="col-md-1">
+
+                                    </div>
+                                    <div class="col-md-7" style="padding-right: 0;">
+                                        <div class="float-right" style="padding-top: 0.65rem;">
+                                            <button style="width: 35px !important;" id="btn_tambah_detail" class="btn btn-sm btn-success" title="Tambah Detail"><i class="fas fa-plus-square"></i></button>
+                                            <button style="width: 35px !important;" id="btn_ext_detail" class="btn btn-sm btn-primary" title="Perpanjangan"><i class="fas fa-calendar-day"></i></button>
+                                            <button style="width: 35px !important;" id="btn_pencairan_detail" class="btn btn-sm btn-default" title="Pencairan"><i class="fas fa-hand-holding-usd"></i></button>
+                                            <button style="width: 35px !important;" id="btn_kembali" class="btn btn-sm btn-warning" title="Kembali Ke Header"><i class="fas fa-arrow-circle-left"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-block">
+                            <table id="table-deposito" class="table table-bordered table-striped" style="margin-left: 0px;">
+                                <thead style="font-size: 12px">
+                                <tr>
+                                    <th>N0.</th>
+                                    <th>BANK COUNTERPARTY</th>
+                                    <th>NO/ACCOUNT BILYET</th>
+                                    <th>NOMINAL</th>
+                                    <th>INTEREST</th>
+                                    <th>TANGGAL PENEMPATAN</th>
+                                    <th>TANGGAL JATUH TEMPO</th>
+                                    <th>TANGGAL PENCAIRAN</th>
+                                    <th>TENOR (HARI)</th>
+                                    <th>BUNGA ACCRUAL</th>
+                                    <th>POKOK &amp; BUNGA</th>
+                                    <th>KETERANGAN</th>
+                                    <th>AKSI</th>
+                                    <th id="forcbparent"></th>
+                                </tr>
+                                </thead>
+                                <tbody style="font-size: 12px">
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modal-upload-xls" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="title_modal_upload_xls">UPLOAD FILE</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="input_file_xls">
-                    <div class="form-group">
-                        <label class="form-control-label">UPLOAD FILE XLS |
-                            <a th:href="@{/api_operator/deposito/template}" id="btn-download-template-data-derivatif">
-                                Download Template
-                            </a></label>
-                        <input type="file" class="form-control" id="file-xls"
-                               accept="application/vnd.ms-excel"/>
-
+        </div >
+        <!--        Header-->
+        <div class="row" id="header_deposito_row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title" style="margin-bottom: 0 !important;">HEADER DEPOSITO</h5>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-info" data-dismiss="modal" onclick="upload_server_xls()">Selesai</button>
+
+                    <div class="card-block" style="padding-top: 1em !important;">
+                        <table id="table_deposito_header" class="table table-striped" style="margin-left: 0px;" width="100%">
+                            <thead>
+                            <tr>
+                                <th>NO</th>
+                                <th>NOMOR ACCOUNT / BILLYET</th>
+                                <th>BANK</th>
+                                <th>CURRENCY</th>
+                                <th>AKSI</th>
+                            </tr>
+                            </thead>
+                            <tbody style="font-size: 12px" align="center">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -24,8 +24,8 @@ $(document).ready(function(){
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
     setSelectFilterBank("cmb_bank", "FILTER", "", "", "REKAP");
-    setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
-    setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+    // setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
+    // setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
 
     $('#check_all').change(function() {
         if($(this).is(':checked')){
@@ -670,17 +670,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                     "aTargets": [72],
                     "mRender": function (data, type, full) {
                         var ret_value;
-                        // // console.log("Ini Full :",full);
-                        /*alert('BOOOMB2'+full.STATUS_TRACKING);*/
-                        /*    if(newRoleUser[0].includes("DIVKEU")){
-                                ret_value =
-                                    '<div class="btn-group">' +
-                                    '<button style="width: 15px !important;" class="btn-duplicate-data btn-sm btn-primary" title="Duplicate Data" onclick="duplicate_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-clone"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="far fa-edit"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                    '<button style="width: 15px !important;" class="btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
-                                    '</div>'
-                            } */
                         if (newRoleUser[0] == "ROLE_MS_LIKUIDITAS" || newRoleUser[0] == "ROLE_DM_LIKUIDITAS") {
                             return "-"
                         }
@@ -1054,14 +1043,20 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                         function (res) {
                             hideLoadingCss();
+                            let totalTagihan = 0;
+                            let arr = res.data;
+                            arr.forEach((val, key) => {
+                                if (val.NOMINAL_DI_BAYAR){
+                                    totalTagihan += parseFloat(val.NOMINAL_DI_BAYAR);
+                                }
+                            });
+                            $("#total_tagihan").html(accounting.formatNumber(totalTagihan.toString(), 2, '.', ','));
                             return res.data;
                         }
                 }
             ,
             "drawCallback":
                 function (settings) {
-                    // $(".dataTables_scrollHeadInner").css({"width":"100%"});
-                    // $(".table ").css({"width":"100%"});
                     table_rekapitulasi.columns.adjust();
                     var currentPageNumber = this.api().page.info().page;
                     for (x=0;x<cbParentArray.length;x++){
@@ -1106,381 +1101,13 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         }
                     }
                 },
-            // "initComplete": function(settings, json) {
-            //     var api = this.api();
-            //     $.ajax({
-            //         url: baseUrl + "api_operator/rekap_invoice_belum/get_column_rekap_invoice",
-            //         dataType: 'JSON',
-            //         type: "GET",
-            //         success: function (res) {
-            //             var response = res.data[0];
-            //             if (response.JENIS_TAGIHAN == 1) {
-            //                 api.column(0).visible(true);
-            //             } else {
-            //                 api.column(0).visible(false);
-            //             }
-            //             if (response.ACCOUNT_HOLDER == 1) {
-            //                 api.column(1).visible(true);
-            //             } else {
-            //                 api.column(1).visible(false);
-            //             }
-            //             if (response.ACCT_TYPEE == 1) {
-            //                 api.column(2).visible(true);
-            //             } else {
-            //                 api.column(2).visible(false);
-            //             }
-            //             if (response.AMOUNT == 1) {
-            //                 api.column(3).visible(true);
-            //             } else {
-            //                 api.column(3).visible(false);
-            //             }
-            //             if (response.AMOUNT_BAYAR == 1) {
-            //                 api.column(4).visible(true);
-            //             } else {
-            //                 api.column(4).visible(false);
-            //             }
-            //             if (response.AMT_LC == 1) {
-            //                 api.column(5).visible(true);
-            //             } else {
-            //                 api.column(5).visible(false);
-            //             }
-            //             if (response.AMT_TC == 1) {
-            //                 api.column(6).visible(true);
-            //             } else {
-            //                 api.column(6).visible(false);
-            //             }
-            //             if (response.AMT_WITH_BASE_LC == 1) {
-            //                 api.column(7).visible(true);
-            //             } else {
-            //                 api.column(7).visible(false);
-            //             }
-            //             if (response.AMT_WITH_BASE_LC == 1) {
-            //                 api.column(8).visible(true);
-            //             } else {
-            //                 api.column(8).visible(false);
-            //             }
-            //             if (response.AMT_WITH_LC == 1) {
-            //                 api.column(9).visible(true);
-            //             } else {
-            //                 api.column(9).visible(false);
-            //             }
-            //             if (response.AMT_WITH_TC == 1) {
-            //                 api.column(10).visible(true);
-            //             } else {
-            //                 api.column(10).visible(false);
-            //             }
-            //             if (response.ASSIGNMENT == 1) {
-            //                 api.column(11).visible(true);
-            //             } else {
-            //                 api.column(11).visible(false);
-            //             }
-            //             if (response.BANK_ACCOUNT == 1) {
-            //                 api.column(12).visible(true);
-            //             } else {
-            //                 api.column(12).visible(false);
-            //             }
-            //             if (response.BANK_BENEF == 1) {
-            //                 api.column(13).visible(true);
-            //             } else {
-            //                 api.column(13).visible(false);
-            //             }
-            //             if (response.BANK_KEY == 1) {
-            //                 api.column(14).visible(true);
-            //             } else {
-            //                 api.column(14).visible(false);
-            //             }
-            //             if (response.BASE_DATE == 1) {
-            //                 api.column(15).visible(true);
-            //             } else {
-            //                 api.column(15).visible(false);
-            //             }
-            //             if (response.BUS_AREA == 1) {
-            //                 api.column(16).visible(true);
-            //             } else {
-            //                 api.column(16).visible(false);
-            //             }
-            //             if (response.CASH_CODE == 1) {
-            //                 api.column(17).visible(true);
-            //             } else {
-            //                 api.column(17).visible(false);
-            //             }
-            //             if (response.COMPANY_CODE == 1) {
-            //                 api.column(18).visible(true);
-            //             } else {
-            //                 api.column(18).visible(false);
-            //             }
-            //             if (response.COST_CTR == 1) {
-            //                 api.column(19).visible(true);
-            //             } else {
-            //                 api.column(19).visible(false);
-            //             }
-            //             if (response.CURRENCY == 1) {
-            //                 api.column(20).visible(true);
-            //             } else {
-            //                 api.column(20).visible(false);
-            //             }
-            //             if (response.CURR_BAYAR == 1) {
-            //                 api.column(21).visible(true);
-            //             } else {
-            //                 api.column(21).visible(false);
-            //             }
-            //             if (response.CUSTOMER == 1) {
-            //                 api.column(22).visible(true);
-            //             } else {
-            //                 api.column(22).visible(false);
-            //             }
-            //             if (response.DOC_DATE == 1) {
-            //                 api.column(23).visible(true);
-            //             } else {
-            //                 api.column(23).visible(false);
-            //             }
-            //             if (response.DOC_NO == 1) {
-            //                 api.column(24).visible(true);
-            //             } else {
-            //                 api.column(24).visible(false);
-            //             }
-            //             if (response.DOC_HDR_TXT == 1) {
-            //                 api.column(25).visible(true);
-            //             } else {
-            //                 api.column(25).visible(false);
-            //             }
-            //             if (response.DOC_TYPE == 1) {
-            //                 api.column(26).visible(true);
-            //             } else {
-            //                 api.column(26).visible(false);
-            //             }
-            //             if (response.DR_CR_IND == 1) {
-            //                 api.column(27).visible(true);
-            //             } else {
-            //                 api.column(27).visible(false);
-            //             }
-            //             if (response.DUE_ON == 1) {
-            //                 api.column(28).visible(true);
-            //             } else {
-            //                 api.column(28).visible(false);
-            //             }
-            //             if (response.ENTRY_DATE == 1) {
-            //                 api.column(29).visible(true);
-            //             } else {
-            //                 api.column(29).visible(false);
-            //             }
-            //             if (response.EXCH_RATE == 1) {
-            //                 api.column(30).visible(true);
-            //             } else {
-            //                 api.column(30).visible(false);
-            //             }
-            //             if (response.FISCAL_YEAR == 1) {
-            //                 api.column(31).visible(true);
-            //             } else {
-            //                 api.column(31).visible(false);
-            //             }
-            //             if (response.GL_ACCT == 1) {
-            //                 api.column(32).visible(true);
-            //             } else {
-            //                 api.column(32).visible(false);
-            //             }
-            //             if (response.GROUP_ID == 1) {
-            //                 api.column(33).visible(true);
-            //             } else {
-            //                 api.column(33).visible(false);
-            //             }
-            //             if (response.HOUSE_BANK == 1) {
-            //                 api.column(34).visible(true);
-            //             } else {
-            //                 api.column(34).visible(false);
-            //             }
-            //             if (response.INT_ORDER == 1) {
-            //                 api.column(35).visible(true);
-            //             } else {
-            //                 api.column(35).visible(false);
-            //             }
-            //             if (response.ITEM_TEXT == 1) {
-            //                 api.column(36).visible(true);
-            //             } else {
-            //                 api.column(36).visible(false);
-            //             }
-            //             if (response.KETERANGAN == 1) {
-            //                 api.column(37).visible(true);
-            //             } else {
-            //                 api.column(37).visible(false);
-            //             }
-            //             if (response.LINE_ITEM == 1) {
-            //                 api.column(38).visible(true);
-            //             } else {
-            //                 api.column(38).visible(false);
-            //             }
-            //             if (response.METODE_PEMBAYARAN == 1) {
-            //                 api.column(39).visible(true);
-            //             } else {
-            //                 api.column(39).visible(false);
-            //             }
-            //             if (response.NAMA_BENEF == 1) {
-            //                 api.column(40).visible(true);
-            //             } else {
-            //                 api.column(40).visible(false);
-            //             }
-            //             if (response.NO_GIRO == 1) {
-            //                 api.column(41).visible(true);
-            //             } else {
-            //                 api.column(41).visible(false);
-            //             }
-            //             if (response.NO_REK_BENEF == 1) {
-            //                 api.column(42).visible(true);
-            //             } else {
-            //                 api.column(42).visible(false);
-            //             }
-            //             if (response.NO_REK_HOUSE_BANK == 1) {
-            //                 api.column(43).visible(true);
-            //             } else {
-            //                 api.column(43).visible(false);
-            //             }
-            //             if (response.OI_IND == 1) {
-            //                 api.column(44).visible(true);
-            //             } else {
-            //                 api.column(44).visible(false);
-            //             }
-            //             if (response.OSS_ID == 1) {
-            //                 api.column(45).visible(true);
-            //             } else {
-            //                 api.column(45).visible(false);
-            //             }
-            //             if (response.PARTIAL_IND == 1) {
-            //                 api.column(46).visible(true);
-            //             } else {
-            //                 api.column(46).visible(false);
-            //             }
-            //             if (response.PMT_BLOCK == 1) {
-            //                 api.column(47).visible(true);
-            //             } else {
-            //                 api.column(47).visible(false);
-            //             }
-            //             if (response.PMT_IND == 1) {
-            //                 api.column(48).visible(true);
-            //             } else {
-            //                 api.column(48).visible(false);
-            //             }
-            //             if (response.POST_DATE == 1) {
-            //                 api.column(49).visible(true);
-            //             } else {
-            //                 api.column(49).visible(false);
-            //             }
-            //             if (response.PO_ITEM == 1) {
-            //                 api.column(50).visible(true);
-            //             } else {
-            //                 api.column(50).visible(false);
-            //             }
-            //             if (response.PO_NUM == 1) {
-            //                 api.column(51).visible(true);
-            //             } else {
-            //                 api.column(51).visible(false);
-            //             }
-            //             if (response.PRTNR_BANK_TYPE == 1) {
-            //                 api.column(52).visible(true);
-            //             } else {
-            //                 api.column(52).visible(false);
-            //             }
-            //             if (response.REFERENCE == 1) {
-            //                 api.column(53).visible(true);
-            //             } else {
-            //                 api.column(53).visible(false);
-            //             }
-            //             if (response.REF_KEY == 1) {
-            //                 api.column(54).visible(true);
-            //             } else {
-            //                 api.column(54).visible(false);
-            //             }
-            //             if (response.REF_KEY1 == 1) {
-            //                 api.column(55).visible(true);
-            //             } else {
-            //                 api.column(55).visible(false);
-            //             }
-            //             if (response.REF_KEY2 == 1) {
-            //                 api.column(56).visible(true);
-            //             } else {
-            //                 api.column(56).visible(false);
-            //             }
-            //             if (response.REF_KEY3 == 1) {
-            //                 api.column(57).visible(true);
-            //             } else {
-            //                 api.column(57).visible(false);
-            //             }
-            //             if (response.REVERSE_WITHH == 1) {
-            //                 api.column(58).visible(true);
-            //             } else {
-            //                 api.column(58).visible(false);
-            //             }
-            //             if (response.REVERSE_YEAR == 1) {
-            //                 api.column(59).visible(true);
-            //             } else {
-            //                 api.column(59).visible(false);
-            //             }
-            //             if (response.SPEC_GL == 1) {
-            //                 api.column(60).visible(true);
-            //             } else {
-            //                 api.column(60).visible(false);
-            //             }
-            //             if (response.SPREAD_VAL == 1) {
-            //                 api.column(61).visible(true);
-            //             } else {
-            //                 api.column(61).visible(false);
-            //             }
-            //             if (response.STATUS_TRACKING == 1) {
-            //                 api.column(62).visible(true);
-            //             } else {
-            //                 api.column(62).visible(false);
-            //             }
-            //             if (response.SUMBER_DANA == 1) {
-            //                 api.column(63).visible(true);
-            //             } else {
-            //                 api.column(63).visible(false);
-            //             }
-            //             if (response.TERM_PMT == 1) {
-            //                 api.column(64).visible(true);
-            //             } else {
-            //                 api.column(64).visible(false);
-            //             }
-            //             if (response.TGL_RENCANA_BAYAR == 1) {
-            //                 api.column(65).visible(true);
-            //             } else {
-            //                 api.column(65).visible(false);
-            //             }
-            //             if (response.TGL_TERIMA_TAGIHAN == 1) {
-            //                 api.column(66).visible(true);
-            //             } else {
-            //                 api.column(66).visible(false);
-            //             }
-            //             if (response.TPBA == 1) {
-            //                 api.column(67).visible(true);
-            //             } else {
-            //                 api.column(67).visible(false);
-            //             }
-            //             if (response.TRANS_TYPE == 1) {
-            //                 api.column(68).visible(true);
-            //             } else {
-            //                 api.column(68).visible(false);
-            //             }
-            //             if (response.VENDOR == 1) {
-            //                 api.column(69).visible(true);
-            //             } else {
-            //                 api.column(69).visible(false);
-            //             }
-            //             if (response.WBS_NUM == 1) {
-            //                 api.column(70).visible(true);
-            //             } else {
-            //                 api.column(70).visible(false);
-            //             }
-            //
-            //             // if (newRoleUser[0] === "ROLE_FCL_SETTLEMENT" || newRoleUser[0] === "ROLE_LOCAL_CURRENCY_LIQUIDITY"){
-            //             //     api.column(72).visible(false);
-            //             //     api.column(73).visible(false);
-            //             // }
-            //
-            //         },
-            //         error: function () {
-            //             hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-            //         }
-            //     });
-            // }
+            "initComplete": function(settings, json) {
+                var api = this.api();
+                if (newRoleUser[0] === "ROLE_ADMIN" || newRoleUser[0] === "ROLE_LOCAL_CURRENCY_LIQUIDITY") {
+                    api.column(72).visible(false);
+                    api.column(73).visible(false);
+                }
+            }
         }
     );
     table_rekapitulasi.on('search.dt', function () {
@@ -1558,7 +1185,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
     });
 
     table_rekapitulasi.columns.adjust();
-    getTotalTagihan();
     initCbparent();
 }
 

@@ -125,7 +125,7 @@ function setSelectBank(idHtml, jenis, jenisBank, idForSelected, form) {
                 $("#" + idHtml + "").append('<option value="' + val.ID + '">' + val.VALUE + '</option>');
             });
             if (idForSelected != "") {
-                $("#" + idHtml + "").val(idForSelected);
+                $("#" + idHtml + "").val(idForSelected).trigger("change");
             }
         },
         error: function () {
@@ -166,7 +166,7 @@ function setSelectBank2(idHtml, jenis, jenisBank, idForSelected, form) {
                 $("#" + idHtml + "").append('<option value="' + val.ID + '">' + val.VALUE + '</option>');
             });
             if (idForSelected != "") {
-                $("#" + idHtml + "").select2("val",idForSelected);
+                $("#" + idHtml + "").val(idForSelected).trigger("change");;
             }
         },
         error: function () {
@@ -191,7 +191,7 @@ function setSelectCurr(idHtml, jenis, idForSelected, form) {
                 $("#" + idHtml + "").append('<option value="' + val.ID + '">' + val.VALUE + '</option>');
             });
             if (idForSelected != "") {
-                $("#" + idHtml + "").val(idForSelected);
+                $("#" + idHtml + "").val(idForSelected).trigger("change");
             }
         },
         error: function () {
@@ -425,6 +425,27 @@ function setSelectVendor(idHtml, jenisPembyaran, idForSelected) {
         data: {
             pJenis: jenisPembyaran
         },
+        success: function (res) {
+            $("#" + idHtml + "").html('');
+            $.each(res, function (key, val) {
+                $("#" + idHtml + "").append('<option value="' + val.ID + '">' + val.VALUE + '</option>');
+            });
+            if (idForSelected != "") {
+                $("#" + idHtml + "").val(idForSelected);
+            }
+        },
+        error: function () {
+            $("#" + idHtml + "").html('<option value="">Pilih Data</option>');
+        }
+    });
+}
+
+function setSelectVendorMetallica(idHtml, jenisPembyaran, idForSelected) {
+    $.ajax({
+        url: baseUrl + "api_master/vendor/get_data_vendor_metallica",
+        dataType: 'JSON',
+        type: "GET",
+        async : false,
         success: function (res) {
             $("#" + idHtml + "").html('');
             $.each(res, function (key, val) {
@@ -1058,6 +1079,10 @@ function checkColumn(value) {
     $("#hc81").prop("checked", value);
 }
 
+function checkAllColumn(value){
+    $("#hide_column_modal").find(".checkbox-toggle").prop("checked",value);
+}
+
 function setSelectJenisRekening(idHtml, jenis, idForSelected, form) {
     $.ajax({
         url: baseUrl + "api_operator/rekap_invoice_belum/get_jenis_rekening",
@@ -1154,6 +1179,44 @@ function setSelectFilterBank(idHtml, jenis, idForSelected) {
         },
         error: function () {
             $("#" + idHtml + "").html('<option value="ALL">SEMUA BANK</option>');
+        }
+    });
+}
+
+function selectFilterBank(idHtml, jenis, idForSelected) {
+    $.ajax({
+        url: baseUrl + "api_master/filter/list_filter_bank",
+        dataType: 'JSON',
+        type: "GET",
+        sync :true,
+        success: function (res) {
+            $("#" + idHtml + "").html('');
+            $("#" + idHtml + "").append('<option value="ALL">SEMUA BANK</option>');
+            $.each(res, function (key, val) {
+                $("#" + idHtml + "").append('<option value="' + val.BANK_BENEF + '">' + val.BANK_BENEF + '</option>');
+            });
+        },
+        error: function () {
+            $("#" + idHtml + "").html('<option value="ALL">SEMUA BANK</option>');
+        }
+    });
+}
+
+function selectFilterCashCode(idHtml, jenis, idForSelected) {
+    $.ajax({
+        url: baseUrl + "api_master/filter/list_filter_cashcode",
+        dataType: 'JSON',
+        type: "GET",
+        sync :true,
+        success: function (res) {
+            $("#" + idHtml + "").html('');
+            $("#" + idHtml + "").append('<option value="ALL">PILIH CASH CODE</option>');
+            $.each(res, function (key, val) {
+                $("#" + idHtml + "").append('<option value="' + val.CASH_CODE + '">'+ val.CASH_CODE+' - '+ val.CASH_DESCRIPTION + '</option>');
+            });
+        },
+        error: function () {
+            $("#" + idHtml + "").html('<option value="ALL">SEMUA CASH CODE</option>');
         }
     });
 }

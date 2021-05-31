@@ -14,7 +14,7 @@ function clearForm() {
 }
 
 function getbyId(id) {
-    showLoadingCss()
+    showLoadingCss();
     $.ajax({
         url: baseUrl + "api_master/user/get_user_byid",
         dataType: 'JSON',
@@ -163,7 +163,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pTenor, pketeranga
                     if (mtch_role.includes(role)){
                         var ret_value =
                             '<button style="width: 15px !important;" class="btn btn-sm btn-info" title="Edit Data" onclick="getbyId(\'' + full.USERNAME + '\')"><i class="fas fa-edit"></i></button>'+
-                            '<button style="width: 15px !important; margin-left: 5px;" class="btn btn-sm btn-danger" title="Update" onclick="update_status(\'' + full.ID_GROUP2 + '\',\''+full.STATUS+'\')">'+icon+'</i></button>';
+                            '<button style="width: 15px !important; margin-left: 5px;" class="btn btn-sm btn-danger" title="Available/Non Available (Group)" onclick="update_status(\'' + full.ID_GROUP2 + '\',\''+full.STATUS+'\')">'+icon+'</i></button>';
                     }else{
                         var ret_value =
                             '<button style="width: 15px !important;" class="btn btn-sm btn-info" title="Edit Data" onclick="getbyId(\'' + full.USERNAME + '\')"><i class="fas fa-edit"></i></button>';

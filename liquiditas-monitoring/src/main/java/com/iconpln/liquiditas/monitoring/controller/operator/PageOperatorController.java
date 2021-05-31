@@ -24,6 +24,10 @@ public class PageOperatorController {
     public String pengelolaan_likuiditas() { return "operator/pengelolaan_likuiditas";
     }
 
+    @RequestMapping("/dashboard_penerimaan")
+    public String dashboard_penerimaan() { return "operator/dash_penerimaan";
+    }
+
     @RequestMapping("/dashboard")
     public String dashboard() { return "operator/dashboard2";
     }
@@ -32,8 +36,49 @@ public class PageOperatorController {
     public String dash_rencana() { return "operator/dash_rencana";
     }
 
+    @RequestMapping("/dashboard_valas")
+    public String dash_valas() { return "operator/dashboard_valas";
+    }
+
+    @RequestMapping("/dashboard_rupiah")
+    public String dash_rupiah() { return "operator/dashboard_rupiah";
+    }
+
     @RequestMapping("/dash_realisasi")
     public String dash_realisasi() { return "operator/dash_realisasi";
+    }
+
+    @RequestMapping("/penjualan_tenaga_listrik")
+    public String penjualan_tenaga_listrik() { return "operator/penjualan_tenaga_listrik";
+    }
+
+    @RequestMapping("/rupiah")
+    public String rupiah() { return "operator/data_pindah_buku_rupiah";
+    }
+
+    @RequestMapping("/valuta_asing")
+    public String valuta_asing() { return "operator/data_pindah_valuta_asing";
+    }
+
+    @RequestMapping("/placement_lcl")
+    public String placement_lcl() { return "operator/placement_lcl_header";
+    }
+
+    @RequestMapping("/giro")
+    public String giro() {
+        return "operator/giro";
+    }
+
+    @RequestMapping("/placement_fcl")
+    public String placement_fcl() { return "operator/placement_lcl";
+    }
+
+    @RequestMapping("/penerimaan_pendanaan")
+    public String penerimaan_pendanaan() { return "operator/penerimaan_pendanaan";
+    }
+
+    @RequestMapping("/penerimaan_operasi")
+    public String penerimaan_operasi() { return "operator/penerimaan_operasi";
     }
 
     @RequestMapping("/rekapitulasi_data")
@@ -76,6 +121,9 @@ public class PageOperatorController {
     public String deviratifCso() {
         return "operator/derivatif_cso";
     }
+
+    @RequestMapping("/derivatif_dndf")
+    public String derivatifDndf(){ return "operator/derivatif_dndf";}
 
     @RequestMapping("/derivatif_ccs")
     public String deviratifCss() {
@@ -181,11 +229,19 @@ public class PageOperatorController {
         return "operator/rekap_invoice_reject";
     }
 
+    @RequestMapping("/rekap_realisasi_pembayaran")
+    public String rekap_realisasi_pembayaran() {
+        return "operator/rekap_realisasi_pembayaran";
+    }
+
     @RequestMapping("/rekap_invoice_admin")
     public String rekap_invoice_admin() {return "operator/rekap_invoice_admin"; }
 
     @RequestMapping("/rekap_invoice_oss")
     public String rekap_invoice_oss(){return "operator/rekap_invoice_oss";}
+
+    @RequestMapping("/giro_special_rate")
+    public String giro_special_rate(){return "operator/giro_special_rate";}
 
     @RequestMapping("/rekap_invoice_reverse")
     public String rekap_invoice_reverse(){return "operator/rekap_invoice_reverse";}
@@ -233,6 +289,11 @@ public class PageOperatorController {
         return "operator/pembelian_valas_trx";
     }
 
+    @RequestMapping("/proyeksi_pengadaan_valas_trx")
+    public String proyeksi_pengadaan_valas_trx() {
+        return "operator/proyeksi_pengadaan_valas_trx";
+    }
+
     @RequestMapping("/pindah_buku_trx")
     public String pindah_buku_trx() {
         return "operator/pindah_buku_trx";
@@ -273,6 +334,21 @@ public class PageOperatorController {
         return "operator/operasi_khusus_trx_lunas";
     }
 
+    @RequestMapping("/corpay_payment_gagal")
+    public String corpay_payment_gagal(){ return "operator/invoice_gagal_corpay"; }
+
     @RequestMapping("/financial_talk")
     public String financial_talk(){return "dashboardcorpay/financial_talk";}
+
+    @RequestMapping("/dashboard_deposito")
+    public String dashboard_deposito(){return "operator/dashboard_deposito";}
+
+    @RequestMapping("/kebutuhan_imprest_unit")
+    public String dashboard_dropping_imprest_unit(){return "dashboardcorpay/imprest_unit";}
+
+    @RequestMapping("/supply_chain_financing")
+    public String supply_chain_financing(){return "operator/supply_chain_financing";}
+
+    @RequestMapping("/supply_chain_financing_collateral")
+    public String supply_chain_financing_collateral(){return "operator/supply_chain_financing_collateral";}
 }

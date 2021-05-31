@@ -1,0 +1,124 @@
+<div th:fragment="stylesheets-backend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        table {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+        }
+        table th {
+            font-size: 12px;
+            vertical-align: middle;
+        }
+        table td {
+            font-size: 12px;
+            text-align: center;
+        }
+            .btn {
+            background-color: #ddd;
+            border: none;
+            color: black;
+            padding: 10px 26px;
+            text-align: center;
+            font-size: 15px;
+            cursor: pointer;
+            margin: 2px 2px;
+            transition: 0.3s;
+            border-radius: 10px;
+          }
+
+          .btn:hover {
+            background-color: #3e8e41;
+            color: white;
+          }
+
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Dashboard Rencana</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div style="overflow-y:auto;">
+                            <div class="col-md-12 row" style="padding-left: 0px; padding-right: 0px">
+                                <div class="col-md-1" style="padding-right: 0px;">
+                                    <label class="lbl-src">Tanggal Awal</label>
+                                </div>
+                                <div class="col-md-2" style="padding-right: 0px;">
+                                    <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal"/>
+                                </div>
+                                <div class="col-md-1" style="padding-right: 0px;">
+                                    <label class="lbl-src">Tanggal Akhir</label>
+                                </div>
+                                <div class="col-md-2" style="padding-right: 0px;">
+                                    <input placeholder="Posting date" type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>
+                                </div>
+                                <div class="col-md-4" style="padding-right: 0px;">&nbsp;</div>
+                                <div class="col-md-2" style="padding-right: 0px;">
+                                    <button onclick="load()" class="btn btn-primary" style="width:100%; border-radius: 3px">Load</button>
+                                </div>
+                                <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
+                                <div class="col-md-2" style="padding-right: 0px;">
+                                    <button onclick="pdf()" class="btn btn-primary" style="width:100%; border-radius: 3px">PDF</button>
+                                </div>
+                                <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
+                                <div class="col-md-2" style="padding-right: 0px;">
+                                    <button onclick="excel()" class="btn btn-primary" style="width:100%; border-radius: 3px">Excel</button>
+                                </div>
+                            </div>
+                            <table id="penerimaan-penjualan-jenis-layanan" class="table table-rencana-realisasi table-condensed table-bordered" width="100%" style="margin-top: 5px; margin-bottom: 15px">
+                                <thead>
+                                <tr class="header">
+                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="11%" align="center">NO</th>
+                                    <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">DOCUMENT NO</th>
+                                    <th scope="col" style="background: #F4D35E; vertical-align: middle; text-align: center" width="8%" align="center">METODE PEMBAYARAN</th>
+                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="10%" align="center">VENDOR/CUSTOMER NAME</th>
+                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">BANK PEMBAYARAN</th>
+                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">NO REKENING BANK PEMBAYARAN</th>
+                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">BANK TUJUAN</th>
+                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">NO REKENING BANK TUJUAN</th>
+                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">CURRENCY</th>
+                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">AMOUNT IN TRANSACTION CURRENCY</th>
+                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">SIGN</th>
+                                    <th scope="col" style="background-color: #F4D35E; vertical-align: middle; text-align: center" width="13.3%" align="center">COUNTER SIGN</th>
+                                </tr>
+                                </thead>
+                                <tbody id="isi1">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--    modal detail -->
+<!--    <div class="modal fade" id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">-->
+<!--        <div class="modal-dialog modal-dialog-centered" role="document">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>-->
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                        <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--                <div class="modal-body">-->
+<!--                    ...-->
+<!--                </div>-->
+<!--                <div class="modal-footer">-->
+<!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--                    <button type="button" class="btn btn-primary">Save changes</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/rekapRealisasiPembayaran.js"></script>
+    <script src="/static/js/backend/fusioncharts/fusioncharts.js"></script>
+    <script src="/static/js/backend/fusioncharts/themes/fusioncharts.theme.fusion.js"></script>
+</div>
