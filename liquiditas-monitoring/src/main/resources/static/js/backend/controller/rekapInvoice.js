@@ -24,8 +24,8 @@ $(document).ready(function(){
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
     setSelectFilterBank("cmb_bank", "FILTER", "", "", "REKAP");
-    setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
-    setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+    // setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
+    // setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
 
     $('#check_all').change(function() {
         if($(this).is(':checked')){
@@ -1043,14 +1043,20 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                         function (res) {
                             hideLoadingCss();
+                            let totalTagihan = 0;
+                            let arr = res.data;
+                            arr.forEach((val, key) => {
+                                if (val.NOMINAL_DI_BAYAR){
+                                    totalTagihan += parseFloat(val.NOMINAL_DI_BAYAR);
+                                }
+                            });
+                            $("#total_tagihan").html(accounting.formatNumber(totalTagihan.toString(), 2, '.', ','));
                             return res.data;
                         }
                 }
             ,
             "drawCallback":
                 function (settings) {
-                    // $(".dataTables_scrollHeadInner").css({"width":"100%"});
-                    // $(".table ").css({"width":"100%"});
                     table_rekapitulasi.columns.adjust();
                     var currentPageNumber = this.api().page.info().page;
                     for (x=0;x<cbParentArray.length;x++){
@@ -1179,7 +1185,6 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
     });
 
     table_rekapitulasi.columns.adjust();
-    getTotalTagihan();
     initCbparent();
 }
 
