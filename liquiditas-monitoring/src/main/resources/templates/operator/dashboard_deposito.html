@@ -1,0 +1,125 @@
+<div th:fragment="stylesheets-backend">
+    <style>
+        button{ cursor: pointer
+        }
+        .table td {
+            padding-right: 0.75rem;
+            padding-bottom: 0.25rem;
+            padding-left: 0.75rem;
+            padding-top: 0.25rem;
+        }
+        div.dataTables_wrapper div.dataTables_paginate {
+            float: right !important;
+            text-align: left !important;
+            padding-left: 0px;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter {
+            text-align: right !important;
+        }
+        .lbl-src{
+            font-size: 12px;
+        }
+        .panel-custom {
+            overflow-x: hidden !important;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Deposito</li>
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>-->
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>-->
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>-->
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS')"><i class="fas fa-plus-square"></i> &nbsp;New Data</button>-->
+            </div>
+        </li>
+    </ol>
+    <div id="edit-deposito-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Deposito</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+                <div class="card">
+                    <div class="card-header" style="background-color: #ddefe2; text-align: center;">
+                        <p style="font-size: 1.5rem; margin-bottom: 0em;" class="card-title">DASHBOARD DEPOSITO</p>
+                        <small>Divisi Treasury, PT. PLN (Persero)</small>
+                    </div>
+                    <div class="card-block">
+
+                        <div class="form-group">
+                            <label for="dashDepositoSearch">Currency</label>
+                            <select type="text" class="form-control" id="dashDepositoSearch">
+                                <option value="IDR" selected="selected">IDR</option>
+                                <option value="JPY">JPY</option>
+                                <option value="EUR">EUR</option>
+                                <option value="USD">USD</option>
+                                <option value="EQ_IDR">EQ IDR</option>
+                            </select>
+                        </div>
+                        <div style="overflow-x: auto;">
+                            <table id="table-dash-deposito" class="table table-bordered table-striped" width="1500px" style="margin-left: 0px; ">
+                                <thead style="font-size: 12px">
+                                <tr>
+                                    <th style="text-align: center">BANK</th>
+                                    <th style="text-align: center">BANK</th>
+                                    <th style="text-align: center">NOMOR ACCOUNT / BILLYET</th>
+                                    <th style="text-align: center">NOMINAL</th>
+                                    <th style="text-align: center">INTEREST</th>
+                                    <th style="text-align: center">TENOR</th>
+                                    <th style="text-align: center">TGL PENEMPATAN</th>
+                                    <th style="text-align: center">TGL JATUH TEMPO</th>
+                                    <th style="text-align: center">TGL PENCAIRAN</th>
+                                    <th style="text-align: center">BUNGA ACCRUAL</th>
+                                    <th style="text-align: center">POKOK BUNGA</th>
+                                    <th style="text-align: center">KETERANGAN</th>
+                                </tr>
+                                </thead>
+                                <tbody style="font-size: 12px">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-upload-xls" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title_modal_upload_xls">UPLOAD FILE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="input_file_xls">
+                    <div class="form-group">
+                        <label class="form-control-label">UPLOAD FILE XLS |
+                            <a th:href="@{/api_operator/deposito/template}" id="btn-download-template-data-derivatif">
+                                Download Template
+                            </a></label>
+                        <input type="file" class="form-control" id="file-xls"
+                               accept="application/vnd.ms-excel"/>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal" onclick="upload_server_xls()">Selesai</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/dashboard_deposito.js"></script>
+</div>

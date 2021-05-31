@@ -46,22 +46,32 @@ public class DerivatifController {
             @RequestParam(value = "pTenor", defaultValue = "") String pTenor,
             @RequestParam(value = "pCurr", defaultValue = "") String pCurr,
             @RequestParam(value = "pNationalAmount", defaultValue = "") String pNationalAmount,
-            @RequestParam(value = "pDealRate", defaultValue = "") String pDealRate,
+            @RequestParam(value = "pDealRate", defaultValue = "0") String pDealRate,
             @RequestParam(value = "pForwardPoint", defaultValue = "") String pForwardPoint,
             @RequestParam(value = "pKursJisdor1", defaultValue = "") String pKursJisdor1,
             @RequestParam(value = "pBungaDeposito", defaultValue = "") String pBungaDeposito,
-            @RequestParam(value = "pPeruntukanDana", defaultValue = "") String pPeruntukanDana,
-            @RequestParam(value = "pFixingRate", defaultValue = "") String pFixingRate,
-            @RequestParam(value = "pSumberDana", defaultValue = "") String pSumberDana,
+            @RequestParam(value = "pSumberDana", defaultValue = "PMN") String pSumberDana,
+            @RequestParam(value = "pPeruntukanDana", defaultValue = "-") String pPeruntukanDana,
+            @RequestParam(value = "pFixingRate", defaultValue = "0") String pFixingRate,
             @RequestParam(value = "pKursJisdor2", defaultValue = "") String pKursJisdor2,
             @RequestParam(value = "pSwapPoint", defaultValue = "") String pSwapPoint,
             @RequestParam(value = "pStrikePrice", defaultValue = "") String pStrikePrice,
             @RequestParam(value = "pStrikePrice2", defaultValue = "") String pStrikePrice2,
             @RequestParam(value = "PSettlementRate", defaultValue = "") String pSettlementRate,
             @RequestParam(value = "pKeterangan", defaultValue = "") String pKeterangan,
-            @RequestParam(value = "pStatusDeviratif", defaultValue = "") String pStatusDeviratif,
+            @RequestParam(value = "pStatusDeviratif", defaultValue = "1") String pStatusDeviratif,
             @RequestParam(value = "pBiayaPremi", defaultValue = "") String pBiayaPremi,
-            @RequestParam(value = "pForwardRate", defaultValue = "") String pForwardRate
+            @RequestParam(value = "pDocNo1", defaultValue = "") String pDocNo1,
+            @RequestParam(value = "pDocNo2", defaultValue = "") String pDocNo2,
+            @RequestParam(value = "pSpotRate", defaultValue = "") String pSpotRate,
+            @RequestParam(value = "pForwardRate", defaultValue = "") String pForwardRate,
+            @RequestParam(value = "pKursJual", defaultValue = "") String pKursJual,
+            @RequestParam(value = "pKursBeli", defaultValue = "") String pKursBeli,
+            @RequestParam(value = "pSellAmountUsd", defaultValue = "") String pSellAmountUsd,
+            @RequestParam(value = "pStatus", defaultValue = "") String pStatus,
+            @RequestParam(value = "pRatePremi", defaultValue = "") String pRatePremi,
+            @RequestParam(value = "pJisdorSettlement", defaultValue = "") String pJisdorSettlement,
+            @RequestParam(value = "pKursSettlement", defaultValue = "") String pKursSettlement
     ) {
         AppUtils.getLogger(this).info("pprutntukan dana : {}", pPeruntukanDana);
         try {
@@ -70,7 +80,8 @@ public class DerivatifController {
                     pForwardPoint, pKursJisdor1, pBungaDeposito,
                     pSumberDana, pPeruntukanDana, pFixingRate, pKursJisdor2,
                     pSwapPoint, pStrikePrice, pStrikePrice2, pSettlementRate,
-                    pKeterangan, pStatusDeviratif, pBiayaPremi, WebUtils.getUsernameLogin());
+                    pKeterangan, pStatusDeviratif, pBiayaPremi, WebUtils.getUsernameLogin(), pDocNo1, pDocNo2,pSpotRate, pForwardRate,
+                    pKursJual, pKursBeli, pSellAmountUsd, pStatus, pRatePremi, pJisdorSettlement, pKursSettlement);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -408,7 +419,7 @@ public class DerivatifController {
 
             List<Map<String, Object>> listData = valasService.getAllDerivatif(pStatusValas.toString(), tglAwal, tglAkhir, pBank, pCurr, pTenor);
 
-            AppUtils.getLogger(this).debug("data rekap : {}, report : {}", pStatusValas, listData.toString());
+            AppUtils.getLogger(this).info("data rekap : {}, report : {}", pStatusValas, listData.toString());
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
 
@@ -422,26 +433,22 @@ public class DerivatifController {
 
                 for (Map data : listData) {
                     Map paramDetail = new HashMap();
-                    paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
-                    paramDetail.put("BANK_CONTERPARTY", data.get("BANK_CONTERPARTY"));
+                    paramDetail.put("NO", data.get("ROW_NUMBER"));
+                    paramDetail.put("DOC_NO", data.get("DOC_NO"));
+                    paramDetail.put("BANK", data.get("BANK"));
                     paramDetail.put("CURRENCY", data.get("CURRENCY"));
+                    paramDetail.put("NATIONAL_AMOUNT", data.get("NATIONAL_AMOUNT"));
                     paramDetail.put("TGL_DEAL", data.get("TGL_DEAL"));
-                    paramDetail.put("JAM_DEAL", data.get("JAM_DEAL"));
-                    paramDetail.put("TGL_JATUH_TEMPO", data.get("TGL_JATUH_TEMPO"));
-                    paramDetail.put("TENOR", data.get("TENOR"));
-                    paramDetail.put("NATIONAL_AMOUNT1", data.get("NATIONAL_AMOUNT"));
-                    paramDetail.put("DEAL_RATE", data.get("DEAL_RATE"));
+                    paramDetail.put("JATUH_TEMPO", data.get("TGL_JATUH_TEMPO"));
+                    paramDetail.put("TENOR", Integer.parseInt(data.get("TENOR").toString()));
+                    paramDetail.put("SPOT_RATE", data.get("SPOT_RATE"));
                     paramDetail.put("FORWARD_POINT", data.get("FORWARD_POINT"));
                     paramDetail.put("FORWARD_RATE", data.get("FORWARD_RATE"));
-                    paramDetail.put("KURS_JISDOR1", data.get("KURS_JISDOR1"));
-                    paramDetail.put("PENDAPATAN1", data.get("PENDAPATAN1"));
-                    paramDetail.put("BIAYA_HEDGING", data.get("BIAYA_HEDGING"));
-                    paramDetail.put("BUNGA_DEPOSITE_HEDGING", data.get("BUNGA_DEPOSITE_HEDGING"));
-                    paramDetail.put("NET_BIAYA_HEDGING", data.get("NET_BIAYA_HEDGING"));
-                    paramDetail.put("NET_BUY_NATIONAL_AMOUNT", data.get("NET_BUY_NATIONAL_AMOUNT"));
-                    paramDetail.put("SUMBER_DANA", data.get("SUMBER_DANA"));
-                    paramDetail.put("PERUNTUKAN_DANA", data.get("PERUNTUKAN_DANA"));
-                    paramDetail.put("STATUS_DERIVATIF", data.get("STATUS_DERIVATIF"));
+                    paramDetail.put("JISDOR", data.get("JISDOR"));
+                    paramDetail.put("BEBAN_PENDAPATAN", data.get("BEBAN_PENDAPATAN"));
+                    paramDetail.put("BEBAN_FORWARD_POINT", data.get("BEBAN_FORWARD_POINT"));
+                    paramDetail.put("NET_BEBAN_PENDAPATAN", data.get("NET_BEBAN_PENDAPATAN"));
+                    paramDetail.put("KETERANGAN", data.get("KETERANGAN"));
                     listDetail.add(paramDetail);
                 }
                 param.put("DETAILS", listDetail);
@@ -452,34 +459,29 @@ public class DerivatifController {
 
                 for (Map data : listData) {
                     Map paramDetail = new HashMap();
-                    paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
-                    paramDetail.put("BANK_CONTERPARTY", data.get("BANK_CONTERPARTY"));
+                    paramDetail.put("NO", data.get("ROW_NUMBER"));
+                    paramDetail.put("DOC_NO", data.get("DOC_NO"));
+                    paramDetail.put("DOC_NO2", data.get("DOC_NO2"));
+                    paramDetail.put("BANK", data.get("BANK"));
                     paramDetail.put("CURRENCY", data.get("CURRENCY"));
+                    paramDetail.put("NATIONAL_AMOUNT", data.get("NATIONAL_AMOUNT"));
                     paramDetail.put("TGL_DEAL", data.get("TGL_DEAL"));
-                    paramDetail.put("JAM_DEAL", data.get("JAM_DEAL"));
                     paramDetail.put("TGL_JATUH_TEMPO", data.get("TGL_JATUH_TEMPO"));
                     paramDetail.put("TENOR", data.get("TENOR"));
-                    paramDetail.put("NATIONAL_AMOUNT", data.get("NATIONAL_AMOUNT"));
-                    paramDetail.put("FIXING_RATE", data.get("FIXING_RATE"));
-                    paramDetail.put("NATIONAL_AMOUNT1", data.get("NATIONAL_AMOUNT1"));
-                    paramDetail.put("KURS_JISDOR1", data.get("KURS_JISDOR1"));
-                    paramDetail.put("PENDAPATAN1", data.get("PENDAPATAN1"));
+                    paramDetail.put("KURS_JUAL", data.get("KURS_JUAL"));
+                    paramDetail.put("SELL_NATIONAL_AMOUNT_USD", data.get("SELL_NATIONAL_AMOUNT_USD"));
                     paramDetail.put("SWAP_POINT", data.get("SWAP_POINT"));
-                    paramDetail.put("SWAP_RATE", data.get("SWAP_RATE"));
-                    paramDetail.put("NATIONAL_AMOUNT2", data.get("NATIONAL_AMOUNT2"));
-                    paramDetail.put("KURS_JISDOR2", data.get("KURS_JISDOR2"));
-                    paramDetail.put("PENDAPATAN2", data.get("PENDAPATAN2"));
-                    paramDetail.put("BIAYA_SWAP", data.get("BIAYA_SWAP"));
-                    paramDetail.put("BUNGA_DEPOSITE_HEDGING", data.get("BUNGA_DEPOSITE_HEDGING"));
-                    paramDetail.put("NET_BIAYA_SWAP", data.get("NET_BIAYA_SWAP"));
-                    paramDetail.put("SUMBER_DANA", data.get("SUMBER_DANA"));
-                    paramDetail.put("PERUNTUKAN_DANA", data.get("PERUNTUKAN_DANA"));
-                    paramDetail.put("STATUS_DERIVATIF", data.get("STATUS_DERIVATIF"));
+                    paramDetail.put("KURS_BELI", data.get("KURS_BELI"));
+                    paramDetail.put("BUY_NATIONAL_AMOUNT_USD", data.get("BUY_NATIONAL_AMOUNT_USD"));
+                    paramDetail.put("BEBAN_PENDAPATAN_SWAP_POINT", data.get("BEBAN_PENDAPATAN_SWAP_POINT"));
+                    paramDetail.put("JISDOR", data.get("JISDOR"));
+                    paramDetail.put("BEBAN_PENDAPATAN", data.get("BEBAN_PENDAPATAN"));
+                    paramDetail.put("KETERANGAN", data.get("KETERANGAN"));
                     listDetail.add(paramDetail);
                 }
                 param.put("DETAILS", listDetail);
 
-            } else {
+            } else if (pStatusValas.equals(3) || pStatusValas == 3){
                 title = "DERIVATIF CALL SPREAD OPTION";
                 namaFile = "derivatif_cso.xls";
                 tempalte = "derivatif-cso.xls";
@@ -487,24 +489,49 @@ public class DerivatifController {
                 for (Map data : listData) {
                     Map paramDetail = new HashMap();
                     paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
-                    paramDetail.put("BANK_CONTERPARTY", data.get("BANK_CONTERPARTY"));
+                    paramDetail.put("DOC_NO", data.get("DOC_NO"));
+                    paramDetail.put("BANK", data.get("BANK"));
                     paramDetail.put("CURRENCY", data.get("CURRENCY"));
+                    paramDetail.put("NATIONAL_AMOUNT", Double.parseDouble(data.get("NATIONAL_AMOUNT").toString()));
                     paramDetail.put("TGL_DEAL", data.get("TGL_DEAL"));
-                    paramDetail.put("JAM_DEAL", data.get("JAM_DEAL"));
                     paramDetail.put("TGL_JATUH_TEMPO", data.get("TGL_JATUH_TEMPO"));
                     paramDetail.put("TENOR", data.get("TENOR"));
-                    paramDetail.put("NATIONAL_AMOUNT", data.get("NATIONAL_AMOUNT"));
-                    paramDetail.put("STRIKE_PRICE1", data.get("STRIKE_PRICE1"));
-                    paramDetail.put("STRIKE_PRICE2", data.get("STRIKE_PRICE2"));
-                    paramDetail.put("SETTLEMENT_RATE", data.get("SETTLEMENT_RATE"));
-                    paramDetail.put("BIAYA_PREMI", data.get("BIAYA_PREMI"));
-                    paramDetail.put("BUNGA_DEPOSITE_HEDGING", data.get("BUNGA_DEPOSITE_HEDGING"));
-                    paramDetail.put("NET_BIAYA_PREMI", data.get("NET_BIAYA_PREMI"));
-                    paramDetail.put("NET_BUY_NATIONAL_AMOUNT", data.get("NET_BUY_NATIONAL_AMOUNT"));
-                    paramDetail.put("SUMBER_DANA", data.get("SUMBER_DANA"));
-                    paramDetail.put("PERUNTUKAN_DANA", data.get("PERUNTUKAN_DANA"));
+                    paramDetail.put("RATE_PREMI", data.get("RATE_PREMI"));
+                    paramDetail.put("JISDOR_DEAL_DATE", Double.parseDouble(data.get("JISDOR_DEAL_DATE").toString()));
+                    paramDetail.put("PREMI_IDR", Double.parseDouble(data.get("PREMI_IDR").toString()));
+                    paramDetail.put("STRIKE_PRICE1", Double.parseDouble(data.get("STRIKE_PRICE1").toString()));
+                    paramDetail.put("STRIKE_PRICE2", Double.parseDouble(data.get("STRIKE_PRICE2").toString()));
+                    paramDetail.put("KURS_SETTLEMENT",Double.parseDouble(data.get("KURS_SETTLEMENT").toString()));
+                    paramDetail.put("JISDOR_SETTLEMENT", Double.parseDouble(data.get("JISDOR_SETTLEMENT").toString()));
+                    paramDetail.put("BEBAN_PENDAPATAN", Double.parseDouble(data.get("BEBAN_PENDAPATAN").toString()));
+                    paramDetail.put("NET_BEBAN_PENDAPATAN", Double.parseDouble(data.get("NET_BEBAN_PENDAPATAN").toString()));
+                    paramDetail.put("STATUS", data.get("STATUS"));
+                    listDetail.add(paramDetail);
+                }
+                param.put("DETAILS", listDetail);
+            }else {
+                title = "DOMESTIC NON DELIVERABLE FORWARD";
+                namaFile = "derivatif_dndf.xls";
+                tempalte = "derivatif-dndf.xls";
+
+                for (Map data : listData) {
+                    Map paramDetail = new HashMap();
+                    paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
+                    paramDetail.put("DOC_NO", data.get("DOC_NO"));
+                    paramDetail.put("BANK", data.get("BANK"));
+                    paramDetail.put("CURRENCY", data.get("CURRENCY"));
+                    paramDetail.put("NATIONAL_AMOUNT", Double.parseDouble(data.get("NATIONAL_AMOUNT").toString()));
+                    paramDetail.put("TGL_DEAL", data.get("TGL_DEAL"));
+                    paramDetail.put("TGL_JATUH_TEMPO", data.get("TGL_JATUH_TEMPO"));
+                    paramDetail.put("TENOR", data.get("TENOR"));
+                    paramDetail.put("SPOT_RATE", data.get("SPOT_RATE"));
+                    paramDetail.put("FORWARD_POINT", Double.parseDouble(data.get("FORWARD_POINT").toString()));
+                    paramDetail.put("FORWARD_RATE", Double.parseDouble(data.get("FORWARD_RATE").toString()));
+                    paramDetail.put("JISDOR", Double.parseDouble(data.get("JISDOR").toString()));
+                    paramDetail.put("BEBAN_PENDAPATAN", Double.parseDouble(data.get("BEBAN_PENDAPATAN").toString()));
+                    paramDetail.put("BEBAN_FORWARD_POINT",Double.parseDouble(data.get("BEBAN_FORWARD_POINT").toString()));
+                    paramDetail.put("NET_BEBAN_PENDAPATAN", Double.parseDouble(data.get("NET_BEBAN_PENDAPATAN").toString()));
                     paramDetail.put("KETERANGAN", data.get("KETERANGAN"));
-                    paramDetail.put("STATUS_DERIVATIF", data.get("STATUS_DERIVATIF"));
                     listDetail.add(paramDetail);
                 }
                 param.put("DETAILS", listDetail);

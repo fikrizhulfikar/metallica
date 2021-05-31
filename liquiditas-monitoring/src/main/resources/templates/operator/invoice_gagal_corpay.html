@@ -1,0 +1,842 @@
+<div th:fragment="stylesheets-backend">
+    <style>
+        button{ cursor: pointer
+        }
+        .table td {
+            padding-right: 0.75rem;
+            padding-bottom: 0.25rem;
+            padding-left: 0.75rem;
+            padding-top: 0.25rem;
+        }
+        div.dataTables_wrapper div.dataTables_paginate {
+            float: right !important;
+            text-align: left !important;
+            padding-left: 3px;
+            padding-right: 75px;
+        }
+
+        .lbl-src {
+            font-size: 12px;
+        }
+
+        .panel-custom {
+            overflow-x: hidden !important;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter {
+            text-align: right !important;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Corporate Payment Gagal</li>
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="upload_xls()"><i class="icon-plus"></i>&nbsp;Input Xls</button>-->
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>-->
+<!--                <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="!hasAnyAuthority('ROLE_MS_LIKUIDITAS','ROLE_DM_LIKUIDITAS','ROLE_VICE_PRESIDENT_OPERATION','ROLE_VICE_PRESIDENT_INVESTMENT','ROLE_KASIR_IDR','ROLE_KASIR', 'ROLE_MANAGER_PAYMENT',-->
+<!--                'ROLE_MANAGER_OPERATION','ROLE_MANAGER_INVESTMENT_APLN','ROLE_MANAGER_INVESTMENT_SLPMN','ROLE_MANAGER_POWER_PURCHASE','ROLE_MANAGER_PRIMARY_ENERGY','EXECUTIVE_VICE_PRESIDENT')">-->
+<!--                    <i class="fas fa-plus-square"></i> &nbsp;New Data-->
+<!--                </button>-->
+            </div>
+        </li>
+    </ol>
+    <div id="hide_column_modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Hide Column</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" style="padding-left: 50px">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="check_all"/>
+                            <label class="form-check-label" for="check_all">Check All</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc0" data-column="0"/>
+                            <label class="form-check-label" for="hc0">NO</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc1" data-column="1"/>
+                            <label class="form-check-label" for="hc1">JENIS TAGIHAN</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc2" data-column="2"/>
+                            <label class="form-check-label" for="hc2">COMPANY CODE</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc3" data-column="3"/>
+                            <label class="form-check-label" for="hc3">DOCUMENT NO</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc4" data-column="4"/>
+                            <label class="form-check-label" for="hc4">GROUP ID</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc5" data-column="5"/>
+                            <label class="form-check-label" for="hc5">OSS ID</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc6" data-column="6"/>
+                            <label class="form-check-label" for="hc6">FISCAL YEAR</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc7" data-column="7"/>
+                            <label class="form-check-label" for="hc7">DOCUMENT TYPE</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc8" data-column="8"/>
+                            <label class="form-check-label" for="hc8">DOCUMENT DATE</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc9" data-column="9"/>
+                            <label class="form-check-label" for="hc9">POSTING DATE</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc10" data-column="10"/>
+                            <label class="form-check-label" for="hc10">ENTRY DATE</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc11" data-column="11"/>
+                            <label class="form-check-label" for="hc11">REFERENCE</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc12" data-column="12"/>
+                            <label class="form-check-label" for="hc12">REVERSE WITH</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc13" data-column="13"/>
+                            <label class="form-check-label" for="hc13">REVERSE YEAR</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc14" data-column="14"/>
+                            <label class="form-check-label" for="hc14">DOCUMENT HDR TXT</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc15" data-column="15"/>
+                            <label class="form-check-label" for="hc15">CURRENCY</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc16" data-column="16"/>
+                            <label class="form-check-label" for="hc16">CURRENCY BAYAR</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc17" data-column="17"/>
+                            <label class="form-check-label" for="hc17">EXCHANGE RATE</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc18" data-column="18"/>
+                            <label class="form-check-label" for="hc18">REFERENCE KEY</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc19" data-column="19"/>
+                            <label class="form-check-label" for="hc19">PAYMENT INDIKATOR</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc20" data-column="20"/>
+                            <label class="form-check-label" for="hc20">TRANSACTION TYPE</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc21" data-column="21"/>
+                            <label class="form-check-label" for="hc21">SPREAD VALUE</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc22" data-column="22"/>
+                            <label class="form-check-label" for="hc22">LINE ITEM</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc23" data-column="23"/>
+                            <label class="form-check-label" for="hc23">OPEN ITEM INDIKATOR</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc24" data-column="24"/>
+                            <label class="form-check-label" for="hc24">ACCOUNT TYPE</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc25" data-column="25"/>
+                            <label class="form-check-label" for="hc25">SPEC GL</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc26" data-column="26"/>
+                            <label class="form-check-label" for="hc26">BUSINESS AREA</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc27" data-column="27"/>
+                            <label class="form-check-label" for="hc27">TRADING PARTNER BUSINESS AREA</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc28" data-column="28"/>
+                            <label class="form-check-label" for="hc28">AMOUNT IN LOCAL CURRENCY</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc29" data-column="29"/>
+                            <label class="form-check-label" for="hc29">AMOUNT IN TRANSACTION CURRENCY</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc30" data-column="30"/>
+                            <label class="form-check-label" for="hc30">AMOUNT WITH HOLDING BASE TC</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc31" data-column="31"/>
+                            <label class="form-check-label" for="hc31">AMOUNT WITH HOLDING TC</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc32" data-column="32"/>
+                            <label class="form-check-label" for="hc32">AMOUNT</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc33" data-column="33"/>
+                            <label class="form-check-label" for="hc33">AMOUNT BAYAR</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc34" data-column="34"/>
+                            <label class="form-check-label" for="hc34">ASSIGNMENT</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc35" data-column="35"/>
+                            <label class="form-check-label" for="hc35">ITEM TEXT</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc36" data-column="36"/>
+                            <label class="form-check-label" for="hc36">COST CENTER</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc37" data-column="37"/>
+                            <label class="form-check-label" for="hc37">GL ACCOUNT</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc38" data-column="38"/>
+                            <label class="form-check-label" for="hc38">CUSTOMER</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc39" data-column="39"/>
+                            <label class="form-check-label" for="hc39">VENDOR</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc40" data-column="40"/>
+                            <label class="form-check-label" for="hc40">BASE DATE</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc41" data-column="41"/>
+                            <label class="form-check-label" for="hc41">TERM OF PAYMENT</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc42" data-column="42"/>
+                            <label class="form-check-label" for="hc42">DUE ON</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc43" data-column="43"/>
+                            <label class="form-check-label" for="hc43">PAYMENT BLOCK</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc44" data-column="44"/>
+                            <label class="form-check-label" for="hc44">HOUSE BANK</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc45" data-column="45"/>
+                            <label class="form-check-label" for="hc45">NO REK HOUSE BANK</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc46" data-column="46"/>
+                            <label class="form-check-label" for="hc46">PARTNER BANK TYPE</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc47" data-column="47"/>
+                            <label class="form-check-label" for="hc47">BANK KEY</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc48" data-column="48"/>
+                            <label class="form-check-label" for="hc48">BANK ACCOUNT</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc49" data-column="49"/>
+                            <label class="form-check-label" for="hc49">ACCOUNT HOLDER</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc50" data-column="50"/>
+                            <label class="form-check-label" for="hc50">NAMA BENEFICIARY</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc51" data-column="51"/>
+                            <label class="form-check-label" for="hc51">NO REK BENEFICIARY</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc52" data-column="52"/>
+                            <label class="form-check-label" for="hc52">BANK BENEFICIARY</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc53" data-column="53"/>
+                            <label class="form-check-label" for="hc53">PO NUMBER</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc54" data-column="54"/>
+                            <label class="form-check-label" for="hc54">PO ITEM</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc55" data-column="55"/>
+                            <label class="form-check-label" for="hc55">REFERENCE KEY 1</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc56" data-column="56"/>
+                            <label class="form-check-label" for="hc56">REFERENCE KEY 2</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc57" data-column="57"/>
+                            <label class="form-check-label" for="hc57">REFERENCE KEY 3</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc58" data-column="58"/>
+                            <label class="form-check-label" for="hc58">INTERNAL ORDER</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc59" data-column="59"/>
+                            <label class="form-check-label" for="hc59">WBS NUMBER</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc60" data-column="60"/>
+                            <label class="form-check-label" for="hc60">CASH CODE</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc61" data-column="61"/>
+                            <label class="form-check-label" for="hc61">DEBIT CREDIT INDIKATOR</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc62" data-column="62"/>
+                            <label class="form-check-label" for="hc62">PARTIAL INDIKATOR</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc63" data-column="63"/>
+                            <label class="form-check-label" for="hc63">AMOUNT WITH HOLDING BASE LC</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc64" data-column="64"/>
+                            <label class="form-check-label" for="hc64">AMOUNT WITH HOLDING LC</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc65" data-column="65"/>
+                            <label class="form-check-label" for="hc65">METODE PEMBAYARAN</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc66" data-column="66"/>
+                            <label class="form-check-label" for="hc66">NO GIRO</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc67" data-column="67"/>
+                            <label class="form-check-label" for="hc67">TGL TERIMA TAGIHAN</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc68" data-column="68"/>
+                            <label class="form-check-label" for="hc68">TGL RENCANA BAYAR</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc69" data-column="69"/>
+                            <label class="form-check-label" for="hc69">SUMBER DANA</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc70" data-column="70"/>
+                            <label class="form-check-label" for="hc70">KETERANGAN</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc71" data-column="71"/>
+                            <label class="form-check-label" for="hc71">STATUS TRACKING</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input checkbox-toggle" type="checkbox" id="hc72" data-column="72"/>
+                            <label class="form-check-label" for="hc72">REFERENCE NUMBER BANK</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="saveColumn()">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+            <div id="filter">
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;">
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Tanggal Awal </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal"/>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Tanggal Akhir </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">House Bank </label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="bank" id="cmb_bank" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Currency Bayar</label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="bacurrecnynk" id="cmb_currecny" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <label class="lbl-src">Metode Bayar</label>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <select name="cmb_cara_pembayaran" id="cmb_cara_pembayaran" class="form-control">
+                            <option value="ALL">SELURUH METODE BAYAR</option>
+                            <option value="INHOUSE">IN HOUSER</option>
+                            <option value="ONLINETRANSFER">ONLINE TRANSFER</option>
+                            <option value="KLIRING">KLIRING</option>
+                            <option value="RTGS">RTGS</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
+                    </div>
+                </div>
+            </div>
+            <div class="list-data" style="margin-top:25px;">
+                <div class="panel panel-default">
+                    <div class="panel-body panel-custom">
+                        <table id="table-rekapitulasi" class="table table-bordered table-striped">
+                            <thead style="font-size: 12px">
+                            <tr>
+                                <th>NO</th>
+                                <th>JENIS TAGIHAN</th>
+                                <th>COMPANY CODE</th>
+                                <th>DOCUMENT NO</th>
+                                <th>GROUP ID</th>
+                                <th>OSS ID</th>
+                                <th>FISCAL YEAR</th>
+                                <th>DOCUMENT TYPE</th>
+                                <th>DOCUMENT DATE</th>
+                                <th>POSTING DATE</th>
+                                <th>ENTRY DATE</th>
+                                <th>REFERENCE</th>
+                                <th>REVERSE WITH</th>
+                                <th>REVERSE YEAR</th>
+                                <th>DOCUMENT HDR TXT</th>
+                                <th>CURRENCY</th>
+                                <th>CURRENCY BAYAR</th>
+                                <th>EXCHANGE RATE</th>
+                                <th>REFERENCE KEY</th>
+                                <th>PAYMENT INDIKATOR</th>
+                                <th>TRANSACTION TYPE</th>
+                                <th>SPREAD VALUE</th>
+                                <th>LINE ITEM</th>
+                                <th>OPEN ITEM INDIKATOR</th>
+                                <th>ACCOUNT TYPE</th>
+                                <th>SPEC GL</th>
+                                <th>BUSINESS AREA</th>
+                                <th>TRADING PARTNER BUSINESS AREA</th>
+                                <th>AMOUNT IN LOCAL CURRENCY</th>
+                                <th>AMOUNT IN TRANSACTION CURRENCY</th>
+                                <th>AMOUNT WITH HOLDING BASE TC</th>
+                                <th>AMOUNT WITH HOLDING TC</th>
+                                <th>AMOUNT</th>
+                                <th>AMOUNT BAYAR</th>
+                                <th>ASSIGNMENT</th>
+                                <th>ITEM TEXT</th>
+                                <th>COST CENTER</th>
+                                <th>GL ACCOUNT</th>
+                                <th>CUSTOMER</th>
+                                <th>VENDOR</th>
+                                <th>BASE DATE</th>
+                                <th>TERM OF PAYMENT</th>
+                                <th>DUE ON</th>
+                                <th>PAYMENT BLOCK</th>
+                                <th>HOUSE BANK</th>
+                                <th>NO REK HOUSE BANK</th>
+                                <th>PARTNER BANK TYPE</th>
+                                <th>BANK KEY</th>
+                                <th>BANK ACCOUNT</th>
+                                <th>ACCOUNT HOLDER</th>
+                                <th>NAMA BENEFICIARY</th>
+                                <th>NO REK BENEFICIARY</th>
+                                <th>BANK BENEFICIARY</th>
+                                <th>PO NUMBER</th>
+                                <th>PO ITEM</th>
+                                <th>REFERENCE KEY 1</th>
+                                <th>REFERENCE KEY 2</th>
+                                <th>REFERENCE KEY 3</th>
+                                <th>INTERNAL ORDER</th>
+                                <th>WBS NUMBER</th>
+                                <th>CASH CODE</th>
+                                <th>DEBIT CREDIT INDIKATOR</th>
+                                <th>PARTIAL INDIKATOR</th>
+                                <th>AMOUNT WITH HOLDING BASE LC</th>
+                                <th>AMOUNT WITH HOLDING LC</th>
+                                <th>METODE PEMBAYARAN</th>
+                                <th>NO GIRO</th>
+                                <th>REFERENCE NUMBER BANK</th>
+                                <th>TGL TERIMA TAGIHAN</th>
+                                <th>TGL RENCANA BAYAR</th>
+                                <th>SUMBER DANA</th>
+                                <th>KETERANGAN</th>
+                                <th>STATUS TRACKING</th>
+                                <th>TGL LUNAS</th>
+                                <th>AKSI</th>
+<!--                                <th>AKSI</th>-->
+<!--                                <th id="forcbparent"></th>-->
+                            </tr>
+                            </thead>
+                            <tbody style="font-size: 12px">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+            <div id="total_per_currency" class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;">
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Form Edit Invoice</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pKet">&nbsp;Jenis Pembayaran :</label>
+                                <input type="text" class="form-control" id="pKet" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCompanyCode">&nbsp;Company Code :</label>
+                                <input type="text" class="form-control" id="pCompanyCode" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoDoc">&nbsp;No Doc :</label>
+                                <input type="text" class="form-control" id="pNoDoc" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pFiscYear">&nbsp;Fiscal Year :</label>
+                                <input type="text" class="form-control" id="pFiscYear" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDocumentType">&nbsp;Document Type :</label>
+                                <input type="text" class="form-control" id="pDocumentType" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDocumentDate">&nbsp;Document Date :</label>
+                                <input type="text" class="form-control" id="pDocumentDate" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPostDate">&nbsp;Posting Date :</label>
+                                <input type="text" class="form-control" id="pPostDate" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pEntryDate">&nbsp;Entry Date :</label>
+                                <input type="text" class="form-control" id="pEntryDate" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pReference">&nbsp;Reference :</label>
+                                <input type="text" class="form-control" id="pReference" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pReverseWith">&nbsp;Reverse With :</label>
+                                <input type="text" class="form-control" id="pReverseWith" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pReverseYear">&nbsp;Reverse Year :</label>
+                                <input type="text" class="form-control" id="pReverseYear" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDocHdr">&nbsp;Document HDR TXT :</label>
+                                <input type="text" class="form-control" id="pDocHdr" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCurrency">&nbsp;Currency :</label>
+                                <input type="text" class="form-control" id="pCurrency" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pExchRate">&nbsp;Exchange Rate :</label>
+                                <input type="text" class="form-control" id="pExchRate" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pRefKey">&nbsp;Reference Key :</label>
+                                <input type="text" class="form-control" id="pRefKey" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPaymentIndicator">&nbsp;Payment Indicator :</label>
+                                <input type="text" class="form-control" id="pPaymentIndicator" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTransactionType">&nbsp;Transaction Type :</label>
+                                <input type="text" class="form-control" id="pTransactionType" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pSpreadValue">&nbsp;Spread Value :</label>
+                                <input type="text" class="form-control" id="pSpreadValue" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAccountType">&nbsp;Account Type :</label>
+                                <input type="text" class="form-control" id="pAccountType" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pBusinessArea">&nbsp;Business Area :</label>
+                                <input type="text" class="form-control" id="pBusinessArea" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTradingPartner">&nbsp;Trading Partner Bisnis Area :</label>
+                                <input type="text" class="form-control" id="pTradingPartner" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAmountLc">&nbsp;Amount In Local Currency :</label>
+                                <input type="text" class="form-control" id="pAmountLc" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAmountTc">&nbsp;Amount In Trasaction Currency :</label>
+                                <input type="text" class="form-control" id="pAmountTc" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAmountWhtBase">&nbsp;Amount WithHolding Base :</label>
+                                <input type="text" class="form-control" id="pAmountWhtBase" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAmountWht">&nbsp;Amount WithHolding :</label>
+                                <input type="text" class="form-control" id="pAmountWht" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTotalTagihan">&nbsp;Total Tagihan :</label>
+                                <input type="text" class="form-control" id="pTotalTagihan" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAssignment">&nbsp;Jenis Transaksi :</label>
+                                <input type="text" class="form-control" id="pAssignment" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pItemText"> Item Text :</label>
+                                <input type="text" class="form-control" id="pItemText" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCostCtr"> Cost Center Code :</label>
+                                <input type="text" class="form-control" id="pCostCtr" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pGlAccount"> GL Account Code :</label>
+                                <input type="text" class="form-control" id="pGlAccount" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNamaVendor"> Nama Vendor :</label>
+                                <input type="text" class="form-control" id="pNamaVendor" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNamaCustomer"> Nama Customer :</label>
+                                <input type="text" class="form-control" id="pNamaCustomer" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pLineItem"> Line Item :</label>
+                                <input type="text" class="form-control" id="pLineItem" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pBaseline"> Baseline Payment Date :</label>
+                                <input type="text" class="form-control" id="pBaseline" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTermOfPayment"> Term Of Payment :</label>
+                                <input type="text" class="form-control" id="pTermOfPayment" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglDueOn">Jatuh Tempo:</label>
+                                <input type="text" class="form-control" id="pTglDueOn" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPaymentBlock"> Payment Block Indikator :</label>
+                                <input type="text" class="form-control" id="pPaymentBlock" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label for="pHouseBank"> House Bank :</label>-->
+<!--                                <input type="text" class="form-control" id="pHouseBank" disabled="disabled"  style="background-color: white" value=""/>-->
+<!--                            </div>-->
+                            <div class="form-group">
+                                <label for="pPartnerBank"> Partner Bank Type :</label>
+                                <input type="text" class="form-control" id="pPartnerBank" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pPoNum"> Purchase Order Item Number :</label>
+                                <input type="text" class="form-control" id="pPoNum" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pRefKey1"> Reference Key 1 :</label>
+                                <input type="text" class="form-control" id="pRefKey1" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pRefKey2"> Reference Key 2 :</label>
+                                <input type="text" class="form-control" id="pRefKey2" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pRefKey3"> Reference Key 3 :</label>
+                                <input type="text" class="form-control" id="pRefKey3" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pIntOrder"> Internal Order :</label>
+                                <input type="text" class="form-control" id="pIntOrder" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pWbsNum"> WBS Number :</label>
+                                <input type="text" class="form-control" id="pWbsNum" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCashCode"> Cash Code :</label>
+                                <input type="text" class="form-control" id="pCashCode" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pDebitCredit"> Debit/Credit Indikator :</label>
+                                <input type="text" class="form-control" id="pDebitCredit" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAmountWthBaseLc"> Amount Withholding Base LC :</label>
+                                <input type="text" class="form-control" id="pAmountWthBaseLc" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAmountWthLc"> Amount Withholding LC :</label>
+                                <input type="text" class="form-control" id="pAmountWthLc" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pBankPenerima">&nbsp;Bank Penerima :</label>
+                                <input type="text" class="form-control" id="pBankPenerima" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNoRekVendor">&nbsp;No Rekening Vendor/Customer :</label>
+                                <input type="text" class="form-control" id="pNoRekVendor"   style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAccountHolder"> Account Holder :</label>
+                                <input type="text" class="form-control" id="pAccountHolder" disabled="disabled"  style="background-color: white" value=""/>
+                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label for="pBankPembayaran"> Bank Pembayar :</label>-->
+<!--                                <input type="text" class="form-control" id="pBankPembayaran" disabled="disabled"  style="background-color: white" value=""/>-->
+<!--                            </div>-->
+                            <div class="form-group">
+                                <label for="pHouseBank"><span style="color: red">*)</span>&nbsp;Bank Pembayar:</label>
+                                <select id="pHouseBank" class="form-control"
+                                        onChange="selectBankPembayar(this.value);" required="required">
+                                    <option value="">Pilih Data</option>
+                                </select>
+                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label for="pNoRekPln"><span style="color: red">*)</span>&nbsp;No Rekening PLN:</label>-->
+<!--                                <select id="pNoRekPln" class="form-control"-->
+<!--                                        onChange="selectBankAccount(this.value);" required="required">-->
+<!--                                    <option value="">Pilih Data</option>-->
+<!--                                </select>-->
+<!--                            </div>-->
+                            <div class="form-group">
+                                <label for="pNoRekPln"> No Rekening PLN :</label>
+                                <input type="text" class="form-control" id="pNoRekPln"  style="background-color: white" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pMetodePembayaran"><span style="color: red">*)</span>&nbsp;Metode Pembayaran:</label>
+                                <select id="pMetodePembayaran" class="form-control">
+                                    <option value="">Pilih Data</option>
+                                    <option value="INHOUSE">In House</option>
+                                    <option value="ONLINETRANSFER">Online Transfer</option>
+                                    <option value="LLG">LLG</option>
+                                    <option value="RTGS">RTGS</option>
+                                    <option value="KLIRING">Kliring</option>
+                                    <option value="TT">TT</option>
+                                    <option value="VALAS">Valas</option>
+                                    <option value="GIRO">Giro</option>
+                                    <option value="INTERNETBANKING">Internet Banking</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pSumberDana"><span style="color: red">*)</span>&nbsp;Sumber Dana:</label>
+                                <select id="pSumberDana" class="form-control">
+                                    <option value="">Pilih Data</option>
+                                    <option value="PMN">PMN</option>
+                                    <option value="NON PMN - APLN">NON PMN - APLN</option>
+                                    <option value="NON PMN - BRIDGING">NON PMN - BRIDGING</option>
+                                    <option value="Rekening Imprest Valas">Rekening Imprest Valas</option>
+                                    <option value="Rekening Non Imprest Valas">Rekening Non Imprest Valas</option>
+
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pTglRencanaBayar"><span style="color: red">*)</span>&nbsp;Tanggal Rencana Bayar:</label>
+                                <input type="text" class="form-control" id="pTglRencanaBayar" required="required"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pNewKeterangan">&nbsp;Keterangan :</label>
+                                <input type="text" class="form-control" id="pNewKeterangan" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pCustomerName">&nbsp;Customer Name :</label>
+                                <input type="text" class="form-control" id="pCustomerName" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAccountNumber">&nbsp;Account Number :</label>
+                                <input type="text" class="form-control" id="pAccountNumber" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pAccountStatus">&nbsp;Account Status :</label>
+                                <input type="text" class="form-control" id="pAccountStatus" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pRespon2">&nbsp;Respon :</label>
+                                <textarea rows="4" type="text" class="form-control" id="pRespon2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="getInquiry()">Inquiry</button>
+                    <button type="button" class="btn btn-primary" onclick="update_pembayaran()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="multiple-edit-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">Buat Group Invoice</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="pNamaGroup">Nama Group :</label>
+                                <input type="text" class="form-control" id="pNamaGroup" required="required"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="create_group()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/corporatePaymentGagal.js"></script>
+    <!--<script src="static/js/jquery.mask.min.js"></script>-->
+</div>

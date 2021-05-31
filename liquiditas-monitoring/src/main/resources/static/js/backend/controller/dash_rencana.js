@@ -130,7 +130,7 @@ function tableMainDashboard(_date){
             var rows = api.rows({page:'current'}).nodes();
             var last = null;
             let array = api.column(groupColumn, {page:'current'}).data();
-//            console.log(array[20])
+            console.log(array)
 
             api.column(groupColumn, {page:'current'}).data().each(function (group, i){
             if (last !== group.BANK){
@@ -149,7 +149,6 @@ function tableMainDashboard(_date){
                     $(rows).eq(i).before(
                         '<tr class="group"><td rowspan="'+count+'" style="vertical-align: middle;text-align: center; font-weight: bold;">'+group.BANK+'</td></tr>'
                     );
-//                console.log(array)
                 last = group.BANK;
                 }
             });
@@ -324,6 +323,7 @@ function tableMainDashboard(_date){
             var rows = api.rows({page:'current'}).nodes();
             var last = null;
             let array = api.column(groupColumn, {page:'current'}).data();
+            console.log("Ini data : ",api)
 
             api.column(groupColumn, {page:'current'}).data().each(function (group, i){
             if (last !== group.JENIS){

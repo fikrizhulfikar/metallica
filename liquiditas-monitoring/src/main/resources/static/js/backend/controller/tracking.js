@@ -28,7 +28,8 @@ function detailTracking(compCode, docNo, fiscYear, lineItem, ossId) {
         },
         success: function (res) {
             $("#table-tracking_ket tbody").empty();
-            hideLoadingCss("")
+            hideLoadingCss("");
+            document.getElementById("posisi_terakhir").innerHTML = res.OUT_POSISI[0].ROLE.toString().replace(/_/g," ");
             $.each(res.return, function (key, val) {
                 var today = new Date(val.TGL);
                 var dd = today.getDate();

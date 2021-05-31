@@ -1221,4 +1221,35 @@ public class MasterDataController {
             return null;
         }
     }
+
+    @GetMapping(path = "/filter/list_filter_bank")
+    public List<Map<String, Object>> filterBank(){
+        try{
+            return masterService.getFilterBank();
+        }catch (Exception e){
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @GetMapping(path = "/filter/list_filter_cashcode")
+    public List<Map<String, Object>> filterCashCode(){
+        try{
+            return masterService.getFilterCashCode();
+        }catch (Exception e){
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/vendor/get_data_vendor_sap", method = RequestMethod.GET)
+    public List<Map<String,Object>> listVendorSap(@RequestParam(value = "pNamaVendor") String pNamaVendor) {
+
+        try{
+            return masterService.getListVendorSap(pNamaVendor);
+        }catch (Exception e){
+            AppUtils.getLogger(this).debug(e.getMessage());
+            return null;
+        }
+    }
 }

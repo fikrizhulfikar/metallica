@@ -17,14 +17,13 @@ var srcTglAkhir = null;
 var addedDays = 2;
 
 $(document).ready(function () {
-    getAllData();
      $( '#pAccountBalance' ).mask('000.000.000.000.000', {reverse: true});
     $('#tanggal_awal').datepicker({dateFormat: 'dd/mm/yy'});
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
     setSelectFilterBank("cmb_bank", "FILTER", "", "", "REKAP");
-    setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
-    setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+    // setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
+    // setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
     setSelectStatusTracking("cmb_status_tracking");
     $('#check_all').change(function() {
             if($(this).is(':checked')){
@@ -47,28 +46,6 @@ $("#tanggal_awal").change(function () {
     }
 });
 
-function getAllData() {
-    $.ajax({
-        url: baseUrl + "api_operator/rekap_invoice_realisasi/get_rekap_lunas",
-        dataType: 'JSON',
-        type: "GET",
-        data: {
-            pStatusValas: "0",
-            pTglAwal: $("#tanggal_awal").val(),
-            pTglAkhir: $("#tanggal_akhir").val(),
-            pBank: $("#cmb_bank").val(),
-            pCurr: $("#cmb_currecny").val(),
-            pCaraBayar: $("#cmb_cara_pembayaran").val()
-        },
-        success: function (res) {
-            allData = res;
-        },
-        error: function (res) {
-            console.log("Gagal Melakukan Proses,Harap Hubungi Administrator : ", res)
-        }
-    });
-
-    }
 
     function search(state) {
         if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
@@ -861,7 +838,14 @@ function getAllData() {
 
                                 function (res) {
                                     hideLoadingCss()
-                                    getTotalTagihan();
+                                    let totalTagihan = 0;
+                                    let arr = res.data;
+                                    arr.forEach((val, key) => {
+                                        if (val.AMOUNT){
+                                            totalTagihan += parseFloat(val.AMOUNT);
+                                        }
+                                    });
+                                    $("#total_tagihan").html(accounting.formatNumber(totalTagihan.toString(), 2, '.', ','));
                                     return res.data;
                                 }
                         }
@@ -2827,7 +2811,7 @@ function cetakStrukLunas(button, comp_code, doc_no, fiscal_year, line_item, ket)
             if (res.createdoc.status === 1){
                 // console.log("Result : ",res);
                 alert("Berhasil Membuat Dokumen. Click 'Ok' untuk mengunduh.");
-                window.open(baseUrl+"generate_doc/cetak/downloadfile/corpay_lunas_"+doc_no+".docx","_blank");
+                window.open(baseUrl+"generate_doc/cetak/downloadfile/corpay_lunas_"+doc_no+".pdf","_blank");
             }
             $(button).find('i').remove();
             $(button).html($('<i/>',{class:'fas fa-receipt'})).prop("disabled",false);

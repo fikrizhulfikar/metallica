@@ -1609,7 +1609,7 @@ pre code {
   color: #b0bec5;
   opacity: 1; }
 .form-control:disabled, .form-control[readonly] {
-  background-color: #d6d4d438;
+  background-color: #d6d4d48a;
   opacity: 1; }
 
 select.form-control:not([size]):not([multiple]) {
@@ -3239,8 +3239,8 @@ tbody.collapse.show {
 
 .badge {
   display: inline-block;
-  padding: 0.25em 0.4em;
-  font-size: 75%;
+  padding: 0.5em 0.4em;
+  font-size: 85%;
   font-weight: bold;
   line-height: 1;
   color: #fff;
@@ -3580,11 +3580,16 @@ button.close {
   display: none;
   overflow: hidden;
   outline: 0; }
-.modal.fade .modal-dialog {
-  transition: transform 0.3s ease-out;
-  transform: translate(0, -25%); }
-.modal.show .modal-dialog {
-  transform: translate(0, 0); }
+  .modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out;
+    transform: translate(0, -25%); }
+  .modal.show .modal-dialog {
+    transform: translate(0, 0); }
+  .modal.fade .modal-dialog-lcl {
+    transition: transform 0.3s ease-out;
+    transform: translate(0, -25%); }
+  .modal.show .modal-dialog-lcl {
+    transform: translate(0, 0); }
 
 .modal-open .modal {
   overflow-x: hidden;
@@ -3659,8 +3664,14 @@ button.close {
     max-width: 300px; } }
 
 @media (min-width: 992px) {
-  .modal-lg {
+  .modal-lg .modal-xl {
     max-width: 800px; } }
+
+@media (min-width: 1200px) {
+  .modal-xl {
+    max-width: 1140px;
+  }
+}
 
 .tooltip {
   position: absolute;
@@ -8908,3 +8919,29 @@ div.buttons {
 }
 
 div.dataTables_filter input { width: 150px }
+
+.c-vr {
+  width: 1px;
+  background-color: rgba(0,0,21,.2);
+}
+
+/* width */
+::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

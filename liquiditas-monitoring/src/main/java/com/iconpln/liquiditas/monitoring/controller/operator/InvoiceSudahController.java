@@ -239,7 +239,18 @@ public class InvoiceSudahController {
     public Map getColumn() {
         Map data = new HashMap();
         try {
-            data.put("data", invoiceSudahService.getColumn(WebUtils.getUsernameLogin()));
+            List<Map<String, Object>> columnList = invoiceSudahService.getColumn(WebUtils.getUsernameLogin());
+            List<Map<String, Integer>> hideColList = new ArrayList<>();
+            Map<String, Integer> hide = new HashMap<>();
+            for (Map<String, Object> col : columnList){
+                for (Map.Entry<String, Object> entry : col.entrySet()){
+                    if (entry.getValue().toString().equals("0")){
+                        hide.put(entry.getKey(), Integer.parseInt(entry.getValue().toString()));
+                    }
+                }
+            }
+            hideColList.add(hide);
+            data.put("data", hideColList);
             return data;
         } catch (Exception e) {
             e.printStackTrace();

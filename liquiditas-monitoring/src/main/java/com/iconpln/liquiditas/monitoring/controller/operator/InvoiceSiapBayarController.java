@@ -224,7 +224,19 @@ public class InvoiceSiapBayarController {
     public Map getColumn() {
         Map data = new HashMap();
         try {
-            data.put("data", invoiceSiapBayarService.getColumn(WebUtils.getUsernameLogin()));
+            List<Map<String, Object>> columnList = invoiceSiapBayarService.getColumn(WebUtils.getUsernameLogin());
+            List<Map<String, Integer>> hiddenColList = new ArrayList<>();
+            Map<String, Integer> hide = new HashMap<>();
+            for (Map<String, Object> col : columnList){
+                for (Map.Entry<String, Object> entry : col.entrySet()){
+                    if (entry.getValue().toString().equals("0")){
+                        hide.put(entry.getKey(), Integer.parseInt(entry.getValue().toString()));
+                    }
+                }
+            }
+            hiddenColList.add(hide);
+            System.out.println("ColList : "+columnList);
+            data.put("data", hiddenColList);
             return data;
         } catch (Exception e) {
             e.printStackTrace();
