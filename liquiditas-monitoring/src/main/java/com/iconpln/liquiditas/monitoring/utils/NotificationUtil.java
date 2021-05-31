@@ -4,7 +4,7 @@ import com.iconpln.liquiditas.core.service.NotificationService;
 import com.iconpln.liquiditas.core.service.ValasService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.core.domain.Notification;
-import com.iconpln.liquiditas.monitoring.config.WsMbConfig;
+//import com.iconpln.liquiditas.monitoring.config.WsMbConfig;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
@@ -37,7 +37,7 @@ public class NotificationUtil {
         long id = service.save(notification);
         if (id != 0) {
             notification.setId(id);
-            messagingTemplate.convertAndSend(WsMbConfig.TOPIC_PREFIX + "/" + notification.getTopic(), notification);
+//            messagingTemplate.convertAndSend(WsMbConfig.TOPIC_PREFIX + "/" + notification.getTopic(), notification);
         }
     }
 
