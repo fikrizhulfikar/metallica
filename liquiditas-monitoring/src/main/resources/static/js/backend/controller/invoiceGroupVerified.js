@@ -21,8 +21,8 @@ $(document).ready(function () {
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
     setSelectFilterBank("cmb_bank", "FILTER", "", "", "REKAP");
-    setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
-    setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
+    // setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+    // setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
 
     $('#check_all').change(function() {
         if($(this).is(':checked')){
@@ -600,8 +600,15 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank,pCaraBayar, pCurr) {
                     ,
                     "dataSrc":
                         function (res) {
-                            hideLoadingCss()
-                            getTotalTagihan();
+                            hideLoadingCss();
+                            let totalTagihan = 0;
+                            let arr = res.data;
+                            arr.forEach((val, key) => {
+                                if (val.TOTAL_TAGIHAN){
+                                    totalTagihan += parseFloat(val.TOTAL_TAGIHAN);
+                                }
+                            });
+                            $("#total_tagihan").html(accounting.formatNumber(totalTagihan.toString(), 2, '.', ','));
                             return res.data;
                         }
                 }
