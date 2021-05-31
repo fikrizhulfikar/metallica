@@ -29,8 +29,8 @@ $(document).ready(function () {
     $('#tanggal_akhir').attr("disabled", "disabled");
     search("load");
     setSelectFilterBank("cmb_bank", "FILTER", "", "", "REKAP");
-    setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
-    setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
+    // setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+    // setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
 
     $('#check_all').change(function() {
         if($(this).is(':checked')){
@@ -1091,16 +1091,21 @@ function initDataTable(pTglAwal, pTglAkhir,  pBank, pCaraBayar, pCurr) {
                     ,
                     "dataSrc":
                         function (res) {
-                            hideLoadingCss()
-                            getTotalTagihan();
+                            hideLoadingCss();
+                            let totalTagihan = 0;
+                            let arr = res.data;
+                            arr.forEach((val, key) => {
+                                if (val.TOTAL_TAGIHAN){
+                                    totalTagihan += parseFloat(val.TOTAL_TAGIHAN);
+                                }
+                            });
+                            $("#total_tagihan").html(accounting.formatNumber(totalTagihan.toString(), 2, '.', ','));
                             return res.data;
                         }
                 }
             ,
             "drawCallback":
                 function (settings) {
-                    // $(".dataTables_scrollHeadInner").css({"width":"100%"});
-                    // $(".table ").css({"width":"100%"});
                     tableInvoiceGroup.columns.adjust();
                     var currentPageNumber = this.api().page.info().page;
                     for (x=0;x<cbParentArray.length;x++){
@@ -1274,27 +1279,6 @@ function upload_server_xls() {
     });
 }
 
-function buildTableBody(data, columns) {
-    var body = [];
-
-    body.push(columns);
-
-    data.forEach(function (row) {
-        var dataRow = [];
-        dataRow.push(row["NO"]);
-        dataRow.push(row["HOUSE_BANK"]);
-        dataRow.push(row["NO_REK_HOUSE_BANK"]);
-        dataRow.push(row["COMP_CODE"]);
-        dataRow.push(row["BUS_AREA"]);
-        dataRow.push(row["DUE_ON"]);
-        dataRow.push(row["TOTAL_TAGIHAN"]);
-        dataRow.push(row["ASSIGNMENT"]);
-        body.push(dataRow);
-    });
-
-    return body;
-}
-
 function checkArray(e) {
     var isNew = true;
     var isNew1 = true;
@@ -1358,33 +1342,10 @@ function checkArray(e) {
             }
         }
     }
-    // let groupToast = null;
-    // if(isSame(fullArrayGroup)){
-    //     console.log("Sama : ",isSame(fullArrayGroup));
-    //     $.toast({
-    //         heading: 'Check Kesamaan Data',
-    //         text: 'Data Oke!',
-    //         icon: 'success',
-    //         hideAfter: false,
-    //         stack : 1
-    //     });
-    // }
-    // if(isSame(fullArrayGroup) == 222){
-    //     console.log("Sama : ",isSame(fullArrayGroup));
-    //     $.toast({
-    //         heading: 'Perhatian',
-    //         text: 'Data belum diInquiry',
-    //         icon: 'warning',
-    //         hideAfter: false,
-    //         stack : 1
-    //     });
-    // }
-    console.log("Full Array : ", fullArrayGroup);
-    console.log("invoice array : ",invoiceCheckedArray);
 }
 
 function getDetails(group_id, pTglAwal, pTglAkhir,  pBank) {
-    showLoadingCss()
+    showLoadingCss();
     $(".list-data").hide();
     $(".detail-data").show();
     $('#exportHeadBtn, #exportAllItemBtn').hide();
