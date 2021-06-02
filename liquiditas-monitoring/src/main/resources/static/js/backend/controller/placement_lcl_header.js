@@ -17,7 +17,7 @@ $(document).ready(function () {
     tglAwal = dd+'/'+mm+'/'+yyyy;
 
 //    initDataTablePlacement();
-    initDataTablePlacement2();
+    initPlacementLclHeader();
 
     if (time <= "14"){
         sesi = 1;
@@ -96,7 +96,7 @@ function search(state) {
     }
 }
 
-function initDataTablePlacement2(){
+function initPlacementLclHeader(){
 
     showLoadingCss();
     $('#table-placement-lcl-header tbody').empty();
@@ -110,43 +110,42 @@ function initDataTablePlacement2(){
         "scrollY": "100%",
         "scrollX": "100%",
         "searching": false,
-        "bSortable": false,
+        "ordering": false,
         "scrollCollapse": false,
         "bInfo": false,
         "aoColumnDefs": [
             {width: 100, targets: 0},
             {width: 100, targets: 1},
             {width: 100, targets: 2},
-            {width: 100, targets: 3},
+            {width: 200, targets: 3},
             {width: 100, targets: 4},
 //            {width: 100, targets: 5},
 //            {width: 100, targets: 6},
 //            {width: 100, targets: 7},
 //            {width: 100, targets: 8},
 //            {width: "20%", "targets": 0},
-            { className: "datatables_action", "targets": [1, 2, 3, 4, 5] },
+            { className: "datatables_action", "targets": [] },
+            {"className": 'dt-body-center', "targets": [0,4]},
             {
                 "data":null,
                 "aTargets": [0],
 //                "visible" : false,
                 "mRender": function (data, type, full) {
-                    return full.TIPE_KEBUTUHAN;
-                },
-                "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {$(cell).css("background-color","#77D5D4");}
+                    return full.ID_FORM;
+                }
             },
             {
                 "data":null,
                 "aTargets": [1],
                 "mRender": function (data, type, full) {
-                    return full.BANK;
-                },
-                "createdCell" : (cell, cellData, rowData, rowIndex, colIndex) => {$(cell).css("background-color","#5ef4d3");}
+                    return full.KETERANGAN;
+                }
             },
             {
                 "data":null,
                 "aTargets": [2],
                 "mRender": function (data, type, full) {
-                    return "<td> Rp. " + accounting.formatNumber(full.RP_D0,2,".",",") + "</td";
+                    return full.TANGGAL;
                 }
 
             },
@@ -154,48 +153,44 @@ function initDataTablePlacement2(){
                 "data":null,
                 "aTargets": [3],
                 "mRender": function (data, type, full) {
-                    return "<td> Rp. " + accounting.formatNumber(full.RP_D1,2,".",",") + "</td";
+                    return full.STATUS_APPROVE;
                 }
 
             },
             {
                 "aTargets": [4],
                 "mRender": function (data, type, full) {
-                    var ret_value = " ";
-                    if (full.TIPE_KEBUTUHAN == "RECEIPT PLACEMENT" || full.TIPE_KEBUTUHAN == "GIRO SPECIAL RATE" ){
-                    ret_value = '<div class="col-md-6 btn-group" align="center">' +
-                                '<button style="width: 15px !important;" id="detail" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="setb(\''+full.TIPE_KEBUTUHAN+'\')"><i class="fa fa-clone"></i></button>';
-                                '<button style="width: 15px !important;" id="detail" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="setb(\''+full.TIPE_KEBUTUHAN+'\')"><i class="fa fa-clone"></i></button>';
-                                '<button style="width: 15px !important;" id="detail" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="setb(\''+full.TIPE_KEBUTUHAN+'\')"><i class="fa fa-clone"></i></button>';
-                                '<button style="width: 15px !important;" id="detail" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="setb(\''+full.TIPE_KEBUTUHAN+'\')"><i class="fa fa-clone"></i></button>';
-                                '<button style="width: 15px !important;" id="detail" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="setb(\''+full.TIPE_KEBUTUHAN+'\')"><i class="fa fa-clone"></i></button>';
+
+                    let ret_value = '<div class="cbtn-group">' +
+                                '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-primary" title="Detail Tagihan" onclick="detailTagihan(\''+full.ID_FORM+'\')"><i class="fas fa-info-circle"></i></button>'+
+                                '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-secondary" title="Sepuluh Tervesar" onclick="sepuluhTerbesar(\''+full.ID_FORM+'\')"><i class="fas fa-list-ol"></i></i></button>'+
+                                '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-success" title="Rangkuman" onclick="rangkuman(\''+full.ID_FORM+'\')"><i class="fas fa-file-archive"></i></button>'+
+                                '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-warning" title="Lembar Kerja" onclick="lembarKerja(\''+full.ID_FORM+'\')"><i class="fas fa-file-alt"></i></button>'+
+                                '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-elementary" title="Nota" onclick="nota(\''+full.ID_FORM+'\')"><i class="fas fa-clipboard"></i></button>'+
+                                '</div>';
                     return ret_value;
-                    }
-//                    else {
-//                    ret_value = '<div class="col-md-6 btn-group" align="center">' +
-//                                '<button style="width: 15px !important;" id="detail" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="seta(\''+full.TIPE_KEBUTUHAN+'\')"><i class="fa fa-clone"></i></button>';
-//                                '<button style="width: 15px !important;" id="detail" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="seta(\''+full.TIPE_KEBUTUHAN+'\')"><i class="fa fa-clone"></i></button>';
-//                                '<button style="width: 15px !important;" id="detail" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="seta(\''+full.TIPE_KEBUTUHAN+'\')"><i class="fa fa-clone"></i></button>';
-//                                '<button style="width: 15px !important;" id="detail" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="seta(\''+full.TIPE_KEBUTUHAN+'\')"><i class="fa fa-clone"></i></button>';
-//                                '<button style="width: 15px !important;" id="detail" class="btn btn-duplicate-data btn-sm btn-primary" title="Set" onclick="seta(\''+full.TIPE_KEBUTUHAN+'\')"><i class="fa fa-clone"></i></button>';
-//                    return ret_value; }
                 }
             }
         ],
         "ajax":
             {
                 "url":
-                    baseUrl + "api_operator/rekap_invoice_belum/placement_lcl_header",
+                    baseUrl + "api_operator/placement_lcl/placement_lcl_header",
                 "type":
                     "GET",
                 "dataType":
                     "json",
                 "data":
                     {
-                        p_tgl_awal: tglAwal
+                        start : 1,
+                        length : 10,
+                        pTanggal: tglAwal
                     }
                 ,
-                "dataSrc":
+                "dataSrc" : function(res){
+                    hideLoadingCss("");
+                    return res.data;
+                },
                 function (res) {
                     hideLoadingCss()
                     localStorage.setItem("imprest_approval_status", (res.data.length <= 0) ? "" : res.data[0].STATUS_APPROVE);
@@ -214,60 +209,59 @@ function initDataTablePlacement2(){
                 });
              }
          },
-
-         "drawCallback" : function (setting, json) {
-             let node = document.getElementById("button_action");
-             node.innerHTML = "";
-
-             let cur_periode = document.getElementById("tglcetak2").innerHTML;
-             let darr = cur_periode.split("/");
-             let now = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-             let periode = new Date(darr[2],darr[1]-1,darr[0]);
-
-             let elements = document.getElementsByClassName('md-step');
-             Array.prototype.forEach.call(elements,el => {
-                 document.getElementById(el.id).classList.remove("active");
-             });
-
-             if (localStorage.getItem("imprest_approval_status") === "1"){
-                 document.getElementById("staff_pe").className += " active";
-             }else if(localStorage.getItem("imprest_approval_status") === "2"){
-                 document.getElementById("staff_pe").className += " active";
-                 document.getElementById("msb_pe").className += " active";
-             }else if(localStorage.getItem("imprest_approval_status") === "3") {
-                 document.getElementById("staff_pe").className += " active";
-                 document.getElementById("msb_pe").className += " active";
-                 document.getElementById("vp_pe").className += " active";
-             }
-
-             if(!periode.getTime() < now.getTime()){
-                 $('.dataTables_filter2').each(function(){
-//                     console.log("Ini data : " + data);
-                     let html2;
-                     if (localStorage.getItem("imprest_approval_status") === "0"){
-                         if (newRoleUser[0] === "ROLE_ADMIN"){
-                             html2 = '<button class="btn btn-warning btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="update_lcl_data(1,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Approve"><i class="fas fa-check-square"></i></button>';
-                         }
-                     }else if(localStorage.getItem("imprest_approval_status") === "1"){
-                         if (newRoleUser[0] === "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY" || newRoleUser[0] === "ROLE_ADMIN"){
-                             html2 = '<button class="btn btn-warning btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="update_lcl_data(2,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Approve"><i class="fas fa-check-square"></i></button>';
-                             html2 += '<button class="btn btn-elementary btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="reverse_lcl_data(1,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Reverse"><i class="fas fa-backspace"></i></button>';
-                         }
-                     }else if(localStorage.getItem("imprest_approval_status") === "2"){
-                         if (newRoleUser[0] === "ROLE_VP_LIQUIDITY_AND_RECEIPT" || newRoleUser[0] === "ROLE_ADMIN"){
-                             html2 = '<button class="btn btn-warning btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="update_lcl_data(3,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Approve"><i class="fas fa-check-square"></i></button>';
-                             html2 += '<button class="btn btn-elementary btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="reverse_lcl_data(2,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Reverse"><i class="fas fa-backspace"></i></button>';
-                         }
-                     }
-                     else{
-                         if (newRoleUser[0] === "ROLE_ADMIN"){
-                             html2 = '<button class="btn btn-elementary btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="reverse_lcl_data(3,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Reverse"><i class="fas fa-backspace"></i></button>';
-                         }
-                     }
-                     $(this).append(html2);
-                 })
-             };
-         }
+//          "drawCallback" : function (setting, json) {
+//              let node = document.getElementById("button_action");
+//              node.innerHTML = "";
+//
+//              let cur_periode = document.getElementById("tglcetak2").innerHTML;
+//              let darr = cur_periode.split("/");
+//              let now = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+//              let periode = new Date(darr[2],darr[1]-1,darr[0]);
+//
+//              let elements = document.getElementsByClassName('md-step');
+//              Array.prototype.forEach.call(elements,el => {
+//                  document.getElementById(el.id).classList.remove("active");
+//              });
+//
+//              if (localStorage.getItem("imprest_approval_status") === "1"){
+//                  document.getElementById("staff_pe").className += " active";
+//              }else if(localStorage.getItem("imprest_approval_status") === "2"){
+//                  document.getElementById("staff_pe").className += " active";
+//                  document.getElementById("msb_pe").className += " active";
+//              }else if(localStorage.getItem("imprest_approval_status") === "3") {
+//                  document.getElementById("staff_pe").className += " active";
+//                  document.getElementById("msb_pe").className += " active";
+//                  document.getElementById("vp_pe").className += " active";
+//              }
+//
+//              if(!periode.getTime() < now.getTime()){
+//                  $('.dataTables_filter2').each(function(){
+// //                     console.log("Ini data : " + data);
+//                      let html2;
+//                      if (localStorage.getItem("imprest_approval_status") === "0"){
+//                          if (newRoleUser[0] === "ROLE_ADMIN"){
+//                              html2 = '<button class="btn btn-warning btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="update_lcl_data(1,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Approve"><i class="fas fa-check-square"></i></button>';
+//                          }
+//                      }else if(localStorage.getItem("imprest_approval_status") === "1"){
+//                          if (newRoleUser[0] === "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY" || newRoleUser[0] === "ROLE_ADMIN"){
+//                              html2 = '<button class="btn btn-warning btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="update_lcl_data(2,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Approve"><i class="fas fa-check-square"></i></button>';
+//                              html2 += '<button class="btn btn-elementary btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="reverse_lcl_data(1,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Reverse"><i class="fas fa-backspace"></i></button>';
+//                          }
+//                      }else if(localStorage.getItem("imprest_approval_status") === "2"){
+//                          if (newRoleUser[0] === "ROLE_VP_LIQUIDITY_AND_RECEIPT" || newRoleUser[0] === "ROLE_ADMIN"){
+//                              html2 = '<button class="btn btn-warning btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="update_lcl_data(3,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Approve"><i class="fas fa-check-square"></i></button>';
+//                              html2 += '<button class="btn btn-elementary btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="reverse_lcl_data(2,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Reverse"><i class="fas fa-backspace"></i></button>';
+//                          }
+//                      }
+//                      else{
+//                          if (newRoleUser[0] === "ROLE_ADMIN"){
+//                              html2 = '<button class="btn btn-elementary btn-sm" style="margin-left: 10px; width: 35px;" type="button" onclick="reverse_lcl_data(3,'+localStorage.getItem("tanggal")+','+localStorage.getItem("sesi")+')" title="Reverse"><i class="fas fa-backspace"></i></button>';
+//                          }
+//                      }
+//                      $(this).append(html2);
+//                  })
+//              };
+//          }
      });
 
      kebutuhanPlacement.on('search.dt', function () {
@@ -277,4 +271,36 @@ function initDataTablePlacement2(){
 
 
     kebutuhanPlacement.columns.adjust();
+}
+
+function detailTagihan(id) {
+    window.open( `${baseUrl}page_operator/placement_lcl/detail_tagihan?p=${id}`);
+}
+
+function sepuluhTerbesar(id) {
+    window.open( `${baseUrl}page_operator/placement_lcl/sepuluh?p=${id}`);
+}
+
+function rangkuman(id) {
+    window.open( `${baseUrl}page_operator/placement_lcl/rangkuman?p=${id}`);
+}
+
+function nota(id) {
+    window.open( `${baseUrl}page_operator/placement_lcl/nota?p=${id}`);
+}
+
+function lembarKerja(id) {
+    window.open( `${baseUrl}page_operator/placement_lcl/lembar_kerja?p=${id}`);
+}
+
+function createNew() {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = () => {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+            console.log(xhttp.response);
+            kebutuhanPlacement.ajax.reload();
+        }
+    };
+    xhttp.open('GET',`${baseUrl}api_operator/placement_lcl/test`, true);
+    xhttp.send();
 }

@@ -1,0 +1,212 @@
+<div th:fragment="stylesheets-backend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        table {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+        }
+        table th {
+            font-size: 13px;
+            vertical-align: middle;
+            text-align: center;
+            font-weight: bold;
+        }
+        table td {
+            font-size: 12px;
+            /*font-weight: bold;*/
+            width:1%;
+            white-space:nowrap;
+        }
+        .modal-dialog {
+            max-width: 1500px;
+            margin: 30px auto;
+        }
+        input{
+            border: none;
+            width: 80%;
+            max-width: 120px;
+        }
+                .md-stepper-horizontal {
+            display:table;
+            width:80%;
+            margin:0 auto;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Placement LCL | Sepuluh Tagihan Terbesar</li>
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="createNew()"><i class="fas fa-plus-square"></i> &nbsp;Create</button>-->
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generateExcel()"><i class="fas fa-file-excel"></i> &nbsp;Xls</button>-->
+            </div>
+        </li>
+    </ol>
+
+    <div class="container-fluid">
+<!--        h0-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="card-title">TAGIHAN H0</h6>
+                    </div>
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-4" style="padding: 0 0.2em 0 0.2em;">
+                                <table class="table table-condensed" id="tb_h0_bri" width="100%">
+                                    <thead style="background-color: #ea907a !important;">
+                                    <tr>
+                                        <th>VENDOR</th>
+                                        <th>REN. BAYAR</th>
+                                        <th>CURRENCY</th>
+                                        <th>NOMINAL</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-4" style="padding: 0 0.2em 0 0.2em;">
+                                <table class="table table-condensed" id="tb_h0_mdr" width="100%">
+                                    <thead style="background-color: #fbc687 !important;">
+                                    <tr>
+                                        <th>VENDOR</th>
+                                        <th>REN. BAYAR</th>
+                                        <th>CURRENCY</th>
+                                        <th>NOMINAL</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-4" style="padding: 0 0.2em 0 0.2em;">
+                                <table class="table table-condensed" id="tb_h0_bni" width="100%">
+                                    <thead style="background-color: #aacdbe !important;">
+                                    <tr>
+                                        <th>VENDOR</th>
+                                        <th>REN. BAYAR</th>
+                                        <th>CURRENCY</th>
+                                        <th>NOMINAL</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!--        h1-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="card-title">TAGIHAN H1</h6>
+                    </div>
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-4" style="padding: 0 0.2em 0 0.2em;">
+                                <table class="table table-condensed" id="tb_h1_bri" width="100%">
+                                    <thead style="background-color: #ea907a !important;">
+                                    <tr>
+                                        <th>VENDOR</th>
+                                        <th>REN. BAYAR</th>
+                                        <th>CURRENCY</th>
+                                        <th>NOMINAL</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-4" style="padding: 0 0.2em 0 0.2em;">
+                                <table class="table table-condensed" id="tb_h1_mdr" width="100%">
+                                    <thead style="background-color: #fbc687 !important;">
+                                    <tr>
+                                        <th>VENDOR</th>
+                                        <th>REN. BAYAR</th>
+                                        <th>CURRENCY</th>
+                                        <th>NOMINAL</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-4" style="padding: 0 0.2em 0 0.2em;">
+                                <table class="table table-condensed" id="tb_h1_bni" width="100%">
+                                    <thead style="background-color: #aacdbe !important;">
+                                    <tr>
+                                        <th>VENDOR</th>
+                                        <th>REN. BAYAR</th>
+                                        <th>CURRENCY</th>
+                                        <th>NOMINAL</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!--        h2-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="card-title">TAGIHAN H2</h6>
+                    </div>
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-4" style="padding: 0 0.2em 0 0.2em;">
+                                <table class="table table-condensed" id="tb_h2_bri" width="100%">
+                                    <thead style="background-color: #ea907a !important;">
+                                    <tr>
+                                        <th>VENDOR</th>
+                                        <th>REN. BAYAR</th>
+                                        <th>CURRENCY</th>
+                                        <th>NOMINAL</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-4" style="padding: 0 0.2em 0 0.2em;">
+                                <table class="table table-condensed" id="tb_h2_mdr" width="100%">
+                                    <thead style="background-color: #fbc687 !important;">
+                                    <tr>
+                                        <th>VENDOR</th>
+                                        <th>REN. BAYAR</th>
+                                        <th>CURRENCY</th>
+                                        <th>NOMINAL</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-4" style="padding: 0 0.2em 0 0.2em;">
+                                <table class="table table-condensed" id="tb_h2_bni" width="100%">
+                                    <thead style="background-color: #aacdbe !important;">
+                                    <tr>
+                                        <th>VENDOR</th>
+                                        <th>REN. BAYAR</th>
+                                        <th>CURRENCY</th>
+                                        <th>NOMINAL</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/placement_lcl_sepuluh.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+</div>

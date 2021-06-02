@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 
@@ -62,6 +63,27 @@ public class PageOperatorController {
 
     @RequestMapping("/placement_lcl")
     public String placement_lcl() { return "operator/placement_lcl_header";
+    }
+
+    @RequestMapping(value= {"/placement_lcl/detail_tagihan"},  params="p")
+    public String placement_lcl_detail() { return "operator/placement_lcl_detail";
+    }
+
+    @RequestMapping(value= {"/placement_lcl/sepuluh"},  params={"p"})
+    public String placement_lcl_sepuluh() { return "operator/placement_lcl_sepuluh";
+    }
+
+    @RequestMapping(value= {"/placement_lcl/rangkuman"},  params={"p"})
+    public String placement_lcl_rangkuman() { return "operator/placement_lcl_rangkuman";
+    }
+
+    @RequestMapping(value= {"/placement_lcl/lembar_kerja"},  params={"p"})
+    public String placement_lcl_lembar_kerja() { return "operator/placement_lcl_lembar_kerja";
+    }
+
+    @RequestMapping(value= {"/placement_lcl/nota"},  params={"p"})
+    public String placement_lcl_nota() {
+        return "operator/placement_lcl_nota";
     }
 
     @RequestMapping("/giro")

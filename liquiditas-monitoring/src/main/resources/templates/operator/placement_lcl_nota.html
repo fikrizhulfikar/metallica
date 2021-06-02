@@ -1,0 +1,54 @@
+<div th:fragment="stylesheets-backend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        table {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+        }
+        table th {
+            font-size: 13px;
+            vertical-align: middle;
+            text-align: center;
+            font-weight: bold;
+        }
+        table td {
+            font-size: 12px;
+            /*font-weight: bold;*/
+            width:1%;
+            white-space:nowrap;
+        }
+        .modal-dialog {
+            max-width: 1500px;
+            margin: 30px auto;
+        }
+        input{
+            border: none;
+            width: 80%;
+            max-width: 120px;
+        }
+                .md-stepper-horizontal {
+            display:table;
+            width:80%;
+            margin:0 auto;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Placement LCL | Nota Placement</li>
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="createNew()"><i class="fas fa-plus-square"></i> &nbsp;Create</button>-->
+                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generateDoc()"><i class="fas fa-file-excel"></i> &nbsp;Cetak</button>
+            </div>
+        </li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="row" id="row_nota">
+
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/placement_lcl_nota.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+</div>
