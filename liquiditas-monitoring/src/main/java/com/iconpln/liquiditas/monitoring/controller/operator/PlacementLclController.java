@@ -294,13 +294,13 @@ public class PlacementLclController {
         }
     }
 
-    @RequestMapping(path = "/reverse_placement_lcl_head", method = RequestMethod.POST)
+    @RequestMapping(path = "/reverse_placement_lcl_header", method = RequestMethod.POST)
     public Map<String, Object> reversePlacementLCLHead(
             @RequestParam(value = "p_status", defaultValue = "") String status,
             @RequestParam(value = "p_id_form", defaultValue = "") String idForm
     ) {
         try {
-            Map<String, Object> result = placementLclService.reversePlacementLclHeader(status, idForm);
+            Map<String, Object> result = placementLclService.reversePlacementLclHeader(status, WebUtils.getUsernameLogin(), idForm);
             System.out.println("Testing reverse = "+status);
             return result;
         } catch (Exception e) {

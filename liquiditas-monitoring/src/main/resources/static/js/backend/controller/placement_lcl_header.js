@@ -161,7 +161,7 @@ function initPlacementLclHeader(){
                 "aTargets": [4],
                 "mRender": function (data, type, full) {
                     var ret_value;
-                    if (full.STATUS_APPROVE === "INPUT DATA"){
+                    if (full.STATUS_TRACKING === "0"){
                         if (newRoleUser[0] === "ROLE_ADMIN" || newRoleUser[0] === "ROLE_LOCAL_CURRENCY_LIQUIDITY"){
                             let ret_value = '<div class="cbtn-group">' +
                                         '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-primary" title="Detail Tagihan" onclick="detailTagihan(\''+full.ID_FORM+'\')"><i class="fas fa-info-circle"></i></button>'+
@@ -173,7 +173,7 @@ function initPlacementLclHeader(){
                                         '</div>';
                             return ret_value;
                         }
-                    } else if (full.STATUS_APPROVE === "VERIFIKASI STAFF") {
+                    } else if (full.STATUS_TRACKING === "1") {
                          if (newRoleUser[0] === "ROLE_ADMIN" || newRoleUser[0] === "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY"){
                             let ret_value = '<div class="cbtn-group">' +
                                         '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-primary" title="Detail Tagihan" onclick="detailTagihan(\''+full.ID_FORM+'\')"><i class="fas fa-info-circle"></i></button>'+
@@ -182,11 +182,11 @@ function initPlacementLclHeader(){
                                         '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-warning" title="Lembar Kerja" onclick="lembarKerja(\''+full.ID_FORM+'\')"><i class="fas fa-file-alt"></i></button>'+
                                         '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-elementary" title="Nota" onclick="nota(\''+full.ID_FORM+'\')"><i class="fas fa-clipboard"></i></button>'+
                                         '<button style="width: 15px !important; margin-left: 5px !important;" id="verifikasi" class="btn btn-sm btn-warning" title="Verifikasi" onclick="verif(2,\''+full.ID_FORM+'\')"><i class="fa fa-check-square"></i></button>' +
-                                        '<button style="width: 15px !important; margin: 2px;" id="reverse" class="btn btn-duplicate-data btn-sm btn-primary" title="Reverse" onclick="reverse(1,\''+full.NAMA_FORM+'\')"><i class="fa fa-backspace"></i></button>' +
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="reverse" class="btn btn-duplicate-data btn-sm btn-primary" title="Reverse" onclick="reverse(1,\''+full.ID_FORM+'\')"><i class="fa fa-backspace"></i></button>' +
                                         '</div>';
                             return ret_value;
                          }
-                    } else if (full.STATUS_APPROVE === "VERIFIKASI MSB LCL") {
+                    } else if (full.STATUS_TRACKING === "2") {
                          if (newRoleUser[0] === "ROLE_ADMIN" || newRoleUser[0] === "ROLE_VP_LIQUIDITY_AND_RECEIPT"){
                             let ret_value = '<div class="cbtn-group">' +
                                         '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-primary" title="Detail Tagihan" onclick="detailTagihan(\''+full.ID_FORM+'\')"><i class="fas fa-info-circle"></i></button>'+
@@ -195,17 +195,19 @@ function initPlacementLclHeader(){
                                         '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-warning" title="Lembar Kerja" onclick="lembarKerja(\''+full.ID_FORM+'\')"><i class="fas fa-file-alt"></i></button>'+
                                         '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-elementary" title="Nota" onclick="nota(\''+full.ID_FORM+'\')"><i class="fas fa-clipboard"></i></button>'+
                                         '<button style="width: 15px !important; margin-left: 5px !important;" id="verifikasi" class="btn btn-sm btn-warning" title="Verifikasi" onclick="verif(3,\''+full.ID_FORM+'\')"><i class="fa fa-check-square"></i></button>' +
-                                        '<button style="width: 15px !important; margin: 2px;" id="reverse" class="btn btn-duplicate-data btn-sm btn-primary" title="Reverse" onclick="reverse(2,\''+full.NAMA_FORM+'\')"><i class="fa fa-backspace"></i></button>' +
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="reverse" class="btn btn-duplicate-data btn-sm btn-primary" title="Reverse" onclick="reverse(2,\''+full.ID_FORM+'\')"><i class="fa fa-backspace"></i></button>' +
                                         '</div>';
                             return ret_value;
                          }
-                    } else if (full.STATUS_APPROVE === "VERIFIKASI VP TLR") {
+                    } else if (full.STATUS_TRACKING === "3") {
                             let ret_value = '<div class="cbtn-group">' +
                                         '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-primary" title="Detail Tagihan" onclick="detailTagihan(\''+full.ID_FORM+'\')"><i class="fas fa-info-circle"></i></button>'+
                                         '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-secondary" title="Sepuluh Tervesar" onclick="sepuluhTerbesar(\''+full.ID_FORM+'\')"><i class="fas fa-list-ol"></i></i></button>'+
                                         '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-success" title="Rangkuman" onclick="rangkuman(\''+full.ID_FORM+'\')"><i class="fas fa-file-archive"></i></button>'+
                                         '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-warning" title="Lembar Kerja" onclick="lembarKerja(\''+full.ID_FORM+'\')"><i class="fas fa-file-alt"></i></button>'+
-                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-elementary" title="Nota" onclick="nota(\''+full.ID_FORM+'\')"><i class="fas fa-clipboard"></i></button>'+                                        '</div>';
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-elementary" title="Nota" onclick="nota(\''+full.ID_FORM+'\')"><i class="fas fa-clipboard"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="reverse" class="btn btn-duplicate-data btn-sm btn-primary" title="Reverse" onclick="reverse(3,\''+full.ID_FORM+'\')"><i class="fa fa-backspace"></i></button>' +
+                                        '</div>';
                             return ret_value;
                     }
                 }
@@ -366,13 +368,14 @@ function verif(status, idForm){
                 hideLoadingCss();
             },
             error : (err) => {
-                hideLoadingCss("Terjadi Kesalahan. Silahakn Hubungi Administrator!");
+                hideLoadingCss("Terjadi kesalahan. Silahkan hubungi administrator!");
             }
         })
     }
 }
 
 function reverse(status, idForm){
+//    console.log("Ini data : " + status + idForm);
     $("#nama-form").html(idForm);
     var confirmation = confirm("Apakah Anda yakin akan reverse placement "+document.getElementById("nama-form").innerHTML+" ?");
     if (confirmation){
@@ -393,7 +396,7 @@ function reverse(status, idForm){
                 hideLoadingCss();
             },
             error : (err) => {
-                hideLoadingCss("Terjadi Kesalahan. Silahakn Hubungi Administrator!");
+                hideLoadingCss("Terjadi kesalahan. Silahkan hubungi administrator!");
             }
         })
     }

@@ -266,7 +266,7 @@ public class PlacementLclService {
         return out;
     }
 
-    public Map<String, Object> reversePlacementLclHeader(String status, String idForm){
+    public Map<String, Object> reversePlacementLclHeader(String status, String userId, String idForm){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY2")
                 .withFunctionName("reverse_status_lcl");
@@ -274,6 +274,7 @@ public class PlacementLclService {
         SqlParameterSource inParent = new MapSqlParameterSource()
                 .addValue("p_status", status, OracleTypes.VARCHAR)
                 .addValue("p_id_form", idForm, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR)
                 .addValue("out_msg", OracleTypes.VARCHAR);
         out = simpleJdbcCall.execute(inParent);
         return out;
