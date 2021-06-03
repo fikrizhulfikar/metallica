@@ -1,0 +1,293 @@
+<div th:fragment="stylesheets-backend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        table {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+        }
+        table th {
+            font-size: 13px;
+            vertical-align: middle;
+            text-align: center;
+            font-weight: bold;
+        }
+        table td {
+            font-size: 12px;
+            /*font-weight: bold;*/
+            width:1%;
+            white-space:nowrap;
+        }
+        .modal-dialog {
+            max-width: 1500px;
+            margin: 30px auto;
+        }
+        input{
+            border: none;
+            width: 80%;
+            max-width: 120px;
+        }
+                .md-stepper-horizontal {
+            display:table;
+            width:80%;
+            margin:0 auto;
+        }
+        .md-stepper-horizontal .md-step {
+            display:table-cell;
+            position:relative;
+            padding:15px;
+        }
+        .md-stepper-horizontal .md-step:active {
+            border-radius: 15% / 75%;
+        }
+        .md-stepper-horizontal .md-step:first-child:active {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        .md-stepper-horizontal .md-step:last-child:active {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        .md-stepper-horizontal .md-step:hover .md-step-circle {
+            background-color:#757575;
+        }
+        .md-stepper-horizontal .md-step:first-child .md-step-bar-left,
+        .md-stepper-horizontal .md-step:last-child .md-step-bar-right {
+            display:none;
+        }
+        .md-stepper-horizontal .md-step .md-step-circle {
+            width:30px;
+            height:30px;
+            margin:0 auto;
+            background-color:#999999;
+            border-radius: 50%;
+            text-align: center;
+            line-height:30px;
+            font-size: 16px;
+            font-weight: 600;
+            color:#FFFFFF;
+        }
+        .md-stepper-horizontal.green .md-step.active .md-step-circle {
+            background-color:#00AE4D;
+        }
+        .md-stepper-horizontal.orange .md-step.active .md-step-circle {
+            background-color:#F96302;
+        }
+        .md-stepper-horizontal .md-step.active .md-step-circle {
+            background-color: rgb(33,150,243);
+        }
+        .md-stepper-horizontal .md-step.done .md-step-circle:before {
+            font-family:'FontAwesome';
+            font-weight:100;
+            content: "\f00c";
+        }
+        .md-stepper-horizontal .md-step.done .md-step-circle *,
+        .md-stepper-horizontal .md-step.editable .md-step-circle * {
+            display:none;
+        }
+        .md-stepper-horizontal .md-step.editable .md-step-circle {
+            -moz-transform: scaleX(-1);
+            -o-transform: scaleX(-1);
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+        }
+        .md-stepper-horizontal .md-step.editable .md-step-circle:before {
+            font-family:'FontAwesome';
+            font-weight:100;
+            content: "\f040";
+        }
+        .md-stepper-horizontal .md-step .md-step-title {
+            margin-top:3px;
+            font-size:16px;
+            font-weight:600;
+        }
+        .md-stepper-horizontal .md-step .md-step-title,
+        .md-stepper-horizontal .md-step .md-step-optional {
+            text-align: center;
+            color:rgba(0,0,0,.26);
+        }
+        .md-stepper-horizontal .md-step.active .md-step-title {
+            font-weight: 600;
+            color:rgba(0,0,0,.87);
+        }
+        .md-stepper-horizontal .md-step.active.done .md-step-title,
+        .md-stepper-horizontal .md-step.active.editable .md-step-title {
+            font-weight:600;
+        }
+        .md-stepper-horizontal .md-step .md-step-optional {
+            font-size:12px;
+        }
+        .md-stepper-horizontal .md-step.active .md-step-optional {
+            color:rgba(0,0,0,.54);
+        }
+        .md-stepper-horizontal .md-step .md-step-bar-left,
+        .md-stepper-horizontal .md-step .md-step-bar-right {
+            position:absolute;
+            top:36px;
+            height:1px;
+            border-top:1px solid #DDDDDD;
+        }
+        .md-stepper-horizontal .md-step .md-step-bar-right {
+            right:0;
+            left:50%;
+            margin-left:20px;
+        }
+        .md-stepper-horizontal .md-step .md-step-bar-left {
+            left:0;
+            right:50%;
+            margin-right:20px;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Placement LCL</li>
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="createNew()"><i class="fas fa-plus-square"></i> &nbsp;Create</button>-->
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generateExcel()"><i class="fas fa-file-excel"></i> &nbsp;Xls</button>-->
+            </div>
+        </li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="card-title">A. TAGIHAN INVOICE</h6>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-condensed table-striped table-primary" id="tb_detail_lcl_invoice" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>NO</th>
+                                    <th>JENIS TAGIHAN</th>
+                                    <th>JENIS PEMBAYARAN</th>
+                                    <th>JATUH TEMPO</th>
+                                    <th>VENDOR/PENGEMBANG/PEMASOK/LOAD</th>
+                                    <th>CURRENCY</th>
+                                    <th>NILAI TAGIHAN</th>
+                                    <th>NOMINAL EQ IDR</th>
+                                    <th>NAMA KONTRAK/ LOAN/ UNIT PENERIMA/ PEMBANGKIT</th>
+                                    <th>BANK TUJUAN PEMBAYARAN</th>
+                                    <th>BANK PEMBAYAR</th>
+                                    <th>TANGGAL TERIMA TAGIHAN</th>
+                                    <th>TGL. TAGIHAN</th>
+                                    <th>NO. TAGIHAN</th>
+<!--                                    <th>TGL. NOTA DINAS PEMBAYARAN</th>-->
+<!--                                    <th>NO. NOTA DINAS PEMBAYARAN</th>-->
+<!--                                    <th>TANGGAL PEMBAYARAN</th>-->
+<!--                                    <th>COUNTDOWN</th>-->
+<!--                                    <th>STATUS</th>-->
+<!--                                    <th>TIPE TRANSAKSI</th>-->
+<!--                                    <th>NOMINAL SBLM PAJAK</th>-->
+<!--                                    <th>PAJAK</th>-->
+<!--                                    <th>NOMINAL STLH PAJAK</th>-->
+<!--                                    <th>NOMINAL UNDERLYING</th>-->
+<!--                                    <th>NOMINAL TANPA UNDERLYING</th>-->
+<!--                                    <th>KURS JISDOR</th>-->
+<!--                                    <th>SPREAD</th>-->
+<!--                                    <th>KURS TRANSAKSI</th>-->
+<!--                                    <th>NOMINAL PEMBAYARAN IDR</th>-->
+<!--                                    <th>CREATE DATE</th>-->
+<!--                                    <th>UPDATE DATE</th>-->
+<!--                                    <th>STATUS TAGIHAN</th>-->
+                                    <th>KETERANGAN</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="card-title">B. TAGIHAN OPERASI KHUSUS</h6>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-responsive table-condensed table-striped" id="tb_detail_operasi_khusus" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>NO</th>
+                                    <th>DOCUMENT_DATE</th>
+                                    <th>POSTING DATE</th>
+                                    <th>DOCUMENT NUMBER</th>
+                                    <th>REFERENCE</th>
+                                    <th>COMPANY_CODE</th>
+                                    <th>BUSINESS_AREA</th>
+                                    <th>CURRENCY</th>
+                                    <th>DOC_HDR_TXT</th>
+                                    <th>TOTAL TAGIHAN</th>
+                                    <th>SUMBER DANA</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="card-title">C. TAGIHAN GIRO SPECIAL RATE</h6>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-responsive table-condensed" id="id_detail_lcl_giro">
+                            <thead>
+                                <tr>
+                                    <th>NO</th>
+                                    <th>BANK</th>
+                                    <th>CURRENCY</th>
+                                    <th>PRODUK</th>
+                                    <th>NOMINAL</th>
+                                    <th>INTEREST</th>
+                                    <th>TGL PENEMPATAN</th>
+                                    <th>TGL JATUH TEMPO</th>
+                                    <th>JASA_GIRO</th>
+                                    <th>PAJAK</th>
+                                    <th>NETT JASA GIRO</th>
+                                    <th>PAJAK JASA GIRO</th>
+                                    <th>KETERANGAN</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="card-title">D. DROPPING UNIT</h6>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-responsive table-condensed" id="tb_detail_lcl_dropping" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>NO</th>
+                                    <th>BANK</th>
+                                    <th>ID FORM</th>
+                                    <th>TANGGAL</th>
+                                    <th>DROPPING_OPERASI</th>
+                                    <th>DROPPING_INVESTASI</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/placement_lcl_detail.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+</div>

@@ -1,0 +1,368 @@
+<div th:fragment="stylesheets-backend" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        table {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.10), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+        }
+        table th {
+            font-size: 13px;
+            vertical-align: middle;
+            text-align: center;
+            font-weight: bold;
+        }
+        table td {
+            font-size: 12px;
+            /*font-weight: bold;*/
+            width:1%;
+            white-space:nowrap;
+        }
+        .modal-dialog {
+            max-width: 1500px;
+            margin: 30px auto;
+        }
+        input{
+            border: none;
+            width: 80%;
+            max-width: 120px;
+        }
+        table.dataTable tbody th, table.dataTable tbody td {
+            padding: 8px 10px;
+        }
+        table.dataTable tbody td input{
+            height: 0.8em;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Placement LCL | Lembar Kerja</li>
+        <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="createNew()"><i class="fas fa-plus-square"></i> &nbsp;Create</button>-->
+<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generateExcel()"><i class="fas fa-file-excel"></i> &nbsp;Xls</button>-->
+            </div>
+        </li>
+    </ol>
+
+    <div class="container-fluid">
+        <div class="row">
+        </div>
+<!--        pembelian valas-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h6 class="card-title">SALDO RECEIPT UNTUK PEMBELIAN VALAS</h6>
+                            </div>
+                            <div class="col-md-1 pull-right">
+                                <button class="btn btn-sm btn-success" onclick="saveLclValas()"><i class="fas fa-save"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-condensed" id="tb_lcl_receipt_pembelian_valas" width="2000px">
+                            <thead>
+                            <tr>
+                                <th>REKENING BANK</th>
+                                <th>TANGGAL</th>
+                                <th>MANDIRI</th>
+                                <th>BRI</th>
+                                <th>BNI</th>
+                                <th>BUKOPIN</th>
+                                <th>BCA</th>
+                                <th>BANK DKI</th>
+                                <th>UOB</th>
+                                <th>BANK DANAMON SYARIAH</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--        end of pembelian valas-->
+
+        <!--        tf rek receipt-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h6 class="card-title">TRF KE REKENING RECEIPT</h6>
+                            </div>
+                            <div class="col-md-1 pull-right">
+                                <button class="btn btn-sm btn-success" onclick="saveLclReceipt()"><i class="fas fa-save"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-condensed" id="tb_lcl_tf_receipt" width="2000px">
+                            <thead>
+                            <tr>
+                                <th>REKENING BANK</th>
+                                <th>TANGGAL</th>
+                                <th>MANDIRI</th>
+                                <th>BRI</th>
+                                <th>BNI</th>
+                                <th>BUKOPIN</th>
+                                <th>CIMB NIAGA</th>
+                                <th>DANAMON SYARIAH</th>
+                                <th>MAYBANK</th>
+                                <th>UOB</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--        end of tf rek receipt-->
+
+<!--        tf rek imp ops pusat-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h6 class="card-title">TRF KE REKENING IMPREST OPERASI TERPUSAT</h6>
+                            </div>
+                            <div class="col-md-1 pull-right">
+                                <button class="btn btn-sm btn-success" onclick="saveLclOpsPusat()"><i class="fas fa-save"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-condensed" id="tb_lcl_ops_pusat" width="100%">
+                            <thead>
+                            <tr>
+                                <th>REKENING BANK</th>
+                                <th>MANDIRI</th>
+                                <th>BRI</th>
+                                <th>BNI</th>
+                                <th>BUKOPIN</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+       <!--       end tf rek imp ops pusat-->
+
+<!--        tf rek inv pusat-->
+        <div class="row" >
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h6 class="card-title">TRF KE REKENING IMPREST INVESTASI TERPUSAT</h6>
+                            </div>
+                            <div class="col-md-1 pull-right">
+                                <button class="btn btn-sm btn-success" onclick="saveLclInvPusat()"><i class="fas fa-save"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-condensed" id="tb_lcl_inv_pusat" width="100%">
+                            <thead>
+                            <tr>
+                                <th>REKENING BANK</th>
+                                <th>MANDIRI</th>
+                                <th>BRI</th>
+                                <th>BNI</th>
+                                <th>BUKOPIN</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--        tf rek inv pusat-->
+
+        <!--        imp pusat-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h6 class="card-title">IMPREST KANTOR PUSAT</h6>
+                            </div>
+                            <div class="col-md-1 pull-right">
+                                <button class="btn btn-sm btn-success" onclick="saveLclImprestPusat()"><i class="fas fa-save"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-condensed" id="tb_lcl_imprest_pusat" width="100%">
+                            <thead>
+                            <tr>
+                                <th>REKENING BANK</th>
+                                <th>MANDIRI</th>
+                                <th>BRI</th>
+                                <th>BNI</th>
+                                <th>BUKOPIN</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--        imp pusat-->
+
+        <!--        tf rek impor-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h6 class="card-title">TRF KE REKENING IMPOR</h6>
+                            </div>
+                            <div class="col-md-1 pull-right">
+                                <button class="btn btn-sm btn-success" onclick="saveLclTfRekImpor()"><i class="fas fa-save"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-condensed" id="tb_lcl_trf_rek_impor" width="100%">
+                            <thead>
+                            <tr>
+                                <th>REKENING BANK</th>
+                                <th>MANDIRI</th>
+                                <th>BRI</th>
+                                <th>BNI</th>
+                                <th>BUKOPIN</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--        tf rek impor-->
+
+<!--supply chain financing-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h6 class="card-title">SUPPLY CHAIN FINANCING</h6>
+                            </div>
+                            <div class="col-md-1 pull-right">
+                                <button class="btn btn-sm btn-success" onclick="saveLclScf()"><i class="fas fa-save"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-condensed" id="tb_lcl_scf" width="100%">
+                            <thead>
+                            <tr>
+                                <th>REKENING BANK</th>
+                                <th>MANDIRI</th>
+                                <th>BRI</th>
+                                <th>BNI</th>
+                                <th>BUKOPIN</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--end of supply chain financing-->
+
+        <!--PLACEMENT OPTIMASI DANA-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h6 class="card-title">PLACEMENT OPTIMASI DANA</h6>
+                            </div>
+                            <div class="col-md-1 pull-right">
+                                <button class="btn btn-sm btn-success" onclick="saveLclOptimasiDana()"><i class="fas fa-save"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-condensed" id="tb_lcl_optimasi_dana" width="2000px">
+                            <thead>
+                            <tr>
+                                <th>REKENING BANK</th>
+                                <th>MANDIRI</th>
+                                <th>BRI</th>
+                                <th>BNI</th>
+                                <th>BUKOPIN</th>
+                                <th>BANK UOB</th>
+                                <th>BTN</th>
+                                <th>BANK DANAMON SYARIAH</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end of PLACEMENT OPTIMASI DANA-->
+
+        <!--last table-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h6 class="card-title">REKAP SALDO</h6>
+                            </div>
+                            <div class="col-md-1 pull-right">
+                                <button class="btn btn-sm btn-success" onclick="saveLclOpsTerpusat()"><i class="fas fa-save"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-block">
+                        <table class="table table-condensed" id="tb_lcl_last" width="100%">
+                            <thead>
+                            <tr>
+                                <th>BANK RECEIPT</th>
+                                <th>SALDO AWAL</th>
+                                <th>SALDO UNTUK KEBUTUHAN VALAS</th>
+                                <th>TOTAL CASH IN</th>
+                                <th>TOTAL CASH OUT</th>
+                                <th>SALDO AKHIR</th>
+                                <th>OPTIMASI DANA</th>
+                                <th>FREECASH FLOW RECEIPT</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot></tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end of last table-->
+
+    </div>
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/controller/placement_lcl_lembar_kerja.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+</div>
