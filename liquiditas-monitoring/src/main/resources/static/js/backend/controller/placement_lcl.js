@@ -1,6 +1,9 @@
 var tempTableSearch = "";
 var kebutuhanPlacement;
-var lcl_today = null;
+var lcl_today = null;} else if (time >= "14"){
+        sesi = 2;
+    }
+
 var tanggal = new Date();
 var tanggal2 = new Date();
 var time = tanggal.getHours();
@@ -19,9 +22,6 @@ $(document).ready(function () {
 
     if (time <= "14"){
         sesi = 1;
-    } else if (time >= "14"){
-        sesi = 2;
-    }
 
     $("#tglcetak1").html(tanggal);
     $("#sesicetak1").html(sesi);

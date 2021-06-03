@@ -125,7 +125,7 @@ function initPlacementLclHeader(){
 //            {width: 100, targets: 8},
 //            {width: "20%", "targets": 0},
             { className: "datatables_action", "targets": [] },
-            {"className": 'dt-body-center', "targets": [0,4]},
+            {"className": 'dt-body-center', "targets": [0,2,3,4]},
             {
                 "data":null,
                 "aTargets": [0],
@@ -160,15 +160,54 @@ function initPlacementLclHeader(){
             {
                 "aTargets": [4],
                 "mRender": function (data, type, full) {
-
-                    let ret_value = '<div class="cbtn-group">' +
-                                '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-primary" title="Detail Tagihan" onclick="detailTagihan(\''+full.ID_FORM+'\')"><i class="fas fa-info-circle"></i></button>'+
-                                '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-secondary" title="Sepuluh Tervesar" onclick="sepuluhTerbesar(\''+full.ID_FORM+'\')"><i class="fas fa-list-ol"></i></i></button>'+
-                                '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-success" title="Rangkuman" onclick="rangkuman(\''+full.ID_FORM+'\')"><i class="fas fa-file-archive"></i></button>'+
-                                '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-warning" title="Lembar Kerja" onclick="lembarKerja(\''+full.ID_FORM+'\')"><i class="fas fa-file-alt"></i></button>'+
-                                '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-elementary" title="Nota" onclick="nota(\''+full.ID_FORM+'\')"><i class="fas fa-clipboard"></i></button>'+
-                                '</div>';
-                    return ret_value;
+                    var ret_value;
+                    if (full.STATUS_APPROVE === "INPUT DATA"){
+                        if (newRoleUser[0] === "ROLE_ADMIN" || newRoleUser[0] === "ROLE_LOCAL_CURRENCY_LIQUIDITY"){
+                            let ret_value = '<div class="cbtn-group">' +
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-primary" title="Detail Tagihan" onclick="detailTagihan(\''+full.ID_FORM+'\')"><i class="fas fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-secondary" title="Sepuluh Tervesar" onclick="sepuluhTerbesar(\''+full.ID_FORM+'\')"><i class="fas fa-list-ol"></i></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-success" title="Rangkuman" onclick="rangkuman(\''+full.ID_FORM+'\')"><i class="fas fa-file-archive"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-warning" title="Lembar Kerja" onclick="lembarKerja(\''+full.ID_FORM+'\')"><i class="fas fa-file-alt"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-elementary" title="Nota" onclick="nota(\''+full.ID_FORM+'\')"><i class="fas fa-clipboard"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="verifikasi" class="btn btn-sm btn-warning" title="Verifikasi" onclick="verif(1,\''+full.ID_FORM+'\')"><i class="fa fa-check-square"></i></button>' +
+                                        '</div>';
+                            return ret_value;
+                        }
+                    } else if (full.STATUS_APPROVE === "VERIFIKASI STAFF") {
+                         if (newRoleUser[0] === "ROLE_ADMIN" || newRoleUser[0] === "ROLE_MSB_LOCAL_CURRENCY_LIQUIDITY"){
+                            let ret_value = '<div class="cbtn-group">' +
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-primary" title="Detail Tagihan" onclick="detailTagihan(\''+full.ID_FORM+'\')"><i class="fas fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-secondary" title="Sepuluh Tervesar" onclick="sepuluhTerbesar(\''+full.ID_FORM+'\')"><i class="fas fa-list-ol"></i></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-success" title="Rangkuman" onclick="rangkuman(\''+full.ID_FORM+'\')"><i class="fas fa-file-archive"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-warning" title="Lembar Kerja" onclick="lembarKerja(\''+full.ID_FORM+'\')"><i class="fas fa-file-alt"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-elementary" title="Nota" onclick="nota(\''+full.ID_FORM+'\')"><i class="fas fa-clipboard"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="verifikasi" class="btn btn-sm btn-warning" title="Verifikasi" onclick="verif(2,\''+full.ID_FORM+'\')"><i class="fa fa-check-square"></i></button>' +
+                                        '<button style="width: 15px !important; margin: 2px;" id="reverse" class="btn btn-duplicate-data btn-sm btn-primary" title="Reverse" onclick="reverse(1,\''+full.NAMA_FORM+'\')"><i class="fa fa-backspace"></i></button>' +
+                                        '</div>';
+                            return ret_value;
+                         }
+                    } else if (full.STATUS_APPROVE === "VERIFIKASI MSB LCL") {
+                         if (newRoleUser[0] === "ROLE_ADMIN" || newRoleUser[0] === "ROLE_VP_LIQUIDITY_AND_RECEIPT"){
+                            let ret_value = '<div class="cbtn-group">' +
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-primary" title="Detail Tagihan" onclick="detailTagihan(\''+full.ID_FORM+'\')"><i class="fas fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-secondary" title="Sepuluh Tervesar" onclick="sepuluhTerbesar(\''+full.ID_FORM+'\')"><i class="fas fa-list-ol"></i></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-success" title="Rangkuman" onclick="rangkuman(\''+full.ID_FORM+'\')"><i class="fas fa-file-archive"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-warning" title="Lembar Kerja" onclick="lembarKerja(\''+full.ID_FORM+'\')"><i class="fas fa-file-alt"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-elementary" title="Nota" onclick="nota(\''+full.ID_FORM+'\')"><i class="fas fa-clipboard"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="verifikasi" class="btn btn-sm btn-warning" title="Verifikasi" onclick="verif(3,\''+full.ID_FORM+'\')"><i class="fa fa-check-square"></i></button>' +
+                                        '<button style="width: 15px !important; margin: 2px;" id="reverse" class="btn btn-duplicate-data btn-sm btn-primary" title="Reverse" onclick="reverse(2,\''+full.NAMA_FORM+'\')"><i class="fa fa-backspace"></i></button>' +
+                                        '</div>';
+                            return ret_value;
+                         }
+                    } else if (full.STATUS_APPROVE === "VERIFIKASI VP TLR") {
+                            let ret_value = '<div class="cbtn-group">' +
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-primary" title="Detail Tagihan" onclick="detailTagihan(\''+full.ID_FORM+'\')"><i class="fas fa-info-circle"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-secondary" title="Sepuluh Tervesar" onclick="sepuluhTerbesar(\''+full.ID_FORM+'\')"><i class="fas fa-list-ol"></i></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-success" title="Rangkuman" onclick="rangkuman(\''+full.ID_FORM+'\')"><i class="fas fa-file-archive"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-warning" title="Lembar Kerja" onclick="lembarKerja(\''+full.ID_FORM+'\')"><i class="fas fa-file-alt"></i></button>'+
+                                        '<button style="width: 15px !important; margin-left: 5px !important;" id="detail" class="btn btn-sm btn-elementary" title="Nota" onclick="nota(\''+full.ID_FORM+'\')"><i class="fas fa-clipboard"></i></button>'+                                        '</div>';
+                            return ret_value;
+                    }
                 }
             }
         ],
@@ -303,4 +342,59 @@ function createNew() {
     };
     xhttp.open('GET',`${baseUrl}api_operator/placement_lcl/test`, true);
     xhttp.send();
+}
+
+function verif(status, idForm){
+    $("#nama-form").html(idForm);
+    var confirmation = confirm("Apakah Anda yakin akan menyetujui placement "+document.getElementById("nama-form").innerHTML+" ?");
+//    console.log("Ini data : " + status + sesi);
+    if (confirmation){
+        showLoadingCss();
+        $.ajax({
+            url : baseUrl + "api_operator/placement_lcl/verifikasi_placement_lcl_header",
+            data : {
+                p_status : status,
+                p_id_form : idForm
+            },
+            type : "POST",
+            success : function (res) {
+                if (res.return === 1){
+                    Swal.fire("Sukses!", "Data berhasil disetujui", "success");
+                    placementHeader.ajax.reload();
+                } else
+                    alert("Maaf, Terjadi Kesalahan");
+                hideLoadingCss();
+            },
+            error : (err) => {
+                hideLoadingCss("Terjadi Kesalahan. Silahakn Hubungi Administrator!");
+            }
+        })
+    }
+}
+
+function reverse(status, idForm){
+    $("#nama-form").html(idForm);
+    var confirmation = confirm("Apakah Anda yakin akan reverse placement "+document.getElementById("nama-form").innerHTML+" ?");
+    if (confirmation){
+        showLoadingCss();
+        $.ajax({
+            url : baseUrl + "api_operator/placement_lcl/reverse_placement_lcl_header",
+            data : {
+                p_status : status,
+                p_id_form : idForm
+            },
+            type : "POST",
+            success : function (res) {
+                if (res.return === 1){
+                    Swal.fire("Sukses!", "Data berhasil di reverse", "success");
+                    placementHeader.ajax.reload();
+                }else alert("Maaf, Terjadi Kesalahan");
+
+                hideLoadingCss();
+            },
+            error : (err) => {
+                hideLoadingCss("Terjadi Kesalahan. Silahakn Hubungi Administrator!");
+            }
+        })
+    }
 }
