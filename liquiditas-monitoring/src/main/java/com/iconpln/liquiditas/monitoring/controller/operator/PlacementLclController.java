@@ -274,9 +274,38 @@ public class PlacementLclController {
         return out;
     }
 
-
     @GetMapping(path = "/test")
     public Map test(){
         return placementLclService.test();
+    }
+
+    @RequestMapping(value = "/verifikasi_placement_lcl_header", method = RequestMethod.POST)
+    public Map<String, Object> updateStatus(
+            @RequestParam(value = "p_id_form", defaultValue = "") String idForm,
+            @RequestParam(value = "p_status", defaultValue = "") String status
+    ){
+        try {
+            Map<String, Object> result = placementLclService.updatePlacementlclHeader(idForm, WebUtils.getUsernameLogin(), status);
+
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(path = "/reverse_placement_lcl_head", method = RequestMethod.POST)
+    public Map<String, Object> reversePlacementLCLHead(
+            @RequestParam(value = "p_status", defaultValue = "") String status,
+            @RequestParam(value = "p_id_form", defaultValue = "") String idForm
+    ) {
+        try {
+            Map<String, Object> result = placementLclService.reversePlacementLCLHead(status, idForm);
+            System.out.println("Testing reverse = "+status);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

@@ -251,4 +251,31 @@ public class PlacementLclService {
 
         return simpleJdbcCall.execute();
     }
+
+    public Map<String, Object> updatePlacementlclHeader(String idForm, String userId, String status){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("upd_status_lcl");
+        Map<String, Object> out;
+        SqlParameterSource inParent = new MapSqlParameterSource()
+                .addValue("p_id_form", idForm, OracleTypes.VARCHAR)
+                .addValue("p_user_id", userId, OracleTypes.VARCHAR)
+                .addValue("p_status", status, OracleTypes.VARCHAR)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        out = simpleJdbcCall.execute(inParent);
+        return out;
+    }
+
+    public Map<String, Object> reversePlacementLCLHead(String status, String idForm){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withFunctionName("reverse_placement_lcl");
+        Map<String, Object> out;
+        SqlParameterSource inParent = new MapSqlParameterSource()
+                .addValue("p_status", status, OracleTypes.VARCHAR)
+                .addValue("p_id_form", idForm, OracleTypes.VARCHAR)
+                .addValue("out_msg", OracleTypes.VARCHAR);
+        out = simpleJdbcCall.execute(inParent);
+        return out;
+    }
 }

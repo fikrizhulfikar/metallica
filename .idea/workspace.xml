@@ -50,17 +50,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1432616-f44a-456c-b349-daf6be464567" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/OperasiKhususTrxService.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/OperasiKhususTrxService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/SapService.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/SapService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/InvoiceReverseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/InvoiceReverseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/placement_lcl.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/placement_lcl.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/placement_lcl_header.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/placement_lcl_header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/placement_lcl_header.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/placement_lcl_header.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/test/java/com/iconpln/liquiditas/monitoring/Test3.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/test/java/com/iconpln/liquiditas/monitoring/Test3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/PlacementLclService.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/PlacementLclService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/PlacementLclController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/PlacementLclController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -653,5 +645,9 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1493" height="448" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1622690148631" />
+    <state x="480" y="129" width="673" height="566" key="find.popup" timestamp="1622700167875">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="480" y="129" width="673" height="566" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1622700167875" />
   </component>
 </project>
