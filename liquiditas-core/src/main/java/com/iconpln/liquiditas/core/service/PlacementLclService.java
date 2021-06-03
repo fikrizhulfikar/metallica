@@ -252,9 +252,9 @@ public class PlacementLclService {
         return simpleJdbcCall.execute();
     }
 
-    public Map<String, Object> updatePlacementlclHeader(String idForm, String userId, String status){
+    public Map<String, Object> updatePlacementLclHeader(String idForm, String userId, String status){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_DASHBOARD_CORPAY")
+                .withCatalogName("PKG_CORPAY2")
                 .withFunctionName("upd_status_lcl");
         Map<String, Object> out;
         SqlParameterSource inParent = new MapSqlParameterSource()
@@ -266,10 +266,10 @@ public class PlacementLclService {
         return out;
     }
 
-    public Map<String, Object> reversePlacementLCLHead(String status, String idForm){
+    public Map<String, Object> reversePlacementLclHeader(String status, String idForm){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_DASHBOARD_CORPAY")
-                .withFunctionName("reverse_placement_lcl");
+                .withCatalogName("PKG_CORPAY2")
+                .withFunctionName("reverse_status_lcl");
         Map<String, Object> out;
         SqlParameterSource inParent = new MapSqlParameterSource()
                 .addValue("p_status", status, OracleTypes.VARCHAR)
