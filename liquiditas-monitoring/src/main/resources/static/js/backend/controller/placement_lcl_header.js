@@ -125,7 +125,7 @@ function initPlacementLclHeader(){
 //            {width: 100, targets: 8},
 //            {width: "20%", "targets": 0},
             { className: "datatables_action", "targets": [] },
-            {"className": 'dt-body-center', "targets": [0,2,3,4]},
+            {"className": 'dt-body-center', "targets": [0,1,2,3,4]},
             {
                 "data":null,
                 "aTargets": [0],
@@ -345,9 +345,9 @@ function createNew() {
 }
 
 function verif(status, idForm){
+//    console.log("Ini data : " + status + idForm);
     $("#nama-form").html(idForm);
     var confirmation = confirm("Apakah Anda yakin akan menyetujui placement "+document.getElementById("nama-form").innerHTML+" ?");
-//    console.log("Ini data : " + status + sesi);
     if (confirmation){
         showLoadingCss();
         $.ajax({
@@ -360,7 +360,7 @@ function verif(status, idForm){
             success : function (res) {
                 if (res.return === 1){
                     Swal.fire("Sukses!", "Data berhasil disetujui", "success");
-                    placementHeader.ajax.reload();
+                    kebutuhanPlacement.ajax.reload();
                 } else
                     alert("Maaf, Terjadi Kesalahan");
                 hideLoadingCss();
@@ -387,7 +387,7 @@ function reverse(status, idForm){
             success : function (res) {
                 if (res.return === 1){
                     Swal.fire("Sukses!", "Data berhasil di reverse", "success");
-                    placementHeader.ajax.reload();
+                    kebutuhanPlacement.ajax.reload();
                 }else alert("Maaf, Terjadi Kesalahan");
 
                 hideLoadingCss();

@@ -285,7 +285,7 @@ public class PlacementLclController {
             @RequestParam(value = "p_status", defaultValue = "") String status
     ){
         try {
-            Map<String, Object> result = placementLclService.updatePlacementlclHeader(idForm, WebUtils.getUsernameLogin(), status);
+            Map<String, Object> result = placementLclService.updatePlacementLclHeader(idForm, WebUtils.getUsernameLogin(), status);
 
             return result;
         }catch (Exception e){
@@ -300,7 +300,7 @@ public class PlacementLclController {
             @RequestParam(value = "p_id_form", defaultValue = "") String idForm
     ) {
         try {
-            Map<String, Object> result = placementLclService.reversePlacementLCLHead(status, idForm);
+            Map<String, Object> result = placementLclService.reversePlacementLclHeader(status, idForm);
             System.out.println("Testing reverse = "+status);
             return result;
         } catch (Exception e) {
