@@ -34,7 +34,8 @@
                     }
                     document.addEventListener("DOMContentLoaded", function () {
                         setInterval(function () {
-                            let d = moment().format("dddd, DD MMMM YYYY kk:mm:ss");
+                            let m = moment().locale("id");
+                            let d = m.format("dddd, DD MMMM YYYY kk:mm:ss");
                             document.getElementById('time').innerHTML = d;
                         },1000);
                     })
