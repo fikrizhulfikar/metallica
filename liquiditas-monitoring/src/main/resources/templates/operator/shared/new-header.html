@@ -7,6 +7,9 @@
         </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item dropdown d-md-down-none">
+            <span style="color: white !important;" id="time"></span>
+        </li>
         <li id="notification_li" class="nav-item dropdown d-md-down-none">
             <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
                 <i class="far fa-envelope"></i><span class="badge badge-pill badge-info" id="notification_count"></span>
@@ -29,6 +32,13 @@
                     function logout() {
                         document.getElementById("form-logout").submit();
                     }
+                    document.addEventListener("DOMContentLoaded", function () {
+                        setInterval(function () {
+                            let m = moment().locale("id");
+                            let d = m.format("dddd, DD MMMM YYYY kk:mm:ss");
+                            document.getElementById('time').innerHTML = d;
+                        },1000);
+                    })
                 </script>
             </div>
         </li>
