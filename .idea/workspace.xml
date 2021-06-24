@@ -82,7 +82,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.ApplicationMonitoring">
+  <component name="RunManager" selected="Application.CallProcTest">
     <configuration name="CallProcTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.iconpln.liquiditas.core.CallProcTest" />
       <module name="liquiditas-core" />
@@ -129,9 +129,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.CallProcTest" />
+      <item itemvalue="Application.TestXx" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.ApplicationMonitoring" />
         <item itemvalue="Application.TestXx" />
         <item itemvalue="Application.CallProcTest" />
       </list>
