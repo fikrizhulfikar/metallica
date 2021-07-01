@@ -173,17 +173,22 @@ function duplicate_data(id) {
             $("#pSpread").val(res[0].SPREAD);
             $("#pJenisTagihan").val(res[0].JENIS_TAGIHAN.toLowerCase());
             $('#pTglJatuhTempo').prop('disabled', false);
-            $("#hrpayableradio").attr('disabled',false);
-            $("#apinvoiceradio").attr('disabled',false);
+
+            if(res[0].JENIS_TRANSAKSI === 'AP INVOICE'){
+                $("#hrpayableradio").prop('checked',false);
+                $("#apinvoiceradio").prop('checked',true);
+            }else{
+                $("#hrpayableradio").prop('checked',true);
+                $("#apinvoiceradio").prop('checked',false);
+            }
+
+            $("#hrpayableradio")
+                .attr('disabled',false);
+            $("#apinvoiceradio")
+                .attr('disabled',false);
+
             if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
                 $('#pTglJatuhTempo').prop('disabled', true);
-            }
-            if(res[0].JENIS_TRANSAKSI === 'AP INVOICE'){
-                $("#hrpayableradio").prop('checked',false)
-                $("#apinvoiceradio").prop('checked',true)
-            }else{
-                $("#hrpayableradio").prop('checked',true)
-                $("#apinvoiceradio").prop('checked',false)
             }
             setTimeout(function () {
                 $("#pVendor").select2({
@@ -489,8 +494,8 @@ function edit_data(id) {
                 $("#hrpayableradio").prop('checked',true)
                 $("#apinvoiceradio").prop('checked',false)
             }
-            // $("#hrpayableradio").attr('readonly',true)
-            // $("#apinvoiceradio").attr('readonly',true)
+            $("#hrpayableradio").attr('disabled',true)
+            $("#apinvoiceradio").attr('disabled',true)
             setTimeout(function () {
                 $("#pVendor").select2({
                     width: "100%"
@@ -1628,7 +1633,8 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                             getTotalTagihan();
                             return res.data;
                         }
-                },
+                }
+            ,
             "drawCallback":
                 function (settings) {
                     // $(".dataTables_scrollHeadInner").css({"width":"100%"});
