@@ -1857,8 +1857,9 @@ function saveColumn() {
         "partial_ind" : hc69 === true ? 1 : 0,
         "keterangan" : hc70 === true ? 1 : 0,
         "status_tracking" : hc71 === true ? 1 : 0,
-        "tgl_act_bayar" : 0,
 
+        "ref_num_bank" : 0,
+        "tgl_act_bayar" : 0,
         "corp_pmt" : 0,
         "inq_customer_name" : 0,
         "inq_account_number" : 0,
