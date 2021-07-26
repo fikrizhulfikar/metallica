@@ -2753,4 +2753,29 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         AppUtils.getLogger(this).info("data upd_status_lcl : {}", out);
         return out;
     }
+
+    public Map<String, Object> insRestitusiTemp(String pGroupId){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY2")
+                .withFunctionName("ins_cetak_bukti_kas_temp");
+        Map<String, Object> out;
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_group_id", pGroupId)
+                .addValue("out_msg",OracleTypes.VARCHAR);
+
+        out = simpleJdbcCall.execute(param);
+        AppUtils.getLogger(this).info("data insert_restitusi_temp : {}", out);
+        return out;
+    }
+
+    public List<Map<String, Object>> getCetakBuktiKasRestitusi(){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY2")
+                .withFunctionName("get_cetak_bukti_kas");
+        List<Map<String, Object>> out;
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("out_data", OracleTypes.CURSOR);
+        out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+        return out;
+    }
 }
