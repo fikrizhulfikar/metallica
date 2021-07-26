@@ -1,8 +1,10 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
+import com.iconpln.liquiditas.core.alt.AltException;
 import com.iconpln.liquiditas.core.domain.Notification;
 import com.iconpln.liquiditas.core.service.CorpayService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
+import com.iconpln.liquiditas.core.xmldoc.DocGenerator;
 import com.iconpln.liquiditas.monitoring.utils.NamedIdentifier;
 import com.iconpln.liquiditas.monitoring.utils.NotificationUtil;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
@@ -11,7 +13,10 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import net.sf.jxls.transformer.XLSTransformer;
@@ -2729,6 +2734,62 @@ public class CorpayController {
             Map<String, Object> result = corpayService.updatePlacementlclHeader(WebUtils.getUsernameLogin(), idForm, status);
 
             return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/create_restitusi", method = RequestMethod.POST)
+    public Map<String, Object> createGroup(
+            @RequestParam(value = "pData", defaultValue = "") String pData
+            ) throws JSONException {
+        ZonedDateTime dt = ZonedDateTime.now();
+        String dateFormated = DateTimeFormatter.ofPattern("ddmmyyyy").format(dt);
+        String filename = "uploadcorpay/temp/laporan_kas_pegawai_"+dateFormated;
+        DocGenerator dg = new DocGenerator();
+        Map<String, Object> out = null;
+        Map<String, Object> res = new HashMap<>();
+        List<Map<String, Object>> getArray = new ArrayList<>();
+        JSONArray jsonArray = new JSONArray(pData);
+        try{
+            for (int j = 0; j < jsonArray.length(); j++) {
+                JSONObject json = jsonArray.getJSONObject(j);
+                out = corpayService.insRestitusiTemp(json.getString("group_id"));
+                res.put(String.valueOf(j),out);
+            }
+            List<Map<String, String>> tableList = new ArrayList<>();
+            if (res.size() == jsonArray.length()){
+                getArray = corpayService.getCetakBuktiKasRestitusi();
+                int no = 0;
+                if (!getArray.isEmpty()){
+                    for (Map<String, Object> p : getArray){
+                        Map<String, String> row = new HashMap<>();
+                        row.put("NO_URUT",String.valueOf(no+=1));
+                        row.put("NAMA_VENDOR", p.get("NAMA_VENDOR").toString());
+                        row.put("DOC_NO", p.get("DOCUMENT_NUMBER").toString());
+                        row.put("CURR_BAYAR", p.get("CURR_BAYAR").toString());
+                        row.put("AMOUNT_BAYAR", p.get("AMOUNT_BAYAR").toString());
+                        row.put("ITEM_TEXT", p.get("ITEM_TEXT").toString());
+                        row.put("ACCOUNT_NAME", p.get("ACCOUNT_NAME").toString());
+                        row.put("ALAMAT_VENDOR", p.get("ALAMAT_VENDOR").toString());
+                        row.put("BANK_BENEF", p.get("BANK_BENEF").toString());
+                        row.put("NO_REK_BENEF", p.get("NO_REK_BENEF").toString());
+                        row.put("ID_GROUP", p.get("ID_GROUP").toString());
+                        row.put("ALAMAT_BANK_BENEF", p.get("ALAMAT_BANK_BENEF").toString());
+                        row.put("EMAIL_VENDOR", p.get("EMAIL_VENDOR").toString());
+                        tableList.add(row);
+                    }
+                }
+                dg.addTableVariables(tableList);
+                try {
+                    dg.createDocFromTemplate("template_laporan_restitusi_giro", filename);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            AppUtils.getLogger(this).debug("statusInvoice : {} ", out);
+            return out;
         }catch (Exception e){
             e.printStackTrace();
             return null;
