@@ -173,17 +173,22 @@ function duplicate_data(id) {
             $("#pSpread").val(res[0].SPREAD);
             $("#pJenisTagihan").val(res[0].JENIS_TAGIHAN.toLowerCase());
             $('#pTglJatuhTempo').prop('disabled', false);
-            $("#hrpayableradio").attr('disabled',false);
-            $("#apinvoiceradio").attr('disabled',false);
+
+            if(res[0].JENIS_TRANSAKSI === 'AP INVOICE'){
+                $("#hrpayableradio").prop('checked',false);
+                $("#apinvoiceradio").prop('checked',true);
+            }else{
+                $("#hrpayableradio").prop('checked',true);
+                $("#apinvoiceradio").prop('checked',false);
+            }
+
+            $("#hrpayableradio")
+                .attr('disabled',false);
+            $("#apinvoiceradio")
+                .attr('disabled',false);
+
             if(newRoleUser[0].replace(" ", "")== "ROLE_OSS"){
                 $('#pTglJatuhTempo').prop('disabled', true);
-            }
-            if(res[0].JENIS_TRANSAKSI === 'AP INVOICE'){
-                $("#hrpayableradio").prop('checked',false)
-                $("#apinvoiceradio").prop('checked',true)
-            }else{
-                $("#hrpayableradio").prop('checked',true)
-                $("#apinvoiceradio").prop('checked',false)
             }
             setTimeout(function () {
                 $("#pVendor").select2({
@@ -327,108 +332,126 @@ function inputKeterangan() {
 }
 
 function ins_data() {
-    var no_ta = $("#pNoTagihan").val().toString();
-    var old_data = localStorage.getItem("real_no_tagihan_RD");
-    var all_val = [];
-    let jenis_dok = $("input[name='pJenisDokumen']:checked").val();
+    if (validateForm("#form_oss") > 0 || ($("#hrpayableradio").prop("checked") === false && $("#apinvoiceradio").prop("checked") === false) ){
+        alert("Harap Lengkapi Data!");
+    }else{
+        var no_ta = $("#pNoTagihan").val().toString();
+        var old_data = localStorage.getItem("real_no_tagihan_RD");
+        var all_val = [];
+        let jenis_dok = $("input[name='pJenisDokumen']:checked").val();
 
-    if (old_data == null) {
-        localStorage.removeItem("real_no_tagihan_RD");
-        localStorage.removeItem("NT");
-        localStorage.setItem("NT", no_ta);
-        all_val.push(no_ta);
-        localStorage.setItem("real_no_tagihan_RD", all_val);
+        if (old_data == null) {
+            localStorage.removeItem("real_no_tagihan_RD");
+            localStorage.removeItem("NT");
+            localStorage.setItem("NT", no_ta);
+            all_val.push(no_ta);
+            localStorage.setItem("real_no_tagihan_RD", all_val);
 
-    }
-    else {
-        localStorage.setItem("NT", no_ta);
+        }
+        else {
+            localStorage.setItem("NT", no_ta);
 
-        all_val.push(old_data);
-        all_val.push(no_ta);
-        var c = old_data.split(",");
-        for (var i = 0; i < c.length; i++) {
-            if (no_ta !== c[i]) {
-                localStorage.setItem("real_no_tagihan_RD", all_val);
+            all_val.push(old_data);
+            all_val.push(no_ta);
+            var c = old_data.split(",");
+            for (var i = 0; i < c.length; i++) {
+                if (no_ta !== c[i]) {
+                    localStorage.setItem("real_no_tagihan_RD", all_val);
+                }
             }
         }
-    }
 
-    var ket = $("#pKeterangan").val().toString();
-    var all_ket = [];
-    var ket_lama = localStorage.getItem("real_ket");
+        var ket = $("#pKeterangan").val().toString();
+        var all_ket = [];
+        var ket_lama = localStorage.getItem("real_ket");
 
-    if (ket_lama == null) {
-        localStorage.removeItem("real_ket");
-        localStorage.removeItem("KET");
-        localStorage.setItem("KET", ket);
+        if (ket_lama == null) {
+            localStorage.removeItem("real_ket");
+            localStorage.removeItem("KET");
+            localStorage.setItem("KET", ket);
 
-        all_ket.push(ket);
-        localStorage.setItem("real_ket", all_ket);
-    }
-    else {
-        localStorage.setItem("KET", ket);
+            all_ket.push(ket);
+            localStorage.setItem("real_ket", all_ket);
+        }
+        else {
+            localStorage.setItem("KET", ket);
 
-        var status = true;
-        var list_keterangan_lama = ket_lama.split(",");
-        for (var i = 0; i < list_keterangan_lama.length; i++) {
-            if (ket === list_keterangan_lama[i]) {
-                status = false
+            var status = true;
+            var list_keterangan_lama = ket_lama.split(",");
+            for (var i = 0; i < list_keterangan_lama.length; i++) {
+                if (ket === list_keterangan_lama[i]) {
+                    status = false
+                }
             }
+            if (status == true) {
+                list_keterangan_lama.push(ket);
+            }
+            localStorage.setItem("real_ket", list_keterangan_lama);
         }
-        if (status == true) {
-            list_keterangan_lama.push(ket);
-        }
-        localStorage.setItem("real_ket", list_keterangan_lama);
+
+        showLoadingCss();
+        $.ajax({
+            url: baseUrl + "api_operator/pembayaran/ins_data",
+            dataType: 'JSON',
+            type: "POST",
+            data: {
+                pIdValas: idValas,
+                pJenisPembayaran: $("#pJenisPemabayaran").val(),
+                pTglJatuhTempo: $("#pTglJatuhTempo").val(),
+                pVendor: $("#pVendor").val(),
+                pCurr: $("#pCurrecny").val(),
+                pNilaiTagihan: $("#pNilaiTagihan").val(),
+                pBankTujuan: $("#pBankTujuan").val(),
+                pBankPembayar: $("#pBankPembayar").val(),
+                pUnitPenerima: $("#pUnitPenerima").val(),
+                pNoTagihan: $("#pNoTagihan").val(),
+                pTglTagihan: $("#pTglTagihan").val(),
+                pNoNotdin: $("#pNoNotaDinas").val(),
+                pTglNotdin: $("#pTglNotaDinas").val(),
+                pStatusValas: $("#pStatus").val(),
+                pKeterangan: $("#pKeterangan").val(),
+                pTipeTransaksi: $("#pTipeTransaksi").val(),
+                pTglTerimaInvoice: $("#pTglTerimaInvoice").val(),
+                pNominalSblmPajak: $("#pNominalSebelumPajak").val(),
+                pNominalUnderlying: $("#pNominalUnderlying").val(),
+                pPajak: $("#pPajak").val(),
+                pNominalTanpaUnderlying: $("#pNominalTanpaUnderlying").val(),
+                pKursJisdor: $("#pKursJisdor").val(),
+                pSpread: $("#pSpread").val(),
+                pJenisTagihan: $("#pJenisTagihan").val(),
+                pJenisDokumen: jenis_dok
+            },
+            success: function (res) {
+                hideLoadingCss("")
+                var result = res.return.split(";")[0];
+                if (result == 1 || result == '1') {
+                    alert(res.OUT_MSG);
+                    search("load");
+                    $('#edit-rekap-modal').modal('hide');
+                    table_rekapitulasi.ajax.reload();
+                } else {
+                    alert(res.OUT_MSG);
+                }
+            },
+            error: function () {
+                hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
+            }
+        });
     }
 
-    showLoadingCss();
-    $.ajax({
-        url: baseUrl + "api_operator/pembayaran/ins_data",
-        dataType: 'JSON',
-        type: "POST",
-        data: {
-            pIdValas: idValas,
-            pJenisPembayaran: $("#pJenisPemabayaran").val(),
-            pTglJatuhTempo: $("#pTglJatuhTempo").val(),
-            pVendor: $("#pVendor").val(),
-            pCurr: $("#pCurrecny").val(),
-            pNilaiTagihan: $("#pNilaiTagihan").val(),
-            pBankTujuan: $("#pBankTujuan").val(),
-            pBankPembayar: $("#pBankPembayar").val(),
-            pUnitPenerima: $("#pUnitPenerima").val(),
-            pNoTagihan: $("#pNoTagihan").val(),
-            pTglTagihan: $("#pTglTagihan").val(),
-            pNoNotdin: $("#pNoNotaDinas").val(),
-            pTglNotdin: $("#pTglNotaDinas").val(),
-            pStatusValas: $("#pStatus").val(),
-            pKeterangan: $("#pKeterangan").val(),
-            pTipeTransaksi: $("#pTipeTransaksi").val(),
-            pTglTerimaInvoice: $("#pTglTerimaInvoice").val(),
-            pNominalSblmPajak: $("#pNominalSebelumPajak").val(),
-            pNominalUnderlying: $("#pNominalUnderlying").val(),
-            pPajak: $("#pPajak").val(),
-            pNominalTanpaUnderlying: $("#pNominalTanpaUnderlying").val(),
-            pKursJisdor: $("#pKursJisdor").val(),
-            pSpread: $("#pSpread").val(),
-            pJenisTagihan: $("#pJenisTagihan").val(),
-            pJenisDokumen: jenis_dok
-        },
-        success: function (res) {
-            hideLoadingCss("")
-            var result = res.return.split(";")[0];
-            if (result == 1 || result == '1') {
-                alert(res.OUT_MSG);
-                search("load");
-                $('#edit-rekap-modal').modal('hide');
-                table_rekapitulasi.ajax.reload();
-            } else {
-                alert(res.OUT_MSG);
+}
+
+function validateForm(form_name){
+    let empty=0;
+    $(form_name)
+        .find("select, input, textarea")
+        .each(function(){
+            if ($(this).prop("required") && ($(this).val() === "" || $(this).val() === null || $(this).val() === "null" || $(this).attr("selectedIndex") === 0 )){
+                empty++;
             }
-        },
-        error: function () {
-            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator");
-        }
-    });
+        });
+    console.log("emp"+empty);
+    return empty;
 }
 
 function edit_data(id) {
@@ -489,8 +512,8 @@ function edit_data(id) {
                 $("#hrpayableradio").prop('checked',true)
                 $("#apinvoiceradio").prop('checked',false)
             }
-            // $("#hrpayableradio").attr('readonly',true)
-            // $("#apinvoiceradio").attr('readonly',true)
+            $("#hrpayableradio").attr('disabled',true)
+            $("#apinvoiceradio").attr('disabled',true)
             setTimeout(function () {
                 $("#pVendor").select2({
                     width: "100%"
@@ -1201,8 +1224,8 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                                     '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-edit-data btn-sm btn-info" title="Edit Data" onclick="edit_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-edit"></i></button>';
                             }
                             ret_value = ret_value +
-                                '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fa fa-upload"></i></button>' +
-                                '<button style="width: 15px !important;" class="btn btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fa fa-close"></i></button>' +
+                                '<button style="width: 15px !important; margin-right: 5px;" class="btn btn-update-data btn-sm btn-success" title="Upload" onclick="upload_file(\'' + full.ID_VALAS + '\')"><i class="fas fa-upload"></i></button>' +
+                                '<button style="width: 15px !important;" class="btn btn-delete-data btn-sm btn-danger" title="Delete" onclick="delete_data(\'' + full.ID_VALAS + '\')"><i class="fas fa-trash"></i></button>' +
                                 '</div>';
                         }else {
 
@@ -1628,7 +1651,8 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pPembayaran, statu
                             getTotalTagihan();
                             return res.data;
                         }
-                },
+                }
+            ,
             "drawCallback":
                 function (settings) {
                     // $(".dataTables_scrollHeadInner").css({"width":"100%"});

@@ -1108,24 +1108,24 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                                 var full_value = '{"full":'+json_string.replace(/'/g,"")+'}';
                                 var ret_value = ''
                                     if (full.STATUS_TRACKING == "INPUT DATA") {
-                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+1+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
+                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+1+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'","bank_byr" : "'+full.BANK_BYR+'"}';
                                         full_value = full_value;
 
                                     }
                                      if (full.STATUS_TRACKING == "VALIDASI DATA") {
-                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+1+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
+                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+1+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'","bank_byr" : "'+full.BANK_BYR+'"}';
                                         full_value = full_value;
                                     }
                                     else if (full.STATUS_TRACKING == "VERIFIED BY MAKER") {
-                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+2+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
+                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+2+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'","bank_byr" : "'+full.BANK_BYR+'"}';
                                         full_value = full_value;
                                     }
                                     else if (full.STATUS_TRACKING == "VERIFIED BY CHECKER") {
-                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+3+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
+                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+3+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'","bank_byr" : "'+full.BANK_BYR+'"}';
                                         full_value = full_value;
                                     }
                                     else if (full.STATUS_TRACKING == "VERIFIED BY APPROVER") {
-                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+4+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'"}';
+                                        value = '{"pDocNo":"'+full.DOC_NO+'","pCompCode" : "'+full.COMP_CODE+'", "pFiscYear":"'+full.FISC_YEAR+'", "pLineItem":"'+full.LINE_ITEM+'","pKet":"'+full.KET+'","customer_name":"'+full.INQ_CUSTOMER_NAME+'","account_number":"'+full.INQ_ACCOUNT_NUMBER+'","statustracking":"'+4+'","oss_id":"'+full.OSS_ID+'","group_id":"'+full.GROUP_ID+'","metode_pembayaran":"'+full.METODE_PEMBAYARAN+'","no_giro":"'+full.NO_GIRO+'","bank_byr" : "'+full.BANK_BYR+'"}';
                                         full_value = full_value;
                                     }
 
@@ -1209,10 +1209,10 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                                 hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
                             }
                         });
-
                     },
                 }
             );
+
             table_rekapitulasi.on('search.dt', function () {
                 var value = $('.dataTables_filter input').val();
                 tempTableSearch = value;
@@ -1261,6 +1261,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                      html = html + '<button class="btn btn-verified btn-sm btn-warning" id="btn-verified" style="margin-left: 10px" type="button" title="Approve" onclick="update_datas()"><i class="fas fa-check-circle"></i></button>' ;
                      html = html + '<button class="btn btn-verified btn-elementary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Dokumen Pengantar" onclick="cetakBuktiKasMultiple()"><i class="fas fa-copy"></i></button>' ;
                      html = html + '<button class="btn btn-reverse-sap btn-danger btn-sm" id="btn-reverse-sap" style="margin-left: 10px" type="button" title="Reverse SAP" onclick="multipleReverseSap()"><i class="fas fa-arrow-left"></i></button>';
+                     html = html + '<button class="btn btn-reverse-sap btn-default btn-sm" id="btn-restitusi" style="margin-left: 10px" type="button" title="Cetak Dok Restitusi" onclick="cetakRestitusi()"><i class="fas fa-people-carry"></i></button>';
                  }
                 else {
                     if (newRoleUser[0] !== "ROLE_OSS"){
@@ -1387,7 +1388,7 @@ function edit_data(pCompCode, pNoDoc, pFiscYear, pLineItem,pSource, pBank,  pBen
             $("#pAmountWht").val(new Intl.NumberFormat().format(res[0].AMT_WITH_TC));
             $("#pTotalTagihan").val(new Intl.NumberFormat().format(res[0].AMOUNT));
             $("#pAssignment").val(res[0].ASSIGNMENT);
-            $("#pAmountBayar").val(res[0].AMOUNT_BAYAR);
+            $("#pAmountBayar").val(new Intl.NumberFormat().format(res[0].AMOUNT_BAYAR));
             $("#pItemText").val(res[0].ITEM_TEXT);
             $("#pCostCtr").val(res[0].COST_CTR);
             $("#pGlAccount").val(res[0].GL_ACCT);
@@ -3058,6 +3059,49 @@ function create_group() {
     });
 }
 
+function create_dok_restitusi() {
+    Swal.fire({
+        title: 'Anda Yakin ?',
+        text: "Anda Yakin Akan Mencetak Tagihan Ini ?",
+        icon: 'warning',
+        html : '<p>Pastikan jenis dokumen sudah sesuai</p>',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya'
+    }).then(result => {
+        if (result.value) {
+            showLoadingCss();
+            $.ajax({
+                url: baseUrl + "api_operator/rekap_invoice_belum/create_restitusi",
+                dataType: 'JSON',
+                type: "POST",
+                data: {
+                    pData: JSON.stringify(invoiceCheckedArray),
+                },
+                success: function (res) {
+                    hideLoadingCss("");
+                    if (res.return == 1) {
+                        Swal.fire(res.OUT_MSG.charAt(0).toUpperCase() + res.OUT_MSG.substring(1).toLowerCase(),'Berhasil Membuat Group','success');
+                        search("load");
+                        $('#multiple-edit-modal').modal('hide');
+                        table_rekapitulasi.ajax.reload();
+                        invoiceCheckedArray = new Array();
+                        fullArray = new Array();
+                    } else {
+                        Swal.fire('Gagal',res.OUT_MSG,'error');
+                    }
+                },
+                error: function () {
+                    hideLoadingCss();
+                    Swal.fire("Gagal Melakukan Proses, Harap Hubungi Administrator","", "error");
+                    search("load");
+                }
+            });
+        }
+    });
+}
+
 
 function openMultipleEditForm(){
     if (invoiceCheckedArray.length <= 0){
@@ -3197,8 +3241,6 @@ function update_datas() {
     });
 }
 
-
-
 function openGetPaymentStatus(){
     //$("#pNamaGroup").val("")
     //$('#multiple-edit-modal').modal({backdrop: 'static', keyboard: false});
@@ -3291,6 +3333,42 @@ function checkArray(e) {
     // }
     console.log("Full Array : ", fullArrayGroup);
     console.log("invoice array : ",invoiceCheckedArray);
+}
+
+function cetakRestitusi() {
+    if(invoiceCheckedArray.length <= 0){
+        Swal.fire("Maaf!", "Silahkan Pilih Data Terlebih Dahulu", "error");
+    }else{
+        if(restirusiIsSame(invoiceCheckedArray) === true){
+            create_dok_restitusi();
+        }else if(isSame(fullArrayGroup) === 222) {
+            Swal.fire({
+                icon: "error",
+                title: "Maaf!",
+                html: '<p>Silahkan Tentukan Metode Pembayaran Terlebih Dahulu</p>',
+            });
+        }else{
+            Swal.fire("Maaf", "Tidak bisa melakukan cetak, Bank Pembayar harus sama.","error");
+        }
+    }
+}
+
+function restirusiIsSame(data){
+    if(data == null || data.length <= 0){
+        return false;
+    } else {
+        let bank_bayar = data[0].bank_byr;
+
+        for(let x = 0; x < data.length; x++){
+            if (data[x].metode_pembayaran === "-"){
+                return 222;
+            }
+            if(bank_bayar !== data[x].bank_byr ){
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 function checkGroup(){
