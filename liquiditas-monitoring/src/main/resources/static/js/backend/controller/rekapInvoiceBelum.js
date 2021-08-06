@@ -1230,7 +1230,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                     // html = html + '<button class="btn btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
 //                    html = html + '<button class="btn btn-sm btn-danger" id="btn-verified" title="Payment Status" style="margin-left: 10px" type="button" onclick="openGetPaymentStatus()"><i class="fa fa-university"></i></button>';
                  }
-                 if(newRoleUser[0] == "ROLE_JA_CASH"){
+                 if(newRoleUser[0] == "ROLE_ADMIN"){
                    // html = html + '<button class="btn btn-dribbble btn-info btn-sm" style="margin-left: 10px" type="button" title="Sembunyikan Kolom" data-toggle="modal" onclick="showColumn()">' +
                    //      '<i class="fa fa-arrows-alt"></i></button>';
                     /*button reject*/
@@ -1252,7 +1252,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                      html = html + '<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Approve" onclick="update_datas()"><i class="fas fa-check-circle"></i></button>' ;
                      html = html + '<button class="btn btn-verified btn-elementary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Dokumen Pegantar" onclick="cetakBuktiKasMultiple()"><i class="fas fa-copy"></i></button>' ;
                      html = html + '<button class="btn btn-reverse-sap btn-danger btn-sm" id="btn-reverse-sap" style="margin-left: 10px" type="button" title="Reverse SAP" onclick="multipleReverseSap()"><i class="fas fa-arrow-left"></i></button>';
-                 }else if(newRoleUser[0] == "ROLE_ADMIN"){
+                 }else if(newRoleUser[0] == "ROLE_JA_CASH"){
 
                      html = html + '<button class="btn btn-sm btn-primary" id="btn-verified" title="Cek Group" style="margin-left: 10px" type="button" onclick="checkGroup()"><i class="fas fa-folder"></i></button>';
                      html = html + '<button class="btn btn-sm btn-success" id="btn-verified" title="Get Balance" style="margin-left: 10px" type="button" onclick="openGetBallance()"><i class="fa fa-university"></i></button>';
@@ -3073,7 +3073,7 @@ function create_dok_restitusi() {
         if (result.value) {
             showLoadingCss();
             $.ajax({
-                url: baseUrl + "api_operator/rekap_invoice_belum/create_restitusi",
+                url: baseUrl + "api_operator/rekap_invoice_belum/create_restitusi" + path_cetak,
                 dataType: 'JSON',
                 type: "POST",
                 data: {
@@ -3083,6 +3083,7 @@ function create_dok_restitusi() {
                     hideLoadingCss("");
                     if (res.return == 1) {
                         Swal.fire('Berhasil Membuat Group');
+                        window.open(baseUrl+"generate_doc/cetak/downloadfile/"+file_name_dl,"_blank");
                         search("load");
                         $('#multiple-edit-modal').modal('hide');
                         table_rekapitulasi.ajax.reload();

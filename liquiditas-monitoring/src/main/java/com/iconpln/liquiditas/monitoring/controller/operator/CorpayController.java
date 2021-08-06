@@ -2763,8 +2763,8 @@ public class CorpayController {
             for (int j = 0; j < jsonArray.length(); j++) {
                 JSONObject json = jsonArray.getJSONObject(j);
                 out = corpayService.insRestitusiTemp(json.getString("group_id"));
-                System.out.println("Ini : "+out);
                 res.put(String.valueOf(j),out);
+                System.out.println("Ini : "+out);
             }
             List<Map<String, String>> tableList = new ArrayList<>();
 
@@ -2792,36 +2792,12 @@ public class CorpayController {
                         row.put("DOC_NO", p.get("DOCUMENT_NUMBER").toString());
                         row.put("ITEM_TEXT", p.get("ITEM_TEXT").toString());
                         row.put("CURR_BAYAR", p.get("CURR_BAYAR").toString());
+                        row.put("SUM_CURR_BAYAR", "IDR");
+                        row.put("TOTAL_BAYAR", "TESTING");
                         DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
                         decimalFormat.applyPattern(pattern);
                         String amount = decimalFormat.format(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",",".")));
                         row.put("AMOUNT_BAYAR", amount);
-                        row.put("ID_GROUP", p.get("ID_GROUP").toString());
-                        row.put("NO_REK_BENEF", p.get("NO_REK_BENEF").toString());
-                        row.put("BANK_BENEF", p.get("BANK_BENEF").toString());
-                        row.put("ALAMAT_BANK_BENEF", p.get("ALAMAT_BANK_BENEF").toString());
-                        row.put("NAMA_VENDOR", p.get("NAMA_VENDOR").toString());
-                        row.put("ACCOUNT_NAME", p.get("ACCOUNT_NAME").toString());
-                        row.put("ALAMAT_VENDOR", p.get("ALAMAT_VENDOR").toString());
-                        row.put("EMAIL_VENDOR", p.get("EMAIL_VENDOR").toString());
-                        if (object.getString("JABATAN").equals("MSB")){
-                            row.put("NAMA_APPROVER_SURAT", p.get("NAMA_COUNTER_SIGNER").toString());
-                            row.put("DETAIL_APPROVER_SURAT", p.get("DETAIL_COUNTER_SIGNER").toString());
-                            row.put("NAMA_COUNTER_SIGNER_SURAT", p.get("NAMA_COUNTER_SIGNER_SURAT").toString());
-                            row.put("DETAIL_COUNTER_SIGNER_SURAT", p.get("DETAIL_COUNTER_SIGNER_SURAT").toString());
-                        }else{
-                            row.put("NAMA_APPROVER_SURAT", p.get("NAMA_APPROVER").toString());
-                            row.put("DETAIL_APPROVER_SURAT", p.get("DETAIL_APPROVER").toString());
-                            row.put("NAMA_COUNTER_SIGNER_SURAT", p.get("NAMA_COUNTER_SIGNER").toString());
-                            row.put("DETAIL_COUNTER_SIGNER_SURAT", p.get("DETAIL_COUNTER_SIGNER").toString());
-                        }
-                        row.put("HOUSE_BANK", p.get("HOUSE_BANK").toString());
-                        row.put("ALAMAT_BANK", p.get("ALAMAT_BANK").toString());
-                        row.put("NAMA_APPROVER", p.get("NAMA_APPROVER").toString());
-                        row.put("DETAIL_APPROVER", p.get("DETAIL_APPROVER").toString());
-                        row.put("NAMA_COUNTER_SIGNER", p.get("NAMA_COUNTER_SIGNER").toString());
-                        row.put("DETAIL_COUNTER_SIGNER", p.get("DETAIL_COUNTER_SIGNER").toString());
-                        row.put("NO_REK_HOUSE_BANK", p.get("NO_REK_HOUSE_BANK").toString());
 
                         String amt = object.getString("AMOUNT_BAYAR").replace(",",".");
                         String[] arr = amt.split("\\.");
@@ -2835,13 +2811,59 @@ public class CorpayController {
                                 koma = koma + conv.toWords(Double.parseDouble(arr[1]));
                             }
                         }
-//                        row.put("NOMINAL_TERBILANG", conv.toWords(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",",".")))+koma+conv.toCurrency(object.getString("CURR_BAYAR")));
-                        row.put("NO_GIRO", p.get("NO_GIRO").toString());
-                        row.put("TGL_RENCANA_BAYAR", localFormatter.format(tgl_rencana_bayar));
-                        row.put("TGL_CETAK",print_df.format(n_print_date));
+                        row.put("NOMINAL_TERBILANG", conv.toWords(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",",".")))+koma+conv.toCurrency(object.getString("CURR_BAYAR")));
 
                         tableList.add(row);
                     }
+                    DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
+                    decimalFormat.applyPattern(pattern);
+                    String amount = decimalFormat.format(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",",".")));
+                    dg.addVariable("AMOUNT_BAYAR", amount);
+
+                    String amt = object.getString("AMOUNT_BAYAR").replace(",",".");
+                    String[] arr = amt.split("\\.");
+                    String koma = "";
+                    if (arr.length > 1){
+                        if (arr[1].equals("00")){
+                            koma = "";
+                            koma = koma + conv.toWords(Double.parseDouble(arr[1]));
+                        }else{
+                            koma = "TITIK ";
+                            koma = koma + conv.toWords(Double.parseDouble(arr[1]));
+                        }
+                    }
+                    dg.addVariable("NOMINAL_TERBILANG", conv.toWords(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",",".")))+koma+conv.toCurrency(object.getString("CURR_BAYAR")));
+                    dg.addVariable("CURR_BAYAR",object.getString("CURR_BAYAR"));
+                    dg.addVariable("ID_GROUP",object.getString("ID_GROUP"));
+                    dg.addVariable("NO_REK_BENEF",object.getString("NO_REK_BENEF"));
+                    dg.addVariable("BANK_BENEF",object.getString("BANK_BENEF"));
+                    dg.addVariable("ALAMAT_BANK_BENEF",object.getString("ALAMAT_BANK_BENEF"));
+                    dg.addVariable("NAMA_VENDOR",object.getString("NAMA_VENDOR"));
+                    dg.addVariable("ACCOUNT_NAME",object.getString("ACCOUNT_NAME"));
+                    dg.addVariable("ALAMAT_VENDOR",object.getString("ALAMAT_VENDOR"));
+                    dg.addVariable("EMAIL_VENDOR",object.getString("EMAIL_VENDOR"));
+                    if (object.getString("JABATAN").equals("MSB")){
+//                        dg.addVariable("NAMA_APPROVER_SURAT",object.getString("NAMA_APPROVER_SURAT"));
+//                        dg.addVariable("DETAIL_APPROVER_SURAT",object.getString("DETAIL_APPROVER_SURAT"));
+//                        dg.addVariable("NAMA_COUNTER_SIGNER_SURAT",object.getString("NAMA_COUNTER_SIGNER_SURAT"));
+//                        dg.addVariable("DETAIL_COUNTER_SIGNER_SURAT",object.getString("DETAIL_COUNTER_SIGNER_SURAT"));
+                    }else{
+//                        dg.addVariable("NAMA_APPROVER_SURAT",object.getString("NAMA_APPROVER_SURAT"));
+//                        dg.addVariable("DETAIL_APPROVER_SURAT",object.getString("DETAIL_APPROVER_SURAT"));
+//                        dg.addVariable("NAMA_COUNTER_SIGNER_SURAT",object.getString("NAMA_COUNTER_SIGNER_SURAT"));
+//                        dg.addVariable("DETAIL_COUNTER_SIGNER_SURAT",object.getString("DETAIL_COUNTER_SIGNER_SURAT"));
+                    }
+                    dg.addVariable("HOUSE_BANK",object.getString("HOUSE_BANK"));
+                    dg.addVariable("ALAMAT_BANK",object.getString("ALAMAT_BANK"));
+                    dg.addVariable("NAMA_APPROVER",object.getString("NAMA_APPROVER"));
+                    dg.addVariable("DETAIL_APPROVER",object.getString("DETAIL_APPROVER"));
+                    dg.addVariable("NAMA_COUNTER_SIGNER",object.getString("NAMA_COUNTER_SIGNER"));
+                    dg.addVariable("DETAIL_COUNTER_SIGNER",object.getString("DETAIL_COUNTER_SIGNER"));
+                    dg.addVariable("NO_REK_HOUSE_BANK",object.getString("NO_REK_HOUSE_BANK"));
+
+                    dg.addVariable("NO_GIRO",object.getString("NO_GIRO"));
+                    dg.addVariable("TGL_RENCANA_BAYAR",object.getString("TGL_RENCANA_BAYAR"));
+                    dg.addVariable("TGL_CETAK",print_df.format(n_print_date));
                 }
                 dg.addTableVariables(tableList);
                 try {
@@ -2909,41 +2931,117 @@ public class CorpayController {
     ) throws JSONException {
         ZonedDateTime dt = ZonedDateTime.now();
         String dateFormated = DateTimeFormatter.ofPattern("ddmmyyyy").format(dt);
-        String filename = "uploadcorpay/temp/laporan_kas_pegawai_"+dateFormated;
+        String filename = "uploadcorpay/temp/laporan_kas_pegawai_" + dateFormated;
         DocGenerator dg = new DocGenerator();
         Map<String, Object> out = null;
         Map<String, Object> res = new HashMap<>();
         List<Map<String, Object>> getArray = new ArrayList<>();
         JSONArray jsonArray = new JSONArray(pData);
-        try{
+        try {
             for (int j = 0; j < jsonArray.length(); j++) {
                 JSONObject json = jsonArray.getJSONObject(j);
                 out = corpayService.insRestitusiTemp(json.getString("group_id"));
-                res.put(String.valueOf(j),out);
+                res.put(String.valueOf(j), out);
+                System.out.println("Ini : " + out);
             }
             List<Map<String, String>> tableList = new ArrayList<>();
-            if (res.size() == jsonArray.length()){
-                getArray = corpayService.getCetakBuktiLunasRestitusi();
+
+            if (res.size() == jsonArray.length()) {
+                getArray = corpayService.getCetakBuktiKasRestitusi();
+                NumberToWordConverter conv = new NumberToWordConverter();
+                System.out.println("Hasil Select : " + getArray);
+//                System.out.println("Ini : "+res);
+                JSONObject object = new JSONObject(getArray.get(0));
+                String rawDate = object.getString("TGL_RENCANA_BAYAR");
+                Date tgl_rencana_bayar = new SimpleDateFormat("dd/MM/yyyy").parse(rawDate);
+                Date n_print_date = new Date();
+                SimpleDateFormat print_df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 int no = 0;
-                if (!getArray.isEmpty()){
-                    for (Map<String, Object> p : getArray){
+                if (!getArray.isEmpty()) {
+                    for (Map<String, Object> p : getArray) {
                         Map<String, String> row = new HashMap<>();
-                        row.put("NO_URUT",String.valueOf(no+=1));
+                        row.put("FISCAL_YEAR", p.get("FISCAL_YEAR").toString());
+//                        row.put("METODE_PEMBAYARAN", (object.getString("METODE_PEMBAYARAN") == null) ? "-" : object.getString("METODE_PEMBAYARAN"));
+                        row.put("ALAMAT_HOUSE_BANK", (object.getString("ALAMAT_BANK") == null) ? "-" : object.getString("ALAMAT_BANK"));
+//                        row.put("REF_NUM", (object.getString("REF_NUM_BANK") == null) ? "-" : object.getString("REF_NUM_BANK"));
+
+                        row.put("NO_URUT", String.valueOf(no += 1));
                         row.put("NAMA_VENDOR", p.get("NAMA_VENDOR").toString());
                         row.put("DOC_NO", p.get("DOCUMENT_NUMBER").toString());
-                        row.put("CURR_BAYAR", p.get("CURR_BAYAR").toString());
-                        row.put("AMOUNT_BAYAR", p.get("AMOUNT_BAYAR").toString());
                         row.put("ITEM_TEXT", p.get("ITEM_TEXT").toString());
-                        row.put("ACCOUNT_NAME", p.get("ACCOUNT_NAME").toString());
-                        row.put("ALAMAT_VENDOR", p.get("ALAMAT_VENDOR").toString());
-                        row.put("BANK_BENEF", p.get("BANK_BENEF").toString());
-                        row.put("NO_REK_BENEF", p.get("NO_REK_BENEF").toString());
-                        row.put("ID_GROUP", p.get("ID_GROUP").toString());
-                        row.put("ALAMAT_BANK_BENEF", p.get("ALAMAT_BANK_BENEF").toString());
-                        row.put("EMAIL_VENDOR", p.get("EMAIL_VENDOR").toString());
-                        row.put("NO_GIRO", p.get("NO_GIRO").toString());
+                        row.put("CURR_BAYAR", p.get("CURR_BAYAR").toString());
+                        row.put("SUM_CURR_BAYAR", "IDR");
+                        row.put("TOTAL_BAYAR", "TESTING");
+                        DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
+                        decimalFormat.applyPattern(pattern);
+                        String amount = decimalFormat.format(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",", ".")));
+                        row.put("AMOUNT_BAYAR", amount);
+
+                        String amt = object.getString("AMOUNT_BAYAR").replace(",", ".");
+                        String[] arr = amt.split("\\.");
+                        String koma = "";
+                        if (arr.length > 1) {
+                            if (arr[1].equals("00")) {
+                                koma = "";
+                                koma = koma + conv.toWords(Double.parseDouble(arr[1]));
+                            } else {
+                                koma = "TITIK ";
+                                koma = koma + conv.toWords(Double.parseDouble(arr[1]));
+                            }
+                        }
+                        row.put("NOMINAL_TERBILANG", conv.toWords(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",", "."))) + koma + conv.toCurrency(object.getString("CURR_BAYAR")));
+
                         tableList.add(row);
                     }
+                    DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
+                    decimalFormat.applyPattern(pattern);
+                    String amount = decimalFormat.format(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",", ".")));
+                    dg.addVariable("AMOUNT_BAYAR", amount);
+
+                    String amt = object.getString("AMOUNT_BAYAR").replace(",", ".");
+                    String[] arr = amt.split("\\.");
+                    String koma = "";
+                    if (arr.length > 1) {
+                        if (arr[1].equals("00")) {
+                            koma = "";
+                            koma = koma + conv.toWords(Double.parseDouble(arr[1]));
+                        } else {
+                            koma = "TITIK ";
+                            koma = koma + conv.toWords(Double.parseDouble(arr[1]));
+                        }
+                    }
+                    dg.addVariable("NOMINAL_TERBILANG", conv.toWords(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",", "."))) + koma + conv.toCurrency(object.getString("CURR_BAYAR")));
+                    dg.addVariable("CURR_BAYAR", object.getString("CURR_BAYAR"));
+                    dg.addVariable("ID_GROUP", object.getString("ID_GROUP"));
+                    dg.addVariable("NO_REK_BENEF", object.getString("NO_REK_BENEF"));
+                    dg.addVariable("BANK_BENEF", object.getString("BANK_BENEF"));
+                    dg.addVariable("ALAMAT_BANK_BENEF", object.getString("ALAMAT_BANK_BENEF"));
+                    dg.addVariable("NAMA_VENDOR", object.getString("NAMA_VENDOR"));
+                    dg.addVariable("ACCOUNT_NAME", object.getString("ACCOUNT_NAME"));
+                    dg.addVariable("ALAMAT_VENDOR", object.getString("ALAMAT_VENDOR"));
+                    dg.addVariable("EMAIL_VENDOR", object.getString("EMAIL_VENDOR"));
+                    if (object.getString("JABATAN").equals("MSB")) {
+//                        dg.addVariable("NAMA_APPROVER_SURAT",object.getString("NAMA_APPROVER_SURAT"));
+//                        dg.addVariable("DETAIL_APPROVER_SURAT",object.getString("DETAIL_APPROVER_SURAT"));
+//                        dg.addVariable("NAMA_COUNTER_SIGNER_SURAT",object.getString("NAMA_COUNTER_SIGNER_SURAT"));
+//                        dg.addVariable("DETAIL_COUNTER_SIGNER_SURAT",object.getString("DETAIL_COUNTER_SIGNER_SURAT"));
+                    } else {
+//                        dg.addVariable("NAMA_APPROVER_SURAT",object.getString("NAMA_APPROVER_SURAT"));
+//                        dg.addVariable("DETAIL_APPROVER_SURAT",object.getString("DETAIL_APPROVER_SURAT"));
+//                        dg.addVariable("NAMA_COUNTER_SIGNER_SURAT",object.getString("NAMA_COUNTER_SIGNER_SURAT"));
+//                        dg.addVariable("DETAIL_COUNTER_SIGNER_SURAT",object.getString("DETAIL_COUNTER_SIGNER_SURAT"));
+                    }
+                    dg.addVariable("HOUSE_BANK", object.getString("HOUSE_BANK"));
+                    dg.addVariable("ALAMAT_BANK", object.getString("ALAMAT_BANK"));
+                    dg.addVariable("NAMA_APPROVER", object.getString("NAMA_APPROVER"));
+                    dg.addVariable("DETAIL_APPROVER", object.getString("DETAIL_APPROVER"));
+                    dg.addVariable("NAMA_COUNTER_SIGNER", object.getString("NAMA_COUNTER_SIGNER"));
+                    dg.addVariable("DETAIL_COUNTER_SIGNER", object.getString("DETAIL_COUNTER_SIGNER"));
+                    dg.addVariable("NO_REK_HOUSE_BANK", object.getString("NO_REK_HOUSE_BANK"));
+
+                    dg.addVariable("NO_GIRO", object.getString("NO_GIRO"));
+                    dg.addVariable("TGL_RENCANA_BAYAR", object.getString("TGL_RENCANA_BAYAR"));
+                    dg.addVariable("TGL_CETAK", print_df.format(n_print_date));
                 }
                 dg.addTableVariables(tableList);
                 try {
@@ -2954,7 +3052,7 @@ public class CorpayController {
             }
             AppUtils.getLogger(this).debug("statusInvoice : {} ", out);
             return out;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

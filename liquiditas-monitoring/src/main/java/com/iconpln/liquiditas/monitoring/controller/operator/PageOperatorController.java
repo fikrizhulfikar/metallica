@@ -257,7 +257,7 @@ public class PageOperatorController {
     }
 
     @RequestMapping("/rekap_invoice_admin")
-    public String rekap_invoice_admin() {return "operator/rekap_invoice_belum"; }
+    public String rekap_invoice_admin() {return "operator/rekap_invoice_employee"; }
 
     @RequestMapping("/rekap_invoice_oss")
     public String rekap_invoice_oss(){return "operator/rekap_invoice_oss";}
