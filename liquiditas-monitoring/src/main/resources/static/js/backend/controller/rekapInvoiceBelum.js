@@ -3082,7 +3082,7 @@ function create_dok_restitusi() {
                 success: function (res) {
                     hideLoadingCss("");
                     if (res.return == 1) {
-                        Swal.fire(res.OUT_MSG.charAt(0).toUpperCase() + res.OUT_MSG.substring(1).toLowerCase(),'Berhasil Membuat Group','success');
+                        Swal.fire('Berhasil Membuat Group');
                         search("load");
                         $('#multiple-edit-modal').modal('hide');
                         table_rekapitulasi.ajax.reload();
@@ -3454,7 +3454,7 @@ function cetakBuktiKasMultiple(){
                     });
                     invoiceCheckedArray = new Array();
                 }
-                // console.log("Result : ",res);
+                 console.log("Result : ",res);
             },
             error : (err) => {
                 // console.log("Error : ",err.error);

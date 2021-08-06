@@ -2308,7 +2308,7 @@ function update_pembayaran() {
             pExchRateDeals : $("#pExchRateDeals3").val() === "-" ? "" : $("#pExchRateDeals3").val().toString().replace(/,/g,"") ,
         },
         success: function (res) {
-            //// // console.log("COBA DIAZ :",res);
+//              console.log("COBA DIAZ :",res);
                     hideLoadingCss("")
                     //var result = res.return.split(";")[0];
                     //var result = res;
@@ -2316,6 +2316,7 @@ function update_pembayaran() {
                         alert(res.OUT_MSG);
                         search("load");
                         $('#edit-modal').modal('hide');
+//                        console.log("COBA DIAZ :",res);
                         table_rekapitulasi.ajax.reload();
                     } else {
                         alert(res.OUT_MSG);
@@ -3450,7 +3451,7 @@ function create_dok_restitusi() {
         if (result.value) {
             showLoadingCss();
             $.ajax({
-                url: baseUrl + "api_operator/rekap_invoice_belum/create_restitusi",
+                url: baseUrl + "api_operator/rekap_invoice_belum/create_restitusi_emp",
                 dataType: 'JSON',
                 type: "POST",
                 data: {

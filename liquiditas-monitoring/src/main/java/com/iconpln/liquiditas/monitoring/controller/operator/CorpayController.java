@@ -5,6 +5,7 @@ import com.iconpln.liquiditas.core.domain.Notification;
 import com.iconpln.liquiditas.core.service.CorpayService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.core.xmldoc.DocGenerator;
+import com.iconpln.liquiditas.monitoring.controller.xmldoc.NumberToWordConverter;
 import com.iconpln.liquiditas.monitoring.utils.NamedIdentifier;
 import com.iconpln.liquiditas.monitoring.utils.NotificationUtil;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
@@ -50,6 +51,12 @@ public class CorpayController {
     private ResourceLoader resourceLoader;
 
     private SimpleDateFormat excelDateFormat = new SimpleDateFormat("dd/mm/yyyy");
+
+    private SimpleDateFormat localFormatter = new SimpleDateFormat("dd MMMM yyyy", new Locale("id"));
+
+    private NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("in","ID"));
+
+    private String pattern = "###,###.00";
 
     @RequestMapping(value = "/get_rekap_invoice", method = RequestMethod.GET)
     public Map listRekapDataBelum(
@@ -2756,11 +2763,167 @@ public class CorpayController {
             for (int j = 0; j < jsonArray.length(); j++) {
                 JSONObject json = jsonArray.getJSONObject(j);
                 out = corpayService.insRestitusiTemp(json.getString("group_id"));
+                System.out.println("Ini : "+out);
+                res.put(String.valueOf(j),out);
+            }
+            List<Map<String, String>> tableList = new ArrayList<>();
+
+            if (res.size() == jsonArray.length()){
+                getArray = corpayService.getCetakBuktiKasRestitusi();
+                NumberToWordConverter conv = new NumberToWordConverter();
+                System.out.println("Hasil Select : "+getArray);
+//                System.out.println("Ini : "+res);
+                JSONObject object = new JSONObject(getArray.get(0));
+                String rawDate = object.getString("TGL_RENCANA_BAYAR");
+                Date tgl_rencana_bayar = new SimpleDateFormat("dd/MM/yyyy").parse(rawDate);
+                Date n_print_date = new Date();
+                SimpleDateFormat print_df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                int no = 0;
+                if (!getArray.isEmpty()){
+                    for (Map<String, Object> p : getArray){
+                        Map<String, String> row = new HashMap<>();
+                        row.put("FISCAL_YEAR", p.get("FISCAL_YEAR").toString());
+//                        row.put("METODE_PEMBAYARAN", (object.getString("METODE_PEMBAYARAN") == null) ? "-" : object.getString("METODE_PEMBAYARAN"));
+                        row.put("ALAMAT_HOUSE_BANK", (object.getString("ALAMAT_BANK") == null) ? "-" : object.getString("ALAMAT_BANK"));
+//                        row.put("REF_NUM", (object.getString("REF_NUM_BANK") == null) ? "-" : object.getString("REF_NUM_BANK"));
+
+                        row.put("NO_URUT",String.valueOf(no+=1));
+                        row.put("NAMA_VENDOR", p.get("NAMA_VENDOR").toString());
+                        row.put("DOC_NO", p.get("DOCUMENT_NUMBER").toString());
+                        row.put("ITEM_TEXT", p.get("ITEM_TEXT").toString());
+                        row.put("CURR_BAYAR", p.get("CURR_BAYAR").toString());
+                        DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
+                        decimalFormat.applyPattern(pattern);
+                        String amount = decimalFormat.format(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",",".")));
+                        row.put("AMOUNT_BAYAR", amount);
+                        row.put("ID_GROUP", p.get("ID_GROUP").toString());
+                        row.put("NO_REK_BENEF", p.get("NO_REK_BENEF").toString());
+                        row.put("BANK_BENEF", p.get("BANK_BENEF").toString());
+                        row.put("ALAMAT_BANK_BENEF", p.get("ALAMAT_BANK_BENEF").toString());
+                        row.put("NAMA_VENDOR", p.get("NAMA_VENDOR").toString());
+                        row.put("ACCOUNT_NAME", p.get("ACCOUNT_NAME").toString());
+                        row.put("ALAMAT_VENDOR", p.get("ALAMAT_VENDOR").toString());
+                        row.put("EMAIL_VENDOR", p.get("EMAIL_VENDOR").toString());
+                        if (object.getString("JABATAN").equals("MSB")){
+                            row.put("NAMA_APPROVER_SURAT", p.get("NAMA_COUNTER_SIGNER").toString());
+                            row.put("DETAIL_APPROVER_SURAT", p.get("DETAIL_COUNTER_SIGNER").toString());
+                            row.put("NAMA_COUNTER_SIGNER_SURAT", p.get("NAMA_COUNTER_SIGNER_SURAT").toString());
+                            row.put("DETAIL_COUNTER_SIGNER_SURAT", p.get("DETAIL_COUNTER_SIGNER_SURAT").toString());
+                        }else{
+                            row.put("NAMA_APPROVER_SURAT", p.get("NAMA_APPROVER").toString());
+                            row.put("DETAIL_APPROVER_SURAT", p.get("DETAIL_APPROVER").toString());
+                            row.put("NAMA_COUNTER_SIGNER_SURAT", p.get("NAMA_COUNTER_SIGNER").toString());
+                            row.put("DETAIL_COUNTER_SIGNER_SURAT", p.get("DETAIL_COUNTER_SIGNER").toString());
+                        }
+                        row.put("HOUSE_BANK", p.get("HOUSE_BANK").toString());
+                        row.put("ALAMAT_BANK", p.get("ALAMAT_BANK").toString());
+                        row.put("NAMA_APPROVER", p.get("NAMA_APPROVER").toString());
+                        row.put("DETAIL_APPROVER", p.get("DETAIL_APPROVER").toString());
+                        row.put("NAMA_COUNTER_SIGNER", p.get("NAMA_COUNTER_SIGNER").toString());
+                        row.put("DETAIL_COUNTER_SIGNER", p.get("DETAIL_COUNTER_SIGNER").toString());
+                        row.put("NO_REK_HOUSE_BANK", p.get("NO_REK_HOUSE_BANK").toString());
+
+                        String amt = object.getString("AMOUNT_BAYAR").replace(",",".");
+                        String[] arr = amt.split("\\.");
+                        String koma = "";
+                        if (arr.length > 1){
+                            if (arr[1].equals("00")){
+                                koma = "";
+                                koma = koma + conv.toWords(Double.parseDouble(arr[1]));
+                            }else{
+                                koma = "TITIK ";
+                                koma = koma + conv.toWords(Double.parseDouble(arr[1]));
+                            }
+                        }
+//                        row.put("NOMINAL_TERBILANG", conv.toWords(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",",".")))+koma+conv.toCurrency(object.getString("CURR_BAYAR")));
+                        row.put("NO_GIRO", p.get("NO_GIRO").toString());
+                        row.put("TGL_RENCANA_BAYAR", localFormatter.format(tgl_rencana_bayar));
+                        row.put("TGL_CETAK",print_df.format(n_print_date));
+
+                        tableList.add(row);
+                    }
+                }
+                dg.addTableVariables(tableList);
+                try {
+                    dg.createDocFromTemplate("template_laporan_restitusi_giro", filename);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            AppUtils.getLogger(this).debug("statusInvoice : {} ", out);
+            return out;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/get_rekap_invoice_employee", method = RequestMethod.GET)
+    public Map listRekapDataPegawai(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "10") int length,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
+            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
+            @RequestParam(value = "pCaraBayar", defaultValue = "ALL") String pCaraBayar,
+            @RequestParam(value = "status", defaultValue = "ALL") String pStatus,
+            @RequestParam(value = "statusTracking", defaultValue = "ALL") String pStatusTracking,
+            @RequestParam(value = "search[value]", defaultValue = "") String pSearch
+    ) {
+
+        String sortBy = parseColumn(sortIndex);
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = corpayService.getListPembayaranPegawai(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, WebUtils.getUsernameLogin(), sortBy, sortDir, pStatus, pStatusTracking, pSearch);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("draw", draw);
+        mapData.put("data", list);
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
+        return mapData;
+    }
+
+    @RequestMapping(value = "/create_restitusi_emp", method = RequestMethod.POST)
+    public Map<String, Object> createGroup2(
+            @RequestParam(value = "pData", defaultValue = "") String pData
+    ) throws JSONException {
+        ZonedDateTime dt = ZonedDateTime.now();
+        String dateFormated = DateTimeFormatter.ofPattern("ddmmyyyy").format(dt);
+        String filename = "uploadcorpay/temp/laporan_kas_pegawai_"+dateFormated;
+        DocGenerator dg = new DocGenerator();
+        Map<String, Object> out = null;
+        Map<String, Object> res = new HashMap<>();
+        List<Map<String, Object>> getArray = new ArrayList<>();
+        JSONArray jsonArray = new JSONArray(pData);
+        try{
+            for (int j = 0; j < jsonArray.length(); j++) {
+                JSONObject json = jsonArray.getJSONObject(j);
+                out = corpayService.insRestitusiTemp(json.getString("group_id"));
                 res.put(String.valueOf(j),out);
             }
             List<Map<String, String>> tableList = new ArrayList<>();
             if (res.size() == jsonArray.length()){
-                getArray = corpayService.getCetakBuktiKasRestitusi();
+                getArray = corpayService.getCetakBuktiLunasRestitusi();
                 int no = 0;
                 if (!getArray.isEmpty()){
                     for (Map<String, Object> p : getArray){
@@ -2778,6 +2941,7 @@ public class CorpayController {
                         row.put("ID_GROUP", p.get("ID_GROUP").toString());
                         row.put("ALAMAT_BANK_BENEF", p.get("ALAMAT_BANK_BENEF").toString());
                         row.put("EMAIL_VENDOR", p.get("EMAIL_VENDOR").toString());
+                        row.put("NO_GIRO", p.get("NO_GIRO").toString());
                         tableList.add(row);
                     }
                 }

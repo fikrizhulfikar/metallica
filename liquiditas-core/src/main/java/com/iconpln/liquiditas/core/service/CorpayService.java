@@ -2778,4 +2778,59 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
         return out;
     }
+
+    public List<Map<String, Object>> getListPembayaranPegawai(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pCaraBayar, String pUserId, String sortBy, String sortDir, String status, String statusTracking, String pSearch) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data rekap search info = " +
+                        "pStart : {}, " +
+                        "pLength : {}, " +
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, " +
+                        "pBank : {}, " +
+                        "pCurrency : {}, " +
+                        "pCaraBayar : {}," +
+                        "pUserId : {}," +
+                        "pSortBy : {}," +
+                        "pSortDir : {}," +
+                        "pStatus : {}," +
+                        "pStatusTracking : {}," +
+                        "pSearch : {},",
+
+                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, pUserId, sortBy, sortDir, pSearch);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY2")
+                .withFunctionName("invoice_get_employe");
+
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_start", pStart, Types.INTEGER)
+                .addValue("p_length", pLength, Types.INTEGER)
+                .addValue("p_tgl_awal", pTglAwal, Types.VARCHAR)
+                .addValue("p_tgl_akhir", pTglAkhir, Types.VARCHAR)
+                .addValue("p_bank", pBank, Types.VARCHAR)
+                .addValue("p_cur", pCurrency, Types.VARCHAR)
+                .addValue("p_cara_bayar", pCaraBayar, Types.VARCHAR)
+                .addValue("p_user_id", pUserId, Types.VARCHAR)
+                .addValue("p_sort_by", sortBy, Types.VARCHAR)
+                .addValue("p_sort_dir", sortDir, Types.VARCHAR)
+                .addValue("p_status", status, Types.VARCHAR)
+                .addValue("p_status_tracking", statusTracking, Types.VARCHAR)
+                .addValue("p_search", pSearch, Types.VARCHAR);
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data invoice_get : {}", resultset);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getCetakBuktiLunasRestitusi(){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY2")
+                .withFunctionName("get_cetak_bukti_pelunasan");
+        List<Map<String, Object>> out;
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("out_data", OracleTypes.CURSOR);
+        out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+        return out;
+    }
 }
