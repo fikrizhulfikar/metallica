@@ -2768,15 +2768,16 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         return out;
     }
 
-    public List<Map<String, Object>> getCetakBuktiKasRestitusi(){
+    public Map<String, Object> getCetakBuktiKasRestitusi(String buktiKas, String buktiLampiran){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY2")
                 .withFunctionName("get_cetak_bukti_kas");
-        List<Map<String, Object>> out;
+        Map<String, Object> map;
         SqlParameterSource param = new MapSqlParameterSource()
-                .addValue("out_data", OracleTypes.CURSOR);
-        out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
-        return out;
+                .addValue("out_bukti_kas", buktiKas, OracleTypes.CURSOR)
+                .addValue("out_bukti_lampiran", buktiLampiran, OracleTypes.CURSOR);
+        map = simpleJdbcCall.execute(param);
+        return map;
     }
 
     public List<Map<String, Object>> getListPembayaranPegawai(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pCaraBayar, String pUserId, String sortBy, String sortDir, String status, String statusTracking, String pSearch) throws SQLException {
