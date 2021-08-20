@@ -12,6 +12,9 @@ import com.iconpln.liquiditas.monitoring.utils.WebUtils;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -26,7 +29,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletOutputStream;
@@ -2932,12 +2940,10 @@ public class CorpayController {
             @RequestParam(value = "buktiLampiran", defaultValue = "") String buktiLampiran
     ) throws JSONException {
         ZonedDateTime dt = ZonedDateTime.now();
-        String dateFormated = DateTimeFormatter.ofPattern("ddmmyyyy").format(dt);
-        String filename = "uploadcorpay/temp/laporan_kas_pegawai_" + dateFormated;
-        DocGenerator dg = new DocGenerator();
         Map<String, Object> out = null;
         Map<String, Object> res = new HashMap<>();
         Map<String, Object> getArray = new HashMap<>();
+        DocGenerator dg = new DocGenerator();
         JSONArray jsonArray = new JSONArray(pData);
         try {
             for (int j = 0; j < jsonArray.length(); j++) {
@@ -2957,8 +2963,7 @@ public class CorpayController {
                 List<Map> objectArray = (List<Map>) getArray.get("return");
                 List<Map> objectArray2 = (List<Map>) getArray.get("OUT_LAMPIRAN");
                 Map object = objectArray.get(0);
-                Map object2 = objectArray2.get(0);
-
+                String filename = "uploadcorpay/temp/laporan_kas_pegawai_" + object.get("ID_GROUP").toString();
                 Date n_print_date = new Date();
                 SimpleDateFormat print_df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 int no = 0;
@@ -3032,8 +3037,8 @@ public class CorpayController {
                             row.put("CURR_BAYAR_LAMPIRAN", objectArray2.get(i).get("CURR_BAYAR").toString());
                             row.put("EMAIL_VENDOR_LAMPIRAN", objectArray2.get(i).get("EMAIL_VENDOR").toString());
                             DecimalFormat decimalFormat2 = (DecimalFormat) numberFormat;
-                            decimalFormat.applyPattern(pattern);
-                            String amount2 = decimalFormat2.format(Double.parseDouble(object2.get("AMOUNT_BAYAR").toString().replace(",", ".")));
+                            decimalFormat2.applyPattern(pattern);
+                            String amount2 = decimalFormat2.format(Double.parseDouble(objectArray2.get(i).get("AMOUNT_BAYAR").toString().replace(",", ".")));
                             row.put("AMOUNT_BAYAR_LAMPIRAN", amount2);
                             tableList2.add(row);
                         }
@@ -3053,4 +3058,19 @@ public class CorpayController {
                 return null;
             }
         }
+
+    @GetMapping(path = "/downloadFile/{filename:.+}")
+    public ResponseEntity downloadSingleFile(@PathVariable String filename){
+        Path path = Paths.get("uploadcorpay/temp/"+filename);
+        Resource resource = null;
+        try{
+            resource = new UrlResource(path.toUri());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+ resource.getFilename() + "\"")
+                .body(resource);
+    }
 }

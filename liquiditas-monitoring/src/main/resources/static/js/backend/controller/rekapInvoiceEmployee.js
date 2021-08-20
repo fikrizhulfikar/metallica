@@ -3459,8 +3459,14 @@ function create_dok_restitusi() {
                 },
                 success: function (res) {
                     hideLoadingCss("");
+                    let tes = JSON.stringify(invoiceCheckedArray);
+                    const obj = JSON.parse(tes);
+//                    console.log("INI HASIL", obj[1].group_id);
+                    window.open(baseUrl+"api_operator/rekap_invoice_belum/downloadFile/laporan_kas_pegawai_"+ obj[1].group_id +".docx","_blank");
                     if (res.return == 1) {
-                        Swal.fire(res.OUT_MSG.charAt(0).toUpperCase() + res.OUT_MSG.substring(1).toLowerCase(),'Berhasil Membuat Group','success');
+//                        Swal.fire(res.OUT_MSG.charAt(0).toUpperCase() + res.OUT_MSG.substring(1).toLowerCase(),'Berhasil Membuat Group','success');
+//                        window.open(baseUrl+"api_operator/rekap_invoice_belum/downloadFile","_blank");
+                        console.log("Berhasil");
                         search("load");
                         $('#multiple-edit-modal').modal('hide');
                         table_rekapitulasi.ajax.reload();
