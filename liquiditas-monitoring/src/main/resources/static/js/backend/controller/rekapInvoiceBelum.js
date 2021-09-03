@@ -1261,7 +1261,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                      html = html + '<button class="btn btn-verified btn-sm btn-warning" id="btn-verified" style="margin-left: 10px" type="button" title="Approve" onclick="update_datas()"><i class="fas fa-check-circle"></i></button>' ;
                      html = html + '<button class="btn btn-verified btn-elementary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Dokumen Pengantar" onclick="cetakBuktiKasMultiple()"><i class="fas fa-copy"></i></button>' ;
                      html = html + '<button class="btn btn-reverse-sap btn-danger btn-sm" id="btn-reverse-sap" style="margin-left: 10px" type="button" title="Reverse SAP" onclick="multipleReverseSap()"><i class="fas fa-arrow-left"></i></button>';
-                     html = html + '<button class="btn btn-reverse-sap btn-default btn-sm" id="btn-restitusi" style="margin-left: 10px" type="button" title="Cetak Dok Restitusi" onclick="cetakRestitusi()"><i class="fas fa-people-carry"></i></button>';
+//                     html = html + '<button class="btn btn-reverse-sap btn-default btn-sm" id="btn-restitusi" style="margin-left: 10px" type="button" title="Cetak Dok Restitusi" onclick="cetakRestitusi()"><i class="fas fa-people-carry"></i></button>';
                  }
                 else {
                     if (newRoleUser[0] !== "ROLE_OSS"){

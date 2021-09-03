@@ -2834,4 +2834,33 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
         return out;
     }
+
+//    public List<Map<String, Object>> getXlsCmsBRI(String docNo, String pCompCode, String pFiscYear) throws SQLException {
+//
+//        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+//                .withCatalogName("PKG_CORPAY2")
+//                .withFunctionName("xls_cms_bri");
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("p_doc_no", docNo);
+//        params.put("p_comp_code", pCompCode);
+//        params.put("p_fisc_year", pFiscYear);
+//        List<Map<String, Object>> xlscmsbri = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+//
+//        return xlscmsbri;
+//    }
+//
+//    public List<Map<String, Object>> getXlsCmsMandiri(String docNo, String pCompCode, String pFiscYear) throws SQLException {
+//
+//        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+//                .withCatalogName("PKG_CORPAY2")
+//                .withFunctionName("xls_cms_mandiri");
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("p_doc_no", docNo);
+//        params.put("p_comp_code", pCompCode);
+//        params.put("p_fisc_year", pFiscYear);
+//        List<Map<String, Object>> xlscmsbri = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+//
+//        return xlscmsbri;
+//    }
+
 }
