@@ -11,6 +11,7 @@ const urlParams = new URLSearchParams(urlString);
 let idForm = urlParams.get('p');
 let xhttp = new XMLHttpRequest();
 let jsonObj = null;
+let grouped = null;
 xhttp.onreadystatechange = function () {
     if (this.readyState === 4 && this.status === 200){
         jsonObj = JSON.parse(this.responseText);
@@ -20,7 +21,9 @@ xhttp.onreadystatechange = function () {
                 return rv;
             }, {});
         };
-        createDiv(groupedBy(jsonObj.return, 'BANK_SUMBER'));
+        grouped = groupedBy(jsonObj.return, 'BANK_SUMBER');
+        console.log(grouped);
+        createDiv(grouped);
     }
 };
 xhttp.open('GET',  `${baseUrl}api_operator/placement_lcl/nota?pIdForm=${idForm}`, true);
@@ -119,6 +122,31 @@ function getImgPath(p){
         "BANK_SYARIAH_MANDIRI" : '/static/images/bank/bmrs_logo.png',
     }
     return pathLogo[p];
+}
+
+function exportNota(){
+
+    if(!isEmpty(grouped)){
+        $.ajax({
+            'url' : `${baseUrl}api_operator/placement_lcl/export_nota`,
+            'type' : 'POST',
+            'data' : {
+                'dataNota' : JSON.stringify(grouped),
+            },
+            'success' : (res) => {
+                alert("Oke");
+            }
+        })
+    }
+}
+
+function isEmpty(object){
+    for(const p in object){
+        if(object.hasOwnProperty(p)){
+        return false
+        }
+    }
+    return true;
 }
 
 

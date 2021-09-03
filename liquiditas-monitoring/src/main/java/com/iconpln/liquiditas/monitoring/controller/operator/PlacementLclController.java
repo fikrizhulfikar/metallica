@@ -1,18 +1,32 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
+import com.iconpln.liquiditas.core.alt.AltException;
 import com.iconpln.liquiditas.core.service.PlacementLclService;
+import com.iconpln.liquiditas.core.xmldoc.DocGenerator;
+import com.iconpln.liquiditas.core.xmldoc.NotaPinbukDocGenerator;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
+import org.apache.commons.compress.archivers.dump.InvalidFormatException;
+import org.apache.poi.util.Units;
+import org.apache.poi.xwpf.usermodel.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
+import javax.json.JsonObject;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api_operator/placement_lcl")
@@ -20,6 +34,9 @@ public class PlacementLclController {
 
     @Autowired
     PlacementLclService placementLclService;
+
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     @GetMapping(path = "/placement_lcl_header")
     public Map listPlacementlclHeader(
@@ -272,6 +289,90 @@ public class PlacementLclController {
             out = placementLclService.insLcOptimasiDana(bank, mandiri, bri, bni, bukopin, uob, btn, danamons, pIdForm);
         }
         return out;
+    }
+//
+    @PostMapping(path = "/export_nota")
+    public String exportNotaPinbuk(@RequestParam("dataNota") String dataNota){
+        Map output = new HashMap();
+        List<Map<String, String>> tableRow = new ArrayList<>();
+        List<Map<String, List<Map<String, String>>>> sectionList = new ArrayList<>();
+
+        NotaPinbukDocGenerator npdg = new NotaPinbukDocGenerator();
+        ZonedDateTime t = ZonedDateTime.now();
+        String strDate = DateTimeFormatter.ofPattern("yyyyMMdd").format(t);
+        String filename = "uploadcorpay/temp/lcl_nota_pinbuk_"+strDate;
+        Map out = new HashMap();
+        try {
+            JSONObject jsonObject = new JSONObject(dataNota);
+            //FileOutputStream out = new FileOutputStream(new File("nota_pinbuk.docx"));
+//            Date date = new Date();
+//            SimpleDateFormat df = new SimpleDateFormat("dd MMMMM yyyy");
+            Iterator<String> keys = jsonObject.keys();
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document dom = db.newDocument();
+
+            Element edocument = dom.createElement("pdx:document");
+            edocument.setAttribute("xmlns:pdx","http://www.phpdocx.com/main");
+
+            Element econtent = dom.createElement("pdx:content");
+            output.put("header","NOTA PEMINDAH BUKUAN PADA TANGGAL 20 MEI 2021");
+            while(keys.hasNext()){
+                Map<String, List<Map<String, String>>> section = new HashMap<>();
+                String key = keys.next();
+                System.out.println("Key : "+key);
+                if (jsonObject.get(key) instanceof JSONArray){
+                    JSONArray jsonArray = jsonObject.getJSONArray(key);
+                    JSONObject o = jsonArray.getJSONObject(0);
+                    Map<String, String> upperRow = new HashMap<>();
+                    upperRow.put("BANK_SUMBER",o.getString("BANK_SUMBER"));
+                    upperRow.put("NAMA_REK", o.getString("NAMA_REKENING"));
+                    upperRow.put("NO_REK", o.getString("NO_REK_SUMBER"));
+                    List<Map<String, String>> upperTableRow = new ArrayList<>();
+                    upperTableRow.add(upperRow);
+                    section.put("upper",upperTableRow);
+                    if (jsonArray.length() > 0){
+                        for (int i = 0; i < jsonArray.length();i++){
+                            Map<String, String> row = new HashMap<>();
+                            row.put("NAMA_BANK",jsonArray.getJSONObject(i).getString("BANK_ASAL"));
+                            row.put("NO_REK",jsonArray.getJSONObject(i).getString("NO_REKENING"));
+                            row.put("NOMINAL",jsonArray.getJSONObject(i).getString("NOMINAL"));
+                            row.put("NO_SAP",jsonArray.getJSONObject(i).getString("NO_SAP"));
+                            row.put("KET",jsonArray.getJSONObject(i).getString("KETERANGAN"));
+                            tableRow.add(row);
+                        }
+                        section.put("lower", tableRow);
+                    }
+                }
+                sectionList.add(section);
+                output.put("data",sectionList);
+            }
+            try {
+                npdg.createDocFromTemplate(output);
+                out.put("success", true);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            out.put("createdoc",checkfile(filename + ".docx")) ;
+            return null;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private Map checkfile(String filename) throws AltException {
+        File f = new File(filename);
+        Map oke = new HashMap();
+        if(f.exists()){
+            oke.put("status",01);
+            oke.put("filename",filename);
+            oke.put("info","File Created");
+            return oke;
+        }
+        else{
+            throw new AltException("File tidak ditemukan");
+        }
     }
 
     @GetMapping(path = "/test")
