@@ -3010,6 +3010,7 @@ public class CorpayController {
 //                        dg.addVariable("DETAIL_COUNTER_SIGNER_SURAT",object.getString("DETAIL_COUNTER_SIGNER_SURAT"));
                     }
                     dg.addVariable("HOUSE_BANK", object.get("HOUSE_BANK").toString());
+                    dg.addVariable("FISCAL_YEAR", object.get("FISCAL_YEAR").toString());
                     dg.addVariable("ITEM_TEXT", object.get("ITEM_TEXT").toString());
                     dg.addVariable("DOC_NO", object.get("DOCUMENT_NUMBER").toString());
                     dg.addVariable("ALAMAT_BANK", object.get("ALAMAT_BANK").toString());
