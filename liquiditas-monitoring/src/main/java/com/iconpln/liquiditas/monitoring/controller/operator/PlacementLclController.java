@@ -274,7 +274,6 @@ public class PlacementLclController {
         return out;
     }
 
-
     @GetMapping(path = "/test")
     public Map test(){
         return placementLclService.test();
