@@ -2768,14 +2768,99 @@ public String payment(String pMetodeBayar, String pBank, String pRefNum, String 
         return out;
     }
 
-    public List<Map<String, Object>> getCetakBuktiKasRestitusi(){
+    public Map<String, Object> getCetakBuktiKasRestitusi(String buktiKas, String buktiLampiran){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CORPAY2")
                 .withFunctionName("get_cetak_bukti_kas");
+        Map<String, Object> map;
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("out_bukti_kas", buktiKas, OracleTypes.CURSOR)
+                .addValue("out_bukti_lampiran", buktiLampiran, OracleTypes.CURSOR);
+        map = simpleJdbcCall.execute(param);
+        return map;
+    }
+
+    public List<Map<String, Object>> getListPembayaranPegawai(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pCaraBayar, String pUserId, String sortBy, String sortDir, String status, String statusTracking, String pSearch) throws SQLException {
+
+        AppUtils.getLogger(this).debug("data rekap search info = " +
+                        "pStart : {}, " +
+                        "pLength : {}, " +
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, " +
+                        "pBank : {}, " +
+                        "pCurrency : {}, " +
+                        "pCaraBayar : {}," +
+                        "pUserId : {}," +
+                        "pSortBy : {}," +
+                        "pSortDir : {}," +
+                        "pStatus : {}," +
+                        "pStatusTracking : {}," +
+                        "pSearch : {},",
+
+                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, pUserId, sortBy, sortDir, pSearch);
+
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY2")
+                .withFunctionName("invoice_get_employe");
+
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_start", pStart, Types.INTEGER)
+                .addValue("p_length", pLength, Types.INTEGER)
+                .addValue("p_tgl_awal", pTglAwal, Types.VARCHAR)
+                .addValue("p_tgl_akhir", pTglAkhir, Types.VARCHAR)
+                .addValue("p_bank", pBank, Types.VARCHAR)
+                .addValue("p_cur", pCurrency, Types.VARCHAR)
+                .addValue("p_cara_bayar", pCaraBayar, Types.VARCHAR)
+                .addValue("p_user_id", pUserId, Types.VARCHAR)
+                .addValue("p_sort_by", sortBy, Types.VARCHAR)
+                .addValue("p_sort_dir", sortDir, Types.VARCHAR)
+                .addValue("p_status", status, Types.VARCHAR)
+                .addValue("p_status_tracking", statusTracking, Types.VARCHAR)
+                .addValue("p_search", pSearch, Types.VARCHAR);
+
+        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+
+        AppUtils.getLogger(this).info("data invoice_get : {}", resultset);
+        return resultset;
+    }
+
+    public List<Map<String, Object>> getCetakBuktiLunasRestitusi(){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CORPAY2")
+                .withFunctionName("get_cetak_bukti_pelunasan");
         List<Map<String, Object>> out;
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("out_data", OracleTypes.CURSOR);
         out = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
         return out;
     }
+
+//    public List<Map<String, Object>> getXlsCmsBRI(String docNo, String pCompCode, String pFiscYear) throws SQLException {
+//
+//        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+//                .withCatalogName("PKG_CORPAY2")
+//                .withFunctionName("xls_cms_bri");
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("p_doc_no", docNo);
+//        params.put("p_comp_code", pCompCode);
+//        params.put("p_fisc_year", pFiscYear);
+//        List<Map<String, Object>> xlscmsbri = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+//
+//        return xlscmsbri;
+//    }
+//
+//    public List<Map<String, Object>> getXlsCmsMandiri(String docNo, String pCompCode, String pFiscYear) throws SQLException {
+//
+//        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+//                .withCatalogName("PKG_CORPAY2")
+//                .withFunctionName("xls_cms_mandiri");
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("p_doc_no", docNo);
+//        params.put("p_comp_code", pCompCode);
+//        params.put("p_fisc_year", pFiscYear);
+//        List<Map<String, Object>> xlscmsbri = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
+//
+//        return xlscmsbri;
+//    }
+
 }

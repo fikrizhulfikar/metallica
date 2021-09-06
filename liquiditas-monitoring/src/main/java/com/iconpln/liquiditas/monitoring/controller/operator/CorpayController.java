@@ -5,12 +5,16 @@ import com.iconpln.liquiditas.core.domain.Notification;
 import com.iconpln.liquiditas.core.service.CorpayService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.core.xmldoc.DocGenerator;
+import com.iconpln.liquiditas.monitoring.controller.xmldoc.NumberToWordConverter;
 import com.iconpln.liquiditas.monitoring.utils.NamedIdentifier;
 import com.iconpln.liquiditas.monitoring.utils.NotificationUtil;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -25,7 +29,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletOutputStream;
@@ -50,6 +59,12 @@ public class CorpayController {
     private ResourceLoader resourceLoader;
 
     private SimpleDateFormat excelDateFormat = new SimpleDateFormat("dd/mm/yyyy");
+
+    private SimpleDateFormat localFormatter = new SimpleDateFormat("dd MMMM yyyy", new Locale("id"));
+
+    private NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("in","ID"));
+
+    private String pattern = "###,###.00";
 
     @RequestMapping(value = "/get_rekap_invoice", method = RequestMethod.GET)
     public Map listRekapDataBelum(
@@ -2757,29 +2772,106 @@ public class CorpayController {
                 JSONObject json = jsonArray.getJSONObject(j);
                 out = corpayService.insRestitusiTemp(json.getString("group_id"));
                 res.put(String.valueOf(j),out);
+                System.out.println("Ini : "+out);
             }
             List<Map<String, String>> tableList = new ArrayList<>();
+
             if (res.size() == jsonArray.length()){
-                getArray = corpayService.getCetakBuktiKasRestitusi();
+                getArray = corpayService.getCetakBuktiLunasRestitusi();
+                NumberToWordConverter conv = new NumberToWordConverter();
+//                System.out.println("Hasil Select : "+getArray);
+//                System.out.println("Ini : "+res);
+                JSONObject object = new JSONObject(getArray.get(0));
+                String rawDate = object.getString("TGL_RENCANA_BAYAR");
+                Date tgl_rencana_bayar = new SimpleDateFormat("dd/MM/yyyy").parse(rawDate);
+                Date n_print_date = new Date();
+                SimpleDateFormat print_df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 int no = 0;
                 if (!getArray.isEmpty()){
                     for (Map<String, Object> p : getArray){
                         Map<String, String> row = new HashMap<>();
+                        row.put("FISCAL_YEAR", p.get("FISCAL_YEAR").toString());
+//                        row.put("METODE_PEMBAYARAN", (object.getString("METODE_PEMBAYARAN") == null) ? "-" : object.getString("METODE_PEMBAYARAN"));
+                        row.put("ALAMAT_HOUSE_BANK", (object.getString("ALAMAT_BANK") == null) ? "-" : object.getString("ALAMAT_BANK"));
+//                        row.put("REF_NUM", (object.getString("REF_NUM_BANK") == null) ? "-" : object.getString("REF_NUM_BANK"));
+
                         row.put("NO_URUT",String.valueOf(no+=1));
                         row.put("NAMA_VENDOR", p.get("NAMA_VENDOR").toString());
                         row.put("DOC_NO", p.get("DOCUMENT_NUMBER").toString());
-                        row.put("CURR_BAYAR", p.get("CURR_BAYAR").toString());
-                        row.put("AMOUNT_BAYAR", p.get("AMOUNT_BAYAR").toString());
                         row.put("ITEM_TEXT", p.get("ITEM_TEXT").toString());
-                        row.put("ACCOUNT_NAME", p.get("ACCOUNT_NAME").toString());
-                        row.put("ALAMAT_VENDOR", p.get("ALAMAT_VENDOR").toString());
-                        row.put("BANK_BENEF", p.get("BANK_BENEF").toString());
-                        row.put("NO_REK_BENEF", p.get("NO_REK_BENEF").toString());
-                        row.put("ID_GROUP", p.get("ID_GROUP").toString());
-                        row.put("ALAMAT_BANK_BENEF", p.get("ALAMAT_BANK_BENEF").toString());
-                        row.put("EMAIL_VENDOR", p.get("EMAIL_VENDOR").toString());
+                        row.put("CURR_BAYAR", p.get("CURR_BAYAR").toString());
+                        row.put("SUM_CURR_BAYAR", "IDR");
+                        row.put("TOTAL_BAYAR", "TESTING");
+                        DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
+                        decimalFormat.applyPattern(pattern);
+                        String amount = decimalFormat.format(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",",".")));
+                        row.put("AMOUNT_BAYAR", amount);
+
+                        String amt = object.getString("AMOUNT_BAYAR").replace(",",".");
+                        String[] arr = amt.split("\\.");
+                        String koma = "";
+                        if (arr.length > 1){
+                            if (arr[1].equals("00")){
+                                koma = "";
+                                koma = koma + conv.toWords(Double.parseDouble(arr[1]));
+                            }else{
+                                koma = "TITIK ";
+                                koma = koma + conv.toWords(Double.parseDouble(arr[1]));
+                            }
+                        }
+                        row.put("NOMINAL_TERBILANG", conv.toWords(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",",".")))+koma+conv.toCurrency(object.getString("CURR_BAYAR")));
+
                         tableList.add(row);
                     }
+                    DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
+                    decimalFormat.applyPattern(pattern);
+                    String amount = decimalFormat.format(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",",".")));
+                    dg.addVariable("AMOUNT_BAYAR", amount);
+
+                    String amt = object.getString("AMOUNT_BAYAR").replace(",",".");
+                    String[] arr = amt.split("\\.");
+                    String koma = "";
+                    if (arr.length > 1){
+                        if (arr[1].equals("00")){
+                            koma = "";
+                            koma = koma + conv.toWords(Double.parseDouble(arr[1]));
+                        }else{
+                            koma = "TITIK ";
+                            koma = koma + conv.toWords(Double.parseDouble(arr[1]));
+                        }
+                    }
+                    dg.addVariable("NOMINAL_TERBILANG", conv.toWords(Double.parseDouble(object.getString("AMOUNT_BAYAR").replace(",",".")))+koma+conv.toCurrency(object.getString("CURR_BAYAR")));
+                    dg.addVariable("CURR_BAYAR",object.getString("CURR_BAYAR"));
+                    dg.addVariable("ID_GROUP",object.getString("ID_GROUP"));
+                    dg.addVariable("NO_REK_BENEF",object.getString("NO_REK_BENEF"));
+                    dg.addVariable("BANK_BENEF",object.getString("BANK_BENEF"));
+                    dg.addVariable("ALAMAT_BANK_BENEF",object.getString("ALAMAT_BANK_BENEF"));
+                    dg.addVariable("NAMA_VENDOR",object.getString("NAMA_VENDOR"));
+                    dg.addVariable("ACCOUNT_NAME",object.getString("ACCOUNT_NAME"));
+                    dg.addVariable("ALAMAT_VENDOR",object.getString("ALAMAT_VENDOR"));
+                    dg.addVariable("EMAIL_VENDOR",object.getString("EMAIL_VENDOR"));
+                    if (object.getString("JABATAN").equals("MSB")){
+//                        dg.addVariable("NAMA_APPROVER_SURAT",object.getString("NAMA_APPROVER_SURAT"));
+//                        dg.addVariable("DETAIL_APPROVER_SURAT",object.getString("DETAIL_APPROVER_SURAT"));
+//                        dg.addVariable("NAMA_COUNTER_SIGNER_SURAT",object.getString("NAMA_COUNTER_SIGNER_SURAT"));
+//                        dg.addVariable("DETAIL_COUNTER_SIGNER_SURAT",object.getString("DETAIL_COUNTER_SIGNER_SURAT"));
+                    }else{
+//                        dg.addVariable("NAMA_APPROVER_SURAT",object.getString("NAMA_APPROVER_SURAT"));
+//                        dg.addVariable("DETAIL_APPROVER_SURAT",object.getString("DETAIL_APPROVER_SURAT"));
+//                        dg.addVariable("NAMA_COUNTER_SIGNER_SURAT",object.getString("NAMA_COUNTER_SIGNER_SURAT"));
+//                        dg.addVariable("DETAIL_COUNTER_SIGNER_SURAT",object.getString("DETAIL_COUNTER_SIGNER_SURAT"));
+                    }
+                    dg.addVariable("HOUSE_BANK",object.getString("HOUSE_BANK"));
+                    dg.addVariable("ALAMAT_BANK",object.getString("ALAMAT_BANK"));
+                    dg.addVariable("NAMA_APPROVER",object.getString("NAMA_APPROVER"));
+                    dg.addVariable("DETAIL_APPROVER",object.getString("DETAIL_APPROVER"));
+                    dg.addVariable("NAMA_COUNTER_SIGNER",object.getString("NAMA_COUNTER_SIGNER"));
+                    dg.addVariable("DETAIL_COUNTER_SIGNER",object.getString("DETAIL_COUNTER_SIGNER"));
+                    dg.addVariable("NO_REK_HOUSE_BANK",object.getString("NO_REK_HOUSE_BANK"));
+
+                    dg.addVariable("NO_GIRO",object.getString("NO_GIRO"));
+                    dg.addVariable("TGL_RENCANA_BAYAR",object.getString("TGL_RENCANA_BAYAR"));
+                    dg.addVariable("TGL_CETAK",print_df.format(n_print_date));
                 }
                 dg.addTableVariables(tableList);
                 try {
@@ -2795,4 +2887,359 @@ public class CorpayController {
             return null;
         }
     }
+
+    @RequestMapping(value = "/get_rekap_invoice_employee", method = RequestMethod.GET)
+    public Map listRekapDataPegawai(
+            @RequestParam(value = "draw", defaultValue = "0") int draw,
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "length", defaultValue = "10") int length,
+            @RequestParam(value = "columns[0][data]", defaultValue = "") String firstColumn,
+            @RequestParam(value = "order[0][column]", defaultValue = "0") int sortIndex,
+            @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
+            @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
+            @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
+            @RequestParam(value = "pBank", defaultValue = "ALL") String pBank,
+            @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
+            @RequestParam(value = "pCaraBayar", defaultValue = "ALL") String pCaraBayar,
+            @RequestParam(value = "status", defaultValue = "ALL") String pStatus,
+            @RequestParam(value = "statusTracking", defaultValue = "ALL") String pStatusTracking,
+            @RequestParam(value = "search[value]", defaultValue = "") String pSearch
+    ) {
+
+        String sortBy = parseColumn(sortIndex);
+        sortDir = sortDir.equalsIgnoreCase("DESC") ? "DESC" : "ASC";
+        if (sortBy.equalsIgnoreCase("UPDATE_DATE")) {
+            sortDir = "DESC";
+        }
+        List<Map<String, Object>> list = new ArrayList<>();
+        try {
+            list = corpayService.getListPembayaranPegawai(((start / length) + 1), length, pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, WebUtils.getUsernameLogin(), sortBy, sortDir, pStatus, pStatusTracking, pSearch);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Map mapData = new HashMap();
+        mapData.put("draw", draw);
+        mapData.put("data", list);
+        AppUtils.getLogger(this).info("size data : {}", list.size());
+        AppUtils.getLogger(this).info("list data : {}", list.toString());
+        if (list.size() < 1 || list.isEmpty() || list.get(0).get("TOTAL_COUNT") == null) {
+            mapData.put("recordsTotal", 0);
+            mapData.put("recordsFiltered", 0);
+        } else {
+            mapData.put("recordsTotal", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+            mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
+        }
+        return mapData;
+    }
+
+    @RequestMapping(value = "/create_restitusi_emp", method = RequestMethod.POST)
+    public Map<String, Object> createGroup2(
+            @RequestParam(value = "pData", defaultValue = "") String pData,
+            @RequestParam(value = "buktiKas", defaultValue = "") String buktiKas,
+            @RequestParam(value = "buktiLampiran", defaultValue = "") String buktiLampiran
+    ) throws JSONException {
+        ZonedDateTime dt = ZonedDateTime.now();
+        Map<String, Object> out = null;
+        Map<String, Object> res = new HashMap<>();
+        Map<String, Object> getArray = new HashMap<>();
+        DocGenerator dg = new DocGenerator();
+        JSONArray jsonArray = new JSONArray(pData);
+        try {
+            for (int j = 0; j < jsonArray.length(); j++) {
+                JSONObject json = jsonArray.getJSONObject(j);
+                out = corpayService.insRestitusiTemp(json.getString("group_id"));
+                res.put(String.valueOf(j), out);
+                System.out.println("Ini : " + out);
+            }
+            List<Map<String, String>> tableList = new ArrayList<>();
+            List<Map<String, String>> tableList2 = new ArrayList<>();
+
+            if (res.size() == jsonArray.length()) {
+                getArray = corpayService.getCetakBuktiKasRestitusi(buktiKas, buktiLampiran);
+                NumberToWordConverter conv = new NumberToWordConverter();
+                System.out.println("Hasil Select : " + getArray);
+
+                List<Map> objectArray = (List<Map>) getArray.get("return");
+                List<Map> objectArray2 = (List<Map>) getArray.get("OUT_LAMPIRAN");
+                Map object = objectArray.get(0);
+                String filename = "uploadcorpay/temp/laporan_kas_pegawai_" + object.get("ID_GROUP").toString();
+                Date n_print_date = new Date();
+                SimpleDateFormat print_df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                int no = 0;
+                if (!getArray.isEmpty()) {
+
+                    DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
+                    decimalFormat.applyPattern(pattern);
+                    String amount = decimalFormat.format(Double.parseDouble(object.get("AMOUNT_BAYAR").toString().replace(",", ".")));
+                    dg.addVariable("AMOUNT_BAYAR", amount);
+
+                    String amt = object.get("AMOUNT_BAYAR").toString().replace(",", ".");
+                    String[] arr = amt.split("\\.");
+                    String koma = "";
+                    if (arr.length > 1) {
+                        if (arr[1].equals("00")) {
+                            koma = "";
+                            koma = koma + conv.toWords(Double.parseDouble(arr[1]));
+                        } else {
+                            koma = "TITIK ";
+                            koma = koma + conv.toWords(Double.parseDouble(arr[1]));
+                        }
+                    }
+                    dg.addVariable("NOMINAL_TERBILANG", conv.toWords(Double.parseDouble(object.get("AMOUNT_BAYAR").toString().replace(",", "."))) + koma + conv.toCurrency(object.get("CURR_BAYAR").toString()));
+                    dg.addVariable("CURR_BAYAR", object.get("CURR_BAYAR").toString());
+                    dg.addVariable("SUM_CURR_BAYAR", "IDR");
+                    dg.addVariable("TOTAL_BAYAR", "TESTING");
+                    dg.addVariable("ID_GROUP", object.get("ID_GROUP").toString());
+                    dg.addVariable("NO_REK_BENEF", object.get("NO_REK_BENEF").toString());
+                    dg.addVariable("BANK_BENEF", object.get("BANK_BENEF").toString());
+                    dg.addVariable("ALAMAT_BANK_BENEF", object.get("ALAMAT_BANK_BENEF").toString());
+                    dg.addVariable("NAMA_VENDOR", object.get("NAMA_VENDOR").toString());
+                    dg.addVariable("ACCOUNT_NAME", object.get("ACCOUNT_NAME").toString());
+                    dg.addVariable("ALAMAT_VENDOR", object.get("ALAMAT_VENDOR").toString());
+                    dg.addVariable("EMAIL_VENDOR", object.get("EMAIL_VENDOR").toString());
+                    if (object.get("JABATAN").toString().equals("MSB")) {
+//                        dg.addVariable("NAMA_APPROVER_SURAT",object.getString("NAMA_APPROVER_SURAT"));
+//                        dg.addVariable("DETAIL_APPROVER_SURAT",object.getString("DETAIL_APPROVER_SURAT"));
+//                        dg.addVariable("NAMA_COUNTER_SIGNER_SURAT",object.getString("NAMA_COUNTER_SIGNER_SURAT"));
+//                        dg.addVariable("DETAIL_COUNTER_SIGNER_SURAT",object.getString("DETAIL_COUNTER_SIGNER_SURAT"));
+                    } else {
+//                        dg.addVariable("NAMA_APPROVER_SURAT",object.getString("NAMA_APPROVER_SURAT"));
+//                        dg.addVariable("DETAIL_APPROVER_SURAT",object.getString("DETAIL_APPROVER_SURAT"));
+//                        dg.addVariable("NAMA_COUNTER_SIGNER_SURAT",object.getString("NAMA_COUNTER_SIGNER_SURAT"));
+//                        dg.addVariable("DETAIL_COUNTER_SIGNER_SURAT",object.getString("DETAIL_COUNTER_SIGNER_SURAT"));
+                    }
+                    dg.addVariable("HOUSE_BANK", object.get("HOUSE_BANK").toString());
+                    dg.addVariable("FISCAL_YEAR", object.get("FISCAL_YEAR").toString());
+                    dg.addVariable("ITEM_TEXT", object.get("ITEM_TEXT").toString());
+                    dg.addVariable("DOC_NO", object.get("DOCUMENT_NUMBER").toString());
+                    dg.addVariable("ALAMAT_BANK", object.get("ALAMAT_BANK").toString());
+                    dg.addVariable("NAMA_APPROVER", object.get("NAMA_APPROVER").toString());
+                    dg.addVariable("DETAIL_APPROVER", object.get("DETAIL_APPROVER").toString());
+                    dg.addVariable("NAMA_COUNTER_SIGNER", object.get("NAMA_COUNTER_SIGNER").toString());
+                    dg.addVariable("DETAIL_COUNTER_SIGNER", object.get("DETAIL_COUNTER_SIGNER").toString());
+                    dg.addVariable("NO_REK_HOUSE_BANK", object.get("NO_REK_HOUSE_BANK").toString());
+
+                    dg.addVariable("NO_GIRO", object.get("NO_GIRO").toString());
+                    dg.addVariable("TGL_RENCANA_BAYAR", object.get("TGL_RENCANA_BAYAR").toString());
+                    dg.addVariable("TGL_CETAK", print_df.format(n_print_date));
+                    dg.addTableVariables(tableList);
+
+                    if (objectArray2.size() > 0) {
+                        for (int i = 0; i < objectArray2.size(); i++) {
+                            Map<String, String> row = new HashMap<>();
+                            row.put("NO_URUT", String.valueOf(no += 1));
+                            row.put("ID_GROUP_LAMPIRAN", objectArray2.get(i).get("ID_GROUP").toString());
+                            row.put("ACCOUNT_NAME_LAMPIRAN", objectArray2.get(i).get("ACCOUNT_NAME").toString());
+                            row.put("BANK_BENEF_LAMPIRAN", objectArray2.get(i).get("BANK_BENEF").toString());
+                            row.put("ALAMAT_BANK_BENEF_LAMPIRAN", objectArray2.get(i).get("ALAMAT_BANK_BENEF").toString());
+                            row.put("ITEM_TEXT_LAMPIRAN", objectArray2.get(i).get("ITEM_TEXT").toString());
+                            row.put("NO_REK_BENEF_LAMPIRAN", objectArray2.get(i).get("NO_REK_BENEF").toString());
+                            row.put("CURR_BAYAR_LAMPIRAN", objectArray2.get(i).get("CURR_BAYAR").toString());
+                            row.put("EMAIL_VENDOR_LAMPIRAN", objectArray2.get(i).get("EMAIL_VENDOR").toString());
+                            DecimalFormat decimalFormat2 = (DecimalFormat) numberFormat;
+                            decimalFormat2.applyPattern(pattern);
+                            String amount2 = decimalFormat2.format(Double.parseDouble(objectArray2.get(i).get("AMOUNT_BAYAR").toString().replace(",", ".")));
+                            row.put("AMOUNT_BAYAR_LAMPIRAN", amount2);
+                            tableList2.add(row);
+                        }
+                    }
+                    dg.addTableVariables(tableList2);
+                }
+                    try {
+                        dg.createDocFromTemplate("template_laporan_restitusi_giro", filename);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                AppUtils.getLogger(this).debug("statusInvoice : {} ", out);
+                return out;
+            } catch(Exception e){
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+    @GetMapping(path = "/downloadFile/{filename:.+}")
+    public ResponseEntity downloadSingleFile(@PathVariable String filename){
+        Path path = Paths.get("uploadcorpay/temp/"+filename);
+        Resource resource = null;
+        try{
+            resource = new UrlResource(path.toUri());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+ resource.getFilename() + "\"")
+                .body(resource);
+    }
+
+//    @RequestMapping(value = "/xls/{docNo}/{pCompCode}/{pFiscYear}", method = RequestMethod.GET)
+//    public String export(
+//            @PathVariable String docNo,
+//            @PathVariable String pCompCode,
+//            @PathVariable String pFiscYear,
+//            HttpServletRequest request,
+//            HttpServletResponse response) {
+//        try {
+//            SimpleDateFormat dateParser = new SimpleDateFormat("yyyymmdd");
+//            String pattern = "###,###.###";
+//            DecimalFormat df  = new DecimalFormat(pattern);
+//            String tglAwal = "";
+//            String tglAkhir = "";
+//            String title = "";
+//            String namaFile = "";
+//
+//            if (!pTglAwal.equals("null")) {
+//                tglAwal = pTglAwal;
+//            }
+//            if (!pTglAkhir.equals("null")) {
+//                tglAkhir = pTglAkhir;
+//            }
+//
+//            if (pRole.equals("ROLE_ADMIN")){
+//                title = "REKAP INVOICE";
+//                namaFile = "rekap_invoice.xls";
+//            }else{
+//                title = "REKAP INVOICE BELUM";
+//                namaFile = "rekap_invoice_belum.xls";
+//            }
+//
+//
+//            ServletOutputStream os = response.getOutputStream();
+//            response.setContentType("application/vnd.ms-excel");
+//            response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
+//
+//            List<Map<String, Object>> listData = corpayService.getXlsCmsBRI(docNo, pCompCode, pFiscYear);
+//
+//            Map param = new HashMap();
+//            List<Map<String, Object>> listDetail = new ArrayList<>();
+//            System.out.println("List_Excel_data : "+listData.toString());
+//
+//            param.put("TITLE", title);
+//            for (Map data : listData) {
+//                Map paramDetail = new HashMap();
+//                paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
+//                paramDetail.put("KET",data.get("KET"));
+//                paramDetail.put("COMP_CODE",data.get("COMP_CODE"));
+//                paramDetail.put("DOC_NO",data.get("DOC_NO"));
+//                paramDetail.put("FISC_YEAR",data.get("FISC_YEAR"));
+//                paramDetail.put("DOC_TYPE",data.get("DOC_TYPE"));
+//                paramDetail.put("DOC_DATE",(!data.get("DOC_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("DOC_DATE").toString())) : "-");
+//                paramDetail.put("DOC_DATE2",data.get("DOC_DATE2"));
+//                paramDetail.put("DESKRIPSI_BANK", data.get("DESKRIPSI_BANK"));
+//                paramDetail.put("POST_DATE",(!data.get("POST_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("POST_DATE").toString())) : "-");
+//                paramDetail.put("POST_DATE2",data.get("POST_DATE2"));
+//                paramDetail.put("ENTRY_DATE",(!data.get("ENTRY_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("ENTRY_DATE").toString())) : "-");
+//                paramDetail.put("ENTRY_DATE2",data.get("ENTRY_DATE2"));
+//                paramDetail.put("REFERENCE",data.get("REFERENCE"));
+//                paramDetail.put("REV_WITH",data.get("REV_WITH"));
+//                paramDetail.put("REV_YEAR",data.get("REV_YEAR"));
+//                paramDetail.put("DOC_HDR_TXT",data.get("DOC_HDR_TXT"));
+//                paramDetail.put("CURRENCY",data.get("CURRENCY"));
+//                paramDetail.put("EXCH_RATE",data.get("EXCH_RATE"));
+//                paramDetail.put("REFERENCE_KEY",data.get("REFERENCE_KEY"));
+//                paramDetail.put("PMT_IND",data.get("PMT_IND"));
+//                paramDetail.put("TRANS_TYPE",data.get("TRANS_TYPE"));
+//                paramDetail.put("SPREAD_VAL",data.get("SPREAD_VAL"));
+//                paramDetail.put("LINE_ITEM",data.get("LINE_ITEM"));
+//                paramDetail.put("OI_IND",data.get("OI_IND"));
+//                paramDetail.put("ACCT_TYPE",data.get("ACCT_TYPE"));
+//                paramDetail.put("SPEC_GL",data.get("SPEC_GL"));
+//                paramDetail.put("BUS_AREA",data.get("BUS_AREA"));
+//                paramDetail.put("TPBA",data.get("TPBA"));
+//                paramDetail.put("AMT_LC",data.get("AMT_LC"));
+//                paramDetail.put("AMT_TC", data.get("AMT_TC"));
+//                paramDetail.put("AMT_WITH_BASE_TC",data.get("AMT_WITH_BASE_TC"));
+//                paramDetail.put("AMT_WITH_TC",data.get("AMT_WITH_TC"));
+//                paramDetail.put("AMOUNT",data.get("AMOUNT"));
+//                paramDetail.put("ASSIGNMENT",data.get("ASSIGNMENT"));
+//                paramDetail.put("ITEM_TEXT",data.get("ITEM_TEXT"));
+//                paramDetail.put("COST_CTR",data.get("COST_CTR"));
+//                paramDetail.put("GL_ACCT",data.get("GL_ACCT"));
+//                paramDetail.put("CUSTOMER",data.get("CUSTOMER"));
+//                paramDetail.put("CUSTOMER_NAME",data.get("CUSTOMER_NAME"));
+//                paramDetail.put("VENDOR",data.get("VENDOR"));
+//                paramDetail.put("VENDOR_NAME",data.get("VENDOR_NAME"));
+//                paramDetail.put("BASE_DATE",(!data.get("BASE_DATE").toString().equals("-")) ? excelDateFormat.format(dateParser.parse(data.get("BASE_DATE").toString())) : "-");
+//                paramDetail.put("TERM_PMT",data.get("TERM_PMT"));
+//                paramDetail.put("DUE_ON",data.get("DUE_ON"));
+//                paramDetail.put("PMT_BLOCK",data.get("PMT_BLOCK"));
+//                paramDetail.put("HOUSE_BANK",data.get("HOUSE_BANK"));
+//                paramDetail.put("NAMA_HOUSE_BANK", data.get("NAMA_BANK"));
+//                paramDetail.put("NO_GIRO", data.get("NO_GIRO"));
+//                paramDetail.put("PRTNR_BANK_TYPE",data.get("PRTNR_BANK_TYPE"));
+//                paramDetail.put("BANK_KEY",data.get("BANK_KEY"));
+//                paramDetail.put("BANK_ACCOUNT",data.get("BANK_ACCOUNT"));
+//                paramDetail.put("ACCOUNT_HOLDER",data.get("ACCOUNT_HOLDER"));
+//                paramDetail.put("PO_NUM",data.get("PO_NUM"));
+//                paramDetail.put("PO_ITEM",data.get("PO_ITEM"));
+//                paramDetail.put("REF_KEY1",data.get("REF_KEY1"));
+//                paramDetail.put("REF_KEY2",data.get("REF_KEY2"));
+//                paramDetail.put("REF_KEY3",data.get("REF_KEY3"));
+//                paramDetail.put("INT_ORDER",data.get("INT_ORDER"));
+//                paramDetail.put("WBS_NUM",data.get("WBS_NUM"));
+//                paramDetail.put("CASH_CODE",data.get("CASH_CODE"));
+//                paramDetail.put("NAMA_CASHCODE",data.get("NAMA_CASHCODE"));
+//                paramDetail.put("AMT_WITH_BASE_LC",data.get("AMT_WITH_BASE_LC"));
+//                paramDetail.put("AMT_WITH_LC",data.get("AMT_WITH_LC"));
+//                paramDetail.put("DR_CR_IND",data.get("DR_CR_IND"));
+//                paramDetail.put("CORP_PMT",data.get("CORP_PMT"));
+//                paramDetail.put("TGL_VERIFIKASI_MAKER",data.get("TGL_VERIFIKASI_MAKER"));
+//                paramDetail.put("TGL_VERIFIKASI_CHECKER",data.get("TGL_VERIFIKASI_CHECKER"));
+//                paramDetail.put("TGL_VERIFIKASI_APPROVER",data.get("TGL_VERIFIKASI_APPROVER"));
+//                paramDetail.put("METODE_PEMBAYARAN",data.get("METODE_PEMBAYARAN"));
+//                paramDetail.put("TGL_TAGIHAN_DITERIMA",data.get("TGL_TAGIHAN_DITERIMA"));
+//                paramDetail.put("MAKER",data.get("MAKER"));
+//                paramDetail.put("CHECKER",data.get("CHECKER"));
+//                paramDetail.put("APPROVER",data.get("APPROVER"));
+//                paramDetail.put("COUNTER",data.get("COUNTER"));
+//                paramDetail.put("KETERANGAN",data.get("KETERANGAN"));
+//                paramDetail.put("FLAG_STATUS",data.get("FLAG_STATUS"));
+//                paramDetail.put("NO_REK_HOUSE_BANK",data.get("NO_REK_HOUSE_BANK"));
+//                paramDetail.put("INQ_CUSTOMER_NAME",data.get("INQ_CUSTOMER_NAME"));
+//                paramDetail.put("INQ_ACCOUNT_NUMBER",data.get("INQ_ACCOUNT_NUMBER"));
+//                paramDetail.put("INQ_ACCOUNT_STATUS",data.get("INQ_ACCOUNT_STATUS"));
+//                paramDetail.put("KODE_BANK_PENERIMA",data.get("KODE_BANK_PENERIMA"));
+//                paramDetail.put("RETRIEVAL_REF_NUMBER",data.get("RETRIEVAL_REF_NUMBER"));
+//                paramDetail.put("CUSTOMER_REF_NUMBER",data.get("CUSTOMER_REF_NUMBER"));
+//                paramDetail.put("CONFIRMATION_CODE",data.get("CONFIRMATION_CODE"));
+//                paramDetail.put("TGL_ACT_BAYAR",data.get("TGL_ACT_BAYAR"));
+//                paramDetail.put("OSS_ID",data.get("OSS_ID"));
+//                paramDetail.put("GROUP_ID",data.get("GROUP_ID"));
+//                paramDetail.put("SUMBER_DANA",data.get("SUMBER_DANA"));
+//                paramDetail.put("TGL_RENCANA_BAYAR",data.get("TGL_RENCANA_BAYAR"));
+//                paramDetail.put("BANK_BYR",data.get("BANK_BYR"));
+//                paramDetail.put("CURR_BAYAR",data.get("CURR_BAYAR"));
+//                paramDetail.put("PARTIAL_IND",data.get("PARTIAL_IND"));
+//                paramDetail.put("AMOUNT_BAYAR",data.get("AMOUNT_BAYAR"));
+//                paramDetail.put("BANK_BENEF",data.get("BANK_BENEF"));
+//                paramDetail.put("NO_REK_BENEF",data.get("NO_REK_BENEF"));
+//                paramDetail.put("NAMA_BENEF",data.get("NAMA_BENEF"));
+//                paramDetail.put("VERIFIED_BY",data.get("VERIFIED_BY"));
+//                paramDetail.put("VERIFIED_ON",data.get("VERIFIED_ON"));
+//                paramDetail.put("SPREAD_VALUE",data.get("SPREAD_VAL"));
+//                paramDetail.put("APPROVE_TGL_RENCANA_BAYAR",data.get("APPROVE_TGL_RENCANA_BAYAR"));
+//                paramDetail.put("STATUS_TRACKING",data.get("STATUS_TRACKING"));
+//                paramDetail.put("STATUS",data.get("STATUS"));
+//                paramDetail.put("POSISI", data.get("POSISI"));
+//                paramDetail.put("NOMINAL_DI_BAYAR", data.get("NOMINAL_DI_BAYAR"));
+//                paramDetail.put("JENIS_TRANSAKSI", data.get("JENIS"));
+//                paramDetail.put("REFERENCE_NUMBER_BANK", data.get("REF_NUM_BANK"));
+//                listDetail.add(paramDetail);
+//            }
+//            param.put("DETAILS", listDetail);
+//
+//            XLSTransformer transformer = new XLSTransformer();
+//            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/rekap_invoice_belum.xls").getInputStream();
+//            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+//            workbook.write(os);
+//            os.flush();
+//            return null;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return "Gagal Export Data :" + e.getMessage();
+//        }
+//    }
 }
