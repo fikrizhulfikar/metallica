@@ -2963,7 +2963,7 @@ public class CorpayController {
                 List<Map> objectArray = (List<Map>) getArray.get("return");
                 List<Map> objectArray2 = (List<Map>) getArray.get("OUT_LAMPIRAN");
                 Map object = objectArray.get(0);
-                String filename = "uploadcorpay/temp/cetak_bukti_kas_" + object.get("ID_GROUP").toString();
+                String filename = "uploadcorpay/temp/cetak_bukti_kas_" + jsonArray.getJSONObject(0).get("group_id").toString();
                 Date n_print_date = new Date();
                 SimpleDateFormat print_df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 int no = 0;
