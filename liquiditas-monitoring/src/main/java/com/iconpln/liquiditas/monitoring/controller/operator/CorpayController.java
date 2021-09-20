@@ -3084,7 +3084,7 @@ public class CorpayController {
             HttpServletResponse response) {
         try {
             String title = "REKAP CMS";
-            String namaFile = "rekap_cms.xls";
+            String namaFile = "rekap_cms_bri.xls";
 
             ServletOutputStream os = response.getOutputStream();
             response.setContentType("application/vnd.ms-excel");
@@ -3157,7 +3157,7 @@ public class CorpayController {
             HttpServletResponse response) {
         try {
             String title = "REKAP CMS";
-            String namaFile = "rekap_cms.xls";
+            String namaFile = "rekap_cms_mandiri.xls";
 
             ServletOutputStream os = response.getOutputStream();
             response.setContentType("application/vnd.ms-excel");
