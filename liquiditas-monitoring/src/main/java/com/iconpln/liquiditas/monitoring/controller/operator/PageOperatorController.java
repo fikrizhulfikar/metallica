@@ -65,23 +65,23 @@ public class PageOperatorController {
     public String placement_lcl() { return "operator/placement_lcl_header";
     }
 
-    @RequestMapping(value= {"/placement_lcl/detail_tagihan"},  params="p")
+    @RequestMapping("/placement_lcl/detail_tagihan")
     public String placement_lcl_detail() { return "operator/placement_lcl_detail";
     }
 
-    @RequestMapping(value= {"/placement_lcl/sepuluh"},  params={"p"})
+    @RequestMapping("/placement_lcl/sepuluh")
     public String placement_lcl_sepuluh() { return "operator/placement_lcl_sepuluh";
     }
 
-    @RequestMapping(value= {"/placement_lcl/rangkuman"},  params={"p"})
+    @RequestMapping("/placement_lcl/rangkuman")
     public String placement_lcl_rangkuman() { return "operator/placement_lcl_rangkuman";
     }
 
-    @RequestMapping(value= {"/placement_lcl/lembar_kerja"},  params={"p"})
+    @RequestMapping("/placement_lcl/lembar_kerja")
     public String placement_lcl_lembar_kerja() { return "operator/placement_lcl_lembar_kerja";
     }
 
-    @RequestMapping(value= {"/placement_lcl/nota"},  params={"p"})
+    @RequestMapping("/placement_lcl/nota")
     public String placement_lcl_nota() {
         return "operator/placement_lcl_nota";
     }
