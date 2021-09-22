@@ -19,7 +19,8 @@ var tempTableSearch = "";
 var sesi = "";
 const urlString = window.location.search;
 const urlParams = new URLSearchParams(urlString);
-let idForm = urlParams.get('p');
+let idForm = sessionStorage.getItem("nota_id");
+document.getElementById("id_nota").innerHTML = idForm;
 let xhttp = new XMLHttpRequest();
 let jsonObj = null;
 

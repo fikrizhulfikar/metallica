@@ -12,6 +12,7 @@ let idForm = urlParams.get('p');
 let xhttp = new XMLHttpRequest();
 let jsonObj = null;
 let grouped = null;
+
 xhttp.onreadystatechange = function () {
     if (this.readyState === 4 && this.status === 200){
         jsonObj = JSON.parse(this.responseText);
@@ -26,7 +27,8 @@ xhttp.onreadystatechange = function () {
         createDiv(grouped);
     }
 };
-xhttp.open('GET',  `${baseUrl}api_operator/placement_lcl/nota?pIdForm=${idForm}`, true);
+document.getElementById("id_nota").innerHTML = sessionStorage.getItem("nota_id");
+xhttp.open('GET',  `${baseUrl}api_operator/placement_lcl/nota?pIdForm=${sessionStorage.getItem("nota_id")}`, true);
 xhttp.send();
 
 function createDiv(obj){

@@ -274,23 +274,28 @@ function initPlacementLclHeader(){
 }
 
 function detailTagihan(id) {
-    window.open( `${baseUrl}page_operator/placement_lcl/detail_tagihan?p=${id}`);
+    sessionStorage.setItem(`nota_id`,id);
+    window.open( `${baseUrl}page_operator/placement_lcl/detail_tagihan`);
 }
 
 function sepuluhTerbesar(id) {
-    window.open( `${baseUrl}page_operator/placement_lcl/sepuluh?p=${id}`);
+    sessionStorage.setItem(`nota_id`,id);
+    window.open( `${baseUrl}page_operator/placement_lcl/sepuluh`);
 }
 
 function rangkuman(id) {
-    window.open( `${baseUrl}page_operator/placement_lcl/rangkuman?p=${id}`);
+    sessionStorage.setItem(`nota_id`,id);
+    window.open( `${baseUrl}page_operator/placement_lcl/rangkuman`);
 }
 
 function nota(id) {
-    window.open( `${baseUrl}page_operator/placement_lcl/nota?p=${id}`);
+    sessionStorage.setItem(`nota_id`,id);
+    window.open( `${baseUrl}page_operator/placement_lcl/nota`);
 }
 
 function lembarKerja(id) {
-    window.open( `${baseUrl}page_operator/placement_lcl/lembar_kerja?p=${id}`);
+    sessionStorage.setItem(`nota_id`,id);
+    window.open( `${baseUrl}page_operator/placement_lcl/lembar_kerja`);
 }
 
 function createNew() {
