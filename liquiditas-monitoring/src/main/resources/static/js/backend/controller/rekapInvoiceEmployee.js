@@ -3543,10 +3543,15 @@ function exportXlsCms() {
                 cetakXlsCmsMandiri();
             } else if (bank == "BRI"){
                 cetakXlsCmsBri();
-            } else if (bank == "BNI"){
+            } else if (bank == "BNI" || bank == "BANK NEGARA INDONESIA"){
                 cetakXlsCmsBni();
             } else {
-                cetakXlsCmsBca();
+                Swal.fire({
+                    icon: "error",
+                    title: "Maaf!",
+                    html: '<p>Untuk CMS bank BCA belum tersedia</p>',
+                });
+//                cetakXlsCmsBca();
             }
         }else if(isSame(fullArrayGroup) === 222) {
             Swal.fire({
@@ -3639,6 +3644,47 @@ function cetakXlsCmsMandiri() {
     }
 
     window.open(baseUrl + "api_operator/rekap_invoice_belum/xlsmandiri" + "/" +obj[0].pDocNo+ "/" +obj[0].pCompCode+ "/" +obj[0].pFiscYear);
+//    window.open(baseUrl + "api_operator/rekap_invoice_belum/xls" + "/" +docNoArray+ "/" +compCodeArray+ "/" +fiscYearArray);
+}
+
+function cetakXlsCmsBni() {
+    let tes = JSON.stringify(invoiceCheckedArray);
+    const obj = JSON.parse(tes);
+
+    var docNoArray = [];
+    for (x = 0; x < obj.length; x++){
+        var temp1 = [];
+        for (j = 1; j < obj.length; j++){
+            var temp1 = [];
+            var docno = obj[j].pDocNo;
+            temp1.push(docno)
+            docNoArray.push(temp1)
+        }
+    }
+
+    var compCodeArray = [];
+    for (x = 0; x < obj.length; x++){
+        var temp2 = [];
+        for (j = 1; j < obj.length; j++){
+            var temp2 = [];
+            var compcode = obj[j].pCompCode;
+            temp2.push(compcode)
+            compCodeArray.push(temp2)
+        }
+    }
+
+    var fiscYearArray = [];
+    for (x = 0; x < obj.length; x++){
+        var temp3 = [];
+        for (j = 1; j < obj.length; j++){
+            var temp3 = [];
+            var fiscyear = obj[j].pFiscYear;
+            temp3.push(fiscyear)
+            fiscYearArray.push(temp3)
+        }
+    }
+
+    window.open(baseUrl + "api_operator/rekap_invoice_belum/xlsbni" + "/" +obj[0].pDocNo+ "/" +obj[0].pCompCode+ "/" +obj[0].pFiscYear);
 //    window.open(baseUrl + "api_operator/rekap_invoice_belum/xls" + "/" +docNoArray+ "/" +compCodeArray+ "/" +fiscYearArray);
 }
 

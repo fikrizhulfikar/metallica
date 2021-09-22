@@ -3137,7 +3137,7 @@ public class CorpayController {
             param.put("DETAILS", listDetail);
 
             XLSTransformer transformer = new XLSTransformer();
-            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/rekap_cms_2.xls").getInputStream();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/template_rekap_cms_bri.xls").getInputStream();
             Workbook workbook = transformer.transformXLS(streamTemplate, param);
             workbook.write(os);
             os.flush();
@@ -3156,7 +3156,7 @@ public class CorpayController {
             HttpServletRequest request,
             HttpServletResponse response) {
         try {
-            String title = "REKAP CMS";
+            String title = "REKAP CMS MANDIRI";
             String namaFile = "rekap_cms_mandiri.xls";
 
             ServletOutputStream os = response.getOutputStream();
@@ -3176,41 +3176,125 @@ public class CorpayController {
                 paramDetail.put("DOC_NO",data.get("DOC_NO"));
                 paramDetail.put("COMP_CODE",data.get("COMP_CODE"));
                 paramDetail.put("FISC_YEAR",data.get("FISC_YEAR"));
-                paramDetail.put("CUSTREFNO",data.get("CUSTREFNO"));
-                paramDetail.put("INSTRUCTIONCODE",data.get("INSTRUCTIONCODE"));
-                paramDetail.put("FXCODE",data.get("FXCODE"));
-                paramDetail.put("VALUEDATE",data.get("VALUEDATE"));
-                paramDetail.put("CURRENCY",data.get("CURRENCY"));
-                paramDetail.put("AMOUNT",data.get("AMOUNT"));
-                paramDetail.put("TRXREMARK",data.get("TRXREMARK"));
-                paramDetail.put("RATEVOUCHERCODE",data.get("RATEVOUCHERCODE"));
-                paramDetail.put("DEBITACCOUNT",data.get("DEBITACCOUNT"));
-                paramDetail.put("SENDERNAME",data.get("SENDERNAME"));
-                paramDetail.put("SENDERADDRESS",data.get("SENDERADDRESS"));
-                paramDetail.put("SENDERCOUNTRYCODE",data.get("SENDERCOUNTRYCODE"));
-                paramDetail.put("CREDITACCOUNT",data.get("CREDITACCOUNT"));
-                paramDetail.put("BENEFICIARYNAME",data.get("BENEFICIARYNAME"));
-                paramDetail.put("BENEFICIARYADDRESS",data.get("BENEFICIARYADDRESS"));
-                paramDetail.put("BENEFICIARYCOUNTYCODE",data.get("BENEFICIARYCOUNTYCODE"));
-                paramDetail.put("BENBANKIDENTIFIER",data.get("BENBANKIDENTIFIER"));
-                paramDetail.put("BENBANKNAME",data.get("BENBANKNAME"));
-                paramDetail.put("BENBANKADDRESS",data.get("BENBANKADDRESS"));
-                paramDetail.put("BENBANKCOUNTYCODE",data.get("BENBANKCOUNTYCODE"));
-                paramDetail.put("INTERBANKIDENTIFIER",data.get("INTERBANKIDENTIFIER"));
-                paramDetail.put("INTERBANKNAME",data.get("INTERBANKNAME"));
-                paramDetail.put("INTERBANKADDRESS",data.get("INTERBANKADDRESS"));
-                paramDetail.put("INTERBANKCOUNTRYCODE",data.get("INTERBANKCOUNTRYCODE"));
-                paramDetail.put("NOTIFICATION",data.get("NOTIFICATION"));
-                paramDetail.put("BENEFICIARYCATEGORY",data.get("BENEFICIARYCATEGORY"));
-                paramDetail.put("BENEFICIARYRELATION",data.get("BENEFICIARYRELATION"));
-                paramDetail.put("BITRANSACTIONCODE",data.get("BITRANSACTIONCODE"));
-                paramDetail.put("TEMPLATECODE",data.get("TEMPLATECODE"));
+                paramDetail.put("HEADER_MAKER",data.get("HEADER_MAKER"));
+                paramDetail.put("INSTRUCTION_DATE",data.get("INSTRUCTION_DATE"));
+                paramDetail.put("DEBIT_ACCOUNT",data.get("DEBIT_ACCOUNT"));
+                paramDetail.put("NUMBER_DETAIL_RECORD",data.get("NUMBER_DETAIL_RECORD"));
+                paramDetail.put("TOTAL_AMOUNT",data.get("TOTAL_AMOUNT"));
+                paramDetail.put("BENEFICIARY_ACCOUNT",data.get("BENEFICIARY_ACCOUNT"));
+                paramDetail.put("BENEFICIARY_NAME",data.get("BENEFICIARY_NAME"));
+                paramDetail.put("BENEFICIARY_ADDRESS1",data.get("BENEFICIARY_ADDRESS1"));
+                paramDetail.put("BENEFICIARY_ADDRESS2",data.get("BENEFICIARY_ADDRESS2"));
+                paramDetail.put("BENEFICIARY_ADDRESS3",data.get("BENEFICIARY_ADDRESS3"));
+                paramDetail.put("TRANSFER_CURRENCY",data.get("TRANSFER_CURRENCY"));
+                paramDetail.put("TRANSFER_AMOUNT",data.get("TRANSFER_AMOUNT"));
+                paramDetail.put("TRANSACTION_REMARKS",data.get("TRANSACTION_REMARKS"));
+                paramDetail.put("CUSTOMER_REFERENCE",data.get("CUSTOMER_REFERENCE"));
+                paramDetail.put("FT_SERVICE",data.get("FT_SERVICE"));
+                paramDetail.put("BENEFICIARY_BANK_CODE",data.get("BENEFICIARY_BANK_CODE"));
+                paramDetail.put("BENEFICIARY_BANK_NAME",data.get("BENEFICIARY_BANK_NAME"));
+                paramDetail.put("BENEFICIARY_BANK_ADDRES1",data.get("BENEFICIARY_BANK_ADDRES1"));
+                paramDetail.put("BENEFICIARY_BANK_ADDRES2",data.get("BENEFICIARY_BANK_ADDRES2"));
+                paramDetail.put("BENEFICIARY_BANK_ADDRES3",data.get("BENEFICIARY_BANK_ADDRES3"));
+                paramDetail.put("BENEFICIARY_BANK_CITY_NAME",data.get("BENEFICIARY_BANK_CITY_NAME"));
+                paramDetail.put("BENEFICIARY_NOTIFICATION_FLAG",data.get("BENEFICIARY_NOTIFICATION_FLAG"));
+                paramDetail.put("BENEFICIARY_NOTIFICATION_EMAIL",data.get("BENEFICIARY_NOTIFICATION_EMAIL"));
+                paramDetail.put("ORG_DIRECTORY_NAME",data.get("ORG_DIRECTORY_NAME"));
+                paramDetail.put("IDENTICAL_STATUS",data.get("IDENTICAL_STATUS"));
+                paramDetail.put("BENEFICIARY_STATUS",data.get("BENEFICIARY_STATUS"));
+                paramDetail.put("BENEFICIARY_CITIZEN",data.get("BENEFICIARY_CITIZEN"));
+                paramDetail.put("PURPOSE_OF_TRANSACTION",data.get("PURPOSE_OF_TRANSACTION"));
+                paramDetail.put("TRANSACTION_DESCRIPTION",data.get("TRANSACTION_DESCRIPTION"));
+                paramDetail.put("REMITTANCE_CODE1",data.get("REMITTANCE_CODE1"));
+                paramDetail.put("REMITTANCE_INFORMATION1",data.get("REMITTANCE_INFORMATION1"));
+                paramDetail.put("REMITTANCE_CODE2",data.get("REMITTANCE_CODE2"));
+                paramDetail.put("REMITTANCE_INFORMATION2",data.get("REMITTANCE_INFORMATION2"));
+                paramDetail.put("REMITTANCE_CODE3",data.get("REMITTANCE_CODE3"));
+                paramDetail.put("REMITTANCE_INFORMATION3",data.get("REMITTANCE_INFORMATION3"));
+                paramDetail.put("REMITTANCE_CODE4",data.get("REMITTANCE_CODE4"));
+                paramDetail.put("REMITTANCE_INFORMATION4",data.get("REMITTANCE_INFORMATION4"));
+                paramDetail.put("INSTRUCTION_CODE1",data.get("INSTRUCTION_CODE1"));
+                paramDetail.put("INSTRUCTION_REMARK1",data.get("INSTRUCTION_REMARK1"));
+                paramDetail.put("INSTRUCTION_CODE2",data.get("INSTRUCTION_CODE2"));
+                paramDetail.put("INSTRUCTION_REMARK2",data.get("INSTRUCTION_REMARK2"));
+                paramDetail.put("INSTRUCTION_CODE3",data.get("INSTRUCTION_CODE3"));
+                paramDetail.put("INSTRUCTION_REMARK3",data.get("INSTRUCTION_REMARK3"));
+                paramDetail.put("CHARGE_INSTRUCTION",data.get("CHARGE_INSTRUCTION"));
+                paramDetail.put("SWIFT_METHOD",data.get("SWIFT_METHOD"));
+                paramDetail.put("EXTENDED_PAYMENT_DETAIL",data.get("EXTENDED_PAYMENT_DETAIL"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
 
             XLSTransformer transformer = new XLSTransformer();
-            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/rekap_cms.xls").getInputStream();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/template_rekap_cms_mandiri.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Gagal Export Data :" + e.getMessage();
+        }
+    }
+
+    @RequestMapping(value = "/xlsbni/{docNo}/{pCompCode}/{pFiscYear}", method = RequestMethod.GET)
+    public String exportBni(
+            @PathVariable String docNo,
+            @PathVariable String pCompCode,
+            @PathVariable String pFiscYear,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
+            String title = "REKAP CMS BNI";
+            String namaFile = "rekap_cms_bni.xls";
+
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
+
+            List<Map<String, Object>> listData = corpayService.getXlsCmsBNI(docNo, pCompCode, pFiscYear);
+
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+            System.out.println("List_Excel_data : "+listData.toString());
+
+            param.put("TITLE", title);
+            for (Map data : listData) {
+                Map paramDetail = new HashMap();
+                paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
+                paramDetail.put("DOC_NO",data.get("DOC_NO"));
+                paramDetail.put("COMP_CODE",data.get("COMP_CODE"));
+                paramDetail.put("FISC_YEAR",data.get("FISC_YEAR"));
+                paramDetail.put("CODE",data.get("CODE"));
+                paramDetail.put("REFNUMBER",data.get("REFNUMBER"));
+                paramDetail.put("VALUEDATE",data.get("VALUEDATE"));
+                paramDetail.put("CURRENCY",data.get("CURRENCY"));
+                paramDetail.put("AMOUNT",data.get("AMOUNT"));
+                paramDetail.put("ORDERINGPARTYNAME",data.get("ORDERINGPARTYNAME"));
+                paramDetail.put("ORDERINGPARTYAC",data.get("ORDERINGPARTYAC"));
+                paramDetail.put("SPAREFIELD1",data.get("SPAREFIELD1"));
+                paramDetail.put("SPECIALRATECODE",data.get("SPECIALRATECODE"));
+                paramDetail.put("RTGSFLAG",data.get("RTGSFLAG"));
+                paramDetail.put("SPAREFIELD2",data.get("SPAREFIELD2"));
+                paramDetail.put("SPAREFIELD3",data.get("SPAREFIELD3"));
+                paramDetail.put("BENEFBANKCODE",data.get("BENEFBANKCODE"));
+                paramDetail.put("BENEFBANKNAME",data.get("BENEFBANKNAME"));
+                paramDetail.put("BENEFBANKADD1",data.get("BENEFBANKADD1"));
+                paramDetail.put("BENEFBANKADD2",data.get("BENEFBANKADD2"));
+                paramDetail.put("BENEFACNO",data.get("BENEFACNO"));
+                paramDetail.put("BENEFNAME",data.get("BENEFNAME"));
+                paramDetail.put("REMARK1",data.get("REMARK1"));
+                paramDetail.put("REMARK2",data.get("REMARK2"));
+                paramDetail.put("CHARGES",data.get("CHARGES"));
+                paramDetail.put("EMAILBENEF",data.get("EMAILBENEF"));
+                paramDetail.put("MOBILENO",data.get("MOBILENO"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/template_rekap_cms_bni.xls").getInputStream();
             Workbook workbook = transformer.transformXLS(streamTemplate, param);
             workbook.write(os);
             os.flush();
