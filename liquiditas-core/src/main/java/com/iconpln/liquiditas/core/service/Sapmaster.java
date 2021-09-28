@@ -1,10 +1,13 @@
 package com.iconpln.liquiditas.core.service;
 
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class Sapmaster {
     private static final String TAG = Sapmaster.class.getName();
     private String intf = "";
