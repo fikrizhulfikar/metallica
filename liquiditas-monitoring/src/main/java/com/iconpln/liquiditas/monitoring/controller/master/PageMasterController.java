@@ -101,5 +101,8 @@ public class PageMasterController {
     @RequestMapping("/upload_saldo_bank")
     public String uploadSaldoBank(){return "operator/upload_saldo_bank";}
 
+    @RequestMapping("/invoice_pilot")
+    public String masterInvoicePilot(){return "operator/master_invoice_pilot";}
+
 
 }
