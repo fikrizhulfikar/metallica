@@ -75,6 +75,51 @@ public class SapHttp {
 
     }
 
+    public static String pilotExecuteGet(String targetURL) throws URISyntaxException{
+        HashMap<String, Object> params = new HashMap<>();
+        return pilotExecuteGet(targetURL, params);
+    };
+
+    public static String pilotExecuteGet(String targetURL, HashMap<String, Object> params) throws URISyntaxException{
+
+        try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
+
+            URIBuilder builder = new URIBuilder(targetURL);
+            for (HashMap.Entry<String, Object> entry : params.entrySet()) {
+                builder.setParameter(entry.getKey(), (String)entry.getValue());
+            }
+
+            HttpGet request = new HttpGet(builder.build());
+
+            // add request header
+            request.addHeader("User-Agent", "Mozilla/5.0");
+            String userpass = AltConfig.get("sappilot.username") + ":" + AltConfig.get("sappilot.password");
+            String basicAuth = "Basic " + DatatypeConverter.printBase64Binary(userpass.getBytes());
+            request.addHeader("Authorization", basicAuth);
+
+            System.out.println("Authentication for GET SAP PILOT : "+userpass);
+            HttpResponse response = client.execute(request);
+
+            System.out.println("\nSending 'GET' request to URL : " + targetURL);
+            System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
+
+            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+
+            StringBuffer result = new StringBuffer();
+            String line = "";
+            while ((line = rd.readLine()) != null) {
+                result.append(line);
+            }
+
+            return result.toString();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
     public static String executePut(String targetURL) throws URISyntaxException{
         HashMap<String, Object> params = new HashMap<>();
         return executePut(targetURL, params);
