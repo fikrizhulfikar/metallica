@@ -1,5 +1,6 @@
 package com.iconpln.liquiditas.monitoring.controller.operator;
 
+import com.iconpln.liquiditas.core.pilot.SapPilot;
 import com.iconpln.liquiditas.core.service.Sap;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.monitoring.utils.NotificationUtil;
@@ -31,6 +32,9 @@ public class SapController {
 
     @Autowired
      Sap sap;
+
+    @Autowired
+    private SapPilot sapPilot;
 
     @Autowired
     private NotificationUtil notificationUtil;
@@ -136,6 +140,29 @@ public class SapController {
             Map<String, Object> result = sap.getGeneralHouseBank(comp_code, house_bank, bank_country,bank_key);
             return result;
         }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping(path = "/get_invoice_pilot")
+    public Map<String, Object> getInvoicePilot(
+            @RequestParam(value = "pCompanyCode", defaultValue = "") String pCompanyCode,
+            @RequestParam(value = "pBusArea", defaultValue = "") String pBusArea,
+            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
+            @RequestParam(value ="pFiscYear", defaultValue = "") String pFiscYear,
+            @RequestParam(value ="pDateFrom", defaultValue = "") String pDatefrom,
+            @RequestParam(value = "pDateTo", defaultValue = "") String pDateTo
+    ){
+        try {
+//            Map<String, String> param = new HashMap<>();
+
+            Map<String, Object> res = sapPilot.getInvoice(pCompanyCode, pBusArea, pDocNo, pFiscYear, pDatefrom, pDateTo);
+            // if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
+
+            //  }
+            return res;
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
