@@ -64,6 +64,8 @@ public class SapPilot {
 
         }catch (Exception e){
             e.printStackTrace();
+            result.put("status", 500);
+            result.put("status_message", "Error On The Server");
         }
         result.put("description",out);
         return result;
