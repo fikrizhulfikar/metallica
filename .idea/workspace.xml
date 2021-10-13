@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c1432616-f44a-456c-b349-daf6be464567" name="Default Changelist" comment="Log">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/CorpayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/CorpayController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapInvoiceEmployee.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapInvoiceEmployee.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploadcorpay/temp/laporan_kas_pegawai_202012160000012217.docx" beforeDir="false" afterPath="$PROJECT_DIR$/uploadcorpay/temp/laporan_kas_pegawai_202012160000012217.docx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +46,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelOrder2" value="2" />
@@ -270,6 +268,7 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Add Param Head/Item to Split Head and Item" />
     <MESSAGE value="Add Param Header and Item" />
     <MESSAGE value="Fix Reverse Button" />
