@@ -1242,6 +1242,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                     html = html + '<button class="btn btn-verified btn-warning btn-sm" id="btn-verified" style="margin-left: 10px" type="button" title="Approve" onclick="update_datas()"><i class="fas fa-check-circle"></i></button>' ;
                     html = html + '<button class="btn btn-reverse-sap btn-danger btn-sm" id="btn-reverse-sap" style="margin-left: 10px" type="button" title="Reverse SAP" onclick="multipleReverseSap()"><i class="fas fa-arrow-left"></i></button>';
                     html = html + '<button class="btn btn-siapbayar btn-ready btn-sm" id="btn-siapbayar" style="margin-left: 5px" type="button" title="Siap Bayar" onclick="siap_bayar_multiple()"><i class="fas fa-money-check"></i></button>' ;
+                    html = html + '<button class="btn btn-verified btn-elementary btn-sm" id="btn-cetak-xls-cms" style="margin-left: 10px" type="button" title="Cetak XLS CMS" onclick="exportXlsCms()"><i class="fas fa-print"></i></button>' ;
                  }
                  else if(newRoleUser[0] == "ROLE_JA_IE"){
 
@@ -1262,6 +1263,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                      html = html + '<button class="btn btn-verified btn-elementary btn-sm" id="btn-cetak-bukti-kas" style="margin-left: 10px" type="button" title="Cetak Dokumen Pengantar" onclick="cetakBuktiKasMultiple()"><i class="fas fa-copy"></i></button>' ;
                      html = html + '<button class="btn btn-reverse-sap btn-danger btn-sm" id="btn-reverse-sap" style="margin-left: 10px" type="button" title="Reverse SAP" onclick="multipleReverseSap()"><i class="fas fa-arrow-left"></i></button>';
 //                     html = html + '<button class="btn btn-reverse-sap btn-default btn-sm" id="btn-restitusi" style="margin-left: 10px" type="button" title="Cetak Dok Restitusi" onclick="cetakRestitusi()"><i class="fas fa-people-carry"></i></button>';
+                     html = html + '<button class="btn btn-verified btn-elementary btn-sm" id="btn-cetak-xls-cms" style="margin-left: 10px" type="button" title="Cetak XLS CMS" onclick="exportXlsCms()"><i class="fas fa-print"></i></button>' ;
                  }
                 else {
                     if (newRoleUser[0] !== "ROLE_OSS"){
@@ -3512,6 +3514,188 @@ function downloadDokPengantar(laporan){
             // console.log("Error : ",err.error);
         }
     })
+}
+
+function restitusiIsSame(data){
+    if(data == null || data.length <= 0){
+        return false;
+    } else {
+        let bank_bayar = data[0].bank_byr;
+
+        for(let x = 0; x < data.length; x++){
+            if (data[x].metode_pembayaran === "-"){
+                return 222;
+            }
+            if(bank_bayar !== data[x].bank_byr ){
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+function exportXlsCms() {
+    if(invoiceCheckedArray.length <= 0){
+        Swal.fire("Maaf!", "Silahkan Pilih Data Terlebih Dahulu", "error");
+    }else{
+        if(restitusiIsSame(invoiceCheckedArray) === true){
+            let data = JSON.stringify(fullArrayGroup);
+            const obj = JSON.parse(data);
+            let bank = obj[0].BANK_BENEF;
+
+            if (bank == "Bank Mandiri"){
+                cetakXlsCmsMandiri();
+            } else if (bank == "BRI" || bank == "BANK RAKYAT INDONESIA" || bank == "Bank Rakyat Indonesia"){
+                cetakXlsCmsBri();
+            } else if (bank == "BNI" || bank == "BANK NEGARA INDONESIA"){
+                cetakXlsCmsBni();
+            } else if (bank == "BCA") {
+                Swal.fire({
+                    icon: "error",
+                    title: "Maaf!",
+                    html: '<p>Untuk CMS bank BCA belum tersedia</p>',
+                });
+//                cetakXlsCmsBca();
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Maaf!",
+                    html: '<p>Untuk CMS bank DBS belum tersedia</p>',
+                });
+            }
+        }else if(isSame(fullArrayGroup) === 222) {
+            Swal.fire({
+                icon: "error",
+                title: "Maaf!",
+                html: '<p>Silahkan Tentukan Metode Pembayaran Terlebih Dahulu</p>',
+            });
+        }else{
+            Swal.fire("Maaf", "Tidak bisa melakukan cetak, Bank Pembayar harus sama.","error");
+        }
+    }
+}
+
+function cetakXlsCmsBri() {
+    let tes = JSON.stringify(invoiceCheckedArray);
+    const obj = JSON.parse(tes);
+
+    var docNoArray = [];
+    for (x = 0; x < obj.length; x++){
+        var temp1 = [];
+        for (j = 1; j < obj.length; j++){
+            var temp1 = [];
+            var docno = obj[j].pDocNo;
+            temp1.push(docno)
+            docNoArray.push(temp1)
+        }
+    }
+
+    var compCodeArray = [];
+    for (x = 0; x < obj.length; x++){
+        var temp2 = [];
+        for (j = 1; j < obj.length; j++){
+            var temp2 = [];
+            var compcode = obj[j].pCompCode;
+            temp2.push(compcode)
+            compCodeArray.push(temp2)
+        }
+    }
+
+    var fiscYearArray = [];
+    for (x = 0; x < obj.length; x++){
+        var temp3 = [];
+        for (j = 1; j < obj.length; j++){
+            var temp3 = [];
+            var fiscyear = obj[j].pFiscYear;
+            temp3.push(fiscyear)
+            fiscYearArray.push(temp3)
+        }
+    }
+
+    window.open(baseUrl + "api_operator/rekap_invoice_belum/xlsbri" + "/" +obj[0].pDocNo+ "/" +obj[0].pCompCode+ "/" +obj[0].pFiscYear);
+//    window.open(baseUrl + "api_operator/rekap_invoice_belum/xls" + "/" +docNoArray+ "/" +compCodeArray+ "/" +fiscYearArray);
+}
+
+function cetakXlsCmsMandiri() {
+    let tes = JSON.stringify(invoiceCheckedArray);
+    const obj = JSON.parse(tes);
+
+    var docNoArray = [];
+    for (x = 0; x < obj.length; x++){
+        var temp1 = [];
+        for (j = 1; j < obj.length; j++){
+            var temp1 = [];
+            var docno = obj[j].pDocNo;
+            temp1.push(docno)
+            docNoArray.push(temp1)
+        }
+    }
+
+    var compCodeArray = [];
+    for (x = 0; x < obj.length; x++){
+        var temp2 = [];
+        for (j = 1; j < obj.length; j++){
+            var temp2 = [];
+            var compcode = obj[j].pCompCode;
+            temp2.push(compcode)
+            compCodeArray.push(temp2)
+        }
+    }
+
+    var fiscYearArray = [];
+    for (x = 0; x < obj.length; x++){
+        var temp3 = [];
+        for (j = 1; j < obj.length; j++){
+            var temp3 = [];
+            var fiscyear = obj[j].pFiscYear;
+            temp3.push(fiscyear)
+            fiscYearArray.push(temp3)
+        }
+    }
+
+    window.open(baseUrl + "api_operator/rekap_invoice_belum/xlsmandiri" + "/" +obj[0].pDocNo+ "/" +obj[0].pCompCode+ "/" +obj[0].pFiscYear);
+//    window.open(baseUrl + "api_operator/rekap_invoice_belum/xls" + "/" +docNoArray+ "/" +compCodeArray+ "/" +fiscYearArray);
+}
+
+function cetakXlsCmsBni() {
+    let tes = JSON.stringify(invoiceCheckedArray);
+    const obj = JSON.parse(tes);
+
+    var docNoArray = [];
+    for (x = 0; x < obj.length; x++){
+        var temp1 = [];
+        for (j = 1; j < obj.length; j++){
+            var temp1 = [];
+            var docno = obj[j].pDocNo;
+            temp1.push(docno)
+            docNoArray.push(temp1)
+        }
+    }
+
+    var compCodeArray = [];
+    for (x = 0; x < obj.length; x++){
+        var temp2 = [];
+        for (j = 1; j < obj.length; j++){
+            var temp2 = [];
+            var compcode = obj[j].pCompCode;
+            temp2.push(compcode)
+            compCodeArray.push(temp2)
+        }
+    }
+
+    var fiscYearArray = [];
+    for (x = 0; x < obj.length; x++){
+        var temp3 = [];
+        for (j = 1; j < obj.length; j++){
+            var temp3 = [];
+            var fiscyear = obj[j].pFiscYear;
+            temp3.push(fiscyear)
+            fiscYearArray.push(temp3)
+        }
+    }
+
+    window.open(baseUrl + "api_operator/rekap_invoice_belum/xlsbni" + "/" +obj[0].pDocNo+ "/" +obj[0].pCompCode+ "/" +obj[0].pFiscYear);
+//    window.open(baseUrl + "api_operator/rekap_invoice_belum/xls" + "/" +docNoArray+ "/" +compCodeArray+ "/" +fiscYearArray);
 }
 
 $("#pMetodePembayaran").change( function(){
