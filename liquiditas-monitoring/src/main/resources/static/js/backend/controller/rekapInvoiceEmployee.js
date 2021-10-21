@@ -3537,21 +3537,17 @@ function exportXlsCms() {
         if(restitusiIsSame(invoiceCheckedArray) === true){
             let data = JSON.stringify(fullArrayGroup);
             const obj = JSON.parse(data);
-            let bank = obj[0].BANK_BENEF;
+            let bank = obj[0].BANK_BYR2;
+            let metode = obj[0].METODE_PEMBAYARAN;
 
-            if (bank == "Bank Mandiri"){
+            if (bank == "MANDIRI" && metode == "GIRO" || metode == "ONLINETRANSFER"){
                 cetakXlsCmsMandiri();
-            } else if (bank == "BRI"){
+            } else if (bank == "BRI" && metode == "GIRO" || metode == "ONLINETRANSFER"){
                 cetakXlsCmsBri();
-            } else if (bank == "BNI" || bank == "BANK NEGARA INDONESIA"){
+            } else if (bank == "BNI" && metode == "GIRO" || metode == "ONLINETRANSFER"){
                 cetakXlsCmsBni();
             } else {
-                Swal.fire({
-                    icon: "error",
-                    title: "Maaf!",
-                    html: '<p>Untuk CMS bank BCA belum tersedia</p>',
-                });
-//                cetakXlsCmsBca();
+                Swal.fire("Maaf!", "Silahkan isi metode pembayaran terlebih dahulu", "error");
             }
         }else if(isSame(fullArrayGroup) === 222) {
             Swal.fire({
