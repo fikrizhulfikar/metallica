@@ -104,5 +104,19 @@ public class PageMasterController {
     @RequestMapping("/invoice_pilot")
     public String masterInvoicePilot(){return "operator/master_invoice_pilot";}
 
+    @RequestMapping("/invoice_nonvendor_pilot")
+    public String masterInvoiceNonVendorPilot(){return "operator/master_invoice_nonvendor_pilot";}
+
+    @RequestMapping("/invoice_lunas_pilot")
+    public String masterInvoiceLunasPilot(){return "operator/master_invoice_lunas_pilot";}
+
+    @RequestMapping("/master_invoice_new")
+    public String masterApInvoiceNew(){return "operator/master/master_apinvoice_new";}
+
+    @RequestMapping("/master_hr_new")
+    public String masterHrPayableNew(){return "operator/master/master_hrpayable_new";}
+
+    @RequestMapping("/invoice_vendor_portal")
+    public String masterInvoiceVendorPortal () {return "operator/master/master_invoice_vendor_portal";}
 
 }
