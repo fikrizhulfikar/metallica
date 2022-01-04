@@ -1,7 +1,7 @@
 package com.iconpln.liquiditas.core.service;
 
 import com.iconpln.liquiditas.core.alt.AltException;
-
+import com.iconpln.liquiditas.core.service.Sapmaster;
 import org.apache.chemistry.opencmis.commons.impl.json.JSONArray;
 import org.apache.chemistry.opencmis.commons.impl.json.JSONObject;
 import org.apache.chemistry.opencmis.commons.impl.json.parser.JSONParseException;
@@ -20,7 +20,6 @@ import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-// Irba Fairuz
 @Repository
 public class Sap {
     JSONParser parser = new JSONParser();
@@ -177,7 +176,7 @@ public class Sap {
             Sapmaster sapmaster = new Sapmaster();
 //
 //            ClassLoader classLoader = Sap.class.getClassLoader();
-//            InputStream inputStream = classLoader.getResourceAsStream("files/JSONApInvoice.json");
+//            InputStream inputStream = classLoader.getResourceAsStream("files/ap.json");
 //            assert inputStream != null;
 //            String res = IOUtils.toString(inputStream);
             Map get_result = sapmaster.getDataApInvoice(param);
@@ -193,124 +192,11 @@ public class Sap {
                 result.put("status_message",object.get("ERROR_MESSAGE").toString());
             }
 
-//            sapmaster.getDataApInvoice(param);
 //            String list = "["+res+"]";
             String list = "["+get_result.get("response").toString()+"]";
-            arr = (org.apache.chemistry.opencmis.commons.impl.json.JSONArray) parser.parse(list);
-
             System.out.println("List AP Invoice:"+list);
-
-            int countter = 0 ;
             out = sapService.insertIntoIntegrationLog("AP_INVOICE",list,header_data,item_data,result.get("status").toString(),param.toString(),get_result.get("url").toString());
-//            for(int i=0; i<arr.size(); i++){
-//                org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObject = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arr.get(i);
-//                if (jsonObject.get("HEADER_DATA") != null){
-//                    arrLines = (org.apache.chemistry.opencmis.commons.impl.json.JSONArray) parser.parse(String.valueOf(jsonObject.get("HEADER_DATA")));
-//
-//                    for(int j=0; j < arrLines.size(); j++){
-//                        org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObjectLines = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arrLines.get(j);
-//                        String comp_code = String.valueOf(jsonObjectLines.get("COMP_CODE"));
-//                        String currency = String.valueOf(jsonObjectLines.get("CURRENCY"));
-//                        String doc_date = String.valueOf(jsonObjectLines.get("DOC_DATE"));
-//                        String doc_hdr_txt = String.valueOf(jsonObjectLines.get("DOC_HDR_TXT"));
-//                        String doc_no = String.valueOf(jsonObjectLines.get("DOC_NO"));
-//                        String doc_type = String.valueOf(jsonObjectLines.get("DOC_TYPE"));
-//                        String entry_date = String.valueOf(jsonObjectLines.get("ENTRY_DATE"));
-//                        String exch_rate = String.valueOf(jsonObjectLines.get("EXCH_RATE")).trim();
-//                        String fisc_year = String.valueOf(jsonObjectLines.get("FISC_YEAR"));
-//                        String pmt_ind = String.valueOf(jsonObjectLines.get("PMT_IND"));
-//                        String post_date = String.valueOf(jsonObjectLines.get("POST_DATE"));
-//                        String reference = String.valueOf(jsonObjectLines.get("REFERENCE"));
-//                        String reference_key = String.valueOf(jsonObjectLines.get("REFERENCE_KEY"));
-//                        String rev_with = String.valueOf(jsonObjectLines.get("REV_WITH"));
-//                        String rev_year = String.valueOf(jsonObjectLines.get("REV_YEAR"));
-//                        String spread_val = String.valueOf(jsonObjectLines.get("SPREAD_VAL"));
-//                        String trans_type = String.valueOf(jsonObjectLines.get("TRANS_TYPE"));
-//                        String oss_Id = String.valueOf(jsonObjectLines.get("OSS_ID"));
-//                        String group_id = String.valueOf(jsonObjectLines.get("GROUP_ID"));
-//                        String sumber_dana = String.valueOf(jsonObjectLines.get("SUMBER_DANA"));
-//                        String tgl_rencana_bayar = String.valueOf(jsonObjectLines.get("TGL_RENCANA_BYR"));
-//                        String bank_bayar = String.valueOf(jsonObjectLines.get("BANK_BYR"));
-//                        String curr_byr = String.valueOf(jsonObjectLines.get("CURR_BYR"));
-//                        String partial_ind = String.valueOf(jsonObjectLines.get("PARTIAL_IND"));
-//                        String amount_bayar = String.valueOf(jsonObjectLines.get("AMOUNT_BYR")).trim();
-//                        String bank_benef = String.valueOf(jsonObjectLines.get("BANK_BNF"));
-//                        String norek_benef = String.valueOf(jsonObjectLines.get("NOREK_BNF"));
-//                        String nama_benef = String.valueOf(jsonObjectLines.get("NAMA_BNF"));
-//                        String verified_by = String.valueOf(jsonObjectLines.get("VERIFIED_BY"));
-//                        String verified_on = String.valueOf(jsonObjectLines.get("VERIFIED_ON"));
-//
-////                        System.out.println("Exch Rate : "+exch_rate);
-////                        System.out.println("Amount Bayar : "+amount_bayar);
-//
-//                        try {
-//                            out = sapService.insertApInvoiceHead(comp_code, doc_no, fisc_year, doc_type, doc_date, post_date, entry_date, reference, rev_with, rev_year,
-//                                    doc_hdr_txt, currency, exch_rate, reference_key, pmt_ind, trans_type, spread_val, oss_Id, group_id,sumber_dana, tgl_rencana_bayar, bank_bayar,
-//                                    curr_byr, partial_ind, amount_bayar, bank_benef, norek_benef, nama_benef, verified_by, verified_on);
-//                            countter =+1;
-//                        }catch (Exception e){
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
-//
-//                System.out.println("Loop Head Ap Invoice :"+ countter);
-//                if (jsonObject.get("ITEM_DATA") != null){
-//                    arrLines2 = (org.apache.chemistry.opencmis.commons.impl.json.JSONArray) parser.parse(String.valueOf(jsonObject.get("ITEM_DATA")));
-////                    System.out.println("Arrlines Size:"+arrLines2.size());
-////                    System.out.println("Arrlines Head:"+arrLines2);
-//                    countter = 0;
-//                    for(int j=0; j < arrLines2.size(); j++){
-//                        condition.clear();
-//                        org.apache.chemistry.opencmis.commons.impl.json.JSONObject jsonObjectLines2 = (org.apache.chemistry.opencmis.commons.impl.json.JSONObject) arrLines2.get(j);
-//                        condition.put("acct_type",String.valueOf(jsonObjectLines2.get("ACCT_TYPE")));
-//                        condition.put("amt_lc",String.valueOf(jsonObjectLines2.get("AMT_LC")).trim());
-//                        condition.put("amt_tc",String.valueOf(jsonObjectLines2.get("AMT_TC")).trim());
-//                        condition.put("amt_with_base_tc",String.valueOf(jsonObjectLines2.get("AMT_WITH_BASE_TC")).trim());
-//                        condition.put("amt_with_tc",String.valueOf(jsonObjectLines2.get("AMT_WITH_TC")).trim());
-//                        condition.put("assignment",String.valueOf(jsonObjectLines2.get("ASSIGNMENT")));
-//                        condition.put("base_date",String.valueOf(jsonObjectLines2.get("BASE_DATE")));
-//                        condition.put("bus_area",String.valueOf(jsonObjectLines2.get("BUS_AREA")));
-//                        condition.put("cash_code",String.valueOf(jsonObjectLines2.get("CASH_CODE")));
-//                        condition.put("comp_code",String.valueOf(jsonObjectLines2.get("COMP_CODE")));
-//                        condition.put("corp_pmt",String.valueOf(jsonObjectLines2.get("CORP_PMT")));
-//                        condition.put("cost_ctr",String.valueOf(jsonObjectLines2.get("COST_CTR")));
-//                        condition.put("customer",String.valueOf(jsonObjectLines2.get("CUSTOMER")));
-//                        condition.put("doc_no",String.valueOf(jsonObjectLines2.get("DOC_NO")));
-//                        condition.put("dr_cr_ind",String.valueOf(jsonObjectLines2.get("DR_CR_IND")));
-//                        condition.put("due_on",String.valueOf(jsonObjectLines2.get("DUE_ON")));
-//                        condition.put("fisc_year",String.valueOf(jsonObjectLines2.get("FISC_YEAR")));
-//                        condition.put("gl_acct",String.valueOf(jsonObjectLines2.get("GL_ACCT")));
-//                        condition.put("house_bank",String.valueOf(jsonObjectLines2.get("HOUSE_BANK")));
-//                        condition.put("int_order",String.valueOf(jsonObjectLines2.get("INT_ORDER")));
-//                        condition.put("item_text",String.valueOf(jsonObjectLines2.get("ITEM_TEXT")));
-//                        condition.put("line_item",String.valueOf(jsonObjectLines2.get("LINE_ITEM")));
-//                        condition.put("oi_ind",String.valueOf(jsonObjectLines2.get("OI_IND")));
-//                        condition.put("pmt_block",String.valueOf(jsonObjectLines2.get("PMT_BLOCK")));
-//                        condition.put("po_item",String.valueOf(jsonObjectLines2.get("PO_ITEM")));
-//                        condition.put("po_num",String.valueOf(jsonObjectLines2.get("PO_NUM")));
-//                        condition.put("prtnr_bank_type",String.valueOf(jsonObjectLines2.get("PRTNR_BANK_TYPE")));
-//                        condition.put("ref_key1",String.valueOf(jsonObjectLines2.get("REF_KEY1")));
-//                        condition.put("ref_key2",String.valueOf(jsonObjectLines2.get("REF_KEY2")));
-//                        condition.put("ref_key3",String.valueOf(jsonObjectLines2.get("REF_KEY3")));
-//                        condition.put("spec_gl",String.valueOf(jsonObjectLines2.get("SPEC_GL")));
-//                        condition.put("term_pmt",String.valueOf(jsonObjectLines2.get("TERM_PMT")));
-//                        condition.put("tpba",String.valueOf(jsonObjectLines2.get("TPBA")));
-//                        condition.put("vendor",String.valueOf(jsonObjectLines2.get("VENDOR")));
-//                        condition.put("wbs_num",String.valueOf(jsonObjectLines2.get("WBS_NUM")));
-//                        condition.put("amt_with_base_lc",String.valueOf(jsonObjectLines2.get("AMT_WITH_BASE_LC")).trim());
-//                        condition.put("amt_with_lc", String.valueOf(jsonObjectLines2.get("AMT_WITH_LC")).trim());
-//                        condition.put("m_date_date",param.get("date_from").toString());
-////                    System.out.println("Ini Condition : "+condition);
-//                        try{
-//                            out = sapService.insertApInvoiceItem(condition);
-//                            countter++;
-//                        }catch (Exception e){
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
-//            }
+
         }catch (Exception e){
             e.printStackTrace();
         }
