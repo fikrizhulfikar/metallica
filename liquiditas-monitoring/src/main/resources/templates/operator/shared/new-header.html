@@ -8,7 +8,7 @@
     </ul>
     <ul class="nav navbar-nav ml-auto">
         <li class="nav-item dropdown d-md-down-none">
-            <span style="color: white !important;" id="time"></span>
+            <span style="color: white !important;" id="time"></span><span style="color: white !important;">&nbsp;WIB</span>
         </li>
         <li id="notification_li" class="nav-item dropdown d-md-down-none">
             <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
@@ -35,7 +35,7 @@
                     document.addEventListener("DOMContentLoaded", function () {
                         setInterval(function () {
                             let m = moment().locale("id");
-                            let d = m.format("dddd, DD MMMM YYYY kk:mm:ss");
+                            let d = m.format("dddd, DD MMMM YYYY kk:mm");
                             document.getElementById('time').innerHTML = d;
                         },1000);
                     })
