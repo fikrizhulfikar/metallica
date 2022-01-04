@@ -8,7 +8,13 @@ import net.sf.jxls.transformer.XLSTransformer;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +23,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -53,7 +62,7 @@ public class KebutuhanImprestUnitController {
     @RequestMapping(value = "/template", method = RequestMethod.GET)
     public String downloadTemplate(HttpServletResponse response) throws SQLException {
         return generateReport(response, null, "template");
-
+//        return getTemplateDropping();
     }
 
     @RequestMapping(value = "/upload_xls_imprest", method = RequestMethod.POST)
@@ -88,6 +97,20 @@ public class KebutuhanImprestUnitController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public ResponseEntity getTemplateDropping(){
+        Path path = Paths.get("templates/report/template_dropping.xls");
+        Resource resource = null;
+        try{
+            resource = new UrlResource(path.toUri());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+ resource.getFilename() + "\"")
+                .body(resource);
     }
 
     @PostMapping(path = "/delete_imprest")
