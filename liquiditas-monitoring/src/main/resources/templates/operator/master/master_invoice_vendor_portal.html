@@ -1,0 +1,183 @@
+<div th:fragment="stylesheets-backend">
+    <style>
+        button{ cursor: pointer
+        }
+        .table td {
+            padding-right: 0.75rem;
+            padding-bottom: 0.25rem;
+            padding-left: 0.75rem;
+            padding-top: 0.25rem;
+        }
+        div.dataTables_wrapper div.dataTables_paginate {
+            float: right !important;
+            text-align: left !important;
+            padding-left: 0px;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter {
+            text-align: right !important;
+        }
+        thead {
+            font-size: 12px; !important;
+        }
+        tbody {
+            font-size: 12px; !important;
+        }
+    </style>
+</div>
+<main class="main" th:fragment="content">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" style="cursor: default">Master Invoice Vendor Portal</li>
+    </ol>
+    <div class="container-fluid" style="margin-bottom: 15px;">
+        <div class="animated fadeIn">
+            <div class="list-data" style="margin-top:50px;">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="form">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="pDate"><span style="color: red">*)</span>&nbsp;Date:</label>
+                                        <input type="text" class="form-control" id="pDate"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div align="right">
+<!--                                <button onclick="clearForm()" class="btn btn-warning">Clear Form</button>-->
+                                <button onclick="getInvoiceVendorPortal()" class="btn btn-success"><i class="fas fa-cloud-download-alt"></i>&nbsp; Get Data</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!--                <div class="list-data" style="margin-top:25px;">-->
+<!--                    <div class="panel panel-default">-->
+<!--                        <div class="panel-body panel-custom">-->
+<!--                            <table id="table-main" class="table table-bordered table-striped">-->
+<!--                                <thead style="font-size: 12px">-->
+<!--                                <tr>-->
+<!--                                    <th>COMP CODE</th>-->
+<!--                                    <th>DOC NO</th>-->
+<!--                                    <th>FISC YEAR</th>-->
+<!--                                    <th>DOC TYPE</th>-->
+<!--                                    <th>DOC DATE</th>-->
+<!--                                    <th>POST DATE</th>-->
+<!--                                    <th>ENTRY DATE</th>-->
+<!--                                    <th>REFERENCE</th>-->
+<!--                                    <th>REV WITH</th>-->
+<!--                                    <th>REV YEAR</th>-->
+<!--                                    <th>DOC HDR TXT</th>-->
+<!--                                    <th>CURRENCY</th>-->
+<!--                                    <th>DOC HDR TXT</th>-->
+<!--                                    <th>EXCH RATE</th>-->
+<!--                                    <th>REFERENCE KEY</th>-->
+<!--                                    <th>PMT IND</th>-->
+<!--                                    <th>TRANS TYPE</th>-->
+<!--                                    <th>SPREAD VAL</th>-->
+<!--                                    <th>LINE ITEM</th>-->
+<!--                                    <th>OI IND</th>-->
+<!--                                    <th>ACCT TYPE</th>-->
+<!--                                    <th>SPEC GL</th>-->
+<!--                                    <th>BUS AREA</th>-->
+<!--                                    <th>TPBA</th>-->
+<!--                                    <th>AMT LC</th>-->
+<!--                                    <th>AMT TC</th>-->
+<!--                                    <th>AMT WITH BASE TC</th>-->
+<!--                                    <th>AMT WITH TC</th>-->
+<!--                                    <th>ASSIGNMENT</th>-->
+<!--                                    <th>ITEM TEXT</th>-->
+<!--                                    <th>COST CTR</th>-->
+<!--                                    <th>GL ACCT</th>-->
+<!--                                    <th>CUSTOMER</th>-->
+<!--                                    <th>CUSTOMER NAME</th>-->
+<!--                                    <th>VENDOR</th>-->
+<!--                                    <th>VENDOR NAME</th>-->
+<!--                                    <th>BASE DATE</th>-->
+<!--                                    <th>TERM PMT</th>-->
+<!--                                    <th>DUE ON</th>-->
+<!--                                    <th>PMT BLOCK</th>-->
+<!--                                    <th>HOUSE BANK</th>-->
+<!--                                    <th>HOUSE BANK</th>-->
+<!--                                    <th>BANK KEY</th>-->
+<!--                                    <th>BANK ACCOUNT</th>-->
+<!--                                    <th>ACCOUNT HOLDER</th>-->
+<!--                                    <th>PO NUM</th>-->
+<!--                                    <th>PO ITEM</th>-->
+<!--                                    <th>REF KEY1</th>-->
+<!--                                    <th>REF KEY2</th>-->
+<!--                                    <th>REF KEY3</th>-->
+<!--                                    <th>INT ORDER</th>-->
+<!--                                    <th>WBS NUM</th>-->
+<!--                                    <th>CASH CODE</th>-->
+<!--                                    <th>CORP PMT</th>-->
+<!--                                    <th>DR CR IND</th>-->
+<!--                                    <th>AMT WITH BASE LC</th>-->
+<!--                                    <th>AMT WITH LC</th>-->
+<!--                                    <th>M DATA DATE</th>-->
+<!--                                    <th>TGL VERIFIKASI MAKER</th>-->
+<!--                                    <th>TGL VERIFIKASI CHECKER</th>-->
+<!--                                    <th>TGL VERIFIKASI APPROVER</th>-->
+<!--                                    <th>METODE PEMBAYARAN</th>-->
+<!--                                    <th>TGL RENCANA BAYAR</th>-->
+<!--                                    <th>SUMBER DANA</th>-->
+<!--                                    <th>KETERANGAN</th>-->
+<!--                                    <th>FLAG STATUS</th>-->
+<!--                                    <th>ID GROUP</th>-->
+<!--                                    <th>NAMA GROUP</th>-->
+<!--                                    <th>TGL GROUP</th>-->
+<!--                                    <th>GROUP BY</th>-->
+<!--                                    <th>NO REK HOUSE BANK</th>-->
+<!--                                    <th>INQ CUSTOMER NAME</th>-->
+<!--                                    <th>INQ ACCOUNT NUMBER</th>-->
+<!--                                    <th>INQ ACCOUNT STATUS</th>-->
+<!--                                    <th>KODE BANK PENERIMA</th>-->
+<!--                                    <th>RETRIEVAL REF NUMBER</th>-->
+<!--                                    <th>CUSTOMER REF NUMBER</th>-->
+<!--                                    <th>CONFIRMATION CODE</th>-->
+<!--                                    <th>TGL ACT BAYAR</th>-->
+<!--                                </tr>-->
+<!--                                </thead>-->
+<!--                                <tbody style="font-size: 12px">-->
+<!--                                </tbody>-->
+<!--                            </table>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+        </div>
+    </div>
+<!--    <div class="modal fade" id="modal-upload-xls" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"-->
+<!--         aria-hidden="true">-->
+<!--        <div class="modal-dialog modal-lg" role="document">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                    <h5 class="modal-title" id="title_modal_upload_xls">UPLOAD FILE</h5>-->
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                        <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--                <div class="modal-body" id="input_file_xls">-->
+<!--                    <div class="form-group" style="display:none">-->
+<!--                        <input type="text" class="form-control" id="temp-xls"/>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label class="form-control-label">UPLOAD FILE XLS |-->
+<!--                            <a th:href="@{/api_master/template/2}" id="btn-download-template-data-bank">-->
+<!--                                Download Template-->
+<!--                            </a></label>-->
+<!--                        <input type="file" class="form-control" id="file-xls"-->
+<!--                               accept="application/vnd.ms-excel"/>-->
+
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="modal-footer">-->
+<!--                    <button type="button" class="btn btn-info" data-dismiss="modal" onclick="upload_server_xls()">Selesai</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+</main>
+<div th:fragment="scripts-backend">
+    <script src="/static/js/backend/master/invoice_vendor_portal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+</div>
