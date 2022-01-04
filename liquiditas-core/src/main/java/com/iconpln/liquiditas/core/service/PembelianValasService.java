@@ -2,7 +2,7 @@ package com.iconpln.liquiditas.core.service;
 
 import com.iconpln.liquiditas.core.domain.PembelianValas;
 import com.iconpln.liquiditas.core.utils.AppUtils;
-import oracle.jdbc.driver.OracleTypes;
+import oracle.jdbc.OracleTypes;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
