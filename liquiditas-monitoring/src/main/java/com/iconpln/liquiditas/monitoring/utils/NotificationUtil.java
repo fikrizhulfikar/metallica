@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.iconpln.liquiditas.monitoring.config.WsMbConfig;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -37,7 +39,7 @@ public class NotificationUtil {
         long id = service.save(notification);
         if (id != 0) {
             notification.setId(id);
-//            messagingTemplate.convertAndSend(WsMbConfig.TOPIC_PREFIX + "/" + notification.getTopic(), notification);
+            messagingTemplate.convertAndSend(WsMbConfig.TOPIC_PREFIX + "/" + notification.getTopic(), notification);
         }
     }
 
