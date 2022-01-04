@@ -167,4 +167,102 @@ public class SapController {
             return null;
         }
     }
+
+    @GetMapping(path = "/get_invoice_nonvendor_pilot")
+    public Map<String, Object> getInvoiceNonVendorPilot(
+            @RequestParam(value = "pCompanyCode", defaultValue = "") String pCompanyCode,
+            @RequestParam(value = "pBusArea", defaultValue = "") String pBusArea,
+            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
+            @RequestParam(value ="pFiscYear", defaultValue = "") String pFiscYear,
+            @RequestParam(value ="pDateFrom", defaultValue = "") String pDatefrom,
+            @RequestParam(value = "pDateTo", defaultValue = "") String pDateTo,
+            @RequestParam(value = "pOssId", defaultValue = "") String pOssId
+    ){
+        try {
+//            Map<String, String> param = new HashMap<>();
+
+            Map<String, Object> res = sapPilot.getInvoiceNonVendor(pCompanyCode, pDocNo, pFiscYear, pBusArea, pOssId, pDatefrom, pDateTo);
+            // if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
+
+            //  }
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping(path = "/get_invoice_lunas_pilot")
+    public Map<String, Object> getInvoiceLunasPilot(
+            @RequestParam(value = "pCompanyCode", defaultValue = "") String pCompanyCode,
+            @RequestParam(value = "pBusArea", defaultValue = "") String pBusArea,
+            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
+            @RequestParam(value ="pFiscYear", defaultValue = "") String pFiscYear,
+            @RequestParam(value ="pDateFrom", defaultValue = "") String pDatefrom,
+            @RequestParam(value = "pDateTo", defaultValue = "") String pDateTo,
+            @RequestParam(value = "pOssId", defaultValue = "") String pOssId
+    ){
+        try {
+//            Map<String, String> param = new HashMap<>();
+
+            Map<String, Object> res = sapPilot.getInvoiceLunas(pCompanyCode, pDocNo, pFiscYear, pBusArea, pOssId, pDatefrom, pDateTo);
+            // if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
+
+            //  }
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping(path = "/get_apinvoice_new")
+    public Map<String, Object> getApInvoiceNew(
+            @RequestParam(value = "pCompanyCode", defaultValue = "") String pCompanyCode,
+            @RequestParam(value = "pBusArea", defaultValue = "") String pBusArea,
+            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
+            @RequestParam(value = "pFiscalYear", defaultValue = "") String pFiscalYear,
+            @RequestParam(value = "pDateFrom", defaultValue = "") String pDateFrom,
+            @RequestParam(value = "pDateTo", defaultValue = "") String pDateTo,
+            @RequestParam(value = "pOssId", defaultValue = "") String pOssId
+    ){
+        try {
+            Map<String, Object> res = sapPilot.getApInvoice(pCompanyCode, pDocNo, pFiscalYear, pBusArea, pDateFrom, pDateTo);
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping(path = "/get_hrpayable_new")
+    public Map<String, Object> getHrPayableNew(
+            @RequestParam(value = "pCompanyCode", defaultValue = "") String pCompanyCode,
+            @RequestParam(value = "pBusArea", defaultValue = "") String pBusArea,
+            @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
+            @RequestParam(value = "pFiscalYear", defaultValue = "") String pFiscalYear,
+            @RequestParam(value = "pDateFrom", defaultValue = "") String pDateFrom,
+            @RequestParam(value = "pDateTo", defaultValue = "") String pDateTo
+    ){
+        try {
+            Map<String, Object> res = sapPilot.getHrPayable(pCompanyCode, pDocNo, pFiscalYear, pBusArea, pDateFrom, pDateTo);
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping(path = "/get_invoice_vendor_portal")
+    public Map<String, Object> getInvoiceVendorPortal(
+            @RequestParam(value = "pDate", defaultValue = "") String pDate
+    ){
+        try {
+            Map<String, Object> res = sapPilot.getInvoiceVendorPortal(pDate);
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
