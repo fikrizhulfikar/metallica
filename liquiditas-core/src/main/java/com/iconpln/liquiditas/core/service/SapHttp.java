@@ -181,6 +181,51 @@ public class SapHttp {
 
     }
 
+    public static String pilotExecuteGetVndorPortal(String targetURL) throws URISyntaxException{
+        HashMap<String, Object> params = new HashMap<>();
+        return pilotExecuteGetVndorPortal(targetURL, params);
+    };
+
+    public static String pilotExecuteGetVndorPortal(String targetURL, HashMap<String, Object> params) throws URISyntaxException{
+
+        try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
+
+            URIBuilder builder = new URIBuilder(targetURL);
+            for (HashMap.Entry<String, Object> entry : params.entrySet()) {
+                builder.setParameter(entry.getKey(), (String)entry.getValue());
+            }
+
+            HttpGet request = new HttpGet(builder.build());
+
+            // add request header
+            request.addHeader("User-Agent", "Mozilla/5.0");
+            String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3VzZXJkYXRhIjoiMTEiLCJ1bmlxdWVfbmFtZSI6InZwX3BhX21ha2VyIiwiVXNlckFnZW50IjoiIiwiSXBBZGRyZXNzIjoiIiwibmJmIjoxNjM1NDkyMzE1LCJleHAiOjE2NDA2NzYzMTUsImlhdCI6MTYzNTQ5MjMxNSwiaXNzIjoiUExOIFZlbmRvciBQb3J0YWwgQXBwcyIsImF1ZCI6IlBMTiBWZW5kb3IgUG9ydGFsIEF1ZGllbmNlIn0.Dv3tUbUTerjUaMhBrXQySYVDg8SeJKm05_el7EufDrE";
+            String tokenAuth = "Bearer " + token;
+            request.addHeader("Authorization", tokenAuth);
+
+//            System.out.println("Authentication for GET SAP PILOT : "+userpass);
+            HttpResponse response = client.execute(request);
+
+            System.out.println("\nSending 'GET' request to URL : " + targetURL);
+            System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
+
+            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+
+            StringBuffer result = new StringBuffer();
+            String line = "";
+            while ((line = rd.readLine()) != null) {
+                result.append(line);
+            }
+
+            return result.toString();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
     public static String executeDelete(String targetURL) throws URISyntaxException{
         HashMap<String, Object> params = new HashMap<>();
         return executeDelete(targetURL, params);
