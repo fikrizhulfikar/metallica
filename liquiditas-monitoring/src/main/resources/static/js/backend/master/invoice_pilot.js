@@ -122,7 +122,7 @@ function initDataTable() {
 hideLoadingCss()
 }
 
-function getInvoicePilot(){
+function getInvoicePilotOss(){
     if (validateForm("#form") !== 0){
         Swal.fire('Oops!',"Silahkan Lengkapi Isian",'info');
     }else{
@@ -130,7 +130,7 @@ function getInvoicePilot(){
         if (stateCrf == true) {
             showLoadingCss();
             $.ajax({
-                url: `${baseUrl}api_master/integrasi_sap/get_invoice_pilot`,
+                url: `${baseUrl}api_master/integrasi_sap/get_invoice_oss_pilot`,
                 dataType: 'JSON',
                 type: "GET",
                 data: {

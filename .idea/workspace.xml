@@ -4,13 +4,82 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1432616-f44a-456c-b349-daf6be464567" name="Default Changelist" comment="">
+    <list default="true" id="b07dde86-94cb-4949-bd9e-5eca4dcbff87" name="Default Changelist" comment="Log">
+      <change afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/pilot/InvoicePilotService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/pilot/InvoicePilotController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/invoiceNonVendor.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapInvoiceHrAp.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapInvoiceOss.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapInvoiceVendorPortal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapRelaisasiInvoice.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/bower.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/daterangepicker.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/daterangepicker.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/demo.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/drp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/example/amd/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/example/amd/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/example/amd/require.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/example/browserify/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/example/browserify/bundle.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/example/browserify/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/example/browserify/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/moment.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/package.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/website/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/website/website.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/website/website.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/invoice_nonvendor_head.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_invoice_hrap.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_invoice_oss.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_invoice_vendorportal.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_realisasi_invoice.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/embedHTML/sample_1/content.xml" beforeDir="false" afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/embedHTML/sample_1/content.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/pilot/SapPilot.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/pilot/SapPilot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/pilot/Sapmasterpilot.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/pilot/Sapmasterpilot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/SapHttp.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/SapHttp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/Sapmaster.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/Sapmaster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/Token.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/xmldoc/XmlDocx.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/xmldoc/XmlDocx.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/resources/config/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/resources/config/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/ApplicationMonitoring.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/ApplicationMonitoring.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/PageOperatorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/PageOperatorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/SapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/SapController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/filter/RestFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/filter/RestFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/task/EmailTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/task/EmailTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/utils/EmailUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/utils/EmailUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application-production.properties" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application-production.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application-testing.properties" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application-testing.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapRealisasiPembayaran.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapRealisasiPembayaran.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/coreapps.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/coreapps.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/master/invoice_pilot.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/master/invoice_pilot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/master/invoice_vendor_portal.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/master/invoice_vendor_portal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/master/master_invoice_vendor_portal.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/master/master_invoice_vendor_portal.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/master_invoice_pilot.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/master_invoice_pilot.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/shared/new-layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/shared/new-layout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/shared/new-menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/shared/new-menu.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/test/java/com/iconpln/liquiditas/monitoring/Test02.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/test/java/com/iconpln/liquiditas/monitoring/Test02.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploadcorpay/temp/cetak_bukti_kas_202101270000013667.docx" beforeDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -26,6 +95,13 @@
     <expand />
     <select />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -36,6 +112,16 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
   </component>
   <component name="ProjectId" id="1d9OvPfjMINLtYXwiis6azDd6GN" />
   <component name="ProjectLevelVcsManager">
@@ -58,19 +144,20 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/report" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="restartRequiresConfirmation" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Work\Icon+\Metalica\Code\uat\metallica\liquiditas-monitoring\src\main\resources\templates\report" />
-      <recent name="D:\Work\Icon+\Metalica\Code\uat\metallica\uploadcorpay\template" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\java\com\iconpln\liquiditas\monitoring\controller\operator" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\operator" />
-      <recent name="D:\OJT\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\backend\controller" />
+      <recent name="D:\Kerjaan\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\backend\controller\pilot" />
+      <recent name="D:\Kerjaan\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\operator\pilot" />
+      <recent name="D:\Kerjaan\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\new-backend\node_modules" />
+      <recent name="D:\Kerjaan\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\backend\master" />
+      <recent name="D:\Kerjaan\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\operator\master" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -127,7 +214,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="c1432616-f44a-456c-b349-daf6be464567" name="Default Changelist" comment="" />
+      <changelist id="b07dde86-94cb-4949-bd9e-5eca4dcbff87" name="Default Changelist" comment="" />
       <created>1591834072613</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -137,6 +224,48 @@
       <workItem from="1599754222102" duration="3144000" />
       <workItem from="1600995465817" duration="591000" />
       <workItem from="1606699328843" duration="622000" />
+      <workItem from="1635731098668" duration="8557000" />
+      <workItem from="1636946713366" duration="6153000" />
+      <workItem from="1636964094203" duration="3015000" />
+      <workItem from="1637026619407" duration="12725000" />
+      <workItem from="1637112502397" duration="52000" />
+      <workItem from="1637216681229" duration="2202000" />
+      <workItem from="1637303750851" duration="3189000" />
+      <workItem from="1637741747184" duration="985000" />
+      <workItem from="1637823907247" duration="1361000" />
+      <workItem from="1637888741273" duration="623000" />
+      <workItem from="1638240455504" duration="73000" />
+      <workItem from="1638938811873" duration="1716000" />
+      <workItem from="1639447705085" duration="1609000" />
+      <workItem from="1640052182747" duration="117000" />
+      <workItem from="1640621364647" duration="1630000" />
+      <workItem from="1640656109581" duration="1696000" />
+      <workItem from="1640743899672" duration="1202000" />
+      <workItem from="1641277541875" duration="9393000" />
+      <workItem from="1641349506199" duration="7595000" />
+      <workItem from="1641431323721" duration="1338000" />
+      <workItem from="1641780010462" duration="18630000" />
+      <workItem from="1641953512338" duration="15131000" />
+      <workItem from="1642034714612" duration="7464000" />
+      <workItem from="1642043527694" duration="10831000" />
+      <workItem from="1642128419577" duration="76000" />
+      <workItem from="1642129909955" duration="1503000" />
+      <workItem from="1642148061128" duration="4874000" />
+      <workItem from="1642384832238" duration="721000" />
+      <workItem from="1642400137888" duration="2957000" />
+      <workItem from="1643333950964" duration="1205000" />
+      <workItem from="1643621067169" duration="895000" />
+      <workItem from="1643624477550" duration="1282000" />
+      <workItem from="1643789794061" duration="600000" />
+      <workItem from="1643858743952" duration="1630000" />
+      <workItem from="1643936500211" duration="2474000" />
+      <workItem from="1643939017249" duration="1643000" />
+      <workItem from="1643941201783" duration="566000" />
+      <workItem from="1643956631239" duration="23127000" />
+      <workItem from="1644359343678" duration="17318000" />
+      <workItem from="1644481313341" duration="4109000" />
+      <workItem from="1644539741107" duration="4430000" />
+      <workItem from="1644804710498" duration="17314000" />
     </task>
     <task id="LOCAL-00001" summary="Updated">
       <created>1591845393081</created>
@@ -264,7 +393,189 @@
       <option name="project" value="LOCAL" />
       <updated>1606699928627</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Update JDBC version">
+      <created>1641279100900</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1641279100900</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Menambahkan UI untuk project Pilot Metallica">
+      <created>1641279217690</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1641279217690</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Menambahkan file js untuk project Pilot Metalica">
+      <created>1641279255695</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1641279255695</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Update template">
+      <created>1641279300456</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1641279300456</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Update logo bank mandiri">
+      <created>1641279353226</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1641279353226</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Updated">
+      <created>1641279497828</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1641279497828</updated>
+    </task>
+    <task id="LOCAL-00025" summary="disable unused dependency">
+      <created>1641280565806</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1641280565806</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Update logo bank mega">
+      <created>1641280680476</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1641280680476</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Menambahkan informasi waktu">
+      <created>1641280799288</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1641280799288</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Manambahkan controller untuk nota pindah buku">
+      <created>1641280838967</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1641280838967</updated>
+    </task>
+    <task id="LOCAL-00029" summary="update logo bank ocbc">
+      <created>1641280860400</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1641280860400</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Disable dependency yg tidak digunakan">
+      <created>1641280916786</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1641280916786</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Menambahkan route page untuk invoice pilot project">
+      <created>1641281015459</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1641281015459</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Memperbarui dependency">
+      <created>1641281100513</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1641281100513</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Update config">
+      <created>1641281299606</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1641281299606</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Hilangkan code yang tidak perlu">
+      <created>1641281922230</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1641281922230</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Update function untuk project pilot">
+      <created>1641281984494</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1641281984494</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Menambah profile untuk production,menghilangkan profil testing">
+      <created>1641282110536</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1641282110536</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Manmbahkan function untuk penarikan data invoice pilot project">
+      <created>1641282177726</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1641282177726</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Menambahkan base url untuk penarikan data invoice pilot">
+      <created>1641282320283</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1641282320283</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Sap pilot">
+      <created>1641282385367</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1641282385367</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Menghilangkan dependency yang tidak digunakan">
+      <created>1641282433489</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1641282433489</updated>
+    </task>
+    <task id="LOCAL-00041" summary="memperbarui template dropping">
+      <created>1641282478492</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1641282478492</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Update">
+      <created>1641282549053</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1641282549053</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Disable dependency">
+      <created>1641282615290</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1641282615290</updated>
+    </task>
+    <task id="LOCAL-00044" summary="add">
+      <created>1641282707219</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1641282707219</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -285,19 +596,31 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Add Param Head/Item to Split Head and Item" />
-    <MESSAGE value="Add Param Header and Item" />
-    <MESSAGE value="Fix Reverse Button" />
-    <MESSAGE value="Update Tracking" />
-    <MESSAGE value="Modify Function Hit" />
+    <MESSAGE value="Menambahkan file js untuk project Pilot Metalica" />
+    <MESSAGE value="Update template" />
+    <MESSAGE value="Update logo bank mandiri" />
+    <MESSAGE value="disable unused dependency" />
+    <MESSAGE value="Update logo bank mega" />
+    <MESSAGE value="Menambahkan informasi waktu" />
+    <MESSAGE value="Manambahkan controller untuk nota pindah buku" />
+    <MESSAGE value="update logo bank ocbc" />
+    <MESSAGE value="Disable dependency yg tidak digunakan" />
+    <MESSAGE value="Menambahkan route page untuk invoice pilot project" />
+    <MESSAGE value="Memperbarui dependency" />
+    <MESSAGE value="No Update" />
+    <MESSAGE value="Update config" />
     <MESSAGE value="Updated" />
-    <MESSAGE value="Ubah idle time dan jetty server post size" />
-    <MESSAGE value="Ubah konfigurasi smtp" />
-    <MESSAGE value="Ubah proses refnum bank menjadi di belakang" />
-    <MESSAGE value="menambahkan titik koma" />
-    <MESSAGE value="Menambahkan tombol approval untuk role msb investment expenditure ii" />
-    <MESSAGE value="Fix bug, disable revere to sap for msb,vp, and evp in approval flow (after verified by maker)" />
-    <MESSAGE value="Log" />
-    <option name="LAST_COMMIT_MESSAGE" value="Log" />
+    <MESSAGE value="Hilangkan code yang tidak perlu" />
+    <MESSAGE value="Update function untuk project pilot" />
+    <MESSAGE value="Menambah profile untuk production,menghilangkan profil testing" />
+    <MESSAGE value="Manmbahkan function untuk penarikan data invoice pilot project" />
+    <MESSAGE value="Menambahkan base url untuk penarikan data invoice pilot" />
+    <MESSAGE value="Sap pilot" />
+    <MESSAGE value="Menghilangkan dependency yang tidak digunakan" />
+    <MESSAGE value="memperbarui template dropping" />
+    <MESSAGE value="Update" />
+    <MESSAGE value="Disable dependency" />
+    <MESSAGE value="add" />
+    <option name="LAST_COMMIT_MESSAGE" value="add" />
   </component>
 </project>

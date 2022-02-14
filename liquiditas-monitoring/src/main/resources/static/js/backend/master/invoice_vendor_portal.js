@@ -2,7 +2,8 @@ var tableMain;
 var isUpdate = "0";
 $(document).ready(function () {
     // initDataTable();
-    $('#pDate').datepicker({dateFormat : 'yymmdd'});
+    $('#pStartDate').datepicker({dateFormat : 'yymmdd'});
+    $('#pEndDate').datepicker({dateFormat : 'yymmdd'});
     $('#pDateTo').datepicker({dateFormat : 'yymmdd'});
     // $('#pFiscYear').datepicker({dateFormat : 'yy'});
 });
@@ -134,7 +135,8 @@ function getInvoiceVendorPortal(){
                 dataType: 'JSON',
                 type: "GET",
                 data: {
-                    pDate: $("#pDate").val(),
+                    pStartDate: $("#pStartDate").val(),
+                    pEndDate: $("#pEndDate").val(),
                 },
                 success: function (response) {
                     if (response.status === 404) {

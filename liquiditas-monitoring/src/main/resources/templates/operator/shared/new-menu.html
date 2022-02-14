@@ -1,8 +1,8 @@
 <div th:fragment="menu-param" class="sidebar">
     <nav class="sidebar-nav">
         <ul class="nav">
-            <li th:each="menu : ${session.menus}" class="nav-item" th:classappend="${(menu.id != 'mnuTransaksiDerivatif' ? '' : 'nav-dropdown') + (menu.id != 'mnuTransaksiInvoice' ? '' : 'nav-dropdown') + (menu.id != 'mnuDashOperasional' ? '' : 'nav-dropdown') + (menu.id != 'mnuPenerimaanPenjualan' ? '' : 'nav-dropdown') + (menu.id != 'mnuPlacement' ? '' : 'nav-dropdown') + (menu.id != 'mnuScf' ? '' : 'nav-dropdown') + (menu.id != 'mnuDataPindahBuku' ? '' : 'nav-dropdown') + (menu.id != 'mnuInvoiceGrouping' ? '' : 'nav-dropdown') +(menu.id != 'mnuPembelianValas' ? '' : 'nav-dropdown') + (menu.id != 'mnuPindahBuku' ? '' : 'nav-dropdown') + (menu.id != 'mnuOperasiKhusus' ? '' : 'nav-dropdown') + (menu.id != 'mnuPotensi' ? '' : 'nav-dropdown')  + (menu.id != 'mnuTransaksiRekapData' ? '' : 'nav-dropdown')}" th:if="${menu.IS_API == 0 &#x26;&#x26; menu.root_id != 'mnuDashIdr' &#x26;&#x26; menu.root_id != 'mnuTransaksiMaster' &#x26;&#x26; menu.root_id != 'mnuPotensi' &#x26;&#x26; menu.id != 'mnuTransaksiMaster'  &#x26;&#x26; menu.root_id != 'mnuDashValas'}">
-                <a th:if="${menu.id != 'mnuTransaksiRekapData' &#x26;&#x26; menu.root_id != 'mnuTransaksiRekapData' &#x26;&#x26; menu.id != 'mnuTransaksiInvoice' &#x26;&#x26; menu.root_id != 'mnuTransaksiInvoice' &#x26;&#x26; menu.id != 'mnuDashOperasional' &#x26;&#x26; menu.root_id != 'mnuDashOperasional' &#x26;&#x26; menu.id != 'mnuPenerimaanPenjualan' &#x26;&#x26; menu.root_id != 'mnuPenerimaanPenjualan' &#x26;&#x26; menu.id != 'mnuDataPindahBuku' &#x26;&#x26; menu.root_id != 'mnuDataPindahBuku' &#x26;&#x26; menu.id != 'mnuPlacement' &#x26;&#x26; menu.root_id != 'mnuPlacement' &#x26;&#x26; menu.id != 'mnuInvoiceGrouping' &#x26;&#x26; menu.root_id != 'mnuInvoiceGrouping' &#x26;&#x26; menu.id != 'mnuPembelianValas' &#x26;&#x26; menu.root_id != 'mnuPembelianValas' &#x26;&#x26; menu.id != 'mnuPindahBuku' &#x26;&#x26; menu.root_id != 'mnuPindahBuku' &#x26;&#x26; menu.id != 'mnuOperasiKhusus' &#x26;&#x26; menu.root_id != 'mnuOperasiKhusus' &#x26;&#x26; menu.id != 'mnuTransaksiDerivatif' &#x26;&#x26; menu.root_id != 'mnuTransaksiDerivatif' &#x26;&#x26; menu.id != 'mnuScf' &#x26;&#x26; menu.root_id != 'mnuScf' &#x26;&#x26; menu.id != 'mnuPotensi' &#x26;&#x26; menu.root_id != 'mnuPotensi'}" class="nav-link" style="font-size: 13px;" th:href="@{${menu.form_id}}">
+            <li th:each="menu : ${session.menus}" class="nav-item" th:classappend="${(menu.id != 'mnuTransaksiDerivatif' ? '' : 'nav-dropdown') + (menu.id != 'mnuTransaksiInvoice' ? '' : 'nav-dropdown') + (menu.id != 'mnuTransaksiInvoicePilot' ? '' : 'nav-dropdown') + (menu.id != 'mnuDashOperasional' ? '' : 'nav-dropdown') + (menu.id != 'mnuPenerimaanPenjualan' ? '' : 'nav-dropdown') + (menu.id != 'mnuPlacement' ? '' : 'nav-dropdown') + (menu.id != 'mnuScf' ? '' : 'nav-dropdown') + (menu.id != 'mnuDataPindahBuku' ? '' : 'nav-dropdown') + (menu.id != 'mnuInvoiceGrouping' ? '' : 'nav-dropdown') +(menu.id != 'mnuPembelianValas' ? '' : 'nav-dropdown') + (menu.id != 'mnuPindahBuku' ? '' : 'nav-dropdown') + (menu.id != 'mnuOperasiKhusus' ? '' : 'nav-dropdown') + (menu.id != 'mnuPotensi' ? '' : 'nav-dropdown')  + (menu.id != 'mnuTransaksiRekapData' ? '' : 'nav-dropdown')}" th:if="${menu.IS_API == 0 &#x26;&#x26; menu.root_id != 'mnuDashIdr' &#x26;&#x26; menu.root_id != 'mnuTransaksiMaster' &#x26;&#x26; menu.root_id != 'mnuPotensi' &#x26;&#x26; menu.root_id != 'mnuTransaksiMasterPilot' &#x26;&#x26; menu.id != 'mnuTransaksiMasterPilot' &#x26;&#x26; menu.id != 'mnuTransaksiMaster'  &#x26;&#x26; menu.root_id != 'mnuDashValas'}">
+                <a th:if="${menu.id != 'mnuTransaksiRekapData' &#x26;&#x26; menu.root_id != 'mnuTransaksiRekapData' &#x26;&#x26; menu.id != 'mnuTransaksiInvoice' &#x26;&#x26; menu.root_id != 'mnuTransaksiInvoice' &#x26;&#x26; menu.id != 'mnuTransaksiInvoicePilot' &#x26;&#x26; menu.root_id != 'mnuTransaksiInvoicePilot' &#x26;&#x26; menu.id != 'mnuDashOperasional' &#x26;&#x26; menu.root_id != 'mnuDashOperasional' &#x26;&#x26; menu.id != 'mnuPenerimaanPenjualan' &#x26;&#x26; menu.root_id != 'mnuPenerimaanPenjualan' &#x26;&#x26; menu.id != 'mnuDataPindahBuku' &#x26;&#x26; menu.root_id != 'mnuDataPindahBuku' &#x26;&#x26; menu.id != 'mnuPlacement' &#x26;&#x26; menu.root_id != 'mnuPlacement' &#x26;&#x26; menu.id != 'mnuInvoiceGrouping' &#x26;&#x26; menu.root_id != 'mnuInvoiceGrouping' &#x26;&#x26; menu.id != 'mnuPembelianValas' &#x26;&#x26; menu.root_id != 'mnuPembelianValas' &#x26;&#x26; menu.id != 'mnuPindahBuku' &#x26;&#x26; menu.root_id != 'mnuPindahBuku' &#x26;&#x26; menu.id != 'mnuOperasiKhusus' &#x26;&#x26; menu.root_id != 'mnuOperasiKhusus' &#x26;&#x26; menu.id != 'mnuTransaksiDerivatif' &#x26;&#x26; menu.root_id != 'mnuTransaksiDerivatif' &#x26;&#x26; menu.id != 'mnuScf' &#x26;&#x26; menu.root_id != 'mnuScf' &#x26;&#x26; menu.id != 'mnuPotensi' &#x26;&#x26; menu.root_id != 'mnuPotensi'}" class="nav-link" style="font-size: 13px;" th:href="@{${menu.form_id}}">
                     <i th:class="${menu.icon_style}" style="width: 25px;"></i>
                     <span th:text="${menu.text}"></span>
                 </a>
@@ -96,6 +96,18 @@
                         </a>
                     </li>
                 </ul>
+
+                <a th:if="${menu.id == 'mnuTransaksiInvoicePilot'}" class="nav-link nav-dropdown-toggle" href="#">
+                    <i th:class="${menu.icon_style}" style="width: 25px;"></i> <span th:text="${menu.text}"></span>
+                </a>
+                <ul th:if="${menu.id == 'mnuTransaksiInvoicePilot'}" class="nav-dropdown-items">
+                    <li th:each="pilot : ${session.pilot}" class="nav-item">
+                        <a class="nav-link" style="font-size: 13px;" th:href="@{${pilot.form_id}}">
+                            <span style="margin-left:15px;" th:text="${pilot.text}"></span>
+                        </a>
+                    </li>
+                </ul>
+
                 <a th:if="${menu.id == 'mnuInvoiceGrouping'}" class="nav-link nav-dropdown-toggle" href="#">
                     <i th:class="${menu.icon_style}" style="width: 25px;"></i> <span th:text="${menu.text}"></span>
                 </a>
@@ -170,7 +182,29 @@
                     </li>
                 </ul>
             </li>
+            <li th:each="menu : ${session.menus}" class="nav-item nav-dropdown" th:if="${menu.IS_API == 0 &#x26;&#x26; menu.id == 'mnuTransaksiMasterPilot'}">
+                <a class="nav-link nav-dropdown-toggle" href="#">
+                    <i th:class="${menu.icon_style}" style="width: 25px;"></i> <span th:text="${menu.text}"></span>
+                </a>
+                <ul th:if="${menu.id == 'mnuTransaksiMasterPilot'}" class="nav-dropdown-items">
+                    <li th:each="masterpilot : ${session.masterpilot}" th:if="${masterpilot.root_id != 'mnuTransaksi'}" class="nav-item">
+                        <a class="nav-link" style="font-size: 13px;" th:href="@{${masterpilot.form_id}}">
+                            <i th:class="${masterpilot.icon_style}" style="width: 25px;"></i>
+                            <span th:text="${masterpilot.text}"></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <li class="divider"></li>
         </ul>
     </nav>
 </div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    var message = /*[[${session.master}]]*/ null;
+    console.log("alskdfh",message);
+
+    /*]]>*/
+</script>

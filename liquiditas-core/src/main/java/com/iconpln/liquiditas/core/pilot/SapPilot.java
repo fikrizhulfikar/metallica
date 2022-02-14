@@ -23,13 +23,16 @@ public class SapPilot {
     private static final Logger logger = LoggerFactory.getLogger(SapPilot.class);
 
     @Autowired
+    private Sapmasterpilot sapmasterpilot;
+
+    @Autowired
     private SapPilotService sapPilotService;
 
     private JSONParser parser = new JSONParser();
     private Map<String, String> param = new HashMap<>();
     private Map<String, Object> result = new HashMap<>();
 
-    public Map<String, Object> getInvoice (String pCompanyCode, String pBusArea, String pDocNo, String pFiscYear, String pDatefrom, String pDateTo) throws IOException, URISyntaxException, AltException {
+    public Map<String, Object> getInvoiceOss (String pCompanyCode, String pBusArea, String pDocNo, String pFiscYear, String pDatefrom, String pDateTo) throws IOException, URISyntaxException, AltException {
         String header_data = "";
         String item_data = "";
         Map<String, Object> out = new HashMap<>();
@@ -43,8 +46,7 @@ public class SapPilot {
             param.put("date_from",pDatefrom);
             param.put("date_to",pDateTo);
 
-            Sapmasterpilot sapmasterpilot = new Sapmasterpilot();
-            Map get_result = sapmasterpilot.getDataInvoice(param);
+            Map get_result = sapmasterpilot.getDataInvoiceOSS(param);
 
             JSONObject object = (JSONObject) parser.parse(get_result.get("response").toString());
             if(object.get("ERROR_CODE") == null){
@@ -85,13 +87,12 @@ public class SapPilot {
             param.put("date_to",pDateTo);
             param.put("oss_id",pOssId);
 
-            Sapmasterpilot sapmasterpilot = new Sapmasterpilot();
             Map<String, String> get_result = sapmasterpilot.getInvoiceNonVendor(param);
 
             JSONObject object = (JSONObject) parser.parse(get_result.get("response"));
-            JSONObject xdata =  (JSONObject) parser.parse(object.get("xdata").toString());
-            if(object.get("ERROR_CODE") == null){
-                result.put("status",200);
+
+            if(object.get("xdata") != null){
+                JSONObject xdata =  (JSONObject) parser.parse(object.get("xdata").toString());
                 header_data = (xdata.get("header") != null) ? xdata.get("header").toString() : "";
                 item_data = (xdata.get("item") != null) ? xdata.get("item").toString() : "" ;
             }else if(object.get("ERROR_CODE") != null){
@@ -99,7 +100,7 @@ public class SapPilot {
                 result.put("status_message",object.get("ERROR_MESSAGE").toString());
             }
 //
-            String list = "["+object.get("xdata").toString()+"]";
+            String list = "["+object.toString()+"]";
             out = sapPilotService.insertIntoLogIntegrationSapPilot("PINBUK_OPSUS_PEMVAL",list,header_data,item_data,result.get("status").toString(),param.toString(),get_result.get("url").toString());
             logger.info("insert to clob {} :",out);
         }catch (Exception e){
@@ -126,20 +127,31 @@ public class SapPilot {
             param.put("date_to",pDateTo);
             param.put("oss_id",pOssId);
 
-            Sapmasterpilot sapmasterpilot = new Sapmasterpilot();
             Map<String, String> get_result = sapmasterpilot.getRealisasiInvoice(param);
+            org.json.JSONObject object = new org.json.JSONObject(get_result);
+            Object item = object.get("response");
 
-            JSONArray jsonArray = new JSONArray(get_result.get("response"));
-            if(jsonArray.length() > 0){
-                result.put("status",200);
-                header_data = jsonArray.toString();
-                item_data = "" ;
-            }else {
-                result.put("status",444);
-                result.put("status_message","Unknown Error");
+            if(item instanceof String){
+                if(((String) item).charAt(0) == '['){
+                    JSONArray jsonArray = new JSONArray(item.toString());
+                    if(jsonArray.length() > 0){
+                        result.put("status",200);
+                        header_data = jsonArray.toString();
+                        item_data = "" ;
+                    }else {
+                        result.put("status",444);
+                        result.put("status_message","Unknown Error");
+                    }
+                }else {
+                    org.json.JSONObject jsonObject = new org.json.JSONObject(item.toString());
+                    if(jsonObject.get("ERROR_CODE") != null){
+                        result.put("status",Integer.parseInt(jsonObject.get("ERROR_CODE").toString()));
+                        result.put("status_message",jsonObject.get("ERROR_MESSAGE").toString());
+                    }
+                }
             }
 //
-            String list = jsonArray.toString();
+            String list = "["+get_result.get("response")+"]";
             out = sapPilotService.insertIntoLogIntegrationSapPilot("REALISASI_INVOICE",list,header_data,item_data,result.get("status").toString(),param.toString(),get_result.get("url").toString());
             logger.info("insert to clob {} :",out);
         }catch (Exception e){
@@ -165,7 +177,6 @@ public class SapPilot {
             param.put("date_from",pDatefrom);
             param.put("date_to",pDateTo);
 
-            Sapmasterpilot sapmasterpilot = new Sapmasterpilot();
             Map<String, String> get_result = sapmasterpilot.getApInvoice(param);
 
             JSONObject object = (JSONObject) parser.parse(get_result.get("response"));
@@ -204,7 +215,6 @@ public class SapPilot {
             param.put("date_from",pDatefrom);
             param.put("date_to",pDateTo);
 
-            Sapmasterpilot sapmasterpilot = new Sapmasterpilot();
             Map<String, String> get_result = sapmasterpilot.getHrPayable(param);
 
             JSONObject object = (JSONObject) parser.parse(get_result.get("response"));
@@ -229,17 +239,16 @@ public class SapPilot {
         return result;
     }
 
-    public Map<String, Object> getInvoiceVendorPortal (String pDate) throws IOException, URISyntaxException, AltException {
+    public Map<String, Object> getInvoiceVendorPortal (String pDateFrom, String pDateTo) throws IOException, URISyntaxException, AltException {
         String header_data = "";
         String item_data = "";
         Map<String, Object> out = new HashMap<>();
         result.clear();
         try {
             param.clear();
-            param.put("date",pDate);
+            param.put("dateFrom",pDateFrom);
+            param.put("dateTo",pDateTo);
 
-
-            Sapmasterpilot sapmasterpilot = new Sapmasterpilot();
             Map<String, String> get_result = sapmasterpilot.getInvoiceVendorPortal(param);
 
             JSONObject object = (JSONObject) parser.parse(get_result.get("response"));

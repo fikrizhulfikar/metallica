@@ -2,6 +2,7 @@ package com.iconpln.liquiditas.core.service;
 
 
 import com.iconpln.liquiditas.core.service.AltConfig;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -17,25 +18,33 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.HashMap;
 
-
+@Component
 public class SapHttp {
 
-    private String user;
-    private String password;
-    public static String executeGet(String targetURL) throws URISyntaxException{
+    @Value("${sappilot.username}")
+    private String pilot_username;
+
+    @Value("${sappilot.password}")
+    private String pilot_password;
+
+    public String executeGet(String targetURL) throws URISyntaxException{
         HashMap<String, Object> params = new HashMap<>();
         return executeGet(targetURL, params);
     };
 
-    public static String executeGet(String targetURL, HashMap<String, Object> params) throws URISyntaxException{
+    public String executeGet(String targetURL, HashMap<String, Object> params) throws URISyntaxException{
 
         try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
 
@@ -48,7 +57,7 @@ public class SapHttp {
 
             // add request header
             request.addHeader("User-Agent", "Mozilla/5.0");
-            String userpass = AltConfig.get("sap.username") + ":" + AltConfig.get("sap.password");
+            String userpass = pilot_username + ":" + pilot_password;
             String basicAuth = "Basic " + DatatypeConverter.printBase64Binary(userpass.getBytes());
             request.addHeader("Authorization", basicAuth);
 
@@ -56,7 +65,7 @@ public class SapHttp {
             HttpResponse response = client.execute(request);
 
             System.out.println("\nSending 'GET' request to URL : " + targetURL);
-            System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
+//            System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
 
             BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
@@ -75,12 +84,12 @@ public class SapHttp {
 
     }
 
-    public static String pilotExecuteGet(String targetURL) throws URISyntaxException{
+    public String pilotExecuteGet(String targetURL) throws URISyntaxException{
         HashMap<String, Object> params = new HashMap<>();
         return pilotExecuteGet(targetURL, params);
     };
 
-    public static String pilotExecuteGet(String targetURL, HashMap<String, Object> params) throws URISyntaxException{
+    public String pilotExecuteGet(String targetURL, HashMap<String, Object> params) throws URISyntaxException{
 
         try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
 
@@ -93,7 +102,8 @@ public class SapHttp {
 
             // add request header
             request.addHeader("User-Agent", "Mozilla/5.0");
-            String userpass = AltConfig.get("sappilot.username") + ":" + AltConfig.get("sappilot.password");
+//            String userpass = AltConfig.get("sappilot.username") + ":" + AltConfig.get("sappilot.password");
+            String userpass = pilot_username + ":" + pilot_password;
             String basicAuth = "Basic " + DatatypeConverter.printBase64Binary(userpass.getBytes());
             request.addHeader("Authorization", basicAuth);
 
@@ -101,7 +111,7 @@ public class SapHttp {
             HttpResponse response = client.execute(request);
 
             System.out.println("\nSending 'GET' request to URL : " + targetURL);
-            System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
+//            System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
 
             BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
@@ -120,12 +130,12 @@ public class SapHttp {
 
     }
 
-    public static String executePut(String targetURL) throws URISyntaxException{
+    public String executePut(String targetURL) throws URISyntaxException{
         HashMap<String, Object> params = new HashMap<>();
         return executePut(targetURL, params);
     };
 
-    public static String executePut(String targetURL, HashMap<String, Object> params) throws URISyntaxException{
+    public String executePut(String targetURL, HashMap<String, Object> params) throws URISyntaxException{
 
         try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
 
@@ -181,15 +191,15 @@ public class SapHttp {
 
     }
 
-    public static String pilotExecuteGetVndorPortal(String targetURL) throws URISyntaxException{
+    public String pilotExecuteGetVndorPortal(String targetURL) throws URISyntaxException{
         HashMap<String, Object> params = new HashMap<>();
         return pilotExecuteGetVndorPortal(targetURL, params);
     };
 
-    public static String pilotExecuteGetVndorPortal(String targetURL, HashMap<String, Object> params) throws URISyntaxException{
+    public String pilotExecuteGetVndorPortal(String targetURL, HashMap<String, Object> params) throws URISyntaxException{
 
         try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
-
+            String token = getToken();
             URIBuilder builder = new URIBuilder(targetURL);
             for (HashMap.Entry<String, Object> entry : params.entrySet()) {
                 builder.setParameter(entry.getKey(), (String)entry.getValue());
@@ -199,7 +209,7 @@ public class SapHttp {
 
             // add request header
             request.addHeader("User-Agent", "Mozilla/5.0");
-            String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3VzZXJkYXRhIjoiMTEiLCJ1bmlxdWVfbmFtZSI6InZwX3BhX21ha2VyIiwiVXNlckFnZW50IjoiIiwiSXBBZGRyZXNzIjoiIiwibmJmIjoxNjM1NDkyMzE1LCJleHAiOjE2NDA2NzYzMTUsImlhdCI6MTYzNTQ5MjMxNSwiaXNzIjoiUExOIFZlbmRvciBQb3J0YWwgQXBwcyIsImF1ZCI6IlBMTiBWZW5kb3IgUG9ydGFsIEF1ZGllbmNlIn0.Dv3tUbUTerjUaMhBrXQySYVDg8SeJKm05_el7EufDrE";
+//            String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3VzZXJkYXRhIjoiMyIsInVuaXF1ZV9uYW1lIjoic2FwX3ZpbSIsIlVzZXJBZ2VudCI6IiIsIklwQWRkcmVzcyI6IiIsIm5iZiI6MTY0Mzk1NzUwNiwiZXhwIjoxNjQzOTU4NDA2LCJpYXQiOjE2NDM5NTc1MDYsImlzcyI6IlBMTiBWZW5kb3IgUG9ydGFsIEFwcHMiLCJhdWQiOiJQTE4gVmVuZG9yIFBvcnRhbCBBdWRpZW5jZSJ9.mNW2-P53PnN2mArZ80Y75P6jM0yfCebc5KOoZO4LE_0";
             String tokenAuth = "Bearer " + token;
             request.addHeader("Authorization", tokenAuth);
 
@@ -226,12 +236,12 @@ public class SapHttp {
 
     }
 
-    public static String executeDelete(String targetURL) throws URISyntaxException{
+    public String executeDelete(String targetURL) throws URISyntaxException{
         HashMap<String, Object> params = new HashMap<>();
         return executeDelete(targetURL, params);
     };
 
-    public static String executeDelete(String targetURL, HashMap<String, Object> params) throws URISyntaxException{
+    public String executeDelete(String targetURL, HashMap<String, Object> params) throws URISyntaxException{
 
         try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
 
@@ -272,14 +282,15 @@ public class SapHttp {
     }
 
     // HTTP POST request
-    public static String executePost(String targetURL) throws IOException{
+    public String executePost(String targetURL) throws IOException{
         HashMap<String, Object> params = new HashMap<>();
         return executePost(targetURL, params);
     };
 
-    public static String executePost(String targetURL, HashMap<String, Object> params) throws IOException{
+    public String executePost(String targetURL, HashMap<String, Object> params) throws IOException{
 
         try(CloseableHttpClient client = HttpClientBuilder.create().build()) {
+
 
             HttpPost post = new HttpPost(targetURL);
 
@@ -333,5 +344,33 @@ public class SapHttp {
         }
     }
 
+    public String getToken(){
+        String token = null;
+        BufferedReader httpResponseReader = null;
+        try {
+            // Connect to the web server endpoint
+            URL serverUrl = new URL("https://vendorinvoice.pln.co.id/api/usermanagement/token");
+            HttpURLConnection urlConnection = (HttpURLConnection) serverUrl.openConnection();
 
+            // Set HTTP method as POST
+            urlConnection.setRequestMethod("POST");
+            // Add two header, username and password
+            urlConnection.setRequestProperty("username","sap_vim");
+            urlConnection.setRequestProperty("password","P@ssw0rd123#");
+
+            // Read response from web server, which will trigger HTTP Basic Authentication request to be sent.
+            httpResponseReader =
+                    new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            String lineRead;
+            String result = "";
+            while((lineRead = httpResponseReader.readLine()) != null) {
+                result = lineRead;
+            }
+            JSONObject data = new JSONObject(result);
+            token = data.getJSONObject("data").getString("accessToken");
+        } catch (IOException | JSONException ioe) {
+            ioe.printStackTrace();
+        }
+        return token;
+    }
 }

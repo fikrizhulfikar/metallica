@@ -12,10 +12,11 @@ import java.net.URL;
 
 public class Token {
 
-    private static final String corpay_ip = "10.1.80.210"; // <= production
+//    private static final String corpay_ip = "10.1.80.210"; // <= production
+    private static final String corpay_ip = "10.14.204.15"; // <= dev/local
 
     public static String getToken(){
-        String usernameColonPassword = "CORPAY:C0RP4Y_M3t4LL1C4@2020";
+        String usernameColonPassword = "CORPAY:CORPAY@2019";
         String basicAuthPayload = "Basic " + Base64.encodeBase64String(usernameColonPassword.getBytes());
         String token = null;
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><pdx:document xmlns:pdx="http://www.phpdocx.com/main"><pdx:content><pdx:embedHTML><pdx:data pdx:dataId="" pdx:type="HTML">&lt;![CDATA[&lt;style&gt;
+            ul {color: blue; font-size: 14pt; font-family: Cambria}
+            table {border: 1px solid green}
+            td {font-family: Arial}
+            #redBG {background-color: red; color: #f0f0f0}
+            .firstP {margin-left: 220px}
+            &lt;/style&gt;
+
+            &lt;p class="firstP"&gt;This is a simple paragraph with &lt;strong&gt;text in bold&lt;/strong&gt;.&lt;/p&gt;
+            &lt;p&gt;Now we include a list:&lt;/p&gt;
+            &lt;ul&gt;
+                &lt;li&gt;First item.&lt;/li&gt;
+                &lt;li&gt;Second item with subitems:
+                    &lt;ul&gt;
+                        &lt;li style="color: red"&gt;First subitem.&lt;/li&gt;
+                        &lt;li&gt;Second subitem.&lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/li&gt;
+                &lt;li id="redBG"&gt;Third subitem.&lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;p&gt;And now a table:&lt;/p&gt;
+            &lt;table&gt;
+                &lt;tbody&gt;&lt;tr&gt;
+                    &lt;td style="background-color: #ffff00"&gt;Cell 1 1&lt;/td&gt;
+                    &lt;td&gt;Cell 1 2&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;Cell 2 1&lt;/td&gt;
+                    &lt;td&gt;Cell 2 2&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/tbody&gt;&lt;/table&gt;]]&gt;</pdx:data></pdx:embedHTML></pdx:content></pdx:document>

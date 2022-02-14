@@ -61,12 +61,13 @@ public class RestFilter implements Filter {
             List<Map<String, Object>> menuPlacement = new ArrayList<>();
             List<Map<String, Object>> menuDataPindahBuku = new ArrayList<>();
             List<Map<String, Object>> menuRekapData = new ArrayList<>();
+            List<Map<String, Object>> mnuMasterPilot = new ArrayList<>();
 
             if (menus == null) {
                 httpResponse.sendRedirect("/");
             } else {
                 HttpSession session = httpRequest.getSession();
-
+                System.out.println("Ini Menunya Cok : "+menus.toString());
                 for (int i = 0; i< menus.size(); i++){
                     if(menus.get(i).get("IS_API").toString().equals("0")){
                         if(menus.get(i).get("root_id").equals("mnuTransaksiDerivatif")){
@@ -108,6 +109,9 @@ public class RestFilter implements Filter {
                         if(menus.get(i).get("root_id").equals("mnuTransaksiRekapData")){
                             menuRekapData.add(menus.get(i));
                         }
+                        if(menus.get(i).get("root_id").equals("mnuTransaksiMasterPilot")){
+                            mnuMasterPilot.add(menus.get(i));
+                        }
                     }
                 }
                 session.setAttribute("menus", menus);
@@ -124,6 +128,7 @@ public class RestFilter implements Filter {
                 session.setAttribute("placement", menuPlacement);
                 session.setAttribute("datapindahbuku", menuDataPindahBuku);
                 session.setAttribute("rekap_data", menuRekapData);
+                session.setAttribute("masterpilot", mnuMasterPilot);
 
                 System.out.println("SERVLET SESSION MENU : " + session.getAttribute("menus"));
 

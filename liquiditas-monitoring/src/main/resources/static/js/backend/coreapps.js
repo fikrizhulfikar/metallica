@@ -5,15 +5,13 @@
 var timeHideLoading = 1600;
 var timeSowFormEdit = 1000;
 var nilaiAnggaran = "";
-// var sso_key = 'METALLICA_TEST'; //<= for server dev
-var sso_key = 'METALLICA'; // <= sso for server prod
-// var sso_key = 'METALLICA_DEV'; //<= for localhost
-var sso_url = 'http://10.1.86.13:8070/dms/auth'; // <= prod
-// var sso_url = 'http://10.14.153.156:8070/dms/auth';// <= dev
+
+var sso_key = sso_k;
+var sso_url = sso_u;
 
 function hideLoading(msg) {
     setTimeout(function () {
-        waitingDialog.hide()
+        waitingDialog.hide();
         if (msg != "") {
             alert(msg);
         }

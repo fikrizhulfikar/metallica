@@ -1,5 +1,6 @@
 package com.iconpln.liquiditas.core.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -9,6 +10,8 @@ import java.util.Map;
 
 @Component
 public class Sapmaster {
+    @Autowired
+    SapHttp sapHttp;
     private static final String TAG = Sapmaster.class.getName();
     private String intf = "";
 //    private int xsap_client = 400; // dev
@@ -26,26 +29,26 @@ public String getdatasap(Map<String, Object> param) throws URISyntaxException,IO
 //        String url = AltConfig.get("sap.url_customer");
         String url = AltConfig.get("sap.url")+"?sap-client="+xsap_client+"&interface=IFM079&customer="+param.get("customer")+"&comp_code="+param.get("comp_code")+"&date="+param.get("date");
 //        String url = "http://10.1.6.103:8000/sap/bc/zmetallica_rest?sap_client=400&interface=IFM079&customer=ALL&comp_code=1000&date=20190930";
-        String response = SapHttp.executeGet(url);
+        String response = sapHttp.executeGet(url);
     return response;
 }
 
     public String getDataCustomer(HashMap<String, Object> param) throws URISyntaxException,IOException {
         String url = AltConfig.get("sap.url")+"?sap_client="+xsap_client+"&interface=IFM079&customer="+param.get("customer")+"&comp_code="+param.get("comp_code")+(param.get("date").toString() == null || param.get("date").equals("") ? "":"&date="+param.get("date"));
-        String response = SapHttp.executeGet(url);
+        String response = sapHttp.executeGet(url);
         return response;
     }
 
     public String getDataVendor(HashMap<String, Object> param) throws URISyntaxException,IOException {
         System.out.println("param Date : "+param.get("date"));
         String url = AltConfig.get("sap.url")+"?sap-client="+xsap_client+"&interface=IFM077&vendor="+param.get("vendor")+"&comp_code="+param.get("comp_code")+(param.get("date").toString() == null || param.get("date").equals("") ? "" : "&date="+param.get("date"));
-        String response = SapHttp.executeGet(url);
+        String response = sapHttp.executeGet(url);
         return response;
     }
 
     public String getDataBank(HashMap<String, Object> param) throws URISyntaxException,IOException {
         String url = AltConfig.get("sap.url")+"?sap-client="+xsap_client+"&interface=IFM078&comp_code="+param.get("comp_code")+"&house_bank="+param.get("house_bank")+"&bank_country="+param.get("bank_country")+"&bank_key="+param.get("bank_key");
-        String response = SapHttp.executeGet(url);
+        String response = sapHttp.executeGet(url);
         return response;
     }
 
@@ -60,7 +63,7 @@ public String getdatasap(Map<String, Object> param) throws URISyntaxException,IO
         System.out.println("date_from : "+param.get("date_from"));
         System.out.println("date_to : "+param.get("date_to"));
         String url = AltConfig.get("sap.url")+"?sap-client="+xsap_client+"&interface=IFM082&comp_code="+param.get("comp_code")+"&bus_area="+param.get("bus_area")+"&doc_no="+param.get("doc_no")+"&fiscal_year="+param.get("fiscal_year")+"&date_from="+param.get("date_from")+"&date_to="+param.get("date_to");
-        String response = SapHttp.executeGet(url);
+        String response = sapHttp.executeGet(url);
         result.put("url",url);
         result.put("response",response);
         System.out.println("SAP URL"+url);
@@ -73,7 +76,7 @@ public String getdatasap(Map<String, Object> param) throws URISyntaxException,IO
         Map result = new HashMap();
         String url = AltConfig.get("sap.url")+"?sap-client="+xsap_client+"&interface=IFM081&comp_code="+param.get("comp_code")+"&bus_area="+param.get("bus_area")+"&doc_no="+param.get("doc_no")+"&fiscal_year="+param.get("fiscal_year")+"&date_from="+param.get("date_from")+"&date_to="+param.get("date_to");
         System.out.println("SAP URL"+url);
-        String response = SapHttp.executeGet(url);
+        String response = sapHttp.executeGet(url);
         result.put("url",url);
         result.put("response",response);
         return result;
@@ -82,14 +85,14 @@ public String getdatasap(Map<String, Object> param) throws URISyntaxException,IO
     public  String getDataPayment(HashMap<String, Object> param) throws URISyntaxException,IOException {
         this.intf = "IFM080";
         String url = AltConfig.get("sap.url")+"?sap-client="+xsap_client+"&interface=IFM080&comp_code="+param.get("comp_code")+"&bus_area="+param.get("bus_area")+"&doc_no="+param.get("doc_no")+"&fiscal_year="+param.get("fiscal_year")+"&date_from="+param.get("date_from")+"&date_to="+param.get("date_to");
-        String response = SapHttp.executeGet(url);
+        String response = sapHttp.executeGet(url);
         return response;
     }
 
     public  String getDataHrBillingReceipt(HashMap<String, Object> param) throws URISyntaxException,IOException {
         this.intf = "IFM083";
         String url = AltConfig.get("sap.url")+"?sap-client="+xsap_client+"&interface=IFM083&comp_code="+param.get("comp_code")+"&bus_area="+param.get("bus_area")+"&doc_no="+param.get("doc_no")+"&fiscal_year="+param.get("fiscal_year")+"&date_from="+param.get("date_from")+"&date_to="+param.get("date_to");
-        String response = SapHttp.executeGet(url);
+        String response = sapHttp.executeGet(url);
         return response;
     }
 }

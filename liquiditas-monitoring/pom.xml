@@ -184,10 +184,19 @@
 			</activation>
 		</profile>
 		<profile>
+			<id>testing</id>
+			<properties>
+				<activatedProperties>testing</activatedProperties>
+			</properties>
+		</profile>
+		<profile>
 			<id>production</id>
 			<properties>
 				<activatedProperties>production</activatedProperties>
 			</properties>
+			<activation>
+							<activeByDefault>true</activeByDefault>
+						</activation>
 		</profile>
 	</profiles>
 

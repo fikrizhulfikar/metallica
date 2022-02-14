@@ -376,4 +376,19 @@ public class PageOperatorController {
 
     @RequestMapping("/supply_chain_financing_collateral")
     public String supply_chain_financing_collateral(){return "operator/supply_chain_financing_collateral";}
+
+    @RequestMapping("/aphr_invoice_pilot")
+    public String invoice_hr_ap_pilot (){return "operator/pilot/rekap_invoice_hrap";}
+
+    @RequestMapping("/invoice_vendor_portal")
+    public String invoice_vendor_portal (){return "operator/pilot/rekap_invoice_vendorportal";}
+
+    @RequestMapping("/invoice_nonvendor")
+    public String invoice_non_vendor (){return "operator/pilot/invoice_nonvendor_head";}
+
+    @RequestMapping("/realisasi_invoice_pilot")
+    public String realisasi_invoice_pilot (){return "operator/pilot/rekap_realisasi_invoice";}
+
+    @RequestMapping("/invoice_oss_pilot")
+    public String invoice_oss_pilot (){return "operator/pilot/rekap_invoice_oss";}
 }

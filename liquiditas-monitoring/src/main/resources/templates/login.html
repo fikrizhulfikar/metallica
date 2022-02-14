@@ -69,14 +69,15 @@
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
-                <form class="login100-form validate-form" name="f" th:action="@{/auth}" method="post">
-                    <span class="login100-form-title p-b-48">
+                <span class="login100-form-title p-b-48">
 						<!--<i></i>-->
 					<img src="../static/images/lg-login.png" height="130" width="130"/>
-                    </span>
-                    <span class="login100-form-title p-b-26 login-title" style="margin-top: -25px;">
-						<b style="font-family: 'Segoe UI', sans-serif">L'METALLICA</b>
-					</span>
+                </span>
+                <span class="login100-form-title p-b-26 login-title" style="margin-top: -25px;">
+                    <b style="font-family: 'Segoe UI', sans-serif">L'METALLICA</b>
+                </span>
+                <form th:if="${@environment.getProperty('login.method') == 'basic'}" class="login100-form validate-form" name="f" th:action="@{/auth}" method="post">
+
                     <div align="center" th:if="${param.error}">
                         <p style="color: orangered; margin-bottom: 10px">Invalid username and password.</p>
                     </div>
@@ -95,7 +96,7 @@
                         <span class="focus-input100"></span>
                     </div>
                     <div class="wrap-input100 validate-input">
-                        <div class="g-recaptcha" data-sitekey="6LdSV-YUAAAAABJjM37d95MADY_PzE-2jumlPcU2"></div>
+                        <div class="g-recaptcha" th:attr="data-sitekey=${@environment.getProperty('google.recaptcha.key.site')}"></div>
                     </div>
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
@@ -106,13 +107,17 @@
                         </div>
                     </div>
                 </form>
-<!--                <form action="">-->
-<!--                    <button type="button" style="margin-top: 6px; width: 100%; font-family: 'Segoe UI', sans-serif" onclick="doSso()" class="btn btn-lg btn-primary">LOGIN IAM PLN</button>-->
-<!--                </form>-->
+                <form th:if="${@environment.getProperty('login.method') == 'sso'}" action="">
+                    <button type="button" style="margin-top: 6px; width: 100%; font-family: 'Segoe UI', sans-serif" onclick="doSso()" class="btn btn-lg btn-primary">LOGIN IAM PLN</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
+<script th:inline="javascript">
+   var sso_k = [[${@environment.getProperty('sso.key')}]];
+   var sso_u = [[${@environment.getProperty('sso.url')}]];
+</script>
 <script src="/static/js/jquery-2.2.0.min.js"></script>
 <script src="/static/js/bootstrap.js"></script>
 <script src="/static/js/backend/coreapps.js"></script>

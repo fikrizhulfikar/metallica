@@ -145,8 +145,8 @@ public class SapController {
         }
     }
 
-    @GetMapping(path = "/get_invoice_pilot")
-    public Map<String, Object> getInvoicePilot(
+    @GetMapping(path = "/get_invoice_oss_pilot")
+    public Map<String, Object> getInvoiceOssPilot(
             @RequestParam(value = "pCompanyCode", defaultValue = "") String pCompanyCode,
             @RequestParam(value = "pBusArea", defaultValue = "") String pBusArea,
             @RequestParam(value = "pDocNo", defaultValue = "") String pDocNo,
@@ -157,7 +157,7 @@ public class SapController {
         try {
 //            Map<String, String> param = new HashMap<>();
 
-            Map<String, Object> res = sapPilot.getInvoice(pCompanyCode, pBusArea, pDocNo, pFiscYear, pDatefrom, pDateTo);
+            Map<String, Object> res = sapPilot.getInvoiceOss(pCompanyCode, pBusArea, pDocNo, pFiscYear, pDatefrom, pDateTo);
             // if (((BigDecimal) res.get("return")).equals(BigDecimal.ONE)) {
 
             //  }
@@ -255,10 +255,11 @@ public class SapController {
 
     @GetMapping(path = "/get_invoice_vendor_portal")
     public Map<String, Object> getInvoiceVendorPortal(
-            @RequestParam(value = "pDate", defaultValue = "") String pDate
+            @RequestParam(value = "pStartDate", defaultValue = "") String pStartDate,
+            @RequestParam(value = "pEndDate", defaultValue = "") String pEndDate
     ){
         try {
-            Map<String, Object> res = sapPilot.getInvoiceVendorPortal(pDate);
+            Map<String, Object> res = sapPilot.getInvoiceVendorPortal(pStartDate, pEndDate);
             return res;
         } catch (Exception e) {
             e.printStackTrace();
