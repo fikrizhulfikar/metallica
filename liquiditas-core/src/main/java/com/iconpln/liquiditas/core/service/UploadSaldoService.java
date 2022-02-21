@@ -173,4 +173,18 @@ public class UploadSaldoService {
                 .withFunctionName("xls_imprest_realisasi");
         return simpleJdbcCall.executeFunction(ArrayList.class);
     }
+
+    public List<Map<String, Object>> getAllTransaksiPilot(String date_from, String date_to, String curr, String mtd_byr, String house_bank, String usr_id){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CENTRALIZED_PAYMENT")
+                .withFunctionName("get_invoice_xls");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", date_from, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", date_to, OracleTypes.VARCHAR)
+                .addValue("p_currency", curr, OracleTypes.VARCHAR)
+                .addValue("p_house_bank", mtd_byr, OracleTypes.VARCHAR)
+                .addValue("p_metode_bayar", house_bank, OracleTypes.VARCHAR)
+                .addValue("p_user_id", usr_id, OracleTypes.VARCHAR);
+        return simpleJdbcCall.executeFunction(ArrayList.class,param);
+    }
 }

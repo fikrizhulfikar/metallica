@@ -18,6 +18,25 @@ var srcTglAwal = null;
 var srcTglAkhir = null;
 var addedDays = 2;
 
+
+(function() {
+    $('#date_from').datepicker({dateFormat: 'dd/mm/yy'});
+    $('#date_to').attr("disabled", "disabled");
+    setSelectFilterBank("cmb_bank", "FILTER", "", "", "REKAP");
+})();
+
+$("#date_from").change(function () {
+    var tglAwalData = $('#date_from').val();
+    if (tglAwalData == "") {
+        //alert("Tanggal awal belum di tentukan");
+        $('#date_to').val("");
+    } else {
+        $('#date_to').attr("disabled", false);
+        $('#date_to').datepicker({dateFormat: 'dd/mm/yy', minDate: tglAwalData});
+    }
+});
+
+
 function upload_server_xls() {
     showLoadingCss();
     var form = $('form')[0];
@@ -103,4 +122,12 @@ function cetakRencanaImprest(){
 
 function cetakRealisasiImprest(){
     window.open(baseUrl + "api_master/upload_saldo_bank/cetak_realisasi_imprest");
+}
+
+function cetakAllInvoicePilot(){
+    let date_from = document.querySelector("#date_from").value;
+    let date_to = document.querySelector("#date_to").value;
+    console.log(date_from);
+    console.log(date_to);
+    window.open(baseUrl + "api_master/upload_saldo_bank/cetak_all_invoice_pilot/xls/" + date_from.replaceAll("/","-") + "/" + date_to.replaceAll("/","-") + "/" + $("#cmb_currency").val() + "/" + $("#cmb_cara_pembayaran").val() + "/" + $("#cmb_bank").val());
 }

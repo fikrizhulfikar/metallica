@@ -84,9 +84,86 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><h5>Cetak All Invoice Pilot</h5></div>
+                    <div class="panel-body">
+                        <button class="btn btn-success" data-toggle="modal" data-target="#modal_options" >Cetak <i class="fas fa-file-excel"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal_options">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="date_from">Date From:</label>
+                        <input type="text" class="form-control" id="date_from" required="required"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="date_to">Date To</label>
+                        <input type="text" class="form-control" id="date_to" required="required"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="cmb_cara_pembayaran" class="label">Metode Bayar</label>
+                        <select name="carabayar" id="cmb_cara_pembayaran" class="form-control">
+                            <option value="ALL">SEMUA METODE BAYAR</option>
+                            <option value="GIRO">GIRO</option>
+                            <option value="INTERNETBANKING">INTERNET BANKING</option>
+                            <option value="INHOUSE">IN HOUSE</option>
+                            <option value="ONLINETRANSFER">ONLINE TRANSFER</option>
+                            <option value="RTGS">RTGS</option>
+                            <option value="KLIRING">KLIRING</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="padding-right: 0px;">
+                        <label for="cmb_currency"><span style="color: red;">*</span>&nbsp; Currency :</label>
+                        <select name="currency" id="cmb_currency" class="form-control">
+                            <option value="ALL">SELURUH MATA UANG</option>
+                            <option value="AUD">AUD</option>
+                            <option value="CHF">CHF</option>
+                            <option value="EUR">EUR</option>
+                            <option value="GBP">GBP</option>
+                            <option value="IDR">IDR</option>
+                            <option value="JPY">JPY</option>
+                            <option value="MYR">MYR</option>
+                            <option value="SGD">SGD</option>
+                            <option value="THB">THB</option>
+                            <option value="USD">USD</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="padding-right: 0px;">
+                        <label for="cmb_bank" class="label">House Bank</label>
+                        <select name="bank" id="cmb_bank" class="form-control">
+                            <option value="">Pilih Data</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="cetakAllInvoicePilot()" class="btn btn-primary">Print</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
     </div>
 </main>
+
+
+
+
 <div th:fragment="scripts-backend">
     <script src="/static/js/backend/controller/uploadSaldoBank.js"></script>
     <!--<script src="static/js/jquery.mask.min.js"></script>-->
