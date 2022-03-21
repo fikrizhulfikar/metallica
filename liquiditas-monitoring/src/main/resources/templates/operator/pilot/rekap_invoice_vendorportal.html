@@ -569,34 +569,29 @@
         <div class="animated fadeIn">
             <div id="filter">
                 <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;">
-                    <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Tanggal Awal </label>
+                    <div class="col-md-4 form-group" style="padding-right: 0px;">
+                        <label class="lbl-src">Tanggal Rencana Bayar </label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input placeholder="Dari.." type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal"/>
+                            </div>
+                            <div class="col-md-6" style="padding-left: 0px !important;">
+                                <input placeholder="Ke.." type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal"/>
-                    </div>
-                    <div class="col-md-1" style="padding-right: 0px;">
-                        <label class="lbl-src">Tanggal Akhir </label>
-                    </div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <input type="text" style="border-radius: 5px" class="form-control" id="tanggal_akhir"/>
-                    </div>
-                    <div class="col-md-1" style="padding-right: 0px;">
+
+                    <div class="col-md-2 form-group" style="padding-right: 0px;">
                         <label class="lbl-src">House Bank </label>
-                    </div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="bank" id="cmb_bank" class="form-control">
-                            <option value="">Pilih Data</option>
+                        <select name="bank" id="cmb_bank" class="form-control select2" style="border-radius: 5px !important; font-size: 0.8rem !important;">
+
                         </select>
                     </div>
-                </div>
-                <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;padding-top: 15px;">
-                    <div class="col-md-1" style="padding-right: 0px;">
+
+                    <div class="col-md-2 form-group" style="padding-right: 0px;">
                         <label class="lbl-src">Currency Bayar</label>
-                    </div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="bacurrecnynk" id="cmb_currecny" class="form-control">
-                            <option value="ALL">SELURUH MATA UANG</option>
+                        <select name="bacurrecnynk" id="cmb_currecny" class="form-control select2" style="border-radius: 5px !important; font-size: 0.72rem !important;">
+                            <option value="ALL">SEMUA CURRENCY</option>
                             <option value="AUD">AUD</option>
                             <option value="CHF">CHF</option>
                             <option value="EUR">EUR</option>
@@ -609,12 +604,11 @@
                             <option value="USD">USD</option>
                         </select>
                     </div>
-                    <div class="col-md-1" style="padding-right: 0px;">
+
+                    <div class="col-md-2 form-group" style="padding-right: 0px;">
                         <label class="lbl-src">Metode Bayar</label>
-                    </div>
-                    <div class="col-md-3" style="padding-right: 0px;">
-                        <select name="carabayar" id="cmb_cara_pembayaran" class="form-control">
-                            <option value="ALL">SEMUA METODE BAYAR</option>
+                        <select name="carabayar" id="cmb_cara_pembayaran" class="form-control select2" style="border-radius: 5px !important; font-size: 0.8rem">
+                            <option value="ALL">SEMUA METODE</option>
                             <option value="GIRO">GIRO</option>
                             <option value="INTERNETBANKING">INTERNET BANKING</option>
                             <option value="INHOUSE">IN HOUSE</option>
@@ -623,8 +617,8 @@
                             <option value="KLIRING">KLIRING</option>
                         </select>
                     </div>
-                    <div class="col-md-1" style="padding-right: 0px;">&nbsp;</div>
-                    <div class="col-md-3" style="padding-right: 0px;">
+                    <div class="col-md-2 form-group" style="padding-right: 0px;">
+                        <label style="visibility: hidden">Label Submit</label>
                         <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
                     </div>
                 </div>
@@ -659,8 +653,6 @@
                                 <th>SKKT NO</th>
                                 <th>SKKT DATE</th>
                                 <th>WORK DEFINITION</th>
-                                <th>AKSI</th>
-                                <th id="forcbparent"></th>
                             </tr>
                             </thead>
                             <tbody style="font-size: 12px">
