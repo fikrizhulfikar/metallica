@@ -106,7 +106,7 @@
                 <db.username>CORPAY</db.username>
                 <db.password>corpay</db.password>
                 <vp.url>http://vendorinvoice.pln.co.id/api/</vp.url>
-                <sappilot.url>http://10.1.6.32:8000/sap/bc</sappilot.url>
+                <sappilot.url>http://10.1.6.101:8000/sap/bc</sappilot.url>
                 <sappilot.username>METALICA_SAP</sappilot.username>
                 <sappilot.password>SAPus3r#</sappilot.password>
                 <xsap_client>100</xsap_client>
