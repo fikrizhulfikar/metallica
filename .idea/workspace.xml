@@ -5,72 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b07dde86-94cb-4949-bd9e-5eca4dcbff87" name="Default Changelist" comment="Log">
-      <change afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/pilot/InvoicePilotService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/pilot/InvoicePilotController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/invoiceNonVendor.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapInvoiceHrAp.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapInvoiceOss.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapInvoiceVendorPortal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapRelaisasiInvoice.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/bower.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/daterangepicker.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/daterangepicker.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/demo.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/drp.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/example/amd/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/example/amd/main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/example/amd/require.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/example/browserify/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/example/browserify/bundle.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/example/browserify/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/example/browserify/main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/moment.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/package.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/website/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/website/website.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/new-backend/node_modules/daterangepicker-master/website/website.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/invoice_nonvendor_head.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_invoice_hrap.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_invoice_oss.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_invoice_vendorportal.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_realisasi_invoice.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/report/template_invoice_oss_pilot.xls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/report/template_realisasi_invoice_pilot.xls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/report/template_vendor_invoice_portal.xls" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/embedHTML/sample_1/content.xml" beforeDir="false" afterPath="$PROJECT_DIR$/drivers/xmldocx/samples/Core/embedHTML/sample_1/content.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/pilot/SapPilot.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/pilot/SapPilot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/pilot/Sapmasterpilot.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/pilot/Sapmasterpilot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/SapHttp.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/SapHttp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/Sapmaster.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/Sapmaster.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/Token.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/xmldoc/XmlDocx.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/xmldoc/XmlDocx.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/resources/config/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/resources/config/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/ApplicationMonitoring.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/ApplicationMonitoring.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/PageOperatorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/PageOperatorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/SapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/operator/SapController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/filter/RestFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/filter/RestFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/task/EmailTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/task/EmailTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/utils/EmailUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/utils/EmailUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application-production.properties" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application-production.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/pilot/InvoicePilotService.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/pilot/InvoicePilotService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/UploadSaldoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-core/src/main/java/com/iconpln/liquiditas/core/service/UploadSaldoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/pilot/InvoicePilotController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/pilot/InvoicePilotController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/saldo/UploadSaldoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/saldo/UploadSaldoController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application-testing.properties" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application-testing.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapRealisasiPembayaran.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/rekapRealisasiPembayaran.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/coreapps.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/coreapps.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/master/invoice_pilot.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/master/invoice_pilot.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/master/invoice_vendor_portal.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/master/invoice_vendor_portal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/master/master_invoice_vendor_portal.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/master/master_invoice_vendor_portal.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/master_invoice_pilot.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/master_invoice_pilot.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/shared/new-layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/shared/new-layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/shared/new-menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/shared/new-menu.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/test/java/com/iconpln/liquiditas/monitoring/Test02.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/test/java/com/iconpln/liquiditas/monitoring/Test02.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploadcorpay/temp/cetak_bukti_kas_202101270000013667.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/invoiceNonVendor.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/invoiceNonVendor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapInvoiceHrAp.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapInvoiceHrAp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapInvoiceOss.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapInvoiceOss.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapInvoiceVendorPortal.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapInvoiceVendorPortal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapRelaisasiInvoice.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapRelaisasiInvoice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/invoice_nonvendor_head.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/invoice_nonvendor_head.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_invoice_hrap.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_invoice_hrap.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_invoice_oss.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_invoice_oss.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_invoice_vendorportal.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_invoice_vendorportal.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_realisasi_invoice.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_realisasi_invoice.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/report/rekap_semua_invoice_pilot.xls" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/report/template_hrap_invoice_pilot.xls" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -144,7 +99,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/report" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -153,11 +108,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Kerjaan\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\report" />
       <recent name="D:\Kerjaan\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\backend\controller\pilot" />
       <recent name="D:\Kerjaan\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\operator\pilot" />
       <recent name="D:\Kerjaan\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\new-backend\node_modules" />
       <recent name="D:\Kerjaan\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\static\js\backend\master" />
-      <recent name="D:\Kerjaan\Metalica-Corpay\application\Metallica\METALICA\liquiditas\liquiditas-monitoring\src\main\resources\templates\operator\master" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -265,7 +220,21 @@
       <workItem from="1644359343678" duration="17318000" />
       <workItem from="1644481313341" duration="4109000" />
       <workItem from="1644539741107" duration="4430000" />
-      <workItem from="1644804710498" duration="17314000" />
+      <workItem from="1644804710498" duration="19988000" />
+      <workItem from="1644909488417" duration="717000" />
+      <workItem from="1644996767814" duration="1207000" />
+      <workItem from="1645059720861" duration="870000" />
+      <workItem from="1645404321091" duration="21913000" />
+      <workItem from="1645578697904" duration="1188000" />
+      <workItem from="1645667461149" duration="3058000" />
+      <workItem from="1645966802813" duration="17247000" />
+      <workItem from="1646032952161" duration="17036000" />
+      <workItem from="1646096700888" duration="5457000" />
+      <workItem from="1646181383367" duration="39000" />
+      <workItem from="1646709723546" duration="2469000" />
+      <workItem from="1646866905402" duration="2212000" />
+      <workItem from="1647481942295" duration="1059000" />
+      <workItem from="1647500912823" duration="1104000" />
     </task>
     <task id="LOCAL-00001" summary="Updated">
       <created>1591845393081</created>
@@ -575,7 +544,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641282707219</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="menambahkan fungsi cetak all invoice pilot">
+      <created>1645428456692</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1645428456692</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -596,7 +572,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Menambahkan file js untuk project Pilot Metalica" />
     <MESSAGE value="Update template" />
     <MESSAGE value="Update logo bank mandiri" />
     <MESSAGE value="disable unused dependency" />
@@ -621,6 +596,7 @@
     <MESSAGE value="Update" />
     <MESSAGE value="Disable dependency" />
     <MESSAGE value="add" />
-    <option name="LAST_COMMIT_MESSAGE" value="add" />
+    <MESSAGE value="menambahkan fungsi cetak all invoice pilot" />
+    <option name="LAST_COMMIT_MESSAGE" value="menambahkan fungsi cetak all invoice pilot" />
   </component>
 </project>
