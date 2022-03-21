@@ -17,24 +17,42 @@ var table_data_length;
 var status_tracking;
 
 $(document).ready(function () {
-    initDataTable();
-    $('#tanggal_awal').datepicker({dateFormat: 'yymmdd'});
-    $('#tanggal_akhir').attr("disabled", "disabled");
-    $('#tanggal_akhir').datepicker({dateFormat: 'yymmdd'});
-    setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+    let dt = $('#tanggal_akhir').datepicker({
+        dateFormat: 'dd/mm/yy',
+        onSelect : (dateTo) => {
+            srcTglAkhir = dateTo;
+        },
+        disabled:true
+    });
 
-    $('input[name="dates"]').daterangepicker();
-});
+    $(".select2").select2({
+        width:"100%",
+        theme : "bootstrap",
+    });
 
-$("#tanggal_awal").change(function () {
-    var tglAwalData = $('#tanggal_awal').val();
-    if (tglAwalData == "") {
-        // alert("Tanggal awal belum di tentukan");
-        $('#tanggal_akhir').val("");
-    } else {
-        $('#tanggal_akhir').attr('disabled', false);
-        $('#tanggal_akhir').datepicker({dateFormat: 'yymmdd', minDate: tglAwalData});
-    }
+    $('#tanggal_awal').datepicker({
+        dateFormat: 'dd/mm/yy',
+        onSelect : (dateFrom) => {
+            srcTglAwal = dateFrom;
+            $('#tanggal_akhir').attr("readonly", false);
+            $('#tanggal_akhir').attr("required", true);
+            dt.datepicker("option","minDate",dateFrom);
+            dt.datepicker("option","disabled",false);
+        }
+    });
+    $('#tanggal_akhir').attr("readonly", "readonly");
+    search("load");
+    setSelectFilterBank("cmb_bank", "FILTER", "ALL", "", "REKAP");
+    // setSelectMetodeBayar("cmb_cara_pembayaran", "FILTER", "", "", "REKAP");
+    // setSelectCurr("cmb_currecny", "FILTER", "", "REKAP");
+
+    $('#check_all').change(function() {
+        if($(this).is(':checked')){
+            checkAllColumn(true);
+        } else {
+            checkAllColumn(false);
+        }
+    });
 });
 
 function getbyId(id) {
@@ -434,7 +452,7 @@ function isBalance(val){
     }else return val.debit - val.kredit === 0;
 }
 
-function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
+function initDataTable(pTglAwal, pTglAkhir,  pCurrency, jenisdok) {
     showLoadingCss();
     $('#table-rekapitulasi tbody').empty();
     $('#table-rekapitulasi').dataTable().fnDestroy();
@@ -885,8 +903,7 @@ function initDataTable(pTglAwal, pTglAkhir,  pCurrency, statusTracking) {
                             pTglAwal: pTglAwal,
                             pTglAkhir: pTglAkhir,
                             pCurrency: pCurrency,
-                            status: $("#cmb_status").val(),
-                            statusTracking: statusTracking
+                            pJenisDok: jenisdok
                         }
                     ,
                     "dataSrc":
@@ -1363,10 +1380,10 @@ function search(state) {
     if ($("#tanggal_akhir").val() == "" && state != "load" && $("#tanggal_awal").val() != "") {
         alert("Mohon Lengkapi Tgl Akhir");
     } else {
-        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_currecny").val())
-        getAllData()
-        srcTglAwal = $("#tanggal_awal").val()
-        srcTglAkhir = $("#tanggal_akhir").val()
+        initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_currecny").val(),$("#cmb_jenisdok").val());
+
+        srcTglAwal = moment().format("DD/MM/YYYY");
+        srcTglAkhir = moment().format("DD/MM/YYYY");
     }
 }
 

@@ -3,13 +3,18 @@ package com.iconpln.liquiditas.monitoring.controller.pilot;
 import com.iconpln.liquiditas.core.pilot.InvoicePilotService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
+import net.sf.jxls.transformer.XLSTransformer;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -399,5 +404,398 @@ public class InvoicePilotController {
             mapData.put("recordsFiltered", new BigDecimal(list.get(0).get("TOTAL_COUNT").toString()));
         }
         return mapData;
+    }
+
+    @RequestMapping(path = "/xls/invoice/{pDateFrom}/{pDateTo}/{pCurrency}/{pCarabayar}/{pHouseBank}")
+    public String cetakHrApnvoicePilot(
+            @PathVariable String pDateFrom,
+            @PathVariable String pDateTo,
+            @PathVariable String pCurrency,
+            @PathVariable String pCarabayar,
+            @PathVariable String pHouseBank,
+            HttpServletRequest request, HttpServletResponse response){
+        try {
+            String title = "Rekap HR/AP Invoice";
+            String fileName = "Rekap HRAP Invoice.xls";
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposistion","attachment; filename=\""+fileName+"\"");
+            List<Map<String, Object>> listData = pilotService.getHrApInvoicePilotXls(pDateFrom.replace("-","/"), pDateTo.replace("-","/"), pCurrency, pCarabayar, pHouseBank, WebUtils.getUsernameLogin());
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+            param.put("TITLE", title);
+            int no = 0;
+            for(Map data : listData){
+                Map paramDetail = new HashMap();
+                paramDetail.put("NO", no++);
+                paramDetail.put("KET", data.get("KET").toString().replace("_"," "));
+                paramDetail.put("COMP_CODE", data.get("COMP_CODE"));
+                paramDetail.put("DOC_NO", data.get("DOC_NO"));
+                paramDetail.put("FISC_YEAR", data.get("FISC_YEAR"));
+                paramDetail.put("DOC_TYPE", data.get("DOC_TYPE"));
+                paramDetail.put("DOC_DATE", data.get("DOC_DATE"));
+                paramDetail.put("DOC_DATE2", data.get("DOC_DATE2"));
+                paramDetail.put("POST_DATE", data.get("POST_DATE"));
+                paramDetail.put("POST_DATE2", data.get("POST_DATE2"));
+                paramDetail.put("ENTRY_DATE", data.get("ENTRY_DATE"));
+                paramDetail.put("ENTRY_DATE2", data.get("ENTRY_DATE2"));
+                paramDetail.put("DOC_HDR_TXT", data.get("DOC_HDR_TXT"));
+                paramDetail.put("CURRENCY", data.get("CURRENCY"));
+                paramDetail.put("EXCH_RATE", data.get("EXCH_RATE"));
+                paramDetail.put("PMT_IND", data.get("PMT_IND"));
+                paramDetail.put("TRANS_TYPE", data.get("TRANS_TYPE"));
+                paramDetail.put("SPREAD_VAL", data.get("SPREAD_VAL"));
+                paramDetail.put("LINE_ITEM", data.get("LINE_ITEM"));
+                paramDetail.put("BUS_AREA", data.get("BUS_AREA"));
+                paramDetail.put("BUS_AREA_PAYMENT", data.get("BUS_AREA_PAYMENT"));
+                paramDetail.put("AMT_LC", data.get("AMT_LC"));
+                paramDetail.put("AMT_TC", data.get("AMT_TC"));
+                paramDetail.put("AMT_WITH_BASE_TC", data.get("AMT_WITH_BASE_TC"));
+                paramDetail.put("AMT_WITH_TC", data.get("AMT_WITH_TC"));
+                paramDetail.put("AMOUNT", data.get("AMOUNT"));
+                paramDetail.put("ASSIGNMENT", data.get("ASSIGNMENT"));
+                paramDetail.put("ITEM_TEXT", data.get("ITEM_TEXT"));
+                paramDetail.put("CUSTOMER", data.get("CUSTOMER"));
+                paramDetail.put("CUSTOMER_NAME", data.get("CUSTOMER_NAME"));
+                paramDetail.put("VENDOR", data.get("VENDOR"));
+                paramDetail.put("ID_VENDOR_DASH", data.get("ID_VENDOR_DASH"));
+                paramDetail.put("VENDOR_NAME", data.get("VENDOR_NAME"));
+                paramDetail.put("PMT_BLOCK", data.get("PMT_BLOCK"));
+                paramDetail.put("HOUSE_BANK", data.get("HOUSE_BANK"));
+                paramDetail.put("PRTNR_BANK_TYPE", data.get("PRTNR_BANK_TYPE"));
+                paramDetail.put("BANK_KEY", data.get("BANK_KEY"));
+                paramDetail.put("BANK_ACCOUNT", data.get("BANK_ACCOUNT"));
+                paramDetail.put("ACCOUNT_HOLDER", data.get("ACCOUNT_HOLDER"));
+                paramDetail.put("CASH_CODE", data.get("CASH_CODE"));
+                paramDetail.put("NAMA_CASH_CODE", data.get("NAMA_CASH_CODE"));
+                paramDetail.put("AMT_WITH_BASE_LC", data.get("AMT_WITH_BASE_LC"));
+                paramDetail.put("AMT_WITH_LC", data.get("AMT_WITH_LC"));
+                paramDetail.put("DR_CR_IND", data.get("DR_CR_IND"));
+                paramDetail.put("CORP_PMT", data.get("CORP_PMT"));
+                paramDetail.put("MAKER", data.get("MAKER"));
+                paramDetail.put("CHECKER", data.get("CHECKER"));
+                paramDetail.put("APPROVER", data.get("APPROVER"));
+                paramDetail.put("COUNTER", data.get("COUNTER"));
+                paramDetail.put("NO_REK_HOUSE_BANK", data.get("NO_REK_HOUSE_BANK"));
+                paramDetail.put("OSS_ID", data.get("OSS_ID"));
+                paramDetail.put("GROUP_ID", data.get("GROUP_ID"));
+                paramDetail.put("SUMBER_DANA", data.get("SUMBER_DANA"));
+                paramDetail.put("TGL_RENCANA_BAYAR", data.get("TGL_RENCANA_BAYAR"));
+                paramDetail.put("BANK_BYR", data.get("BANK_BYR"));
+                paramDetail.put("BANK_BYR2", data.get("BANK_BYR2"));
+                paramDetail.put("CURR_BAYAR", data.get("CURR_BAYAR"));
+                paramDetail.put("PARTIAL_IND", data.get("PARTIAL_IND"));
+                paramDetail.put("AMOUNT_BAYAR", data.get("AMOUNT_BAYAR"));
+                paramDetail.put("BANK_BENEF", data.get("BANK_BENEF"));
+                paramDetail.put("NO_REK_BENEF", data.get("NO_REK_BENEF"));
+                paramDetail.put("NAMA_BENEF", data.get("NAMA_BENEF"));
+                paramDetail.put("VERIFIED_BY", data.get("VERIFIED_BY"));
+                paramDetail.put("VERIFIED_ON", data.get("VERIFIED_ON"));
+                paramDetail.put("TGL_TAGIHAN_DITERIMA", data.get("TGL_TAGIHAN_DITERIMA"));
+                paramDetail.put("NOMINAL_DI_BAYAR", data.get("NOMINAL_DI_BAYAR"));
+                paramDetail.put("GROUP_ID_SAP", data.get("GROUP_ID_SAP"));
+                paramDetail.put("EQ_IDR", data.get("EQ_IDR"));
+                paramDetail.put("ASSIGNMENT_DEPAN", data.get("ASSIGNMENT_DEPAN"));
+                paramDetail.put("HARI_KERJA", data.get("HARI_KERJA"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/template_hrap_invoice_pilot.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            System.out.println("List Data Excel All Pilot: "+listData);
+            return null;
+        } catch (IOException | InvalidFormatException e) {
+            e.printStackTrace();
+            return "Gagal melakukan export data"+ e.getMessage();
+        }
+    }
+
+    @RequestMapping(value = "/xls/nonvip/{dateFrom}/{dateTo}/{docNo}/{pCompCode}/{pFiscYear}", method = RequestMethod.GET)
+    public String exportBni(
+            @PathVariable String docNo,
+            @PathVariable String pCompCode,
+            @PathVariable String pFiscYear,
+            @PathVariable String dateFrom,
+            @PathVariable String dateTo,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
+            String title = "REKAP Invoice Non Vendor";
+            String namaFile = "rekap_invoice_non_vendor_pilot.xls";
+
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
+
+            List<Map<String, Object>> listData = pilotService.getXlsInvoiceNonVendor(dateFrom, dateTo, WebUtils.getUsernameLogin(),docNo,pCompCode, pFiscYear);
+
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+            System.out.println("List_Excel_data : "+listData.toString());
+
+            param.put("TITLE", title);
+            for (Map data : listData) {
+                Map paramDetail = new HashMap();
+                paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
+                paramDetail.put("DOC_NO",data.get("DOC_NO"));
+                paramDetail.put("COMP_CODE",data.get("COMP_CODE"));
+                paramDetail.put("FISC_YEAR",data.get("FISC_YEAR"));
+                paramDetail.put("CODE",data.get("CODE"));
+                paramDetail.put("REFNUMBER",data.get("REFNUMBER"));
+                paramDetail.put("VALUEDATE",data.get("VALUEDATE"));
+                paramDetail.put("CURRENCY",data.get("CURRENCY"));
+                paramDetail.put("AMOUNT",data.get("AMOUNT"));
+                paramDetail.put("ORDERINGPARTYNAME",data.get("ORDERINGPARTYNAME"));
+                paramDetail.put("ORDERINGPARTYAC",data.get("ORDERINGPARTYAC"));
+                paramDetail.put("SPAREFIELD1",data.get("SPAREFIELD1"));
+                paramDetail.put("SPECIALRATECODE",data.get("SPECIALRATECODE"));
+                paramDetail.put("RTGSFLAG",data.get("RTGSFLAG"));
+                paramDetail.put("SPAREFIELD2",data.get("SPAREFIELD2"));
+                paramDetail.put("SPAREFIELD3",data.get("SPAREFIELD3"));
+                paramDetail.put("BENEFBANKCODE",data.get("BENEFBANKCODE"));
+                paramDetail.put("BENEFBANKNAME",data.get("BENEFBANKNAME"));
+                paramDetail.put("BENEFBANKADD1",data.get("BENEFBANKADD1"));
+                paramDetail.put("BENEFBANKADD2",data.get("BENEFBANKADD2"));
+                paramDetail.put("BENEFACNO",data.get("BENEFACNO"));
+                paramDetail.put("BENEFNAME",data.get("BENEFNAME"));
+                paramDetail.put("REMARK1",data.get("REMARK1"));
+                paramDetail.put("REMARK2",data.get("REMARK2"));
+                paramDetail.put("CHARGES",data.get("CHARGES"));
+                paramDetail.put("EMAILBENEF",data.get("EMAILBENEF"));
+                paramDetail.put("MOBILENO",data.get("MOBILENO"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/template_rekap_cms_bni.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Gagal Export Data :" + e.getMessage();
+        }
+    }
+
+    @RequestMapping(value = "/xls/oss/{pDateFrom}/{pDateTo}/{pBank}/{pCurrency}", method = RequestMethod.GET)
+    public String exportInvoiceOssPilot(
+            @PathVariable String pDateFrom,
+            @PathVariable String pDateTo,
+            @PathVariable String pBank,
+            @PathVariable String pCurrency,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
+            String title = "REKAP Invoice Oss Pilot";
+            String namaFile = "rekap_invoice_oss_pilot.xls";
+
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
+
+            List<Map<String, Object>> listData = pilotService.getInvoiceOssXls(pDateFrom.replace("-","/"), pDateTo.replace("-","/"), pBank, pCurrency, WebUtils.getUsernameLogin());
+
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+            System.out.println("List_Excel_data : "+listData.toString());
+
+            param.put("TITLE", title);
+            for (Map data : listData) {
+                Map paramDetail = new HashMap();
+                paramDetail.put("NO", data.get("ROW_NUMBER"));
+                paramDetail.put("COMP_CODE", data.get("COMP_CODE"));
+                paramDetail.put("DOC_NO", data.get("DOC_NO"));
+                paramDetail.put("FISC_YEAR", data.get("FISC_YEAR"));
+                paramDetail.put("BUS_AREA", data.get("BUS_AREA"));
+                paramDetail.put("DOC_TYPE", data.get("DOC_TYPE"));
+                paramDetail.put("DOC_DATE", data.get("DOC_DATE"));
+                paramDetail.put("POST_DATE", data.get("POST_DATE"));
+                paramDetail.put("ENTRY_DATE", data.get("ENTRY_DATE"));
+                paramDetail.put("DOC_HDR_TXT", data.get("DOC_HDR_TXT"));
+                paramDetail.put("CURRENCY", data.get("CURRENCY"));
+                paramDetail.put("EXCH_RATE", data.get("EXCH_RATE"));
+                paramDetail.put("TRANS_TYPE", data.get("TRANS_TYPE"));
+                paramDetail.put("OSS_ID", data.get("OSS_ID"));
+                paramDetail.put("SUMBER_DANA", data.get("SUMBER_DANA"));
+                paramDetail.put("TGL_RENCANA_BYR", data.get("TGL_RENCANA_BYR"));
+                paramDetail.put("BANK_BYR", data.get("BANK_BYR"));
+                paramDetail.put("CURR_BAYAR", data.get("CURR_BAYAR"));
+                paramDetail.put("BANK_BENEF", data.get("BANK_BENEF"));
+                paramDetail.put("NO_REK_BENEF", data.get("NO_REK_BENEF"));
+                paramDetail.put("NAMA_BENEF", data.get("NAMA_BENEF"));
+                paramDetail.put("JENIS_BAYAR", data.get("JENIS_BAYAR"));
+                paramDetail.put("JENIS_DOC", data.get("JENIS_DOC"));
+                paramDetail.put("NAMA_UNIT", data.get("NAMA_UNIT"));
+                paramDetail.put("TGL_TERIMA_INVOICE", data.get("TGL_TERIMA_INVOICE"));
+                paramDetail.put("INPUT_BY", data.get("INPUT_BY"));
+                paramDetail.put("LINE_NO", data.get("LINE_NO"));
+                paramDetail.put("AMT_LC", data.get("AMT_LC"));
+                paramDetail.put("AMT_TC", data.get("AMT_TC"));
+                paramDetail.put("AMT_WITH_BASE_LC", data.get("AMT_WITH_BASE_LC"));
+                paramDetail.put("AMT_WITH_LC", data.get("AMT_WITH_LC"));
+                paramDetail.put("AMT_WITH_BASE_TC", data.get("AMT_WITH_BASE_TC"));
+                paramDetail.put("AMT_WITH_TC", data.get("AMT_WITH_TC"));
+                paramDetail.put("ASSIGNMENT", data.get("ASSIGNMENT"));
+                paramDetail.put("ITEM_TEXT", data.get("ITEM_TEXT"));
+                paramDetail.put("CUSTOMER", data.get("CUSTOMER"));
+                paramDetail.put("CUSTOMER_NAME", data.get("CUSTOMER_NAME"));
+                paramDetail.put("VENDOR", data.get("VENDOR"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/template_invoice_oss_pilot.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Gagal Export Data :" + e.getMessage();
+        }
+    }
+
+    @RequestMapping(value = "/xls/vip/{pDateFrom}/{pDateTo}/{pBank}/{pCurrency}", method = RequestMethod.GET)
+    public String exportVendorPortalInvoice(
+            @PathVariable String pDateFrom,
+            @PathVariable String pDateTo,
+            @PathVariable String pBank,
+            @PathVariable String pCurrency,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
+            String title = "Rekap Vendor Invoice Portal";
+            String namaFile = "rekap_vendor_invoice_portal.xls";
+
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
+
+            List<Map<String, Object>> listData = pilotService.getListInvoiceVendorPortal(1,100000,pDateFrom, pDateTo,pBank,pCurrency,WebUtils.getUsernameLogin(),"","","");
+
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+            System.out.println("List_Excel_data_vip : "+listData.toString());
+
+            param.put("TITLE", title);
+            for (Map data : listData) {
+                Map paramDetail = new HashMap();
+                paramDetail.put("KET", data.get("KET"));
+                paramDetail.put("SUBMISSION_ID", data.get("SUBMISSION_ID"));
+                paramDetail.put("INVOICE_TYPE", data.get("INVOICE_TYPE"));
+                paramDetail.put("TRANSACTION_TYPE", data.get("TRANSACTION_TYPE"));
+                paramDetail.put("DOCUMENT_TYPE", data.get("DOCUMENT_TYPE"));
+                paramDetail.put("PAYMENT_TYPE", data.get("PAYMENT_TYPE"));
+                paramDetail.put("DUE_DATE", data.get("DUE_DATE"));
+                paramDetail.put("VENDOR_NAME", data.get("VENDOR_NAME"));
+                paramDetail.put("CURRENCY", data.get("CURRENCY"));
+                paramDetail.put("TOTAL_INVOICE_AMOUNT", data.get("TOTAL_INVOICE_AMOUNT"));
+                paramDetail.put("BANK_ACCOUNT", data.get("BANK_ACCOUNT"));
+                paramDetail.put("GROSS_INVOICE_AMOUNT", data.get("GROSS_INVOICE_AMOUNT"));
+                paramDetail.put("TAX_CODE", data.get("TAX_CODE"));
+                paramDetail.put("NET_INVOICE_AMOUNT", data.get("NET_INVOICE_AMOUNT"));
+                paramDetail.put("EXCHANGE_RATE", data.get("EXCHANGE_RATE"));
+                paramDetail.put("SPREAD", data.get("SPREAD"));
+                paramDetail.put("BANK_PEMBAYAR", data.get("BANK_PEMBAYAR"));
+                paramDetail.put("SOFT_COPY_UPLOAD_DATE", data.get("SOFT_COPY_UPLOAD_DATE"));
+                paramDetail.put("INVOICE_DATE", data.get("INVOICE_DATE"));
+                paramDetail.put("VENDOR_INVOICE_REF", data.get("VENDOR_INVOICE_REF"));
+                paramDetail.put("SKKT_NO", data.get("SKKT_NO"));
+                paramDetail.put("SKKT_DATE", data.get("SKKT_DATE"));
+                paramDetail.put("WORK_DEFINITION", data.get("WORK_DEFINITION"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/template_vendor_invoice_portal.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Gagal Export Data :" + e.getMessage();
+        }
+    }
+
+    @RequestMapping(value = "/xls/realisasi/{pDateFrom}/{pDateTo}/{pBank}/{pCurrency}", method = RequestMethod.GET)
+    public String exportRealisasiInvoice(
+            @PathVariable String pDateFrom,
+            @PathVariable String pDateTo,
+            @PathVariable String pBank,
+            @PathVariable String pCurrency,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        try {
+            String title = "Rekap Realisasi Invoice";
+            String namaFile = "rekap_realisasi_invoice_pilot.xls";
+
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
+
+            List<Map<String, Object>> listData = pilotService.getRealisasiInvoiceXls(pDateFrom, pDateTo, pBank, pCurrency, WebUtils.getUsernameLogin());
+
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+            System.out.println("List_Excel_data_realisasi : "+listData.toString());
+
+            param.put("TITLE", title);
+            for (Map data : listData) {
+                Map paramDetail = new HashMap();
+                paramDetail.put("COMP_CODE", data.get("COMP_CODE"));
+                paramDetail.put("DOC_NO", data.get("DOC_NO"));
+                paramDetail.put("FISC_YEAR", data.get("FISC_YEAR"));
+                paramDetail.put("OSS_ID", data.get("OSS_ID"));
+                paramDetail.put("INV_STATUS", data.get("INV_STATUS"));
+                paramDetail.put("PMT_DOC_NO", data.get("PMT_DOC_NO"));
+                paramDetail.put("PMT_AMOUNT", data.get("PMT_AMOUNT"));
+                paramDetail.put("PMT_RESIDUAL_IND", data.get("PMT_RESIDUAL_IND"));
+                paramDetail.put("PMT_CURRENCY", data.get("PMT_CURRENCY"));
+                paramDetail.put("PMT_HOUSE_BANK", data.get("PMT_HOUSE_BANK"));
+                paramDetail.put("PMT_DATE", data.get("PMT_DATE"));
+                paramDetail.put("PMT_BUS_AREA", data.get("PMT_BUS_AREA"));
+                paramDetail.put("PMT_CASH_CODE", data.get("PMT_CASH_CODE"));
+                paramDetail.put("PMT_SUMBER_DANA", data.get("PMT_SUMBER_DANA"));
+                paramDetail.put("GROUP_ID", data.get("GROUP_ID"));
+                paramDetail.put("DOC_HDR_TXT", data.get("DOC_HDR_TXT"));
+                paramDetail.put("ITEM_TEXT", data.get("ITEM_TEXT"));
+                paramDetail.put("CUSTOMER", data.get("CUSTOMER"));
+                paramDetail.put("NAMA_CUSTOMER", data.get("NAMA_CUSTOMER"));
+                paramDetail.put("VENDOR", data.get("VENDOR"));
+                paramDetail.put("NAMA_VENDOR", data.get("NAMA_VENDOR"));
+                paramDetail.put("NO_REK_HOUSE_BANK", data.get("NO_REK_HOUSE_BANK"));
+                paramDetail.put("BANK_BENEF", data.get("BANK_BENEF"));
+                paramDetail.put("NO_REK_BENEF", data.get("NO_REK_BENEF"));
+                paramDetail.put("NAMA_BENEF", data.get("NAMA_BENEF"));
+                paramDetail.put("VERIFIED_BY", data.get("VERIFIED_BY"));
+                paramDetail.put("VERIFIED_ON", data.get("VERIFIED_ON"));
+                paramDetail.put("EXCH_RATE", data.get("EXCH_RATE"));
+                paramDetail.put("DOC_TYPE", data.get("DOC_TYPE"));
+                paramDetail.put("TGL_RENCANA_BYR", data.get("TGL_RENCANA_BYR"));
+                paramDetail.put("JENIS_DOK", data.get("JENIS_DOK"));
+                paramDetail.put("ORI_CURRENCY", data.get("ORI_CURRENCY"));
+                paramDetail.put("ORI_AMOUNT", data.get("ORI_AMOUNT"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/template_realisasi_invoice_pilot.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Gagal Export Data :" + e.getMessage();
+        }
     }
 }

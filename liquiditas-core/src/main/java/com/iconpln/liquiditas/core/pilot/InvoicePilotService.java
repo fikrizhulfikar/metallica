@@ -1,6 +1,7 @@
 package com.iconpln.liquiditas.core.pilot;
 
 import com.iconpln.liquiditas.core.utils.AppUtils;
+import oracle.jdbc.OracleTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SqlParameter;
@@ -230,5 +231,71 @@ public class InvoicePilotService {
 
         AppUtils.getLogger(this).info("data invoice_oss_get : {}", resultset);
         return resultset;
+    }
+
+    public List<Map<String, Object>> getXlsInvoiceNonVendor(String pTglAwal, String pTglAkhir, String pUserId, String pDocNo, String pCompCode, String pFiscYear){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CENTRALIZED_PAYMENT")
+                .withFunctionName("get_nonvendor_item_xls");
+
+        AppUtils.getLogger(this).info("data rekap search info = " +
+
+
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, " +
+                        "pUserId : {}," +
+                        "pDocNo : {}," +
+                        "pCompCode : {}," +
+                        "pFiscYear : {}," ,
+              pTglAwal, pTglAkhir,pUserId, pDocNo, pCompCode, pFiscYear);
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", pTglAwal, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", pTglAwal, OracleTypes.VARCHAR)
+                .addValue("p_user_id", pTglAwal, OracleTypes.VARCHAR)
+                .addValue("p_doc_no", pTglAwal, OracleTypes.VARCHAR)
+                .addValue("p_comp_code", pTglAwal, OracleTypes.VARCHAR)
+                .addValue("p_fisc_year ", pTglAwal, OracleTypes.VARCHAR);
+
+        return (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
+    }
+
+    public List<Map<String, Object>> getHrApInvoicePilotXls(String date_from, String date_to, String curr, String mtd_byr, String house_bank, String usr_id){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CENTRALIZED_PAYMENT")
+                .withFunctionName("get_invoice_xls");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", date_from, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", date_to, OracleTypes.VARCHAR)
+                .addValue("p_currency", curr, OracleTypes.VARCHAR)
+                .addValue("p_house_bank", mtd_byr, OracleTypes.VARCHAR)
+                .addValue("p_metode_bayar", house_bank, OracleTypes.VARCHAR)
+                .addValue("p_user_id", usr_id, OracleTypes.VARCHAR);
+        return simpleJdbcCall.executeFunction(ArrayList.class,param);
+    }
+
+    public List<Map<String, Object>> getInvoiceOssXls(String date_from, String date_to, String bank, String curr, String usr_id){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CENTRALIZED_PAYMENT")
+                .withFunctionName("get_oss_xls");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", date_from, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", date_to, OracleTypes.VARCHAR)
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_cur", curr, OracleTypes.VARCHAR)
+                .addValue("p_user_id", usr_id, OracleTypes.VARCHAR);
+        return simpleJdbcCall.executeFunction(ArrayList.class,param);
+    }
+
+    public List<Map<String, Object>> getRealisasiInvoiceXls(String date_from, String date_to, String bank, String curr, String usr_id){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CENTRALIZED_PAYMENT")
+                .withFunctionName("get_realisasi_xls");
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", date_from, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", date_to, OracleTypes.VARCHAR)
+                .addValue("p_bank", bank, OracleTypes.VARCHAR)
+                .addValue("p_cur", curr, OracleTypes.VARCHAR)
+                .addValue("p_user_id", usr_id, OracleTypes.VARCHAR);
+        return simpleJdbcCall.executeFunction(ArrayList.class,param);
     }
 }
