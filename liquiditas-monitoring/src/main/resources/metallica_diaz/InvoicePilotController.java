@@ -720,7 +720,7 @@ public class InvoicePilotController {
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
 
-            List<Map<String, Object>> listData = pilotService.getVendorPortalXls(pDateFrom, pDateTo,pBank,pCurrency,WebUtils.getUsernameLogin());
+            List<Map<String, Object>> listData = pilotService.getListInvoiceVendorPortal(1,100000,pDateFrom, pDateTo,pBank,pCurrency,WebUtils.getUsernameLogin(),"","","");
 
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
@@ -752,6 +752,12 @@ public class InvoicePilotController {
                 paramDetail.put("SKKT_NO", data.get("SKKT_NO"));
                 paramDetail.put("SKKT_DATE", data.get("SKKT_DATE"));
                 paramDetail.put("WORK_DEFINITION", data.get("WORK_DEFINITION"));
+                paramDetail.put("SUBMISSION_TRANSACTION_NAME", data.get("SUBMISSION_TRANSACTION_NAME"));
+                paramDetail.put("WORK_COMPANY_CODE", data.get("WORK_COMPANY_CODE"));
+                paramDetail.put("CASH_CODE", data.get("CASH_CODE"));
+                paramDetail.put("NAMA_CASH_CODE", data.get("NAMA_CASH_CODE"));
+                paramDetail.put("HOUSE_BANK", data.get("HOUSE_BANK"));
+                paramDetail.put("NAMA_HOUSE_BANK", data.get("NAMA_HOUSE_BANK"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
@@ -791,10 +797,8 @@ public class InvoicePilotController {
             System.out.println("List_Excel_data_realisasi : "+listData.toString());
 
             param.put("TITLE", title);
-            int no = 0;
             for (Map data : listData) {
                 Map paramDetail = new HashMap();
-                paramDetail.put("NO", no++);
                 paramDetail.put("COMP_CODE", data.get("COMP_CODE"));
                 paramDetail.put("DOC_NO", data.get("DOC_NO"));
                 paramDetail.put("FISC_YEAR", data.get("FISC_YEAR"));
@@ -828,10 +832,6 @@ public class InvoicePilotController {
                 paramDetail.put("JENIS_DOK", data.get("JENIS_DOK"));
                 paramDetail.put("ORI_CURRENCY", data.get("ORI_CURRENCY"));
                 paramDetail.put("ORI_AMOUNT", data.get("ORI_AMOUNT"));
-                paramDetail.put("JENIS_TRANSAKSI", data.get("JENIS_TRANSAKSI"));
-                paramDetail.put("TIPE_TRANSAKSI", data.get("TIPE_TRANSAKSI"));
-                paramDetail.put("EQ_IDR", data.get("EQ_IDR"));
-                paramDetail.put("CREATE_DATE", data.get("CREATE_DATE"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);

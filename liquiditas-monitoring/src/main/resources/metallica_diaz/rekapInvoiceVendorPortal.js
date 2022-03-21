@@ -119,12 +119,14 @@ function getAllData() {
 
 function exportXls() {
     var tglAwal = "null";
-    if (srcTglAwal !== "") {
-        tglAwal = srcTglAwal.split("/").reverse().join("");
+    if (srcTglAwal != "") {
+        let from = srcTglAwal.split("/").reverse().join();
+        tglAwal = from;
     }
     var tglAkhir = "null";
-    if (srcTglAkhir !== "") {
-        tglAkhir = srcTglAkhir.split("/").reverse().join("");
+    if (srcTglAkhir != "") {
+        let to = srcTglAkhir.split("/").reverse().join("");
+        tglAkhir = to;
     }
     window.open(baseUrl + "api_invoice_pilot/hrap_invoice/xls/vip/" + tglAwal.replaceAll("/","-") + "/" + tglAkhir.replaceAll("/","-") + "/" + $("#cmb_bank").val() + "/" + $("#cmb_currecny").val());
 }
@@ -483,7 +485,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
             $('.dataTables_length').each(function () {
 //                var html = '<label style="margin-left: 120px; cursor:default;">Total tagihan (Rp): <b id="total_tagihan">0</b></label>';
-//                 $(this).append(html);
+                $(this).append(html);
             });
 
 //             $('.dataTables_filter').each(function () {

@@ -34,7 +34,7 @@
         <li class="breadcrumb-menu d-md-down-none">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
-<!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>-->
+                <!--                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="generatePDF()"><i class="icon-docs"></i> &nbsp;Pdf</button>-->
 
             </div>
         </li>
@@ -570,7 +570,7 @@
             <div id="filter">
                 <div class="col-md-12 row" style="padding-left: 7.5px;padding-right: 0px;">
                     <div class="col-md-4 form-group" style="padding-right: 0px;">
-                        <label class="lbl-src">Invoice Date </label>
+                        <label class="lbl-src">Tanggal Rencana Bayar </label>
                         <div class="row">
                             <div class="col-md-6">
                                 <input placeholder="Dari.." type="text" style="border-radius: 5px" class="form-control" id="tanggal_awal"/>
@@ -605,18 +605,18 @@
                         </select>
                     </div>
 
-                    <div class="col-md-2 form-group" style="padding-right: 0px;">
-                        <label class="lbl-src">Metode Bayar</label>
-                        <select name="carabayar" id="cmb_cara_pembayaran" class="form-control select2" style="border-radius: 5px !important; font-size: 0.8rem">
-                            <option value="ALL">SEMUA METODE</option>
-                            <option value="GIRO">GIRO</option>
-                            <option value="INTERNETBANKING">INTERNET BANKING</option>
-                            <option value="INHOUSE">IN HOUSE</option>
-                            <option value="ONLINETRANSFER">ONLINE TRANSFER</option>
-                            <option value="RTGS">RTGS</option>
-                            <option value="KLIRING">KLIRING</option>
-                        </select>
-                    </div>
+<!--                    <div class="col-md-2 form-group" style="padding-right: 0px;">-->
+<!--                        <label class="lbl-src">Metode Bayar</label>-->
+<!--                        <select name="carabayar" id="cmb_cara_pembayaran" class="form-control select2" style="border-radius: 5px !important; font-size: 0.8rem">-->
+<!--                            <option value="ALL">SEMUA METODE</option>-->
+<!--                            <option value="GIRO">GIRO</option>-->
+<!--                            <option value="INTERNETBANKING">INTERNET BANKING</option>-->
+<!--                            <option value="INHOUSE">IN HOUSE</option>-->
+<!--                            <option value="ONLINETRANSFER">ONLINE TRANSFER</option>-->
+<!--                            <option value="RTGS">RTGS</option>-->
+<!--                            <option value="KLIRING">KLIRING</option>-->
+<!--                        </select>-->
+<!--                    </div>-->
                     <div class="col-md-2 form-group" style="padding-right: 0px;">
                         <label style="visibility: hidden">Label Submit</label>
                         <button onclick="search()" class="btn btn-primary" style="width:100%; border-radius: 3px">Search</button>
@@ -630,35 +630,20 @@
                             <thead style="font-size: 12px">
                             <tr>
                                 <th>NO</th>
-                                <th>JENIS TAGIHAN</th>
-                                <th>SUBMISSION ID</th>
-                                <th>INVOICE TYPE</th>
-                                <th>TRANSACTION TYPE</th>
-                                <th>DOCUMENT TYPE</th>
-                                <th>PAYMENT TYPE</th>
-                                <th>DUE DATE</th>
-                                <th>VENDOR</th>
-                                <th>CURRENCY</th>
-                                <th>TOTAL AMOUNT</th>
-                                <th>GROSS INVOICE AMOUNT</th>
-                                <th>BANK ACCOUNT</th>
-                                <th>TAX CODE</th>
-                                <th>NET INVOICE AMOUNT</th>
+                                <th>JENIS TRANSAKSI</th>
+                                <th>TIPE TRANSAKSI</th>
+                                <th>CURRENCY BAYAR</th>
                                 <th>EXCHANGE RATE</th>
-                                <th>SPREAD</th>
-                                <th>BANK PEMBAYAR</th>
-                                <th>SOFT COPY UPLOAD DATE</th>
-                                <th>INVOICE DATE</th>
-                                <th>VENDOR INVOICE REF</th>
-                                <th>SKKT NO</th>
-                                <th>SKKT DATE</th>
-                                <th>WORK DEFINITION</th>
-                                <th>SUBMISSION_TRANSACTION_NAME</th>
-                                <th>WORK COMPANY CODE</th>
-                                <th>CASH CODE</th>
-                                <th>NAMA CASH CODE</th>
+                                <th>AMOUNT BAYAR</th>
+                                <th>EQ IDR</th>
+                                <th>VENDOR</th>
                                 <th>HOUSE BANK</th>
                                 <th>NAMA HOUSE BANK</th>
+                                <th>CASH CODE</th>
+                                <th>NAMA CASHCODE</th>
+                                <th>TGL RENCANA BAYAR</th>
+                                <th>TGL ENTRY</th>
+                                <th>SUMBER DATA</th>
                             </tr>
                             </thead>
                             <tbody style="font-size: 12px">
@@ -979,10 +964,10 @@
                                 <label for="pAmountWthLc"> Amount Withholding LC :</label>
                                 <input type="text" class="form-control" id="pAmountWthLc" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
                             </div>
-                            <div class="form-group">
-                                <label for="pTotalTagihan">&nbsp;Total Tagihan :</label>
-                                <input type="text" class="form-control" id="pTotalTagihan" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
-                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label for="pTotalTagihan">&nbsp;Total Tagihan :</label>-->
+<!--                                <input type="text" class="form-control" id="pTotalTagihan" disabled="disabled"  style="background-color: #CFD8DC" value=""/>-->
+<!--                            </div>-->
                             <div class="form-group">
                                 <label for="pAmountBayar">&nbsp;Amount Bayar :</label>
                                 <input type="text" class="form-control" id="pAmountBayar" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
@@ -1007,18 +992,18 @@
                                 <label for="pNoRekPln"> No Rekening PLN :</label>
                                 <input type="text" id="pNoRekPln" class="form-control" value="" readonly="readonly"/>
                             </div>
-                            <div class="form-group">
-                                <label for="pMetodePembayaran"><span style="color: red">*)</span>&nbsp;Metode Pembayaran:</label>
-                                <select id="pMetodePembayaran" class="form-control">
-                                    <option value="">Pilih Data</option>
-                                    <option value="INHOUSE">In House</option>
-                                    <option value="ONLINETRANSFER">Online Transfer</option>
-                                    <option value="RTGS">RTGS</option>
-                                    <option value="KLIRING">Kliring</option>
-                                    <option value="GIRO">Giro</option>
-                                    <option value="INTERNETBANKING">Internet Banking</option>
-                                </select>
-                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label for="pMetodePembayaran"><span style="color: red">*)</span>&nbsp;Metode Pembayaran:</label>-->
+<!--                                <select id="pMetodePembayaran" class="form-control">-->
+<!--                                    <option value="">Pilih Data</option>-->
+<!--                                    <option value="INHOUSE">In House</option>-->
+<!--                                    <option value="ONLINETRANSFER">Online Transfer</option>-->
+<!--                                    <option value="RTGS">RTGS</option>-->
+<!--                                    <option value="KLIRING">Kliring</option>-->
+<!--                                    <option value="GIRO">Giro</option>-->
+<!--                                    <option value="INTERNETBANKING">Internet Banking</option>-->
+<!--                                </select>-->
+<!--                            </div>-->
                             <div class="form-group pNoGiro">
                                 <label for="pNoGiro"><span style="color: red;">*</span> Nomor Giro :</label>
                                 <input type="text" id="pNoGiro" class="form-control" value=""/>
@@ -1241,10 +1226,10 @@
                                 <label for="pAmountWht2">&nbsp;Amount WithHolding :</label>
                                 <input type="text" class="form-control" id="pAmountWht2" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
                             </div>
-                            <div class="form-group">
-                                <label for="pTotalTagihan2">&nbsp;Total Tagihan :</label>
-                                <input type="text" class="form-control" id="pTotalTagihan2" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
-                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label for="pTotalTagihan2">&nbsp;Total Tagihan :</label>-->
+<!--                                <input type="text" class="form-control" id="pTotalTagihan2" disabled="disabled"  style="background-color: #CFD8DC" value=""/>-->
+<!--                            </div>-->
                             <div class="form-group">
                                 <label for="pAmountBayar2">&nbsp;Amount Bayar :</label>
                                 <input type="text" class="form-control" id="pAmountBayar2" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
@@ -1295,10 +1280,10 @@
                                 <label for="pPaymentBlock2"> Payment Block Indikator :</label>
                                 <input type="text" class="form-control" id="pPaymentBlock2" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="pHouseBank2"> House Bank :</label>-->
-<!--                                <input type="text" class="form-control" id="pHouseBank2" disabled="disabled"  style="background-color: white" value=""/>-->
-<!--                            </div>-->
+                            <!--                            <div class="form-group">-->
+                            <!--                                <label for="pHouseBank2"> House Bank :</label>-->
+                            <!--                                <input type="text" class="form-control" id="pHouseBank2" disabled="disabled"  style="background-color: white" value=""/>-->
+                            <!--                            </div>-->
                             <div class="form-group">
                                 <label for="pPartnerBank2"> Partner Bank Type :</label>
                                 <input type="text" class="form-control" id="pPartnerBank2" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
@@ -1383,21 +1368,21 @@
                                 <label for="pMetodePembayaran2">&nbsp;Metode Pembayaran :</label>
                                 <input type="text" class="form-control" id="pMetodePembayaran2" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="pMetodePembayaran2"><span style="color: red">*)</span>&nbsp;Metode Pembayaran:</label>-->
-<!--                                <select id="pMetodePembayaran2" class="form-control">-->
-<!--                                    <option value="">Pilih Data</option>-->
-<!--                                    <option value="INHOUSE">In House</option>-->
-<!--                                    <option value="ONLINETRANSFER">Online Transfer</option>-->
-<!--                                    <option value="LLG">LLG</option>-->
-<!--                                    <option value="RTGS">RTGS</option>-->
-<!--                                    <option value="KLIRING">Kliring</option>-->
-<!--                                    <option value="TT">TT</option>-->
-<!--                                    <option value="VALAS">Valas</option>-->
-<!--                                    <option value="GIRO">Giro</option>-->
-<!--                                    <option value="INTERNETBANKING">Internet Banking</option>-->
-<!--                                </select>-->
-<!--                            </div>-->
+                            <!--                            <div class="form-group">-->
+                            <!--                                <label for="pMetodePembayaran2"><span style="color: red">*)</span>&nbsp;Metode Pembayaran:</label>-->
+                            <!--                                <select id="pMetodePembayaran2" class="form-control">-->
+                            <!--                                    <option value="">Pilih Data</option>-->
+                            <!--                                    <option value="INHOUSE">In House</option>-->
+                            <!--                                    <option value="ONLINETRANSFER">Online Transfer</option>-->
+                            <!--                                    <option value="LLG">LLG</option>-->
+                            <!--                                    <option value="RTGS">RTGS</option>-->
+                            <!--                                    <option value="KLIRING">Kliring</option>-->
+                            <!--                                    <option value="TT">TT</option>-->
+                            <!--                                    <option value="VALAS">Valas</option>-->
+                            <!--                                    <option value="GIRO">Giro</option>-->
+                            <!--                                    <option value="INTERNETBANKING">Internet Banking</option>-->
+                            <!--                                </select>-->
+                            <!--                            </div>-->
                             <div class="form-group">
                                 <label for="pTglRencanaBayar2"><span style="color: red">*)</span>&nbsp;Tanggal Rencana Bayar:</label>
                                 <input type="text" class="form-control" id="pTglRencanaBayar2" disabled="disabled"  style="background-color: #CFD8DC"/>
@@ -1414,18 +1399,18 @@
                                 <label for="pSumberDana2">&nbsp;Sumber Dana :</label>
                                 <input type="text" class="form-control" id="pSumberDana2" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="pSumberDana2"><span style="color: red">*)</span>&nbsp;Sumber Dana:</label>-->
-<!--                                <select id="pSumberDana2" class="form-control">-->
-<!--                                    <option value="">Pilih Data</option>-->
-<!--                                    <option value="PMN">PMN</option>-->
-<!--                                    <option value="NON PMN - APLN">NON PMN</option>-->
-<!--                                    <option value="NON PMN - BRIDGING">NON PMN - BRIDGING</option>-->
-<!--                                    <option value="Rekening Imprest Valas">Rekening Imprest Valas</option>-->
-<!--                                    <option value="Rekening Non Imprest Valas">Rekening Non Imprest Valas</option>-->
+                            <!--                            <div class="form-group">-->
+                            <!--                                <label for="pSumberDana2"><span style="color: red">*)</span>&nbsp;Sumber Dana:</label>-->
+                            <!--                                <select id="pSumberDana2" class="form-control">-->
+                            <!--                                    <option value="">Pilih Data</option>-->
+                            <!--                                    <option value="PMN">PMN</option>-->
+                            <!--                                    <option value="NON PMN - APLN">NON PMN</option>-->
+                            <!--                                    <option value="NON PMN - BRIDGING">NON PMN - BRIDGING</option>-->
+                            <!--                                    <option value="Rekening Imprest Valas">Rekening Imprest Valas</option>-->
+                            <!--                                    <option value="Rekening Non Imprest Valas">Rekening Non Imprest Valas</option>-->
 
-<!--                                </select>-->
-<!--                            </div>-->
+                            <!--                                </select>-->
+                            <!--                            </div>-->
                             <div class="form-group">
                                 <label for="pNewKeterangan2">&nbsp;Keterangan :</label>
                                 <input type="text" class="form-control" id="pNewKeterangan2" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
@@ -1466,7 +1451,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-<!--                    <button type="button" class="btn btn-warning" onclick="save_inquiry()">Inquiry</button>-->
+                    <!--                    <button type="button" class="btn btn-warning" onclick="save_inquiry()">Inquiry</button>-->
                     <button type="button" id="validasiTokenBtn" class="btn btn-primary" onclick="validasiToken()">Check Token</button>
                     <button type="button" id="btn-payment" class="btn btn-success" onclick="doPayment()">Payment</button>
                     <button type="button" id="btn_siap_corpay" class="btn btn-warning" onclick="siapBayarCorpay()">Siap Bayar</button>
@@ -1486,29 +1471,29 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-<!--                                <label for="pBank">&nbsp;Bank :</label>-->
-<!--                                <input type="text" class="form-control" id="pBank"  />-->
-                            <label for="pBanks"><span style="color: red">*)</span>&nbsp;Nama Bank:</label>
-                            <select id="pBanks" class="form-control">
-                                <option value="">Pilih Data</option>
-                                <option value="BNI">BNI</option>
-                                <option value="BRI">BRI</option>
-                                <option value="BUKOPIN">BUKOPIN</option>
-                                <option value="MANDIRI">MANDIRI</option>
-                            </select>
+                                <!--                                <label for="pBank">&nbsp;Bank :</label>-->
+                                <!--                                <input type="text" class="form-control" id="pBank"  />-->
+                                <label for="pBanks"><span style="color: red">*)</span>&nbsp;Nama Bank:</label>
+                                <select id="pBanks" class="form-control">
+                                    <option value="">Pilih Data</option>
+                                    <option value="BNI">BNI</option>
+                                    <option value="BRI">BRI</option>
+                                    <option value="BUKOPIN">BUKOPIN</option>
+                                    <option value="MANDIRI">MANDIRI</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="pSources">&nbsp;Nomor Rekening :</label>
                                 <input type="text" class="form-control" id="pSources"/>
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="pAccountNames">&nbsp;Account Name :</label>-->
-<!--                                <input type="text" class="form-control" id="pAccountNames"/>-->
-<!--                            </div>-->
-<!--                            <div class="form-group">-->
-<!--                                <label for="pAmounts">&nbsp;Amount :</label>-->
-<!--                                <input type="text" class="form-control" id="pAmounts"/>-->
-<!--                            </div>-->
+                            <!--                            <div class="form-group">-->
+                            <!--                                <label for="pAccountNames">&nbsp;Account Name :</label>-->
+                            <!--                                <input type="text" class="form-control" id="pAccountNames"/>-->
+                            <!--                            </div>-->
+                            <!--                            <div class="form-group">-->
+                            <!--                                <label for="pAmounts">&nbsp;Amount :</label>-->
+                            <!--                                <input type="text" class="form-control" id="pAmounts"/>-->
+                            <!--                            </div>-->
                             <div class="form-group">
                                 <label for="pRespons">&nbsp;Respon :</label>
                                 <textarea rows="4" type="text" class="form-control" id="pRespons"></textarea>
@@ -1559,10 +1544,10 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-<!--                            <div class="form-group">-->
-<!--                                <label for="pResponPaymentStatus">&nbsp;Respon :</label>-->
-<!--                                <input type="text" class="form-control" id="pResponPaymentStatus"/>-->
-<!--                            </div>-->
+                            <!--                            <div class="form-group">-->
+                            <!--                                <label for="pResponPaymentStatus">&nbsp;Respon :</label>-->
+                            <!--                                <input type="text" class="form-control" id="pResponPaymentStatus"/>-->
+                            <!--                            </div>-->
                             <div class="form-group">
                                 <label for="pStatusPembayaran">&nbsp;Status Pembayaran :</label>
                                 <input type="text" class="form-control" id="pStatusPembayaran"/>
@@ -1805,10 +1790,10 @@
                             <!--                                <label for="pBankPenerima">&nbsp;Bank Penerima :</label>-->
                             <!--                                <input type="text" class="form-control" id="pBankPenerima" disabled="disabled" style="background-color: #CFD8DC" value=""/>-->
                             <!--                            </div>-->
-                            <div class="form-group">
-                                <label for="pTotalTagihan3">&nbsp;Total Tagihan :</label>
-                                <input type="text" class="form-control" id="pTotalTagihan3" disabled="disabled"  style="background-color: #CFD8DC" value=""/>
-                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label for="pTotalTagihan3">&nbsp;Total Tagihan :</label>-->
+<!--                                <input type="text" class="form-control" id="pTotalTagihan3" disabled="disabled"  style="background-color: #CFD8DC" value=""/>-->
+<!--                            </div>-->
                             <!--                            <div class="form-group">-->
                             <!--                                <label for="pKodeBankPenerima">&nbsp;Kode Bank Penerima :</label>-->
                             <!--                                <input type="text" class="form-control" id="pKodeBankPenerima" style="background-color: white" value=""/>-->
@@ -2018,7 +2003,7 @@
     </div>
 </main>
 <div th:fragment="scripts-backend">
-    <script src="/static/js/backend/controller/pilot/rekapInvoiceVendorPortal.js"></script>
+    <script src="/static/js/backend/controller/pilot/rekapAllInvoice.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <!--<script src="static/js/jquery.mask.min.js"></script>-->
 </div>

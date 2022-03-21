@@ -84,12 +84,12 @@ function getTotalTagihan() {
 
 function exportXls() {
     var tglAwal = "null";
-    if (srcTglAwal != "") {
-        tglAwal = srcTglAwal
+    if (srcTglAwal !== "") {
+        tglAwal = srcTglAwal.split("/").reverse().join("");
     }
     var tglAkhir = "null";
-    if (srcTglAkhir != "") {
-        tglAkhir = srcTglAkhir
+    if (srcTglAkhir !== "") {
+        tglAkhir = srcTglAkhir.split("/").reverse().join("");
     }
     window.open(baseUrl + "api_invoice_pilot/hrap_invoice/xls/realisasi/" + tglAwal.replaceAll("/","-") + "/" + tglAkhir.replaceAll("/","-") + "/" + $("#cmb_bank").val() + "/" + $("#cmb_currecny").val());
 }
@@ -100,8 +100,12 @@ function search(state) {
         } else {
             initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val(), $("#cmb_cara_pembayaran").val(), $("#cmb_status_tracking").val())
             // getAllData();
-            srcTglAwal = moment().format("DD/MM/YYYY");
-            srcTglAkhir = moment().format("DD/MM/YYYY");
+            if((srcTglAwal === null || srcTglAwal === "")){
+                srcTglAwal = moment().format("DD/MM/YYYY");
+            }
+            if((srcTglAkhir === null || srcTglAkhir === "")){
+                srcTglAkhir = moment().format("DD/MM/YYYY");
+            }
         }
     }
 
@@ -175,6 +179,22 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [5],
+                            "name" : "GROUP_ID",
+                            "mRender": function (data, type, full) {
+                                return full.JENIS_TRANSAKSI;
+                            }
+
+                        },
+                        {
+                            "aTargets": [6],
+                            "name" : "GROUP_ID",
+                            "mRender": function (data, type, full) {
+                                return full.TIPE_TRANSAKSI;
+                            }
+
+                        },
+                        {
+                            "aTargets": [7],
                             "name" : "OSS_ID",
                             "mRender": function (data, type, full) {
                                 return full.INV_STATUS;
@@ -182,7 +202,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                         },
                         {
-                            "aTargets": [6],
+                            "aTargets": [8],
                             "name" : "FISC_YEAR",
                             "mRender": function (data, type, full) {
                                 return full.PMT_DOC_NO;
@@ -190,7 +210,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                         },
                         {
-                            "aTargets": [7],
+                            "aTargets": [9],
                             "name" : "DOC_TYPE",
                             "mRender": function (data, type, full) {
                                 return accounting.formatNumber(full.PMT_AMOUNT, 2,'.',',');
@@ -198,7 +218,31 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                         },
                         {
-                            "aTargets": [8],
+                            "aTargets": [10],
+                            "name" : "DOC_TYPE",
+                            "mRender": function (data, type, full) {
+                                return full.ORI_CURRENCY;
+                            }
+
+                        },
+                        {
+                            "aTargets": [11],
+                            "name" : "DOC_TYPE",
+                            "mRender": function (data, type, full) {
+                                return accounting.formatNumber(full.ORI_AMOUNT, 2,'.',',');
+                            }
+
+                        },
+                        {
+                            "aTargets": [12],
+                            "name" : "DOC_TYPE",
+                            "mRender": function (data, type, full) {
+                                return accounting.formatNumber(full.EQ_IDR, 2,'.',',');
+                            }
+
+                        },
+                        {
+                            "aTargets": [13],
                             "name" : "DOC_DATE",
                             "mRender": function (data, type, full) {
                                 return full.PMT_RESIDUAL_IND;
@@ -206,7 +250,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                         },
                         {
-                            "aTargets": [9],
+                            "aTargets": [14],
                             "name" : "POST_DATE",
                             "mRender": function (data, type, full) {
                                 return full.PMT_CURRENCY;
@@ -214,7 +258,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                             }
                         },
                         {
-                            "aTargets": [10],
+                            "aTargets": [15],
                             "name" : "ENTRY_DATE",
                             "mRender": function (data, type, full) {
                                 return full.PMT_HOUSE_BANK;
@@ -222,7 +266,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                         },
                         {
-                            "aTargets": [11],
+                            "aTargets": [16],
                             "name" : "DOC_HDR_TXT",
                             "mRender": function (data, type, full) {
                                 return moment(full.PMT_DATE).format("DD/MM/YYYY") ;
@@ -230,7 +274,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                         },
                         {
-                            "aTargets": [12],
+                            "aTargets": [17],
                             "name" : "CURRENCY",
                             "mRender": function (data, type, full) {
                                 return full.PMT_BUS_AREA;
@@ -238,7 +282,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                         },
                         {
-                            "aTargets": [13],
+                            "aTargets": [18],
                             "name" : "CURR_BAYAR",
                             "mRender": function (data, type, full) {
                                 return full.PMT_CASH_CODE;
@@ -246,7 +290,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                         },
                         {
-                            "aTargets": [14],
+                            "aTargets": [19],
                             "name" : "EXCH_RATE",
                             "mRender": function (data, type, full) {
                                 return full.PMT_SUMBER_DANA;
@@ -254,63 +298,63 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                         },
                         {
-                            "aTargets": [15],
+                            "aTargets": [20],
                             "name" : "PMT_IND",
                             "mRender": function (data, type, full) {
                                 return full.GROUP_ID;
                             }
                         },
                         {
-                            "aTargets": [16],
+                            "aTargets": [21],
                             "name" : "TRANS_TYPE",
                             "mRender": function (data, type, full) {
                                 return full.DOC_HDR_TXT;
                             }
                         },
                         {
-                            "aTargets": [17],
+                            "aTargets": [22],
                             "name" : "SPREAD_VAL",
                             "mRender": function (data, type, full) {
                                 return full.ITEM_TEXT;
                             }
                         },
                         {
-                            "aTargets": [18],
+                            "aTargets": [23],
                             "name" : "LINE_ITEM",
                             "mRender": function (data, type, full) {
                                 return full.CUSTOMER;
                             }
                         },
                         {
-                            "aTargets": [19],
+                            "aTargets": [24],
                             "name" : "BUS_AREA",
                             "mRender": function (data, type, full) {
                                 return full.NAMA_CUSTOMER;
                             }
                         },
                         {
-                            "aTargets": [20],
+                            "aTargets": [25],
                             "name" : "AMT_LC",
                             "mRender": function (data, type, full) {
                                 return full.VENDOR;
                             }
                         },
                         {
-                            "aTargets": [21],
+                            "aTargets": [26],
                             "name" : "AMT_TC",
                             "mRender": function (data, type, full) {
                                 return full.NAMA_VENDOR;
                             }
                         },
                         {
-                            "aTargets": [22],
+                            "aTargets": [27],
                             "name" : "AMT_WITH_BASE_TC",
                             "mRender": function (data, type, full) {
                                 return full.NO_REK_HOUSE_BANK;
                             }
                         },
                         {
-                            "aTargets": [23],
+                            "aTargets": [28],
                             "name" : "AMT_WITH_TC",
                             "mRender": function (data, type, full) {
                                 return full.BANK_BENEF;
@@ -318,7 +362,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
 
                         {
-                            "aTargets": [24],
+                            "aTargets": [29],
                             "name" : "AMOUNT",
                             "mRender": function (data, type, full) {
                                 return full.NO_REK_BENEF;
@@ -326,52 +370,59 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                         },
                         {
-                            "aTargets": [25],
+                            "aTargets": [30],
                             "name" : "AMOUNT_BAYAR",
                             "mRender": function (data, type, full) {
                                 return full.NAMA_BENEF;
                             }
                         },
                         {
-                            "aTargets": [26],
+                            "aTargets": [31],
                             "name" : "ASSIGNMENT",
                             "mRender": function (data, type, full) {
                                 return full.VERIFIED_BY;
                             }
                         },
                         {
-                            "aTargets": [27],
+                            "aTargets": [32],
                             "name" : "ITEM_TEXT",
                             "mRender": function (data, type, full) {
                                 return moment(full.VERIFIED_ON).format("DD/MM/YYYY");
                             }
                         },
                         {
-                            "aTargets": [28],
+                            "aTargets": [33],
                             "name" : "CUSTOMER_NAME",
                             "mRender": function (data, type, full) {
                                 return full.EXCH_RATE;
                             }
                         },
                         {
-                            "aTargets": [29],
+                            "aTargets": [34],
                             "name" : "VENDOR_NAME",
                             "mRender": function (data, type, full) {
                                 return full.DOC_TYPE;
                             }
                         },
                         {
-                            "aTargets": [30],
+                            "aTargets": [35],
                             "name" : "PMT_BLOCK",
                             "mRender": function (data, type, full) {
                                 return moment(full.TGL_RENCANA_BYR).format("DD/MM/YYYY");
                             }
                         },
                         {
-                            "aTargets": [31],
+                            "aTargets": [36],
                             "name" : "HOUSE_BANK",
                             "mRender": function (data, type, full) {
                                 return full.JENIS_DOK;
+                            }
+                        },
+                        {
+                            "aTargets": [37],
+                            "name" : "HOUSE_BANK",
+                            "mRender": function (data, type, full) {
+                                return moment(full.CREATE_DATE).format('DD/MM/YYYY');
                             }
                         }
                     ],
@@ -385,9 +436,9 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                                 "json",
                             "data":
                                 {
-                                    pTglAwal: pTglAwal,
+                                    pTglAwal: pTglAwal.split("/").reverse().join(""),
                                     pTglAkhir:
-                                    pTglAkhir,
+                                    pTglAkhir.split("/").reverse().join(""),
                                     pBank:
                                     pBank,
                                     pCurrency:

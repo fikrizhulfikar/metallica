@@ -168,11 +168,19 @@ public class InvoicePilotService {
                 .withCatalogName("PKG_CENTRALIZED_PAYMENT")
                 .withFunctionName("realisasi_get");
 
-        AppUtils.getLogger(this).info("realisasi get = " +
-
+        AppUtils.getLogger(this).info("data rekap search info = " +
+                        "pStart : {}, " +
+                        "pLength : {}, " +
                         "pTglAwal : {}, " +
-                        "pTglAkhir : {}, ",
-                pTglAwal, pTglAkhir);
+                        "pTglAkhir : {}, " +
+                        "pBank : {}, " +
+                        "pCurrency : {}, " +
+                        "pUserId : {}," +
+                        "pSortBy : {}," +
+                        "pSortDir : {}," +
+                        "pSearch : {},",
+
+                pStart, pLength, pTglAwal, pTglAkhir, pBank, pCurrency, pUserId, sortBy, sortDir, pSearch);
         SqlParameterSource params = new MapSqlParameterSource()
                 .addValue("p_start", pStart, Types.INTEGER)
                 .addValue("p_length", pLength, Types.INTEGER)
@@ -315,12 +323,6 @@ public class InvoicePilotService {
     }
 
     public List<Map<String, Object>> getRealisasiInvoiceXls(String date_from, String date_to, String bank, String curr, String usr_id){
-        AppUtils.getLogger(this).info("xls realisasi = " +
-
-                        "pTglAwal : {}, " +
-                        "pTglAkhir : {}, ",
-                date_from, date_to);
-
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CENTRALIZED_PAYMENT")
                 .withFunctionName("get_realisasi_xls");
@@ -337,18 +339,6 @@ public class InvoicePilotService {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CENTRALIZED_PAYMENT")
                 .withFunctionName("get_rekap_all_invoice_xls");
-        SqlParameterSource param = new MapSqlParameterSource()
-                .addValue("p_tgl_awal", date_from, OracleTypes.VARCHAR)
-                .addValue("p_tgl_akhir", date_to, OracleTypes.VARCHAR)
-                .addValue("p_bank", bank, OracleTypes.VARCHAR)
-                .addValue("p_cur", curr, OracleTypes.VARCHAR)
-                .addValue("p_user_id", usr_id, OracleTypes.VARCHAR);
-        return simpleJdbcCall.executeFunction(ArrayList.class,param);
-    }
-    public List<Map<String, Object>> getVendorPortalXls(String date_from, String date_to, String bank, String curr, String usr_id){
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
-                .withCatalogName("PKG_CENTRALIZED_PAYMENT")
-                .withFunctionName("get_vendor_portal_xls");
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("p_tgl_awal", date_from, OracleTypes.VARCHAR)
                 .addValue("p_tgl_akhir", date_to, OracleTypes.VARCHAR)

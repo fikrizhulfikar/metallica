@@ -391,4 +391,7 @@ public class PageOperatorController {
 
     @RequestMapping("/invoice_oss_pilot")
     public String invoice_oss_pilot (){return "operator/pilot/rekap_invoice_oss";}
+
+    @RequestMapping("/rekap_all_invoice")
+    public String rekap_all_invoice_pilot (){return "operator/pilot/rekap_all_invoice";}
 }

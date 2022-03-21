@@ -75,18 +75,19 @@ $("#tanggal_awal").change(function () {
 
 function getAllData() {
     $.ajax({
-        url: baseUrl + "api_invoice_pilot/hrap_invoice/get_list_vendor_portal",
+        url: baseUrl + "api_invoice_pilot/hrap_invoice/list_rekap_all_invoice",
         dataType: 'JSON',
         type: "GET",
         data: {
-            pStatusValas: "0",
             pTglAwal: $("#tanggal_awal").val(),
             pTglAkhir: $("#tanggal_akhir").val(),
             pBank: $("#cmb_bank").val(),
             pCurr: $("#cmb_currecny").val()
         },
         success: function (res) {
-            // console.log('Bank :'+pBank);
+             console.log('Bank :'+pBank);
+             console.log('tanggalawal :'+pTglAwal);
+             console.log('tanggalakhir :'+pTglAkhir);
             allData = res;
         },
         error: function (res) {
@@ -96,37 +97,39 @@ function getAllData() {
 
     }
 
-//function getTotalTagihan() {
-//    $.ajax({
-//        url: baseUrl + "api_operator/rekap_invoice_belum/get_total_tagihan",
-//        type: "GET",
-//        data: {
-//            tgl_awal: $("#tanggal_awal").val(),
-//            tgl_akhir: $("#tanggal_akhir").val(),
-//            currency: $("#cmb_currecny").val(),
-//            caraBayar: $("#cmb_cara_pembayaran").val(),
-//            bank: $("#cmb_bank").val(),
-//            search: tempTableSearch
-//        },
-//        success: function (res) {
-//            $("#total_tagihan").html(res);
-//        },
-//        error: function () {
-//            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
-//        }
-//    });
-//}
+function getTotalTagihan() {
+    $.ajax({
+        url: baseUrl + "api_operator/rekap_invoice_belum/get_total_tagihan",
+        type: "GET",
+        data: {
+            tgl_awal: $("#tanggal_awal").val(),
+            tgl_akhir: $("#tanggal_akhir").val(),
+            currency: $("#cmb_currecny").val(),
+            caraBayar: $("#cmb_cara_pembayaran").val(),
+            bank: $("#cmb_bank").val(),
+            search: tempTableSearch
+        },
+        success: function (res) {
+            $("#total_tagihan").html(res);
+        },
+        error: function () {
+            hideLoadingCss("Gagal Melakukan Proses,Harap Hubungi Administrator")
+        }
+    });
+}
 
 function exportXls() {
     var tglAwal = "null";
     if (srcTglAwal !== "") {
+        alert(srcTglAwal);
         tglAwal = srcTglAwal.split("/").reverse().join("");
     }
     var tglAkhir = "null";
     if (srcTglAkhir !== "") {
+        alert(srcTglAkhir);
         tglAkhir = srcTglAkhir.split("/").reverse().join("");
     }
-    window.open(baseUrl + "api_invoice_pilot/hrap_invoice/xls/vip/" + tglAwal.replaceAll("/","-") + "/" + tglAkhir.replaceAll("/","-") + "/" + $("#cmb_bank").val() + "/" + $("#cmb_currecny").val());
+    window.open(baseUrl + "api_invoice_pilot/hrap_invoice/xls/rekapallinvoice/" + tglAwal.replaceAll("/","-") + "/" + tglAkhir.replaceAll("/","-") + "/" + $("#cmb_bank").val() + "/" + $("#cmb_currecny").val());
 }
 
 function search(state) {
@@ -157,6 +160,22 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                     "scrollCollapse": true,
                     "lengthMenu": [[10, 25, 50, 100, 200, 400, 600, 1000], [10, 25, 50, 100, 200, 400, 600, 1000]],
                     "aoColumnDefs": [
+                    {width: 20, targets: 0},
+                                                        {width: 100, targets: 1},
+                                                        {width: 100, targets: 2},
+                                                        {width: 100, targets: 3},
+                                                        {width: 100, targets: 4},
+                                                        {width: 100, targets: 5},
+                                                        {width: 100, targets: 6},
+                                                        {width: 100, targets: 7},
+                                                        {width: 100, targets: 8},
+                                                        {width: 100, targets: 9},
+                                                        {width: 100, targets: 10},
+                                                        {width: 100, targets: 11},
+                                                        {width: 100, targets: 12},
+                                                        {width: 100, targets: 13},
+                                                        {width: 100, targets: 14},
+                                                        {width: "20%", "targets": 0},
                         { className: "datatables_action", "targets": [] },
                         {
                             "bSortable": true,
@@ -176,239 +195,108 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                         },
                         {
-                            "aTargets": [1],
-                            "name" : "KET",
-                            "mRender": function (data, type, full) {
-                                return full.KET;
-                            }
-
+                        "aTargets":[1],
+                        "name" : "JENIS_TRANSAKSI",
+                        "mRender" : function(data,type,full){
+                        return full.JENIS_TRANSAKSI;
+                        }
                         },
                         {
-                            "aTargets": [2],
-                            "name" : "COMP_CODE",
-                            "mRender": function (data, type, full) {
-                                return full.SUBMISSION_ID;
-                            }
-
+                        "aTargets":[2],
+                        "name" : "TIPE_TRANSAKSI",
+                        "mRender" : function(data,type,full){
+                        return full.TIPE_TRANSAKSI;
+                        }
                         },
                         {
-                            "aTargets": [3],
-                            "name" : "DOC_NO",
-                            "mRender": function (data, type, full) {
-                                return full.INVOICE_TYPE;
-                            }
-
-                        },
-
-                        {
-                            "aTargets": [4],
-                            "name" : "GROUP_ID",
-                            "mRender": function (data, type, full) {
-                                return full.TRANSACTION_TYPE;
-                            }
-
+                        "aTargets":[3],
+                        "name" : "CURRENCY_BAYAR",
+                        "mRender" : function(data,type,full){
+                        return full.CURRENCY_BAYAR;
+                        }
                         },
                         {
-                            "aTargets": [5],
-                            "name" : "OSS_ID",
-                            "mRender": function (data, type, full) {
-                                return full.DOCUMENT_TYPE;
-                            }
-
+                        "aTargets":[4],
+                        "name" : "EXCHANGE_RATE",
+                        "mRender" : function(data,type,full){
+                        return full.EXCHANGE_RATE;
+                        }
                         },
                         {
-                            "aTargets": [6],
-                            "name" : "FISC_YEAR",
-                            "mRender": function (data, type, full) {
-                                return full.PAYMENT_TYPE;
-                            }
-
+                        "aTargets":[5],
+                        "name" : "AMOUNT_BAYAR",
+                        "mRender" : function(data,type,full){
+                        return full.AMOUNT_BAYAR;
+                        }
                         },
                         {
-                            "aTargets": [7],
-                            "name" : "DOC_TYPE",
-                            "mRender": function (data, type, full) {
-                                return moment(full.DUE_DATE).format("DD/MM/YYYY");
-                            }
-
+                        "aTargets":[6],
+                        "name" : "EQ_IDR",
+                        "mRender" : function(data,type,full){
+                        return full.EQ_IDR;
+                        }
                         },
                         {
-                            "aTargets": [8],
-                            "name" : "DOC_DATE",
-                            "mRender": function (data, type, full) {
-                                return full.VENDOR_NAME;
-                            }
-
+                        "aTargets":[7],
+                        "name" : "VENDOR",
+                        "mRender" : function(data,type,full){
+                        return full.VENDOR;
+                        }
                         },
                         {
-                            "aTargets": [9],
-                            "name" : "POST_DATE",
-                            "mRender": function (data, type, full) {
-                                return full.CURRENCY;
-
-                            }
+                        "aTargets":[8],
+                        "name" : "HOUSE_BANK",
+                        "mRender" : function(data,type,full){
+                        return full.HOUSE_BANK;
+                        }
                         },
                         {
-                            "aTargets": [10],
-                            "name" : "ENTRY_DATE",
-                            "mRender": function (data, type, full) {
-                                return new Intl.NumberFormat(['ban', 'id']).format(full.TOTAL_INVOICE_AMOUNT);
-                            }
-
+                        "aTargets":[9],
+                        "name" : "NAMA_HOUSE_BANK",
+                        "mRender" : function(data,type,full){
+                        return full.NAMA_HOUSE_BANK;
+                        }
                         },
                         {
-                            "aTargets": [11],
-                            "name" : "DOC_HDR_TXT",
-                            "mRender": function (data, type, full) {
-                                return new Intl.NumberFormat(['ban', 'id']).format(full.GROSS_INVOICE_AMOUNT);
-                            }
-
+                        "aTargets":[10],
+                        "name" : "CASH_CODE",
+                        "mRender" : function(data,type,full){
+                        return full.CASH_CODE;
+                        }
                         },
                         {
-                            "aTargets": [12],
-                            "name" : "CURRENCY",
-                            "mRender": function (data, type, full) {
-                                return full.BANK_ACCOUNT;
-                            }
-
+                        "aTargets":[11],
+                        "name" : "NAMA_CASHCODE",
+                        "mRender" : function(data,type,full){
+                        return full.NAMA_CASHCODE;
+                        }
                         },
                         {
-                            "aTargets": [13],
-                            "name" : "CURR_BAYAR",
-                            "mRender": function (data, type, full) {
-                                return full.TAX_CODE;
-                            }
-
+                        "aTargets":[12],
+                        "name" : "TGL_RENCANA_BAYAR",
+                        "mRender" : function(data,type,full){
+                        return full.TGL_RENCANA_BAYAR;
+                        }
                         },
                         {
-                            "aTargets": [14],
-                            "name" : "EXCH_RATE",
-                            "mRender": function (data, type, full) {
-                                return new Intl.NumberFormat(['ban', 'id']).format(full.NET_INVOICE_AMOUNT) ;
-                            }
-
+                        "aTargets":[13],
+                        "name" : "TGL_ENTRY",
+                        "mRender" : function(data,type,full){
+                        return full.TGL_ENTRY;
+                        }
                         },
                         {
-                            "aTargets": [15],
-                            "name" : "PMT_IND",
-                            "mRender": function (data, type, full) {
-                                return full.EXCHANGE_RATE;
-                            }
+                        "aTargets":[14],
+                        "name" : "SUMBER_DATA",
+                        "mRender" : function(data,type,full){
+                        return full.SUMBER_DATA;
+                        }
                         },
-                        {
-                            "aTargets": [16],
-                            "name" : "TRANS_TYPE",
-                            "mRender": function (data, type, full) {
-                                return full.SPREAD;
-                            }
-                        },
-                        {
-                            "aTargets": [17],
-                            "name" : "SPREAD_VAL",
-                            "mRender": function (data, type, full) {
-                                return full.BANK_PEMBAYAR;
-                            }
-                        },
-                        {
-                            "aTargets": [18],
-                            "name" : "LINE_ITEM",
-                            "mRender": function (data, type, full) {
-                                return moment(full.SOFT_COPY_UPLOAD_DATE).format("DD/MM/YYYY");
-                            }
-                        },
-                        {
-                            "aTargets": [19],
-                            "name" : "BUS_AREA",
-                            "mRender": function (data, type, full) {
-                                const d = new Date(parseInt(full.INVOICE_DATE));
-                                return moment(full.INVOICE_DATE).format("DD/MM/YYYY") ;
-                            }
-                        },
-                        {
-                            "aTargets": [20],
-                            "name" : "AMT_LC",
-                            "mRender": function (data, type, full) {
-                                return full.VENDOR_INVOICE_REF;
-                                // return full.AMT_LC;
-                            }
-                        },
-                        {
-                            "aTargets": [21],
-                            "name" : "AMT_LC",
-                            "mRender": function (data, type, full) {
-                                return full.SKKT_NO;
-                                // return full.AMT_LC;
-                            }
-                        },
-                        {
-                            "aTargets": [22],
-                            "name" : "AMT_LC",
-                            "mRender": function (data, type, full) {
-                                return moment(full.SKKT_DATE).format("L") ;
-
-                            }
-                        },
-                        {
-                            "aTargets": [23],
-                            "name" : "AMT_LC",
-                            "mRender": function (data, type, full) {
-                                return full.WORK_DEFINITION;
-                                // return full.AMT_LC;
-                            }
-                        },
-                        {
-                          "aTargets": [24],
-                          "name" : "SUBMISSION_TRANSACTION_NAME",
-                          "mRender": function (data, type, full) {
-                           return full.SUBMISSION_TRANSACTION_NAME;
-                           // return full.AMT_LC;
-                            }
-                        },
-                        {
-                                                  "aTargets": [25],
-                                                  "name" : "WORK_COMPANY_CODE",
-                                                  "mRender": function (data, type, full) {
-                                                   return full.WORK_COMPANY_CODE;
-                                                   // return full.AMT_LC;
-                                                    }
-                                                },
-                        {
-                                                  "aTargets": [26],
-                                                  "name" : "CASH_CODE",
-                                                  "mRender": function (data, type, full) {
-                                                   return full.CASH_CODE;
-                                                   // return full.AMT_LC;
-                                                    }
-                                                },
-                        {
-                                                  "aTargets": [27],
-                                                  "name" : "NAMA_CASH_CODE",
-                                                  "mRender": function (data, type, full) {
-                                                   return full.NAMA_CASH_CODE;
-                                                   // return full.AMT_LC;
-                                                    }
-                                                },
-                        {
-                                                  "aTargets": [28],
-                                                  "name" : "HOUSE_BANK",
-                                                  "mRender": function (data, type, full) {
-                                                   return full.HOUSE_BANK;
-                                                   // return full.AMT_LC;
-                                                    }
-                                                },
-                         {
-                                                   "aTargets": [29],
-                                                   "name" : "NAMA_HOUSE_BANK",
-                                                   "mRender": function (data, type, full) {
-                                                    return full.NAMA_HOUSE_BANK;
-                                                    // return full.AMT_LC;
-                                                     }
-                                                 },
                     ],
                     "ajax":
                         {
                             "url":
-                                baseUrl + "api_invoice_pilot/hrap_invoice/get_list_vendor_portal",
+                                baseUrl + "api_invoice_pilot/hrap_invoice/list_rekap_all_invoice",
                             "type":
                                 "GET",
                             "dataType":
@@ -428,7 +316,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                                 function (res) {
                                     hideLoadingCss();
-//                                    console.log("cok : ",res);
+                                    console.log("cok : ",res);
                                     let totaltagihan = 0;
                                     let arr = res.data;
                                     arr.forEach(function (val, key) {
