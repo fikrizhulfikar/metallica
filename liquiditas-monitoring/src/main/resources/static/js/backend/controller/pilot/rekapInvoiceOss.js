@@ -100,8 +100,12 @@ function search(state) {
         } else {
             initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val(), $("#cmb_cara_pembayaran").val(), $("#cmb_status_tracking").val())
             // getAllData();
-            srcTglAwal = moment().format("DD/MM/YYYY");
-            srcTglAkhir = moment().format("DD/MM/YYYY");
+            if((srcTglAwal === null || srcTglAwal === "")){
+                srcTglAwal = moment().format("DD/MM/YYYY");
+            }
+            if((srcTglAkhir === null || srcTglAkhir === "")){
+                srcTglAkhir = moment().format("DD/MM/YYYY");
+            }
         }
     }
 

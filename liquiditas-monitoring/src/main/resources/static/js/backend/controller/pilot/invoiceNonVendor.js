@@ -1382,8 +1382,12 @@ function search(state) {
     } else {
         initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_currecny").val(),$("#cmb_jenisdok").val());
 
-        srcTglAwal = moment().format("DD/MM/YYYY");
-        srcTglAkhir = moment().format("DD/MM/YYYY");
+        if((srcTglAwal === null || srcTglAwal === "")){
+            srcTglAwal = moment().format("DD/MM/YYYY");
+        }
+        if((srcTglAkhir === null || srcTglAkhir === "")){
+            srcTglAkhir = moment().format("DD/MM/YYYY");
+        }
     }
 }
 
