@@ -305,6 +305,11 @@ public class InvoicePilotService {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CENTRALIZED_PAYMENT")
                 .withFunctionName("get_oss_xls");
+        AppUtils.getLogger(this).info("xls oss = " +
+
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, ",
+                date_from, date_to);
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("p_tgl_awal", date_from, OracleTypes.VARCHAR)
                 .addValue("p_tgl_akhir", date_to, OracleTypes.VARCHAR)
@@ -349,6 +354,11 @@ public class InvoicePilotService {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CENTRALIZED_PAYMENT")
                 .withFunctionName("get_vendor_portal_xls");
+        AppUtils.getLogger(this).info("xls vip = " +
+
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, ",
+                date_from, date_to);
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("p_tgl_awal", date_from, OracleTypes.VARCHAR)
                 .addValue("p_tgl_akhir", date_to, OracleTypes.VARCHAR)

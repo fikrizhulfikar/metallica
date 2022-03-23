@@ -419,9 +419,9 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                                 "json",
                             "data":
                                 {
-                                    pTglAwal: pTglAwal,
+                                    pTglAwal: pTglAwal.split("/").reverse().join(""),
                                     pTglAkhir:
-                                    pTglAkhir,
+                                    pTglAkhir.split("/").reverse().join(""),
                                     pBank:
                                     pBank,
                                     pCurrency:

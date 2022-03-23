@@ -738,8 +738,11 @@ public class InvoicePilotController {
                 paramDetail.put("DUE_DATE", data.get("DUE_DATE"));
                 paramDetail.put("VENDOR_NAME", data.get("VENDOR_NAME"));
                 paramDetail.put("CURRENCY", data.get("CURRENCY"));
+                paramDetail.put("CURR_BAYAR", data.get("CURR_BAYAR"));
                 paramDetail.put("TOTAL_INVOICE_AMOUNT", data.get("TOTAL_INVOICE_AMOUNT"));
                 paramDetail.put("BANK_ACCOUNT", data.get("BANK_ACCOUNT"));
+                paramDetail.put("BANK_NAME", data.get("BANK_NAME"));
+                paramDetail.put("BANK_BENEF", data.get("BANK_BENEF"));
                 paramDetail.put("GROSS_INVOICE_AMOUNT", data.get("GROSS_INVOICE_AMOUNT"));
                 paramDetail.put("TAX_CODE", data.get("TAX_CODE"));
                 paramDetail.put("NET_INVOICE_AMOUNT", data.get("NET_INVOICE_AMOUNT"));
@@ -752,6 +755,12 @@ public class InvoicePilotController {
                 paramDetail.put("SKKT_NO", data.get("SKKT_NO"));
                 paramDetail.put("SKKT_DATE", data.get("SKKT_DATE"));
                 paramDetail.put("WORK_DEFINITION", data.get("WORK_DEFINITION"));
+                paramDetail.put("SUBMISSION_TRANSACTION_NAME", data.get("SUBMISSION_TRANSACTION_NAME"));
+                paramDetail.put("WORK_COMPANY_CODE", data.get("WORK_COMPANY_CODE"));
+                paramDetail.put("CASH_CODE", data.get("CASH_CODE"));
+                paramDetail.put("NAMA_CASH_CODE", data.get("NAMA_CASH_CODE"));
+                paramDetail.put("HOUSE_BANK", data.get("HOUSE_BANK"));
+                paramDetail.put("NAMA_HOUSE_BANK", data.get("NAMA_HOUSE_BANK"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
