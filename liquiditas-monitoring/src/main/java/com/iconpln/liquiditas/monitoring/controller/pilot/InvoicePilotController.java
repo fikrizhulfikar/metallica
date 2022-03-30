@@ -250,7 +250,7 @@ public class InvoicePilotController {
             @RequestParam(value = "order[0][dir]", defaultValue = "") String sortDir,
             @RequestParam(value = "pTglAwal", defaultValue = "") String pTglAwal,
             @RequestParam(value = "pTglAkhir", defaultValue = "") String pTglAkhir,
-            @RequestParam(value = "pJenisDok", defaultValue = "VALAS") String pJenisDok,
+            @RequestParam(value = "pJenisDok", defaultValue = "ALL") String pJenisDok,
             @RequestParam(value = "pCurrency", defaultValue = "ALL") String pCurrency,
             @RequestParam(value = "search[value]", defaultValue = "") String pSearch
     ) {
@@ -449,6 +449,116 @@ public class InvoicePilotController {
         return mapData;
     }
 
+    @RequestMapping(path = "/xls/nonvendorhead/{pDateFrom}/{pDateTo}/{pCurrency}/{pJenisDok}")
+    public String cetakNonVendorHead(
+            @PathVariable String pDateFrom,
+            @PathVariable String pDateTo,
+            @PathVariable String pCurrency,
+            @PathVariable String pJenisDok,
+
+            HttpServletRequest request, HttpServletResponse response){
+        try {
+            String title = "Rekap Invoice Non Vendor Head";
+            String fileName = "Rekap Invoice Non Vendor Head.xls";
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposistion","attachment; filename=\""+fileName+"\"");
+
+            String date_from = (pDateFrom.equals("null")) ? "" : pDateFrom.replace("-","/");
+            String date_to = (pDateTo.equals("null")) ? "" : pDateTo.replace("-","/");
+
+            List<Map<String, Object>> listData = pilotService.getNonVendorHeadXls(date_from, date_to, pJenisDok, pCurrency, WebUtils.getUsernameLogin());
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+            param.put("TITLE", title);
+            int no = 0;
+            for(Map data : listData){
+                Map paramDetail = new HashMap();
+                paramDetail.put("NO", no += 1);
+                paramDetail.put("COMP_CODE", data.get("COMP_CODE"));
+                paramDetail.put("DOC_NO", data.get("DOC_NO"));
+                paramDetail.put("FISC_YEAR", data.get("FISC_YEAR"));
+                paramDetail.put("DOC_DATE", data.get("DOC_DATE"));
+                paramDetail.put("POST_DATE", data.get("POST_DATE"));
+                paramDetail.put("REFERENCE", data.get("REFERENCE"));
+                paramDetail.put("DOC_HDR_TXT", data.get("DOC_HDR_TXT"));
+                paramDetail.put("CURRENCY", data.get("CURRENCY"));
+                paramDetail.put("EXCH_RATE", Double.parseDouble(data.get("EXCH_RATE").toString()));
+                paramDetail.put("SUMBER_DANA", data.get("SUMBER_DANA"));
+                paramDetail.put("TGL_RENCANA_BYR", data.get("TGL_RENCANA_BYR"));
+                paramDetail.put("JENIS_DOC", data.get("JENIS_DOC"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/template_nonvendor_head.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            System.out.println("List Data Excel All Pilot: "+listData);
+            return null;
+        } catch (IOException | InvalidFormatException e) {
+            e.printStackTrace();
+            return "Gagal melakukan export data"+ e.getMessage();
+        }
+    }
+
+    @RequestMapping(path = "/xls/nonvendoritem/{pDateFrom}/{pDateTo}/{pDocNo}/{pCompCode}/{pFiscalYear}")
+    public String cetakNonVendorItem(
+            @PathVariable String pDateFrom,
+            @PathVariable String pDateTo,
+            @PathVariable String pDocNo,
+            @PathVariable String pCompCode,
+            @PathVariable String pFiscalYear,
+
+            HttpServletRequest request, HttpServletResponse response){
+        try {
+            String title = "Rekap Invoice Non Vendor Item";
+            String fileName = "Rekap Invoice Non Vendor Item.xls";
+            ServletOutputStream os = response.getOutputStream();
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-Disposistion","attachment; filename=\""+fileName+"\"");
+
+            String date_from = (pDateFrom.equals("null")) ? "" : pDateFrom.replace("-","/");
+            String date_to = (pDateTo.equals("null")) ? "" : pDateTo.replace("-","/");
+
+            List<Map<String, Object>> listData = pilotService.getNonVendorItemXls(date_from, date_to, pDocNo.replace(".","/"), pCompCode, pFiscalYear, WebUtils.getUsernameLogin());
+            Map param = new HashMap();
+            List<Map<String, Object>> listDetail = new ArrayList<>();
+            param.put("TITLE", title);
+            int no = 0;
+            for(Map data : listData){
+                Map paramDetail = new HashMap();
+                paramDetail.put("NO", no += 1);
+                paramDetail.put("COMP_CODE", data.get("COMP_CODE"));
+                paramDetail.put("DOC_NO", data.get("DOC_NO"));
+                paramDetail.put("FISC_YEAR", data.get("FISC_YEAR"));
+                paramDetail.put("LINE_ITEM", data.get("LINE_ITEM"));
+                paramDetail.put("DR_CR_IND", data.get("DR_CR_IND"));
+                paramDetail.put("GL_ACCOUNT", data.get("GL_ACCOUNT"));
+                paramDetail.put("BUS_AREA", data.get("BUS_AREA"));
+                paramDetail.put("ITEM_TEXT", data.get("ITEM_TEXT"));
+                paramDetail.put("CURRENCY", data.get("CURRENCY"));
+                paramDetail.put("AMOUNT", Double.parseDouble(data.get("AMOUNT").toString()) );
+                paramDetail.put("CASH_CODE", data.get("CASH_CODE"));
+                paramDetail.put("COST_CENTER", data.get("COST_CENTER"));
+                paramDetail.put("JENIS_DOK", data.get("JENIS_DOK"));
+                listDetail.add(paramDetail);
+            }
+            param.put("DETAILS", listDetail);
+            XLSTransformer transformer = new XLSTransformer();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/template_nonvendor_item.xls").getInputStream();
+            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            workbook.write(os);
+            os.flush();
+            System.out.println("List Data Excel All Pilot: "+listData);
+            return null;
+        } catch (IOException | InvalidFormatException e) {
+            e.printStackTrace();
+            return "Gagal melakukan export data"+ e.getMessage();
+        }
+    }
+
     @RequestMapping(path = "/xls/invoice/{pDateFrom}/{pDateTo}/{pCurrency}/{pCarabayar}/{pHouseBank}")
     public String cetakHrApnvoicePilot(
             @PathVariable String pDateFrom,
@@ -645,7 +755,10 @@ public class InvoicePilotController {
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
 
-            List<Map<String, Object>> listData = pilotService.getInvoiceOssXls(pDateFrom.replace("-","/"), pDateTo.replace("-","/"), pBank, pCurrency, WebUtils.getUsernameLogin());
+            String date_from = (pDateFrom.equals("null")) ? "" : pDateFrom.replace("-","/");
+            String date_to = (pDateTo.equals("null")) ? "" : pDateTo.replace("-","/");
+
+            List<Map<String, Object>> listData = pilotService.getInvoiceOssXls(date_from, date_to, pBank, pCurrency, WebUtils.getUsernameLogin());
 
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
@@ -665,7 +778,7 @@ public class InvoicePilotController {
                 paramDetail.put("ENTRY_DATE", data.get("ENTRY_DATE"));
                 paramDetail.put("DOC_HDR_TXT", data.get("DOC_HDR_TXT"));
                 paramDetail.put("CURRENCY", data.get("CURRENCY"));
-                paramDetail.put("EXCH_RATE", data.get("EXCH_RATE"));
+                paramDetail.put("EXCH_RATE", Double.parseDouble(data.get("EXCH_RATE").toString()));
                 paramDetail.put("TRANS_TYPE", data.get("TRANS_TYPE"));
                 paramDetail.put("OSS_ID", data.get("OSS_ID"));
                 paramDetail.put("SUMBER_DANA", data.get("SUMBER_DANA"));
@@ -681,12 +794,12 @@ public class InvoicePilotController {
                 paramDetail.put("TGL_TERIMA_INVOICE", data.get("TGL_TERIMA_INVOICE"));
                 paramDetail.put("INPUT_BY", data.get("INPUT_BY"));
                 paramDetail.put("LINE_NO", data.get("LINE_NO"));
-                paramDetail.put("AMT_LC", data.get("AMT_LC"));
-                paramDetail.put("AMT_TC", data.get("AMT_TC"));
-                paramDetail.put("AMT_WITH_BASE_LC", data.get("AMT_WITH_BASE_LC"));
-                paramDetail.put("AMT_WITH_LC", data.get("AMT_WITH_LC"));
-                paramDetail.put("AMT_WITH_BASE_TC", data.get("AMT_WITH_BASE_TC"));
-                paramDetail.put("AMT_WITH_TC", data.get("AMT_WITH_TC"));
+                paramDetail.put("AMT_LC", Double.parseDouble(data.get("AMT_LC").toString()));
+                paramDetail.put("AMT_TC", Double.parseDouble(data.get("AMT_TC").toString()));
+                paramDetail.put("AMT_WITH_BASE_LC", Double.parseDouble(data.get("AMT_WITH_BASE_LC").toString()));
+                paramDetail.put("AMT_WITH_LC", Double.parseDouble(data.get("AMT_WITH_LC").toString()));
+                paramDetail.put("AMT_WITH_BASE_TC", Double.parseDouble(data.get("AMT_WITH_BASE_TC").toString()));
+                paramDetail.put("AMT_WITH_TC", Double.parseDouble(data.get("AMT_WITH_TC").toString()));
                 paramDetail.put("ASSIGNMENT", data.get("ASSIGNMENT"));
                 paramDetail.put("ITEM_TEXT", data.get("ITEM_TEXT"));
                 paramDetail.put("CUSTOMER", data.get("CUSTOMER"));
