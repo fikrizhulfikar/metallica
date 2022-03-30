@@ -800,7 +800,10 @@ public class InvoicePilotController {
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
 
-            List<Map<String, Object>> listData = pilotService.getRealisasiInvoiceXls(pDateFrom, pDateTo, pBank, pCurrency, WebUtils.getUsernameLogin());
+            String date_from = (pDateFrom.equals("null")) ? "" : pDateFrom.replace("-","/");
+            String date_to = (pDateTo.equals("null")) ? "" : pDateTo.replace("-","/");
+
+            List<Map<String, Object>> listData = pilotService.getRealisasiInvoiceXls(date_from, date_to, pBank, pCurrency, WebUtils.getUsernameLogin());
 
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
@@ -817,7 +820,7 @@ public class InvoicePilotController {
                 paramDetail.put("OSS_ID", data.get("OSS_ID"));
                 paramDetail.put("INV_STATUS", data.get("INV_STATUS"));
                 paramDetail.put("PMT_DOC_NO", data.get("PMT_DOC_NO"));
-                paramDetail.put("PMT_AMOUNT", data.get("PMT_AMOUNT"));
+                paramDetail.put("PMT_AMOUNT", Double.parseDouble(data.get("PMT_AMOUNT").toString().replace(",",".")));
                 paramDetail.put("PMT_RESIDUAL_IND", data.get("PMT_RESIDUAL_IND"));
                 paramDetail.put("PMT_CURRENCY", data.get("PMT_CURRENCY"));
                 paramDetail.put("PMT_HOUSE_BANK", data.get("PMT_HOUSE_BANK"));
@@ -838,15 +841,15 @@ public class InvoicePilotController {
                 paramDetail.put("NAMA_BENEF", data.get("NAMA_BENEF"));
                 paramDetail.put("VERIFIED_BY", data.get("VERIFIED_BY"));
                 paramDetail.put("VERIFIED_ON", data.get("VERIFIED_ON"));
-                paramDetail.put("EXCH_RATE", data.get("EXCH_RATE"));
+                paramDetail.put("EXCH_RATE", Double.parseDouble(data.get("EXCH_RATE").toString()));
                 paramDetail.put("DOC_TYPE", data.get("DOC_TYPE"));
                 paramDetail.put("TGL_RENCANA_BYR", data.get("TGL_RENCANA_BYR"));
                 paramDetail.put("JENIS_DOK", data.get("JENIS_DOK"));
                 paramDetail.put("ORI_CURRENCY", data.get("ORI_CURRENCY"));
-                paramDetail.put("ORI_AMOUNT", data.get("ORI_AMOUNT"));
+//                paramDetail.put("ORI_AMOUNT", Double.parseDouble(data.get("ORI_AMOUNT").toString()));
                 paramDetail.put("JENIS_TRANSAKSI", data.get("JENIS_TRANSAKSI"));
                 paramDetail.put("TIPE_TRANSAKSI", data.get("TIPE_TRANSAKSI"));
-                paramDetail.put("EQ_IDR", data.get("EQ_IDR"));
+                paramDetail.put("EQ_IDR", Double.parseDouble(data.get("EQ_IDR").toString()));
                 paramDetail.put("CREATE_DATE", data.get("CREATE_DATE"));
                 listDetail.add(paramDetail);
             }
