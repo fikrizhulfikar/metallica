@@ -463,7 +463,11 @@ public class InvoicePilotController {
             ServletOutputStream os = response.getOutputStream();
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-Disposistion","attachment; filename=\""+fileName+"\"");
-            List<Map<String, Object>> listData = pilotService.getHrApInvoicePilotXls(pDateFrom.replace("-","/"), pDateTo.replace("-","/"), pCurrency, pCarabayar, pHouseBank, WebUtils.getUsernameLogin());
+
+            String date_from = (pDateFrom.equals("null")) ? "" : pDateFrom.replace("-","/");
+            String date_to = (pDateTo.equals("null")) ? "" : pDateTo.replace("-","/");
+
+            List<Map<String, Object>> listData = pilotService.getHrApInvoicePilotXls(date_from, date_to, pCurrency, pCarabayar, pHouseBank, WebUtils.getUsernameLogin());
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
             param.put("TITLE", title);
