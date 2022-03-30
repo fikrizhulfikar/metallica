@@ -119,11 +119,11 @@ function getAllData() {
 
 function exportXls() {
     var tglAwal = "null";
-    if (srcTglAwal !== "") {
+    if (srcTglAwal !== "" && srcTglAwal !== null) {
         tglAwal = srcTglAwal.split("/").reverse().join("");
     }
     var tglAkhir = "null";
-    if (srcTglAkhir !== "") {
+    if (srcTglAkhir !== "" && srcTglAkhir !== null) {
         tglAkhir = srcTglAkhir.split("/").reverse().join("");
     }
     window.open(baseUrl + "api_invoice_pilot/hrap_invoice/xls/vip/" + tglAwal.replaceAll("/","-") + "/" + tglAkhir.replaceAll("/","-") + "/" + $("#cmb_bank").val() + "/" + $("#cmb_currecny").val());
@@ -135,12 +135,12 @@ function search(state) {
         } else {
             initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val())
             // getAllData();
-            if((srcTglAwal === null || srcTglAwal === "")){
-                srcTglAwal = moment().format("DD/MM/YYYY");
-            }
-            if((srcTglAkhir === null || srcTglAkhir === "")){
-                srcTglAkhir = moment().format("DD/MM/YYYY");
-            }
+            // if((srcTglAwal === null || srcTglAwal === "")){
+            //     srcTglAwal = moment().format("DD/MM/YYYY");
+            // }
+            // if((srcTglAkhir === null || srcTglAkhir === "")){
+            //     srcTglAkhir = moment().format("DD/MM/YYYY");
+            // }
         }
     }
 
