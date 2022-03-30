@@ -724,7 +724,10 @@ public class InvoicePilotController {
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
 
-            List<Map<String, Object>> listData = pilotService.getVendorPortalXls(pDateFrom, pDateTo,pBank,pCurrency,WebUtils.getUsernameLogin());
+            String date_from = (pDateFrom.equals("null")) ? "" : pDateFrom.replace("-","/");
+            String date_to = (pDateTo.equals("null")) ? "" : pDateTo.replace("-","/");
+
+            List<Map<String, Object>> listData = pilotService.getVendorPortalXls(date_from, date_to,pBank,pCurrency,WebUtils.getUsernameLogin());
 
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
