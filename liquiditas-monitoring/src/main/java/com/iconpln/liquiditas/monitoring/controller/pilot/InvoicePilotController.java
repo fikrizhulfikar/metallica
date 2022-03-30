@@ -746,14 +746,14 @@ public class InvoicePilotController {
                 paramDetail.put("VENDOR_NAME", data.get("VENDOR_NAME"));
                 paramDetail.put("CURRENCY", data.get("CURRENCY"));
                 paramDetail.put("CURR_BAYAR", data.get("CURR_BAYAR"));
-                paramDetail.put("TOTAL_INVOICE_AMOUNT", data.get("TOTAL_INVOICE_AMOUNT"));
+                paramDetail.put("TOTAL_INVOICE_AMOUNT", Double.parseDouble(data.get("TOTAL_INVOICE_AMOUNT").toString()));
                 paramDetail.put("BANK_ACCOUNT", data.get("BANK_ACCOUNT"));
                 paramDetail.put("BANK_NAME", data.get("BANK_NAME"));
                 paramDetail.put("BANK_BENEF", data.get("BANK_BENEF"));
-                paramDetail.put("GROSS_INVOICE_AMOUNT", data.get("GROSS_INVOICE_AMOUNT"));
+                paramDetail.put("GROSS_INVOICE_AMOUNT", Double.parseDouble(data.get("GROSS_INVOICE_AMOUNT").toString()));
                 paramDetail.put("TAX_CODE", data.get("TAX_CODE"));
-                paramDetail.put("NET_INVOICE_AMOUNT", data.get("NET_INVOICE_AMOUNT"));
-                paramDetail.put("EXCHANGE_RATE", data.get("EXCHANGE_RATE"));
+                paramDetail.put("NET_INVOICE_AMOUNT", Double.parseDouble(data.get("NET_INVOICE_AMOUNT").toString()));
+                paramDetail.put("EXCHANGE_RATE", Double.parseDouble(data.get("EXCHANGE_RATE").toString()));
                 paramDetail.put("SPREAD", data.get("SPREAD"));
                 paramDetail.put("BANK_PEMBAYAR", data.get("BANK_PEMBAYAR"));
                 paramDetail.put("SOFT_COPY_UPLOAD_DATE", data.get("SOFT_COPY_UPLOAD_DATE"));
