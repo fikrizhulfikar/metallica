@@ -84,11 +84,11 @@ function getTotalTagihan() {
 
 function exportXls() {
     var tglAwal = "null";
-    if (srcTglAwal != "") {
+    if (srcTglAwal !== "" && srcTglAwal !== null) {
         tglAwal = srcTglAwal
     }
     var tglAkhir = "null";
-    if (srcTglAkhir != "") {
+    if (srcTglAwal !== "" && srcTglAwal !== null) {
         tglAkhir = srcTglAkhir
     }
     window.open(baseUrl + "api_invoice_pilot/hrap_invoice/xls/invoice/" + tglAwal.replaceAll("/","-") + "/" + tglAkhir.replaceAll("/","-") + "/" + $("#cmb_currecny").val() + "/" + $("#cmb_cara_pembayaran").val() + "/" + $("#cmb_bank").val());
@@ -100,12 +100,12 @@ function search(state) {
         } else {
             initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_bank").val(), $("#cmb_currecny").val(), $("#cmb_cara_pembayaran").val(), $("#cmb_status_tracking").val())
             // getAllData();
-            if((srcTglAwal === null || srcTglAwal === "")){
-                srcTglAwal = moment().format("DD/MM/YYYY");
-            }
-            if((srcTglAkhir === null || srcTglAkhir === "")){
-                srcTglAkhir = moment().format("DD/MM/YYYY");
-            }
+            // if((srcTglAwal === null || srcTglAwal === "")){
+            //     srcTglAwal = moment().format("DD/MM/YYYY");
+            // }
+            // if((srcTglAkhir === null || srcTglAkhir === "")){
+            //     srcTglAkhir = moment().format("DD/MM/YYYY");
+            // }
         }
     }
 
