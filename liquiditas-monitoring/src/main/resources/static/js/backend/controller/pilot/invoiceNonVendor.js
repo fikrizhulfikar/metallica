@@ -17,6 +17,7 @@ var table_data_length;
 var status_tracking;
 
 $(document).ready(function () {
+    $("#xls_item").hide();
     let dt = $('#tanggal_akhir').datepicker({
         dateFormat: 'dd/mm/yy',
         onSelect : (dateTo) => {
@@ -384,14 +385,30 @@ function isBalance(val){
 
 function exportXls() {
     var tglAwal = "null";
-    if (srcTglAwal != "") {
-        tglAwal = srcTglAwal
+    if (srcTglAwal !== "" && srcTglAwal !== null) {
+        tglAwal = srcTglAwal.split("/").reverse().join("");
     }
     var tglAkhir = "null";
-    if (srcTglAkhir != "") {
-        tglAkhir = srcTglAkhir
+    if (srcTglAkhir !== "" && srcTglAkhir !== null) {
+        tglAkhir = srcTglAkhir.split("/").reverse().join("");
     }
-    window.open(baseUrl + "api_operator/pembelian_valas_trx/xls/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currecny").val());
+    window.open(baseUrl + "api_invoice_pilot/hrap_invoice/xls/nonvendorhead/" + tglAwal + "/" + tglAkhir + "/" + $("#cmb_currecny").val()+"/"+$("#cmb_jenisdok").val());
+}
+
+function exportXlsItem() {
+    var tglAwal = "null";
+    if (srcTglAwal !== "" && srcTglAwal !== null) {
+        tglAwal = srcTglAwal.split("/").reverse().join("");
+    }
+    var tglAkhir = "null";
+    if (srcTglAkhir !== "" && srcTglAkhir !== null) {
+        tglAkhir = srcTglAkhir.split("/").reverse().join("");
+    }
+    let doc_no = document.querySelector("#pDetailDocumentNumber").value;
+    let comp_code = document.querySelector("#pCompCode").value;
+    let fiscal_year = document.querySelector("#pFiscalYear").value;
+
+    window.open(baseUrl + "api_invoice_pilot/hrap_invoice/xls/nonvendoritem/" + tglAwal + "/" + tglAkhir + "/" + doc_no.replaceAll("/",".")+"/"+comp_code+"/"+fiscal_year);
 }
 
 
@@ -1234,8 +1251,12 @@ function getDetails(doc_no, comp_code, fisc_year) {
     $("#filter").hide();
     $("#btn-add-rekap").hide();
     $(".fungsional-button").hide();
+    $("#xls_head").hide();
+    $("#xls_item").show();
 
-
+    document.querySelector("#pDetailDocumentNumber").value = doc_no;
+    document.querySelector("#pCompCode").value = comp_code;
+    document.querySelector("#pFiscalYear").value = fisc_year;
 
     showLoadingCss();
     pembelianValasDetail = $("#table-main-detail").DataTable({
@@ -1362,6 +1383,8 @@ function back(){
             $("#filter").show();
             $("#btn-add-rekap").show();
             $(".fungsional-button").show();
+            $("#xls_item").hide();
+            $("#xls_head").show();
             tablePembelianValas.ajax.reload();
             pembelianValasDetail.destroy();
         }
@@ -1382,12 +1405,12 @@ function search(state) {
     } else {
         initDataTable($("#tanggal_awal").val(), $("#tanggal_akhir").val(), $("#cmb_currecny").val(),$("#cmb_jenisdok").val());
 
-        if((srcTglAwal === null || srcTglAwal === "")){
-            srcTglAwal = moment().format("DD/MM/YYYY");
-        }
-        if((srcTglAkhir === null || srcTglAkhir === "")){
-            srcTglAkhir = moment().format("DD/MM/YYYY");
-        }
+        // if((srcTglAwal === null || srcTglAwal === "")){
+        //     srcTglAwal = moment().format("DD/MM/YYYY");
+        // }
+        // if((srcTglAkhir === null || srcTglAkhir === "")){
+        //     srcTglAkhir = moment().format("DD/MM/YYYY");
+        // }
     }
 }
 

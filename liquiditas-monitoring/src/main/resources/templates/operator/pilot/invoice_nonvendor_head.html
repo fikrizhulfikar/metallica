@@ -32,7 +32,7 @@
         <li class="breadcrumb-item active" style="cursor: default">Pembelian Valas Belum Diapprove</li>
         <li class="breadcrumb-menu d-md-down-none fungsional-button">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
+                <button id="xls_head" style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXls()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
                 <button style="font-style: italic; cursor: pointer" id="btn-add-rekap" class="btn btn-secondary" onclick="openFormNew('')" sec:authorize="hasAnyAuthority('ROLE_FCL_SETTLEMENT','ROLE_ADMIN','ROLE_PRIMARY_ENERGY','ROLE_CENTRALIZED_RECEIPT')">
                     <i class="fas fa-plus-square"></i> &nbsp;New Data
                 </button>
@@ -238,24 +238,19 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="pDetailPmtProposalId">Proposal Payment Id :</label>
-                                <input type="text" class="form-control" id="pDetailPmtProposalId" readonly="readonly"/>
+                                <label for="pCompCode">Company Code :</label>
+                                <input type="text" class="form-control" id="pCompCode" readonly="readonly"/>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="pDetailReference">Reference :</label>
-                                <input type="text" class="form-control" id="pDetailReference" readonly="readonly"/>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group just-for-input-data">
-                                <label for="pDetailLineNo">Line Number :</label>
-                                <input type="text" class="form-control" id="pDetailLineNo" readonly="readonly"/>
+                                <label for="pFiscalYear">Fiscal Year :</label>
+                                <input type="text" class="form-control" id="pFiscalYear" readonly="readonly"/>
                             </div>
                         </div>
                     </div>
                     <div class="just-for-input-data" align="right">
+                        <button id="xls_item" style="font-style: italic; cursor: pointer" class="btn btn-secondary" onclick="exportXlsItem()"><i class="fas fa-file-excel"></i>&nbsp;Xls</button>
                         <button onclick="AddToTable()" class="btn btn-success"><i class="fa fa-plus-square"></i>&nbsp;Add</button>
                     </div>
                 </div>
