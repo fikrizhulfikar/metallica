@@ -4,7 +4,6 @@ import com.iconpln.liquiditas.core.utils.AppUtils;
 import oracle.jdbc.OracleTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -287,17 +286,27 @@ public class InvoicePilotService {
         return (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, param);
     }
 
-    public List<Map<String, Object>> getHrApInvoicePilotXls(String date_from, String date_to, String curr, String mtd_byr, String house_bank, String usr_id){
+    public ArrayList getHrApInvoicePilotXls(String date_from, String date_to, String curr, String mtd_byr, String house_bank, String usr_id){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CENTRALIZED_PAYMENT")
                 .withFunctionName("get_invoice_xls");
+        AppUtils.getLogger(this).info("xls aphr = " +
+
+                        "pTglAwal : {}, " +
+                        "MtdByar : {}, " +
+                        "Curr : {}, " +
+                        "HOuseBank : {}, " +
+                        "Userid : {}, " +
+                        "pTglAkhir : {}, ",
+                date_from, mtd_byr, curr, house_bank, usr_id, date_to);
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("p_tgl_awal", date_from, OracleTypes.VARCHAR)
                 .addValue("p_tgl_akhir", date_to, OracleTypes.VARCHAR)
                 .addValue("p_currency", curr, OracleTypes.VARCHAR)
                 .addValue("p_house_bank", mtd_byr, OracleTypes.VARCHAR)
                 .addValue("p_metode_bayar", house_bank, OracleTypes.VARCHAR)
-                .addValue("p_user_id", usr_id, OracleTypes.VARCHAR);
+                .addValue("p_user_id", usr_id, OracleTypes.VARCHAR)
+                .addValue("out_data", OracleTypes.CURSOR);
         return simpleJdbcCall.executeFunction(ArrayList.class,param);
     }
 
@@ -350,12 +359,12 @@ public class InvoicePilotService {
                 .addValue("p_user_id", usr_id, OracleTypes.VARCHAR);
         return simpleJdbcCall.executeFunction(ArrayList.class,param);
     }
+
     public List<Map<String, Object>> getVendorPortalXls(String date_from, String date_to, String bank, String curr, String usr_id){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CENTRALIZED_PAYMENT")
                 .withFunctionName("get_vendor_portal_xls");
         AppUtils.getLogger(this).info("xls vip = " +
-
                         "pTglAwal : {}, " +
                         "pTglAkhir : {}, ",
                 date_from, date_to);
@@ -364,7 +373,48 @@ public class InvoicePilotService {
                 .addValue("p_tgl_akhir", date_to, OracleTypes.VARCHAR)
                 .addValue("p_bank", bank, OracleTypes.VARCHAR)
                 .addValue("p_cur", curr, OracleTypes.VARCHAR)
-                .addValue("p_user_id", usr_id, OracleTypes.VARCHAR);
+                .addValue("p_user_id", usr_id, OracleTypes.VARCHAR)
+                .addValue("out_data", OracleTypes.CURSOR);
+
+        return simpleJdbcCall.executeFunction(ArrayList.class,param);
+    }
+
+    public List<Map<String, Object>> getNonVendorHeadXls(String date_from, String date_to, String jenis_dok, String curr, String usr_id){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CENTRALIZED_PAYMENT")
+                .withFunctionName("get_nonvendor_head_xls");
+        AppUtils.getLogger(this).info("xls vip = " +
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, ",
+                date_from, date_to);
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", date_from, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", date_to, OracleTypes.VARCHAR)
+                .addValue("p_jenis_dok", jenis_dok, OracleTypes.VARCHAR)
+                .addValue("p_currency", curr, OracleTypes.VARCHAR)
+                .addValue("p_user_id", usr_id, OracleTypes.VARCHAR)
+                .addValue("out_data", OracleTypes.CURSOR);
+
+        return simpleJdbcCall.executeFunction(ArrayList.class,param);
+    }
+
+    public List<Map<String, Object>> getNonVendorItemXls(String date_from, String date_to, String doc_no, String comp_code, String fisc_year, String usr_id){
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
+                .withCatalogName("PKG_CENTRALIZED_PAYMENT")
+                .withFunctionName("get_nonvendor_item_xls");
+        AppUtils.getLogger(this).info("xls vip = " +
+                        "pTglAwal : {}, " +
+                        "pTglAkhir : {}, ",
+                date_from, date_to);
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("p_tgl_awal", date_from, OracleTypes.VARCHAR)
+                .addValue("p_tgl_akhir", date_to, OracleTypes.VARCHAR)
+                .addValue("p_fisc_year", fisc_year, OracleTypes.VARCHAR)
+                .addValue("p_doc_no", doc_no, OracleTypes.VARCHAR)
+                .addValue("p_user_id", usr_id, OracleTypes.VARCHAR)
+                .addValue("p_comp_code", comp_code, OracleTypes.VARCHAR)
+                .addValue("out_data", OracleTypes.CURSOR);
+
         return simpleJdbcCall.executeFunction(ArrayList.class,param);
     }
 }
