@@ -996,7 +996,10 @@ public class InvoicePilotController {
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + namaFile + "\"");
 
-            List<Map<String, Object>> listData = pilotService.getRekapAllInvoice(pDateFrom, pDateTo,pBank,pCurrency,WebUtils.getUsernameLogin());
+            String date_from = (pDateFrom.equals("null")) ? "" : pDateFrom.replace("-","/");
+            String date_to = (pDateTo.equals("null")) ? "" : pDateTo.replace("-","/");
+
+            List<Map<String, Object>> listData = pilotService.getRekapAllInvoice(date_from, date_to,pBank,pCurrency,WebUtils.getUsernameLogin());
 
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
@@ -1009,9 +1012,9 @@ public class InvoicePilotController {
                 paramDetail.put("JENIS_TRANSAKSI", data.get("JENIS_TRANSAKSI"));
                 paramDetail.put("TIPE_TRANSAKSI", data.get("TIPE_TRANSAKSI"));
                 paramDetail.put("CURRENCY_BAYAR", data.get("CURRENCY_BAYAR"));
-                paramDetail.put("EXCHANGE_RATE", data.get("EXCHANGE_RATE"));
-                paramDetail.put("AMOUNT_BAYAR", data.get("AMOUNT_BAYAR"));
-                paramDetail.put("EQ_IDR", data.get("EQ_IDR"));
+                paramDetail.put("EXCHANGE_RATE", Double.parseDouble(data.get("EXCHANGE_RATE").toString()));
+                paramDetail.put("AMOUNT_BAYAR", Double.parseDouble(data.get("AMOUNT_BAYAR").toString()));
+                paramDetail.put("EQ_IDR", Double.parseDouble(data.get("EQ_IDR").toString()));
                 paramDetail.put("VENDOR", data.get("VENDOR"));
                 paramDetail.put("HOUSE_BANK", data.get("HOUSE_BANK"));
                 paramDetail.put("NAMA_HOUSE_BANK", data.get("NAMA_HOUSE_BANK"));

@@ -351,6 +351,14 @@ public class InvoicePilotService {
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CENTRALIZED_PAYMENT")
                 .withFunctionName("get_rekap_all_invoice_xls");
+
+        AppUtils.getLogger(this).info("realisasi get = " +
+
+                        "pTglAwal : {}, " +
+                        "pTglAwal : {}, " +
+                        "bank : {}, " +
+                        "currency : {}, ",
+                date_from, date_to, bank, curr);
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("p_tgl_awal", date_from, OracleTypes.VARCHAR)
                 .addValue("p_tgl_akhir", date_to, OracleTypes.VARCHAR)
