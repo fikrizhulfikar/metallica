@@ -4,8 +4,11 @@ import com.iconpln.liquiditas.core.pilot.InvoicePilotService;
 import com.iconpln.liquiditas.core.utils.AppUtils;
 import com.iconpln.liquiditas.monitoring.utils.WebUtils;
 import net.sf.jxls.transformer.XLSTransformer;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.util.ZipSecureFile;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.*;
@@ -749,7 +752,7 @@ public class InvoicePilotController {
             HttpServletResponse response) {
         try {
             String title = "REKAP Invoice Oss Pilot";
-            String namaFile = "rekap_invoice_oss_pilot.xls";
+            String namaFile = "rekap_invoice_oss_pilot.xlsx";
 
             ServletOutputStream os = response.getOutputStream();
             response.setContentType("application/vnd.ms-excel");
@@ -799,12 +802,19 @@ public class InvoicePilotController {
                 paramDetail.put("AMT_WITH_BASE_LC", Double.parseDouble(data.get("AMT_WITH_BASE_LC").toString()));
                 paramDetail.put("AMT_WITH_LC", Double.parseDouble(data.get("AMT_WITH_LC").toString()));
                 paramDetail.put("AMT_WITH_BASE_TC", Double.parseDouble(data.get("AMT_WITH_BASE_TC").toString()));
-                paramDetail.put("AMT_WITH_TC", Double.parseDouble(data.get("AMT_WITH_TC").toString()));
+                paramDetail.put("TOTAL_AMT_TC", Double.parseDouble(data.get("TOTAL_AMT_TC").toString()));
+                paramDetail.put("TOTAL_AMT_LC", Double.parseDouble(data.get("TOTAL_AMT_LC").toString()));
+                paramDetail.put("AMOUNT_BAYAR", Double.parseDouble(data.get("AMOUNT_BAYAR").toString()));
+                paramDetail.put("AMT_WITH_TC", (!data.get("AMT_WITH_TC").equals("-")) ? Double.parseDouble(data.get("AMT_WITH_TC").toString()) : "-");
                 paramDetail.put("ASSIGNMENT", data.get("ASSIGNMENT"));
                 paramDetail.put("ITEM_TEXT", data.get("ITEM_TEXT"));
                 paramDetail.put("CUSTOMER", data.get("CUSTOMER"));
                 paramDetail.put("CUSTOMER_NAME", data.get("CUSTOMER_NAME"));
                 paramDetail.put("VENDOR", data.get("VENDOR"));
+                paramDetail.put("VENDOR_NAME", data.get("VENDOR_NAME"));
+                paramDetail.put("VERIFIED_ON", data.get("VERIFIED_ON"));
+                paramDetail.put("TGL_TAGIHAN_DITERIMA", data.get("TGL_TAGIHAN_DITERIMA"));
+
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
@@ -959,10 +969,10 @@ public class InvoicePilotController {
                 paramDetail.put("TGL_RENCANA_BYR", data.get("TGL_RENCANA_BYR"));
                 paramDetail.put("JENIS_DOK", data.get("JENIS_DOK"));
                 paramDetail.put("ORI_CURRENCY", data.get("ORI_CURRENCY"));
-//                paramDetail.put("ORI_AMOUNT", Double.parseDouble(data.get("ORI_AMOUNT").toString()));
+                paramDetail.put("ORI_AMOUNT", Double.parseDouble(data.get("ORI_AMOUNT").toString().replace(",",".")));
                 paramDetail.put("JENIS_TRANSAKSI", data.get("JENIS_TRANSAKSI"));
                 paramDetail.put("TIPE_TRANSAKSI", data.get("TIPE_TRANSAKSI"));
-                paramDetail.put("EQ_IDR", Double.parseDouble(data.get("EQ_IDR").toString()));
+                paramDetail.put("EQ_IDR", (data.get("EQ_IDR").equals("-")) ? "-" : Double.parseDouble(data.get("EQ_IDR").toString()));
                 paramDetail.put("CREATE_DATE", data.get("CREATE_DATE"));
                 listDetail.add(paramDetail);
             }
@@ -970,6 +980,9 @@ public class InvoicePilotController {
 
             XLSTransformer transformer = new XLSTransformer();
             InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/template_realisasi_invoice_pilot.xls").getInputStream();
+//            ZipSecureFile.setMinInflateRatio(-1.0d);
+//            XSSFWorkbook xssfWorkbook = new XSSFWorkbook(streamTemplate);
+//            transformer.transformWorkbook(xssfWorkbook,param);
             Workbook workbook = transformer.transformXLS(streamTemplate, param);
             workbook.write(os);
             os.flush();
@@ -990,7 +1003,7 @@ public class InvoicePilotController {
             HttpServletResponse response) {
         try {
             String title = "Rekap All Invoice";
-            String namaFile = "rekap_all_invoice.xls";
+            String namaFile = "rekap_all_invoice.xlsx";
 
             ServletOutputStream os = response.getOutputStream();
             response.setContentType("application/vnd.ms-excel");
@@ -1028,8 +1041,9 @@ public class InvoicePilotController {
             param.put("DETAILS", listDetail);
 
             XLSTransformer transformer = new XLSTransformer();
-            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/template_rekap_all_invoice.xls").getInputStream();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/template_rekap_all_invoice.xlsx").getInputStream();
             Workbook workbook = transformer.transformXLS(streamTemplate, param);
+//            XSSFWorkbook workbook = transformer.transformWorkbook(streamTemplate, param);
             workbook.write(os);
             os.flush();
             return null;
