@@ -95,7 +95,7 @@
                         <input class="input100" type="password" placeholder="Password" id="password" name="password"/>
                         <span class="focus-input100"></span>
                     </div>
-                    <div class="wrap-input100 validate-input">
+                    <div th:if="${@environment.getProperty('login.captcha') == 'yes'}" class="wrap-input100 validate-input">
                         <div class="g-recaptcha" th:attr="data-sitekey=${@environment.getProperty('google.recaptcha.key.site')}"></div>
                     </div>
                     <div class="container-login100-form-btn">

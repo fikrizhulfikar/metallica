@@ -474,7 +474,7 @@ public class InvoicePilotController {
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
             param.put("TITLE", title);
-            int no = 0;
+            int no = 1;
             for(Map data : listData){
                 Map paramDetail = new HashMap();
                 paramDetail.put("NO", no += 1);
@@ -529,7 +529,7 @@ public class InvoicePilotController {
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
             param.put("TITLE", title);
-            int no = 0;
+            int no = 1;
             for(Map data : listData){
                 Map paramDetail = new HashMap();
                 paramDetail.put("NO", no += 1);
@@ -584,7 +584,7 @@ public class InvoicePilotController {
             Map param = new HashMap();
             List<Map<String, Object>> listDetail = new ArrayList<>();
             param.put("TITLE", title);
-            int no = 0;
+            int no = 1;
             for(Map data : listData){
                 Map paramDetail = new HashMap();
                 paramDetail.put("NO", no++);
@@ -752,7 +752,7 @@ public class InvoicePilotController {
             HttpServletResponse response) {
         try {
             String title = "REKAP Invoice Oss Pilot";
-            String namaFile = "rekap_invoice_oss_pilot.xlsx";
+            String namaFile = "rekap_invoice_oss_pilot.xls";
 
             ServletOutputStream os = response.getOutputStream();
             response.setContentType("application/vnd.ms-excel");
@@ -768,9 +768,10 @@ public class InvoicePilotController {
             System.out.println("List_Excel_data : "+listData.toString());
 
             param.put("TITLE", title);
+            int no = 1;
             for (Map data : listData) {
                 Map paramDetail = new HashMap();
-                paramDetail.put("NO", data.get("ROW_NUMBER"));
+                paramDetail.put("NO", no++);
                 paramDetail.put("COMP_CODE", data.get("COMP_CODE"));
                 paramDetail.put("DOC_NO", data.get("DOC_NO"));
                 paramDetail.put("FISC_YEAR", data.get("FISC_YEAR"));
@@ -804,7 +805,6 @@ public class InvoicePilotController {
                 paramDetail.put("AMT_WITH_BASE_TC", Double.parseDouble(data.get("AMT_WITH_BASE_TC").toString()));
                 paramDetail.put("TOTAL_AMT_TC", Double.parseDouble(data.get("TOTAL_AMT_TC").toString()));
                 paramDetail.put("TOTAL_AMT_LC", Double.parseDouble(data.get("TOTAL_AMT_LC").toString()));
-                paramDetail.put("AMOUNT_BAYAR", Double.parseDouble(data.get("AMOUNT_BAYAR").toString()));
                 paramDetail.put("AMT_WITH_TC", (!data.get("AMT_WITH_TC").equals("-")) ? Double.parseDouble(data.get("AMT_WITH_TC").toString()) : "-");
                 paramDetail.put("ASSIGNMENT", data.get("ASSIGNMENT"));
                 paramDetail.put("ITEM_TEXT", data.get("ITEM_TEXT"));
@@ -933,7 +933,7 @@ public class InvoicePilotController {
             System.out.println("List_Excel_data_realisasi : "+listData.toString());
 
             param.put("TITLE", title);
-            int no = 0;
+            int no = 1;
             for (Map data : listData) {
                 Map paramDetail = new HashMap();
                 paramDetail.put("NO", no++);
@@ -969,7 +969,7 @@ public class InvoicePilotController {
                 paramDetail.put("TGL_RENCANA_BYR", data.get("TGL_RENCANA_BYR"));
                 paramDetail.put("JENIS_DOK", data.get("JENIS_DOK"));
                 paramDetail.put("ORI_CURRENCY", data.get("ORI_CURRENCY"));
-                paramDetail.put("ORI_AMOUNT", Double.parseDouble(data.get("ORI_AMOUNT").toString().replace(",",".")));
+                paramDetail.put("ORI_AMOUNT", (!data.get("ORI_AMOUNT").toString().equals("-")) ? Double.parseDouble(data.get("ORI_AMOUNT").toString().replace(",",".")) : "-");
                 paramDetail.put("JENIS_TRANSAKSI", data.get("JENIS_TRANSAKSI"));
                 paramDetail.put("TIPE_TRANSAKSI", data.get("TIPE_TRANSAKSI"));
                 paramDetail.put("EQ_IDR", (data.get("EQ_IDR").equals("-")) ? "-" : Double.parseDouble(data.get("EQ_IDR").toString()));
@@ -1003,7 +1003,7 @@ public class InvoicePilotController {
             HttpServletResponse response) {
         try {
             String title = "Rekap All Invoice";
-            String namaFile = "rekap_all_invoice.xlsx";
+            String namaFile = "rekap_all_invoice.xls";
 
             ServletOutputStream os = response.getOutputStream();
             response.setContentType("application/vnd.ms-excel");
@@ -1022,6 +1022,7 @@ public class InvoicePilotController {
             for (Map data : listData) {
                 Map paramDetail = new HashMap();
                 paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
+                paramDetail.put("SUBMISSION_OSS_ID", data.get("SUBMISSION_OSS_ID"));
                 paramDetail.put("JENIS_TRANSAKSI", data.get("JENIS_TRANSAKSI"));
                 paramDetail.put("TIPE_TRANSAKSI", data.get("TIPE_TRANSAKSI"));
                 paramDetail.put("CURRENCY_BAYAR", data.get("CURRENCY_BAYAR"));
@@ -1041,7 +1042,7 @@ public class InvoicePilotController {
             param.put("DETAILS", listDetail);
 
             XLSTransformer transformer = new XLSTransformer();
-            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/template_rekap_all_invoice.xlsx").getInputStream();
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/template_rekap_all_invoice.xls").getInputStream();
             Workbook workbook = transformer.transformXLS(streamTemplate, param);
 //            XSSFWorkbook workbook = transformer.transformWorkbook(streamTemplate, param);
             workbook.write(os);

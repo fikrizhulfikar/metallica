@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpRequest;
@@ -50,6 +51,8 @@ import org.springframework.web.util.WebUtils;
 @EnableWebSecurity
 @EnableWebMvc
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Value("@login.captcha")
+    String captcha_status;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -141,7 +144,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 String ip = httpServletRequest.getRemoteAddr();
 
 //                System.out.println("Google : "+httpServletRequest.getParameter("g-recaptcha-response"));
-                String result_recaptcha = recaptchaService.verifyRecaptcha(ip,response);
+
+                String result_recaptcha = "OK";
+                if(captcha_status.equals("yes")){
+                    result_recaptcha = recaptchaService.verifyRecaptcha(ip,response);
+                }
+
 //                System.out.println("Google 2 : "+result_recaptcha);
                 if (result_recaptcha != "OK"){
                     HttpSession session = httpServletRequest.getSession(false);

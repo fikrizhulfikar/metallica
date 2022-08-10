@@ -224,7 +224,7 @@ public class InvoicePilotService {
         return resultset;
     }
 
-    public List<Map<String, Object>> getListRekapAllInvoice(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pUserId, String sortBy, String sortDir, String pSearch){
+    public ArrayList getListRekapAllInvoice(Integer pStart, Integer pLength, String pTglAwal, String pTglAkhir, String pBank, String pCurrency, String pUserId, String sortBy, String sortDir, String pSearch){
         SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(getJdbcTemplate())
                 .withCatalogName("PKG_CENTRALIZED_PAYMENT")
                 .withFunctionName("rekap_all_invoice_get");
@@ -254,10 +254,8 @@ public class InvoicePilotService {
                 .addValue("p_sort_by", sortBy, Types.VARCHAR)
                 .addValue("p_sort_dir", sortDir, Types.VARCHAR)
                 .addValue("p_search", pSearch, Types.VARCHAR);
-        List<Map<String, Object>> resultset = (List<Map<String, Object>>) simpleJdbcCall.executeFunction(ArrayList.class, params);
 
-        AppUtils.getLogger(this).info("data invoice_get : {}", resultset);
-        return resultset;
+        return simpleJdbcCall.executeFunction(ArrayList.class, params);
     }
 
     public List<Map<String, Object>> getXlsInvoiceNonVendor(String pTglAwal, String pTglAkhir, String pUserId, String pDocNo, String pCompCode, String pFiscYear){
