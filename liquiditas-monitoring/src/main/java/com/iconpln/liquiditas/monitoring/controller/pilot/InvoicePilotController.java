@@ -917,7 +917,7 @@ public class InvoicePilotController {
             HttpServletResponse response) {
         try {
             String title = "Rekap Realisasi Invoice";
-            String namaFile = "rekap_realisasi_invoice_pilot.xls";
+            String namaFile = "rekap_realisasi_invoice_pilot.xlsx";
 
             ServletOutputStream os = response.getOutputStream();
             response.setContentType("application/vnd.ms-excel");
@@ -936,14 +936,19 @@ public class InvoicePilotController {
             int no = 1;
             for (Map data : listData) {
                 Map paramDetail = new HashMap();
-                paramDetail.put("NO", no++);
+                paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
                 paramDetail.put("COMP_CODE", data.get("COMP_CODE"));
                 paramDetail.put("DOC_NO", data.get("DOC_NO"));
                 paramDetail.put("FISC_YEAR", data.get("FISC_YEAR"));
                 paramDetail.put("OSS_ID", data.get("OSS_ID"));
+                paramDetail.put("JENIS_TRANSAKSI", data.get("JENIS_TRANSAKSI"));
+                paramDetail.put("TIPE_TRANSAKSI", data.get("TIPE_TRANSAKSI"));
                 paramDetail.put("INV_STATUS", data.get("INV_STATUS"));
                 paramDetail.put("PMT_DOC_NO", data.get("PMT_DOC_NO"));
                 paramDetail.put("PMT_AMOUNT", Double.parseDouble(data.get("PMT_AMOUNT").toString().replace(",",".")));
+                paramDetail.put("ORI_CURRENCY", data.get("ORI_CURRENCY"));
+                paramDetail.put("ORI_AMOUNT", (!data.get("ORI_AMOUNT").toString().equals("-")) ? Double.parseDouble(data.get("ORI_AMOUNT").toString().replace(",",".").replace("-","")) : "-");
+                paramDetail.put("EQ_IDR", (data.get("EQ_IDR").equals("-")) ? "-" : Double.parseDouble(data.get("EQ_IDR").toString()));
                 paramDetail.put("PMT_RESIDUAL_IND", data.get("PMT_RESIDUAL_IND"));
                 paramDetail.put("PMT_CURRENCY", data.get("PMT_CURRENCY"));
                 paramDetail.put("PMT_HOUSE_BANK", data.get("PMT_HOUSE_BANK"));
@@ -968,22 +973,18 @@ public class InvoicePilotController {
                 paramDetail.put("DOC_TYPE", data.get("DOC_TYPE"));
                 paramDetail.put("TGL_RENCANA_BYR", data.get("TGL_RENCANA_BYR"));
                 paramDetail.put("JENIS_DOK", data.get("JENIS_DOK"));
-                paramDetail.put("ORI_CURRENCY", data.get("ORI_CURRENCY"));
-                paramDetail.put("ORI_AMOUNT", (!data.get("ORI_AMOUNT").toString().equals("-")) ? Double.parseDouble(data.get("ORI_AMOUNT").toString().replace(",",".")) : "-");
-                paramDetail.put("JENIS_TRANSAKSI", data.get("JENIS_TRANSAKSI"));
-                paramDetail.put("TIPE_TRANSAKSI", data.get("TIPE_TRANSAKSI"));
-                paramDetail.put("EQ_IDR", (data.get("EQ_IDR").equals("-")) ? "-" : Double.parseDouble(data.get("EQ_IDR").toString()));
                 paramDetail.put("CREATE_DATE", data.get("CREATE_DATE"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
 
             XLSTransformer transformer = new XLSTransformer();
-            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/template_realisasi_invoice_pilot.xls").getInputStream();
-//            ZipSecureFile.setMinInflateRatio(-1.0d);
-//            XSSFWorkbook xssfWorkbook = new XSSFWorkbook(streamTemplate);
-//            transformer.transformWorkbook(xssfWorkbook,param);
-            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/template_realisasi_invoice_pilot.xlsx").getInputStream();
+            ZipSecureFile.setMinInflateRatio(-1.0d);
+//            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+//            XSSFWorkbook workbook = transformer.transformWorkbook(streamTemplate, param);
+            XSSFWorkbook workbook = new XSSFWorkbook(streamTemplate);
+            transformer.transformWorkbook(workbook,param);
             workbook.write(os);
             os.flush();
             return null;
@@ -1003,7 +1004,7 @@ public class InvoicePilotController {
             HttpServletResponse response) {
         try {
             String title = "Rekap All Invoice";
-            String namaFile = "rekap_all_invoice.xls";
+            String namaFile = "rekap_all_invoice.xlsx";
 
             ServletOutputStream os = response.getOutputStream();
             response.setContentType("application/vnd.ms-excel");
@@ -1019,32 +1020,60 @@ public class InvoicePilotController {
             System.out.println("List_Excel_data_allinvoice : "+listData.toString());
 
             param.put("TITLE", title);
+            int no = 1;
             for (Map data : listData) {
                 Map paramDetail = new HashMap();
+//                paramDetail.put("NO", no++);
                 paramDetail.put("ROW_NUMBER", data.get("ROW_NUMBER"));
-                paramDetail.put("SUBMISSION_OSS_ID", data.get("SUBMISSION_OSS_ID"));
-                paramDetail.put("JENIS_TRANSAKSI", data.get("JENIS_TRANSAKSI"));
-                paramDetail.put("TIPE_TRANSAKSI", data.get("TIPE_TRANSAKSI"));
-                paramDetail.put("CURRENCY_BAYAR", data.get("CURRENCY_BAYAR"));
-                paramDetail.put("EXCHANGE_RATE", Double.parseDouble(data.get("EXCHANGE_RATE").toString()));
-                paramDetail.put("AMOUNT_BAYAR", Double.parseDouble(data.get("AMOUNT_BAYAR").toString()));
-                paramDetail.put("EQ_IDR", Double.parseDouble(data.get("EQ_IDR").toString()));
+                paramDetail.put("DOC_NO", data.get("DOC_NO"));
+                paramDetail.put("DOC_TYPE", data.get("DOC_TYPE"));
+                paramDetail.put("COMP_CODE", data.get("COMP_CODE"));
+                paramDetail.put("FISC_YEAR", data.get("FISC_YEAR"));
+                paramDetail.put("BUS_AREA", data.get("BUS_AREA"));
+                paramDetail.put("POST_DATE", data.get("POST_DATE"));
+                paramDetail.put("ENTRY_DATE", data.get("ENTRY_DATE"));
+                paramDetail.put("DOC_HDR_TXT", data.get("DOC_HDR_TXT"));
+                paramDetail.put("CURRENCY", data.get("CURRENCY"));
+                paramDetail.put("EXCH_RATE", Double.parseDouble(data.get("EXCH_RATE").toString()));
+                paramDetail.put("TRANS_TYPE", data.get("TRANS_TYPE"));
+                paramDetail.put("OSS_ID", data.get("OSS_ID"));
+                paramDetail.put("SUMBER_DANA", data.get("SUMBER_DANA"));
+                paramDetail.put("TGL_RENCANA_BYR", data.get("TGL_RENCANA_BYR"));
+                paramDetail.put("BANK_BYR", data.get("BANK_BYR"));
+                paramDetail.put("CURR_BAYAR", data.get("CURR_BAYAR"));
+                paramDetail.put("BANK_BENEF", data.get("BANK_BENEF"));
+                paramDetail.put("NO_REK_BENEF", data.get("NO_REK_BENEF"));
+                paramDetail.put("JENIS_BAYAR", data.get("JENIS_BAYAR"));
+                paramDetail.put("JENIS_DOC", data.get("JENIS_DOC"));
+                paramDetail.put("NAMA_UNIT", data.get("NAMA_UNIT"));
+                paramDetail.put("TGL_TERIMA_INVOICE", data.get("TGL_TERIMA_INVOICE"));
+                paramDetail.put("INPUT_BY", data.get("INPUT_BY"));
+                paramDetail.put("LINE_NO", data.get("LINE_NO"));
+                paramDetail.put("AMT_LC", data.get("AMT_LC"));
+                paramDetail.put("AMT_TC", data.get("AMT_TC"));
+                paramDetail.put("AMT_WITH_BASE_LC", data.get("AMT_WITH_BASE_LC"));
+                paramDetail.put("AMT_WITH_LC", data.get("AMT_WITH_LC"));
+                paramDetail.put("AMT_WITH_BASE_TC", data.get("AMT_WITH_BASE_TC"));
+                paramDetail.put("AMT_WITH_TC", data.get("AMT_WITH_TC"));
+                paramDetail.put("TOTAL_AMT_TC", data.get("TOTAL_AMT_TC"));
+                paramDetail.put("TOTAL_AMT_LC", data.get("TOTAL_AMT_LC"));
+                paramDetail.put("ASSIGNMENT", data.get("ASSIGNMENT"));
+                paramDetail.put("ITEM_TEXT", data.get("ITEM_TEXT"));
+                paramDetail.put("CUSTOMER", data.get("CUSTOMER"));
+                paramDetail.put("CUSTOMER_NAME", data.get("CUSTOMER_NAME"));
                 paramDetail.put("VENDOR", data.get("VENDOR"));
-                paramDetail.put("HOUSE_BANK", data.get("HOUSE_BANK"));
-                paramDetail.put("NAMA_HOUSE_BANK", data.get("NAMA_HOUSE_BANK"));
-                paramDetail.put("CASH_CODE", data.get("CASH_CODE"));
-                paramDetail.put("NAMA_CASHCODE", data.get("NAMA_CASHCODE"));
-                paramDetail.put("TGL_RENCANA_BAYAR", data.get("TGL_RENCANA_BAYAR"));
-                paramDetail.put("TGL_ENTRY", data.get("TGL_ENTRY"));
-                paramDetail.put("SUMBER_DATA", data.get("SUMBER_DATA"));
+                paramDetail.put("VENDOR_NAME", data.get("VENDOR_NAME"));
                 listDetail.add(paramDetail);
             }
             param.put("DETAILS", listDetail);
 
             XLSTransformer transformer = new XLSTransformer();
-            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/template_rekap_all_invoice.xls").getInputStream();
-            Workbook workbook = transformer.transformXLS(streamTemplate, param);
+            InputStream streamTemplate = resourceLoader.getResource("classpath:/templates/report/template_rekap_all_invoice.xlsx").getInputStream();
+            ZipSecureFile.setMinInflateRatio(-1.0d);
+//            Workbook workbook = transformer.transformXLS(streamTemplate, param);
 //            XSSFWorkbook workbook = transformer.transformWorkbook(streamTemplate, param);
+            XSSFWorkbook workbook = new XSSFWorkbook(streamTemplate);
+            transformer.transformWorkbook(workbook,param);
             workbook.write(os);
             os.flush();
             return null;
