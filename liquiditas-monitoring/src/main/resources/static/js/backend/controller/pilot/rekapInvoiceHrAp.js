@@ -91,7 +91,7 @@ function exportXls() {
     if (srcTglAwal !== "" && srcTglAwal !== null) {
         tglAkhir = srcTglAkhir
     }
-    window.open(baseUrl + "api_invoice_pilot/hrap_invoice/xls/invoice/" + tglAwal.replaceAll("/","-") + "/" + tglAkhir.replaceAll("/","-") + "/" + $("#cmb_currecny").val() + "/" + $("#cmb_cara_pembayaran").val() + "/" + $("#cmb_bank").val());
+    window.open(baseUrl + "api_invoice_pilot/hrap_invoice/xls/invoice/" + tglAwal.replaceAll("/","-") + "/" + tglAkhir.replaceAll("/","-") + "/" + $("#cmb_currency").val() + "/" + $("#cmb_cara_pembayaran").val() + "/" + $("#cmb_bank").val());
 }
 
 function search(state) {

@@ -5,15 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b07dde86-94cb-4949-bd9e-5eca4dcbff87" name="Default Changelist" comment="update">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/report/template_hrap_invoice_pilot.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/report/template_invoice_non_vendor_pilot.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/report/template_invoice_oss_pilot.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/report/template_vendor_invoice_portal.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/pilot/InvoicePilotController.java" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/java/com/iconpln/liquiditas/monitoring/controller/pilot/InvoicePilotController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_all_invoice.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_all_invoice.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_realisasi_invoice.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_realisasi_invoice.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/report/template_realisasi_invoice_pilot.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/report/template_realisasi_invoice_pilot.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapInvoiceHrAp.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapInvoiceHrAp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapInvoiceVendorPortal.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapInvoiceVendorPortal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapRelaisasiInvoice.js" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/static/js/backend/controller/pilot/rekapRelaisasiInvoice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/invoice_nonvendor_head.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/invoice_nonvendor_head.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_invoice_hrap.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_invoice_hrap.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_invoice_oss.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_invoice_oss.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_invoice_vendorportal.html" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/operator/pilot/rekap_invoice_vendorportal.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/report/template_rekap_all_invoice.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/liquiditas-monitoring/src/main/resources/templates/report/template_rekap_all_invoice.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

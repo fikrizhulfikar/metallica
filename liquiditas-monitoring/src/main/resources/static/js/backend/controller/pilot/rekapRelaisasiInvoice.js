@@ -138,7 +138,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [0],
-                            "name" : "NOMOR",
+                            "name" : "ROW_NUMBER",
                             "mRender": function (data, type, full) {
                                 return full.ROW_NUMBER;
                             }
@@ -146,7 +146,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [1],
-                            "name" : "KET",
+                            "name" : "COMP_CODE",
                             "mRender": function (data, type, full) {
                                 return full.COMP_CODE;
                             }
@@ -154,7 +154,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [2],
-                            "name" : "COMP_CODE",
+                            "name" : "DOC_NO",
                             "mRender": function (data, type, full) {
                                 return full.DOC_NO;
                             }
@@ -162,7 +162,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [3],
-                            "name" : "DOC_NO",
+                            "name" : "FISC_YEAR",
                             "mRender": function (data, type, full) {
                                 return full.FISC_YEAR;
                             }
@@ -171,7 +171,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                         {
                             "aTargets": [4],
-                            "name" : "GROUP_ID",
+                            "name" : "OSS_ID",
                             "mRender": function (data, type, full) {
                                 return full.OSS_ID;
                             }
@@ -179,7 +179,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [5],
-                            "name" : "GROUP_ID",
+                            "name" : "JENIS_TRANSAKSI",
                             "mRender": function (data, type, full) {
                                 return full.JENIS_TRANSAKSI;
                             }
@@ -187,7 +187,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [6],
-                            "name" : "GROUP_ID",
+                            "name" : "TIPE_TRANSAKSI",
                             "mRender": function (data, type, full) {
                                 return full.TIPE_TRANSAKSI;
                             }
@@ -195,7 +195,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [7],
-                            "name" : "OSS_ID",
+                            "name" : "INV_STATUS",
                             "mRender": function (data, type, full) {
                                 return full.INV_STATUS;
                             }
@@ -203,7 +203,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [8],
-                            "name" : "FISC_YEAR",
+                            "name" : "PMT_DOC_NO",
                             "mRender": function (data, type, full) {
                                 return full.PMT_DOC_NO;
                             }
@@ -211,7 +211,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [9],
-                            "name" : "DOC_TYPE",
+                            "name" : "PMT_AMOUNT",
                             "mRender": function (data, type, full) {
                                 return accounting.formatNumber(full.PMT_AMOUNT, 2,'.',',');
                             }
@@ -219,7 +219,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [10],
-                            "name" : "DOC_TYPE",
+                            "name" : "ORI_CURRENCY",
                             "mRender": function (data, type, full) {
                                 return full.ORI_CURRENCY;
                             }
@@ -227,15 +227,16 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [11],
-                            "name" : "DOC_TYPE",
+                            "name" : "ORI_AMOUNT",
                             "mRender": function (data, type, full) {
                                 return accounting.formatNumber(full.ORI_AMOUNT, 2,'.',',');
+//                                return full.ORI_AMOUNT;
                             }
 
                         },
                         {
                             "aTargets": [12],
-                            "name" : "DOC_TYPE",
+                            "name" : "EQ_IDR",
                             "mRender": function (data, type, full) {
                                 return accounting.formatNumber(full.EQ_IDR, 2,'.',',');
                             }
@@ -243,7 +244,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [13],
-                            "name" : "DOC_DATE",
+                            "name" : "PMT_RESIDUAL_IND",
                             "mRender": function (data, type, full) {
                                 return full.PMT_RESIDUAL_IND;
                             }
@@ -251,7 +252,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [14],
-                            "name" : "POST_DATE",
+                            "name" : "PMT_CURRENCY",
                             "mRender": function (data, type, full) {
                                 return full.PMT_CURRENCY;
 
@@ -259,7 +260,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [15],
-                            "name" : "ENTRY_DATE",
+                            "name" : "PMT_HOUSE_BANK",
                             "mRender": function (data, type, full) {
                                 return full.PMT_HOUSE_BANK;
                             }
@@ -267,7 +268,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [16],
-                            "name" : "DOC_HDR_TXT",
+                            "name" : "PMT_DATE",
                             "mRender": function (data, type, full) {
                                 return moment(full.PMT_DATE).format("DD/MM/YYYY") ;
                             }
@@ -275,7 +276,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [17],
-                            "name" : "CURRENCY",
+                            "name" : "PMT_BUS_AREA",
                             "mRender": function (data, type, full) {
                                 return full.PMT_BUS_AREA;
                             }
@@ -283,7 +284,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [18],
-                            "name" : "CURR_BAYAR",
+                            "name" : "PMT_CASH_CODE",
                             "mRender": function (data, type, full) {
                                 return full.PMT_CASH_CODE;
                             }
@@ -291,7 +292,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [19],
-                            "name" : "EXCH_RATE",
+                            "name" : "PMT_SUMBER_DANA",
                             "mRender": function (data, type, full) {
                                 return full.PMT_SUMBER_DANA;
                             }
@@ -299,63 +300,63 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [20],
-                            "name" : "PMT_IND",
+                            "name" : "GROUP_ID",
                             "mRender": function (data, type, full) {
                                 return full.GROUP_ID;
                             }
                         },
                         {
                             "aTargets": [21],
-                            "name" : "TRANS_TYPE",
+                            "name" : "DOC_HDR_TXT",
                             "mRender": function (data, type, full) {
                                 return full.DOC_HDR_TXT;
                             }
                         },
                         {
                             "aTargets": [22],
-                            "name" : "SPREAD_VAL",
+                            "name" : "ITEM_TEXT",
                             "mRender": function (data, type, full) {
                                 return full.ITEM_TEXT;
                             }
                         },
                         {
                             "aTargets": [23],
-                            "name" : "LINE_ITEM",
+                            "name" : "CUSTOMER",
                             "mRender": function (data, type, full) {
                                 return full.CUSTOMER;
                             }
                         },
                         {
                             "aTargets": [24],
-                            "name" : "BUS_AREA",
+                            "name" : "NAMA_CUSTOMER",
                             "mRender": function (data, type, full) {
                                 return full.NAMA_CUSTOMER;
                             }
                         },
                         {
                             "aTargets": [25],
-                            "name" : "AMT_LC",
+                            "name" : "VENDOR",
                             "mRender": function (data, type, full) {
                                 return full.VENDOR;
                             }
                         },
                         {
                             "aTargets": [26],
-                            "name" : "AMT_TC",
+                            "name" : "NAMA_VENDOR",
                             "mRender": function (data, type, full) {
                                 return full.NAMA_VENDOR;
                             }
                         },
                         {
                             "aTargets": [27],
-                            "name" : "AMT_WITH_BASE_TC",
+                            "name" : "NO_REK_HOUSE_BANK",
                             "mRender": function (data, type, full) {
                                 return full.NO_REK_HOUSE_BANK;
                             }
                         },
                         {
                             "aTargets": [28],
-                            "name" : "AMT_WITH_TC",
+                            "name" : "BANK_BENEF",
                             "mRender": function (data, type, full) {
                                 return full.BANK_BENEF;
                             }
@@ -363,7 +364,7 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
 
                         {
                             "aTargets": [29],
-                            "name" : "AMOUNT",
+                            "name" : "NO_REK_BENEF",
                             "mRender": function (data, type, full) {
                                 return full.NO_REK_BENEF;
                             }
@@ -371,56 +372,56 @@ function initDataTable(pTglAwal, pTglAkhir, pBank, pCurrency, pCaraBayar, status
                         },
                         {
                             "aTargets": [30],
-                            "name" : "AMOUNT_BAYAR",
+                            "name" : "NAMA_BENEF",
                             "mRender": function (data, type, full) {
                                 return full.NAMA_BENEF;
                             }
                         },
                         {
                             "aTargets": [31],
-                            "name" : "ASSIGNMENT",
+                            "name" : "VERIFIED_BY",
                             "mRender": function (data, type, full) {
                                 return full.VERIFIED_BY;
                             }
                         },
                         {
                             "aTargets": [32],
-                            "name" : "ITEM_TEXT",
+                            "name" : "VERIFIED_ON",
                             "mRender": function (data, type, full) {
                                 return moment(full.VERIFIED_ON).format("DD/MM/YYYY");
                             }
                         },
                         {
                             "aTargets": [33],
-                            "name" : "CUSTOMER_NAME",
+                            "name" : "EXCH_RATE",
                             "mRender": function (data, type, full) {
                                 return full.EXCH_RATE;
                             }
                         },
                         {
                             "aTargets": [34],
-                            "name" : "VENDOR_NAME",
+                            "name" : "DOC_TYPE",
                             "mRender": function (data, type, full) {
                                 return full.DOC_TYPE;
                             }
                         },
                         {
                             "aTargets": [35],
-                            "name" : "PMT_BLOCK",
+                            "name" : "TGL_RENCANA_BYR",
                             "mRender": function (data, type, full) {
                                 return moment(full.TGL_RENCANA_BYR).format("DD/MM/YYYY");
                             }
                         },
                         {
                             "aTargets": [36],
-                            "name" : "HOUSE_BANK",
+                            "name" : "JENIS_DOK",
                             "mRender": function (data, type, full) {
                                 return full.JENIS_DOK;
                             }
                         },
                         {
                             "aTargets": [37],
-                            "name" : "HOUSE_BANK",
+                            "name" : "CREATE_DATE",
                             "mRender": function (data, type, full) {
                                 return moment(full.CREATE_DATE).format('DD/MM/YYYY');
                             }

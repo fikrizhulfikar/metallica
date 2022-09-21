@@ -126,7 +126,7 @@ function exportXls() {
     if (srcTglAkhir !== "" && srcTglAkhir !== null) {
         tglAkhir = srcTglAkhir.split("/").reverse().join("");
     }
-    window.open(baseUrl + "api_invoice_pilot/hrap_invoice/xls/vip/" + tglAwal.replaceAll("/","-") + "/" + tglAkhir.replaceAll("/","-") + "/" + $("#cmb_bank").val() + "/" + $("#cmb_currecny").val());
+    window.open(baseUrl + "api_invoice_pilot/hrap_invoice/xls/vip/" + tglAwal.replaceAll("/","-") + "/" + tglAkhir.replaceAll("/","-") + "/" + $("#cmb_bank").val() + "/" + $("#cmb_currency").val());
 }
 
 function search(state) {
